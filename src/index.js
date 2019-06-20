@@ -7,8 +7,8 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import { initializeApp } from './actions';
 import store from './store';
+import handleResponse from './responses';
 
-const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
 const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
@@ -18,13 +18,8 @@ const replyTo = ObjectId();
 stompClient.connect(process.env.REACT_APP_CLOUDAMQP_USERNAME, process.env.REACT_APP_CLOUDAMQP_PASSWORD, () => {
   console.log('Successfully Connected');
   store.dispatch(initializeApp(stompClient, replyTo));
-  stompClient.subscribe('/queue/' + replyTo, msg => {
-    let obj = JSON.parse(msg.body);
-    let json = JSON.parse(msgpack.decode(obj.data));
-    console.log('****************** Response ******************');
-    console.log(json.data);
-    console.log(json.fields);
-    console.log(json.properties);
+  stompClient.subscribe('/queue/' + replyTo, body => {
+    handleResponse(body);
   }, {
     'auto-delete': true
   });

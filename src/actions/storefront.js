@@ -1,8 +1,8 @@
-import { FETCH_STOREFRONT } from '../constants/action-types';
+import { REQUEST_STOREFRONT } from '../constants/action-types';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const fetchStore = storefrontId => async (dispatch, getState) => {
+export const requestFetchStore = storefrontId => async (dispatch, getState) => {
   const stompClient = getState().global.stompClient;
   const replyTo = getState().global.replyTo;
   const params = {
@@ -16,7 +16,14 @@ export const fetchStore = storefrontId => async (dispatch, getState) => {
     'correlation-id': ObjectId()
   }, obj);
   dispatch({
-    type: FETCH_STOREFRONT,
+    type: REQUEST_STOREFRONT,
     payload: {}
   });
+}
+
+export const recievedFetchStore = storeFront => {
+  return {
+    type: 'RECEIVED_STOREFRONT',
+    payload: storeFront
+  }
 }
