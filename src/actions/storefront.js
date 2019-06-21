@@ -7,7 +7,9 @@ export const requestFetchStore = storefrontId => async (dispatch, getState) => {
   const replyTo = getState().global.replyTo;
   const params = {
     'params': {
-      '_id': storefrontId
+      'query': {
+        '_id': storefrontId
+      }
     }
   };
   var obj = JSON.stringify(msgpack.encode(params));
