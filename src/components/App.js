@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { requestFetchStorefront } from '../actions';
+
+import { requestFetchStorefront } from '../modules/storefront/actions';
 
 class App extends Component {
   componentWillMount() {
@@ -18,7 +19,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    stompClient: state.global.stompClient,
+    stompClient: state.stomp.client,
     storefront: state.storefront
   };
 };

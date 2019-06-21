@@ -1,0 +1,1 @@
+export const CONNECT_STOMP = 'CONNECT_STOMP';

@@ -1,11 +1,13 @@
-import { INITIALIZE_APP } from '../constants/action-types';
+import { REQUEST_STOREFRONT, RECEIVED_STOREFRONT } from './types';
 
 const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case INITIALIZE_APP:
+        case REQUEST_STOREFRONT:
+            return { ...state };
+        case RECEIVED_STOREFRONT:
             return { ...state, ...action.payload };
         default:
             return state;

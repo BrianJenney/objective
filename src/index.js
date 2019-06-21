@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './components/App';
-import { initializeApp } from './actions';
+import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
 
@@ -17,7 +17,7 @@ const replyTo = ObjectId();
 
 stompClient.connect(process.env.REACT_APP_CLOUDAMQP_USERNAME, process.env.REACT_APP_CLOUDAMQP_PASSWORD, () => {
   console.log('Successfully Connected');
-  store.dispatch(initializeApp(stompClient, replyTo));
+  store.dispatch(connectStomp(stompClient, replyTo));
   stompClient.subscribe('/queue/' + replyTo, body => {
     handleResponse(body);
   }, {

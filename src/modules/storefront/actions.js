@@ -1,10 +1,10 @@
-import { REQUEST_STOREFRONT } from '../constants/action-types';
+import { REQUEST_STOREFRONT } from './types';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
 export const requestFetchStorefront = storefrontId => async (dispatch, getState) => {
-  const stompClient = getState().global.stompClient;
-  const replyTo = getState().global.replyTo;
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
   const params = {
     'params': {
       'query': {
