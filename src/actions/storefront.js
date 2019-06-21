@@ -2,7 +2,7 @@ import { REQUEST_STOREFRONT } from '../constants/action-types';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestFetchStore = storefrontId => async (dispatch, getState) => {
+export const requestFetchStorefront = storefrontId => async (dispatch, getState) => {
   const stompClient = getState().global.stompClient;
   const replyTo = getState().global.replyTo;
   const params = {
@@ -23,7 +23,7 @@ export const requestFetchStore = storefrontId => async (dispatch, getState) => {
   });
 }
 
-export const recievedFetchStore = storeFront => {
+export const receivedFetchStorefront = storeFront => {
   return {
     type: 'RECEIVED_STOREFRONT',
     payload: storeFront

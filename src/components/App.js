@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { requestFetchStore } from '../actions';
+import { requestFetchStorefront } from '../actions';
 
 class App extends Component {
   componentWillMount() {
-    this.props.requestFetchStore(process.env.REACT_APP_STORE_ID);
+    this.props.requestFetchStorefront(process.env.REACT_APP_STORE_ID);
   }
 
   render() {
@@ -24,7 +24,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  requestFetchStore
+  requestFetchStorefront
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
