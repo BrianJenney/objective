@@ -4,7 +4,7 @@ import { requestFetchStore } from '../actions';
 
 class App extends Component {
   componentWillMount() {
-    this.props.requestFetchStore('5d0a9374603b13055e1e3670');
+    this.props.requestFetchStore(process.env.REACT_APP_STORE_ID);
   }
 
   render() {
