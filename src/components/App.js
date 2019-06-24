@@ -17,7 +17,6 @@ class App extends Component {
           <Header as='h1' textAlign='center'>{this.props.storefront.name}</Header>
         </Container>
       </Segment>
-      
     );
   }
 }
