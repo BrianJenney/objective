@@ -15,7 +15,12 @@ const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
 const stompClient = Stomp.over(wss);
 const replyTo = ObjectId();
 
-stompClient.connect(process.env.REACT_APP_CLOUDAMQP_USERNAME, process.env.REACT_APP_CLOUDAMQP_PASSWORD, () => {
+/**
+ * STOMP connect success callback handler
+ *
+ * @return none
+ */
+const onStompConnectSuccess = () => {
   console.log('Successfully Connected');
   store.dispatch(connectStomp(stompClient, replyTo));
   stompClient.subscribe('/queue/' + replyTo, body => {
@@ -29,7 +34,29 @@ stompClient.connect(process.env.REACT_APP_CLOUDAMQP_USERNAME, process.env.REACT_
     </Provider>,
     document.querySelector('#root')
   );
-}, e => {
+};
+
+/**
+ * STOMP connect error callback handler
+ *
+ * @param  object e
+ */
+const onStompConnectError = e => {
   console.log('******************** Error: ' + e);
   // Render a "Site down" page
-}, process.env.REACT_APP_CLOUDAMQP_USERNAME);
+};
+
+/**
+ * @todo
+ *
+ * Need to handle disconnections
+ * - Reconnect
+ * - Make sure we didn't lose any messages
+ */
+stompClient.connect(
+  process.env.REACT_APP_CLOUDAMQP_USERNAME,
+  process.env.REACT_APP_CLOUDAMQP_PASSWORD,
+  onStompConnectSuccess,
+  onStompConnectError,
+  process.env.REACT_APP_CLOUDAMQP_USERNAME
+);
