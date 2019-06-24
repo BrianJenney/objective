@@ -1,4 +1,4 @@
-import { REQUEST_STOREFRONT } from './types';
+import { REQUEST_FETCH_STOREFRONT, RECEIVED_FETCH_STOREFRONT } from './types';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
@@ -18,14 +18,14 @@ export const requestFetchStorefront = storefrontId => async (dispatch, getState)
     'correlation-id': ObjectId()
   }, obj);
   dispatch({
-    type: REQUEST_STOREFRONT,
+    type: REQUEST_FETCH_STOREFRONT,
     payload: {}
   });
 }
 
 export const receivedFetchStorefront = storeFront => {
   return {
-    type: 'RECEIVED_STOREFRONT',
+    type: RECEIVED_FETCH_STOREFRONT,
     payload: storeFront
   }
 }
