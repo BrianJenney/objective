@@ -1,5 +1,5 @@
-import store from '../store';
-import { receivedFetchStorefront } from '../modules/storefront/actions';
+import store from '../../store';
+import { receivedFetchStorefront } from './actions';
 
 export const handleStorefrontResponse = (data, fields, properties) => {
   switch (fields.routingKey) {

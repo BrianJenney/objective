@@ -1,4 +1,4 @@
-import { handleStorefrontResponse } from './storefront';
+import { handleStorefrontResponse } from './modules/storefront/responses';
 
 const msgpack = require('msgpack-lite');
 
