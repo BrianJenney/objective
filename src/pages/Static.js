@@ -5,7 +5,7 @@ import { requestFetchContent } from '../modules/content/actions';
 
 class Static extends React.Component {
   componentWillMount() {
-    this.props.requestFetchContent(process.env.REACT_APP_STORE_ID);
+    this.props.requestFetchContent(this.props.match.path);
   }
 
   render() {

@@ -21,10 +21,11 @@ class App extends Component {
             <Link to ='/'>
               <Header as='h1' textAlign='center'>{this.props.storefront.name}</Header>
             </Link>
-            <Route exact path="/" component={Home} />
-            <Route path="/terms" component={Static} />
           </Container>
         </Segment>
+        <Route exact path="/" component={Home} />
+        <Route path="/terms" component={Static} />
+        <Route path="/about" component={Static} />
       </BrowserRouter>
     );
   }

@@ -4,7 +4,7 @@ import { receivedFetchContent } from './actions';
 export const handleContentResponse = (data, fields, properties) => {
   switch (fields.routingKey) {
     case 'content.request.find':
-      console.log('****************** TERMS Response ******************');
+      console.log('****************** Terms Response ******************');
       console.log(data);
       console.log(fields);
       console.log(properties);

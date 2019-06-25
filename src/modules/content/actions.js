@@ -6,10 +6,11 @@ const ObjectId = require('bson-objectid');
 export const requestFetchContent = contentId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
+  let url = window.location.pathname;
   const params = {
     'params': {
       'query': {
-        'slug': 'disclaimer'
+        'contentPage': url
       }
     }
   };
