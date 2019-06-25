@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Segment, Container, Header } from 'semantic-ui-react';
+import Home from '../pages/Home';
+import Static from '../pages/Static';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 
@@ -12,11 +15,18 @@ class App extends Component {
 
   render() {
     return (
-      <Segment>
-        <Container>
-          <Header as='h1' textAlign='center'>{this.props.storefront.name}</Header>
-        </Container>
-      </Segment>
+      <BrowserRouter>
+        <Segment>
+          <Container>
+            <Link to ='/'>
+              <Header as='h1' textAlign='center'>{this.props.storefront.name}</Header>
+            </Link>
+          </Container>
+        </Segment>
+        <Route exact path="/" component={Home} />
+        <Route path="/terms" component={Static} />
+        <Route path="/about" component={Static} />
+      </BrowserRouter>
     );
   }
 }
