@@ -11,7 +11,7 @@ class Static extends React.Component {
   render() {
     return (
       <Container>
-        {this.props.content.content}
+        <div dangerouslySetInnerHTML={{__html: this.props.content.content}} />
       </Container>
     );
   }
