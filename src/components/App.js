@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Segment, Container, Header } from 'semantic-ui-react';
 import Home from '../pages/Home';
 import Static from '../pages/Static';
+import Gallery from '../pages/Gallery';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 
@@ -26,6 +27,7 @@ class App extends Component {
         <Route exact path="/" component={Home} />
         <Route path="/terms" component={Static} />
         <Route path="/about" component={Static} />
+        <Route path="/gallery" component={Gallery} />
       </BrowserRouter>
     );
   }
