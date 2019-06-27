@@ -14,11 +14,13 @@ export const requestFetchContent = contentId => async (dispatch, getState) => {
       }
     }
   };
+
   var obj = JSON.stringify(msgpack.encode(params));
   stompClient.send('/exchange/content/content.request.find', {
     'reply-to': replyTo,
     'correlation-id': ObjectId()
   }, obj);
+
   dispatch({
     type: REQUEST_FETCH_CONTENT,
     payload: {}

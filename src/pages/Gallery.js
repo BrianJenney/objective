@@ -8,27 +8,25 @@ class Gallery extends React.Component {
   componentWillMount() {
     this.props.requestFetchProducts(['5ceea2eb0023ee3bcc730cc7', '5ceebf7ea686a03bccfa67bf', '5ceec48fa686a03bccfa67c4']);
   }
-  
+
   render() {
-    if(!this.props.products){
+    if (!this.props.products) {
       return (<div></div>);
     }
 
     let prods = this.props.products;
-    let prodlist = Object.values(prods).map((product, ind) => (
+    let prodlist = Object.values(prods).map((product) => (
       <Container key={product._id}>
-          <Segment>
-            <h3>{product.name}</h3>
-            SKU: {product.sku}<br/>
-            {product.description}<br/>
-            Price: {product.price.$numberDecimal}
-          </Segment>
+        <Segment>
+          <h3>{product.name}</h3>
+          SKU: {product.sku}<br />
+          {product.description}<br />
+          Price: {product.price.$numberDecimal}
+        </Segment>
       </Container>
     ));
-    
-    return(
-        prodlist
-    )
+
+    return (prodlist)
   }
 }
 
@@ -39,7 +37,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    requestFetchProducts
+  requestFetchProducts
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gallery);
