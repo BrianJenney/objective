@@ -1,5 +1,6 @@
 import { handleStorefrontResponse } from './modules/storefront/responses';
 import { handleContentResponse } from './modules/content/responses';
+import { handleProductResponse } from './modules/products/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -15,6 +16,9 @@ export default body => {
     case 'content':
         handleContentResponse(data, fields, properties);
         break;
+    case 'product':
+      handleProductResponse(data, fields, properties);
+      break;
     default:
       console.log('no response handler ... ruh roh!');
   }
