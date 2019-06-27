@@ -5,15 +5,27 @@ import { requestFetchContent } from '../modules/content/actions';
 
 class Static extends React.Component {
   componentWillMount() {
-    this.props.requestFetchContent(this.props.match.path);
+    const { page } = this.props.match.params;
+
+    this.props.requestFetchContent(page);
+  }
+
+  renderContent(content) {
+    if (content === '404') {
+      return <p>404 Page</p>;
+    } else {
+      return (
+        <Container>
+          <div dangerouslySetInnerHTML={{__html: content}} />
+        </Container>
+      );
+    }
   }
 
   render() {
-    return (
-      <Container>
-        <div dangerouslySetInnerHTML={{__html: this.props.content.content}} />
-      </Container>
-    );
+    const { content } = this.props.content;
+
+    return this.renderContent(content);
   }
 }
 
