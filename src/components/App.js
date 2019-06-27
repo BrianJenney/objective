@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Segment, Container, Header } from 'semantic-ui-react';
 import Home from '../pages/Home';
@@ -14,6 +14,15 @@ class App extends Component {
     this.props.requestFetchStorefront(process.env.REACT_APP_STORE_ID);
   }
 
+  /**
+   * @todo
+   *
+   * Static Component needs to throw 404 if a page is not found
+   *
+   * @note
+   *
+   * The order that routes are defined matters, make sure /:page is the very last one
+   */
   render() {
     return (
       <BrowserRouter>
@@ -24,10 +33,11 @@ class App extends Component {
             </Link>
           </Container>
         </Segment>
-        <Route exact path="/" component={Home} />
-        <Route path="/terms" component={Static} />
-        <Route path="/about" component={Static} />
-        <Route path="/gallery" component={Gallery} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/gallery" component={Gallery} />
+          <Route path="/:page" component={Static} />
+        </Switch>
       </BrowserRouter>
     );
   }
