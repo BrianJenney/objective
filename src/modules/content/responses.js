@@ -1,10 +1,11 @@
 import store from '../../store';
 import { receivedFetchContent } from './actions';
 
-export const handleContentResponse = (data, fields, properties) => {
+export const handleContentResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'content.request.find':
       console.log('****************** Content Response ******************');
+      console.log(status);
       console.log(data);
       console.log(fields);
       console.log(properties);
