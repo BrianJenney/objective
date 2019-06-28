@@ -9,7 +9,8 @@ export const requestFetchStorefront = storefrontCode => async (dispatch, getStat
   const params = {
     'params': {
       'query': {
-        'code': storefrontCode
+        'code': storefrontCode,
+        'status': 'active'
       }
     }
   };
