@@ -3,13 +3,13 @@ import { REQUEST_FETCH_STOREFRONT, RECEIVED_FETCH_STOREFRONT } from './types';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestFetchStorefront = storefrontId => async (dispatch, getState) => {
+export const requestFetchStorefront = storefrontCode => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
     'params': {
       'query': {
-        '_id': storefrontId
+        'code': storefrontCode
       }
     }
   };

@@ -11,7 +11,7 @@ import { requestFetchStorefront } from '../modules/storefront/actions';
 
 class App extends Component {
   componentWillMount() {
-    this.props.requestFetchStorefront(process.env.REACT_APP_STORE_ID);
+    this.props.requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
   }
 
   /**
