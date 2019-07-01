@@ -8,7 +8,8 @@ export default class Home extends Component {
   render() {
     return (
       <Container>
-        {/* <Header as='h2'>Home Page</Header>
+        <Header as='h2'>Home Page</Header>
+        {/* 
         <Menu>
           <Menu.Item>
             <Link to="/about">About Us</Link>

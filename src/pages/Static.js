@@ -12,7 +12,7 @@ class Static extends React.Component {
 
   renderContent(content) {
     if (content === '404') {
-      return <p>404 Page</p>;
+      return <Container><p>404 Page</p></Container>;
     } else {
       return (
         <Container>

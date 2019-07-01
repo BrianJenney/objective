@@ -9,7 +9,7 @@ import { Container, Menu, Divider} from 'semantic-ui-react';
                     Home
                 </Link>
                 <Link to="/gallery" className="item">
-                    All Products
+                    All Products/Gallery
                 </Link>
                 <Link to="/cart" className="item">
                     <i className="cart link icon"></i>
