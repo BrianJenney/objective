@@ -1,7 +1,7 @@
 import store from '../../store';
-import { receivedFetchUsers } from './actions';
+import { receivedFetchAccount } from './actions';
 
-export const handleUsersResponse = (status, data, fields, properties) => {
+export const handleAccountResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'account.request.find':
       console.log('****************** Account Response ******************');
@@ -9,7 +9,7 @@ export const handleUsersResponse = (status, data, fields, properties) => {
       console.log(data);
       console.log(fields);
       console.log(properties);
-      store.dispatch(receivedFetchUsers(data.data[0]));
+      store.dispatch(receivedFetchAccount(data.data[0]));
       break;
     default:
       console.log('bad response');
