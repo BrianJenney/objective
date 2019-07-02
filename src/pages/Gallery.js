@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Header, Grid, Divider, Card } from 'semantic-ui-react';
+import { Container, Grid, Divider, Card, Image } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import { requestFetchProducts } from '../modules/products/actions';
 
@@ -17,7 +17,7 @@ class Gallery extends React.Component {
     let prods = this.props.products;
     var cardStyle = {
       padding: '20px',
-      height: '475px'
+      height: '525px'
     }
     var imgStyle = {
       height: '200px',
@@ -26,11 +26,16 @@ class Gallery extends React.Component {
     let prodlist = Object.values(prods).map((product) => (
       <Grid.Column className="card" key={product._id}>
         <Card style={cardStyle}>
-          <Header as='h3' textAlign='center'>{product.name}</Header>
-          <img src={product.assets.imgs} alt={product.name} style={imgStyle} />
-          <p>SKU: {product.sku}</p>
-          <p>{product.description}</p>
-          <p>Price: {product.price.$numberDecimal}</p>
+          <Image src={product.assets.imgs} ui={false} style={imgStyle} />
+          <Divider hidden/>
+          <Card.Content>
+            <Card.Header>{product.name}</Card.Header>
+            <Card.Description>
+              <p>SKU: {product.sku}</p>
+              <p>{product.description}</p>
+              <p>Price: {product.price.$numberDecimal}</p>
+            </Card.Description>
+          </Card.Content>
         </Card>
       </Grid.Column>
     ));
