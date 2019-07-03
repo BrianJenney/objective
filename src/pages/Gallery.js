@@ -4,7 +4,7 @@ import { Container, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { requestFetchProducts } from '../modules/products/actions';
-import ProductContext from '../contexts/ProductContext';
+import GalleryContext from '../contexts/GalleryContext';
 
 class Gallery extends React.Component {
   constructor(props) {
@@ -39,18 +39,18 @@ class Gallery extends React.Component {
     ));
 
     return (
-      <ProductContext.Consumer>
+      <GalleryContext.Consumer>
         { 
           value => {
             return (prodlist);
           } 
         }
-      </ProductContext.Consumer>
+      </GalleryContext.Consumer>
     )
   }
 }
 
-Gallery.contextType = ProductContext;
+Gallery.contextType = GalleryContext;
 
 const mapStateToProps = state => {
   return {
