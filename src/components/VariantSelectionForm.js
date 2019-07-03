@@ -48,7 +48,7 @@ export default class VariantSelectionForm extends Component {
                 <Button 
                   color='blue' 
                   content='Add To Cart' 
-                  disabled={this.props.selectedVariantIndex === null} 
+                  disabled={this.state.selectedVariantIndex === null} 
                   type='submit'
                 />
               </Form>
