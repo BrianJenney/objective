@@ -1,7 +1,7 @@
 import { handleStorefrontResponse } from './modules/storefront/responses';
 import { handleContentResponse } from './modules/content/responses';
 import { handleProductResponse } from './modules/products/responses';
-import { handleCartResponse } from './modules/cart/responses';
+//import { handleCartResponse } from './modules/cart/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -16,7 +16,7 @@ export default body => {
       handleStorefrontResponse(status, data, fields, properties);
       break;
     case 'cart':
-      handleCartResponse(status, data, fields, properties);
+//      handleCartResponse(status, data, fields, properties);
       break;
     case 'content':
       handleContentResponse(status, data, fields, properties);
