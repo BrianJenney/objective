@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Divider, Form, Header, Segment } from 'semantic-ui-react';
-import { requestFetchProductVariants } from '../modules/pdp/actions';
+import { requestFetchProduct, requestFetchProductVariants } from '../modules/pdp/actions';
 import ProductContext from '../contexts/ProductContext';
 
 class PDP extends Component {
@@ -10,15 +10,16 @@ class PDP extends Component {
     super(props);
     this.addToCart = this.addToCart.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = { selectedVariant: '', selectedVariantIndex: null };
+    this.state = { selectedProduct: {}, selectedVariant: '', selectedVariantIndex: null };
   }
 
   componentWillMount() {
-    this.props.requestFetchProductVariants(this.context.selectedProduct._id);
+    this.props.requestFetchProduct(this.props.match.params.id);
+    this.props.requestFetchProductVariants(this.props.match.params.id);
   }
 
   addToCart = (e) => {
-    let msg = this.context.selectedProduct.name + ' - ' 
+    let msg = this.state.selectedProduct.name + ' - ' 
             + this.state.selectedVariant.sku 
             + ' will be added to your cart.'
     alert(msg);
@@ -31,11 +32,16 @@ class PDP extends Component {
     });
   }
 
+  // handleClick(product) {
+  //   this.context.selectedProduct = product;
+  // }
+
   render() { 
-    if(!this.context.selectedProduct) {
+    if(!this.state.selectedProduct) {
       return ( <div></div>)
     } else {
-      console.log(this.props.match);
+      console.log(this.state);
+      console.log(this.props);
       return ( 
         <ProductContext.Consumer>
           { 
@@ -43,8 +49,8 @@ class PDP extends Component {
               return (
         <>
           <Segment>
-            <Header as='h3'>{value.selectedProduct.name}</Header>
-            <div>{value.selectedProduct.description}</div>
+            <Header as='h3'>{this.state.selectedProduct.name}</Header>
+            <div>{this.state.selectedProduct.description}</div>
           </Segment>
           <Segment> 
             <Form onSubmit={this.addToCart}>
@@ -90,7 +96,7 @@ const mapStateToProps = state => {
 };
   
 const mapDispatchToProps = {
-  requestFetchProductVariants
+  requestFetchProduct, requestFetchProductVariants
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PDP);

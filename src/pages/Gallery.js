@@ -1,12 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Segment } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { requestFetchProducts } from '../modules/products/actions';
+import ProductContext from '../contexts/ProductContext';
 
 class Gallery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   componentWillMount() {
     this.props.requestFetchProducts(['5ceea2eb0023ee3bcc730cc7', '5ceebf7ea686a03bccfa67bf', '5ceec48fa686a03bccfa67c4']);
+  }
+
+  handleClick(product) {
+    this.context.selectedProduct = product;
   }
 
   render() {
@@ -21,18 +32,29 @@ class Gallery extends React.Component {
           <h3>{product.name}</h3>
           SKU: {product.sku}<br />
           {product.description}<br />
-          Price: {product.price.$numberDecimal}
+          Price: {product.price.$numberDecimal}<br />
+          <Link to={`/product/${product._id}`}>See Details</Link>
         </Segment>
       </Container>
     ));
 
-    return (prodlist)
+    return (
+      <ProductContext.Consumer>
+        { 
+          value => {
+            return (prodlist);
+          } 
+        }
+      </ProductContext.Consumer>
+    )
   }
 }
 
+Gallery.contextType = ProductContext;
+
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
   };
 };
 

@@ -13,13 +13,11 @@ export const requestFetchProducts = productids => async (dispatch, getState) => 
       }
     }
   };
-
   var obj = JSON.stringify(msgpack.encode(params));
   stompClient.send('/exchange/product/product.request.find', {
     'reply-to': replyTo,
     'correlation-id': ObjectId()
   }, obj);
-
   dispatch({
     type: REQUEST_FETCH_PRODUCTS,
     payload: {}

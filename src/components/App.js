@@ -6,6 +6,7 @@ import { Segment, Container, Header } from 'semantic-ui-react';
 import Home from '../pages/Home';
 import Static from '../pages/Static';
 import Gallery from '../pages/Gallery';
+import PDP from '../pages/PDP';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 
@@ -36,6 +37,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/gallery" component={Gallery} />
+          <Route path="/product/:id" component={PDP} />
           <Route path="/:page" component={Static} />
         </Switch>
       </BrowserRouter>
