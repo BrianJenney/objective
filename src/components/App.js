@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+
 import 'semantic-ui-css/semantic.min.css';
 import { Segment, Container, Header } from 'semantic-ui-react';
+
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 import Home from '../pages/Home';
 import Static from '../pages/Static';
 import Gallery from '../pages/Gallery';
 import Cart from '../pages/Cart';
+import Account from '../pages/Account';
+import Login from '../pages/Login';
+import Checkout from '../pages/Checkout';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
@@ -50,12 +57,17 @@ class App extends Component {
             </Link>
           </Container>
         </Segment>
+        <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/gallery" component={Gallery} />
           <Route path="/cart" component={Cart} />
+          <Route path="/login" component={Login} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/account" component={Account} />
           <Route path="/:page" component={Static} />
         </Switch>
+        <Footer />
       </BrowserRouter>
     );
   }
