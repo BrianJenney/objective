@@ -3,15 +3,32 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Segment, Container, Header } from 'semantic-ui-react';
+
 import Home from '../pages/Home';
 import Static from '../pages/Static';
 import Gallery from '../pages/Gallery';
+import Cart from '../pages/Cart';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
+import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
+
+const localStorageClient = require('store');
 
 class App extends Component {
   componentWillMount() {
     this.props.requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
+
+    /**
+     * We check to see if the user already has a cart, if they do
+     * we fetch it, otherwise we create a new empty one
+     *
+     * @todo Is this the best place for this logic? Should it actually exist in the cart action instead?
+     */
+    if (localStorageClient.get('cartId')) {
+      this.props.requestFetchCart(localStorageClient.get('cartId'));
+    } else {
+      this.props.requestCreateCart();
+    }
   }
 
   /**
@@ -36,6 +53,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/gallery" component={Gallery} />
+          <Route path="/cart" component={Cart} />
           <Route path="/:page" component={Static} />
         </Switch>
       </BrowserRouter>
@@ -46,12 +64,15 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     stompClient: state.stomp.client,
-    storefront: state.storefront
+    storefront: state.storefront,
+    cart: state.cart
   };
 };
 
 const mapDispatchToProps = {
-  requestFetchStorefront
+  requestFetchStorefront,
+  requestFetchCart,
+  requestCreateCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
