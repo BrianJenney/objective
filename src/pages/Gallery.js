@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Container, Segment } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-import { requestFetchProducts } from '../modules/products/actions';
+import { requestFetchProducts } from '../modules/product/actions';
 import GalleryContext from '../contexts/GalleryContext';
 
-class Gallery extends React.Component {
+class Gallery extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -19,7 +19,7 @@ class Gallery extends React.Component {
   }
 
   handleClick(product) {
-    this.context.selectedProduct = product;
+    this.context.product = product;
   }
 
   render() {
