@@ -23,7 +23,7 @@ import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
 const localStorageClient = require('store');
 
 class App extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
 
     /**

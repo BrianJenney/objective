@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import { Container, Menu, Divider} from 'semantic-ui-react';
 
@@ -23,6 +23,6 @@ const Navbar = () => {
       <Divider hidden />
     </Container>
   );
-}
+};
 
 export default Navbar;

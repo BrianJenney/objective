@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 import { Container, Menu, Segment, Divider } from 'semantic-ui-react';
 
@@ -21,6 +21,6 @@ const Footer = () => {
       </Segment>  
     </div>
   );
-}
+};
 
 export default Footer;
