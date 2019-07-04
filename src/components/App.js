@@ -5,14 +5,15 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import { Segment, Container, Header } from 'semantic-ui-react';
 
+import Navbar from './Navbar';
+import Footer from './Footer';
+
 import Home from '../pages/Home';
 import Static from '../pages/Static';
 import Gallery from '../pages/Gallery';
 import Account from '../pages/Account';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
-import Navbar from '../pages/Navbar';
-import Footer from '../pages/Footer';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 
@@ -46,7 +47,7 @@ class App extends Component {
           <Route path="/gallery" component={Gallery} />
           <Route path="/login" component={Login} />
           <Route path="/checkout" component={Checkout} />
-          <Route path="/my-account" component={Account} />
+          <Route path="/account" component={Account} />
           <Route path="/:page" component={Static} />
         </Switch>
         <Footer />
