@@ -1,62 +1,61 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { Container, Grid, Divider, Card, Image } from 'semantic-ui-react';
+import { Container, Segment } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 import { requestFetchProducts } from '../modules/products/actions';
+import GalleryContext from '../contexts/GalleryContext';
 
 class Gallery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   componentWillMount() {
     this.props.requestFetchProducts(['5ceea2eb0023ee3bcc730cc7', '5ceebf7ea686a03bccfa67bf', '5ceec48fa686a03bccfa67c4']);
   }
-  
+
+  handleClick(product) {
+    this.context.selectedProduct = product;
+  }
+
   render() {
     if (!this.props.products) {
       return (<div></div>);
     }
 
-    let prods = this.props.products;
-    var cardStyle = {
-      padding: '20px',
-      height: '525px'
-    }
-    var imgStyle = {
-      height: '200px',
-      margin: '0 auto'
-    }
-    let prodlist = Object.values(prods).map((product) => (
-      <Grid.Column className="card" key={product._id}>
-        <Card style={cardStyle}>
-          <Image src={product.assets.imgs} ui={false} style={imgStyle} />
-          <Divider hidden/>
-          <Card.Content>
-            <Card.Header>{product.name}</Card.Header>
-            <Card.Description>
-              <p>SKU: {product.sku}</p>
-              <p>{product.description}</p>
-              <p>Price: {product.price.$numberDecimal}</p>
-            </Card.Description>
-          </Card.Content>
-        </Card>
-      </Grid.Column>
+    let prodlist = Object.values(this.props.products).map((product) => (
+      <Container key={product._id}>
+        <Segment>
+          <h3>{product.name}</h3>
+          SKU: {product.sku}<br />
+          {product.description}<br />
+          Price: {product.price.$numberDecimal}<br />
+          <Link to={`/product/${product._id}`}>See Details</Link>
+        </Segment>
+      </Container>
     ));
 
     return (
-      <Container>
-        <Divider hidden />
-        <Divider hidden />
-        <Grid columns={3} className="box">
-              {prodlist}
-          </Grid>
-      </Container>
-      )
+      <GalleryContext.Consumer>
+        { 
+          value => {
+            return (prodlist);
+          } 
+        }
+      </GalleryContext.Consumer>
+    )
   }
 }
 
+Gallery.contextType = GalleryContext;
+
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
   };
 };
 

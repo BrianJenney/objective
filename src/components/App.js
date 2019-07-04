@@ -15,6 +15,7 @@ import Cart from '../pages/Cart';
 import Account from '../pages/Account';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
+import PDP from '../pages/PDP';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
@@ -65,6 +66,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/account" component={Account} />
+          <Route path="/product/:id" component={PDP} />
           <Route path="/:page" component={Static} />
         </Switch>
         <Footer />

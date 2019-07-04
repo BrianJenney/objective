@@ -1,8 +1,9 @@
 import { handleStorefrontResponse } from './modules/storefront/responses';
 import { handleContentResponse } from './modules/content/responses';
 import { handleProductResponse } from './modules/products/responses';
-//import { handleCartResponse } from './modules/cart/responses';
 import { handleAccountResponse } from './modules/account/responses';
+import { handleProductVariantResponse } from './modules/pdp/responses';
+import { handleCartResponse } from './modules/cart/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -16,9 +17,9 @@ export default body => {
     case 'store':
       handleStorefrontResponse(status, data, fields, properties);
       break;
-    /* case 'cart':
+    case 'cart':
       handleCartResponse(status, data, fields, properties);
-      break; */
+      break;
     case 'content':
       handleContentResponse(status, data, fields, properties);
       break;
@@ -27,6 +28,9 @@ export default body => {
       break;
     case 'account':
       handleAccountResponse(status, data, fields, properties);
+      break;
+    case 'variant':
+      handleProductVariantResponse(status, data, fields, properties);
       break;
     default:
       console.log('no response handler ... ruh roh!');
