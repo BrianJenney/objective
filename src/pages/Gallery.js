@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { Container, Grid, Divider, Card, Image } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+
 import { requestFetchProducts } from '../modules/products/actions';
 
 class Gallery extends React.Component {

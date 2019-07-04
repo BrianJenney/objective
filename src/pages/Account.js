@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { Container, Header, Grid, Card } from 'semantic-ui-react';
+
 import { requestFetchAccount} from '../modules/account/actions';
 
 class Account extends React.Component {
@@ -36,7 +38,7 @@ class Account extends React.Component {
           {userList}
         </Grid>
       </Container>
-    )
+    );
   }
 }
 

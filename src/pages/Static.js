@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { Container } from 'semantic-ui-react';
+
 import { requestFetchContent } from '../modules/content/actions';
 
-class Static extends React.Component {
+class Static extends Component {
   componentWillMount() {
     const { page } = this.props.match.params;
 
