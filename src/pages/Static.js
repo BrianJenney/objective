@@ -18,6 +18,15 @@ class Static extends Component {
   }
 
   componentDidMount() {
+    this.getStaticData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.page !== this.props.match.params.page)
+      this.getStaticData();
+  }
+
+  getStaticData() {
     const { stomp } = store.getState();
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
@@ -37,7 +46,12 @@ class Static extends Component {
     }, obj);
   }
 
-  renderContent(content) {
+  renderContent() {
+    if (!this.state.content)
+      return <div></div>;
+
+    let { content } = this.state;
+
     if (content === '404') {
       return <Container><p>404 Page</p></Container>;
     } else {
@@ -50,9 +64,7 @@ class Static extends Component {
   }
 
   render() {
-    const { content } = this.state;
-
-    return this.renderContent(content);
+    return this.renderContent();
   }
 }
 
