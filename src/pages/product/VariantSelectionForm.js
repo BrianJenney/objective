@@ -5,6 +5,8 @@ import { Button, Divider, Form, Segment } from 'semantic-ui-react';
 import ProductContext from '../../contexts/ProductContext';
 
 class VariantSelectionForm extends Component {
+  static contextType = ProductContext;
+
   constructor(props) {
     super(props);
     this.addToCart = this.addToCart.bind(this);
@@ -22,29 +24,23 @@ class VariantSelectionForm extends Component {
   }
 
   render() {
+    if (!this.context.variants)
+      return <div></div>;
+
     return (
-      <ProductContext.Consumer>
-        {
-          value => {
-            return (
-              <Segment>
-                <Form onSubmit={this.addToCart}>
-                  <Form.Group widths='equal' style={{display:'block'}}>
-                    {value.variants.map((variant, index) => (
-                      <Form.Checkbox radio checked={this.state.selectedVariantIndex===index} key={variant._id} varindex={index} label={variant.sku + ':  ' + variant.price.$numberDecimal} name='variant' onChange={this.handleChange} sku={variant.sku} />
-                    ))}
-                  </Form.Group>
-                  <Divider horizontal />
-                  <Button color='blue' content='Add To Cart' disabled={this.state.selectedVariantIndex === null} type='submit' />
-                </Form>
-              </Segment>
-            );
-          }
-        }
-      </ProductContext.Consumer>
+      <Segment>
+        <Form onSubmit={this.addToCart}>
+          <Form.Group widths='equal' style={{display:'block'}}>
+            {this.context.variants.map((variant, index) => (
+              <Form.Checkbox radio checked={this.state.selectedVariantIndex===index} key={variant._id} varindex={index} label={variant.sku + ':  ' + variant.price.$numberDecimal} name='variant' onChange={this.handleChange} sku={variant.sku} />
+            ))}
+          </Form.Group>
+          <Divider horizontal />
+          <Button color='blue' content='Add To Cart' disabled={this.state.selectedVariantIndex === null} type='submit' />
+        </Form>
+      </Segment>
     );
   }
 }
-VariantSelectionForm.contextType = ProductContext;
 
 export default VariantSelectionForm;
