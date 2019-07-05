@@ -5,7 +5,6 @@ import ProductHeader from './product/ProductHeader';
 import VariantSelectionForm from './product/VariantSelectionForm';
 
 import { requestFetchProduct, requestFetchProductVariants } from '../modules/product/actions';
-
 import ProductContext from '../contexts/ProductContext';
 
 class Product extends Component {

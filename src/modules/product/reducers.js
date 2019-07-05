@@ -15,25 +15,25 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REQUEST_FETCH_PRODUCTS:
-      return { ...state };
-    case RECEIVED_FETCH_PRODUCTS:
-      return Object.assign({}, state, {
-        products: action.payload
-      });
-    case REQUEST_FETCH_PRODUCT:
-      return { ...state };
-    case RECEIVED_FETCH_PRODUCT:
-      return Object.assign({}, state, {
-        product: action.payload
-      });
-    case REQUEST_FETCH_VARIANTS:
-      return { ...state };
-    case RECEIVED_FETCH_VARIANTS:
-      return Object.assign({}, state, {
-        variants: action.payload
-      });
-    default:
-      return state;
+  case REQUEST_FETCH_PRODUCTS:
+    return { ...state };
+  case RECEIVED_FETCH_PRODUCTS:
+    return Object.assign({}, state, {
+      products: action.payload
+    });
+  case REQUEST_FETCH_PRODUCT:
+    return { ...state };
+  case RECEIVED_FETCH_PRODUCT:
+    return Object.assign({}, state, {
+      product: action.payload
+    });
+  case REQUEST_FETCH_VARIANTS:
+    return { ...state };
+  case RECEIVED_FETCH_VARIANTS:
+    return Object.assign({}, state, {
+      variants: action.payload
+    });
+  default:
+    return state;
   }
 };

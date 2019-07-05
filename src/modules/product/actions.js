@@ -29,14 +29,16 @@ export const requestFetchProducts = productids => async (dispatch, getState) => 
     type: REQUEST_FETCH_PRODUCTS,
     payload: {}
   });
-}
+};
 
 export const receivedFetchProducts = products => {
+  console.log('***** Received Fetch Products *****');
+  console.log(products);
   return {
     type: RECEIVED_FETCH_PRODUCTS,
     payload: products
-  }
-}
+  };
+};
 
 export const requestFetchProduct = productId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -53,14 +55,14 @@ export const requestFetchProduct = productId => async (dispatch, getState) => {
     type: REQUEST_FETCH_PRODUCT,
     payload: {}
   });
-}
+};
 
 export const receivedFetchProduct = product => {
   return {
     type: RECEIVED_FETCH_PRODUCT,
     payload: product
-  }
-}
+  };
+};
 
 export const requestFetchProductVariants = productId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -81,11 +83,11 @@ export const requestFetchProductVariants = productId => async (dispatch, getStat
     type: REQUEST_FETCH_VARIANTS,
     payload: {}
   });
-}
+};
 
 export const receivedFetchProductVariants = variants => {
   return {
     type: RECEIVED_FETCH_VARIANTS,
     payload: variants
-  }
-}
+  };
+};
