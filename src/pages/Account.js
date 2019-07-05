@@ -6,7 +6,7 @@ import { Container, Header, Grid, Card } from 'semantic-ui-react';
 import { requestFetchAccount} from '../modules/account/actions';
 
 class Account extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
   }
 
@@ -18,16 +18,16 @@ class Account extends React.Component {
     var userNum = 1;
     let userList = Object.values(users).map((user) => (
       <Grid.Column className="card" key={userNum++}>
-      <Card>
-        <Card.Content>
-          <Card.Header>{user.firstName} {user.lastName}</Card.Header>
-          <Card.Description>
-            <p>Email: {user.email}</p>
-            <p>Preferred Contact Method: {user.contactPreferences.preferred}</p>
-          </Card.Description>
-        </Card.Content>
-      </Card>
-    </Grid.Column>
+        <Card>
+          <Card.Content>
+            <Card.Header>{user.firstName} {user.lastName}</Card.Header>
+            <Card.Description>
+              <p>Email: {user.email}</p>
+              <p>Preferred Contact Method: {user.contactPreferences.preferred}</p>
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      </Grid.Column>
     ));
 
     return (
@@ -46,7 +46,7 @@ const mapStateToProps = state => {
   return {
     stompClient: state.stomp.client,
     account: state.account
-  }
+  };
 };
 
 const mapDispatchToProps = {

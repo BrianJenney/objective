@@ -24,11 +24,11 @@ export const requestFetchAccount = url => async (dispatch, getState) => {
     type: REQUEST_FETCH_ACCOUNT,
     payload: {}
   });
-}
+};
 
 export const receivedFetchAccount = account => {
   return {
     type: RECEIVED_FETCH_ACCOUNT,
     payload: account
-  }
-}
+  };
+};

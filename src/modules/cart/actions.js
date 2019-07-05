@@ -39,14 +39,14 @@ export const requestFetchCart = cartId => async (dispatch, getState) => {
     type: REQUEST_FETCH_CART,
     payload: {}
   });
-}
+};
 
 export const receivedFetchCart = cart => {
   return {
     type: RECEIVED_FETCH_CART,
     payload: cart
   };
-}
+};
 
 export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -66,15 +66,15 @@ export const requestCreateCart = () => async (dispatch, getState) => {
     type: REQUEST_CREATE_CART,
     payload: {}
   });
-}
+};
 
 export const receivedCreateCart = cart => {
   console.log(cart);
   return {
     type: RECEIVED_CREATE_CART,
     payload: cart
-  }
-}
+  };
+};
 
 export const requestUpdateCart = (cartId, updates) => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -84,7 +84,8 @@ export const requestUpdateCart = (cartId, updates) => async (dispatch, getState)
       'query': {
         '_id': cartId
       }
-    }
+    },
+    'data': updates
   };
   var obj = JSON.stringify(msgpack.encode(params));
   stompClient.send('/exchange/cart/cart.request.update', {
@@ -95,14 +96,14 @@ export const requestUpdateCart = (cartId, updates) => async (dispatch, getState)
     type: REQUEST_UPDATE_CART,
     payload: {}
   });
-}
+};
 
 export const receivedUpdateCart = cart => {
   return {
     type: RECEIVED_UPDATE_CART,
     payload: cart
-  }
-}
+  };
+};
 
 export const requestAddItemCart = product => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -117,14 +118,14 @@ export const requestAddItemCart = product => async (dispatch, getState) => {
     type: REQUEST_ADD_ITEM_CART,
     payload: {}
   });
-}
+};
 
 export const receivedAddItemCart = cart => {
   return {
     type: RECEIVED_ADD_ITEM_CART,
     payload: cart
-  }
-}
+  };
+};
 
 export const requestRemoveItemCart = product => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -139,14 +140,14 @@ export const requestRemoveItemCart = product => async (dispatch, getState) => {
     type: REQUEST_REMOVE_ITEM_CART,
     payload: {}
   });
-}
+};
 
 export const receivedRemoveItemCart = cart => {
   return {
     type: RECEIVED_REMOVE_ITEM_CART,
     payload: cart
-  }
-}
+  };
+};
 
 export const requestClearCart = product => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -161,14 +162,14 @@ export const requestClearCart = product => async (dispatch, getState) => {
     type: REQUEST_CLEAR_CART,
     payload: {}
   });
-}
+};
 
 export const receivedClearCart = cart => {
   return {
     type: RECEIVED_CLEAR_CART,
     payload: cart
-  }
-}
+  };
+};
 
 export const requestAddCouponCart = coupon => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -183,14 +184,14 @@ export const requestAddCouponCart = coupon => async (dispatch, getState) => {
     type: REQUEST_ADD_COUPON_CART,
     payload: {}
   });
-}
+};
 
 export const receivedAddCouponCart = cart => {
   return {
     type: RECEIVED_ADD_COUPON_CART,
     payload: cart
-  }
-}
+  };
+};
 
 export const requestRemoveCouponCart = coupon => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -205,11 +206,11 @@ export const requestRemoveCouponCart = coupon => async (dispatch, getState) => {
     type: REQUEST_REMOVE_COUPON_CART,
     payload: {}
   });
-}
+};
 
 export const receivedRemoveCouponCart = cart => {
   return {
     type: RECEIVED_REMOVE_COUPON_CART,
     payload: cart
-  }
-}
+  };
+};

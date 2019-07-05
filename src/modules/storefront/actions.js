@@ -25,11 +25,11 @@ export const requestFetchStorefront = storefrontCode => async (dispatch, getStat
     type: REQUEST_FETCH_STOREFRONT,
     payload: {}
   });
-}
+};
 
 export const receivedFetchStorefront = storeFront => {
   return {
     type: RECEIVED_FETCH_STOREFRONT,
     payload: storeFront
-  }
-}
+  };
+};

@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Segment } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+
 import { requestFetchCart } from '../modules/cart/actions';
 
 class Cart extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.requestFetchCart('5d1be9a5f4db196065c6d297');
   }
 
@@ -17,7 +16,7 @@ class Cart extends React.Component {
     console.log('Got cart:');
     console.log(this.props.cart);
     return (
-        <div>Have a cart</div>
+      <div>Have a cart</div>
     );
   }
 }

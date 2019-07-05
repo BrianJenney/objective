@@ -16,6 +16,7 @@
     "plugin:react/recommended"
   ],
   "rules": {
+    "no-console": "off",
     "indent": [
       "error",
       2
