@@ -1,15 +1,40 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { Container } from 'semantic-ui-react';
 
-import { requestFetchContent } from '../modules/content/actions';
+import store from '../store';
+import { EventEmitter } from '../events';
+
+const msgpack = require('msgpack-lite');
+const ObjectId = require('bson-objectid');
 
 class Static extends Component {
-  componentWillMount() {
-    const { page } = this.props.match.params;
+  constructor(props) {
+    super(props);
+    this.state = {};
+    EventEmitter.subscribe('content.request.find', data => {
+      this.setState({ 'content': data.data.data[0].content });
+    });
+  }
 
-    this.props.requestFetchContent(page);
+  componentDidMount() {
+    const { stomp } = store.getState();
+    const stompClient = stomp.client;
+    const replyTo = stomp.replyTo;
+    const { page } = this.props.match.params;
+    const params = {
+      'params': {
+        'query': {
+          'slug': page
+        }
+      }
+    };
+  
+    var obj = JSON.stringify(msgpack.encode(params));
+    stompClient.send('/exchange/content/content.request.find', {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    }, obj);
   }
 
   renderContent(content) {
@@ -25,20 +50,10 @@ class Static extends Component {
   }
 
   render() {
-    const { content } = this.props.content;
+    const { content } = this.state;
 
     return this.renderContent(content);
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    content: state.content
-  };
-};
-
-const mapDispatchToProps = {
-  requestFetchContent
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Static);
+export default Static;

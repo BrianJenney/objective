@@ -4,13 +4,11 @@ import reduxThunk from 'redux-thunk';
 import stompReducer from './modules/stomp/reducers';
 import storefrontReducer from './modules/storefront/reducers';
 import cartReducer from './modules/cart/reducers';
-import contentReducer from './modules/content/reducers';
 import accountReducer from './modules/account/reducers';
 
 const rootReducer = combineReducers({
   stomp: stompReducer,
   storefront: storefrontReducer,
-  content: contentReducer,
   cart: cartReducer,
   account: accountReducer
 });

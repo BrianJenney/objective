@@ -1,7 +1,6 @@
 import { EventEmitter } from './events';
 
 import { handleStorefrontResponse } from './modules/storefront/responses';
-import { handleContentResponse } from './modules/content/responses';
 import { handleAccountResponse } from './modules/account/responses';
 import { handleCartResponse } from './modules/cart/responses';
 
@@ -20,22 +19,15 @@ export default body => {
   case 'cart':
     handleCartResponse(status, data, fields, properties);
     break;
-  case 'content':
-    handleContentResponse(status, data, fields, properties);
-    break;
   case 'account':
     handleAccountResponse(status, data, fields, properties);
     break;
-  case 'product':
-  case 'variant':
+  default:
     EventEmitter.dispatch(fields.routingKey, {
       'status': status,
       'data': data,
       'fields': fields,
       'properties': properties
     });
-    break;
-  default:
-    console.log('no response handler ... ruh roh!');
   }
 };
