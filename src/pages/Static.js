@@ -29,7 +29,7 @@ class Static extends Component {
         }
       }
     };
-  
+
     var obj = JSON.stringify(msgpack.encode(params));
     stompClient.send('/exchange/content/content.request.find', {
       'reply-to': replyTo,
