@@ -5,27 +5,37 @@ import { EventEmitter } from '../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+const _ = require('lodash');
 
 const Context = React.createContext();
 
 export class GalleryStore extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {};
     EventEmitter.subscribe('product.request.find', data => {
       this.setState({ 'products': data.data.data });
     });
   }
 
-  state = {};
-
   componentDidMount() {
+    this.getGalleryData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(prevProps.productIds, this.props.productIds)) {
+      this.getGalleryData();
+    }
+  }
+
+  getGalleryData() {
     const { stomp } = store.getState();
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
     const params = {
       'params': {
         'query': {
-          '_id': { $in: ['5ceea2eb0023ee3bcc730cc7', '5ceebf7ea686a03bccfa67bf', '5ceec48fa686a03bccfa67c4'] }
+          '_id': { $in: this.props.productIds }
         }
       }
     };

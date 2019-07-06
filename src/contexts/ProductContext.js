@@ -11,6 +11,7 @@ const Context = React.createContext();
 export class ProductStore extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
     EventEmitter.subscribe('product.request.get', data => {
       this.setState({ ...this.state, 'product': data.data });
     });
@@ -19,9 +20,16 @@ export class ProductStore extends Component {
     });
   }
 
-  state = {};
-
   componentDidMount() {
+    this.getProductData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.productId !== this.props.productId)
+      this.getProductData();
+  }
+
+  getProductData() {
     const { stomp } = store.getState();
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
