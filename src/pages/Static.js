@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Container } from 'semantic-ui-react';
-
 import store from '../store';
 import { EventEmitter } from '../events';
 
@@ -53,12 +51,12 @@ class Static extends Component {
     let { content } = this.state;
 
     if (content === '404') {
-      return <Container><p>404 Page</p></Container>;
+      return <div><p>404 Page</p></div>;
     } else {
       return (
-        <Container>
+        <div>
           <div dangerouslySetInnerHTML={{__html: content}} />
-        </Container>
+        </div>
       );
     }
   }

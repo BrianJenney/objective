@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Container, Header, Grid, Card } from 'semantic-ui-react';
-
 import { requestFetchAccount} from '../modules/account/actions';
 
 class Account extends React.Component {
@@ -17,27 +15,21 @@ class Account extends React.Component {
     let users = this.props.account.users;
     var userNum = 1;
     let userList = Object.values(users).map((user) => (
-      <Grid.Column className="card" key={userNum++}>
-        <Card>
-          <Card.Content>
-            <Card.Header>{user.firstName} {user.lastName}</Card.Header>
-            <Card.Description>
-              <p>Email: {user.email}</p>
-              <p>Preferred Contact Method: {user.contactPreferences.preferred}</p>
-            </Card.Description>
-          </Card.Content>
-        </Card>
-      </Grid.Column>
+      <div className="card" key={userNum++}>
+        <h2>{user.firstName} {user.lastName}</h2>
+        <p>Email: {user.email}</p>
+        <p>Preferred Contact Method: {user.contactPreferences.preferred}</p>
+      </div>
     ));
 
     return (
-      <Container>
-        <Header as='h2'>Account Info</Header>
+      <div>
+        <h2>Account Info</h2>
         <p>Status: {this.props.account.status}</p>
-        <Grid>
+        <div>
           {userList}
-        </Grid>
-      </Container>
+        </div>
+      </div>
     );
   }
 }

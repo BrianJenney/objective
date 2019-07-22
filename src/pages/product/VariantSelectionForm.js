@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Button, Divider, Form, Segment } from 'semantic-ui-react';
-
 import ProductContext from '../../contexts/ProductContext';
 
 class VariantSelectionForm extends Component {
@@ -28,7 +26,7 @@ class VariantSelectionForm extends Component {
       return <div></div>;
 
     return (
-      <Segment>
+      {/* <div>
         <Form onSubmit={this.addToCart}>
           <Form.Group widths='equal' style={{display:'block'}}>
             {this.context.variants.map((variant, index) => (
@@ -38,7 +36,7 @@ class VariantSelectionForm extends Component {
           <Divider horizontal />
           <Button color='blue' content='Add To Cart' disabled={this.state.selectedVariantIndex === null} type='submit' />
         </Form>
-      </Segment>
+      </div> */}
     );
   }
 }

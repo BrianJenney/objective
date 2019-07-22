@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Header, Segment } from 'semantic-ui-react';
-
 import ProductContext from '../../contexts/ProductContext';
 
 class ProductHeader extends Component {
@@ -13,10 +11,10 @@ class ProductHeader extends Component {
     }
 
     return (
-      <Segment>
-        <Header as='h3'>{this.context.product.name}</Header>
+      <div>
+        <h3>{this.context.product.name}</h3>
         <div>{this.context.product.description}</div>
-      </Segment>
+      </div>
     );
   }
 }
