@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-
 import Gallery from './Gallery';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
 export default class Home extends Component {
   render() {
     return (
-      <div>
-        <h2>Home Page</h2>
+      <Container>
+        <Typography gutterBottom variant="h3">Homepage</Typography>
         <Gallery />
-      </div>
+      </Container>
     );
   }
 }
