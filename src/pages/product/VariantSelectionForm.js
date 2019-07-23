@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-
 import ProductContext from '../../contexts/ProductContext';
+import Container from '@material-ui/core/Container';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import { conditionalExpression } from '@babel/types';
 
 class VariantSelectionForm extends Component {
   static contextType = ProductContext;
@@ -26,17 +33,23 @@ class VariantSelectionForm extends Component {
       return <div></div>;
 
     return (
-      {/* <div>
-        <Form onSubmit={this.addToCart}>
-          <Form.Group widths='equal' style={{display:'block'}}>
-            {this.context.variants.map((variant, index) => (
-              <Form.Checkbox radio checked={this.state.selectedVariantIndex===index} key={variant._id} varindex={index} label={variant.sku + ':  ' + variant.price.$numberDecimal} name='variant' onChange={this.handleChange} sku={variant.sku} />
-            ))}
-          </Form.Group>
-          <Divider horizontal />
-          <Button color='blue' content='Add To Cart' disabled={this.state.selectedVariantIndex === null} type='submit' />
-        </Form>
-      </div> */}
+      <Container>
+        <form>
+          <FormLabel component="legend">Variant Options</FormLabel>
+          <RadioGroup onChange={this.handleChange} >
+            {Object.values(this.context.variants).map((variant, index) => (
+              <FormControlLabel value={variant._id} control={<Radio />} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id}  />
+          ))}
+          </RadioGroup>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Add To Cart
+          </Button>
+        </form>
+      </Container>
     );
   }
 }

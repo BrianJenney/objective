@@ -7,6 +7,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { spacing } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -87,6 +89,7 @@ const Navbar = () => {
           </Button>
         </Toolbar>
       </AppBar>
+      <Box mb="2rem" />
     </React.Fragment>
   );
 };

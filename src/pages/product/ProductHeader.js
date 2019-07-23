@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
 import ProductContext from '../../contexts/ProductContext';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
 class ProductHeader extends Component {
   static contextType = ProductContext;
@@ -11,10 +12,10 @@ class ProductHeader extends Component {
     }
 
     return (
-      <div>
-        <h3>{this.context.product.name}</h3>
+      <Container>
+        <Typography component="h1" variant="h3" align="center">{this.context.product.name}</Typography>
         <div>{this.context.product.description}</div>
-      </div>
+      </Container>
     );
   }
 }
