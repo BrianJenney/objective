@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import store from '../store';
 import { EventEmitter } from '../events';
+import Container from '@material-ui/core/Container';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -51,12 +52,12 @@ class Static extends Component {
     let { content } = this.state;
 
     if (content === '404') {
-      return <div><p>404 Page</p></div>;
+      return <Container><p>404 Page</p></Container>;
     } else {
       return (
-        <div>
+        <Container>
           <div dangerouslySetInnerHTML={{__html: content}} />
-        </div>
+        </Container>
       );
     }
   }

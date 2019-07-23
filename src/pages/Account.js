@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { requestFetchAccount} from '../modules/account/actions';
+import Container from '@material-ui/core/Container';
 
 class Account extends React.Component {
   componentDidMount() {
@@ -23,13 +24,13 @@ class Account extends React.Component {
     ));
 
     return (
-      <div>
+      <Container>
         <h2>Account Info</h2>
         <p>Status: {this.props.account.status}</p>
         <div>
           {userList}
         </div>
-      </div>
+      </Container>
     );
   }
 }

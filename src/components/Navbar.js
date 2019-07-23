@@ -80,8 +80,14 @@ const Navbar = () => {
             <Link variant="button" color="textPrimary" className={classes.link}>
               <RouterLink to="/gallery">All Products</RouterLink>
             </Link>
-            <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+            <Link variant="button" color="textPrimary" className={classes.link}>
               <RouterLink to="/cart">Cart</RouterLink>
+            </Link>
+            <Link variant="button" color="textPrimary" className={classes.link}>
+              <RouterLink to="/checkout">Checkout</RouterLink>
+            </Link>
+            <Link variant="button" color="textPrimary" className={classes.link}>
+              <RouterLink to="/account">Account</RouterLink>
             </Link>
           </nav>
           <Button href="#" color="primary" variant="outlined" className={classes.link}>
