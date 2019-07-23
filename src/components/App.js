@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
-
-import { Segment, Container, Header } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -50,27 +48,26 @@ class App extends Component {
    */
   render() {
     return (
-      <BrowserRouter>
-        <Segment>
-          <Container>
-            <Link to ='/'>
-              <Header as='h1' textAlign='center'>{this.props.storefront.name}</Header>
-            </Link>
-          </Container>
-        </Segment>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/gallery" component={Gallery} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/login" component={Login} />
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/account" component={Account} />
-          <Route path="/product/:id" component={Product} />
-          <Route path="/:page" component={Static} />
-        </Switch>
-        <Footer />
-      </BrowserRouter>
+      <React.Fragment>
+        <CssBaseline />
+        <BrowserRouter>
+          <div>
+            <Link to ='/'>{this.props.storefront.name}</Link>
+          </div>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/gallery" component={Gallery} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/login" component={Login} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/account" component={Account} />
+            <Route path="/product/:id" component={Product} />
+            <Route path="/:page" component={Static} />
+          </Switch>
+          <Footer />
+        </BrowserRouter>
+      </React.Fragment> 
     );
   }
 }

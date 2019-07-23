@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
-import { Header, Segment } from 'semantic-ui-react';
-
 import ProductContext from '../../contexts/ProductContext';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
 class ProductHeader extends Component {
   static contextType = ProductContext;
@@ -13,10 +12,10 @@ class ProductHeader extends Component {
     }
 
     return (
-      <Segment>
-        <Header as='h3'>{this.context.product.name}</Header>
+      <Container>
+        <Typography component="h1" variant="h3" align="center">{this.context.product.name}</Typography>
         <div>{this.context.product.description}</div>
-      </Segment>
+      </Container>
     );
   }
 }
