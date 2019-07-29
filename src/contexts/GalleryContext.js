@@ -13,12 +13,12 @@ export class GalleryStore extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    EventEmitter.subscribe('product.request.find', data => {
-      this.setState({ 'products': data.data.data });
-    });
   }
 
   componentDidMount() {
+    EventEmitter.subscribe('product.request.find', data => {
+      this.setState({ 'products': data.data.data });
+    });
     this.getGalleryData();
   }
 

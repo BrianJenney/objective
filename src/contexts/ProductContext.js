@@ -12,15 +12,15 @@ export class ProductStore extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
     EventEmitter.subscribe('product.request.get', data => {
       this.setState({ ...this.state, 'product': data.data });
     });
     EventEmitter.subscribe('variant.request.find', data => {
       this.setState({ ...this.state, 'variants': data.data.data });
     });
-  }
-
-  componentDidMount() {
     this.getProductData();
   }
 
