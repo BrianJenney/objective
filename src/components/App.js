@@ -19,6 +19,7 @@ import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
 
 const localStorageClient = require('store');
+//localStorageClient.clearAll();
 
 class App extends Component {
   componentDidMount() {

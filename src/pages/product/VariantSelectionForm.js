@@ -5,9 +5,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import { conditionalExpression } from '@babel/types';
+
+import store from '../../store';
+
+import { requestPatchCart } from '../../modules/cart/actions';
+
+const msgpack = require('msgpack-lite');
+const ObjectId = require('bson-objectid');
 
 class VariantSelectionForm extends Component {
   static contextType = ProductContext;
@@ -20,12 +25,37 @@ class VariantSelectionForm extends Component {
   }
 
   addToCart = (e) => {
-    let msg = this.context.product.name + ' - ' + this.context.variants[this.state.selectedVariantIndex].sku + ' will be added to your cart.';
-    alert(msg);
+    const { cart } = store.getState();
+
+    let variant = this.context.variants[this.state.selectedVariantIndex];
+
+    const localStorageClient = require('store');
+
+    let newitem = {
+      product_id: this.context.product._id,
+      variant_id: variant._id,
+      product_name: this.context.product.name,
+      variant_name: variant.name,
+      quantity: 1,
+      unit_price: parseInt(variant.price.$numberDecimal)
+    }
+
+    let newitems = cart.items;
+    newitems.push(newitem);
+//    console.log(cart.subtotal, newitem.unit_price);
+
+    let patches = {
+      items: newitems,
+      subtotal: cart.subtotal + newitem.unit_price,
+      total: cart.total + newitem.unit_price
+    }
+
+    store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
+
   }
 
-  handleChange(e, { varindex }) {
-    this.setState({selectedVariantIndex: varindex});
+  handleChange(e) {
+    this.setState({selectedVariantIndex: e.target.value});
   }
 
   render() {
@@ -35,16 +65,17 @@ class VariantSelectionForm extends Component {
     return (
       <Container>
         <form>
-          <FormLabel component="legend">Variant Options</FormLabel>
+          <FormLabel component="legend">Select an Option:</FormLabel>
           <RadioGroup onChange={this.handleChange} >
             {Object.values(this.context.variants).map((variant, index) => (
-              <FormControlLabel value={variant._id} control={<Radio />} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id}  />
+              <FormControlLabel value={index} control={<Radio />} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id}  />
           ))}
           </RadioGroup>
           <Button
-            type="submit"
-            variant="contained"
             color="primary"
+            disabled={this.state.selectedVariantIndex === null}
+            onClick={(e) => this.addToCart(e)}
+            variant="contained"
           >
             Add To Cart
           </Button>

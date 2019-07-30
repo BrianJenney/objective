@@ -12,7 +12,10 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './checkout/AddressForm';
 import PaymentForm from './checkout/PaymentForm';
+import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
+
+import store from '../store';
 
 
 const useStyles = makeStyles(theme => ({
@@ -52,22 +55,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping Method', 'Shipping Address', 'Payment Details', 'Review Your Order'];
+
+var cart = store.getState().cart;
 
 function getStepContent(step) {
   switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
+  case 0:
+    return <ShippingForm cart={cart}/>;
+  case 1:
+    return <AddressForm cart={cart}/>;
+  case 2:
+    return <PaymentForm cart={cart}/>;
+  case 3:
+    return <Review cart={cart}/>;
+  default:
+    throw new Error('Unknown step');
   }
 }
 
-export default function Checkout() {
+function validateShippingAddress(cart, props) {
+  console.log(cart);
+  console.log(props);
+}
+
+export default function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
