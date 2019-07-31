@@ -24,6 +24,14 @@ class VariantSelectionForm extends Component {
     this.state = { selectedVariantIndex: null };
   }
 
+  calculateCartTotal(c) {
+    let total = 0;
+    for(var i = 0; i < c.length; i++) {
+      total += (c[i].unit_price * c[i].quantity); 
+    }
+    return total;
+  }
+
   addToCart = (e) => {
     const { cart } = store.getState();
 
@@ -31,23 +39,35 @@ class VariantSelectionForm extends Component {
 
     const localStorageClient = require('store');
 
-    let newitem = {
-      product_id: this.context.product._id,
-      variant_id: variant._id,
-      product_name: this.context.product.name,
-      variant_name: variant.name,
-      quantity: 1,
-      unit_price: parseInt(variant.price.$numberDecimal)
-    }
-
     let newitems = cart.items;
-    newitems.push(newitem);
+
+    let alreadyInCart = false;
+
+    for(var i = 0; i < newitems.length; i++) {
+      if(newitems[i].variant_id == variant._id) {
+        alreadyInCart = true;
+        newitems[i].quantity++;
+      }
+    }
+    
+    
+    if(!alreadyInCart) {
+      let newitem = {
+        product_id: this.context.product._id,
+        variant_id: variant._id,
+        product_name: this.context.product.name,
+        variant_name: variant.name,
+        quantity: 1,
+        unit_price: parseFloat(variant.price.$numberDecimal)
+      }
+      newitems.push(newitem);
+    }
 //    console.log(cart.subtotal, newitem.unit_price);
 
     let patches = {
       items: newitems,
-      subtotal: cart.subtotal + newitem.unit_price,
-      total: cart.total + newitem.unit_price
+      subtotal: this.calculateCartTotal(newitems),
+      total: this.calculateCartTotal(newitems)
     }
 
     store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
@@ -69,7 +89,7 @@ class VariantSelectionForm extends Component {
           <RadioGroup onChange={this.handleChange} >
             {Object.values(this.context.variants).map((variant, index) => (
               <FormControlLabel value={index} control={<Radio />} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id}  />
-          ))}
+            ))}
           </RadioGroup>
           <Button
             color="primary"
