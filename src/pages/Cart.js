@@ -4,9 +4,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
+import Link from '@material-ui/core/Link';
 
 import { requestFetchCart, requestPatchCart } from '../modules/cart/actions';
 
@@ -76,7 +74,11 @@ class Cart extends React.Component {
           ) : (
             Object.values(this.props.cart.items).map((item, index) => (
               <>
-                <Grid item xs={4}>{item.variant_name}</Grid>
+                <Grid item xs={4}>
+                  <a href={"product/" + item.product_id} style={{color:'#3f51b5'}}>
+                    {item.variant_name}
+                  </a>
+                </Grid>
                 <Grid item xs={2}>
                   <Button color="primary" onClick={(e) => this.adjustQty(e, -1)} style={{'font-size':'21pt'}} value={index}>
                     -
