@@ -69,9 +69,6 @@ class Cart extends React.Component {
 
     return (
       <Container>
-        <Grid container spacing={3}>
-          <Typography component="h1" variant="h6" align="center">Try Something New!</Typography>
-        </Grid>
         <Typography component="h1" variant="h5" align="center">Your Cart</Typography>
         <Grid container spacing={3}>
           {this.props.cart.items.length == 0 ? (
@@ -99,15 +96,6 @@ class Cart extends React.Component {
           )
           }
           <Grid item xs={12}>TOTAL:  {'$' + this.props.cart.total}</Grid>
-          <Grid item xs={4}>
-            <Paper>
-              <InputBase
-                placeholder="Apply Coupon Code"
-              />
-              <Button variant="outlined">Apply</Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={12}></Grid>
           <Grid item xs={2}>
             <Button color="primary" href='checkout' variant="contained">Checkout</Button>
           </Grid>
