@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import store from '../store';
-import { EventEmitter } from '../events';
+import EventEmitter from '../events';
 import Container from '@material-ui/core/Container';
 
 const msgpack = require('msgpack-lite');
@@ -11,7 +11,7 @@ class Static extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    EventEmitter.subscribe('content.request.find', data => {
+    EventEmitter.addListener('content.request.find', data => {
       this.setState({ 'content': data.data.data[0].content });
     });
   }

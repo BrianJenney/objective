@@ -1,4 +1,4 @@
-import { EventEmitter } from './events';
+import EventEmitter from './events';
 
 import { handleStorefrontResponse } from './modules/storefront/responses';
 import { handleAccountResponse } from './modules/account/responses';
@@ -23,7 +23,7 @@ export default body => {
     handleAccountResponse(status, data, fields, properties);
     break;
   default:
-    EventEmitter.dispatch(fields.routingKey, {
+    EventEmitter.emit(fields.routingKey, {
       'status': status,
       'data': data,
       'fields': fields,
