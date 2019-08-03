@@ -88,7 +88,7 @@ class VariantSelectionForm extends Component {
           <FormLabel component="legend">Select an Option:</FormLabel>
           <RadioGroup onChange={this.handleChange} >
             {Object.values(this.context.variants).map((variant, index) => (
-              <FormControlLabel value={index} control={<Radio />} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id}  />
+              <FormControlLabel value={index} control={<Radio checked={index==this.state.selectedVariantIndex}/>} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id} />
             ))}
           </RadioGroup>
           <Button

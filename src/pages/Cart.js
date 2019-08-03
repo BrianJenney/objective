@@ -14,8 +14,6 @@ class Cart extends React.Component {
 
   applyCoupon(e) {
     console.log('Logic to apply coupon goes here');
-    console.log(e.target.value);
-    console.log(this.props.cart);
   }
 
   calculateCartTotal(c) {

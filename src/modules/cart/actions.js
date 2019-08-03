@@ -116,7 +116,7 @@ export const requestPatchCart = (cartId, patches) => async (dispatch, getState) 
     'reply-to': replyTo,
     'correlation-id': ObjectId()
   }, obj);
-  dispatch({
+  await dispatch({
     type: REQUEST_PATCH_CART,
     payload: {}
   });

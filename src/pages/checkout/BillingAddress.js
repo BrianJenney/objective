@@ -2,14 +2,15 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
-
-class AddressForm extends React.Component{
-
+class BillingAddressForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props.cart.shippingAddress || {};
+    this.state = props.cart.billingAddress || {};
     this.handleChange = this.handleChange.bind(this);
+    this.initialState = JSON.parse(JSON.stringify(this.state));
   }
 
   validate() {
@@ -17,20 +18,35 @@ class AddressForm extends React.Component{
   }
 
   getData() {
-    return {shippingAddress: this.state};
+    return { billingAddress: this.state };
   }
 
   handleChange(e) {
-    this.setState({ [e.target.id]: e.target.value });
+    if(e.target.id == 'sameAsBilling') {
+      if(e.target.checked) {
+        this.setState({...this.props.cart.shippingAddress});
+      } else {
+        this.setState(this.initialState, ()=>{console.log(this.state);});
+      }
+    } else {
+      this.setState({ [e.target.id]: e.target.value });
+    }
   }
 
   render() {
     return (
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
-        Shipping address
+          Billing Address
         </Typography>
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox color="secondary" id="sameAsBilling" name="sameAsBilling" />}
+              label="Use shipping address"
+              onChange={this.handleChange}
+            />
+          </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -91,11 +107,11 @@ class AddressForm extends React.Component{
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField 
-              id="state" 
-              name="state" 
-              label={!this.state.state ? "State/Province/Region" : ''} 
-              fullWidth 
+            <TextField
+              id="state"
+              name="state"
+              label={!this.state.state ? "State/Province/Region" : ''}
+              fullWidth
               onChange={this.handleChange}
               value={this.state.state ? this.state.state : ''}
             />
@@ -130,4 +146,4 @@ class AddressForm extends React.Component{
   }
 }
 
-export default AddressForm;
+export default BillingAddressForm;

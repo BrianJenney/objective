@@ -6,55 +6,71 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import store from '../../store';
 
 //mock shipping methods...where will this come from when we go live?
 const shippingMethods = [{
   displayName: 'Ground',
   name: 'ground',
-  price: 'FREE',
+  price: 0.00,
   deliveryEstimate: '3-7 Business Days'
 }, {
   displayName: '2 Day Air',
   name: '2dayair',
-  price:  '$17.90',
+  price:  17.90,
   deliveryEstimate: '2 Business Days'
 }];
 
+class ShippingForm extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      shippingMethod: 0
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-export default function ShippingForm(props) {
+  setShippingMethod(s) {
+    this.setState({shippingMethod: s});
+  }
 
-  const [shippingMethod, setShippingMethod] = React.useState(0);
-  
-  props.cart.shipping = shippingMethods[shippingMethod];
+  getData() {
+    return {shipping: shippingMethods[this.state.shippingMethod]};
+  }
 
-  function handleChange(event) {
-    setShippingMethod(parseInt(event.target.value));
-    props.cart.shipping = shippingMethods[shippingMethod];
-  };
+  handleChange(event) {
+    this.setShippingMethod(parseInt(event.target.value));
+    this.props.cart.shipping = shippingMethods[this.state.shippingMethod];
+    console.log(this.props.cart);
+  }
 
-  return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Shipping Method
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <RadioGroup
-            name="shippingMethod"
-            onChange={handleChange}
-            row
-            value={shippingMethod}
-          >
-            {Object.values(shippingMethods).map((sm, index) => (
-              <>
-              <FormControlLabel key={index.toString()} value={parseInt(index)} control={<Radio />} label={sm.displayName + ' - ' + sm.price} />
-              <span>Estimated delivery:  {sm.deliveryEstimate}</span>
-              </> 
-            ))}
-          </RadioGroup>
+  render() {
+    return (
+      <React.Fragment>
+        <Typography variant="h6" gutterBottom>
+          Shipping Method
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <RadioGroup
+              name="shippingMethod"
+              onChange={this.handleChange}
+              row
+              value={this.shippingMethod}
+            >
+              {Object.values(shippingMethods).map((sm, index) => (
+                <>
+                <FormControlLabel key={index.toString()} value={parseInt(index)} control={<Radio checked={this.state.shippingMethod==index}/>} label={sm.displayName + ' - ' + sm.price} />
+                <span>Estimated delivery:  {sm.deliveryEstimate}</span>
+                </> 
+              ))}
+            </RadioGroup>
+          </Grid>
         </Grid>
-      </Grid>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
 }
+
+export default ShippingForm;
