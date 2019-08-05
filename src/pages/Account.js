@@ -9,12 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-
 const pStyle = {
   padding: 20,
   textAlign: 'center'
 };
-
 
 class Account extends React.Component {
 
