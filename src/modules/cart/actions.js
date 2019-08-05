@@ -7,10 +7,6 @@ import {
   RECEIVED_UPDATE_CART,
   REQUEST_PATCH_CART,
   RECEIVED_PATCH_CART,
-  REQUEST_ADD_ITEM_CART,
-  RECEIVED_ADD_ITEM_CART,
-  REQUEST_REMOVE_ITEM_CART,
-  RECEIVED_REMOVE_ITEM_CART,
   REQUEST_CLEAR_CART,
   RECEIVED_CLEAR_CART,
   REQUEST_ADD_COUPON_CART,
@@ -129,49 +125,6 @@ export const receivedPatchCart = cart => {
   };
 };
 
-export const requestAddItemCart = product => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
-  const params = { product };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.item.request.create', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
-  dispatch({
-    type: REQUEST_ADD_ITEM_CART,
-    payload: {}
-  });
-};
-
-export const receivedAddItemCart = cart => {
-  return {
-    type: RECEIVED_ADD_ITEM_CART,
-    payload: cart
-  };
-};
-
-export const requestRemoveItemCart = product => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
-  const params = { product };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.item.request.delete', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
-  dispatch({
-    type: REQUEST_REMOVE_ITEM_CART,
-    payload: {}
-  });
-};
-
-export const receivedRemoveItemCart = cart => {
-  return {
-    type: RECEIVED_REMOVE_ITEM_CART,
-    payload: cart
-  };
-};
 
 export const requestClearCart = product => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -238,3 +191,5 @@ export const receivedRemoveCouponCart = cart => {
     payload: cart
   };
 };
+
+

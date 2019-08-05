@@ -6,8 +6,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import store from '../../store';
-
 //mock shipping methods...where will this come from when we go live?
 const shippingMethods = [{
   displayName: 'Ground',

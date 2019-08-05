@@ -1,14 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './checkout/AddressForm';
 import BillingAddressForm from './checkout/BillingAddress';
@@ -18,6 +15,7 @@ import Review from './checkout/Review';
 
 import store from '../store';
 import { requestPatchCart } from '../modules/cart/actions';
+import { requestCreateOrder } from '../modules/order/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -92,10 +90,15 @@ export default function Checkout(props) {
       }
     }
 
-    // update mongo & redux
-    store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
-    
-    setActiveStep(activeStep + 1);
+    if(activeStep == 4) {
+      //We're done...place the cart onto the order exchange
+      store.dispatch(requestCreateOrder(cart));
+      setActiveStep(0);
+    } else {
+      // update mongo & redux
+      store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {

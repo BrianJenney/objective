@@ -4,7 +4,7 @@ import {
   REQUEST_FETCH_CART, 
   RECEIVED_FETCH_CART,
   REQUEST_PATCH_CART, 
-  RECEIVED_PATCH_CART 
+  RECEIVED_PATCH_CART,
 } from './types';
 
 const localStorageClient = require('store');
