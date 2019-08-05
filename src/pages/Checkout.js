@@ -11,8 +11,13 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './checkout/AddressForm';
+import BillingAddressForm from './checkout/BillingAddress';
 import PaymentForm from './checkout/PaymentForm';
+import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
+
+import store from '../store';
+import { requestPatchCart } from '../modules/cart/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -52,26 +57,44 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Payment Details', 'Review Your Order'];
 
-function getStepContent(step) {
+function getStepContent(step, cart, formRef) {
   switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
+  case 0:
+    return <ShippingForm cart={cart} ref={formRef}/>;
+  case 1:
+    return <AddressForm cart={cart} ref={formRef}/>;
+  case 2:
+    return <BillingAddressForm cart={cart} ref={formRef}/>;
+  case 3:
+    return <PaymentForm cart={cart} ref={formRef}/>;
+  case 4:
+    return <Review cart={cart} />;
+  default:
+    throw new Error('Unknown step');
   }
 }
 
-export default function Checkout() {
+export default function Checkout(props) {
+  let formRef = React.createRef();
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  
+  let cart = store.getState().cart;
+  //console.log(cart);
 
   const handleNext = () => {
+    if((activeStep == 1) || (activeStep == 2) || activeStep == 3) {
+      if(!formRef.current.validate()) {
+        console.log('invalid');
+        return false;
+      }
+    }
+
+    // update mongo & redux
+    store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
+    
     setActiveStep(activeStep + 1);
   };
 
@@ -107,7 +130,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, cart, formRef)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

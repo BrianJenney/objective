@@ -5,6 +5,8 @@ import {
   RECEIVED_CREATE_CART,
   REQUEST_UPDATE_CART,
   RECEIVED_UPDATE_CART,
+  REQUEST_PATCH_CART,
+  RECEIVED_PATCH_CART,
   REQUEST_ADD_ITEM_CART,
   RECEIVED_ADD_ITEM_CART,
   REQUEST_REMOVE_ITEM_CART,
@@ -53,8 +55,6 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   const replyTo = getState().stomp.replyTo;
   const params = {
     'data': {
-      'subtotal': 0.00,
-      'total': 0.00
     }
   };
   var obj = JSON.stringify(msgpack.encode(params));
@@ -69,7 +69,6 @@ export const requestCreateCart = () => async (dispatch, getState) => {
 };
 
 export const receivedCreateCart = cart => {
-  console.log(cart);
   return {
     type: RECEIVED_CREATE_CART,
     payload: cart
@@ -101,6 +100,31 @@ export const requestUpdateCart = (cartId, updates) => async (dispatch, getState)
 export const receivedUpdateCart = cart => {
   return {
     type: RECEIVED_UPDATE_CART,
+    payload: cart
+  };
+};
+
+export const requestPatchCart = (cartId, patches) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    id: cartId,
+    data: patches
+  };
+  var obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send('/exchange/cart/cart.request.patch', {
+    'reply-to': replyTo,
+    'correlation-id': ObjectId()
+  }, obj);
+  await dispatch({
+    type: REQUEST_PATCH_CART,
+    payload: {}
+  });
+};
+
+export const receivedPatchCart = cart => {
+  return {
+    type: RECEIVED_PATCH_CART,
     payload: cart
   };
 };

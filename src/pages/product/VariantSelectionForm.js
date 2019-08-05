@@ -5,9 +5,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import { conditionalExpression } from '@babel/types';
+
+import store from '../../store';
+
+import { requestPatchCart } from '../../modules/cart/actions';
+
+const msgpack = require('msgpack-lite');
+const ObjectId = require('bson-objectid');
 
 class VariantSelectionForm extends Component {
   static contextType = ProductContext;
@@ -19,13 +24,58 @@ class VariantSelectionForm extends Component {
     this.state = { selectedVariantIndex: null };
   }
 
-  addToCart = (e) => {
-    let msg = this.context.product.name + ' - ' + this.context.variants[this.state.selectedVariantIndex].sku + ' will be added to your cart.';
-    alert(msg);
+  calculateCartTotal(c) {
+    let total = 0;
+    for(var i = 0; i < c.length; i++) {
+      total += (c[i].unit_price * c[i].quantity); 
+    }
+    return total;
   }
 
-  handleChange(e, { varindex }) {
-    this.setState({selectedVariantIndex: varindex});
+  addToCart = (e) => {
+    const { cart } = store.getState();
+
+    let variant = this.context.variants[this.state.selectedVariantIndex];
+
+    const localStorageClient = require('store');
+
+    let newitems = cart.items;
+
+    let alreadyInCart = false;
+
+    for(var i = 0; i < newitems.length; i++) {
+      if(newitems[i].variant_id == variant._id) {
+        alreadyInCart = true;
+        newitems[i].quantity++;
+      }
+    }
+    
+    
+    if(!alreadyInCart) {
+      let newitem = {
+        product_id: this.context.product._id,
+        variant_id: variant._id,
+        product_name: this.context.product.name,
+        variant_name: variant.name,
+        quantity: 1,
+        unit_price: parseFloat(variant.price.$numberDecimal)
+      }
+      newitems.push(newitem);
+    }
+//    console.log(cart.subtotal, newitem.unit_price);
+
+    let patches = {
+      items: newitems,
+      subtotal: this.calculateCartTotal(newitems),
+      total: this.calculateCartTotal(newitems)
+    }
+
+    store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
+
+  }
+
+  handleChange(e) {
+    this.setState({selectedVariantIndex: e.target.value});
   }
 
   render() {
@@ -35,16 +85,17 @@ class VariantSelectionForm extends Component {
     return (
       <Container>
         <form>
-          <FormLabel component="legend">Variant Options</FormLabel>
+          <FormLabel component="legend">Select an Option:</FormLabel>
           <RadioGroup onChange={this.handleChange} >
             {Object.values(this.context.variants).map((variant, index) => (
-              <FormControlLabel value={variant._id} control={<Radio />} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id}  />
-          ))}
+              <FormControlLabel value={index} control={<Radio checked={index==this.state.selectedVariantIndex}/>} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id} />
+            ))}
           </RadioGroup>
           <Button
-            type="submit"
-            variant="contained"
             color="primary"
+            disabled={this.state.selectedVariantIndex === null}
+            onClick={(e) => this.addToCart(e)}
+            variant="contained"
           >
             Add To Cart
           </Button>
