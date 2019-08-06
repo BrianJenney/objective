@@ -1,21 +1,21 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './checkout/AddressForm';
+import BillingAddressForm from './checkout/BillingAddress';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 
 import store from '../store';
+import { requestPatchCart } from '../modules/cart/actions';
+import { requestCreateOrder } from '../modules/order/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -55,36 +55,50 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Shipping Method', 'Shipping Address', 'Payment Details', 'Review Your Order'];
+const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Payment Details', 'Review Your Order'];
 
-var cart = store.getState().cart;
-
-function getStepContent(step) {
+function getStepContent(step, cart, formRef) {
   switch (step) {
   case 0:
-    return <ShippingForm cart={cart}/>;
+    return <ShippingForm cart={cart} ref={formRef}/>;
   case 1:
-    return <AddressForm cart={cart}/>;
+    return <AddressForm cart={cart} ref={formRef}/>;
   case 2:
-    return <PaymentForm cart={cart}/>;
+    return <BillingAddressForm cart={cart} ref={formRef}/>;
   case 3:
-    return <Review cart={cart}/>;
+    return <PaymentForm cart={cart} ref={formRef}/>;
+  case 4:
+    return <Review cart={cart} />;
   default:
     throw new Error('Unknown step');
   }
 }
 
-function validateShippingAddress(cart, props) {
-  console.log(cart);
-  console.log(props);
-}
-
 export default function Checkout(props) {
+  let formRef = React.createRef();
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  
+  let cart = store.getState().cart;
+  //console.log(cart);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if((activeStep == 1) || (activeStep == 2) || activeStep == 3) {
+      if(!formRef.current.validate()) {
+        console.log('invalid');
+        return false;
+      }
+    }
+
+    if(activeStep == 4) {
+      //We're done...place the cart onto the order exchange
+      store.dispatch(requestCreateOrder(cart));
+      setActiveStep(0);
+    } else {
+      // update mongo & redux
+      store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -119,7 +133,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, cart, formRef)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>

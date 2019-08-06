@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import store from '../store';
-import { EventEmitter } from '../events';
+import EventEmitter from '../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -16,7 +16,7 @@ export class GalleryStore extends Component {
   }
 
   componentDidMount() {
-    EventEmitter.subscribe('product.request.find', data => {
+    EventEmitter.addListener('product.request.find', data => {
       this.setState({ 'products': data.data.data });
     });
     this.getGalleryData();

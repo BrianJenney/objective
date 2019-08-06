@@ -1,8 +1,9 @@
-import { EventEmitter } from './events';
+import EventEmitter from './events';
 
 import { handleStorefrontResponse } from './modules/storefront/responses';
 import { handleAccountResponse } from './modules/account/responses';
 import { handleCartResponse } from './modules/cart/responses';
+import { handleOrderResponse } from './modules/order/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -22,8 +23,11 @@ export default body => {
   case 'account':
     handleAccountResponse(status, data, fields, properties);
     break;
+  case 'order':
+    handleOrderResponse(status, data, fields, properties);
+    break;
   default:
-    EventEmitter.dispatch(fields.routingKey, {
+    EventEmitter.emit(fields.routingKey, {
       'status': status,
       'data': data,
       'fields': fields,

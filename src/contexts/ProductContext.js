@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import store from '../store';
-import { EventEmitter } from '../events';
+import EventEmitter from '../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -15,10 +15,10 @@ export class ProductStore extends Component {
   }
 
   componentDidMount() {
-    EventEmitter.subscribe('product.request.get', data => {
+    EventEmitter.addListener('product.request.get', data => {
       this.setState({ ...this.state, 'product': data.data });
     });
-    EventEmitter.subscribe('variant.request.find', data => {
+    EventEmitter.addListener('variant.request.find', data => {
       this.setState({ ...this.state, 'variants': data.data.data });
     });
     this.getProductData();

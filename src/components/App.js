@@ -19,7 +19,7 @@ import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
 
 const localStorageClient = require('store');
-//localStorageClient.clearAll();
+//localStorageClient.clearAll();  //Uncomment this to force creation of a new cart
 
 class App extends Component {
   componentDidMount() {
