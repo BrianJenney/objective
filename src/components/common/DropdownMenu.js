@@ -54,7 +54,7 @@ DropdownMenu.propTypes = {
 };
 
 DropdownMenu.defaultProps = {
-  panelId: 'truehealth-dropdown',
+  panelId: 'default-dropdown',
   menuItems: []
 };
 

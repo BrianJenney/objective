@@ -14,7 +14,6 @@ InputField.propTypes = {
 
 InputField.defaultProps = {
   fullWidth: true,
-  margin: 'dense',
   variant: 'outlined'
 };
 

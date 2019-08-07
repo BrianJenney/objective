@@ -43,7 +43,7 @@ PopoverView.propTypes = {
 };
 
 PopoverView.defaultProps = {
-  panelId: 'truehealth-popover'
+  panelId: 'default-popover'
 };
 
 export default PopoverView;
