@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIn } from 'formik';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+} from '@material-ui/core';
 
 const Field = ({ render, form, name, label, ...rest }) => {
   const { touched, errors } = form;

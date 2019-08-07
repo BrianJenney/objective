@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
+import { Box, Typography, Checkbox } from '@material-ui/core';
 
 const CheckboxField = ({ field, form, disabled, label, ...rest }) => (
   <Box display="flex" alignItems="center">

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIn } from 'formik';
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@material-ui/core';
 
 InputField.propTypes = {
   field: PropTypes.object,
