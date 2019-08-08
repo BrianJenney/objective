@@ -47,6 +47,10 @@ class App extends Component {
    * @note
    *
    * The order that routes are defined matters, make sure /:page is the very last one
+   * 
+   * The Navbar needs to be removed; it will be replaced by the Header component.  
+   * I'm leaving it in for now bc it provides easy access to the cart, checkout 
+   * funnel, etc. 
    */
   render() {
     return (
