@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from './Navbar';
+import Header from './Header';
 import Footer from './Footer';
 
 import Home from '../pages/Home';
@@ -56,6 +57,7 @@ class App extends Component {
             <Link to ='/'>{this.props.storefront.name}</Link>
           </div>
           <Navbar />
+          <Header />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
