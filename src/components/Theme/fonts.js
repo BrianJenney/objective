@@ -4,15 +4,15 @@ export const fonts = {
   header: 'Canela Text',
   caption: 'p22-underground',
   captionBook: {
-    header: caption,
+    header: 'p22-underground',
     weight: 400
   },
   captionMedium: {
-    header: caption,
+    header: 'p22-underground',
     weight: 500
   },
   captionHeavy: {
-    header: caption,
+    header: 'p22-underground',
     weight: 900
   },
 };
@@ -27,7 +27,7 @@ export const sizes = {
   title: '1rem',
   subhead: '1rem',
   body: '1rem',
-  bodyMd:'1.125rem',
+  bodyMd: '1.125rem',
   bodyLg: '1.75rem',
   caption: '0.75rem',
   productBook: '0.875rem',
