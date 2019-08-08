@@ -1,10 +1,20 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { nxtPalette } from './nxt-palette';
+import { colorPalette } from './color-palette';
 
-const { ...color } = nxtPalette;
+const { ...color } = colorPalette;
 
 const nxtTheme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1400,
+      xl: 1920
+    }
+  },
   palette: {
+    type: 'light',
     primary: {
       forestGreen: color.FOREST_GREEN,
       seaFoam: color.SEA_FOAM,
@@ -21,6 +31,11 @@ const nxtTheme = createMuiTheme({
       lemon: color.LEMON,
       orange: color.ORANGE,
       vanilla: color.VANILLA
+    },
+    error: {
+      main: colors.red,
+      dark: colors.red,
+      contrastText: colors.white
     }
   }
 });

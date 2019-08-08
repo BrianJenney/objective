@@ -1,4 +1,4 @@
-export const nxtPalette = {
+export const colorPalette = {
   // primary colors
 FOREST_GREEN: '#003833',
 SEA_FOAM: '#c3f1cf',
