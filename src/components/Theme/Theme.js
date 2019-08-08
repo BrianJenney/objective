@@ -51,6 +51,97 @@ const nxtTheme = createMuiTheme({
       default: color.WHITE
     }
   },
+  typography: {
+    htmlFontSize: 16,
+    fontSize: 16,
+    fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+    h1: {
+      fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.h1,
+      fontWeight: 800,
+      lineHeight: '3.125rem'
+    },
+    h2: {
+      fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.h2,
+      fontWeight: 800,
+      lineHeight: '1.875rem'
+    },
+    h3: {
+      // Title T1
+      fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.title,
+      fontWeight: 800,
+      lineHeight: '1.4375rem'
+    },
+    h4: {
+      // subhead S1
+      fontFamily: `${fonts.caption}, ${backupFontStack.sans}`,
+      fontSize: sizes.subhead,
+      fontWeight: 400,
+      lineHeight: '1.4375rem'
+    },
+    subtitle1: {
+      // subhead S1
+      fontFamily: `${fonts.caption}, ${backupFontStack.sans}`,
+      fontSize: sizes.subhead,
+      fontWeight: 400,
+      lineHeight: '1.4375rem'
+    },
+    caption: {
+      fontFamily: `${fonts.caption}, ${backupFontStack.sans}`,
+      fontSize: sizes.caption,
+      fontWeight: 400,
+      lineHeight: '0.9375rem'
+    },
+    productBook: {
+      fontFamily: `${fonts.captionBook.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.productBook,
+      lineHeight: '1.5rem',
+      fontWeight: `${fonts.captionBook.weight}`,
+      textTransform: 'uppercase'
+    },
+    productMedium: {
+      fontFamily: `${fonts.captionMedium.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.productMedium,
+      fontWeight: `${fonts.captionMedium.weight}`,
+      textTransform: 'uppercase'
+    },
+    productHeavy: {
+      fontFamily: `${fonts.captionHeavy.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.productHeavy,
+      lineHeight: '2.5rem',
+      fontWeight: `${fonts.captionHeavy.weight}`,
+      textTransform: 'uppercase'
+    },
+    button: {
+      fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
+      textTransform: 'uppercase',
+      textDecoration: 'none',
+      color: color.WHITE
+    },
+    bodyMd: {
+      fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+      fontSize: sizes.bodyMd,
+      fontWeight: `${fonts.bodyWeight}`,
+      lineHeight: '1.375rem'
+    },
+    bodyLg: {
+      fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+      fontSize: sizes.bodyLg,
+      fontWeight: `${fonts.bodyWeight}`,
+      lineHeight: '2.125rem'
+    }
+  },
+  overrides: {},
+  shape: {
+    borderRadius: 0
+  },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true
+    },
+  }
 });
 
 export default nxtTheme
