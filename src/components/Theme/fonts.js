@@ -1,7 +1,20 @@
 export const fonts = {
-  body: 'Georgia',
+  body: 'freight-text-pro',
+  bodyWeight: '400',
   header: 'Canela Text',
-  caption: 'Helvetica'
+  caption: 'p22-underground',
+  captionBook: {
+    header: caption,
+    weight: 400
+  },
+  captionMedium: {
+    header: caption,
+    weight: 500
+  },
+  captionHeavy: {
+    header: caption,
+    weight: 900
+  },
 };
 
 export const backupFontStack = {
@@ -14,7 +27,12 @@ export const sizes = {
   title: '1rem',
   subhead: '1rem',
   body: '1rem',
+  bodyMd:'1.125rem',
+  bodyLg: '1.75rem',
   caption: '0.75rem',
+  productBook: '0.875rem',
+  productMedium: '1.75rem',
+  productHeavy: '1.875rem',
   tableHead: '0.75rem',
   tableBody: '0.875rem'
 };

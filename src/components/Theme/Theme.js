@@ -82,17 +82,43 @@ const nxtTheme = createMuiTheme({
       fontWeight: 400,
       lineHeight: '0.9375rem'
     },
+    productBook: {
+      fontFamily: `${fonts.sansBook.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.productBook,
+      lineHeight: '1.5rem',
+      fontWeight: `${fonts.captionBook.weight}`,
+      textTransform: 'uppercase'
+    },
+    productMedium: {
+      fontFamily: `${fonts.sansMedium.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.productMedium,
+      fontWeight: `${fonts.captionMedium.weight}`,
+      textTransform: 'uppercase'
+    },
+    productHeavy: {
+      fontFamily: `${fonts.sansHeavy.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.productHeavy,
+      lineHeight: '2.5rem',
+      fontWeight: `${fonts.captionHeavy.weight}`,
+      textTransform: 'uppercase'
+    },
     button: {
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
       textTransform: 'uppercase',
       textDecoration: 'none',
       color: colors.white
     },
-    body1: {
+    bodyMd: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
-      fontSize: sizes.body,
-      fontWeight: 400,
-      lineHeight: '1.4375rem'
+      fontSize: sizes.bodyMd,
+      fontWeight: `${fonts.bodyWeight}`,
+      lineHeight: '1.375rem'
+    },
+    bodyLg: {
+      fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+      fontSize: sizes.bodyLg,
+      fontWeight: `${fonts.bodyWeight}`,
+      lineHeight: '2.125rem'
     }
   },
   overrides: {},
