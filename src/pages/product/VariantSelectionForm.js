@@ -1,108 +1,99 @@
 import React, { Component } from 'react';
+import { Formik, Field, Form } from 'formik';
+import { object, number } from 'yup';
+import { Container, FormLabel } from '@material-ui/core';
 import ProductContext from '../../contexts/ProductContext';
-import Container from '@material-ui/core/Container';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import Button from '@material-ui/core/Button';
-
-import store from '../../store';
-
 import { requestPatchCart } from '../../modules/cart/actions';
+import store from '../../store';
+import { Button } from '../../components/common';
+import { RadioGroupField } from '../../components/form-fields';
 
-const msgpack = require('msgpack-lite');
-const ObjectId = require('bson-objectid');
+const localStorageClient = require('store');
 
-class VariantSelectionForm extends Component {
+const calculateCartTotal = cartItems =>
+  cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
+
+const schema = object().shape({ selectedVariantIndex: number() });
+const INITIAL_VALUES = {
+  selectedVariantIndex: null
+};
+
+export default class VariantSelectionForm extends Component {
   static contextType = ProductContext;
 
-  constructor(props) {
-    super(props);
-    this.addToCart = this.addToCart.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = { selectedVariantIndex: null };
-  }
+  renderForm = ({ values }) => {
+    const { variants } = this.context;
+    const variantOptions = Object.values(variants).map((variant, index) => ({
+      key: variant._id,
+      label: `${variant.sku}: ${variant.price.$numberDecimal}`,
+      value: index
+    }));
 
-  calculateCartTotal(c) {
-    let total = 0;
-    for(var i = 0; i < c.length; i++) {
-      total += (c[i].unit_price * c[i].quantity); 
-    }
-    return total;
-  }
+    return (
+      <Form>
+        <FormLabel component="legend">Select an Option:</FormLabel>
+        <Field
+          component={RadioGroupField}
+          name="selectedVariantIndex"
+          options={variantOptions}
+        />
+        <Button disabled={values.selectedVariantIndex === null} type="submit">
+          Add To Cart
+        </Button>
+      </Form>
+    );
+  };
 
-  addToCart = (e) => {
+  handleSubmit = values => {
     const { cart } = store.getState();
-
-    let variant = this.context.variants[this.state.selectedVariantIndex];
-
-    const localStorageClient = require('store');
-
-    let newitems = cart.items;
-
+    const variant = this.context.variants[values.selectedVariantIndex];
+    const newItems = cart.items;
     let alreadyInCart = false;
 
-    for(var i = 0; i < newitems.length; i++) {
-      if(newitems[i].variant_id == variant._id) {
+    for (let i = 0; i < newItems.length; i++) {
+      if (newItems[i].variant_id == variant._id) {
         alreadyInCart = true;
-        newitems[i].quantity++;
+        newItems[i].quantity++;
       }
     }
-    
-    
-    if(!alreadyInCart) {
-      let newitem = {
+
+    if (!alreadyInCart) {
+      const newItem = {
         product_id: this.context.product._id,
         variant_id: variant._id,
         product_name: this.context.product.name,
         variant_name: variant.name,
         quantity: 1,
         unit_price: parseFloat(variant.price.$numberDecimal)
-      }
-      newitems.push(newitem);
+      };
+      newItems.push(newItem);
     }
-//    console.log(cart.subtotal, newitem.unit_price);
 
-    let patches = {
-      items: newitems,
-      subtotal: this.calculateCartTotal(newitems),
-      total: this.calculateCartTotal(newitems)
-    }
+    const patches = {
+      items: newItems,
+      subtotal: calculateCartTotal(newItems),
+      total: calculateCartTotal(newItems)
+    };
 
     store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
-
-  }
-
-  handleChange(e) {
-    this.setState({selectedVariantIndex: e.target.value});
-  }
+  };
 
   render() {
-    if (!this.context.variants)
-      return <div></div>;
+    const { variants } = this.context;
+
+    if (!variants) {
+      return null;
+    }
 
     return (
       <Container>
-        <form>
-          <FormLabel component="legend">Select an Option:</FormLabel>
-          <RadioGroup onChange={this.handleChange} >
-            {Object.values(this.context.variants).map((variant, index) => (
-              <FormControlLabel value={index} control={<Radio checked={index==this.state.selectedVariantIndex}/>} label={variant.sku + ':  ' + variant.price.$numberDecimal} key={variant._id} />
-            ))}
-          </RadioGroup>
-          <Button
-            color="primary"
-            disabled={this.state.selectedVariantIndex === null}
-            onClick={(e) => this.addToCart(e)}
-            variant="contained"
-          >
-            Add To Cart
-          </Button>
-        </form>
+        <Formik
+          initialValues={INITIAL_VALUES}
+          onSubmit={this.handleSubmit}
+          validationSchema={schema}
+          render={this.renderForm}
+        />
       </Container>
     );
   }
 }
-
-export default VariantSelectionForm;
