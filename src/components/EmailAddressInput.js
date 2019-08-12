@@ -39,7 +39,6 @@ const EmailAddressInput = () => {
   };
 
   const handleChange = (e) => {
-    console.log(email.length);
     setEmail(e.target.value);
   };
 
