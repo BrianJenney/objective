@@ -12,7 +12,6 @@ export default (state = INITIAL_STATE, action) => {
   case REQUEST_CREATE_ORDER:
     return { ...state };
   case RECEIVED_CREATE_ORDER:
-    console.log(action.payload);
     return { ...state, ...action.payload };
   default:
     return state;
