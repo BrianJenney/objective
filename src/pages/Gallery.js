@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { GalleryStore } from '../contexts/GalleryContext';
+import Products from './gallery/Products';
 
-import ProductCard from './gallery/ProductCard';
+const productIds = ['5ceea2eb0023ee3bcc730cc7', '5ceebf7ea686a03bccfa67bf', '5ceec48fa686a03bccfa67c4'];
 
-class Gallery extends Component {
-  render() {
-    return (
-      <GalleryStore productIds={['5ceea2eb0023ee3bcc730cc7', '5ceebf7ea686a03bccfa67bf', '5ceec48fa686a03bccfa67c4']}>
-        <ProductCard></ProductCard>
-      </GalleryStore>
-    );
-  }
-}
+const Gallery = () => {
+  return (
+    <GalleryStore productIds={productIds}>
+      <Products></Products>
+    </GalleryStore>
+  );
+};
 
 export default Gallery;
