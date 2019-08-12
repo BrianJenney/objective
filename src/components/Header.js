@@ -112,7 +112,7 @@ const Header = () => {
             <Link color={black} component={RouterLink} to='/gallery'>Shop</Link>
           </Grid>
           <Grid item xs={1} className={classes.navBarLink}>
-            <Link color={black} component={RouterLink}>Science</Link>
+            <Link color={black} component={RouterLink} to='/'>Science</Link>
           </Grid>
         </>
       )}
