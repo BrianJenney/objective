@@ -109,10 +109,10 @@ const Header = () => {
       ) : (
         <>
           <Grid item xs={1} className={classes.navBarLink}>
-            <Link color={black}>Shop</Link>
+            <Link color={black} component={RouterLink} to='/gallery'>Shop</Link>
           </Grid>
           <Grid item xs={1} className={classes.navBarLink}>
-            <Link color={black}>Science</Link>
+            <Link color={black} component={RouterLink}>Science</Link>
           </Grid>
         </>
       )}
