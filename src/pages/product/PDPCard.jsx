@@ -26,6 +26,8 @@ export default function PDPCard(props) {
   const classes = useStyles();
   const title = <Typography gutterBottom variant="h5" component="h2"> {props.title}</Typography>;
   const body = <Typography variant="body2" component="p"> {props.body} </Typography>;
+  const icon = <CardMedia image={props.icon} />
+  console.log(icon)
 
   switch (props.cardType) {
     case 'imgcard1':
@@ -35,7 +37,7 @@ export default function PDPCard(props) {
       cardFinal = imgcard2(title, body);
       break;
     case 'imgcard3':
-      cardFinal = imgcard3(title, body);
+      cardFinal = imgcard3(title, body, icon);
       break;
     default:
       return null;

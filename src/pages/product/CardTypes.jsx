@@ -74,7 +74,7 @@ const imgcard3 = (title, body, icon) => {
 
   const Styles = makeStyles({
     media: {
-      height: 250,
+      height: 300,
     },
   });
   const classes = Styles();
@@ -83,11 +83,9 @@ const imgcard3 = (title, body, icon) => {
     <>
       <CardMedia
         className={classes.media}
-        image="https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_rubber-tree-6_hyde_blush-7_1500x.progressive.jpg?v=1564086208" />
-      {/* {icon} */}
+        image={icon.props.image} />
       <CardContent>
-        <Typography
-          align="center">
+        <Typography align="center">
           {title}
         </Typography>
       </CardContent>
