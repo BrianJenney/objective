@@ -1,7 +1,6 @@
 import React from 'react';
 import { GalleryStore } from '../../contexts/GalleryContext';
 import Slider from '../common/Slider';
-import { Carousel } from '../common';
 
 const ProductSlider = () => {
   return (
