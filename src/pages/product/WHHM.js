@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import PDPCard from './PDPCard'
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import { blue } from '@material-ui/core/colors';
 
 const Styles = makeStyles(theme => ({
   root: {
@@ -15,6 +16,7 @@ const Styles = makeStyles(theme => ({
   },
   text: {
     paddingTop: 10,
+    fontWeight: '500',
   },
 }));
 
@@ -22,28 +24,26 @@ export default function WHHM() {
   const classes = Styles();
   const border = {
     border: 1,
+    borderColor: 'red',
   };
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={6} justify="center" direction="row">
+      <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={3}>
-          <Box
-            borderColor='blue'
-            {...border}>
-            <Paper><PDPCard title='Morning, Day or Night' cardType='imgcard3' /></Paper>
+          <Box {...border}>
+            <Paper elevation={0}><PDPCard title='Morning, Day or Night' cardType='imgcard3' icon='https://www.thesill.com/products/snake-plant-zeylanica-medium-grant?variant=blush' /></Paper>
           </Box>
           <Typography
             align='center'
-            className={classes.text}>
+            className={classes.text}
+            fontWeight="fontWeightBold">
             WHEN
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Box
-            borderColor='blue'
-            {...border}>
-            <Paper><PDPCard title='Mix with 8oz of liquid' cardType='imgcard3' /></Paper>
+          <Box {...border}>
+            <Paper elevation={0}><PDPCard title='Mix with 8oz of liquid' cardType='imgcard3' /></Paper>
           </Box>
           <Typography align='center'
             className={classes.text}>
@@ -51,10 +51,8 @@ export default function WHHM() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Box
-            borderColor='blue'
-            {...border}>
-            <Paper><PDPCard title='1-2 scoops' cardType='imgcard3' /></Paper>
+          <Box {...border}>
+            <Paper elevation={0}><PDPCard title='1-2 scoops' cardType='imgcard3' /></Paper>
           </Box>
           <Typography align='center'
             className={classes.text}>
@@ -62,6 +60,6 @@ export default function WHHM() {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </div >
   );
 }

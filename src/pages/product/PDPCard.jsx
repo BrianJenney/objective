@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { imgcard1, imgcard2, imgcard3 } from './CardTypes';
+import { NONAME } from 'dns';
 
 
 const useStyles = makeStyles({
@@ -42,7 +43,7 @@ export default function PDPCard(props) {
 
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} elevation={0}>
       {cardFinal}
     </Card>
   );
