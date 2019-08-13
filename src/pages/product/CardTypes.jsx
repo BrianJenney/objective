@@ -65,5 +65,39 @@ const imgcard2 = (title, body, icon) => {
   );
 };
 
+const textOnlyCard = (title, body) => {
+  const Styles = makeStyles(theme => ({
+    card: {
+      minWidth: 275,
+      maxWidth: 565,
+      minHeight: 100,
+      display: 'block',
+      backgroundColor: theme.palette.background.paper
+    },
+    bullet: {
+      display: 'block',
+      margin: '0 2px',
+      transform: 'scale(0.8)',
+    },
+    title: {
+      fontSize: 14,
+    },
+    subtitle: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  }));
+  const classes = Styles();
 
-export { imgcard1, imgcard2 };
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        {title}
+      </CardContent>
+    </Card>
+  )
+}
+
+export { imgcard1, imgcard2, textOnlyCard };
