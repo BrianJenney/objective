@@ -1,11 +1,10 @@
-import React, { Component, useContext, useCallback } from 'react';
-import { Formik } from 'formik';
+import React, { useState, useContext, useCallback } from 'react';
 
 import ProductContext from '../../contexts/ProductContext';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from "@material-ui/core";
+import {makeStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,10 +13,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
-import {Link} from "react-router-dom";
-import Field from '../../components/form-fields/Field';
-import InputField from '../../components/form-fields/InputField';
-import * as Yup from 'yup';
+
+import { useQuantity } from '../../hooks';
 
 const useStyles = makeStyles(theme => ({
   media: {
@@ -33,6 +30,7 @@ const ProductDetail = () => {
   const handleAddToCart = useCallback(() => {
     alert(`Add to cart ${product.name} at `)
   },[]);
+  const [quantity, Quantity] = useQuantity('QTY');
   if (!product) {
     return null;
   }
@@ -59,11 +57,12 @@ const ProductDetail = () => {
               <Typography gutterBottom variant="body1">{product.description}</Typography>
               <Typography  variant="h6">${product.price.$numberDecimal} / {available} VEGGIE CAPSULES</Typography>
               <Divider variant="middle" />
+              <Quantity />
               <Divider variant="middle" />
             </CardContent>
             <CardActions>
               <Button variant="contained" color="primary" onClick={handleAddToCart}>
-                Add To Cart
+                Add {quantity} item{quantity > 1 ? 's' : ''} To Cart
               </Button>
             </CardActions>
           </Grid>
@@ -72,7 +71,7 @@ const ProductDetail = () => {
     </Container>
   );
 
-}
+};
 
 export default ProductDetail;
 
