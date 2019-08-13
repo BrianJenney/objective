@@ -12,6 +12,7 @@ import BillingAddressForm from './checkout/BillingAddress';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
+import Result from './checkout/Result';
 
 import store from '../store';
 import { requestPatchCart } from '../modules/cart/actions';
@@ -55,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Payment Details', 'Review Your Order'];
+const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Payment Details', 'Review Your Order', 'Confirmation'];
 
 function getStepContent(step, cart, formRef) {
   switch (step) {
@@ -69,6 +70,8 @@ function getStepContent(step, cart, formRef) {
     return <PaymentForm cart={cart} ref={formRef}/>;
   case 4:
     return <Review cart={cart} />;
+  case 5:
+    return <Result cart={cart} />;
   default:
     throw new Error('Unknown step');
   }
@@ -93,12 +96,11 @@ export default function Checkout(props) {
     if(activeStep == 4) {
       //We're done...place the cart onto the order exchange
       store.dispatch(requestCreateOrder(cart));
-      setActiveStep(0);
-    } else {
+    } else if(activeStep != 5) {
       // update mongo & redux
       store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
-      setActiveStep(activeStep + 1);
     }
+    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
@@ -135,19 +137,21 @@ export default function Checkout(props) {
               <React.Fragment>
                 {getStepContent(activeStep, cart, formRef)}
                 <div className={classes.buttons}>
-                  {activeStep !== 0 && (
+                  {activeStep !== 0 && activeStep != steps.length - 1 && (
                     <Button onClick={handleBack} className={classes.button}>
                       Back
                     </Button>
                   )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
+                  {activeStep != steps.length - 1 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      {activeStep === steps.length - 2 ? 'Place order' : 'Next'}
+                    </Button>
+                  )}
                 </div>
               </React.Fragment>
             )}

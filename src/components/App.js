@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from './Navbar';
+import Header from './Header';
 import Footer from './Footer';
 
 import Home from '../pages/Home';
@@ -46,6 +47,10 @@ class App extends Component {
    * @note
    *
    * The order that routes are defined matters, make sure /:page is the very last one
+   * 
+   * The Navbar needs to be removed; it will be replaced by the Header component.  
+   * I'm leaving it in for now bc it provides easy access to the cart, checkout 
+   * funnel, etc. 
    */
   render() {
     return (
@@ -56,6 +61,7 @@ class App extends Component {
             <Link to ='/'>{this.props.storefront.name}</Link>
           </div>
           <Navbar />
+          <Header />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
