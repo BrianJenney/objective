@@ -65,11 +65,11 @@ const imgcard2 = (title, body, icon) => {
   );
 };
 
-const textOnlyCard = (title, body) => {
+const textOnlyCard = (title, subhead, smallHeader1, list1, smallHeader2, list2) => {
   const Styles = makeStyles(theme => ({
     card: {
       minWidth: 275,
-      maxWidth: 565,
+      maxWidth: 569,
       minHeight: 100,
       display: 'block',
       backgroundColor: theme.palette.background.paper
@@ -95,6 +95,11 @@ const textOnlyCard = (title, body) => {
     <Card className={classes.card}>
       <CardContent>
         {title}
+        {subhead}
+        {smallHeader1}
+        {list1}
+        {smallHeader2}
+        {list2}
       </CardContent>
     </Card>
   )

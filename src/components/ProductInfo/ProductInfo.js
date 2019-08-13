@@ -7,6 +7,10 @@ import { textOnlyCard } from '../../pages/product/CardTypes';
 import PDPCard from '../../pages/product/PDPCard';
 
 const Styles = makeStyles(theme => ({
+  root: {
+    maxWidth: 1138,
+    margin: '0 auto',
+  },
   card: {
     minWidth: 275,
   },
@@ -16,12 +20,15 @@ const Styles = makeStyles(theme => ({
     transform: 'scale(0.8)',
   },
   sectionTitle: {
-    fontSize: "35px"
+    fontSize: "40px",
+    marginBottom: "70px"
   },
-  subtitle: {
+  subhead: {
     fontSize: theme.overrides.h4,
     height: "40px"
   },
+  smallHeader1: theme.typography.smallHeader,
+  smallHeader2: theme.typography.smallHeader,
   pos: {
     marginBottom: 12,
   }
@@ -36,7 +43,13 @@ const ProductInfo = (props) => {
     <div className={classes.root}>
       <Grid container spacing={0}>
         <Grid item xs={12} sm={6}>
-          <PDPCard title={title} cardType='textOnlyCard' list='img card 2 body' />
+          <PDPCard
+            title={title}
+            cardType='textOnlyCard'
+            smallHeader1="Serving"
+            list1='img card 2 body'
+            smallHeader2="Serving"
+            list2='img card 2 body'/>
         </Grid>
         <Grid item xs={12} sm={6}>
           <PDPCard title='(table)' cardType='textOnlyCard' list='img card 2 body' />

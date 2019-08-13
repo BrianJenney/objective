@@ -3,6 +3,8 @@ export const fonts = {
   bodyWeight: '400',
   header: 'Canela Text',
   caption: 'p22-underground',
+  subhead: 'p22-underground',
+  smallHeader: 'p22-underground',
   captionBook: {
     header: 'p22-underground',
     weight: 400

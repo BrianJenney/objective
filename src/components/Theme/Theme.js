@@ -5,6 +5,7 @@ import { fonts, sizes, backupFontStack } from './fonts';
 const { ...color } = colorPalette;
 
 const nxtTheme = createMuiTheme({
+  shadows: ["none"],
   breakpoints: {
     values: {
       xs: 0,
@@ -84,7 +85,7 @@ const nxtTheme = createMuiTheme({
     },
     subtitle1: {
       // subhead S1
-      fontFamily: `${fonts.caption}, ${backupFontStack.sans}`,
+      fontFamily: `${fonts.subhead}, ${backupFontStack.sans}`,
       fontSize: sizes.subhead,
       fontWeight: 400,
       lineHeight: '1.4375rem'
@@ -114,6 +115,12 @@ const nxtTheme = createMuiTheme({
       lineHeight: '2.5rem',
       fontWeight: `${fonts.captionHeavy.weight}`,
       textTransform: 'uppercase'
+    },
+    smallHeader: {
+      fontFamily: `${fonts.smallHeader}, ${backupFontStack.sans}`,
+      fontSize: sizes.htmlFontSize,
+      fontWeight: 400,
+      lineHeight: '0.9375rem'
     },
     button: {
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
