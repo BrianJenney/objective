@@ -2,7 +2,6 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import StarIcon from './StarIcon';
-import { positions } from '@material-ui/system';
 
 const useStyles = makeStyles({
   root: {

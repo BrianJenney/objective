@@ -8,4 +8,5 @@ export { default as MenuLink } from './MenuLink';
 export { ArrowLeft, ArrowRight } from './Navigation';
 export { default as NavLink } from './NavLink';
 export { default as Popover } from './Popover';
+export { default as Slider} from './Slider'
 export { default as TemporaryDrawer } from './TemporaryDrawer';

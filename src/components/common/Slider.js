@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import GalleryContext from '../../../contexts/GalleryContext';
+import GalleryContext from '../../contexts/GalleryContext';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
@@ -9,7 +9,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import BestSeller from './BestSeller';
+import BestSeller from '../ProductSlider/BestSeller';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -47,14 +47,9 @@ const Slider = () => {
   const renderProducts = id => Object.values(productContext)
     .map(products => products.map(product => {
       const { assets, name, _id } = product
-      console.log(
-        "assets ====> ", assets,
-        "name ====> ", name,
-        "_id ====> ", _id
-      )
       const maxSteps = Object.keys(assets).length
-      // for each value in key under the asset key render a card
       const imgUrl = Object.values(assets).map(item => item)
+
         return (
           id === _id ?
             <>
