@@ -7,6 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { green } from '@material-ui/core/colors';
+import Box from '@material-ui/core/Box';
+import { borderLeft } from '@material-ui/system';
 
 
 
@@ -38,6 +41,7 @@ const imgcard1 = (title, body) => {
   );
 };
 
+
 const imgcard2 = (title, body, icon) => {
 
   const Styles = makeStyles({
@@ -66,4 +70,30 @@ const imgcard2 = (title, body, icon) => {
 };
 
 
-export { imgcard1, imgcard2 };
+const imgcard3 = (title, body, icon) => {
+
+  const Styles = makeStyles({
+    media: {
+      height: 140,
+    },
+  });
+  const classes = Styles();
+
+  return (
+    <>
+      <CardMedia
+        className={classes.media}
+        image="https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_rubber-tree-6_hyde_blush-7_1500x.progressive.jpg?v=1564086208" />
+      {/* {icon} */}
+      <CardContent>
+        <Typography
+          align="center">
+          {body}
+        </Typography>
+      </CardContent>
+    </>
+
+  );
+};
+
+export { imgcard1, imgcard2, imgcard3 };
