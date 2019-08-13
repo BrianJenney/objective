@@ -18,6 +18,10 @@ const Styles = makeStyles(theme => ({
     paddingTop: 10,
     fontWeight: '500',
   },
+  title: {
+    paddingBottom: 30,
+    fontWeight: '500'
+  },
 }));
 
 export default function WHHM() {
@@ -29,6 +33,9 @@ export default function WHHM() {
 
   return (
     <div className={classes.root}>
+      <Typography className={classes.title} align='center'>
+        LOREM IPSUM COMPLIANCE
+      </Typography>
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={3}>
           <Box {...border}>
