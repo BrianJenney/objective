@@ -74,7 +74,7 @@ const imgcard3 = (title, body, icon) => {
 
   const Styles = makeStyles({
     media: {
-      height: 140,
+      height: 250,
     },
   });
   const classes = Styles();
@@ -88,7 +88,7 @@ const imgcard3 = (title, body, icon) => {
       <CardContent>
         <Typography
           align="center">
-          {body}
+          {title}
         </Typography>
       </CardContent>
     </>

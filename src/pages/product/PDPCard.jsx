@@ -43,9 +43,7 @@ export default function PDPCard(props) {
 
   return (
     <Card className={classes.card}>
-      <CardActionArea>
-        {cardFinal}
-      </CardActionArea>
+      {cardFinal}
     </Card>
   );
 }
