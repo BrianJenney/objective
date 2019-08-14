@@ -39,7 +39,7 @@ export default function WHHM() {
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={3}>
           <Box {...border}>
-            <Paper elevation={0}><PDPCard title='Morning, Day or Night' cardType='imgcard3' icon='https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_snake-zeylanica-6_grant_blush-7_1500x.progressive.jpg?v=1564590364' /></Paper>
+            <PDPCard title="Morning, Day or Night" bottomBg="green" cardType='imgcard3' icon='https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_snake-zeylanica-6_grant_blush-7_1500x.progressive.jpg?v=1564590364' />
           </Box>
           <Typography
             align='center'

@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,10 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { green } from '@material-ui/core/colors';
-import Box from '@material-ui/core/Box';
 import { borderLeft } from '@material-ui/system';
-
-
 
 
 const imgcard1 = (title, body) => {
@@ -70,7 +69,7 @@ const imgcard2 = (title, body, icon) => {
 };
 
 
-const imgcard3 = (title, body, icon) => {
+const Imgcard3 = ({ title, body, icon, bottomBg }) => {
 
   const Styles = makeStyles({
     media: {
@@ -84,14 +83,20 @@ const imgcard3 = (title, body, icon) => {
       <CardMedia
         className={classes.media}
         image={icon.props.image} />
-      <CardContent>
+      <Box bgcolor={bottomBg} px={4} py={2} height={80} display="flex" alignItems="center" justifyContent="center">
         <Typography align="center">
           {title}
         </Typography>
-      </CardContent>
+      </Box>
     </>
-
   );
 };
 
-export { imgcard1, imgcard2, imgcard3 };
+Imgcard3.propTypes = {
+  title: PropTypes.string,
+  body: PropTypes.node,
+  icon: PropTypes.node,
+  bottomBg: PropTypes.string
+};
+
+export { imgcard1, imgcard2, Imgcard3 };
