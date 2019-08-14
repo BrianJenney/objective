@@ -73,100 +73,84 @@ const Footer = () => {
       {xs ? (
         <Box className={classes.container}>
           <Grid container spacing={0}>
-            <Grid item xs={11}>
-              <Box className={classes.footerBoxTop}>
-                <Link color={offWhite} component={RouterLink} to='/gallery'>
-                  Shop
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={4}>
               <Box fontSize={11} className={classes.footerBoxTop}>
                 TH Logo
               </Box>
             </Grid>
-
-            <Grid item xs={12} className={classes.footerBoxMid}>
-              About
+            <Grid item xs={8}>
+              <Box fontSize={11} className={classes.footerBoxTop}>
+                Copyright 2019
+              </Box>
             </Grid>
-            <Grid item xs={11} className={classes.footerBoxMid}>
+
+            <Grid item xs={6} className={classes.footerBoxMid}>
               <Grid container spacing={0}>
-                <Grid item xs={5}>
+                <Grid item xs={12}>
+                  About
+                </Grid>
+                <Grid item xs={12} className={classes.aboutLink}>
                   <Box fontSize={11} className={classes.aboutLink}>
                     <Link
                       color={offWhite}
                       component={RouterLink}
-                      to='/ourstory'
+                      to="/ourstory"
                     >
                       Our Story
                     </Link>
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Box fontSize={11} className={classes.aboutLink}>
                     <Link
                       color={offWhite}
                       component={RouterLink}
-                      to='/shipping'
-                    >
-                      Shipping &amp; Returns
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={5}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link
-                      color={offWhite}
-                      component={RouterLink}
-                      to='/ingredients'
+                      to="/ingredients"
                     >
                       Ingredients
                     </Link>
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to='/account'>
-                      My Account
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={5}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to='/faqs'>
-                      FAQs
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link
-                      color={offWhite}
-                      component={RouterLink}
-                      to='/ordertracking'
-                    >
-                      Track an Order
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={5}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to='/contact'>
-                      Contact Us
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to='/careers'>
-                      Careers
+                    <Link color={offWhite} component={RouterLink} to="/journal">
+                      Read Our Journal
                     </Link>
                   </Box>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={1} className={classes.footerBoxMid}>
-              <div style={{ transform: 'rotate(90deg)' }}>Copyright 2019</div>
+            <Grid item xs={6} className={classes.footerBoxMid}>
+              <Grid container spacing={0}>
+                <Grid item xs={12}>
+                  Shop
+                </Grid>
+                <Grid item xs={12}>
+                  <Box fontSize={11} className={classes.aboutLink}>
+                    <Link color={offWhite} component={RouterLink} to="/faqs">
+                      FAQs
+                    </Link>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box fontSize={11} className={classes.aboutLink}>
+                    <Link
+                      color={offWhite}
+                      component={RouterLink}
+                      to="/ordertracking"
+                    >
+                      Account &amp; Orders
+                    </Link>
+                  </Box>
+                </Grid>
+                <Grid item xs={5}>
+                  <Box fontSize={11} className={classes.aboutLink}>
+                    <Link color={offWhite} component={RouterLink} to="/contact">
+                      Contact Us
+                    </Link>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
 
             <Grid item xs={12} className={classes.emailBox}>
@@ -174,19 +158,19 @@ const Footer = () => {
             </Grid>
 
             <Grid item xs={4} className={classes.socialBox}>
-              <Link color={offWhite} href=''>
+              <Link color={offWhite} href="">
                 IG Icon
               </Link>
             </Grid>
             <Grid item xs={4} className={classes.socialBox}>
-              <Link color={offWhite} href=''>
+              <Link color={offWhite} href="">
                 TW Icon
               </Link>
             </Grid>
             <Grid item xs={4} className={classes.socialBox}>
               <Link
                 color={offWhite}
-                href='https://www.facebook.com/truehealthsupplements'
+                href="https://www.facebook.com/truehealthsupplements"
               >
                 FB Icon
               </Link>
@@ -200,14 +184,14 @@ const Footer = () => {
 
             <Grid item xs={6}>
               <Box fontSize={9} className={classes.legalBox}>
-                <Link color={offWhite} to='/pricavypolicy'>
+                <Link color={offWhite} to="/pricavypolicy">
                   Privacy Policy
                 </Link>
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box fontSize={9} className={classes.legalBox}>
-                <Link color={offWhite} to='/terms'>
+                <Link color={offWhite} to="/terms">
                   Terms of use
                 </Link>
               </Box>
