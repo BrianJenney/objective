@@ -1,5 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { colorPalette } from './color-palette';
+import { fonts, sizes, backupFontStack } from './fonts';
 
 const { ...color } = colorPalette;
 

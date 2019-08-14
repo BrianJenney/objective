@@ -44,59 +44,63 @@ const Slider = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   // pass id to renderProducts function and render related product
-  const renderProducts = id => Object.values(productContext)
-    .map(products => products.map(product => {
-      const { assets, name, _id } = product
-      const maxSteps = Object.keys(assets).length
-      const imgUrl = Object.values(assets).map(item => item)
+  const transformProduct = (id, product) => {
+    const { assets, name, _id } = product
+    const maxSteps = Object.keys(assets).length
+    const imgUrl = Object.values(assets)
 
-        return (
-          id === _id ?
-            <>
-              <BestSeller />
-              <AutoPlaySwipeableViews
-              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-              index={activeStep}
-              onChangeIndex={handleStepChange}
-              enableMouseEvents
-            >
-              {Object.keys(assets).map((step, index) => (
-                <div key={step.label}>
-                  {Math.abs(activeStep - index) <= 2 ? (
-              <Card>
-                <CardMedia
-                  key={`${_id}`}
-                  style={{ height: 355, width: 200, margin: '20px 90px' }}
-                  image={imgUrl[activeStep]}
-                  title={name}
-                />
-              </Card>
-                  ) : null}
-                </div>
-              ))}
-            </AutoPlaySwipeableViews>
-              <MobileStepper
-                steps={maxSteps}
-                position="static"
-                variant="text"
-                activeStep={activeStep}
-                nextButton={
-                  <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                    Next
+    if (id !== _id) {
+      return null;
+    }
+
+    return (
+      <>
+        <BestSeller />
+        <AutoPlaySwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+        >
+          {Object.keys(assets).map((step, index) => (
+            <div key={step.label}>
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Card>
+                  <CardMedia
+                    key={`${_id}`}
+                    style={{ height: 355, width: 200, margin: '20px 90px' }}
+                    image={imgUrl[activeStep]}
+                    title={name}
+                  />
+                </Card>
+              ) : null}
+            </div>
+          ))}
+        </AutoPlaySwipeableViews>
+        <MobileStepper
+          steps={maxSteps}
+          position="static"
+          variant="text"
+          activeStep={activeStep}
+          nextButton={
+            <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+              Next
                     {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </Button>
+          }
+          backButton={
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+              Back
                   </Button>
-                }
-                backButton={
-                  <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                    {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                    Back
-                  </Button>
-                }
-              />
-            </> :
-            <div></div>
-        )
-      })
+          }
+        />
+      </>
+    )
+  };
+
+  const renderProducts = id => Object.values(productContext)
+    .map(products => products.map(product => transformProduct(id, product))
     )
   //
   const handleNext = () => {
