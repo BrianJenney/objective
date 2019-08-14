@@ -11,6 +11,8 @@ import Static from '../pages/Static';
 import Gallery from '../pages/Gallery';
 import Cart from '../pages/Cart';
 import Account from '../pages/Account';
+import ManageProfile from '../pages/account/ManageProfile';
+import ManageAddresses from '../pages/account/ManageAddresses';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
 import Product from '../pages/Product';
@@ -53,7 +55,7 @@ class App extends Component {
         <CssBaseline />
         <BrowserRouter>
           <div>
-            <Link to ='/'>{this.props.storefront.name}</Link>
+            <Link to="/">{this.props.storefront.name}</Link>
           </div>
           <Navbar />
           <Switch>
@@ -63,12 +65,14 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/account" component={Account} />
+            <Route path="/manage-profile" component={ManageProfile} />
+            <Route path="/manage-addresses" component={ManageAddresses} />
             <Route path="/product/:id" component={Product} />
             <Route path="/:page" component={Static} />
           </Switch>
           <Footer />
         </BrowserRouter>
-      </React.Fragment> 
+      </React.Fragment>
     );
   }
 }
@@ -87,4 +91,7 @@ const mapDispatchToProps = {
   requestCreateCart
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
