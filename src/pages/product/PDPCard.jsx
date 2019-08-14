@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function PDPCard({ title, body, icon, cardType, bottomBg }) {
+export default function PDPCard({ title, body, icon, cardType, bottomColor, textColor }) {
 
   let cardFinal = '';
   const classes = useStyles();
@@ -36,7 +36,7 @@ export default function PDPCard({ title, body, icon, cardType, bottomBg }) {
       cardFinal = imgcard2(titleContent, bodyContent);
       break;
     case 'imgcard3':
-      cardFinal = <Imgcard3 title={titleContent} body={bodyContent} icon={iconContent} bottomBg={bottomBg} />;
+      cardFinal = <Imgcard3 title={titleContent} body={bodyContent} icon={iconContent} bottomColor={bottomColor} textColor={textColor} />;
       break;
     default:
       return null;

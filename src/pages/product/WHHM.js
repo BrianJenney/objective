@@ -20,7 +20,8 @@ const Styles = makeStyles(theme => ({
   },
   title: {
     paddingBottom: 30,
-    fontWeight: '500'
+    fontWeight: '500',
+    fontSize: 20,
   },
 }));
 
@@ -28,7 +29,7 @@ export default function WHHM() {
   const classes = Styles();
   const border = {
     border: 1,
-    borderColor: 'red',
+    borderColor: '#003833',
   };
 
   return (
@@ -39,12 +40,11 @@ export default function WHHM() {
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={3}>
           <Box {...border}>
-            <PDPCard title="Morning, Day or Night" bottomBg="green" cardType='imgcard3' icon='https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_snake-zeylanica-6_grant_blush-7_1500x.progressive.jpg?v=1564590364' />
+            <PDPCard title="Morning, Day or Night" bottomColor="#003833" textColor="white" cardType="imgcard3" icon="https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_snake-zeylanica-6_grant_blush-7_1500x.progressive.jpg?v=1564590364" />
           </Box>
           <Typography
             align='center'
-            className={classes.text}
-            fontWeight="fontWeightBold">
+            className={classes.text}>
             WHEN
           </Typography>
         </Grid>

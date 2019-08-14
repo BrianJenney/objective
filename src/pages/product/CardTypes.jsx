@@ -69,7 +69,7 @@ const imgcard2 = (title, body, icon) => {
 };
 
 
-const Imgcard3 = ({ title, body, icon, bottomBg }) => {
+const Imgcard3 = ({ title, body, icon, bottomColor, textColor }) => {
 
   const Styles = makeStyles({
     media: {
@@ -83,7 +83,7 @@ const Imgcard3 = ({ title, body, icon, bottomBg }) => {
       <CardMedia
         className={classes.media}
         image={icon.props.image} />
-      <Box bgcolor={bottomBg} px={4} py={2} height={80} display="flex" alignItems="center" justifyContent="center">
+      <Box bgcolor={bottomColor} color={textColor} px={4} py={2} height={80} display="flex" alignItems="center" justifyContent="center">
         <Typography align="center">
           {title}
         </Typography>
@@ -96,7 +96,8 @@ Imgcard3.propTypes = {
   title: PropTypes.string,
   body: PropTypes.node,
   icon: PropTypes.node,
-  bottomBg: PropTypes.string
+  bottomColor: PropTypes.string,
+  textColor: PropTypes.string
 };
 
 export { imgcard1, imgcard2, Imgcard3 };
