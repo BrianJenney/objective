@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useContext, useCallback } from 'react';
 
 import ProductContext from '../../contexts/ProductContext';
 
@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
@@ -25,16 +24,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductDetail = () => {
+  const available = 20;
   const classes = useStyles();
   const { product } = useContext(ProductContext);
   const handleAddToCart = useCallback(() => {
     alert(`Add to cart ${product.name} at `)
-  },[]);
-  const [quantity, Quantity] = useQuantity('QTY');
+  },[product]);
+  const [quantity, Quantity] = useQuantity('QTY', 1, available);
   if (!product) {
     return null;
   }
-  const available = 60;
   const subtitle = 'COMPLETE PLAN PROTEIN + PROBIOTICS';
 
   return (
@@ -50,18 +49,23 @@ const ProductDetail = () => {
           </Grid>
           <Grid item item xs={12} sm={4} md={8}>
             <CardContent>
-              <Typography gutterBottom variant="h3" align="center">{product.name}</Typography>
-              <Divider variant="middle" />
+              <Typography gutterBottom variant="h4" align="center">{product.name}</Typography>
+              <Divider variant="fullWidth" />
               <Typography variant="h6" align="center">{subtitle}</Typography>
-              <Divider variant="middle" />
-              <Typography gutterBottom variant="body1">{product.description}</Typography>
-              <Typography  variant="h6">${product.price.$numberDecimal} / {available} VEGGIE CAPSULES</Typography>
-              <Divider variant="middle" />
+              <Divider variant="fullWidth" />
+              <br />
+              <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
+              <br/>
+              <Typography  variant="body2"><strong>${product.price.$numberDecimal}</strong> / {available} VEGGIE CAPSULES</Typography>
+              <br/>
+              <Divider variant="fullWidth" />
+              <br/>
               <Quantity />
-              <Divider variant="middle" />
+              <br/>
+              <Divider variant="fullWidth" />
             </CardContent>
             <CardActions>
-              <Button variant="contained" color="primary" onClick={handleAddToCart}>
+              <Button variant="outlined" color="primary" onClick={handleAddToCart}>
                 Add {quantity} item{quantity > 1 ? 's' : ''} To Cart
               </Button>
             </CardActions>
