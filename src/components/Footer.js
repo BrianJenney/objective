@@ -45,6 +45,10 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'uppercase',
     whiteSpace: 'nowrap'
   },
+  promiseSection: {
+    background: offWhite,
+    textAlign: 'center'
+  },
   socialBox: {
     background: black,
     border: '1px solid ' + offWhite,
@@ -73,6 +77,19 @@ const Footer = () => {
       {xs ? (
         <Box className={classes.container}>
           <Grid container spacing={0}>
+            <Grid item xs={12} className={classes.promiseSection}>
+              Diamond TH Logo Here
+            </Grid>
+            <Grid item xs={12} className={classes.promiseSection}>
+              The True Health Promise
+            </Grid>
+            <Grid item xs={12} className={classes.promiseSection}>
+              TH Promse text goes here. Brunch church-key reclette chartreuse
+              poke, XOXO next level shaman hot chicken sustainable vegan yr
+              jianbing affogato. Hot chicken Schlitz squad, migas single-origin
+              single-origin coffee chambray umami raclette.
+            </Grid>
+
             <Grid item xs={4}>
               <Box fontSize={11} className={classes.footerBoxTop}>
                 TH Logo
