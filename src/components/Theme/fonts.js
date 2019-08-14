@@ -26,6 +26,7 @@ export const backupFontStack = {
 export const sizes = {
   h1: '2.75rem',
   h2: '1.625rem',
+  fineprint: '12px',
   title: '1rem',
   subhead: '1rem',
   body: '1rem',

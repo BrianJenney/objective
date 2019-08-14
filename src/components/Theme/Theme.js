@@ -120,7 +120,8 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.smallHeader}, ${backupFontStack.sans}`,
       fontSize: sizes.htmlFontSize,
       fontWeight: 400,
-      lineHeight: '0.9375rem'
+      lineHeight: '0.9375rem',
+      textTransform: 'uppercase'
     },
     button: {
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
@@ -139,6 +140,12 @@ const nxtTheme = createMuiTheme({
       fontSize: sizes.bodyLg,
       fontWeight: `${fonts.bodyWeight}`,
       lineHeight: '2.125rem'
+    },
+    fineprint: {
+      fontFamily: `${fonts.captionBook.header}, ${backupFontStack.sans}`,
+      fontSize: sizes.fineprint,
+      lineHeight: '.5rem',
+      fontWeight: `${fonts.captionBook.weight}`,
     }
   },
   overrides: {},
