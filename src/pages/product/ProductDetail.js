@@ -40,20 +40,20 @@ const ProductDetail = () => {
     <Container>
       <Card >
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={4} md={4}>
+          <Grid item xs={12} sm={4} md={4} alignItems="center">
             <CardMedia
               className={classes.media}
               image={product.assets.imgs}
               title={product.name}
             />
           </Grid>
-          <Grid item item xs={12} sm={4} md={8}>
+          <Grid item item xs={12} sm={8} md={8}>
             <CardContent>
               <Typography gutterBottom variant="h4" align="center">{product.name}</Typography>
               <Divider variant="fullWidth" />
               <Typography variant="h6" align="center">{subtitle}</Typography>
               <Divider variant="fullWidth" />
-              <br />
+              <br/>
               <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
               <br/>
               <Typography  variant="body2"><strong>${product.price.$numberDecimal}</strong> / {available} VEGGIE CAPSULES</Typography>
