@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { ProductStore } from '../contexts/ProductContext';
 
-import ProductHeader from './product/ProductHeader';
-import VariantSelectionForm from './product/VariantSelectionForm';
-import TabSection from './product/TabSection';
+import ProductDetail from './product/ProductDetail';
 
-class Product extends Component {
-  render() {
-    return (
-      <ProductStore productId={this.props.match.params.id}>
-        <ProductHeader />
-        <VariantSelectionForm />
-        <TabSection />
-      </ProductStore>
-    );
-  }
-}
+const Product = ({ match }) => {
+  const productId = match.params.id;
+
+  return (
+    <ProductStore productId={productId}>
+      <ProductDetail />
+    </ProductStore>
+  );
+};
 
 export default Product;
