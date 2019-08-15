@@ -35,12 +35,6 @@ const INITIAL_VALUES = {
 };
 
 class ManageProfile extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   componentDidMount() {
     this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
     console.log('******************MOUNTED****************************');

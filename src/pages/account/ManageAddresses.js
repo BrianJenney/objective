@@ -40,12 +40,6 @@ const INITIAL_VALUES = {
 };
 
 class ManageProfile extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   componentDidMount() {
     this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
     console.log('******************MOUNTED****************************');
@@ -73,15 +67,6 @@ class ManageProfile extends React.Component {
       }
     };
     store.dispatch(requestPatchAccount(user._id, omit(payload)));
-  };
-
-  handleInputChange = event => {
-    const {
-      target: { name, value }
-    } = event;
-    this.setState({
-      [name]: value
-    });
   };
 
   render() {
