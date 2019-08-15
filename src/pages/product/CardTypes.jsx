@@ -1,15 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-
-
-
+import PropTypes from 'prop-types';
 
 const imgcard1 = (title, body) => {
 
@@ -65,7 +59,7 @@ const imgcard2 = (title, body, icon) => {
   );
 };
 
-const textOnlyCard = (cardType, title, smallHeader1, list1, smallHeader2, list2, fineprint, bulletedList) => {
+const textOnlyCard = (title, body, smallHeader1, list1, smallHeader2, list2, fineprint, bulletedList) => {
   const Styles = makeStyles(theme => ({
     card: {
       minWidth: 275,
@@ -94,17 +88,29 @@ const textOnlyCard = (cardType, title, smallHeader1, list1, smallHeader2, list2,
   return (
     <Card className={classes.card}>
       <CardContent>
-        {title ? title : null}
+        {title}
+        {body}
         {smallHeader1}
         {list1}
         {bulletedList ? bulletedList : null}
-        {smallHeader2 ? smallHeader2 : null}
-        {list2 ? list2 : null}
-        {fineprint ? fineprint : null}
+        {smallHeader2}
+        {list2}
+        {fineprint}
       </CardContent>
     </Card>
   )
 }
+
+textOnlyCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string,
+  smallHeader1: PropTypes.node,
+  list1: PropTypes.node,
+  bulletedList: PropTypes.string,
+  smallHeader2: PropTypes.string,
+  list2: PropTypes.string,
+  fineprint: PropTypes.string,
+};
 
 const tableOnlyCard = (table) => {
   const Styles = makeStyles(theme => ({
@@ -133,5 +139,9 @@ const tableOnlyCard = (table) => {
     </Card>
   )
 }
+
+tableOnlyCard.propTypes = {
+  table: PropTypes.element.isRequired
+};
 
 export { imgcard1, imgcard2, textOnlyCard, tableOnlyCard };

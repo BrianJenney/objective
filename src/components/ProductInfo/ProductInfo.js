@@ -1,9 +1,7 @@
 import React from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { textOnlyCard } from '../../pages/product/CardTypes';
+  import Typography from '@material-ui/core/Typography';
 import ListItemText from '@material-ui/core/ListItemText';
 import PDPCard from '../../pages/product/PDPCard';
 import PDPTable from './ProductTable';
@@ -23,7 +21,8 @@ const Styles = makeStyles(theme => ({
   },
   sectionTitle: {
     fontSize: "40px",
-    marginBottom: "70px"
+    marginBottom: "70px",
+    marginTop: 100
   },
   subhead: {
     fontSize: theme.overrides.h4,
@@ -92,7 +91,8 @@ const ProductInfo = (props) => {
             list1={serving}
             smallHeader2="directions"
             list2={directions}
-            fineprint={fineprint}/>
+            fineprint={fineprint}
+            className={classes.pushDown}/>
         </Grid>
         <Grid item xs={12} sm={6}>
           <PDPCard

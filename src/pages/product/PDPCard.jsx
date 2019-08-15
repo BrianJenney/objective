@@ -16,26 +16,28 @@ const useStyles = makeStyles(theme => ({
   smallHeader1: theme.typography.smallHeader,
   smallHeader2: theme.typography.smallHeader,
   fineprint: theme.typography.fineprint,
-  bulletedList: {
-    listStyleType: 'circle'
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
   },
 }));
 
 
 
 export default function PDPCard(props) {
-  const { cardType, className} = props
-  let cardFinal = '';
   const classes = useStyles();
+  const { cardType } = props
+  let cardFinal = '';
   const title = <Typography gutterBottom variant="h5" component="h2"> {props.title}</Typography>;
   const body = <Typography variant="body2" color="textPrimary" component="p"> {props.body} </Typography>;
   const subhead = <Typography gutterBottom variant="h5" component="h2"> {props.subhead}</Typography>;
   const smallHeader1 = <Typography className={classes.smallHeader1} gutterBottom component="p"> {props.smallHeader1}</Typography>;
   const smallHeader2 = <Typography className={classes.smallHeader2} gutterBottom component="p"> {props.smallHeader2}</Typography>;
-  const bulletedList = <List gutterBottom><ListItemIcon><ListItem><ListItemText>{props.bulletedList}</ListItemText></ListItem></ListItemIcon></List>;
-  const list1 = <List gutterBottom component="li"><ListItem><ListItemText>{props.list1}</ListItemText></ListItem></List>;
-  const list2 = <List gutterBottom component="li"><ListItem><ListItemText>{props.list2}</ListItemText></ListItem></List>;
-  const fineprint = <List gutterBottom variant="fineprint" className={classes.fineprint}><ListItem><ListItemText>{props.fineprint}</ListItemText></ListItem></List>;
+  const bulletedList = <List component="li"><ListItemIcon><ListItem><ListItemText>{props.bulletedList}</ListItemText></ListItem></ListItemIcon></List>;
+  const list1 = <List><ListItem component="li"><ListItemText>{props.list1}</ListItemText></ListItem></List>;
+  const list2 = <List><ListItem component="li"><ListItemText>{props.list2}</ListItemText></ListItem></List>;
+  const fineprint = <List gutterBottom variant="fineprint" className={classes.fineprint}><ListItemText>{props.fineprint}</ListItemText></List>;
   const table = <PDPTable />;
 
   switch (cardType) {
@@ -46,7 +48,7 @@ export default function PDPCard(props) {
       cardFinal = imgcard2(title, body);
       break;
     case 'textOnlyCard':
-      cardFinal = textOnlyCard(cardType, title, smallHeader1, list1, smallHeader2, list2, fineprint, bulletedList);
+      cardFinal = textOnlyCard(title, body, smallHeader1, list1, smallHeader2, list2, fineprint, bulletedList);
       break;
     case 'tableOnlyCard':
       cardFinal = tableOnlyCard(table);
@@ -56,9 +58,7 @@ export default function PDPCard(props) {
 
   return (
     <Card className={classes.card}>
-      <CardActionArea>
         {cardFinal}
-      </CardActionArea>
     </Card>
   );
 }
