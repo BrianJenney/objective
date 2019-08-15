@@ -1,11 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import {
-  requestFetchAccount,
-  requestPatchAccount
-} from '../../modules/account/actions';
-import store from '../../store';
+import { Formik, Field, Form } from 'formik';
+import { object, string } from 'yup';
+import { omit } from 'lodash';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
@@ -14,13 +11,32 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {
+  requestFetchAccount,
+  requestPatchAccount
+} from '../../modules/account/actions';
+import store from '../../store';
+import { InputField } from '../../components/form-fields';
 
 const pStyle = {
   padding: 20,
   textAlign: 'center'
 };
-const inputStyle = {
-  margin: 20
+const schema = object().shape({
+  address1: string(),
+  address2: string(),
+  city: string(),
+  state: string(),
+  zipcode: string(),
+  country: string()
+});
+const INITIAL_VALUES = {
+  address1: '',
+  address2: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  country: ''
 };
 
 class ManageProfile extends React.Component {
@@ -35,20 +51,28 @@ class ManageProfile extends React.Component {
     console.log('******************MOUNTED****************************');
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    let user = this.props.account;
-    let patches = {
+  renderForm = () => {
+    return (
+      <Form>
+        <Field label="Address" name="address1" component={InputField} />
+        <Field label="Address 2" name="address2" component={InputField} />
+        <Field label="City" name="city" component={InputField} />
+        <Field label="State" name="state" component={InputField} />
+        <Field label="Zipcode" name="zipcode" component={InputField} />
+        <Field label="Country" name="country" component={InputField} />
+        <Button type="submit">Submit</Button>
+      </Form>
+    );
+  };
+
+  handleSubmit = values => {
+    const { account: user } = this.props;
+    const payload = {
       defaultAddress: {
-        address1: this.state.address1,
-        address2: this.state.address2,
-        city: this.state.city,
-        state: this.state.state,
-        zipcode: this.state.zipcode,
-        country: this.state.country
+        ...values
       }
     };
-    store.dispatch(requestPatchAccount(user._id, patches));
+    store.dispatch(requestPatchAccount(user._id, omit(payload)));
   };
 
   handleInputChange = event => {
@@ -61,11 +85,11 @@ class ManageProfile extends React.Component {
   };
 
   render() {
-    if (!this.props.account.contactPreferences) {
+    const { account: user } = this.props;
+
+    if (!user.contactPreferences) {
       return <div>No Account</div>;
     }
-
-    let user = this.props.account;
 
     return (
       <Container>
@@ -75,104 +99,40 @@ class ManageProfile extends React.Component {
         <Link variant="button" color="textPrimary">
           <RouterLink to="/account">Back</RouterLink>
         </Link>
-        <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <Paper style={pStyle}>
-                <Typography variant="h6" gutterBottom>
-                  Address
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {user.defaultAddress.address1}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {user.defaultAddress.address2}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {user.defaultAddress.city}, {user.defaultAddress.state}
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {user.defaultAddress.zipcode} {user.defaultAddress.country}
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper style={pStyle}>
-                <Typography variant="h3" gutterBottom>
-                  Edit Default Address Here
-                </Typography>
-                <TextField
-                  id="outlined-name"
-                  label="Address"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="address1"
-                  value={this.state.address1}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Address 2"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="address2"
-                  value={this.state.address2}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="City"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="city"
-                  value={this.state.city}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="State"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="state"
-                  value={this.state.state}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Zip Code"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="zipcode"
-                  value={this.state.zipcode}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Country"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="country"
-                  value={this.state.country}
-                  onChange={this.handleInputChange}
-                />
-                <Button
-                  href="#"
-                  color="primary"
-                  variant="outlined"
-                  onClick={this.handleSubmit}
-                >
-                  Submit
-                </Button>
-              </Paper>
-            </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <Paper style={pStyle}>
+              <Typography variant="h6" gutterBottom>
+                Address
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {user.defaultAddress.address1}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {user.defaultAddress.address2}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {user.defaultAddress.city}, {user.defaultAddress.state}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {user.defaultAddress.zipcode} {user.defaultAddress.country}
+              </Typography>
+            </Paper>
           </Grid>
-        </form>
+          <Grid item xs={6}>
+            <Paper style={pStyle}>
+              <Typography variant="h3" gutterBottom>
+                Edit Default Address Here
+              </Typography>
+              <Formik
+                initialValues={INITIAL_VALUES}
+                onSubmit={this.handleSubmit}
+                validationSchema={schema}
+                render={this.renderForm}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
