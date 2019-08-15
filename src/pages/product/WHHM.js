@@ -40,27 +40,18 @@ export default function WHHM() {
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={3}>
           <Box {...border}>
-            <PDPCard title="Morning, Day or Night" bottomColor="#003833" textColor="white" cardType="imgcard3" body="TEST" icon="https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_snake-zeylanica-6_grant_blush-7_1500x.progressive.jpg?v=1564590364" />
+            <PDPCard title="Morning, Day or Night" bottomColor="#003833" textColor="white" cardType="imgcard3" label="WHEN" icon="https://cdn0.iconfinder.com/data/icons/tiny-icons-1/100/tiny-16-512.png" />
           </Box>
-
         </Grid>
         <Grid item xs={12} sm={3}>
           <Box {...border}>
-            <Paper elevation={0}><PDPCard title='Mix with 8oz of liquid' bottomColor="#003833" textColor="white" cardType='imgcard3' icon='https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_calathea-pinstripe_grant_mustard-4_1500x.progressive.jpg?v=1565258513' /></Paper>
+            <Paper elevation={0}><PDPCard title='Mix with 8oz of liquid' bottomColor="#003833" textColor="white" cardType='imgcard3' label="HOW" icon="https://cdn0.iconfinder.com/data/icons/tiny-icons-1/100/tiny-45-512.png" /></Paper>
           </Box>
-          <Typography align='center'
-            className={classes.text}>
-            HOW
-          </Typography>
         </Grid>
         <Grid item xs={12} sm={3}>
           <Box {...border}>
-            <Paper elevation={0}><PDPCard title='1-2 scoops' bottomColor="#003833" textColor="white" cardType='imgcard3' icon='https://cdn.shopify.com/s/files/1/0150/6262/products/the-sill_potted-plant_fiddle-leaf-fig-6_hyde_black-7_1500x.progressive.jpg?v=1564653394' /></Paper>
+            <Paper elevation={0}><PDPCard title='1-2 scoops' bottomColor="#003833" textColor="white" cardType='imgcard3' label="HOW MUCH" icon="https://cdn0.iconfinder.com/data/icons/tiny-icons-1/100/tiny-17-512.png" /></Paper>
           </Box>
-          <Typography align='center'
-            className={classes.text}>
-            HOW MUCH
-          </Typography>
         </Grid>
       </Grid>
     </div >
