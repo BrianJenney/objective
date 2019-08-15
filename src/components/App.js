@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import Navbar from './Navbar';
 import Header from './Header';
 import Footer from './Footer';
-
 import Home from '../pages/Home';
 import Static from '../pages/Static';
 import Gallery from '../pages/Gallery';
@@ -18,6 +16,7 @@ import Product from '../pages/Product';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
+import ProductSlider from './ProductSlider/';
 
 const localStorageClient = require('store');
 //localStorageClient.clearAll();  //Uncomment this to force creation of a new cart
@@ -62,6 +61,7 @@ class App extends Component {
           </div>
           <Navbar />
           <Header />
+          <ProductSlider />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
@@ -74,7 +74,7 @@ class App extends Component {
           </Switch>
           <Footer />
         </BrowserRouter>
-      </React.Fragment> 
+      </React.Fragment>
     );
   }
 }
