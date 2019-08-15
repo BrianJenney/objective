@@ -24,8 +24,8 @@ export default function PDPCard({ title, body, icon, cardType, bottomColor, text
 
   let cardFinal = '';
   const classes = useStyles();
-  const titleContent = <Typography variant="h5" component="h2"> {title}</Typography>;
-  const bodyContent = <Typography variant="body2" component="p"> {body} </Typography>;
+  const titleContent = <Typography variant="h5" component="h2"> {title} </Typography>;
+  const bodyContent = <Typography> {body} </Typography>;
   const iconContent = <CardMedia image={icon} />
 
   switch (cardType) {

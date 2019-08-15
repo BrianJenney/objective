@@ -82,8 +82,14 @@ const Imgcard3 = ({ title, body, icon, bottomColor, textColor }) => {
     <>
       <CardMedia
         className={classes.media}
-        image={icon.props.image} />
-      <Box bgcolor={bottomColor} color={textColor} px={4} py={2} height={80} display="flex" alignItems="center" justifyContent="center">
+        image={icon.props.image}>
+        <Box color="white" px={4} py={4} display="flex" justifyContent="center">
+          <Typography variant="h5" component="h2">
+            {body}
+          </Typography>
+        </Box>
+      </CardMedia>
+      <Box bgcolor={bottomColor} color={textColor} px={4} py={9} height={80} display="flex" alignItems="center" justifyContent="center">
         <Typography align="center">
           {title}
         </Typography>
