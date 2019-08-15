@@ -65,7 +65,7 @@ const imgcard2 = (title, body, icon) => {
   );
 };
 
-const textOnlyCard = (className, title, subhead, smallHeader1, list1, smallHeader2, list2, fineprint) => {
+const textOnlyCard = (cardType, title, smallHeader1, list1, smallHeader2, list2, fineprint, className) => {
   const Styles = makeStyles(theme => ({
     card: {
       minWidth: 275,
@@ -94,16 +94,44 @@ const textOnlyCard = (className, title, subhead, smallHeader1, list1, smallHeade
   return (
     <Card className={classes.card}>
       <CardContent>
-        {title}
-        {subhead}
+        {title ? title : null}
         {smallHeader1}
         {list1}
-        {smallHeader2}
-        {list2}
-        {fineprint}
+        {smallHeader2 ? smallHeader2 : null}
+        {list2 ? list2 : null}
+        {fineprint ? fineprint : null}
+        {className ? className : null}
       </CardContent>
     </Card>
   )
 }
 
-export { imgcard1, imgcard2, textOnlyCard };
+const tableOnlyCard = (table) => {
+  const Styles = makeStyles(theme => ({
+    bullet: {
+      display: 'block',
+      margin: '0 2px',
+      transform: 'scale(0.8)',
+    },
+    title: {
+      fontSize: 14,
+    },
+    subtitle: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  }));
+  const classes = Styles();
+
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        {table}
+      </CardContent>
+    </Card>
+  )
+}
+
+export { imgcard1, imgcard2, textOnlyCard, tableOnlyCard };
