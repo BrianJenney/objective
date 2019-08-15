@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import braintree from 'braintree-web';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -7,21 +8,19 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import AddressForm from './checkout/AddressForm';
-import BillingAddressForm from './checkout/BillingAddress';
+import ShippingAddressForm from './checkout/ShippingAddressForm';
+import BillingAddressForm from './checkout/BillingAddressForm';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 import Result from './checkout/Result';
-
 import store from '../store';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
 
-
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative',
+    position: 'relative'
   },
   layout: {
     width: 'auto',
@@ -30,8 +29,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+      marginRight: 'auto'
+    }
   },
   paper: {
     marginTop: theme.spacing(3),
@@ -40,71 +39,99 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
+      padding: theme.spacing(3)
+    }
   },
   stepper: {
-    padding: theme.spacing(3, 0, 5),
+    padding: theme.spacing(3, 0, 5)
   },
   buttons: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   button: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
+    marginLeft: theme.spacing(1)
+  }
 }));
 
-const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Payment Details', 'Review Your Order', 'Confirmation'];
+const steps = [
+  'Shipping Method',
+  'Shipping Address',
+  'Billing Address',
+  'Payment Details',
+  'Review Your Order',
+  'Confirmation'
+];
 
-function getStepContent(step, cart, formRef) {
-  switch (step) {
-  case 0:
-    return <ShippingForm cart={cart} ref={formRef}/>;
-  case 1:
-    return <AddressForm cart={cart} ref={formRef}/>;
-  case 2:
-    return <BillingAddressForm cart={cart} ref={formRef}/>;
-  case 3:
-    return <PaymentForm cart={cart} ref={formRef}/>;
-  case 4:
-    return <Review cart={cart} />;
-  case 5:
-    return <Result cart={cart} />;
-  default:
-    throw new Error('Unknown step');
-  }
-}
-
-export default function Checkout(props) {
-  let formRef = React.createRef();
+const Checkout = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  
-  let cart = store.getState().cart;
-  //console.log(cart);
+  const [activeStep, setActiveStep] = useState(0);
+  const [values, setValues] = useState({});
+  const cart = store.getState().cart;
+  const fetchBrainTreeNonce = async () => {
+    const { paymentDetails, billingAddress } = values;
+    let nonce = null;
 
-  const handleNext = () => {
-    if((activeStep == 1) || (activeStep == 2) || activeStep == 3) {
-      if(!formRef.current.validate()) {
-        console.log('invalid');
-        return false;
-      }
+    try {
+      const client = await braintree.client.create({
+        authorization: process.env.BRAINTREE_CLIENT_AUTHORIZATION
+      });
+      const braintreeResponse = await client.request({
+        endpoint: 'payment_methods/credit_cards',
+        method: 'post',
+        data: {
+          creditCard: {
+            number: paymentDetails.cardNumber,
+            expirationDate: paymentDetails.expDate,
+            cvv: paymentDetails.cvv,
+            cardholderName: paymentDetails.cardName,
+            billingAddress
+          }
+        }
+      });
+      nonce = braintreeResponse.creditCards[0].nonce;
+    } catch (e) {
+      console.log('Error', e);
     }
 
-    if(activeStep == 4) {
+    return nonce;
+  };
+  const handleNext = () => {
+    if (activeStep == 4) {
       //We're done...place the cart onto the order exchange
       store.dispatch(requestCreateOrder(cart));
-    } else if(activeStep != 5) {
+    } else if (activeStep != 5) {
       // update mongo & redux
-      store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
+      store.dispatch(requestPatchCart(cart._id, values));
     }
     setActiveStep(activeStep + 1);
   };
-
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+  const handleFormValuesUpdate = formValues =>
+    setValues({
+      ...values,
+      ...formValues
+    });
+  const getStepContent = step => {
+    switch (step) {
+      case 0:
+        return <ShippingForm onSubmit={handleFormValuesUpdate} />;
+      case 1:
+        return <ShippingAddressForm onSubmit={handleFormValuesUpdate} />;
+      case 2:
+        return <BillingAddressForm onSubmit={handleFormValuesUpdate} />;
+      case 3:
+        return <PaymentForm onSubmit={handleFormValuesUpdate} />;
+      case 4:
+        return <Review cart={{ ...cart, ...values }} />;
+      case 5:
+        return <Result cart={cart} />;
+      default:
+        throw new Error('Unknown step');
+    }
   };
 
   return (
@@ -129,13 +156,14 @@ export default function Checkout(props) {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  Your order number is #2001539. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
                 </Typography>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep, cart, formRef)}
+                {getStepContent(activeStep, cart)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && activeStep != steps.length - 1 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -160,4 +188,6 @@ export default function Checkout(props) {
       </main>
     </React.Fragment>
   );
-}
+};
+
+export default Checkout;

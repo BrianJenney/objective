@@ -1,88 +1,96 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import PropTypes from 'prop-types';
+import { object, string, number, boolean } from 'yup';
+import { Formik, Field, Form } from 'formik';
+import { Box, Grid, Typography } from '@material-ui/core';
+import {
+  InputField,
+  CheckboxField,
+  DatePickerField
+} from '../../components/form-fields';
 
-class PaymentForm extends React.Component {
+const schema = object().shape({
+  paymentDetails: object().shape({
+    cardName: string().required('Card name is required'),
+    cardNumber: number().required('Card number is required'),
+    expDate: string().required('Expiry date is required'),
+    cvv: number().required('CVV is required'),
+    saveCard: boolean()
+  })
+});
 
-  constructor(props) {
-    super(props);
-    this.state = props.cart.paymentDetails || { };
-    this.handleChange = this.handleChange.bind(this);
+const INITIAL_VALUES = {
+  paymentDetails: {
+    cardName: '',
+    cardNumber: 0,
+    expDate: '',
+    cvv: 0,
+    saveCard: false
   }
+};
 
-  validate() {
-    return ((this.state.cardName)  && (this.state.cardNumber)  && (this.state.expDate) && (this.state.cvv));
-  }
-
-  handleChange(e) {
-    this.setState({ [e.target.id]: e.target.value });
-  }
-
-  getData() {
-    return {paymentDetails: this.state};
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-          Payment method
-        </Typography>
+const PaymentForm = ({ onSubmit }) => {
+  const renderForm = () => (
+    <Box>
+      <Typography variant="h6" gutterBottom children="Payment method" />
+      <Form>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <TextField 
-              required 
-              id="cardName" 
-              label={!this.state.cardName ? "Name on Card" : ''}
-              fullWidth 
-              onChange={this.handleChange}
-              value={this.state.cardName ? this.state.cardName : ''}
+            <Field
+              name="paymentDetails.cardName"
+              label="Name on Card"
+              component={InputField}
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField 
-              required 
-              id="cardNumber" 
-              label={!this.state.cardNumber ? "Card Number" : ''} 
-              fullWidth 
-              onChange={this.handleChange}
-              value={this.state.cardNumber ? this.state.cardNumber : ''}
+            <Field
+              name="paymentDetails.cardNumber"
+              label="Card Number"
+              component={InputField}
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField 
-              required 
-              id="expDate" 
-              label={!this.state.expDate ? "Expiry Date" : ''} 
-              fullWidth 
-              onChange={this.handleChange}
-              value={this.state.expDate ? this.state.expDate : ''}
+            <Field
+              name="paymentDetails.expDate"
+              label="Expiry Date"
+              component={DatePickerField}
+              variant="inline"
+              autoOk
+              disableToolbar
+              disablePast
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
-              required
-              id="cvv"
-              label={!this.state.cvv ? "CVV" : ''}
-              helperText="Last three digits on signature strip"
-              fullWidth
-              onChange={this.handleChange}
-              value={this.state.cvv ? this.state.cvv : ''}
+            <Field
+              name="paymentDetails.cvv"
+              label="CVV"
+              component={InputField}
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox color="secondary" name="saveCard" value="yes" />}
+            <Field
+              name="paymentDetails.saveCard"
               label="Remember credit card details for next time"
+              component={CheckboxField}
             />
           </Grid>
         </Grid>
-      </React.Fragment>
-    );
-  }
-}
+      </Form>
+    </Box>
+  );
+
+  return (
+    <Formik
+      initialValues={INITIAL_VALUES}
+      onSubmit={onSubmit}
+      validationSchema={schema}
+      render={renderForm}
+    />
+  );
+};
+
+PaymentForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};
 
 export default PaymentForm;
