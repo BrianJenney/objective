@@ -59,7 +59,7 @@ class Account extends React.Component {
               <Grid item xs={12}>
                 <Paper style={pStyle}>
                   <Typography variant="h6" gutterBottom>
-                    Address
+                    Default Address
                   </Typography>
                   <Typography variant="body1" gutterBottom>
                     {user.defaultAddress.address1}
