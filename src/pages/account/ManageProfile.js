@@ -1,26 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import {
-  requestFetchAccount,
-  requestPatchAccount
-} from '../../modules/account/actions';
-import store from '../../store';
+import { Formik, Field, Form } from 'formik';
+import { object, string } from 'yup';
+import { omit } from 'lodash';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {
+  requestFetchAccount,
+  requestPatchAccount
+} from '../../modules/account/actions';
+import store from '../../store';
+import { InputField } from '../../components/form-fields';
 
 const pStyle = {
   padding: 20,
   textAlign: 'center'
 };
-const inputStyle = {
-  margin: 20
+const schema = object().shape({
+  firstName: string(),
+  lastName: string(),
+  email: string(),
+  phoneNumber: string()
+});
+const INITIAL_VALUES = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phoneNumber: ''
 };
 
 class ManageProfile extends React.Component {
@@ -35,35 +46,38 @@ class ManageProfile extends React.Component {
     console.log('******************MOUNTED****************************');
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    let user = this.props.account;
-    let patches = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      phoneBook: {
-        defaultNum: this.state.number
-      }
-    };
-    store.dispatch(requestPatchAccount(user._id, patches));
+  renderForm = () => {
+    return (
+      <Form>
+        <Field label="First Name" name="firstName" component={InputField} />
+        <Field label="Last Name" name="lastName" component={InputField} />
+        <Field label="Email" name="email" component={InputField} />
+        <Field label="Phone Number" name="phoneNumber" component={InputField} />
+        <Button type="submit">Submit</Button>
+      </Form>
+    );
   };
 
-  handleInputChange = event => {
-    const {
-      target: { name, value }
-    } = event;
-    this.setState({
-      [name]: value
-    });
+  handleSubmit = values => {
+    const { account: user } = this.props;
+    const payload = {
+      ...values,
+      phoneBook: {
+        defaultNum: values.phoneNumber
+      }
+    };
+
+    store.dispatch(
+      requestPatchAccount(user._id, omit(payload, ['phoneNumber']))
+    );
   };
 
   render() {
-    if (!this.props.account.contactPreferences) {
+    const { account: user } = this.props;
+
+    if (!user.contactPreferences) {
       return <div>No Account</div>;
     }
-
-    let user = this.props.account;
 
     return (
       <Container>
@@ -73,81 +87,38 @@ class ManageProfile extends React.Component {
         <Link variant="button" color="textPrimary">
           <RouterLink to="/account">Back</RouterLink>
         </Link>
-        <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <Paper style={pStyle}>
-                <Typography variant="h3" gutterBottom>
-                  {user.firstName} {user.lastName}
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                  Email: {user.email}
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                  Phone: {user.phoneBook.defaultNum}
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
-                  Preferred Contact Method: {user.contactPreferences.preferred}
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper style={pStyle}>
-                <Typography variant="h3" gutterBottom>
-                  Edit Info Here
-                </Typography>
-                <TextField
-                  id="outlined-name"
-                  label="First Name"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="firstName"
-                  value={this.state.firstName}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Last Name"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="lastName"
-                  value={this.state.lastName}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Email"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleInputChange}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Phone Number"
-                  margin="normal"
-                  variant="outlined"
-                  style={inputStyle}
-                  name="number"
-                  value={this.state.number}
-                  onChange={this.handleInputChange}
-                />
-                <Button
-                  href="#"
-                  color="primary"
-                  variant="outlined"
-                  onClick={this.handleSubmit}
-                >
-                  Submit
-                </Button>
-              </Paper>
-            </Grid>
+
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <Paper style={pStyle}>
+              <Typography variant="h3" gutterBottom>
+                {user.firstName} {user.lastName}
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Email: {user.email}
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Phone: {user.phoneBook.defaultNum}
+              </Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Preferred Contact Method: {user.contactPreferences.preferred}
+              </Typography>
+            </Paper>
           </Grid>
-        </form>
+          <Grid item xs={6}>
+            <Paper style={pStyle}>
+              <Typography variant="h3" gutterBottom>
+                Edit Info Here
+              </Typography>
+              <Formik
+                initialValues={INITIAL_VALUES}
+                onSubmit={this.handleSubmit}
+                validationSchema={schema}
+                render={this.renderForm}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
