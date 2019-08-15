@@ -57,9 +57,9 @@ class ManageProfile extends React.Component {
   };
 
   handleInputChange = event => {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+    const {
+      target: { name, value }
+    } = event;
     this.setState({
       [name]: value
     });
@@ -104,7 +104,7 @@ class ManageProfile extends React.Component {
             <Grid item xs={6}>
               <Paper style={pStyle}>
                 <Typography variant="h3" gutterBottom>
-                  Edit Address Here
+                  Edit Default Address Here
                 </Typography>
                 <TextField
                   id="outlined-name"
