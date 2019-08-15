@@ -1,14 +1,14 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from 'react';
 
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
-  const [quantity, setQuantity] = useState(initialQty);
-  const adjustQuantity = useCallback((adjustment) => setQuantity(qty => qty + adjustment), [setQuantity]);
+  const [ quantity, setQuantity ] = useState(initialQty);
+  const adjustQuantity = useCallback((adjustment) => setQuantity(qty => qty + adjustment), [ setQuantity ]);
   const Quantity = () => (
     <>
       <Grid container justify="left-start" alignItems="center" spacing={3}>
@@ -29,5 +29,5 @@ export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
       </Grid>
     </>
   );
-  return [quantity, Quantity];
+  return [ quantity, Quantity ];
 };
