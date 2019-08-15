@@ -27,12 +27,7 @@ class ManageProfile extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      number: ''
-    };
+    this.state = {};
   }
 
   componentDidMount() {
