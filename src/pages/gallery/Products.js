@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -11,9 +11,11 @@ class Products extends Component {
 
   render() {
     const { products } = this.context;
+
     if (!products) {
       return null;
     }
+
     return (
       <Container>
         <Grid container spacing={4}>
