@@ -4,14 +4,14 @@ import ProductContext from '../../contexts/ProductContext';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 
 import { useQuantity } from '../../hooks';
 
@@ -30,10 +30,12 @@ const ProductDetail = () => {
   const handleAddToCart = useCallback(() => {
     alert(`Add to cart ${product.name} at `)
   },[product]);
-  const [quantity, Quantity] = useQuantity('QTY', 1, available);
+  const [ quantity, Quantity ] = useQuantity('QTY', 1, available);
+
   if (!product) {
     return null;
   }
+
   const subtitle = 'COMPLETE PLAN PROTEIN + PROBIOTICS';
 
   return (
@@ -78,4 +80,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
