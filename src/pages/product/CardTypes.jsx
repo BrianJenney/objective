@@ -65,7 +65,7 @@ const imgcard2 = (title, body, icon) => {
   );
 };
 
-const textOnlyCard = (cardType, title, smallHeader1, list1, smallHeader2, list2, fineprint, className) => {
+const textOnlyCard = (cardType, title, smallHeader1, list1, smallHeader2, list2, fineprint, bulletedList) => {
   const Styles = makeStyles(theme => ({
     card: {
       minWidth: 275,
@@ -97,10 +97,10 @@ const textOnlyCard = (cardType, title, smallHeader1, list1, smallHeader2, list2,
         {title ? title : null}
         {smallHeader1}
         {list1}
+        {bulletedList ? bulletedList : null}
         {smallHeader2 ? smallHeader2 : null}
         {list2 ? list2 : null}
         {fineprint ? fineprint : null}
-        {className ? className : null}
       </CardContent>
     </Card>
   )
