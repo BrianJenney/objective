@@ -4,6 +4,7 @@ import { object } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { RadioGroupField } from '../../components/form-fields';
+import { Button } from '../../components/common';
 
 const schema = object().shape({
   shipping: object().required('Shipping method is required')
@@ -43,11 +44,16 @@ const ShippingForm = ({ onSubmit }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Form>
-            <Field
-              component={RadioGroupField}
-              name="shipping"
-              options={SHIPPING_METHODS}
-            />
+            <Box>
+              <Field
+                component={RadioGroupField}
+                name="shipping"
+                options={SHIPPING_METHODS}
+              />
+            </Box>
+            <Box>
+              <Button type="submit" children="Next" />
+            </Box>
           </Form>
         </Grid>
       </Grid>

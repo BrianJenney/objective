@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import braintree from 'braintree-web';
+import {
+  CssBaseline,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Typography
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import ShippingAddressForm from './checkout/ShippingAddressForm';
 import BillingAddressForm from './checkout/BillingAddressForm';
 import PaymentForm from './checkout/PaymentForm';
@@ -67,10 +68,9 @@ const steps = [
 const Checkout = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const [values, setValues] = useState({});
-  const cart = store.getState().cart;
+  const { cart } = store.getState();
   const fetchBrainTreeNonce = async () => {
-    const { paymentDetails, billingAddress } = values;
+    const { paymentDetails, billingAddress } = cart;
     let nonce = null;
 
     try {
@@ -97,45 +97,54 @@ const Checkout = () => {
 
     return nonce;
   };
-  const handleNext = () => {
-    if (activeStep == 4) {
-      //We're done...place the cart onto the order exchange
-      store.dispatch(requestCreateOrder(cart));
-    } else if (activeStep != 5) {
+  const handleBack = () => {
+    if (activeStep === 0) {
+      return;
+    }
+    setActiveStep(activeStep - 1);
+  };
+  const handleNext = async values => {
+    if (activeStep === 4) {
+      // Fetch braintree nonce
+      const nonce = await fetchBrainTreeNonce();
+      // We're done...place the cart onto the order exchange
+      store.dispatch(requestCreateOrder(cart, nonce));
+    } else if (activeStep <= 3) {
       // update mongo & redux
       store.dispatch(requestPatchCart(cart._id, values));
     }
+
     setActiveStep(activeStep + 1);
   };
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-  const handleFormValuesUpdate = formValues =>
-    setValues({
-      ...values,
-      ...formValues
-    });
   const getStepContent = step => {
     switch (step) {
       case 0:
-        return <ShippingForm onSubmit={handleFormValuesUpdate} />;
+        return <ShippingForm onSubmit={handleNext} />;
       case 1:
-        return <ShippingAddressForm onSubmit={handleFormValuesUpdate} />;
+        return (
+          <ShippingAddressForm onBack={handleBack} onSubmit={handleNext} />
+        );
       case 2:
-        return <BillingAddressForm onSubmit={handleFormValuesUpdate} />;
+        return (
+          <BillingAddressForm
+            shippingAddressSeed={cart}
+            onBack={handleBack}
+            onSubmit={handleNext}
+          />
+        );
       case 3:
-        return <PaymentForm onSubmit={handleFormValuesUpdate} />;
+        return <PaymentForm onBack={handleBack} onSubmit={handleNext} />;
       case 4:
-        return <Review cart={{ ...cart, ...values }} />;
+        return <Review cart={cart} onBack={handleBack} onSubmit={handleNext} />;
       case 5:
-        return <Result cart={cart} />;
+        return <Result onSubmit={handleNext} />;
       default:
         throw new Error('Unknown step');
     }
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -149,9 +158,9 @@ const Checkout = () => {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <Fragment>
             {activeStep === steps.length ? (
-              <React.Fragment>
+              <Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
@@ -160,33 +169,14 @@ const Checkout = () => {
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
-              </React.Fragment>
+              </Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep, cart)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && activeStep != steps.length - 1 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  {activeStep != steps.length - 1 && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 2 ? 'Place order' : 'Next'}
-                    </Button>
-                  )}
-                </div>
-              </React.Fragment>
+              <Fragment>{getStepContent(activeStep)}</Fragment>
             )}
-          </React.Fragment>
+          </Fragment>
         </Paper>
       </main>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

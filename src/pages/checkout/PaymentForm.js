@@ -8,6 +8,7 @@ import {
   CheckboxField,
   DatePickerField
 } from '../../components/form-fields';
+import { Button } from '../../components/common';
 
 const schema = object().shape({
   paymentDetails: object().shape({
@@ -29,7 +30,7 @@ const INITIAL_VALUES = {
   }
 };
 
-const PaymentForm = ({ onSubmit }) => {
+const PaymentForm = ({ onSubmit, onBack }) => {
   const renderForm = () => (
     <Box>
       <Typography variant="h6" gutterBottom children="Payment method" />
@@ -74,6 +75,12 @@ const PaymentForm = ({ onSubmit }) => {
               component={CheckboxField}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="center">
+              <Button type="button" onClick={onBack} children="Back" mr={2} />
+              <Button type="submit" children="Next" />
+            </Box>
+          </Grid>
         </Grid>
       </Form>
     </Box>
@@ -90,7 +97,8 @@ const PaymentForm = ({ onSubmit }) => {
 };
 
 PaymentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired
 };
 
 export default PaymentForm;

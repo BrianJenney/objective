@@ -4,6 +4,7 @@ import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { InputField } from '../../components/form-fields';
+import { Button } from '../../components/common';
 
 const schema = object().shape({
   shippingAddress: object().shape({
@@ -31,7 +32,7 @@ const INITIAL_VALUES = {
   }
 };
 
-const ShippingAddressForm = ({ onSubmit }) => {
+const ShippingAddressForm = ({ onSubmit, onBack }) => {
   const renderForm = () => (
     <Box>
       <Typography variant="h6" gutterBottom children="Shipping address" />
@@ -93,6 +94,12 @@ const ShippingAddressForm = ({ onSubmit }) => {
               component={InputField}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="center">
+              <Button type="button" onClick={onBack} children="Back" mr={2} />
+              <Button type="submit" children="Next" />
+            </Box>
+          </Grid>
         </Grid>
       </Form>
     </Box>
@@ -109,7 +116,8 @@ const ShippingAddressForm = ({ onSubmit }) => {
 };
 
 ShippingAddressForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired
 };
 
 export default ShippingAddressForm;

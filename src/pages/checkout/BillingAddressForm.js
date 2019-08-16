@@ -4,6 +4,7 @@ import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { InputField, CheckboxField } from '../../components/form-fields';
+import { Button } from '../../components/common';
 
 const schema = object().shape({
   billingAddress: object().shape({
@@ -31,7 +32,7 @@ const INITIAL_VALUES = {
   }
 };
 
-const BillingAddressForm = ({ shippingAddressSeed, onSubmit }) => {
+const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
   const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
   const handleUseShippingAddressToggle = event => {
     if (event.target.checked) {
@@ -109,6 +110,12 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit }) => {
               component={InputField}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="center">
+              <Button type="button" onClick={onBack} children="Back" mr={2} />
+              <Button type="submit" children="Next" />
+            </Box>
+          </Grid>
         </Grid>
       </Form>
     </Box>
@@ -127,7 +134,8 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit }) => {
 
 BillingAddressForm.propTypes = {
   shippingAddressSeed: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired
 };
 
 export default BillingAddressForm;
