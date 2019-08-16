@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
+    [theme.breakpoints.up(800 + theme.spacing(2) * 2)]: {
+      width: 800,
       marginLeft: 'auto',
       marginRight: 'auto'
     }
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+    [theme.breakpoints.up(800 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
@@ -64,6 +64,21 @@ const steps = [
   'Review Your Order',
   'Confirmation'
 ];
+
+const shippingMethods = {
+  ground: {
+    displayName: 'Ground',
+    name: 'ground',
+    price: 0.0,
+    deliveryEstimate: '3-7 Business Days'
+  },
+  twodayair: {
+    displayName: '2 Day Air',
+    name: '2dayair',
+    price: 17.9,
+    deliveryEstimate: '2 Business Days'
+  }
+};
 
 const Checkout = () => {
   const classes = useStyles();
@@ -104,14 +119,21 @@ const Checkout = () => {
     setActiveStep(activeStep - 1);
   };
   const handleNext = async values => {
-    if (activeStep === 4) {
+    if (activeStep === 0) {
+      // update mongo & redux
+      store.dispatch(
+        requestPatchCart(cart._id, {
+          shipping: shippingMethods[values.shipping]
+        })
+      );
+    } else if (activeStep <= 3) {
+      // update mongo & redux
+      store.dispatch(requestPatchCart(cart._id, values));
+    } else if (activeStep === 4) {
       // Fetch braintree nonce
       const nonce = await fetchBrainTreeNonce();
       // We're done...place the cart onto the order exchange
       store.dispatch(requestCreateOrder(cart, nonce));
-    } else if (activeStep <= 3) {
-      // update mongo & redux
-      store.dispatch(requestPatchCart(cart._id, values));
     }
 
     setActiveStep(activeStep + 1);

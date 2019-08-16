@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { getIn } from 'formik';
 import moment from 'moment';
 import { noop } from 'lodash';
-import { DatePicker } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 
 const DatePickerField = ({
   field,
@@ -19,22 +23,25 @@ const DatePickerField = ({
   const touched = getIn(form.touched, name);
 
   const handleChange = v => {
-    form.setFieldValue(name, v ? moment(v).format(valueFormat) : null);
-    onChange(moment(v).format(valueFormat));
+    const fieldValue = v ? moment(v).format(valueFormat) : null;
+    form.setFieldValue(name, fieldValue);
+    onChange(fieldValue);
   };
 
   return (
-    <DatePicker
-      className="date-picker"
-      id={name}
-      error={!!(touched && error)}
-      helperText={(touched && error) || helperText}
-      disabled={form.isSubmitting || disabled}
-      onChange={handleChange}
-      onError={(_, err) => form.setFieldError(name, err)}
-      value={value ? moment(value, valueFormat) : null}
-      {...rest}
-    />
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <KeyboardDatePicker
+        id={name}
+        error={!!(touched && error)}
+        helperText={(touched && error) || helperText}
+        disabled={form.isSubmitting || disabled}
+        onChange={handleChange}
+        onError={(_, err) => form.setFieldError(name, err)}
+        value={value ? moment(value, valueFormat) : null}
+        KeyboardButtonProps={{ 'aria-label': 'change date' }}
+        {...rest}
+      />
+    </MuiPickersUtilsProvider>
   );
 };
 

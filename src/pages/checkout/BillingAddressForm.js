@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { InputField, CheckboxField } from '../../components/form-fields';
+import { Box, Grid, Typography, Checkbox } from '@material-ui/core';
+import { InputField } from '../../components/form-fields';
 import { Button } from '../../components/common';
 
 const schema = object().shape({
@@ -41,6 +41,8 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
           ...shippingAddressSeed.shippingAddress
         }
       });
+    } else {
+      setInitialValues(INITIAL_VALUES);
     }
   };
   const renderForm = () => (
@@ -49,10 +51,13 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
       <Form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <CheckboxField
-              label="Use shipping address"
-              onChange={handleUseShippingAddressToggle}
-            />
+            <Box display="flex" alignItems="center">
+              <Checkbox
+                id="useShippingAddressToggle"
+                onChange={handleUseShippingAddressToggle}
+              />
+              <Typography children="Use shipping address" />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field

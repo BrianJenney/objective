@@ -24,7 +24,7 @@ const INITIAL_VALUES = {
   paymentDetails: {
     cardName: '',
     cardNumber: 0,
-    expDate: '',
+    expDate: '2019-10-01',
     cvv: 0,
     saveCard: false
   }
@@ -53,9 +53,9 @@ const PaymentForm = ({ onSubmit, onBack }) => {
           <Grid item xs={12} md={6}>
             <Field
               name="paymentDetails.expDate"
-              label="Expiry Date"
               component={DatePickerField}
               variant="inline"
+              label="Expiry Date"
               autoOk
               disableToolbar
               disablePast

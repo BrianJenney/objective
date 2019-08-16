@@ -1,40 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { object } from 'yup';
+import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { RadioGroupField } from '../../components/form-fields';
 import { Button } from '../../components/common';
 
 const schema = object().shape({
-  shipping: object().required('Shipping method is required')
+  shipping: string().required('Shipping method is required')
 });
 
-const SHIPPING_METHODS = [
+const SHIPPING_METHOD_OPTIONS = [
   {
     key: 'ground',
     label: 'Ground - 0.00 (Estimated Delivery: 3-7 Business Days)',
-    value: {
-      displayName: 'Ground',
-      name: 'ground',
-      price: 0.0,
-      deliveryEstimate: '3-7 Business Days'
-    }
+    value: 'ground'
   },
   {
     key: 'air',
     label: '2 Day Air - 17.9 (Estimated Delivery: 2 Business Days)',
-    value: {
-      displayName: '2 Day Air',
-      name: '2dayair',
-      price: 17.9,
-      deliveryEstimate: '2 Business Days'
-    }
+    value: 'twodayair'
   }
 ];
 
 const INITIAL_VALUES = {
-  shipping: null
+  shipping: ''
 };
 
 const ShippingForm = ({ onSubmit }) => {
@@ -42,13 +32,13 @@ const ShippingForm = ({ onSubmit }) => {
     <Box>
       <Typography variant="h6" gutterBottom children="Shipping Method" />
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Form>
             <Box>
               <Field
                 component={RadioGroupField}
                 name="shipping"
-                options={SHIPPING_METHODS}
+                options={SHIPPING_METHOD_OPTIONS}
               />
             </Box>
             <Box>
