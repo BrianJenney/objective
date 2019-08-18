@@ -1,5 +1,7 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 import ProductContext from '../../contexts/ProductContext';
 
 import Container from '@material-ui/core/Container';
@@ -17,7 +19,6 @@ import Link from '@material-ui/core/Link';
 import VariantSelectionDialog  from './VariantSelectionDialog'
 
 import { useQuantity } from '../../hooks';
-import { withMessage } from '../../hoc';
 
 import store from '../../store';
 import {requestPatchCart} from '../../modules/cart/actions';
@@ -46,10 +47,11 @@ const ProductDetail = ({ message, history }) => {
   const available = 20;
 
   const classes = useStyles();
-  const [openVariantSelectionDialog, setOpenVariantSelectionDialog] = useState(false);
-  const [selectedProductVariant, setSelectedProductVariant] = useState(null);
+  const [ openVariantSelectionDialog, setOpenVariantSelectionDialog ] = useState(false);
+  const [ selectedProductVariant, setSelectedProductVariant ] = useState(null);
   const { product } = useContext(ProductContext);
   const [ quantity, Quantity ] = useQuantity('QTY', 1, available);
+  const { enqueueSnackbar } = useSnackbar();
 
   const saveSelectedProductVariant = useCallback((variant) => {
     setSelectedProductVariant(variant);
@@ -57,10 +59,10 @@ const ProductDetail = ({ message, history }) => {
 
   const handleAddToCart = useCallback(() => {
     const { cart } = store.getState();
-    console.log('cart', cart)
+    // console.log('cart', cart)
     const newItems = cart.items;
     let alreadyInCart = false;
-    console.log('new Items', newItems)
+    // console.log('new Items', newItems)
     newItems.filter(item => item.variant_id == selectedProductVariant._id)
             .forEach(item => {
               alreadyInCart = true;
@@ -79,7 +81,7 @@ const ProductDetail = ({ message, history }) => {
       };
       newItems.push(newItem);
     }
-    console.log('cart', newItems)
+    // console.log('cart', newItems)
 
     const patches = {
       items: newItems,
@@ -88,7 +90,9 @@ const ProductDetail = ({ message, history }) => {
     };
 
     store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
-    message(`${quantity} ${selectedProductVariant.sku} added to cart`);
+    enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
+      variant: 'success',
+    });
     history.push('/cart');
   }, [product, selectedProductVariant, quantity, message, history]);
 
@@ -147,4 +151,4 @@ const ProductDetail = ({ message, history }) => {
 
 };
 
-export default withRouter(withMessage(ProductDetail));
+export default withRouter(ProductDetail);
