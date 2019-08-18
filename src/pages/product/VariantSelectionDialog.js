@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { Button } from '../../components/common';
 import { RadioGroupField } from '../../components/form-fields';
-import withDialog from '../../components/common/withDialog';
+import withDialog from '../../hoc/withDialog';
 
 const schema = object().shape({ selectedVariantIndex: number() });
 const INITIAL_VALUES = {
