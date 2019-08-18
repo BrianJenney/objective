@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback } from 'react';
-
+import { withRouter } from 'react-router-dom';
 import ProductContext from '../../contexts/ProductContext';
 
 import Container from '@material-ui/core/Container';
@@ -17,6 +17,8 @@ import Link from '@material-ui/core/Link';
 import VariantSelectionDialog  from './VariantSelectionDialog'
 
 import { useQuantity } from '../../hooks';
+import { withMessage } from '../../hoc';
+
 import store from '../../store';
 import {requestPatchCart} from '../../modules/cart/actions';
 
@@ -36,51 +38,48 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductVariant = ({product, available }) => {
-  return product ? (<Typography  variant="body2"><strong>${product.price.$numberDecimal}</strong> / {available} {product.sku } VEGGIE CAPSULES</Typography>
+  return product ? (<Typography  variant="body2"><strong>${product.price.$numberDecimal}</strong> / {available} {product.sku } CAPSULES</Typography>
   ) : null;
 };
 
-const ProductDetail = () => {
+const ProductDetail = ({ message, history }) => {
   const available = 20;
+
   const classes = useStyles();
   const [openVariantSelectionDialog, setOpenVariantSelectionDialog] = useState(false);
   const [selectedProductVariant, setSelectedProductVariant] = useState(null);
   const { product } = useContext(ProductContext);
   const [ quantity, Quantity ] = useQuantity('QTY', 1, available);
 
-  if (!product) {
-    return null;
-  }
-
-  const subtitle = 'COMPLETE PLAN PROTEIN + PROBIOTICS';
-
-  const saveSelectedProductVariant = (variant) => {
+  const saveSelectedProductVariant = useCallback((variant) => {
     setSelectedProductVariant(variant);
-  };
+  },[setSelectedProductVariant]);
 
-  const handleAddToCart = values => {
+  const handleAddToCart = useCallback(() => {
     const { cart } = store.getState();
+    console.log('cart', cart)
     const newItems = cart.items;
     let alreadyInCart = false;
-
-    for (let i = 0; i < newItems.length; i++) {
-      if (newItems[i].variant_id == selectedProductVariant._id) {
-        alreadyInCart = true;
-        newItems[i].quantity += quantity;
-      }
-    }
+    console.log('new Items', newItems)
+    newItems.filter(item => item.variant_id == selectedProductVariant._id)
+            .forEach(item => {
+              alreadyInCart = true;
+              item.quantity += quantity;
+            });
 
     if (!alreadyInCart) {
       const newItem = {
         product_id: product._id,
-        variant_id: selectedProductVariant._id,
         product_name: product.name,
         variant_name: selectedProductVariant.name,
+        variant_id: selectedProductVariant._id,
+        sku: selectedProductVariant.sku,
         quantity: quantity,
         unit_price: parseFloat(selectedProductVariant.price.$numberDecimal)
       };
       newItems.push(newItem);
     }
+    console.log('cart', newItems)
 
     const patches = {
       items: newItems,
@@ -89,10 +88,18 @@ const ProductDetail = () => {
     };
 
     store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
-  };
+    message(`${quantity} ${selectedProductVariant.sku} added to cart`);
+    history.push('/cart');
+  }, [product, selectedProductVariant, quantity, message, history]);
 
-  const showVariantSelectionDialog = () => setOpenVariantSelectionDialog(true);
-  const closeVariantSelectionDialog = () => setOpenVariantSelectionDialog(false);
+  const showVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(true), [setOpenVariantSelectionDialog]);
+  const closeVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(false), [setOpenVariantSelectionDialog]);
+
+  if (!product) {
+    return null;
+  }
+
+  const subtitle = 'COMPLETE PLAN PROTEIN + PROBIOTICS';
 
   return (
     <Container>
@@ -115,9 +122,7 @@ const ProductDetail = () => {
               <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
               <br/>
               <Typography>
-                <Link className={classes.link} onClick={showVariantSelectionDialog}>
-                  Select Product Variant
-                </Link>
+                <Link color="primary" variant="caption" onClick={showVariantSelectionDialog}>Select Product Variant</Link>
               </Typography>
               <ProductVariant product={selectedProductVariant} available={available}/>
               <br/>
@@ -128,18 +133,18 @@ const ProductDetail = () => {
               <Divider variant="fullWidth" />
             </CardContent>
             <CardActions>
-              <Button variant="outlined" color="primary" onClick={handleAddToCart}>
+              <Button variant="outlined" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant == null}>
                 Add {quantity} item{quantity > 1 ? 's' : ''} To Cart
               </Button>
             </CardActions>
           </Grid>
         </Grid>
       </Card>
-      {openVariantSelectionDialog && <VariantSelectionDialog closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
+      {openVariantSelectionDialog &&
+       <VariantSelectionDialog closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
     </Container>
-
   );
 
 };
 
-export default ProductDetail;
+export default withRouter(withMessage(ProductDetail));
