@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import ProductInfo from '../../components/ProductInfo/ProductInfo';
+import ProductContext from '../../contexts/ProductContext';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,15 +58,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PdpTabs() {
+export default function PdpTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const { product, hiwTab, infoTab } = useContext(ProductContext);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
 
+  if (!product) {
+    return null;
+  }
   return (
     <Container>
       <Grid spacing={0} xs={12}>
@@ -80,14 +84,14 @@ export default function PdpTabs() {
                 classes={{ indicator: classes.indicator }}
               >
                 <Tab label="How it works" {...a11yProps(0)} className={classes.tabs} />
-                <Tab label="View label information & details" {...a11yProps(1)} className={classes.tabs} />
+                <Tab label="Information" {...a11yProps(1)} className={classes.tabs} />
               </Tabs>
             </AppBar>
-            <TabPanel value={value} index={0} dir={theme.direction}>
-              Item One
+            <TabPanel value={value} index={0} dir={theme.direction} tab={0}>
+              <div dangerouslySetInnerHTML={{ __html: hiwTab }} />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              {ProductInfo}
+              <div dangerouslySetInnerHTML={{ __html: infoTab }} />
             </TabPanel>
           </div>
         </Box>
