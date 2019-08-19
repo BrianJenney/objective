@@ -8,6 +8,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './checkout/AddressForm';
+import CreateAccount from './checkout/CreateAccount';
 import BillingAddressForm from './checkout/BillingAddress';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
@@ -60,20 +61,22 @@ const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Paymen
 
 function getStepContent(step, cart, formRef) {
   switch (step) {
-  case 0:
-    return <ShippingForm cart={cart} ref={formRef}/>;
-  case 1:
-    return <AddressForm cart={cart} ref={formRef}/>;
-  case 2:
-    return <BillingAddressForm cart={cart} ref={formRef}/>;
-  case 3:
-    return <PaymentForm cart={cart} ref={formRef}/>;
-  case 4:
-    return <Review cart={cart} />;
-  case 5:
-    return <Result cart={cart} />;
-  default:
-    throw new Error('Unknown step');
+    case 0:
+      return <CreateAccount cart={cart} ref={formRef}/>;
+    case 1:
+      return <ShippingForm cart={cart} ref={formRef}/>;
+    case 2:
+      return <AddressForm cart={cart} ref={formRef}/>;
+    case 3:
+      return <BillingAddressForm cart={cart} ref={formRef}/>;
+    case 4:
+      return <PaymentForm cart={cart} ref={formRef}/>;
+    case 5:
+      return <Review cart={cart} />;
+    case 6:
+      return <Result cart={cart} />;
+    default:
+      throw new Error('Unknown step');
   }
 }
 
