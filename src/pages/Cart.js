@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 
 import { requestFetchCart, requestPatchCart } from '../modules/cart/actions';
 
@@ -19,7 +18,7 @@ class Cart extends React.Component {
   calculateCartTotal(c) {
     let total = 0;
     for(var i = 0; i < c.length; i++) {
-      total += (c[i].unit_price * c[i].quantity); 
+      total += (c[i].unit_price * c[i].quantity);
     }
     return total;
   }
@@ -36,7 +35,7 @@ class Cart extends React.Component {
 
     store.dispatch(requestPatchCart(this.props.cart._id, patches));
   }
-  
+
   adjustQty(e, amt) {
     let newitems =  this.props.cart.items;
     newitems[e.currentTarget.value].quantity += amt;
@@ -67,7 +66,7 @@ class Cart extends React.Component {
       <Container>
         <Typography component="h1" variant="h5" align="center">Your Cart</Typography>
         <Grid container spacing={3}>
-          {this.props.cart.items.length == 0 ? (
+          {this.props.cart.items.length === 0 ? (
             <div>Your cart is empty</div>
           ) : (
             Object.values(this.props.cart.items).map((item, index) => (
@@ -86,8 +85,8 @@ class Cart extends React.Component {
                     +
                   </Button>
                 </Grid>
-                <Grid item xs={2}>{item.unit_price}</Grid>
-                <Grid item xs={2}>{item.quantity * item.unit_price}</Grid>
+                <Grid item xs={2}>{item.unit_price.toFixed(2)}</Grid>
+                <Grid item xs={2}>{(item.quantity * item.unit_price).toFixed(2)}</Grid>
                 <Grid item xs={2}>
                   <Button color="primary" onClick={(e) => this.removeFromCart(e)} value={index} variant="contained">Remove Item</Button>
                 </Grid>
@@ -95,7 +94,7 @@ class Cart extends React.Component {
             ))
           )
           }
-          <Grid item xs={12}>TOTAL:  {'$' + this.props.cart.total}</Grid>
+          <Grid item xs={12}>TOTAL:  {'$' + this.props.cart.total.toFixed(2)}</Grid>
           <Grid item xs={2}>
             <Button color="primary" href='checkout' variant="contained">Checkout</Button>
           </Grid>

@@ -1,7 +1,7 @@
-import React, { Component, useContext, useCallback } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { object, number } from 'yup';
-import { Container, FormLabel } from '@material-ui/core';
+
 import ProductContext from '../../contexts/ProductContext';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -64,17 +64,16 @@ const DialogActions = withStyles(theme => ({
 const VariantSelectionForm = ({closeVariantSelectionDialog, closeDialog, onExited}) => {
   const { variants } = useContext(ProductContext);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     closeDialog();
     closeVariantSelectionDialog();
-  };
+  },[closeVariantSelectionDialog, closeDialog]);
 
-  const handleSubmit = values => {
+  const handleSubmit = useCallback((values) => {
     const variant = variants[values.selectedVariantIndex];
-    console.log('variant:', variant )
     handleClose();
     onExited(variant);
-  };
+  }, [onExited, handleClose, variants]);
 
   const renderForm = ({ values }) => {
 
