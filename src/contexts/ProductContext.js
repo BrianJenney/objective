@@ -21,6 +21,13 @@ export class ProductStore extends Component {
     EventEmitter.addListener('variant.request.find', data => {
       this.setState({ ...this.state, 'variants': data.data.data });
     });
+    EventEmitter.addListener('content.request.find', data => {
+      this.setState({
+        ...this.state,
+        'hiwTab': data.data.data[0].content,
+        'infoTab': data.data.data[1].content
+      });
+    });
     this.getProductData();
   }
 
@@ -54,6 +61,21 @@ export class ProductStore extends Component {
 
     obj = JSON.stringify(msgpack.encode(params));
     stompClient.send('/exchange/variant/variant.request.find', {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    }, obj);
+
+    let re = new RegExp(this.props.productId + '$');
+    params = {
+      'params': {
+        'query': {
+          'component': re
+        }
+      }
+    };
+
+    obj = JSON.stringify(msgpack.encode(params));
+    stompClient.send('/exchange/content/content.request.find', {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     }, obj);
