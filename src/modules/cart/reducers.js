@@ -1,16 +1,18 @@
-import { 
-  REQUEST_CREATE_CART, 
-  RECEIVED_CREATE_CART, 
-  REQUEST_FETCH_CART, 
+import {
+  REQUEST_CREATE_CART,
+  RECEIVED_CREATE_CART,
+  REQUEST_FETCH_CART,
   RECEIVED_FETCH_CART,
-  REQUEST_PATCH_CART, 
+  REQUEST_PATCH_CART,
   RECEIVED_PATCH_CART,
 } from './types';
 
 const localStorageClient = require('store');
 
 const INITIAL_STATE = {
-
+  items: [],
+  subtotal: 0,
+  total: 0,
 };
 
 export default (state = INITIAL_STATE, action) => {

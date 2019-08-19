@@ -9,7 +9,7 @@ import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
 import nxtTheme from './components/Theme/Theme';
-
+import { SnackbarProvider } from 'notistack';
 
 const ObjectId = require('bson-objectid');
 
@@ -35,7 +35,15 @@ const onStompConnectSuccess = () => {
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={nxtTheme}>
-      <App />
+        <SnackbarProvider
+          maxSnack={5}
+          anchorOrigin={{
+            horizontal: 'right',
+            vertical: 'top'}
+          }
+        >
+          <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>,
     document.querySelector('#root')
