@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import GalleryContext from '../../contexts/GalleryContext';
+import ProductContext from '../../contexts/ProductContext';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
@@ -15,7 +16,8 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 400,
+    width: '100%',
+    maxWidth: '712px',
     flexGrow: 1,
     MuiPaper: 0,
     display: 'flex',
@@ -27,25 +29,28 @@ const useStyles = makeStyles(theme => ({
     height: 50,
     paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
-  },
-  img: {
-    height: 255,
-    maxWidth: 400,
-    overflow: 'hidden',
-    display: 'block',
-    width: '100%',
-  },
+  }
 }));
 
 const Slider = () => {
   // get context from GalleryContext
   const productContext = useContext(GalleryContext)
+  const { product } = useContext(ProductContext);
+  const { assets, name, _id } = product
+  const maxSteps = Object.keys(assets).length
+  const imgUrl = Object.values(assets)
+  console.log(productContext)
+  console.log(product)
+  console.log(assets, name, _id)
+  console.log(maxSteps)
+  console.log(imgUrl)
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   // pass id to renderProducts function and render related product
   const transformProduct = (id, product) => {
     const { assets, name, _id } = product
+    console.log(assets, name, _id)
     const maxSteps = Object.keys(assets).length
     const imgUrl = Object.values(assets)
 
@@ -68,9 +73,9 @@ const Slider = () => {
                 <Card>
                   <CardMedia
                     key={`${_id}`}
-                    style={{ height: 355, width: 200, margin: '20px 90px' }}
+                    style={{ height: 355, width: 200, margin: '0 auto' }}
                     image={imgUrl[activeStep]}
-                    title={name}
+                    title={product.name}
                   />
                 </Card>
               ) : null}
@@ -99,10 +104,8 @@ const Slider = () => {
     )
   };
 
-  const renderProducts = id => Object.values(productContext)
-    .map(products => products.map(product => transformProduct(id, product))
-    )
-  //
+  const renderProducts = id => transformProduct(id, product)
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   }
@@ -114,7 +117,6 @@ const Slider = () => {
   function handleStepChange(step) {
     setActiveStep(step);
   }
-  console.log(Object.values(productContext).map(product => product))
   return (
     <div className={classes.root}>
       {

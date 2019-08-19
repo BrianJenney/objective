@@ -18,7 +18,6 @@ import Product from '../pages/Product';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
-import ProductSlider from './ProductSlider/';
 
 const localStorageClient = require('store');
 //localStorageClient.clearAll();  //Uncomment this to force creation of a new cart
@@ -63,7 +62,6 @@ class App extends Component {
           </div>
           <Navbar />
           <Header />
-          <ProductSlider />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />

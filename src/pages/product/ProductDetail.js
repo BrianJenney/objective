@@ -3,17 +3,16 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import ProductContext from '../../contexts/ProductContext';
-
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import ProductSlider from '../../components/common/Slider';
 import Link from '@material-ui/core/Link';
 
 import VariantSelectionDialog  from './VariantSelectionDialog'
@@ -28,14 +27,10 @@ const localStorageClient = require('store');
 const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
 const useStyles = makeStyles(theme => ({
-  media: {
-    width: 200,
-    height: 355,
-    margin: '20px 90px'
-  },
-  link: {
-    margin: theme.spacing(1),
-  },
+  root: {
+    width: '100%',
+    maxWidth: '728px'
+  }
 }));
 
 const ProductVariant = ({product, available }) => {
@@ -109,14 +104,10 @@ const ProductDetail = ({ history }) => {
     <Container>
       <Card >
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={4} md={4} alignItems="center">
-            <CardMedia
-              className={classes.media}
-              image={product.assets.imgs}
-              title={product.name}
-            />
+          <Grid item xs={12} sm={6}>
+            <ProductSlider />
           </Grid>
-          <Grid item xs={12} sm={8} md={8}>
+          <Grid item xs={12} sm={6}>
             <CardContent>
               <Typography gutterBottom variant="h4" align="center">{product.name}</Typography>
               <Divider variant="fullWidth" />
