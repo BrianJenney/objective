@@ -65,7 +65,6 @@ export class ProductStore extends Component {
       'correlation-id': ObjectId()
     }, obj);
 
-    let component = '$regex: ' + this.props.productId + '$';
     let re = new RegExp(this.props.productId + '$');
     params = {
       'params': {
@@ -80,22 +79,6 @@ export class ProductStore extends Component {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     }, obj);
-
-    // component = 'infoTab_' + this.props.productId;
-    // params = {
-    //   'params': {
-    //     'query': {
-    //       'component': component
-    //     }
-    //   }
-    // };
-
-    // obj = JSON.stringify(msgpack.encode(params));
-    // stompClient.send('/exchange/content/content.request.find', {
-    //   'reply-to': replyTo,
-    //   'correlation-id': ObjectId()
-    // }, obj);
-
   }
 
   render() {
