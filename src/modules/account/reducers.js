@@ -11,6 +11,8 @@ import {
 const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case REQUEST_FETCH_ACCOUNT:
       return { ...state };
@@ -25,10 +27,6 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_LOGIN_FAILURE:
       return { ...state };
     case RECEIVED_LOGIN_SUCCESS:
-      return { ...state, ...action.payload };
-    case REQUEST_PATCH_ACCOUNT:
-      return { ...state };
-    case RECEIVED_PATCH_ACCOUNT:
       return { ...state, ...action.payload };
     default:
       return state;
