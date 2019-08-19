@@ -11,8 +11,6 @@ import {
 const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
-  console.log(state);
-  console.log(action);
   switch (action.type) {
     case REQUEST_FETCH_ACCOUNT:
       return { ...state };

@@ -85,22 +85,6 @@ export const receivedFetchAccount = account => async (dispatch, getState) => {
   });
 };
 
-export const requestFindAccount = (email, password) => async (
-  dispatch,
-  getState
-) => {
-  const stompClient = getState().stomp.client;
-  const { replyTo } = getState().stomp;
-  const params = {
-    params: {
-      query: {
-        email,
-        password
-      }
-    }
-  };
-};
-
 export const requestPatchAccount = (accountId, patches) => async (
   dispatch,
   getState
