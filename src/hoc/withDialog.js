@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
 const withDialog = (WrappedComponent) => {
   const  WithDialog = (props) => {
-    const [open, setOpen] = useState(false);
-    useEffect(() => {
-      setOpen(true);
-    },[]);
+    const [open, setOpen] = useState(true);
     const handleDialogClose = useCallback(() => {
       setOpen(false);
     },[]);

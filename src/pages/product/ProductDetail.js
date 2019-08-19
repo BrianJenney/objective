@@ -43,7 +43,7 @@ const ProductVariant = ({product, available }) => {
   ) : null;
 };
 
-const ProductDetail = ({ message, history }) => {
+const ProductDetail = ({ history }) => {
   const available = 20;
 
   const classes = useStyles();
@@ -63,7 +63,7 @@ const ProductDetail = ({ message, history }) => {
     const newItems = cart.items;
     let alreadyInCart = false;
     // console.log('new Items', newItems)
-    newItems.filter(item => item.variant_id == selectedProductVariant._id)
+    newItems.filter(item => item.variant_id === selectedProductVariant._id)
             .forEach(item => {
               alreadyInCart = true;
               item.quantity += quantity;
@@ -94,10 +94,10 @@ const ProductDetail = ({ message, history }) => {
       variant: 'success',
     });
     history.push('/cart');
-  }, [product, selectedProductVariant, quantity, message, history]);
+  }, [product, selectedProductVariant, quantity, history, enqueueSnackbar]);
 
-  const showVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(true), [setOpenVariantSelectionDialog]);
-  const closeVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(false), [setOpenVariantSelectionDialog]);
+  const showVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(true), []);
+  const closeVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(false), []);
 
   if (!product) {
     return null;
@@ -116,7 +116,7 @@ const ProductDetail = ({ message, history }) => {
               title={product.name}
             />
           </Grid>
-          <Grid item item xs={12} sm={8} md={8}>
+          <Grid item xs={12} sm={8} md={8}>
             <CardContent>
               <Typography gutterBottom variant="h4" align="center">{product.name}</Typography>
               <Divider variant="fullWidth" />
