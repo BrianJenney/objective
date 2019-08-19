@@ -1,23 +1,25 @@
-import {
-  REQUEST_CREATE_ORDER,
-  RECEIVED_CREATE_ORDER
-} from './types';
+import { REQUEST_CREATE_ORDER, RECEIVED_CREATE_ORDER } from './types';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-//is this the proper place for this code?
-export const requestCreateOrder = cart => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+export const requestCreateOrder = (cart, nonce) => async (
+  dispatch,
+  getState
+) => {
+  const { client, replyTo } = getState().stomp;
   const params = {
-    data: { 'cart': cart }
+    data: { cart, nonce }
   };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/order/order.request.create', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const payload = JSON.stringify(msgpack.encode(params));
+  client.send(
+    '/exchange/order/order.request.create',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
   await dispatch({
     type: REQUEST_CREATE_ORDER,
     payload: {}

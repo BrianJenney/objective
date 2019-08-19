@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import braintree from 'braintree-web';
 import {
   CssBaseline,
   Paper,
@@ -9,15 +8,16 @@ import {
   Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { sendCreditCardBraintreeRequest } from '../utils/braintree';
+import store from '../store';
+import { requestPatchCart } from '../modules/cart/actions';
+import { requestCreateOrder } from '../modules/order/actions';
 import ShippingAddressForm from './checkout/ShippingAddressForm';
 import BillingAddressForm from './checkout/BillingAddressForm';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 import Result from './checkout/Result';
-import store from '../store';
-import { requestPatchCart } from '../modules/cart/actions';
-import { requestCreateOrder } from '../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -86,31 +86,21 @@ const Checkout = () => {
   const { cart } = store.getState();
   const fetchBrainTreeNonce = async () => {
     const { paymentDetails, billingAddress } = cart;
-    let nonce = null;
 
     try {
-      const client = await braintree.client.create({
-        authorization: process.env.BRAINTREE_CLIENT_AUTHORIZATION
+      const creditCardResponse = await sendCreditCardBraintreeRequest({
+        ...paymentDetails,
+        billingAddress
       });
-      const braintreeResponse = await client.request({
-        endpoint: 'payment_methods/credit_cards',
-        method: 'post',
-        data: {
-          creditCard: {
-            number: paymentDetails.cardNumber,
-            expirationDate: paymentDetails.expDate,
-            cvv: paymentDetails.cvv,
-            cardholderName: paymentDetails.cardName,
-            billingAddress
-          }
-        }
-      });
-      nonce = braintreeResponse.creditCards[0].nonce;
+
+      const { nonce } = creditCardResponse.creditCards[0];
+
+      return nonce;
     } catch (e) {
       console.log('Error', e);
     }
 
-    return nonce;
+    return null;
   };
   const handleBack = () => {
     if (activeStep === 0) {
@@ -132,6 +122,7 @@ const Checkout = () => {
     } else if (activeStep === 4) {
       // Fetch braintree nonce
       const nonce = await fetchBrainTreeNonce();
+      // @TODO: Error handling
       // We're done...place the cart onto the order exchange
       store.dispatch(requestCreateOrder(cart, nonce));
     }
