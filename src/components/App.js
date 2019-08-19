@@ -18,6 +18,9 @@ import Product from '../pages/Product';
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
+import ProductSlider from './ProductSlider/';
+import LoggedInUser from './LoggedInUser';
+import utils from './utils/utils';
 
 const localStorageClient = require('store');
 //localStorageClient.clearAll();  //Uncomment this to force creation of a new cart
@@ -62,6 +65,8 @@ class App extends Component {
           </div>
           <Navbar />
           <Header />
+          {utils.isLoggedIn() ? <LoggedInUser /> : ''}
+          <ProductSlider />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
@@ -85,7 +90,8 @@ const mapStateToProps = state => {
   return {
     stompClient: state.stomp.client,
     storefront: state.storefront,
-    cart: state.cart
+    cart: state.cart,
+    account: state.account
   };
 };
 
