@@ -62,13 +62,13 @@ export default function PdpTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const { product, hiwTab, infoTab } = useContext(ProductContext);
+  const { hiwTab, infoTab } = useContext(ProductContext);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
 
-  if (!product) {
+  if (!hiwTab || !infoTab) {
     return null;
   }
   return (
