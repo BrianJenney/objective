@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import utils from '../components/utils/utils';
 import store from '../store';
-import { requestFindAccount } from '../modules/account/actions';
+import { requestLoginAttempt } from '../modules/account/actions';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -57,7 +57,7 @@ export default function Login() {
 
   const handleClick = () => {
     if (utils.validateEmailAddress(email)) {
-      store.dispatch(requestFindAccount(email, password));
+      store.dispatch(requestLoginAttempt(email, password));
     } else {
       alert('Please enter a valid email address');
     }
