@@ -53,6 +53,7 @@ export const requestPatchAccount = (accountId, patches) => async (
     data: patches
   };
   var obj = JSON.stringify(msgpack.encode(params));
+  console.log(params);
   stompClient.send(
     '/exchange/account/account.request.patch',
     {

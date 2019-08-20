@@ -12,6 +12,7 @@ import Cart from '../pages/Cart';
 import Account from '../pages/Account';
 import ManageProfile from '../pages/account/ManageProfile';
 import ManageAddresses from '../pages/account/ManageAddresses';
+import ResetPassword from '../pages/account/ResetPassword';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
 import Product from '../pages/Product';
@@ -47,10 +48,10 @@ class App extends Component {
    * @note
    *
    * The order that routes are defined matters, make sure /:page is the very last one
-   * 
-   * The Navbar needs to be removed; it will be replaced by the Header component.  
-   * I'm leaving it in for now bc it provides easy access to the cart, checkout 
-   * funnel, etc. 
+   *
+   * The Navbar needs to be removed; it will be replaced by the Header component.
+   * I'm leaving it in for now bc it provides easy access to the cart, checkout
+   * funnel, etc.
    */
   render() {
     return (
@@ -71,6 +72,7 @@ class App extends Component {
             <Route path="/account" component={Account} />
             <Route path="/manage-profile" component={ManageProfile} />
             <Route path="/manage-addresses" component={ManageAddresses} />
+            <Route path="/reset-password" component={ResetPassword} />
             <Route path="/product/:id" component={Product} />
             <Route path="/:page" component={Static} />
           </Switch>
