@@ -109,7 +109,7 @@ const ProductDetail = ({ history }) => {
     return null;
   }
 
-  const dropdownType = product.attributes[0].name;
+  const dropdownType = product.attributes[0].value;
 
   return (
     <Container>
