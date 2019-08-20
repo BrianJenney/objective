@@ -25,7 +25,8 @@ export class ProductStore extends Component {
       this.setState({
         ...this.state,
         'hiwTab': data.data.data[0].content,
-        'infoTab': data.data.data[1].content
+        'infoTab': data.data.data[1].content,
+        'whhmBoxes': data.data.data[2].content,
       });
     });
     this.getProductData();
