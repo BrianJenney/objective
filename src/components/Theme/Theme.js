@@ -44,7 +44,7 @@ const nxtTheme = createMuiTheme({
     },
     text: {
       primary: color.BLACK,
-      secondary: color.NAVY,
+      secondary: color.BLACK,
       disabled: color.GRAY,
       hint: color.ORANGE
     },
@@ -148,7 +148,15 @@ const nxtTheme = createMuiTheme({
       fontWeight: `${fonts.captionBook.weight}`,
     }
   },
-  overrides: {},
+  overrides: {
+    MuiTab: {
+      root: {
+        '&$selected': {
+          backgroundColor: '#ffffff',
+        }
+      },
+    },
+  },
   shape: {
     borderRadius: 0
   },
