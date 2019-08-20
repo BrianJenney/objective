@@ -90,7 +90,7 @@ const Checkout = () => {
     try {
       const creditCardResponse = await sendCreditCardBraintreeRequest({
         ...paymentDetails,
-        billingAddress
+        postalCode: billingAddress.postalCode
       });
 
       const { nonce } = creditCardResponse.creditCards[0];

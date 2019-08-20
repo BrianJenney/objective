@@ -1,3 +1,4 @@
+import moment from 'moment';
 import braintreeClient from 'braintree-web/client';
 import config from './config';
 
@@ -13,17 +14,15 @@ export const createClient = async () => {
 
 export const sendCreditCardRequest = async payload => {
   const client = await createClient();
-
   const creditCardResponse = await client.request({
     endpoint: 'payment_methods/credit_cards',
     method: 'post',
     data: {
       creditCard: {
-        number: payload.cardNumber,
-        expirationDate: payload.expDate,
-        cvv: payload.cvv,
-        cardholderName: payload.cardName,
-        billingAddress: payload.billingAddress
+        ...payload,
+        number: parseInt(payload.number, 10),
+        expirationDate: moment(payload.expirationDate).format('MM/YYYY'),
+        cvv: parseInt(payload.cvv, 10)
       }
     }
   });

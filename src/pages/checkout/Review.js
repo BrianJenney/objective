@@ -43,20 +43,19 @@ const Review = ({ cart, onBack, onSubmit }) => {
   ) {
     return null;
   }
+  const shippingMethodLabel = `${shipping.displayName} - ${shipping.price} (Estimated Delivery: ${shipping.deliveryEstimate})`; // eslint-disable-line
 
+  /* eslint-disable */
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {Object.values(items).map(product => (
-          <ListItem className={classes.listItem} key={product.product_id}>
-            <ListItemText
-              primary={product.product_name}
-              secondary={product.desc}
-            />
-            <Typography variant="body2">{product.unit_price}</Typography>
+        {items.map(({ product_id, product_name, desc, unit_price }) => (
+          <ListItem className={classes.listItem} key={product_id}>
+            <ListItemText primary={product_name} secondary={desc} />
+            <Typography variant="body2">{unit_price}</Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
@@ -71,7 +70,7 @@ const Review = ({ cart, onBack, onSubmit }) => {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping Method
           </Typography>
-          <Typography gutterBottom>{shipping}</Typography>
+          <Typography gutterBottom>{shippingMethodLabel}</Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
@@ -86,7 +85,7 @@ const Review = ({ cart, onBack, onSubmit }) => {
             }`}
           </Typography>
           <Typography gutterBottom>
-            {`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.zip}`}
+            {`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -102,7 +101,7 @@ const Review = ({ cart, onBack, onSubmit }) => {
             }`}
           </Typography>
           <Typography gutterBottom>
-            {`${billingAddress.city}, ${billingAddress.state} ${billingAddress.zip}`}
+            {`${billingAddress.city}, ${billingAddress.state} ${billingAddress.postalCode}`}
           </Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
@@ -111,13 +110,17 @@ const Review = ({ cart, onBack, onSubmit }) => {
           </Typography>
           <Grid container>
             <Grid item xs={6}>
-              <Typography gutterBottom>{paymentDetails.cardName}</Typography>
+              <Typography gutterBottom>
+                {paymentDetails.cardholderName}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography gutterBottom>{paymentDetails.cardNumber}</Typography>
+              <Typography gutterBottom>{paymentDetails.number}</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography gutterBottom>{paymentDetails.expDate}</Typography>
+              <Typography gutterBottom>
+                {paymentDetails.expirationDate}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>{paymentDetails.cvv}</Typography>
@@ -131,6 +134,7 @@ const Review = ({ cart, onBack, onSubmit }) => {
       </Box>
     </Box>
   );
+  /* eslint-enable */
 };
 
 Review.propTypes = {

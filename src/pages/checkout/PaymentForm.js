@@ -12,9 +12,9 @@ import { Button } from '../../components/common';
 
 const schema = object().shape({
   paymentDetails: object().shape({
-    cardName: string().required('Card name is required'),
-    cardNumber: number().required('Card number is required'),
-    expDate: string().required('Expiry date is required'),
+    cardholderName: string().required('Card name is required'),
+    number: number().required('Card number is required'),
+    expirationDate: string().required('Expiry date is required'),
     cvv: number().required('CVV is required'),
     saveCard: boolean()
   })
@@ -22,9 +22,9 @@ const schema = object().shape({
 
 const INITIAL_VALUES = {
   paymentDetails: {
-    cardName: '',
-    cardNumber: 0,
-    expDate: '2019-10-01',
+    cardholderName: '',
+    number: 0,
+    expirationDate: '2019/10/01',
     cvv: 0,
     saveCard: false
   }
@@ -38,21 +38,21 @@ const PaymentForm = ({ onSubmit, onBack }) => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Field
-              name="paymentDetails.cardName"
+              name="paymentDetails.cardholderName"
               label="Name on Card"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Field
-              name="paymentDetails.cardNumber"
+              name="paymentDetails.number"
               label="Card Number"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Field
-              name="paymentDetails.expDate"
+              name="paymentDetails.expirationDate"
               component={DatePickerField}
               variant="inline"
               label="Expiry Date"

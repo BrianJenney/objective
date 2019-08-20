@@ -14,7 +14,7 @@ const schema = object().shape({
     address2: string().required('Address2 is required'),
     city: string().required('City is required'),
     state: string().required('State is required'),
-    zip: string().required('Zip code is required'),
+    postalCode: string().required('Postal code is required'),
     country: string().required('Country is required')
   })
 });
@@ -27,7 +27,7 @@ const INITIAL_VALUES = {
     address2: '',
     city: '',
     state: '',
-    zip: '',
+    postalCode: '',
     country: ''
   }
 };
@@ -82,7 +82,7 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="shippingAddress.zip"
+              name="shippingAddress.postalCode"
               label="Zip/Postal code"
               component={InputField}
             />
