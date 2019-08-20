@@ -66,7 +66,6 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  console.log(utils.isLoggedIn());
   return (
     <React.Fragment>
       <CssBaseline />

@@ -36,13 +36,7 @@ const Logout = () => {
   }
 
   return (
-    <Button
-      href="#"
-      color="primary"
-      variant="outlined"
-      className={classes.link}
-      onClick={handleClick}
-    >
+    <Button variant="outlined" className={classes.link} onClick={handleClick}>
       Logout
     </Button>
   );

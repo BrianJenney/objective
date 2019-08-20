@@ -65,7 +65,7 @@ class App extends Component {
           </div>
           <Navbar />
           <Header />
-          {utils.isLoggedIn() ? <LoggedInUser /> : ''}
+          {utils.isLoggedIn() && <LoggedInUser />}
           <ProductSlider />
           <Switch>
             <Route exact path="/" component={Home} />
