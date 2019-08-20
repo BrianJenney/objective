@@ -3,8 +3,7 @@ import {
   receivedFetchAccount,
   receivedPatchAccount,
   receivedLoginFailure,
-  receivedLoginSuccess,
-  receivedPatchAccount
+  receivedLoginSuccess
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields, properties) => {
