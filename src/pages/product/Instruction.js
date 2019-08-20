@@ -10,6 +10,10 @@ import ProductContext from '../../contexts/ProductContext';
 export default function Instruction() {
   const { whhmBoxes } = useContext(ProductContext);
 
+  if (!whhmBoxes) {
+    return null;
+  }
+
   return (
     <Container>
       <div dangerouslySetInnerHTML={{ __html: whhmBoxes }} />
