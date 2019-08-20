@@ -11,7 +11,10 @@ const Context = React.createContext();
 export class ProductStore extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      product: null,
+      variants: [],
+    };
   }
 
   componentDidMount() {

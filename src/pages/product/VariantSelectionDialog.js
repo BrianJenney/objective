@@ -61,7 +61,7 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-const VariantSelectionForm = ({closeVariantSelectionDialog, closeDialog, onExited}) => {
+const VariantSelectionForm = ({dropdownType, closeVariantSelectionDialog, closeDialog, onExited}) => {
   const { variants } = useContext(ProductContext);
 
   const handleClose = useCallback(() => {
@@ -77,22 +77,26 @@ const VariantSelectionForm = ({closeVariantSelectionDialog, closeDialog, onExite
 
   const renderForm = ({ values }) => {
 
-    const variantOptions = variants.map((variant, index) => ({
-      key: variant._id,
-      label: `${variant.sku}: $${variant.price.$numberDecimal}`,
-      value: String(index)
-    }));
+    const dropdownOptions = variants.filter(variant => variant.attributes[0].name === dropdownType)
+                                    .map((variant, index) => {
+                                      const dropdownValue = variant.attributes[0].value;
+                                      return {
+                                        key: variant._id,
+                                        label: `${dropdownValue} @ $${variant.price.$numberDecimal}`,
+                                        value: String(index)
+                                      }
+                                    });
 
     return (
       <Form>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          <strong>Product Variant</strong>
+          <strong>{dropdownType}</strong>
         </DialogTitle>
         <DialogContent dividers>
           <Field
             component={RadioGroupField}
             name="selectedVariantIndex"
-            options={variantOptions}
+            options={dropdownOptions}
           />
         </DialogContent>
         <DialogActions>

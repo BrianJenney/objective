@@ -1,8 +1,9 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-
+import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,11 +31,24 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     maxWidth: '728px'
+  },
+  box: {
+    backgroundColor: 'grey'
+  },
+  title: {
+    margin: 0,
+    paddingTop: theme.spacing(7),
+    paddingBottom: theme.spacing(7),
+  },
+  subtitle: {
+    margin: 0,
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   }
 }));
 
-const ProductVariant = ({product, available }) => {
-  return product ? (<Typography  variant="body2"><strong>${product.price.$numberDecimal}</strong> / {available} {product.sku } CAPSULES</Typography>
+const ProductVariant = ({productVariant, available }) => {
+  return productVariant ? (<Typography variant="body2"><strong>{productVariant.attributes[0].value} ${productVariant.price.$numberDecimal}</strong> / {available} {productVariant.sku } CAPSULES</Typography>
   ) : null;
 };
 
@@ -42,6 +56,8 @@ const ProductDetail = ({ history }) => {
   const available = 20;
 
   const classes = useStyles();
+  const cart = useSelector(state => state.cart);
+  const dispatch = useDispatch();
   const [ openVariantSelectionDialog, setOpenVariantSelectionDialog ] = useState(false);
   const [ selectedProductVariant, setSelectedProductVariant ] = useState(null);
   const { product } = useContext(ProductContext);
@@ -53,17 +69,13 @@ const ProductDetail = ({ history }) => {
   },[setSelectedProductVariant]);
 
   const handleAddToCart = useCallback(() => {
-    const { cart } = store.getState();
-    // console.log('cart', cart)
     const newItems = cart.items;
     let alreadyInCart = false;
-    // console.log('new Items', newItems)
     newItems.filter(item => item.variant_id === selectedProductVariant._id)
             .forEach(item => {
               alreadyInCart = true;
               item.quantity += quantity;
             });
-
     if (!alreadyInCart) {
       const newItem = {
         product_id: product._id,
@@ -71,20 +83,19 @@ const ProductDetail = ({ history }) => {
         variant_name: selectedProductVariant.name,
         variant_id: selectedProductVariant._id,
         sku: selectedProductVariant.sku,
+        variant_type: selectedProductVariant.attributes[0].name,
+        variant_value: selectedProductVariant.attributes[0].value,
         quantity: quantity,
         unit_price: parseFloat(selectedProductVariant.price.$numberDecimal)
       };
       newItems.push(newItem);
     }
-    // console.log('cart', newItems)
-
     const patches = {
       items: newItems,
       subtotal: calculateCartTotal(newItems),
       total: calculateCartTotal(newItems)
     };
-
-    store.dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
+    dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
@@ -98,7 +109,7 @@ const ProductDetail = ({ history }) => {
     return null;
   }
 
-  const subtitle = 'COMPLETE PLAN PROTEIN + PROBIOTICS';
+  const dropdownType = product.attributes[0].name;
 
   return (
     <Container>
@@ -109,17 +120,22 @@ const ProductDetail = ({ history }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <CardContent>
-              <Typography gutterBottom variant="h4" align="center">{product.name}</Typography>
               <Divider variant="fullWidth" />
-              <Typography variant="h6" align="center">{subtitle}</Typography>
+              <Box className={classes.box}>
+                <Typography className={classes.title} variant="h3" align="center">{product.name}</Typography>
+              </Box>
+              <Divider variant="fullWidth" />
+              <Box className={classes.box} >
+                <Typography className={classes.subtitle} variant="h6" align="center">{product.subtitle}</Typography>
+              </Box>
               <Divider variant="fullWidth" />
               <br/>
               <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
               <br/>
               <Typography>
-                <Link color="primary" variant="caption" onClick={showVariantSelectionDialog}>Select Product Variant</Link>
+                <Link color="primary" variant="caption" onClick={showVariantSelectionDialog}>Select {dropdownType}</Link>
               </Typography>
-              <ProductVariant product={selectedProductVariant} available={available}/>
+              <ProductVariant productVariant={selectedProductVariant} available={available}/>
               <br/>
               <Divider variant="fullWidth" />
               <br/>
@@ -128,15 +144,15 @@ const ProductDetail = ({ history }) => {
               <Divider variant="fullWidth" />
             </CardContent>
             <CardActions>
-              <Button variant="outlined" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant == null}>
-                Add {quantity} item{quantity > 1 ? 's' : ''} To Cart
+              <Button fullWidth variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant == null}>
+                Buy {quantity} item{quantity > 1 ? 's' : ''}
               </Button>
             </CardActions>
           </Grid>
         </Grid>
       </Card>
       {openVariantSelectionDialog &&
-       <VariantSelectionDialog closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
+       <VariantSelectionDialog dropdownType={dropdownType} closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
     </Container>
   );
 
