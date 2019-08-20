@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -30,7 +30,7 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
@@ -41,27 +41,32 @@ function a11yProps(index) {
 }
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: 'white'
-  },
   indicator: {
-    display: 'none'
+    display: 'block',
+    borderBottom: '1px solid #ffffff',
+    backgroundColor: '#fdf8f2',
   },
   tabs: {
-    borderBottom: '1px solid #003833',
     borderLeft: '1px solid #003833',
-    backgroundColor: '#FDF8F2'
+    borderBottom: '1px solid #003833',
+    backgroundColor: '#fdf8f2',
+    padding: '30px 0',
+    fontFamily: 'Helvetica, sans',
+    "&:hover" : {
+      backgroundColor: '#ffffff',
+      color: '#000000',
+    },
   },
   wrapper: {
     marginTop: '50px',
     border: '1px solid #003833'
-  }
+  },
 }));
 
 export default function PdpTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const { hiwTab, infoTab } = useContext(ProductContext);
 
   function handleChange(event, newValue) {
@@ -81,13 +86,14 @@ export default function PdpTabs(props) {
                 value={value}
                 onChange={handleChange}
                 variant="fullWidth"
+                textColor="primary"
                 classes={{ indicator: classes.indicator }}
               >
-                <Tab label="How it works" {...a11yProps(0)} className={classes.tabs} />
-                <Tab label="Information" {...a11yProps(1)} className={classes.tabs} />
+                <Tab variant="smallHeader" label="How it works" {...a11yProps(0)} className={classes.tabs} style={{borderLeft: 'none'}} />
+                <Tab variant="smallHeader" label="Information" {...a11yProps(1)} className={classes.tabs} />
               </Tabs>
             </AppBar>
-            <TabPanel value={value} index={0} dir={theme.direction} tab={0}>
+            <TabPanel value={value} index={0} dir={theme.direction}>
               <div dangerouslySetInnerHTML={{ __html: hiwTab }} />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
