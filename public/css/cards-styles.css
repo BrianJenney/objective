@@ -466,7 +466,6 @@ html, * {
 
 @media only screen and (min-width: 735.99px) {
   .step-wrapper {
-    width: 1361px;
     height: 768px;
     border: solid 1px #003833;
     justify-content: center;
@@ -598,3 +597,97 @@ img {
     padding: 20px;
   }
 }
+
+.whhm-wrapper { 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.one-box, .two-box, .three-box {
+  width: 343px;
+  height: 400px;
+  border: solid 2px #003833;;
+  margin: 16px;
+}
+
+.one-label, .two-label, .three-label {
+  height: 20px;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.6px;
+  text-align: center;
+  color: #000000;
+}
+
+.one-bottom-color, .two-bottom-color, .three-bottom-color {
+  width: 339px;
+  height: 125px;
+  background-color: #003833;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.one-title, .two-title {
+  width: 133px;
+  font-family: FreightTextProBook;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #b3dcc5;
+}
+
+.three-title {
+  width: 70px;
+  height: 64px;
+  font-family: FreightTextProBook;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #b3dcc5;
+}
+
+.clock-icon {
+  width: 95px;
+  height: 82px;
+  margin: 70px 120px 69px 120px;
+}
+
+.glass-icon {
+  width: 80px;
+  height: 89px;
+  margin: 70px 130px 62px 128px;
+}
+
+.spoons-icon {
+  width: 90px;
+  height: 81px;
+  margin: 70px 130px 70px 125px;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .whhm-wrapper {
+      height: 700px;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      justify-content: center;
+  }
+  .one-box, .two-box, .three-box {
+    margin: 50px;
+  }
+}
+
