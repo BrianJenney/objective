@@ -27,6 +27,7 @@ export class ProductStore extends Component {
         'hiwTab': data.data.data[0].content,
         'infoTab': data.data.data[1].content,
         'whhmBoxes': data.data.data[2].content,
+        'stepBoxes': data.data.data[3].content,
       });
     });
     this.getProductData();
