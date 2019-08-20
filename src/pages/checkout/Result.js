@@ -1,28 +1,19 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import { Typography, Paper } from '@material-ui/core';
+import { Button } from '../../components/common';
 
-class Result extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = props || { };
-  }
+const Result = ({ onSubmit }) => (
+  <Paper>
+    <Typography component="h1" variant="h4" align="center">
+      Things
+    </Typography>
+    <Button type="button" onClick={onSubmit} children="OK" />
+  </Paper>
+);
 
-  render() {
-
-    if(!this.props.success) {
-      return(<div></div>);
-    }
-
-    console.log(this.props);
-    return (
-      <Paper>
-        <Typography component="h1" variant="h4" align="center">
-          Things
-        </Typography>
-      </Paper>
-    );
-  }
-}
+Result.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};
 
 export default Result;

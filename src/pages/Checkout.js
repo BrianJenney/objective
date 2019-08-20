@@ -1,114 +1,163 @@
-import React from 'react';
+import React, { useState, Fragment } from 'react';
+import {
+  CssBaseline,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Typography
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import AddressForm from './checkout/AddressForm';
-import BillingAddressForm from './checkout/BillingAddress';
+import { sendCreditCardBraintreeRequest } from '../utils/braintree';
+import store from '../store';
+import { requestPatchCart } from '../modules/cart/actions';
+import { requestCreateOrder } from '../modules/order/actions';
+import ShippingAddressForm from './checkout/ShippingAddressForm';
+import BillingAddressForm from './checkout/BillingAddressForm';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 import Result from './checkout/Result';
 
-import store from '../store';
-import { requestPatchCart } from '../modules/cart/actions';
-import { requestCreateOrder } from '../modules/order/actions';
-
-
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative',
+    position: 'relative'
   },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
+    [theme.breakpoints.up(800 + theme.spacing(2) * 2)]: {
+      width: 800,
       marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+      marginRight: 'auto'
+    }
   },
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+    [theme.breakpoints.up(800 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
+      padding: theme.spacing(3)
+    }
   },
   stepper: {
-    padding: theme.spacing(3, 0, 5),
+    padding: theme.spacing(3, 0, 5)
   },
   buttons: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   button: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
+    marginLeft: theme.spacing(1)
+  }
 }));
 
-const steps = ['Shipping Method', 'Shipping Address', 'Billing Address', 'Payment Details', 'Review Your Order', 'Confirmation'];
+const steps = [
+  'Shipping Method',
+  'Shipping Address',
+  'Billing Address',
+  'Payment Details',
+  'Review Your Order',
+  'Confirmation'
+];
 
-function getStepContent(step, cart, formRef) {
-  switch (step) {
-  case 0:
-    return <ShippingForm cart={cart} ref={formRef}/>;
-  case 1:
-    return <AddressForm cart={cart} ref={formRef}/>;
-  case 2:
-    return <BillingAddressForm cart={cart} ref={formRef}/>;
-  case 3:
-    return <PaymentForm cart={cart} ref={formRef}/>;
-  case 4:
-    return <Review cart={cart} />;
-  case 5:
-    return <Result cart={cart} />;
-  default:
-    throw new Error('Unknown step');
+const shippingMethods = {
+  ground: {
+    displayName: 'Ground',
+    name: 'ground',
+    price: 0.0,
+    deliveryEstimate: '3-7 Business Days'
+  },
+  twodayair: {
+    displayName: '2 Day Air',
+    name: '2dayair',
+    price: 17.9,
+    deliveryEstimate: '2 Business Days'
   }
-}
+};
 
-export default function Checkout(props) {
-  let formRef = React.createRef();
+const Checkout = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  
-  let cart = store.getState().cart;
-  //console.log(cart);
+  const [activeStep, setActiveStep] = useState(0);
+  const { cart } = store.getState();
+  const fetchBrainTreeNonce = async () => {
+    const { paymentDetails, billingAddress } = cart;
 
-  const handleNext = () => {
-    if((activeStep == 1) || (activeStep == 2) || activeStep == 3) {
-      if(!formRef.current.validate()) {
-        console.log('invalid');
-        return false;
-      }
+    try {
+      const creditCardResponse = await sendCreditCardBraintreeRequest({
+        ...paymentDetails,
+        postalCode: billingAddress.postalCode
+      });
+
+      const { nonce } = creditCardResponse.creditCards[0];
+
+      return nonce;
+    } catch (e) {
+      console.log('Error', e);
     }
 
-    if(activeStep == 4) {
-      //We're done...place the cart onto the order exchange
-      store.dispatch(requestCreateOrder(cart));
-    } else if(activeStep != 5) {
+    return null;
+  };
+  const handleBack = () => {
+    if (activeStep === 0) {
+      return;
+    }
+    setActiveStep(activeStep - 1);
+  };
+  const handleNext = async values => {
+    if (activeStep === 0) {
       // update mongo & redux
-      store.dispatch(requestPatchCart(cart._id, formRef.current.getData()));
+      store.dispatch(
+        requestPatchCart(cart._id, {
+          shipping: shippingMethods[values.shipping]
+        })
+      );
+    } else if (activeStep <= 3) {
+      // update mongo & redux
+      store.dispatch(requestPatchCart(cart._id, values));
+    } else if (activeStep === 4) {
+      // Fetch braintree nonce
+      const nonce = await fetchBrainTreeNonce();
+      // @TODO: Error handling
+      // We're done...place the cart onto the order exchange
+      store.dispatch(requestCreateOrder(cart, nonce));
     }
+
     setActiveStep(activeStep + 1);
   };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
+  const getStepContent = step => {
+    switch (step) {
+      case 0:
+        return <ShippingForm onSubmit={handleNext} />;
+      case 1:
+        return (
+          <ShippingAddressForm onBack={handleBack} onSubmit={handleNext} />
+        );
+      case 2:
+        return (
+          <BillingAddressForm
+            shippingAddressSeed={cart}
+            onBack={handleBack}
+            onSubmit={handleNext}
+          />
+        );
+      case 3:
+        return <PaymentForm onBack={handleBack} onSubmit={handleNext} />;
+      case 4:
+        return <Review cart={cart} onBack={handleBack} onSubmit={handleNext} />;
+      case 5:
+        return <Result onSubmit={handleNext} />;
+      default:
+        throw new Error('Unknown step');
+    }
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -122,42 +171,26 @@ export default function Checkout(props) {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <Fragment>
             {activeStep === steps.length ? (
-              <React.Fragment>
+              <Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  Your order number is #2001539. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
                 </Typography>
-              </React.Fragment>
+              </Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep, cart, formRef)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && activeStep != steps.length - 1 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  {activeStep != steps.length - 1 && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 2 ? 'Place order' : 'Next'}
-                    </Button>
-                  )}
-                </div>
-              </React.Fragment>
+              <Fragment>{getStepContent(activeStep)}</Fragment>
             )}
-          </React.Fragment>
+          </Fragment>
         </Paper>
       </main>
-    </React.Fragment>
+    </Fragment>
   );
-}
+};
+
+export default Checkout;

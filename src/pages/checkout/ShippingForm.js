@@ -1,74 +1,67 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import { object, string } from 'yup';
+import { Formik, Field, Form } from 'formik';
+import { Box, Grid, Typography } from '@material-ui/core';
+import { RadioGroupField } from '../../components/form-fields';
+import { Button } from '../../components/common';
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+const schema = object().shape({
+  shipping: string().required('Shipping method is required')
+});
 
-//mock shipping methods...where will this come from when we go live?
-const shippingMethods = [{
-  displayName: 'Ground',
-  name: 'ground',
-  price: 0.00,
-  deliveryEstimate: '3-7 Business Days'
-}, {
-  displayName: '2 Day Air',
-  name: '2dayair',
-  price:  17.90,
-  deliveryEstimate: '2 Business Days'
-}];
-
-class ShippingForm extends React.Component {
-
-  constructor() {
-    super();
-    this.state = {
-      shippingMethod: 0
-    };
-    this.handleChange = this.handleChange.bind(this);
+const SHIPPING_METHOD_OPTIONS = [
+  {
+    key: 'ground',
+    label: 'Ground - 0.00 (Estimated Delivery: 3-7 Business Days)',
+    value: 'ground'
+  },
+  {
+    key: 'air',
+    label: '2 Day Air - 17.9 (Estimated Delivery: 2 Business Days)',
+    value: 'twodayair'
   }
+];
 
-  setShippingMethod(s) {
-    this.setState({shippingMethod: s});
-  }
+const INITIAL_VALUES = {
+  shipping: ''
+};
 
-  getData() {
-    return {shipping: shippingMethods[this.state.shippingMethod]};
-  }
-
-  handleChange(event) {
-    this.setShippingMethod(parseInt(event.target.value));
-    this.props.cart.shipping = shippingMethods[this.state.shippingMethod];
-    console.log(this.props.cart);
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-          Shipping Method
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <RadioGroup
-              name="shippingMethod"
-              onChange={this.handleChange}
-              row
-              value={this.shippingMethod}
-            >
-              {Object.values(shippingMethods).map((sm, index) => (
-                <>
-                <FormControlLabel key={index.toString()} value={parseInt(index)} control={<Radio checked={this.state.shippingMethod==index}/>} label={sm.displayName + ' - ' + sm.price} />
-                <span>Estimated delivery:  {sm.deliveryEstimate}</span>
-                </> 
-              ))}
-            </RadioGroup>
-          </Grid>
+const ShippingForm = ({ onSubmit }) => {
+  const renderForm = () => (
+    <Box>
+      <Typography variant="h6" gutterBottom children="Shipping Method" />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Form>
+            <Box>
+              <Field
+                component={RadioGroupField}
+                name="shipping"
+                options={SHIPPING_METHOD_OPTIONS}
+              />
+            </Box>
+            <Box>
+              <Button type="submit" children="Next" />
+            </Box>
+          </Form>
         </Grid>
-      </React.Fragment>
-    );
-  }
-}
+      </Grid>
+    </Box>
+  );
+
+  return (
+    <Formik
+      initialValues={INITIAL_VALUES}
+      onSubmit={onSubmit}
+      validationSchema={schema}
+      render={renderForm}
+    />
+  );
+};
+
+ShippingForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};
 
 export default ShippingForm;
