@@ -16,6 +16,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case RECEIVED_FETCH_ACCOUNT:
       return { ...state, ...action.payload };
+    case REQUEST_PATCH_ACCOUNT:
+      return { ...state };
+    case RECEIVED_PATCH_ACCOUNT:
+      return { ...state, ...action.payload };
     case REQUEST_LOGIN_ATTEMPT:
       return { ...state };
     case RECEIVED_LOGIN_FAILURE:
