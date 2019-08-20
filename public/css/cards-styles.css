@@ -456,3 +456,145 @@ html, * {
     flex-direction: row;
   }
 }
+
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .step-wrapper {
+    width: 1361px;
+    height: 768px;
+    border: solid 1px #003833;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+}
+
+.step-title {
+  width: 245px;
+  height: 40px;
+  font-family: helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.6px;
+  text-align: center;
+  color: #000000;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+@media only screen and (min-width: 735.99px) {
+.step-title {
+   width: 421px;
+   height: 20px;
+   font-family: sans-serif;
+   font-size: 20px;
+   font-weight: 600;
+   font-style: normal;
+   font-stretch: normal;
+   line-height: normal;
+   letter-spacing: 1.6px;
+   text-align: center;
+   color: #000000;
+  }
+}
+
+.step-subheader {
+  width: 311px;
+  height: 96px;
+  font-family: FreightTextProBook;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+  padding-top: 15px;
+}
+
+@media only screen and (min-width: 735.99px) {
+.step-subheader {
+   width: 549px;
+   height: 64px;
+   font-family: FreightTextProBook;
+   font-size: 20px;
+   font-weight: normal;
+   font-style: normal;
+   font-stretch: normal;
+   line-height: 1.6;
+   letter-spacing: normal;
+   text-align: center;
+   color: #000000;
+  }
+}
+
+.step-label {
+  font-family: helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.6px;
+  text-align: center;
+  color: #000000;
+  padding-top: 15px;
+}
+
+img {
+  width: 240px;
+  height: 246.2px;
+}
+
+.step-slider {
+  padding-top: 50px;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-bottom: 50px;
+}
+.step-slide {
+  flex-shrink: 0;
+  margin: 5px;
+  scroll-snap-align: start;
+}
+
+.step-slider::-webkit-scrollbar {
+  height: 2px;
+}
+
+.step-slider::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+.step-slider::-webkit-scrollbar-thumb {
+  background: #003833;
+}
+
+@media only screen and (min-width: 735.99px) {
+img {
+   width: 310px;
+   height: 318px;
+  }
+  .step-slider {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+  }
+  .step-slide {
+    padding: 20px;
+  }
+}
