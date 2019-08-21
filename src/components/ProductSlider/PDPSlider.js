@@ -27,7 +27,6 @@ const Carousel = (props) => {
       const thumbImg = thumb.getElementsByTagName('img')
 
       for (let item of thumbImg) {
-
         item.classList.add(styles['reset-thumb-height'])
       }
     }
