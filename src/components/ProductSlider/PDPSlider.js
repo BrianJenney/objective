@@ -12,7 +12,6 @@ const Carousel = (props) => {
   useEffect(() => {
     const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper')
     const largeImg = document.getElementsByClassName('image-gallery-image')
-    const thumbImg = document.getElementsByClassName('image-gallery-thumbnails-container')
 
     for (let imgParent of largeImg) {
       imgParent.classList.add(styles['reset-display'])
@@ -20,14 +19,6 @@ const Carousel = (props) => {
 
       for (let pic of prodImg) {
         pic.classList.add(styles['reset-image-size'])
-      }
-    }
-
-    for (let thumb of thumbImg) {
-      const thumbImg = thumb.getElementsByTagName('img')
-
-      for (let item of thumbImg) {
-        item.classList.add(styles['reset-thumb-height'])
       }
     }
 
@@ -59,10 +50,10 @@ const Carousel = (props) => {
 
     let carouselImages = [];
 
-    imgArr.map(url => {
-      carouselImages.push({ original: url, thumbnail: url })
-      return carouselImages
+    const mappedAssets = () => imgArr.map(url => {
+      carouselImages.push({original: url, thumbnail: url})
     })
+    mappedAssets()
 
     if (!_id) {
       return null;

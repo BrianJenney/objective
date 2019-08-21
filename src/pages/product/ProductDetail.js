@@ -13,6 +13,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import ProductSlider from '../../components/common/Slider';
+
 import Link from '@material-ui/core/Link';
 
 import VariantSelectionDialog  from './VariantSelectionDialog'
