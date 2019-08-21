@@ -19,7 +19,7 @@ export default function Instruction() {
     textAlign: "center",
     alignItems: "center",
     pt: 10,
-    pb: 8,
+    pb: 5,
   };
 
   if (!whhmBoxes) {
@@ -29,7 +29,7 @@ export default function Instruction() {
   return (
     <Container>
       <Grid container spacing={6} justify="center">
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={5}>
           <Box {...box}>
             LOREM IPSUM COMPLIANCE
           </Box>
