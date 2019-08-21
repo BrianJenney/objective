@@ -7,7 +7,6 @@ import styles from './overrides.module.scss'
 const Carousel = (props) => {
   const { product } = useContext(ProductContext);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  console.log(product)
 
   useEffect(() => {
     const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper')
@@ -31,7 +30,6 @@ const Carousel = (props) => {
       }
     }
 
-    console.log(largeImg)
     if (windowWidth < 769) {
       imageWrapper[0].classList.add(styles['newWidth'])
     } else if (windowWidth > 769) {
