@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import ProductContext from '../../contexts/ProductContext';
+import './cards-styles.css'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

@@ -1,0 +1,25 @@
+.newWidth {
+  width: 100% !important;
+}
+
+.reset-display {
+  display: flex;
+  max-height: 682px;
+}
+
+.reset-image-size {
+  height: auto;
+  // width: auto !important;
+  margin: 0 auto;
+  object-fit: scale-down;
+}
+
+.reset-thumb-height {
+  width: auto;
+  height: auto;
+
+  @media only screen and (min-width: 735.99px) {
+    width: auto;
+    height: auto;
+  }
+}
