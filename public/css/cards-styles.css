@@ -690,10 +690,28 @@ img {
       flex-wrap: nowrap;
       flex-direction: row;
       justify-content: center;
-      padding-bottom: 30px;
+      padding-bottom: 50px;
   }
   .one-box, .two-box, .three-box {
     margin: 50px;
+    width: 341px;
+    position: relative;
+  }
+  .one-label, .two-label, .three-label {
+    position: absolute;
+    top: 420px;
+    right: 0;
+    left: 0;
+  }
+  .img-container {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 100px;
+  }
+  .one-bottom-color, .two-bottom-color, .three-bottom-color {
+    position: absolute;
+    bottom: 0;
   }
 }
 
