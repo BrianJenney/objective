@@ -8,25 +8,12 @@ import {
   Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-<<<<<<< HEAD
 import { sendCreditCardBraintreeRequest } from '../utils/braintree';
 import store from '../store';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
 import ShippingAddressForm from './checkout/ShippingAddressForm';
 import BillingAddressForm from './checkout/BillingAddressForm';
-=======
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import AddressForm from './checkout/AddressForm';
-import CreateAccount from './checkout/CreateAccount';
-import BillingAddressForm from './checkout/BillingAddress';
->>>>>>> rudimentary create account form
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
@@ -78,7 +65,6 @@ const steps = [
   'Confirmation'
 ];
 
-<<<<<<< HEAD
 const shippingMethods = {
   ground: {
     displayName: 'Ground',
@@ -91,26 +77,6 @@ const shippingMethods = {
     name: '2dayair',
     price: 17.9,
     deliveryEstimate: '2 Business Days'
-=======
-function getStepContent(step, cart, formRef) {
-  switch (step) {
-    case 0:
-      return <CreateAccount cart={cart} ref={formRef}/>;
-    case 1:
-      return <ShippingForm cart={cart} ref={formRef}/>;
-    case 2:
-      return <AddressForm cart={cart} ref={formRef}/>;
-    case 3:
-      return <BillingAddressForm cart={cart} ref={formRef}/>;
-    case 4:
-      return <PaymentForm cart={cart} ref={formRef}/>;
-    case 5:
-      return <Review cart={cart} />;
-    case 6:
-      return <Result cart={cart} />;
-    default:
-      throw new Error('Unknown step');
->>>>>>> rudimentary create account form
   }
 };
 
