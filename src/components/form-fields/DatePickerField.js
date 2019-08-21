@@ -63,7 +63,7 @@ DatePickerField.defaultProps = {
   fullWidth: true,
   margin: 'dense',
   inputVariant: 'outlined',
-  valueFormat: 'YYYY-MM-DD',
+  valueFormat: 'MM/DD/YYYY',
   format: 'MM/DD/YYYY',
   onChange: noop
 };

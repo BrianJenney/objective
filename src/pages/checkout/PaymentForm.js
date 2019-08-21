@@ -24,7 +24,7 @@ const INITIAL_VALUES = {
   paymentDetails: {
     cardholderName: '',
     number: 0,
-    expirationDate: '2019/10/01',
+    expirationDate: '02/20/2023',
     cvv: 0,
     saveCard: false
   }
