@@ -76,7 +76,7 @@ class ResetPassword extends React.Component {
     const { account: user } = this.props;
 
     if (!user.contactPreferences) {
-      return <AlertPanel children="No Account" />;
+      return <AlertPanel type="info" text="No Account" />;
     }
 
     return (
