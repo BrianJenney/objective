@@ -26,10 +26,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case RECEIVED_LOGIN_SUCCESS:
       return { ...state, ...action.payload };
-    case REQUEST_PATCH_ACCOUNT:
-      return { ...state };
-    case RECEIVED_PATCH_ACCOUNT:
-      return { ...state, ...action.payload };
     default:
       return state;
   }

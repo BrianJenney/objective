@@ -157,7 +157,6 @@ export const receivedLoginSuccess = loginReply => async (dispatch, getState) => 
 };
 
 export const receivedLoginFailure = loginReply => async (dispatch, getState) => {
-  console.log(loginReply);
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
     payload: {}
