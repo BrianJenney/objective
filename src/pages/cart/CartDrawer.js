@@ -8,46 +8,41 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import { AlertPanel } from '../../components/common';
 import { Link } from 'react-router-dom';
+import { calculateCartTotal } from './CartFunctions';
 
-import { requestFetchCart, requestPatchCart } from '../modules/cart/actions';
+import { requestFetchCart, requestPatchCart } from '../../modules/cart/actions';
 
-import store from '../store';
+import store from '../../store';
 
 class Cart extends React.Component {
   applyCoupon(e) {
     console.log('Logic to apply coupon goes here');
   }
 
-  calculateCartTotal(c) {
-    let total = 0;
-    for (let i = 0; i < c.length; i++) {
-      total += c[i].unit_price * c[i].quantity;
-    }
-    return total;
-  }
-
   removeFromCart(e) {
-    const newitems = this.props.cart.items;
-    newitems.splice(e.currentTarget.value, 1);
+
+    const newItems = [...this.props.cart.items];
+    newItems.splice(e.currentTarget.value, 1);
 
     const patches = {
-      items: newitems,
-      subtotal: this.calculateCartTotal(newitems),
-      total: this.calculateCartTotal(newitems)
+      items: newItems,
+      subtotal: calculateCartTotal(newItems),
+      total: calculateCartTotal(newItems)
     };
 
     store.dispatch(requestPatchCart(this.props.cart._id, patches));
   }
 
   adjustQty(e, amt) {
-    const newitems = this.props.cart.items;
-    newitems[e.currentTarget.value].quantity += amt;
+    const newItems = [...this.props.cart.items];
+    newItems[e.currentTarget.value].quantity += amt;
 
     const patches = {
-      items: newitems,
-      subtotal: this.calculateCartTotal(newitems),
-      total: this.calculateCartTotal(newitems)
+      items: newItems,
+      subtotal: calculateCartTotal(newItems),
+      total: calculateCartTotal(newItems)
     };
 
     store.dispatch(requestPatchCart(this.props.cart._id, patches));
@@ -55,11 +50,11 @@ class Cart extends React.Component {
 
   render() {
     if (!this.props.cart) {
-      return <div>No Cart</div>;
+      return <AlertPanel type="info" text="No Cart" />;
     }
 
     if (!this.props.cart.items) {
-      return <div></div>;
+      return null;
     }
 
     return (
