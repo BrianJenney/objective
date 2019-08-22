@@ -11,7 +11,7 @@ export const SIDES = {
   RIGHT: 'right'
 };
 
-const TemporaryDrawer = ({ toggleContent, listContent, side, ...rest }) => {
+const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) => {
   const [state, setState] = React.useState({
     open: false
   });
@@ -28,12 +28,16 @@ const TemporaryDrawer = ({ toggleContent, listContent, side, ...rest }) => {
   };
 
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side) ? 1 : 250;
-
+  const closePanel = (
+    <Box
+      onClick={toggleDrawer(false)}
+      children={closer}
+    />
+  );
   const listPanel = (
     <Box
       width={listPanelWidth}
       role="presentation"
-      onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
       children={listContent}
     />
@@ -51,8 +55,10 @@ const TemporaryDrawer = ({ toggleContent, listContent, side, ...rest }) => {
         anchor={side}
         open={state.open}
         onClose={toggleDrawer(false)}
-        children={listPanel}
-      />
+      >
+        {closePanel}
+        {listPanel}
+      </Drawer>
     </Box>
   );
 };
@@ -60,6 +66,7 @@ const TemporaryDrawer = ({ toggleContent, listContent, side, ...rest }) => {
 TemporaryDrawer.propTypes = {
   side: PropTypes.oneOf(Object.values(SIDES)).isRequired,
   toggleContent: PropTypes.node.isRequired,
+  closer: PropTypes.node,
   listContent: PropTypes.node.isRequired
 };
 
