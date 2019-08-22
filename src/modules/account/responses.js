@@ -46,16 +46,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
         store.dispatch(receivedLoginFailure(data));
       }
       break;
-    case 'account.request.patch':
-      console.log(
-        '****************** Account Patch Response ******************'
-      );
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
-      store.dispatch(receivedPatchAccount(data));
-      break;
     default:
       console.log('bad response');
   }

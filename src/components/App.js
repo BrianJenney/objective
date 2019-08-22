@@ -16,6 +16,10 @@ import ResetPassword from '../pages/account/ResetPassword';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
 import Product from '../pages/Product';
+import ProductSlider from './ProductSlider/';
+import LoggedInUser from './LoggedInUser';
+import utils from './utils/utils';
+
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
@@ -63,6 +67,7 @@ class App extends Component {
           </div>
           <Navbar />
           <Header />
+          {utils.isLoggedIn() && <LoggedInUser />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
@@ -87,7 +92,8 @@ const mapStateToProps = state => {
   return {
     stompClient: state.stomp.client,
     storefront: state.storefront,
-    cart: state.cart
+    cart: state.cart,
+    account: state.account
   };
 };
 
