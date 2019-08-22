@@ -87,7 +87,7 @@ const Checkout = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const { cart } = store.getState();
-  const fetchBrainTreeNonce = async () => {
+  const fetchCreditCardBrainTreeNonce = async () => {
     const { paymentDetails, billingAddress } = cart;
 
     try {
@@ -95,8 +95,24 @@ const Checkout = () => {
         ...paymentDetails,
         postalCode: billingAddress.postalCode
       });
-
       const { nonce } = creditCardResponse.creditCards[0];
+
+      return nonce;
+    } catch (e) {
+      console.log('Error', e);
+    }
+
+    return null;
+  };
+  const fetchPaypalCheckoutBrainTreeNonce = async () => {
+    const { total, shippingAddress } = cart;
+
+    try {
+      const paypalCheckoutResponse = await sendPaypalCheckoutBraintreeRequest(
+        total,
+        shippingAddress
+      );
+      const { nonce } = paypalCheckoutResponse;
 
       return nonce;
     } catch (e) {
@@ -124,8 +140,12 @@ const Checkout = () => {
       store.dispatch(requestPatchCart(cart._id, values));
     } else if (activeStep === 4) {
       // Fetch braintree nonce
-      const nonce = await fetchBrainTreeNonce();
-      // @TODO: Error handling
+      const nonce = await fetchCreditCardBrainTreeNonce();
+
+      if (!nonce) {
+        // @TODO: Error handling
+      }
+
       // We're done...place the cart onto the order exchange
       store.dispatch(requestCreateOrder(cart, nonce));
     }

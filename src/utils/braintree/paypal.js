@@ -1,3 +1,4 @@
+import paypal from 'paypal-checkout';
 import braintreePaypalCheckout from 'braintree-web/paypal-checkout';
 import { env } from './config';
 import createClient from './client';
