@@ -13,16 +13,14 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import ProductSlider from '../../components/common/Slider';
-
 import Link from '@material-ui/core/Link';
 
-import VariantSelectionDialog  from './VariantSelectionDialog'
+import VariantSelectionDialog from './VariantSelectionDialog'
 
 import { useQuantity } from '../../hooks';
 
 import store from '../../store';
-import {requestPatchCart} from '../../modules/cart/actions';
+import { requestPatchCart } from '../../modules/cart/actions';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 
 const localStorageClient = require('store');
@@ -49,8 +47,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductVariant = ({productVariant, available }) => {
-  return productVariant ? (<Typography variant="body2"><strong>{productVariant.attributes[0].value} ${productVariant.price.$numberDecimal}</strong> / {available} {productVariant.sku } CAPSULES</Typography>
+const ProductVariant = ({ productVariant, available }) => {
+  return productVariant ? (<Typography variant="body2"><strong>{productVariant.attributes[0].value} ${productVariant.price.$numberDecimal}</strong> / {available} {productVariant.sku} CAPSULES</Typography>
   ) : null;
 };
 
@@ -60,30 +58,31 @@ const ProductDetail = ({ history }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const [ openVariantSelectionDialog, setOpenVariantSelectionDialog ] = useState(false);
-  const [ selectedProductVariant, setSelectedProductVariant ] = useState(null);
+  const [openVariantSelectionDialog, setOpenVariantSelectionDialog] = useState(false);
+  const [selectedProductVariant, setSelectedProductVariant] = useState(null);
   const { product } = useContext(ProductContext);
-  const [ quantity, Quantity ] = useQuantity('QTY', 1, available);
+  const [quantity, Quantity] = useQuantity('QTY', 1, available);
   const { enqueueSnackbar } = useSnackbar();
 
   const saveSelectedProductVariant = useCallback((variant) => {
     setSelectedProductVariant(variant);
-  },[setSelectedProductVariant]);
+  }, [setSelectedProductVariant]);
 
   const handleAddToCart = useCallback(() => {
     const newItems = cart.items;
     let alreadyInCart = false;
     newItems.filter(item => item.variant_id === selectedProductVariant._id)
-            .forEach(item => {
-              alreadyInCart = true;
-              item.quantity += quantity;
-            });
+      .forEach(item => {
+        alreadyInCart = true;
+        item.quantity += quantity;
+      });
     if (!alreadyInCart) {
       const newItem = {
         product_id: product._id,
         product_name: product.name,
         variant_name: selectedProductVariant.name,
         variant_id: selectedProductVariant._id,
+        product_img: product.assets.imgs,
         sku: selectedProductVariant.sku,
         variant_type: selectedProductVariant.attributes[0].name,
         variant_value: selectedProductVariant.attributes[0].value,
@@ -101,7 +100,6 @@ const ProductDetail = ({ history }) => {
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
-    history.push('/cart');
   }, [product, selectedProductVariant, quantity, history, enqueueSnackbar]);
 
   const showVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(true), []);
@@ -118,7 +116,7 @@ const ProductDetail = ({ history }) => {
       <Card >
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
-            <Carousel prodId={product._id}/>
+            <Carousel prodId={product._id} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <CardContent>
@@ -131,18 +129,18 @@ const ProductDetail = ({ history }) => {
                 <Typography className={classes.subtitle} variant="h6" align="center">{product.subtitle}</Typography>
               </Box>
               <Divider variant="fullWidth" />
-              <br/>
+              <br />
               <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
-              <br/>
+              <br />
               <Typography>
                 <Link color="primary" variant="caption" onClick={showVariantSelectionDialog}>Select {dropdownType}</Link>
               </Typography>
-              <ProductVariant productVariant={selectedProductVariant} available={available}/>
-              <br/>
+              <ProductVariant productVariant={selectedProductVariant} available={available} />
+              <br />
               <Divider variant="fullWidth" />
-              <br/>
+              <br />
               <Quantity />
-              <br/>
+              <br />
               <Divider variant="fullWidth" />
             </CardContent>
             <CardActions>
@@ -154,7 +152,7 @@ const ProductDetail = ({ history }) => {
         </Grid>
       </Card>
       {openVariantSelectionDialog &&
-       <VariantSelectionDialog dropdownType={dropdownType} closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
+        <VariantSelectionDialog dropdownType={dropdownType} closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
     </Container>
   );
 
