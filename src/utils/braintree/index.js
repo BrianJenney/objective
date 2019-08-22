@@ -1,4 +1,7 @@
+export { default as createBraintreeClient } from './client';
 export {
-  createClient as createBraintreeClient,
   sendCreditCardRequest as sendCreditCardBraintreeRequest
-} from './client';
+} from './creditCard';
+export {
+  sendPaypalCheckoutRequest as sendPaypalCheckoutBraintreeRequest
+} from './paypal';
