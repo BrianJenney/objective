@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Navbar from './Navbar';
 import Header from './Header';
 import Footer from './Footer';
 import Home from '../pages/Home';
@@ -19,7 +18,6 @@ import Product from '../pages/Product';
 import ProductSlider from './ProductSlider/';
 import LoggedInUser from './LoggedInUser';
 import utils from './utils/utils';
-
 
 import { requestFetchStorefront } from '../modules/storefront/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
@@ -52,10 +50,6 @@ class App extends Component {
    * @note
    *
    * The order that routes are defined matters, make sure /:page is the very last one
-   *
-   * The Navbar needs to be removed; it will be replaced by the Header component.
-   * I'm leaving it in for now bc it provides easy access to the cart, checkout
-   * funnel, etc.
    */
   render() {
     return (
@@ -65,7 +59,6 @@ class App extends Component {
           <div>
             <Link to="/">{this.props.storefront.name}</Link>
           </div>
-          <Navbar />
           <Header />
           {utils.isLoggedIn() && <LoggedInUser />}
           <Switch>

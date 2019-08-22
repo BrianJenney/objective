@@ -11,15 +11,8 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap'
   },
   textField: {
-    background: '#fcf8f4',
-    color: '#fcf8f4',
-    marginTop: theme.spacing(2)
-  },
-  dense: {
-    marginTop: theme.spacing(2)
-  },
-  menu: {
-    width: 200
+    background: 'transparent',
+    color: '#FFFFFF'
   }
 }));
 
@@ -59,22 +52,10 @@ const EmailAddressInput = () => {
             className={classes.button}
             disabled={email.length === undefined || email.length === 0}
             onClick={handleClick}
-          >
-            <SvgIcon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z" />
-              </svg>
-            </SvgIcon>
-          </Button>
+          ></Button>
         )
       }}
-      margin="normal"
+      margin="none"
       name="email"
       onChange={handleChange}
       onKeyUp={handleEnter}
