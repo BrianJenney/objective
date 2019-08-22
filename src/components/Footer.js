@@ -3,351 +3,272 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import EmailAddressInput from './EmailAddressInput';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-const black = '#000000';
-const offWhite = '#fcf8f4';
-
-const useStyles = makeStyles(theme => ({
-  aboutLink: {
-    background: black,
-    color: offWhite,
-    paddingTop: 10,
-    textTransform: 'none'
-  },
-  container: {
-    background: black,
-    padding: 10
-  },
-  footerBoxTop: {
-    background: black,
-    border: '1px solid ' + offWhite,
-    color: offWhite,
-    height: 80,
-    paddingTop: 55,
-    textTransform: 'uppercase'
-  },
-  emailBox: {
-    background: black,
-    border: '1px solid ' + offWhite,
-    color: offWhite,
-    height: 70
-  },
-  footerBoxMid: {
-    background: black,
-    border: '1px solid ' + offWhite,
-    color: offWhite,
-    height: 150,
-    paddingTop: 25,
-    textTransform: 'uppercase',
-    whiteSpace: 'nowrap'
-  },
-  promiseSection: {
-    background: offWhite,
-    textAlign: 'center'
-  },
-  socialBox: {
-    background: black,
-    border: '1px solid ' + offWhite,
-    color: offWhite,
-    height: 70,
-    paddingTop: 30
-  },
-  legalBox: {
-    background: black,
-    color: offWhite,
-    height: 30,
-    paddingTop: 7,
-    textAlign: 'center',
-    textTransform: 'uppercase'
-  }
-}));
+import EmailAddressInput from './EmailAddressInput';
+import './Footer-style.scss';
 
 const Footer = () => {
-  const classes = useStyles();
-
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <>
       {xs ? (
-        <Box className={classes.container}>
+        <Box className="footer-container">
           <Grid container spacing={0}>
-            <Grid item xs={12} className={classes.promiseSection}>
-              Diamond TH Logo Here
-            </Grid>
-            <Grid item xs={12} className={classes.promiseSection}>
-              The True Health Promise
-            </Grid>
-            <Grid item xs={12} className={classes.promiseSection}>
-              TH Promse text goes here. Brunch church-key reclette chartreuse
-              poke, XOXO next level shaman hot chicken sustainable vegan yr
-              jianbing affogato. Hot chicken Schlitz squad, migas single-origin
-              single-origin coffee chambray umami raclette.
-            </Grid>
-
-            <Grid item xs={4}>
-              <Box fontSize={11} className={classes.footerBoxTop}>
-                TH Logo
-              </Box>
-            </Grid>
-            <Grid item xs={8}>
-              <Box fontSize={11} className={classes.footerBoxTop}>
-                Copyright 2019
-              </Box>
-            </Grid>
-
-            <Grid item xs={6} className={classes.footerBoxMid}>
-              <Grid container spacing={0}>
-                <Grid item xs={12}>
-                  About
-                </Grid>
-                <Grid item xs={12} className={classes.aboutLink}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link
-                      color={offWhite}
-                      component={RouterLink}
-                      to="/ourstory"
-                    >
-                      Our Story
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link
-                      color={offWhite}
-                      component={RouterLink}
-                      to="/ingredients"
-                    >
-                      Ingredients
-                    </Link>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to="/journal">
-                      Read Our Journal
-                    </Link>
-                  </Box>
-                </Grid>
+            <Grid container className="promise" xs={12}>
+              <Grid item xs={12}>
+                Diamond Logo
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h3" gutterBottom className="uppercase">
+                  The True<br></br>Health Promise
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="subtitle1" gutterBottom>
+                  TH Promse text goes here. Brunch church-key reclette
+                  chartreuse poke, XOXO next level shaman hot chicken
+                  sustainable vegan yr jianbing affogato. Hot chicken Schlitz
+                  squad, migas single-origin single-origin coffee chambray umami
+                  raclette.
+                </Typography>
               </Grid>
             </Grid>
-            <Grid item xs={6} className={classes.footerBoxMid}>
-              <Grid container spacing={0}>
-                <Grid item xs={12}>
-                  Help
+            <div className="footer-main-holder">
+              <Grid container className="footer-main" xs={12}>
+                <Grid item xs={6} className="border-bottom row1">
+                  <Box>TH Logo</Box>
                 </Grid>
-                <Grid item xs={12}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to="/faqs">
-                      FAQs
-                    </Link>
+                <Grid item xs={6} className="border-bottom border-left row1">
+                  <Box>
+                    <div className="rotate">Copyright 2019</div>
                   </Box>
                 </Grid>
-                <Grid item xs={12}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link
-                      color={offWhite}
-                      component={RouterLink}
-                      to="/ordertracking"
-                    >
-                      Account &amp; Orders
-                    </Link>
-                  </Box>
+                <Grid item xs={6} className="row2 border-bottom">
+                  <Grid container spacing={0}>
+                    <Grid item xs={12} className="title">
+                      <Link component={RouterLink} to="/gallery">
+                        About
+                      </Link>
+                    </Grid>
+                    <List className="links">
+                      <ListItem>
+                        <Link component={RouterLink} to="/ourstory">
+                          Our Story
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link component={RouterLink} to="/ingredients">
+                          Ingredients
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link component={RouterLink} to="/contact">
+                          Contact Us
+                        </Link>
+                      </ListItem>
+                    </List>
+                  </Grid>
                 </Grid>
-                <Grid item xs={5}>
-                  <Box fontSize={11} className={classes.aboutLink}>
-                    <Link color={offWhite} component={RouterLink} to="/contact">
-                      Contact Us
-                    </Link>
-                  </Box>
+                <Grid item xs={6} className="row2 border-bottom border-left">
+                  <Grid container spacing={0}>
+                    <Grid item xs={12} className="title">
+                      <Link component={RouterLink} to="/gallery">
+                        Help
+                      </Link>
+                    </Grid>
+                    <List className="links">
+                      <ListItem>
+                        <Link component={RouterLink} to="/ourstory">
+                          FAQs
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link component={RouterLink} to="/ingredients">
+                          Contact Us
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link component={RouterLink} to="/contact">
+                          Accounts &amp; Orders
+                        </Link>
+                      </ListItem>
+                    </List>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} className="border-bottom signup-box p-20">
+                  Sign up for tips and new prouct launches.<br></br>
+                  <EmailAddressInput />
+                </Grid>
+                <Grid item xs={4} className="border-bottom p-20 text-center">
+                  <Link to="">IG Icon</Link>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  className="border-bottom p-20 text-center border-left"
+                >
+                  <Link href="">TW Icon</Link>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  className="border-bottom p-20 text-center border-left"
+                >
+                  <Link href="https://www.facebook.com/truehealthsupplements">
+                    FB Icon
+                  </Link>
+                </Grid>
+                <Grid container xs={12} className="legal">
+                  <List>
+                    <ListItem className="text-center">
+                      TrueHealth &bull; All rights reserved
+                    </ListItem>
+                  </List>
+                </Grid>
+                <Grid container xs={12} className="legal">
+                  <List>
+                    <ListItem className="text-center">
+                      <Link to="/privacy-policy">Privacy Policy</Link>
+                    </ListItem>
+                    <ListItem className="text-center">
+                      <Link to="/terms">Terms of use</Link>
+                    </ListItem>
+                  </List>
                 </Grid>
               </Grid>
-            </Grid>
-
-            <Grid item xs={12} className={classes.emailBox}>
-              <EmailAddressInput />
-            </Grid>
-
-            <Grid item xs={4} className={classes.socialBox}>
-              <Link color={offWhite} href="">
-                IG Icon
-              </Link>
-            </Grid>
-            <Grid item xs={4} className={classes.socialBox}>
-              <Link color={offWhite} href="">
-                TW Icon
-              </Link>
-            </Grid>
-            <Grid item xs={4} className={classes.socialBox}>
-              <Link
-                color={offWhite}
-                href="https://www.facebook.com/truehealthsupplements"
-              >
-                FB Icon
-              </Link>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box fontSize={9} className={classes.legalBox}>
-                TrueHealth - All rights reserved
-              </Box>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Box fontSize={9} className={classes.legalBox}>
-                <Link color={offWhite} to="/pricavypolicy">
-                  Privacy Policy
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box fontSize={9} className={classes.legalBox}>
-                <Link color={offWhite} to="/terms">
-                  Terms of use
-                </Link>
-              </Box>
-            </Grid>
+            </div>
           </Grid>
         </Box>
       ) : (
-        <Box className={classes.container}>
+        <Box className="footer-container">
           <Grid container spacing={0}>
-            <Grid item xs={12} className={classes.promiseSection}>
-              Diamond TH Logo Here
+            <Grid container xs={12} className="promise">
+              <Grid item xs={12}>
+                <Typography variant="h3" gutterBottom className="uppercase">
+                  The True Health Promise
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                Diamond Logo
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h4" gutterBottom className="uppercase">
+                  Dek Line Goes Here
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom>
+                  TH Promse text goes here. Brunch church-key reclette
+                  chartreuse poke, XOXO next level shaman hot chicken
+                  sustainable vegan yr jianbing affogato. Hot chicken Schlitz
+                  squad, migas single-origin single-origin coffee chambray umami
+                  raclette.
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={12} className={classes.promiseSection}>
-              The True Health Promise
-            </Grid>
-            <Grid item xs={12} className={classes.promiseSection}>
-              TH Promse text goes here. Brunch church-key reclette chartreuse
-              poke, XOXO next level shaman hot chicken sustainable vegan yr
-              jianbing affogato. Hot chicken Schlitz squad, migas single-origin
-              single-origin coffee chambray umami raclette.
-            </Grid>
-
-            <Grid item xs={5}>
-              <Box className={classes.footerBoxTop}>
-                <Link color={offWhite} component={RouterLink} to="/gallery">
-                  Shop
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box fontSize={11} className={classes.footerBoxTop}>
-                About
-              </Box>
-            </Grid>
-            <Grid item xs={1}>
-              <Box fontSize={11} className={classes.footerBoxTop}>
-                TH Logo
-              </Box>
-            </Grid>
-
-            <Grid item xs={5} className={classes.footerBoxMid}>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/ourstory">
-                  Our Story
-                </Link>
-              </Box>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/ingredients">
-                  Ingredients
-                </Link>
-              </Box>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/faqs">
-                  FAQs
-                </Link>
-              </Box>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/contact">
-                  Contact Us
-                </Link>
-              </Box>
-            </Grid>
-
-            <Grid item xs={6} className={classes.footerBoxMid}>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/shipping">
-                  Shipping &amp; Returns
-                </Link>
-              </Box>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/account">
-                  My Account
-                </Link>
-              </Box>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link
-                  color={offWhite}
-                  component={RouterLink}
-                  to="/ordertracking"
+            <div className="footer-main-holder">
+              <Grid container xs={12} className="footer-main">
+                <Grid item xs={5} className="title border-bottom">
+                  <Box>
+                    <Link component={RouterLink} to="/gallery">
+                      About
+                    </Link>
+                  </Box>
+                </Grid>
+                <Grid item xs={6} className="title border-bottom border-left">
+                  <Box>
+                    <Link component={RouterLink} to="/help">
+                      Help
+                    </Link>
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={1}
+                  className="title border-bottom logo border-left"
                 >
-                  Track an Order
-                </Link>
-              </Box>
-              <Box fontSize={11} className={classes.aboutLink}>
-                <Link color={offWhite} component={RouterLink} to="/careers">
-                  Careers
-                </Link>
-              </Box>
-            </Grid>
-
-            <Grid item xs={1}>
-              <Box fontSize={11} className={classes.footerBoxMid}>
-                <div style={{ transform: 'rotate(90deg)' }}>Copyright 2019</div>
-              </Box>
-            </Grid>
-
-            <Grid item xs={9} className={classes.emailBox}>
-              <EmailAddressInput />
-            </Grid>
-            <Grid item xs={1} className={classes.socialBox}>
-              <Link color={offWhite} href="">
-                IG Icon
-              </Link>
-            </Grid>
-            <Grid item xs={1} className={classes.socialBox}>
-              <Link color={offWhite} href="">
-                TW Icon
-              </Link>
-            </Grid>
-            <Grid item xs={1} className={classes.socialBox}>
-              <Link
-                color={offWhite}
-                href="https://www.facebook.com/truehealthsupplements"
-              >
-                FB Icon
-              </Link>
-            </Grid>
-
-            <Grid item xs={3} className={classes.legalBox}></Grid>
-            <Grid item xs={3}>
-              <Box fontSize={9} className={classes.legalBox}>
-                TrueHealth - All rights reserved
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box fontSize={9} className={classes.legalBox}>
-                <Link color={offWhite} to="/pricavypolicy">
-                  Privacy Policy
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box fontSize={9} className={classes.legalBox}>
-                <Link color={offWhite} to="/terms">
-                  Terms of use
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item xs={2} className={classes.legalBox}></Grid>
+                  <Box>Logo</Box>
+                </Grid>
+                <Grid item xs={5} className="border-bottom">
+                  <List className="links">
+                    <ListItem>
+                      <Link component={RouterLink} to="/ourstory">
+                        Our Story
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link component={RouterLink} to="/ingredients">
+                        Ingredients
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link component={RouterLink} to="/contact">
+                        Contact Us
+                      </Link>
+                    </ListItem>
+                  </List>
+                </Grid>
+                <Grid item xs={6} className="border-left border-bottom">
+                  <List className="links">
+                    <ListItem>
+                      <Link component={RouterLink} to="/shipping">
+                        Shipping &amp; Returns
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link component={RouterLink} to="/account">
+                        My Account
+                      </Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link component={RouterLink} to="/ordertracking">
+                        Track an Order
+                      </Link>
+                    </ListItem>
+                  </List>
+                </Grid>
+                <Grid item xs={1} className="border-left border-bottom">
+                  <Box>
+                    <div className="rotate">Copyright 2019</div>
+                  </Box>
+                </Grid>
+                <Grid item xs={8} className="border-bottom signup-box p-40">
+                  Sign up for tips and new prouct launches.<br></br>
+                  <EmailAddressInput />
+                </Grid>
+                <Grid item xs={1} className="border-left border-bottom p-40">
+                  <Link href="">IG Icon</Link>
+                </Grid>
+                <Grid item xs={1} className="border-left border-bottom p-40">
+                  <Link href="">TW Icon</Link>
+                </Grid>
+                <Grid item xs={1} className="border-left border-bottom p-40">
+                  <Link href="https://www.facebook.com/truehealthsupplements">
+                    FB Icon
+                  </Link>
+                </Grid>
+                <Grid item xs={1} className="border-left border-bottom">
+                  &nbsp;
+                </Grid>
+                <Grid container xs={12} className="legal">
+                  <List>
+                    <ListItem>TrueHealth &bull; All rights reserved</ListItem>
+                    <ListItem>
+                      <Link to="/pricavypolicy">Privacy Policy</Link>
+                    </ListItem>
+                    <ListItem>
+                      <Link to="/terms">Terms of use</Link>
+                    </ListItem>
+                  </List>
+                </Grid>
+              </Grid>
+            </div>
           </Grid>
         </Box>
       )}
