@@ -8,7 +8,10 @@ import {
   Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { sendCreditCardBraintreeRequest } from '../utils/braintree';
+import {
+  sendCreditCardBraintreeRequest,
+  sendPaypalCheckoutBraintreeRequest
+} from '../utils/braintree';
 import store from '../store';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';

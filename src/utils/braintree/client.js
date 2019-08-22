@@ -1,31 +1,16 @@
-import moment from 'moment';
 import braintreeClient from 'braintree-web/client';
-import config from './config';
+import { tokenizationKey } from './config';
 
-const { tokenizationKey } = config;
+const createClient = async () => {
+  try {
+    const client = await braintreeClient.create({
+      authorization: tokenizationKey
+    });
 
-export const createClient = async () => {
-  const client = await braintreeClient.create({
-    authorization: tokenizationKey
-  });
-
-  return client;
+    return client;
+  } catch (err) {
+    throw err;
+  }
 };
 
-export const sendCreditCardRequest = async payload => {
-  const client = await createClient();
-  const creditCardResponse = await client.request({
-    endpoint: 'payment_methods/credit_cards',
-    method: 'post',
-    data: {
-      creditCard: {
-        ...payload,
-        number: parseInt(payload.number, 10),
-        expirationDate: moment(payload.expirationDate).format('MM/YYYY'),
-        cvv: parseInt(payload.cvv, 10)
-      }
-    }
-  });
-
-  return creditCardResponse;
-};
+export default createClient;
