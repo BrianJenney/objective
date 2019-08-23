@@ -1,104 +1,84 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Grid,
+  TextField,
+  Typography
+} from '@material-ui/core';
+import { Formik, Field, Form } from 'formik';
+import PropTypes from 'prop-types';
+import { object, string } from 'yup';
+import { InputField } from '../../components/form-fields';
 import store from '../../store';
 import { requestCreateAccount } from '../../modules/account/actions';
 
-const CreateAccount = () => {
-  const [firstName, setFname] = React.useState(null);
-  const [lastName, setLname] = React.useState(null);
-  const [email, setEmail] = React.useState(null);
-  const [password, setPword] = React.useState(null);
-
-  const handleChange = e => {
-    switch (e.target.id) {
-      case 'firstName':
-        setFname(e.target.value);
-        break;
-      case 'lastName':
-        setLname(e.target.value);
-        break;
-      case 'email':
-        setEmail(e.target.value);
-        break;
-      case 'password':
-        setPword(e.target.value);
-        break;
-      default:
-        break;
-    }
+const CreateAccountForm = ({ onSubmit }) => {
+  const INITIAL_VALUES = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
   };
 
-  const handleClick = e => {
-    console.log(e);
-    store.dispatch(
-      requestCreateAccount({ firstName, lastName, email, password })
-    );
-  };
+  const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
 
-  return (
+  const schema = object().shape({
+    firstName: string().required('First name is required'),
+    lastName: string().required('Last name is required'),
+    email: string().required('Email is required'),
+    password: string().required('Password is required')
+  });
+
+  const renderForm = () => (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Create an Account
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="fname"
-            onChange={handleChange}
-            value={firstName}
-          />
+      <Form>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Field name="firstName" label="First name" component={InputField} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Field
+              required
+              name="lastName"
+              label="Last name"
+              component={InputField}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Field name="email" label="Email Address" component={InputField} />
+          </Grid>
+          <Grid item xs={12}>
+            <Field name="password" label="Password" component={InputField} />
+            <Grid item xs={12}>
+              <Box display="flex" alignItems="center">
+                <Button type="button" mr={2} />
+                <Button type="submit" children="Next" />
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="lname"
-            onChange={handleChange}
-            value={lastName}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="email"
-            name="email"
-            label="Email Address"
-            fullWidth
-            autoComplete="email"
-            onChange={handleChange}
-            value={email}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="password"
-            name="password"
-            label="Password"
-            fullWidth
-            onChange={handleChange}
-            value={password}
-          />
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            {'Create Account'}
-          </Button>
-        </Grid>
-      </Grid>
+      </Form>
     </React.Fragment>
+  );
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={schema}
+      render={renderForm}
+      enableReinitialize
+    />
   );
 };
 
-export default CreateAccount;
+CreateAccountForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};
+
+export default CreateAccountForm;

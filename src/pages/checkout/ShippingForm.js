@@ -27,7 +27,7 @@ const INITIAL_VALUES = {
   shipping: ''
 };
 
-const ShippingForm = ({ onSubmit }) => {
+const ShippingForm = ({ onBack, onSubmit }) => {
   const renderForm = () => (
     <Box>
       <Typography variant="h6" gutterBottom children="Shipping Method" />
@@ -42,6 +42,7 @@ const ShippingForm = ({ onSubmit }) => {
               />
             </Box>
             <Box>
+              <Button type="button" onClick={onBack} children="Back" mr={2} />
               <Button type="submit" children="Next" />
             </Box>
           </Form>
@@ -61,7 +62,8 @@ const ShippingForm = ({ onSubmit }) => {
 };
 
 ShippingForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired
 };
 
 export default ShippingForm;

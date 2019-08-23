@@ -45,6 +45,7 @@ export const requestCreateAccount = account => async (dispatch, getState) => {
 };
 
 export const receivedCreateAccount = account => async (dispatch, getState) => {
+  console.log(account);
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT,
     payload: account
@@ -62,7 +63,7 @@ export const requestFetchAccount = url => async (dispatch, getState) => {
     }
   };
 
-  let obj = JSON.stringify(msgpack.encode(params));
+  const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/account/account.request.find',
     {
@@ -95,7 +96,7 @@ export const requestPatchAccount = (accountId, patches) => async (
     id: accountId,
     data: patches
   };
-  var obj = JSON.stringify(msgpack.encode(params));
+  const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/account/account.request.patch',
     {

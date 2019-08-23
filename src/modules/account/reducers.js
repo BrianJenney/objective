@@ -1,4 +1,6 @@
 import {
+  REQUEST_CREATE_ACCOUNT,
+  RECEIVED_CREATE_ACCOUNT,
   REQUEST_FETCH_ACCOUNT,
   RECEIVED_FETCH_ACCOUNT,
   REQUEST_LOGIN_ATTEMPT,
@@ -12,6 +14,10 @@ const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case REQUEST_CREATE_ACCOUNT:
+      return { ...state };
+    case RECEIVED_CREATE_ACCOUNT:
+      return { ...state, ...action.payload };
     case REQUEST_FETCH_ACCOUNT:
       return { ...state };
     case RECEIVED_FETCH_ACCOUNT:
@@ -25,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_LOGIN_FAILURE:
       return { ...state };
     case RECEIVED_LOGIN_SUCCESS:
+      console.log(state);
+      console.log(action.payload);
       return { ...state, ...action.payload };
     default:
       return state;

@@ -1,9 +1,11 @@
 import store from '../../store';
 import {
+  receivedCreateAccount,
   receivedFetchAccount,
-  receivedPatchAccount,
   receivedLoginFailure,
-  receivedLoginSuccess
+  receivedLoginSuccess,
+  receivedPatchAccount,
+  requestLoginAttempt
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields, properties) => {
@@ -12,9 +14,10 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       console.log('****************** Account Response ******************');
       console.log(status);
       console.log(data);
+      console.log(data.data);
       console.log(fields);
       console.log(properties);
-      store.dispatch(receivedFetchAccount(data.data));
+      store.dispatch(receivedCreateAccount(data));
       break;
     case 'account.request.find':
       console.log('****************** Account Response ******************');

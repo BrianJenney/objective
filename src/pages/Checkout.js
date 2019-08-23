@@ -17,12 +17,16 @@ import {
 } from '../utils/checkout';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
+import { requestCreateAccount } from '../modules/account/actions';
+import CreateAccountForm from './checkout/CreateAccount';
 import ShippingAddressForm from './checkout/ShippingAddressForm';
 import BillingAddressForm from './checkout/BillingAddressForm';
 import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 import Result from './checkout/Result';
+
+const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -62,6 +66,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const steps = [
+  'Create Account',
   'Shipping Method',
   'Shipping Address',
   'Billing Address',
@@ -88,7 +93,12 @@ const shippingMethods = {
 const Checkout = () => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const [activeStep, setActiveStep] = useState(0);
+
+  localStorageClient.remove('token');   ///This is just for development
+  let token = localStorageClient.get('token');
+  const [activeStep, setActiveStep] = useState(
+    typeof token === 'undefined' ? 0 : 1
+  );
   const { cart } = store.getState();
 
   const handleBack = () => {
@@ -99,16 +109,19 @@ const Checkout = () => {
   };
   const handleNext = async values => {
     if (activeStep === 0) {
+      console.log(values);
+      store.dispatch(requestCreateAccount(values));
+    } else if (activeStep === 1) {
       // update mongo & redux
       store.dispatch(
         requestPatchCart(cart._id, {
           shipping: shippingMethods[values.shipping]
         })
       );
-    } else if (activeStep <= 3) {
+    } else if (activeStep <= 4) {
       // update mongo & redux
       store.dispatch(requestPatchCart(cart._id, values));
-    } else if (activeStep === 4) {
+    } else if (activeStep === 5) {
       // Fetch braintree nonce
       const { paymentDetails, billingAddress, shippingAddress, total } = cart;
       let nonce = null;
@@ -135,14 +148,17 @@ const Checkout = () => {
     setActiveStep(activeStep + 1);
   };
   const getStepContent = step => {
+    console.log(store.getState());
     switch (step) {
       case 0:
-        return <ShippingForm onSubmit={handleNext} />;
+        return <CreateAccountForm onSubmit={handleNext} />;
       case 1:
+        return <ShippingForm onBack={handleBack} onSubmit={handleNext} />;
+      case 2:
         return (
           <ShippingAddressForm onBack={handleBack} onSubmit={handleNext} />
         );
-      case 2:
+      case 3:
         return (
           <BillingAddressForm
             shippingAddressSeed={cart}
@@ -150,11 +166,11 @@ const Checkout = () => {
             onSubmit={handleNext}
           />
         );
-      case 3:
-        return <PaymentForm onBack={handleBack} onSubmit={handleNext} />;
       case 4:
-        return <Review cart={cart} onBack={handleBack} onSubmit={handleNext} />;
+        return <PaymentForm onBack={handleBack} onSubmit={handleNext} />;
       case 5:
+        return <Review cart={cart} onBack={handleBack} onSubmit={handleNext} />;
+      case 6:
         return <Result onSubmit={handleNext} />;
       default:
         enqueueSnackbar('Unknown step', { variant: 'error' });
