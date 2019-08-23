@@ -57,10 +57,16 @@ const nxtTheme = createMuiTheme({
     htmlFontSize: 16,
     fontSize: 16,
     fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+    body2: {
+      fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+      fontSize: sizes.productDetail,
+      fontWeight: 400,
+      lineHeight: '2.3rem'
+    },
     h1: {
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
       fontSize: sizes.h1,
-      fontWeight: 800,
+      fontWeight: 400,
       lineHeight: '3.125rem'
     },
     h2: {
@@ -82,6 +88,18 @@ const nxtTheme = createMuiTheme({
       fontSize: sizes.subhead,
       fontWeight: 400,
       lineHeight: '1.4375rem'
+    },
+    h5: {
+      fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
+      fontSize: sizes.variant,
+      fontWeight: 400,
+      lineHeight: '1.875rem'
+    },
+    h6: {
+      fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
+      fontSize: sizes.productDetailSubTitle,
+      fontWeight: 400,
+      lineHeight: '2.75rem',
     },
     subtitle1: {
       // subhead S1
@@ -127,7 +145,7 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
       textTransform: 'uppercase',
       textDecoration: 'none',
-      color: color.WHITE
+      color: color.WHITE,
     },
     bodyMd: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,

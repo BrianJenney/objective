@@ -1,20 +1,25 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import {TextField, Button} from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import utils from './utils/utils';
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    fontFamily: 'p22-underground, Helvetica, sans-serif',
   },
-  textField: {
-    background: 'transparent',
-    color: '#FFFFFF'
-  }
 }));
+
+const StyledTextField = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#ffffff',
+    fontSize: '24px',
+    backgroundColor: 'transparent',
+  },
+}))(TextField)
 
 const EmailAddressInput = () => {
   const classes = useStyles();
@@ -42,7 +47,7 @@ const EmailAddressInput = () => {
   };
 
   return (
-    <TextField
+    <StyledTextField
       autoComplete="email"
       className={classes.textField}
       id="outlined-email-input"

@@ -1,15 +1,34 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
-import { useTheme } from '@material-ui/core/styles';
+import { Box, Link, Grid, List, ListItem, Typography } from '@material-ui/core';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import EmailAddressInput from './EmailAddressInput';
 import './Footer-style.scss';
+
+const StyledBox = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#ffffff',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    // fontSize: '12px',
+    // lineHeight: '44px'
+  },
+}))(Box)
+
+const StyledList = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#ffffff',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    // fontSize: '12px',
+    // lineHeight: '44px'
+  },
+}))(List)
 
 const Footer = () => {
   const theme = useTheme();
@@ -18,7 +37,7 @@ const Footer = () => {
   return (
     <>
       {xs ? (
-        <Box className="footer-container">
+        <StyledBox className="footer-container">
           <Grid container spacing={0}>
             <Grid container className="promise" xs={12}>
               <Grid item xs={12}>
@@ -42,12 +61,12 @@ const Footer = () => {
             <div className="footer-main-holder">
               <Grid container className="footer-main" xs={12}>
                 <Grid item xs={6} className="border-bottom row1">
-                  <Box>TH Logo</Box>
+                  <StyledBox>TH Logo</StyledBox>
                 </Grid>
                 <Grid item xs={6} className="border-bottom border-left row1">
-                  <Box>
+                  <StyledBox>
                     <div className="rotate">Copyright 2019</div>
-                  </Box>
+                  </StyledBox>
                 </Grid>
                 <Grid item xs={6} className="row2 border-bottom">
                   <Grid container spacing={0}>
@@ -56,7 +75,7 @@ const Footer = () => {
                         About
                       </Link>
                     </Grid>
-                    <List className="links">
+                    <StyledList className="links">
                       <ListItem>
                         <Link component={RouterLink} to="/ourstory">
                           Our Story
@@ -72,7 +91,7 @@ const Footer = () => {
                           Contact Us
                         </Link>
                       </ListItem>
-                    </List>
+                    </StyledList>
                   </Grid>
                 </Grid>
                 <Grid item xs={6} className="row2 border-bottom border-left">
@@ -82,7 +101,7 @@ const Footer = () => {
                         Help
                       </Link>
                     </Grid>
-                    <List className="links">
+                    <StyledList className="links">
                       <ListItem>
                         <Link component={RouterLink} to="/ourstory">
                           FAQs
@@ -98,7 +117,7 @@ const Footer = () => {
                           Accounts &amp; Orders
                         </Link>
                       </ListItem>
-                    </List>
+                    </StyledList>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="border-bottom signup-box p-20">
@@ -125,28 +144,28 @@ const Footer = () => {
                   </Link>
                 </Grid>
                 <Grid container xs={12} className="legal">
-                  <List>
+                  <StyledList>
                     <ListItem className="text-center">
                       TrueHealth &bull; All rights reserved
                     </ListItem>
-                  </List>
+                  </StyledList>
                 </Grid>
                 <Grid container xs={12} className="legal">
-                  <List>
+                  <StyledList>
                     <ListItem className="text-center">
                       <Link to="/privacy-policy">Privacy Policy</Link>
                     </ListItem>
                     <ListItem className="text-center">
                       <Link to="/terms">Terms of use</Link>
                     </ListItem>
-                  </List>
+                  </StyledList>
                 </Grid>
               </Grid>
             </div>
           </Grid>
-        </Box>
+        </StyledBox>
       ) : (
-        <Box className="footer-container">
+        <StyledBox className="footer-container">
           <Grid container spacing={0}>
             <Grid container xs={12} className="promise">
               <Grid item xs={12}>
@@ -175,28 +194,28 @@ const Footer = () => {
             <div className="footer-main-holder">
               <Grid container xs={12} className="footer-main">
                 <Grid item xs={5} className="title border-bottom">
-                  <Box>
+                  <StyledBox>
                     <Link component={RouterLink} to="/gallery">
                       About
                     </Link>
-                  </Box>
+                  </StyledBox>
                 </Grid>
                 <Grid item xs={6} className="title border-bottom border-left">
-                  <Box>
+                  <StyledBox>
                     <Link component={RouterLink} to="/help">
                       Help
                     </Link>
-                  </Box>
+                  </StyledBox>
                 </Grid>
                 <Grid
                   item
                   xs={1}
                   className="title border-bottom logo border-left"
                 >
-                  <Box>Logo</Box>
+                  <StyledBox>Logo</StyledBox>
                 </Grid>
                 <Grid item xs={5} className="border-bottom">
-                  <List className="links">
+                  <StyledList className="links">
                     <ListItem>
                       <Link component={RouterLink} to="/ourstory">
                         Our Story
@@ -212,10 +231,10 @@ const Footer = () => {
                         Contact Us
                       </Link>
                     </ListItem>
-                  </List>
+                  </StyledList>
                 </Grid>
                 <Grid item xs={6} className="border-left border-bottom">
-                  <List className="links">
+                  <StyledList className="links">
                     <ListItem>
                       <Link component={RouterLink} to="/shipping">
                         Shipping &amp; Returns
@@ -231,12 +250,12 @@ const Footer = () => {
                         Track an Order
                       </Link>
                     </ListItem>
-                  </List>
+                  </StyledList>
                 </Grid>
                 <Grid item xs={1} className="border-left border-bottom">
-                  <Box>
+                  <StyledBox>
                     <div className="rotate">Copyright 2019</div>
-                  </Box>
+                  </StyledBox>
                 </Grid>
                 <Grid item xs={8} className="border-bottom signup-box p-40">
                   Sign up for tips and new prouct launches.<br></br>
@@ -257,7 +276,7 @@ const Footer = () => {
                   &nbsp;
                 </Grid>
                 <Grid container xs={12} className="legal">
-                  <List>
+                  <StyledList>
                     <ListItem>TrueHealth &bull; All rights reserved</ListItem>
                     <ListItem>
                       <Link to="/pricavypolicy">Privacy Policy</Link>
@@ -265,12 +284,12 @@ const Footer = () => {
                     <ListItem>
                       <Link to="/terms">Terms of use</Link>
                     </ListItem>
-                  </List>
+                  </StyledList>
                 </Grid>
               </Grid>
             </div>
           </Grid>
-        </Box>
+        </StyledBox>
       )}
     </>
   );

@@ -1,46 +1,69 @@
+@import '../assets/styles/variables';
+
 .headerContainer {
   background-color: #ffffff;
   text-transform: uppercase;
-  font-family: 'Helvetica';
+  font-family: $sansSerif;
+  font-weight: 'bold';
   letter-spacing: 1px;
   font-size: 16px;
   display: flex;
   height: 100px;
+
   @media (min-width: 1200px) {
     height: 161px;
-    border-bottom: 3px solid #000000;
+    border-bottom: 1px solid #000000;
   }
+
   .top {
     padding: 10px;
   }
+
   .holder {
     padding: 0 82px;
   }
+
   .headerBar {
     background: black;
     color: #ffffff;
     height: 40px;
-    padding: 12px;
+    // padding: 12px;
     letter-spacing: 0.8px;
+
     .option {
       padding: 0 10px;
+
       @media (min-width: 1200px) {
         padding: 0 20px;
+        display: flex;
+        align-items: center;
+
+        &:first-child {
+          justify-content: flex-end;
+        }
+
+        &:nth-child(2) {
+          justify-content: flex-start;
+        }
       }
     }
   }
+
   a:hover,
   a:visited,
   a:active {
     text-decoration: none;
   }
 }
+
 .text-right {
   text-align: right;
 }
+
 .text-left {
   text-align: left;
 }
+
 .text-center {
   text-align: center;
 }

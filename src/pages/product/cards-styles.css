@@ -51,7 +51,7 @@ html,
 
 .label-info-wrapper .top-block .card h6,
 .label-info-wrapper .bottom-block .card h6 {
-  font-family: P22Underground, Helvetica, serif;
+  font-family: P22-underground, Helvetica, serif;
   font-size: 16px;
   font-weight: 600;
   font-style: normal;
@@ -79,7 +79,7 @@ html,
 
 .label-info-wrapper .top-block .card ul.fineprint li,
 .label-info-wrapper .bottom-block .card ul.fineprint li {
-  font-family: P22Underground, Helvetica, sans-serif;
+  font-family: P22-underground, Helvetica, sans-serif;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -139,12 +139,12 @@ html,
 }
 
 .label-info-wrapper .top-block .facts-table table th {
-  font-family: P22Underground, Helvetica, sans;
+  font-family: P22-underground, Helvetica, sans;
   text-transform: uppercase;
 }
 
 .label-info-wrapper .top-block .facts-table table td {
-  font-family: P22Underground, Helvetica, sans;
+  font-family: P22-underground, Helvetica, sans;
 }
 
 .label-info-wrapper .top-block .facts-table table td,
@@ -301,7 +301,7 @@ html,
 .how-it-works-wrapper .topBlock .rightCol .colTitle {
   text-transform: uppercase;
   width: 100%;
-  font-family: P22Underground, Helvetica, sans-serif;
+  font-family: P22-underground, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: 600;
   font-style: normal;
@@ -347,7 +347,7 @@ html,
 .how-it-works-wrapper .coreBenefits .textTitle {
   width: 100%;
   margin: 28px auto 28px auto;
-  font-family: P22Underground, Helvetica, sans-serif;
+  font-family: P22-underground, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: 600;
   font-style: normal;
@@ -542,7 +542,7 @@ html,
   padding: 28px 0 28px 0;
   margin-bottom: 60px;
   border-bottom: 1px solid #003833;
-  font-family: P22Underground, Helvetica, Arial, sans-serif;
+  font-family: P22-underground, Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 600;
   font-style: normal;
@@ -627,7 +627,7 @@ html,
 .step-title {
   width: 245px;
   height: 40px;
-  font-family: helvetica;
+  font-family: P22-underground, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
   font-style: normal;
@@ -644,7 +644,7 @@ html,
   .step-title {
     width: 421px;
     height: 20px;
-    font-family: sans-serif;
+    font-family: P22-underground, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: 600;
     font-style: normal;
@@ -688,7 +688,7 @@ html,
 }
 
 .step-label {
-  font-family: helvetica;
+  font-family: P22-underground, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
   font-style: normal;
@@ -776,7 +776,7 @@ html,
 .two-label,
 .three-label {
   height: 20px;
-  font-family: sans-serif;
+  font-family: P22-underground, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
   font-style: normal;
