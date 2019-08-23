@@ -22,17 +22,21 @@ export const requestFetchCart = cartId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    'params': {
-      'query': {
-        '_id': cartId
+    params: {
+      query: {
+        _id: cartId
       }
     }
   };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.request.find', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.find',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   dispatch({
     type: REQUEST_FETCH_CART,
     payload: {}
@@ -50,14 +54,17 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    'data': {
-    }
+    data: {}
   };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.request.create', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.create',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   dispatch({
     type: REQUEST_CREATE_CART,
     payload: {}
@@ -71,22 +78,29 @@ export const receivedCreateCart = cart => {
   };
 };
 
-export const requestUpdateCart = (cartId, updates) => async (dispatch, getState) => {
+export const requestUpdateCart = (cartId, updates) => async (
+  dispatch,
+  getState
+) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    'params': {
-      'query': {
-        '_id': cartId
+    params: {
+      query: {
+        _id: cartId
       }
     },
-    'data': updates
+    data: updates
   };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.request.update', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.update',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   dispatch({
     type: REQUEST_UPDATE_CART,
     payload: {}
@@ -100,18 +114,25 @@ export const receivedUpdateCart = cart => {
   };
 };
 
-export const requestPatchCart = (cartId, patches) => async (dispatch, getState) => {
+export const requestPatchCart = (cartId, patches) => async (
+  dispatch,
+  getState
+) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
     id: cartId,
     data: patches
   };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.request.patch', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.patch',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   await dispatch({
     type: REQUEST_PATCH_CART,
     payload: {}
@@ -125,16 +146,19 @@ export const receivedPatchCart = cart => {
   };
 };
 
-
 export const requestClearCart = product => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = { product };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.item.request.delete', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.item.request.delete',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   dispatch({
     type: REQUEST_CLEAR_CART,
     payload: {}
@@ -152,11 +176,15 @@ export const requestAddCouponCart = coupon => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = { coupon };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.coupon.request.create', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.coupon.request.create',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   dispatch({
     type: REQUEST_ADD_COUPON_CART,
     payload: {}
@@ -174,11 +202,15 @@ export const requestRemoveCouponCart = coupon => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = { coupon };
-  var obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send('/exchange/cart/cart.coupon.request.delete', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId()
-  }, obj);
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.coupon.request.delete',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
   dispatch({
     type: REQUEST_REMOVE_COUPON_CART,
     payload: {}
@@ -191,5 +223,3 @@ export const receivedRemoveCouponCart = cart => {
     payload: cart
   };
 };
-
-
