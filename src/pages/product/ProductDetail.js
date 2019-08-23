@@ -13,13 +13,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import VariantSelectionDialog from './VariantSelectionDialog'
+import { useQuantity, useWindowSize } from '../../hooks';
 
-import { useQuantity } from '../../hooks';
-
-import store from '../../store';
 import { requestPatchCart } from '../../modules/cart/actions';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 
@@ -47,26 +45,46 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductVariant = ({ productVariant, available }) => {
-  return productVariant ? (<Typography variant="body2"><strong>{productVariant.attributes[0].value} ${productVariant.price.$numberDecimal}</strong> / {available} {productVariant.sku} CAPSULES</Typography>
+const ProductVariant = ({ productVariant, max }) => {
+  return productVariant ? (<Typography variant="body1"><strong>${productVariant.price.$numberDecimal}</strong> / {max} Veggie Capsules</Typography>
   ) : null;
 };
 
 const ProductDetail = ({ history }) => {
-  const available = 20;
+  const capsuleMax = 60;
 
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const [openVariantSelectionDialog, setOpenVariantSelectionDialog] = useState(false);
-  const [selectedProductVariant, setSelectedProductVariant] = useState(null);
-  const { product } = useContext(ProductContext);
-  const [quantity, Quantity] = useQuantity('QTY', 1, available);
+  const [ productType, setProductType] = useState(null);
+  const { product, variants } = useContext(ProductContext);
+  const windowSize = useWindowSize();
+  const [quantity, Quantity] = useQuantity('QTY');
   const { enqueueSnackbar } = useSnackbar();
+  const selectedProductVariant = productType ? variants[productType] : null;
 
-  const saveSelectedProductVariant = useCallback((variant) => {
-    setSelectedProductVariant(variant);
-  }, [setSelectedProductVariant]);
+  const ProductType = ({isMobile, options}) => {
+    const handleChange = useCallback((event) => {
+      setProductType(event.target.value)
+    },[]);
+    return (
+      <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
+        <Grid item >
+          <Typography variant="body1">PRODUCT TYPE</Typography>
+        </Grid>
+        <Grid item>
+          <Select
+            value={productType}
+            onChange={handleChange}
+          >
+            {options.map(option => (
+              <MenuItem key={option.key} value={option.value}>{option.label}</MenuItem>
+            ))}
+          </Select>
+        </Grid>
+      </Grid>
+    );
+  };
 
   const handleAddToCart = useCallback(() => {
     const newItems = cart.items;
@@ -100,16 +118,24 @@ const ProductDetail = ({ history }) => {
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
+    history.push('/cart');
   }, [product, selectedProductVariant, quantity, history, enqueueSnackbar]);
-
-  const showVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(true), []);
-  const closeVariantSelectionDialog = useCallback(() => setOpenVariantSelectionDialog(false), []);
 
   if (!product) {
     return null;
   }
 
+  const isMobile = windowSize.width < 600;
   const dropdownType = product.attributes[0].value;
+  const productTypeOptions = variants.filter(variant => variant.attributes[0].name === dropdownType)
+    .map((variant, index) => {
+      const dropdownValue = variant.attributes[0].value;
+      return {
+        key: variant._id,
+        label: `${dropdownValue}`,
+        value: String(index)
+      }
+    });
 
   return (
     <Container>
@@ -129,30 +155,26 @@ const ProductDetail = ({ history }) => {
                 <Typography className={classes.subtitle} variant="h6" align="center">{product.subtitle}</Typography>
               </Box>
               <Divider variant="fullWidth" />
+              <br/>
+              <ProductVariant productVariant={selectedProductVariant} max={capsuleMax}/>
               <br />
               <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
               <br />
-              <Typography>
-                <Link color="primary" variant="caption" onClick={showVariantSelectionDialog}>Select {dropdownType}</Link>
-              </Typography>
-              <ProductVariant productVariant={selectedProductVariant} available={available} />
+              <Typography variant="body1">DIRECTIONS</Typography>
+              <Typography variant="body2">Take one soft gel daily with meal</Typography>
+              <br/>
+              <ProductType isMobile={isMobile} options={productTypeOptions}/>
               <br />
-              <Divider variant="fullWidth" />
-              <br />
-              <Quantity />
-              <br />
-              <Divider variant="fullWidth" />
+              {!isMobile && <Quantity />}
             </CardContent>
             <CardActions>
-              <Button fullWidth variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant == null}>
-                Buy {quantity} item{quantity > 1 ? 's' : ''}
+              <Button fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
+                ADD TO CART
               </Button>
             </CardActions>
           </Grid>
         </Grid>
       </Card>
-      {openVariantSelectionDialog &&
-        <VariantSelectionDialog dropdownType={dropdownType} closeVariantSelectionDialog={closeVariantSelectionDialog} onExited={saveSelectedProductVariant} />}
     </Container>
   );
 
