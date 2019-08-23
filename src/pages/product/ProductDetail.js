@@ -59,7 +59,7 @@ const ProductDetail = ({ history }) => {
   const [ productType, setProductType] = useState(null);
   const { product, variants } = useContext(ProductContext);
   const windowSize = useWindowSize();
-  const [quantity, Quantity] = useQuantity('QTY');
+  const [quantity, setQuantity, Quantity] = useQuantity('QTY');
   const { enqueueSnackbar } = useSnackbar();
   const selectedProductVariant = productType ? variants[productType] : null;
 
@@ -118,6 +118,8 @@ const ProductDetail = ({ history }) => {
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
+    setQuantity(1);
+    setProductType(null);
     // history.push('/cart');
   }, [product, selectedProductVariant, quantity, enqueueSnackbar]);
 

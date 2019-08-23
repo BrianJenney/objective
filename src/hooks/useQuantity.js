@@ -35,5 +35,5 @@ export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
       <Divider variant="fullWidth" />
     </>
   );
-  return [ quantity, Quantity ];
+  return [ quantity, setQuantity, Quantity ];
 };
