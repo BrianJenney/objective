@@ -1,80 +1,111 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { object, string, number, boolean } from 'yup';
+import { isNil, isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
 import {
   InputField,
   CheckboxField,
-  DatePickerField
+  DatePickerField,
+  SelectField
 } from '../../components/form-fields';
 import { Button } from '../../components/common';
+import {
+  PAYMENT_METHODS,
+  PAYMENT_METHOD_OPTIONS
+} from '../../constants/payment';
 
-const schema = object().shape({
-  paymentDetails: object().shape({
-    cardholderName: string().required('Card name is required'),
-    number: number().required('Card number is required'),
-    expirationDate: string().required('Expiry date is required'),
-    cvv: number().required('CVV is required'),
-    saveCard: boolean()
-  })
-});
+const validateTextField = value => {
+  if (value) {
+    return undefined;
+  }
+  return 'This field is required';
+};
+
+const validateNumberField = value => {
+  if (isNil(value) || value === '') {
+    return 'This field is required';
+  }
+  if (isNaN(value)) {
+    return 'This field should be a number';
+  }
+  return undefined;
+};
 
 const INITIAL_VALUES = {
   paymentDetails: {
-    cardholderName: '',
-    number: 0,
+    paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
+    cardholderName: 'Leonardo Kim',
+    number: '4263982640269299',
     expirationDate: '02/20/2023',
-    cvv: 0,
+    cvv: '837',
     saveCard: false
   }
 };
 
 const PaymentForm = ({ onSubmit, onBack }) => {
-  const renderForm = () => (
+  /* eslint-disable */
+  const renderForm = ({ values }) => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Payment method" />
+      <Typography variant="h6" gutterBottom children="Payment details" />
       <Form>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Field
-              name="paymentDetails.cardholderName"
-              label="Name on Card"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Field
-              name="paymentDetails.number"
-              label="Card Number"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Field
-              name="paymentDetails.expirationDate"
-              component={DatePickerField}
-              variant="inline"
-              label="Expiry Date"
-              autoOk
-              disableToolbar
-              disablePast
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Field
-              name="paymentDetails.cvv"
-              label="CVV"
-              component={InputField}
-            />
-          </Grid>
           <Grid item xs={12}>
             <Field
-              name="paymentDetails.saveCard"
-              label="Remember credit card details for next time"
-              component={CheckboxField}
+              name="paymentDetails.paymentMethod"
+              label="Payment Method"
+              component={SelectField}
+              options={PAYMENT_METHOD_OPTIONS}
+              validate={validateTextField}
             />
           </Grid>
+          {values.paymentDetails.paymentMethod ===
+            PAYMENT_METHODS.CREDIT_CARD && (
+            <>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="paymentDetails.cardholderName"
+                  label="Name on Card"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="paymentDetails.number"
+                  label="Card Number"
+                  component={InputField}
+                  validate={validateNumberField}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="paymentDetails.expirationDate"
+                  component={DatePickerField}
+                  variant="inline"
+                  label="Expiry Date"
+                  autoOk
+                  disableToolbar
+                  disablePast
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Field
+                  name="paymentDetails.cvv"
+                  label="CVV"
+                  component={InputField}
+                  validate={validateNumberField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="paymentDetails.saveCard"
+                  label="Remember credit card details for next time"
+                  component={CheckboxField}
+                />
+              </Grid>
+            </>
+          )}
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               <Button type="button" onClick={onBack} children="Back" mr={2} />
@@ -85,12 +116,12 @@ const PaymentForm = ({ onSubmit, onBack }) => {
       </Form>
     </Box>
   );
+  /* eslint-enable */
 
   return (
     <Formik
       initialValues={INITIAL_VALUES}
       onSubmit={onSubmit}
-      validationSchema={schema}
       render={renderForm}
     />
   );

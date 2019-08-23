@@ -10,6 +10,10 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '../../components/common';
+import {
+  PAYMENT_METHODS,
+  PAYMENT_METHOD_LABELS_MAP
+} from '../../constants/payment';
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -43,6 +47,7 @@ const Review = ({ cart, onBack, onSubmit }) => {
   ) {
     return null;
   }
+
   const shippingMethodLabel = `${shipping.displayName} - ${shipping.price} (Estimated Delivery: ${shipping.deliveryEstimate})`; // eslint-disable-line
 
   /* eslint-disable */
@@ -80,12 +85,12 @@ const Review = ({ cart, onBack, onSubmit }) => {
             {`${shippingAddress.firstName} ${shippingAddress.lastName}`}
           </Typography>
           <Typography gutterBottom>
-            {`${shippingAddress.address1} ${
-              shippingAddress.address2 ? shippingAddress.address2 : ''
+            {`${shippingAddress.line1} ${
+              shippingAddress.line2 ? shippingAddress.line2 : ''
             }`}
           </Typography>
           <Typography gutterBottom>
-            {`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}`}
+            {`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}, ${shippingAddress.countryCode}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -96,12 +101,12 @@ const Review = ({ cart, onBack, onSubmit }) => {
             {`${billingAddress.firstName} ${billingAddress.lastName}`}
           </Typography>
           <Typography gutterBottom>
-            {`${billingAddress.address1} ${
-              billingAddress.address2 ? billingAddress.address2 : ''
+            {`${billingAddress.line1} ${
+              billingAddress.line2 ? billingAddress.line2 : ''
             }`}
           </Typography>
           <Typography gutterBottom>
-            {`${billingAddress.city}, ${billingAddress.state} ${billingAddress.postalCode}`}
+            {`${billingAddress.city}, ${billingAddress.state} ${billingAddress.postalCode}, ${billingAddress.countryCode}`}
           </Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
@@ -111,20 +116,32 @@ const Review = ({ cart, onBack, onSubmit }) => {
           <Grid container>
             <Grid item xs={6}>
               <Typography gutterBottom>
-                {paymentDetails.cardholderName}
+                {PAYMENT_METHOD_LABELS_MAP[paymentDetails.paymentMethod]}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography gutterBottom>{paymentDetails.number}</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography gutterBottom>
-                {paymentDetails.expirationDate}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography gutterBottom>{paymentDetails.cvv}</Typography>
-            </Grid>
+            {paymentDetails.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
+              <>
+                <Grid item xs={6}>
+                  <Typography gutterBottom>
+                    {paymentDetails.cardholderName}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography gutterBottom>{paymentDetails.number}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography gutterBottom>
+                    {paymentDetails.expirationDate}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography gutterBottom>{paymentDetails.cvv}</Typography>
+                </Grid>
+              </>
+            )}
+            {paymentDetails.paymentMethod === PAYMENT_METHODS.PAYPAL && (
+              <div id="paypal-checkout-button" />
+            )}
           </Grid>
         </Grid>
       </Grid>
