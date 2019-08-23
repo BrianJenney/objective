@@ -10,19 +10,9 @@ const Carousel = (props) => {
   console.log(product)
 
   useEffect(() => {
-    const imageGallerySlide = ''
     const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper')
     const largeImg = document.getElementsByClassName('image-gallery-image')
     const thumbImg = document.getElementsByClassName('image-gallery-thumbnails-container')
-
-    for (let imgParent of largeImg) {
-      imgParent.classList.add(styles['reset-display'])
-      const prodImg = imgParent.getElementsByTagName('img')
-
-      for (let pic of prodImg) {
-        pic.classList.add(styles['reset-image-size'])
-      }
-    }
 
     for (let imgParent of largeImg) {
       imgParent.classList.add(styles['reset-display'])
