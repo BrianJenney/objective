@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import {
   CssBaseline,
   Paper,
@@ -8,11 +9,12 @@ import {
   Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  sendCreditCardBraintreeRequest,
-  sendPaypalCheckoutBraintreeRequest
-} from '../utils/braintree';
 import store from '../store';
+import { PAYMENT_METHODS } from '../constants/payment';
+import {
+  fetchCreditCardBrainTreeNonce,
+  fetchPaypalCheckoutBrainTreeNonce
+} from '../utils/checkout';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
 import ShippingAddressForm from './checkout/ShippingAddressForm';
@@ -85,42 +87,10 @@ const shippingMethods = {
 
 const Checkout = () => {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
   const [activeStep, setActiveStep] = useState(0);
   const { cart } = store.getState();
-  const fetchCreditCardBrainTreeNonce = async () => {
-    const { paymentDetails, billingAddress } = cart;
 
-    try {
-      const creditCardResponse = await sendCreditCardBraintreeRequest({
-        ...paymentDetails,
-        postalCode: billingAddress.postalCode
-      });
-      const { nonce } = creditCardResponse.creditCards[0];
-
-      return nonce;
-    } catch (e) {
-      console.log('Error', e);
-    }
-
-    return null;
-  };
-  const fetchPaypalCheckoutBrainTreeNonce = async () => {
-    const { total, shippingAddress } = cart;
-
-    try {
-      const paypalCheckoutResponse = await sendPaypalCheckoutBraintreeRequest(
-        total,
-        shippingAddress
-      );
-      const { nonce } = paypalCheckoutResponse;
-
-      return nonce;
-    } catch (e) {
-      console.log('Error', e);
-    }
-
-    return null;
-  };
   const handleBack = () => {
     if (activeStep === 0) {
       return;
@@ -140,14 +110,26 @@ const Checkout = () => {
       store.dispatch(requestPatchCart(cart._id, values));
     } else if (activeStep === 4) {
       // Fetch braintree nonce
-      const nonce = await fetchCreditCardBrainTreeNonce();
+      const { paymentDetails, billingAddress, shippingAddress, total } = cart;
+      let nonce = null;
 
-      if (!nonce) {
-        // @TODO: Error handling
+      try {
+        if (paymentDetails.paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
+          nonce = await fetchCreditCardBrainTreeNonce({
+            paymentDetails,
+            billingAddress
+          });
+        } else {
+          nonce = await fetchPaypalCheckoutBrainTreeNonce({
+            total,
+            shippingAddress
+          });
+        }
+        // We're done...place the cart onto the order exchange
+        store.dispatch(requestCreateOrder(cart, nonce));
+      } catch (err) {
+        enqueueSnackbar(err.message, { variant: 'error' });
       }
-
-      // We're done...place the cart onto the order exchange
-      store.dispatch(requestCreateOrder(cart, nonce));
     }
 
     setActiveStep(activeStep + 1);
@@ -175,12 +157,13 @@ const Checkout = () => {
       case 5:
         return <Result onSubmit={handleNext} />;
       default:
-        throw new Error('Unknown step');
+        enqueueSnackbar('Unknown step', { variant: 'error' });
+        return null;
     }
   };
 
   return (
-    <Fragment>
+    <>
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -194,9 +177,9 @@ const Checkout = () => {
               </Step>
             ))}
           </Stepper>
-          <Fragment>
+          <>
             {activeStep === steps.length ? (
-              <Fragment>
+              <>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
@@ -205,14 +188,14 @@ const Checkout = () => {
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
-              </Fragment>
+              </>
             ) : (
-              <Fragment>{getStepContent(activeStep)}</Fragment>
+              <>{getStepContent(activeStep)}</>
             )}
-          </Fragment>
+          </>
         </Paper>
       </main>
-    </Fragment>
+    </>
   );
 };
 

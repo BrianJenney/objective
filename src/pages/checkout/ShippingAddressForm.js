@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
-import { InputField } from '../../components/form-fields';
+import { InputField, SelectField } from '../../components/form-fields';
 import { Button } from '../../components/common';
+import { COUNTRY_OPTIONS } from '../../constants/location';
 
 const schema = object().shape({
   shippingAddress: object().shape({
     firstName: string().required('First name is required'),
     lastName: string().required('Last name is required'),
-    address1: string().required('Address1 is required'),
-    address2: string().required('Address2 is required'),
+    line1: string().required('Address1 is required'),
+    line2: string(),
     city: string().required('City is required'),
     state: string().required('State is required'),
     postalCode: string().required('Postal code is required'),
-    country: string().required('Country is required')
+    countryCode: string().required('Country is required')
   })
 });
 
@@ -23,12 +24,12 @@ const INITIAL_VALUES = {
   shippingAddress: {
     firstName: '',
     lastName: '',
-    address1: '',
-    address2: '',
+    line1: '',
+    line2: '',
     city: '',
     state: '',
     postalCode: '',
-    country: ''
+    countryCode: ''
   }
 };
 
@@ -54,14 +55,14 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="shippingAddress.address1"
+              name="shippingAddress.line1"
               label="Address line 1"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="shippingAddress.address2"
+              name="shippingAddress.line2"
               label="Address line 2"
               component={InputField}
             />
@@ -89,9 +90,10 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="shippingAddress.country"
+              name="shippingAddress.countryCode"
               label="Country"
-              component={InputField}
+              component={SelectField}
+              options={COUNTRY_OPTIONS}
             />
           </Grid>
           <Grid item xs={12}>
