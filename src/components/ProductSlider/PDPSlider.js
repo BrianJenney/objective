@@ -1,17 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react'
 import ProductContext from '../../contexts/ProductContext';
 import ImageGallery from 'react-image-gallery';
-import '../../../node_modules/react-image-gallery/styles/css/image-gallery.css'
+import './image-gallery-overrides.css'
 import styles from './overrides.module.scss'
 
 const Carousel = (props) => {
   const { product } = useContext(ProductContext);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  console.log(product)
 
   useEffect(() => {
+    const imageGallerySlide = ''
     const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper')
     const largeImg = document.getElementsByClassName('image-gallery-image')
     const thumbImg = document.getElementsByClassName('image-gallery-thumbnails-container')
+
+    for (let imgParent of largeImg) {
+      imgParent.classList.add(styles['reset-display'])
+      const prodImg = imgParent.getElementsByTagName('img')
+
+      for (let pic of prodImg) {
+        pic.classList.add(styles['reset-image-size'])
+      }
+    }
 
     for (let imgParent of largeImg) {
       imgParent.classList.add(styles['reset-display'])
@@ -30,6 +41,7 @@ const Carousel = (props) => {
       }
     }
 
+    console.log(largeImg)
     if (windowWidth < 769) {
       imageWrapper[0].classList.add(styles['newWidth'])
     } else if (windowWidth > 769) {
@@ -68,6 +80,8 @@ const Carousel = (props) => {
 
     return (
       <ImageGallery
+        showNav={windowWidth < 769 ? false : true}
+        additionalClass={styles['set-gallery-width']}
         showFullscreenButton={false}
         showPlayButton={false}
         items={carouselImages}
@@ -79,11 +93,11 @@ const Carousel = (props) => {
   const renderProducts = id => transformProduct(id, product)
 
   return (
-    <div>
+    <>
       {
         renderProducts(product._id)
       }
-    </div>
+    </>
   );
 }
 

@@ -700,7 +700,7 @@ html,
   padding-top: 15px;
 }
 
-img {
+.step-slide img {
   width: 240px;
   height: 246.2px;
 }
@@ -735,7 +735,7 @@ img {
 }
 
 @media only screen and (min-width: 735.99px) {
-  img {
+  .step-slide > img {
     width: 310px;
     height: 318px;
   }
