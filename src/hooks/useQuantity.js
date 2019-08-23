@@ -3,8 +3,8 @@ import React, { useCallback, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
 import Divider from "@material-ui/core/Divider";
 
 export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
@@ -22,11 +22,11 @@ export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
         <Grid item>
           <Grid container direction="row" alignItems="center" spacing={3}>
             <IconButton disabled={quantity <= 1} color="primary" onClick={(e) => adjustQuantity(-1)}>
-              <RemoveCircleIcon  />
+              <RemoveIcon  />
             </IconButton>
             <Typography align="center" variant="body2">{quantity}</Typography>
             <IconButton disabled={quantity >= maxQty} color="primary" onClick={(e) => adjustQuantity(1)} >
-              <AddCircleIcon />
+              <AddIcon />
             </IconButton>
           </Grid>
         </Grid>
