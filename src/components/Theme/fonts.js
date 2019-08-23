@@ -4,6 +4,7 @@ export const fonts = {
   header: 'Canela Text',
   caption: 'p22-underground',
   subhead: 'p22-underground',
+  variant:'p22-underground',
   smallHeader: 'p22-underground',
   captionBook: {
     header: 'p22-underground',
@@ -26,11 +27,14 @@ export const backupFontStack = {
 export const sizes = {
   h1: '2.75rem',
   h2: '1.625rem',
+  variant: '1.925rem',
+  productDetailSubTitle: '1.13rem',
   fineprint: '12px',
   title: '1rem',
   subhead: '1rem',
+  productDetail: '1.5rem',
   body: '1rem',
-  bodyMd: '1.125rem',
+  bodyMd: '1.135rem',
   bodyLg: '1.75rem',
   caption: '0.75rem',
   productBook: '0.875rem',

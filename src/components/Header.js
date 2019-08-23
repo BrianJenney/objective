@@ -1,10 +1,7 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import Container from '@material-ui/core/Container';
+import { Grid, Box, Link } from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { Link as RouterLink } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
@@ -12,6 +9,29 @@ import DropdownMenu from './common/DropdownMenu';
 import TemporaryDrawer from './common/TemporaryDrawer';
 import CartDrawer from '../pages/cart/CartDrawer';
 import './Header-style.scss';
+
+const StyledLink = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#000000',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: '16px',
+  },
+}))(Link)
+
+const StyledBox = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#ffffff',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: '12px',
+    lineHeight: '44px'
+  },
+}))(Box)
 
 const Header = () => {
   const renderBurgerIcon = () => {
@@ -44,7 +64,7 @@ const Header = () => {
           </SvgIcon>
         }
         closer={
-          <Box
+          <StyledBox
             position="absolute"
             right={10}
             top={10}
@@ -74,9 +94,9 @@ const Header = () => {
             </Grid>
             <Grid item xs={1}>
               {!burger && (
-                <Link component={RouterLink} to="/account">
+                <StyledLink component={RouterLink} to="/account">
                   Account
-                </Link>
+                </StyledLink>
               )}
             </Grid>
             <Grid item xs={1}>
@@ -85,10 +105,10 @@ const Header = () => {
           </Grid>
           <Grid container xs={12} className="headerBar">
             <Grid item xs={8} className="option text-right">
-              <Box fontSize={9}>Free Shipping On Orders Over $75</Box>
+              <StyledBox fontSize={9}>Free Shipping On Orders Over $75</StyledBox>
             </Grid>
             <Grid item xs={4} className="option text-left">
-              <Box fontSize={9}>Free Returns</Box>
+              <StyledBox fontSize={9}>Free Returns</StyledBox>
             </Grid>
           </Grid>
         </>
@@ -96,31 +116,31 @@ const Header = () => {
         <>
           <Grid container xs={12} className="headerBar">
             <Grid item xs={6} className="option text-right">
-              <Box fontSize={12}>Free Shipping On Orders Over $75</Box>
+              <StyledBox fontSize={12}>Free Shipping On Orders Over $75</StyledBox>
             </Grid>
             <Grid item xs={6} className="option text-left">
-              <Box fontSize={12}>Free Returns</Box>
+              <StyledBox fontSize={12}>Free Returns</StyledBox>
             </Grid>
           </Grid>
           <Grid container className="holder" xs={12}>
             <Grid item xs={1}>
-              <Link component={RouterLink} to="/gallery">
+              <StyledLink component={RouterLink} to="/gallery">
                 Shop
-              </Link>
+              </StyledLink>
             </Grid>
             <Grid item xs={1}>
-              <Link component={RouterLink} to="/">
+              <StyledLink component={RouterLink} to="/">
                 Science
-              </Link>
+              </StyledLink>
             </Grid>
             <Grid item xs={8} className="logo text-center">
               Logo.
             </Grid>
             <Grid item xs={1}>
               {!burger && (
-                <Link component={RouterLink} to="/account">
+                <StyledLink component={RouterLink} to="/account">
                   Account
-                </Link>
+                </StyledLink>
               )}
             </Grid>
             <Grid item xs={1}>
