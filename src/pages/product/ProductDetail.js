@@ -118,8 +118,8 @@ const ProductDetail = ({ history }) => {
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
-    history.push('/cart');
-  }, [product, selectedProductVariant, quantity, history, enqueueSnackbar]);
+    // history.push('/cart');
+  }, [product, selectedProductVariant, quantity, enqueueSnackbar]);
 
   if (!product) {
     return null;
