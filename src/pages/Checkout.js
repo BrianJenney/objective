@@ -109,12 +109,12 @@ const Checkout = () => {
   };
   const handleNext = async values => {
     if (activeStep === 0) {
-      console.log(values);
       store.dispatch(requestCreateAccount(values));
     } else if (activeStep === 1) {
       // update mongo & redux
       store.dispatch(
         requestPatchCart(cart._id, {
+          account_id: store.getState().account._id, // we got this when an account was created
           shipping: shippingMethods[values.shipping]
         })
       );
