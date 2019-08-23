@@ -149,6 +149,12 @@ const nxtTheme = createMuiTheme({
     }
   },
   overrides: {
+    MuiGrid: {
+      container: {
+        maxWidth: 1600,
+        margin: '0 auto',
+      }
+    },
     MuiTab: {
       root: {
         '&$selected': {
@@ -156,6 +162,9 @@ const nxtTheme = createMuiTheme({
         }
       },
     },
+    MuiContainer: {
+      maxWidth: 1504
+    }
   },
   shape: {
     borderRadius: 0

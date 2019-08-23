@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -15,11 +14,11 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import { useQuantity, useWindowSize } from '../../hooks';
-
+import VariantSelectionDialog  from './VariantSelectionDialog'
 import { requestPatchCart } from '../../modules/cart/actions';
 import Carousel from '../../components/ProductSlider/PDPSlider';
+import './overrides.css'
 
 const localStorageClient = require('store');
 
@@ -28,7 +27,6 @@ const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + it
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: '728px'
   },
   box: {
     backgroundColor: 'grey'
@@ -42,6 +40,10 @@ const useStyles = makeStyles(theme => ({
     margin: 0,
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+  },
+  gridModifications: {
+    padding: '60px 81px',
+    backgroundColor: '#fdf8f2'
   }
 }));
 
@@ -140,13 +142,13 @@ const ProductDetail = ({ history }) => {
     });
 
   return (
-    <Container>
-      <Card >
-        <Grid container spacing={4}>
+    <>
+        <Grid container className={classes.gridModifications}>
           <Grid item xs={12} sm={6}>
             <Carousel prodId={product._id} />
           </Grid>
-          <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6}>
+          <Card>
             <CardContent>
               <Divider variant="fullWidth" />
               <Box className={classes.box}>
@@ -174,10 +176,10 @@ const ProductDetail = ({ history }) => {
                 ADD TO CART
               </Button>
             </CardActions>
+            </Card>
           </Grid>
-        </Grid>
-      </Card>
-    </Container>
+      </Grid>
+    </>
   );
 
 };
