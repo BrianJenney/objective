@@ -44,11 +44,11 @@ export const requestCreateAccount = account => async (dispatch, getState) => {
   });
 };
 
-export const receivedCreateAccount = account => async (dispatch, getState) => {
-  console.log(account);
+export const receivedCreateAccount = createReply => async (dispatch, getState) => {
+  localStorageClient.set('token', createReply.jwt);
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT,
-    payload: account
+    payload: createReply.account
   });
 };
 
@@ -151,6 +151,7 @@ export const requestLoginAttempt = (email, password) => async (
 
 export const receivedLoginSuccess = loginReply => async (dispatch, getState) => {
   localStorageClient.set('token', loginReply.jwt);
+  console.log(localStorageClient.get('token'));
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply.account.data[0]

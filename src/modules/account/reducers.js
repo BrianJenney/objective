@@ -31,8 +31,6 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_LOGIN_FAILURE:
       return { ...state };
     case RECEIVED_LOGIN_SUCCESS:
-      console.log(state);
-      console.log(action.payload);
       return { ...state, ...action.payload };
     default:
       return state;

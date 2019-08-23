@@ -39,15 +39,10 @@ const CreateAccountForm = ({ onSubmit }) => {
       <Form>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <Field name="firstName" label="First name" component={InputField} />
+            <Field name="firstName" label="First Name" component={InputField} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Field
-              required
-              name="lastName"
-              label="Last name"
-              component={InputField}
-            />
+            <Field name="lastName" label="Last Name" component={InputField} />
           </Grid>
           <Grid item xs={12}>
             <Field name="email" label="Email Address" component={InputField} />
