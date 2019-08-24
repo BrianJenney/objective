@@ -115,13 +115,6 @@ const StyledButton = withStyles(theme => ({
   },
 }))(Button)
 
-// const ProductVariant = ({ productVariant, max }) => {
-//   const classes = useStyles();
-//   return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {max} Veggie Capsules</Typography>
-//   ) : null;
-// };
-
-
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();
   return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {productVariant.attributes[0].size} {productVariant.attributes[0].type}</Typography>
@@ -140,11 +133,6 @@ const ProductDetail = ({ history }) => {
   const [quantity, setQuantity, Quantity] = useQuantity('QTY');
   const { enqueueSnackbar } = useSnackbar();
   const selectedProductVariant = productType ? variants[productType] : null;
-
-  console.log("selected varrrr");
-  console.log(selectedProductVariant);
-  console.log("------------");
-
 
   const ProductType = ({ isMobile, options }) => {
     const handleChange = useCallback((event) => {
