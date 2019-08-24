@@ -22,14 +22,14 @@ const schema = object().shape({
 
 const INITIAL_VALUES = {
   shippingAddress: {
-    firstName: '',
-    lastName: '',
-    line1: '',
+    firstName: 'Kevin',
+    lastName: 'Christian',
+    line1: '1111 Sprng Street',
     line2: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    countryCode: ''
+    city: 'Raleigh',
+    state: 'NC',
+    postalCode: '22222',
+    countryCode: 'AD'
   }
 };
 
