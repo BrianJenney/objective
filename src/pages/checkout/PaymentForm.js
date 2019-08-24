@@ -35,11 +35,11 @@ const validateNumberField = value => {
 const INITIAL_VALUES = {
   paymentDetails: {
     paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
-    cardholderName: 'Leonardo Kim',
-    number: '4263982640269299',
+    cardholderName: 'Kevin C',
+    number: '4111111111111111',
     expirationDate: '02/20/2023',
     cvv: '837',
-    saveCard: false
+    saveCard: true
   }
 };
 
