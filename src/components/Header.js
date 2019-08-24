@@ -81,10 +81,11 @@ const Header = () => {
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Grid container spacing={0} className="headerContainer">
+    <Grid container xs={12} className="headerContainer">
+          <Grid container xs={12} spacing={0}>
       {burger ? (
         <>
-          <Grid container xs={12} className="top">
+          <Grid container xs={10} className="top">
             <Grid item xs={1}>
               {renderBurgerIcon()}
             </Grid>
@@ -149,6 +150,7 @@ const Header = () => {
           </Grid>
         </>
       )}
+    </Grid>
     </Grid>
   );
 };
