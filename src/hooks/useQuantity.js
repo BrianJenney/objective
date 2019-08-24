@@ -5,12 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
   counterGrid: {
     // width: '80%',
     marginLeft: 0,
+    maxWidth: '464px'
   },
   counterWrapper: {
     width: '100%',
@@ -34,11 +34,13 @@ const useStyles = makeStyles(theme => ({
   iconButtonPlus: {
     borderLeft: 'solid 1px #100f0f',
     borderRadius: 0,
+    backgroundColor: '#ebf0e8 !important',
     padding: 0,
     alignSelf: 'flex-start',
     height: '78px',
-    width: '80px',
-    backgroundColor: '#ebf0e8 !important',
+    width: '100%',
+    maxWidth: '17.5%',
+    minWidth: '60px',
   },
   iconButtonMinus: {
     borderRight: 'solid 1px #100f0f',
@@ -47,7 +49,9 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     alignSelf: 'flex-start',
     height: '78px',
-    width: '80px',
+    width: '100%',
+    maxWidth: '17.5%',
+    minWidth: '60px',
   }
 }));
 
@@ -65,7 +69,7 @@ export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
   const adjustQuantity = useCallback((adjustment) => setQuantity(qty => qty + adjustment), [ setQuantity ]);
   const Quantity = () => (
     <>
-      <Grid container className={classes.counterGrid} justify="left-start" alignItems="center">
+      <Grid container xs={12} className={classes.counterGrid} justify="left-start" alignItems="center">
         <Grid item className={classes.counterWrapper}>
           <Grid className={classes.counterBlock} container direction="row" alignItems="center" spacing={3}>
             <StyledIconButton className={classes.iconButtonMinus} disabled={quantity <= 1} color="primary" onClick={(e) => adjustQuantity(-1)}>

@@ -3,17 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { spacing } from '@material-ui/system';
+import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import { useQuantity, useWindowSize } from '../../hooks';
 import { requestPatchCart } from '../../modules/cart/actions';
 import Carousel from '../../components/ProductSlider/PDPSlider';
@@ -24,6 +16,10 @@ const localStorageClient = require('store');
 const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
 const useStyles = makeStyles(theme => ({
+  // spacing: 8,
+  wrapperMaxWidth: {
+maxWidth: '86% !important'
+  },
   resetButtonPadding: {
     padding: 0
   },
@@ -35,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   box: {
     backgroundColor: 'transparent',
-    marginLeft: '18%',
+    // marginLeft: '18%',
   },
   title: {
     margin: 0,
@@ -47,8 +43,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   gridModifications: {
-    padding: '60px 81px',
+    // padding: '60px 81px',
+    //paddingLeft: theme.spacing(6),
+    //paddingRight: theme.spacing(6),
+    paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
+  },
+  padding: {
+    padding: '60px 81px',
   },
   variant: {
     paddingBottom: theme.spacing(5)
@@ -63,23 +65,34 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(1),
   },
   dropdown: {
-    width: '220px',
-    paddingLeft: '14px',
+    width: '100%',
+    minWidth: '180px',
+    maxWidth: '220px',
+    paddingLeft: '0 !important',
     border: '1px solid',
     height: '52px',
     fontFamily: 'p22-underground, Helvetica, sans-serif',
   },
   overridePadding: {
-    padding: '0 !important'
+    padding: '0 0 0 12px !important',
+    width: '59%',
+  },
+  rightPadding: {
+    paddingRight: '0 !important',
+    maxWidth: '130px !important'
   },
   productType: {
     fontSize: '.9rem',
     padding: 0,
     lineHeight: '.7rem',
-    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    minWidth: '110px !important',
   },
-  selfAlignment: {
+  flexEnd: {
       alignSelf: 'flex-end',
+  },
+  flexStart: {
+      alignSelf: 'flex-start',
   },
 }));
 
@@ -125,11 +138,11 @@ const ProductDetail = ({ history }) => {
       setProductType(event.target.value)
     },[]);
     return (
-      <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
-        <Grid item className={classes.selfAlignment}>
+      <Grid container direction={isMobile ? "column" : "row "} spacing={3} className="someClass">
+        <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
           <Typography className={classes.productType} variant="h6">PRODUCT TYPE</Typography>
         </Grid>
-        <Grid item className={classes.overridePadding}>
+        <Grid item xs={12} sm={7} className={classes.overridePadding} justify={isMobile ? "flex-end" : "flex-start"}>
           <Select
             className={classes.dropdown}
             value={productType}
@@ -185,7 +198,7 @@ const ProductDetail = ({ history }) => {
     return null;
   }
 
-  const isMobile = windowSize.width < 600;
+  const isMobile = windowSize.width < 944;
   const dropdownType = product.attributes[0].value;
   const productTypeOptions = variants.filter(variant => variant.attributes[0].name === dropdownType)
     .map((variant, index) => {
@@ -199,11 +212,12 @@ const ProductDetail = ({ history }) => {
 
   return (
     <>
-        <Grid container className={classes.gridModifications}>
+      <Grid container className={classes.gridModifications} xs={12} sm={12}>
+        <Grid container justify="space-between" xs={10} sm={11} className={classes.wrapperMaxWidth}>
           <Grid item xs={12} sm={6}>
             <Carousel prodId={product._id} />
           </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={5}>
           <Card className={classes.box}>
             <CardContent className={classes.cardRootOverrides}>
               <Box>
@@ -225,7 +239,7 @@ const ProductDetail = ({ history }) => {
               <ProductType isMobile={isMobile} options={productTypeOptions}/>
               <br />
               <br />
-              {!isMobile && <Quantity />}
+              <Quantity />
             </CardContent>
                           <br />
             <CardActions>
@@ -235,7 +249,8 @@ const ProductDetail = ({ history }) => {
             </CardActions>
             </Card>
           </Grid>
-      </Grid>
+        </Grid>
+        </Grid>
     </>
   );
 
