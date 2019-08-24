@@ -120,27 +120,22 @@ const Checkout = () => {
     } else if (activeStep === 5) {
       // Fetch braintree nonce
       const { paymentDetails, billingAddress, shippingAddress, total } = cart;
-      let nonce1 = null;
-      let nonce2 = null;
+      let nonce = null;
 
       try {
         if (paymentDetails.paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
-          nonce1 = await fetchCreditCardBrainTreeNonce({
-            paymentDetails,
-            billingAddress
-          });
-          nonce2 = await fetchCreditCardBrainTreeNonce({
+          nonce = await fetchCreditCardBrainTreeNonce({
             paymentDetails,
             billingAddress
           });
         } else {
-          nonce1 = await fetchPaypalCheckoutBrainTreeNonce({
+          nonce = await fetchPaypalCheckoutBrainTreeNonce({
             total,
             shippingAddress
           });
         }
-        // We're done...place the cart onto the order exchange
-        store.dispatch(requestCreateOrder(cart, nonce1, nonce2));
+        // We're done...place the cart onto the order exchang.
+        store.dispatch(requestCreateOrder(cart, nonce));
       } catch (err) {
         enqueueSnackbar(err.message, { variant: 'error' });
       }
