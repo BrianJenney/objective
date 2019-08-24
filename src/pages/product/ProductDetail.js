@@ -16,7 +16,11 @@ const localStorageClient = require('store');
 const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
 const useStyles = makeStyles(theme => ({
-  // spacing: 8,
+  maxWidth: {
+    width: '100%',
+    maxWidth: '464px',
+    padding: '0 !important'
+  },
   wrapperMaxWidth: {
 maxWidth: '86% !important'
   },
@@ -31,7 +35,6 @@ maxWidth: '86% !important'
   },
   box: {
     backgroundColor: 'transparent',
-    // marginLeft: '18%',
   },
   title: {
     margin: 0,
@@ -43,9 +46,6 @@ maxWidth: '86% !important'
     marginTop: theme.spacing(1),
   },
   gridModifications: {
-    // padding: '60px 81px',
-    //paddingLeft: theme.spacing(6),
-    //paddingRight: theme.spacing(6),
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
@@ -103,6 +103,7 @@ const StyledButton = withStyles(theme => ({
     border: 0,
     color: 'white',
     width: '100%',
+    maxWidth: '464px',
     height: '80px',
     padding: '0',
   },
@@ -242,11 +243,14 @@ const ProductDetail = ({ history }) => {
               <Quantity />
             </CardContent>
                           <br />
-            <CardActions>
-              <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
+
+                <Grid container xs={12} justify="left-start" alignItems="center">
+                <CardActions className={classes.maxWidth}>
+                <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
                 ADD TO CART
               </StyledButton>
-            </CardActions>
+                            </CardActions>
+              </Grid>
             </Card>
           </Grid>
         </Grid>
