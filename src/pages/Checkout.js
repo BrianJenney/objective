@@ -93,13 +93,10 @@ const shippingMethods = {
 const Checkout = () => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-
-  //localStorageClient.remove('token');   //This is just for development
-  let token = localStorageClient.get('token');
+  const { account, cart } = store.getState();
   const [activeStep, setActiveStep] = useState(
-    typeof token === 'undefined' ? 0 : 1
+    typeof account._id === 'undefined' ? 0 : 1
   );
-  const { cart } = store.getState();
 
   const handleBack = () => {
     if (activeStep === 0) {
@@ -111,7 +108,6 @@ const Checkout = () => {
     if (activeStep === 0) {
       store.dispatch(requestCreateAccount(values));
     } else if (activeStep === 1) {
-      // update mongo & redux
       store.dispatch(
         requestPatchCart(cart._id, {
           account_id: store.getState().account._id, // we got this when an account was created

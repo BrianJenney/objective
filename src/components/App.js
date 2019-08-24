@@ -15,7 +15,6 @@ import ResetPassword from '../pages/account/ResetPassword';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
 import Product from '../pages/Product';
-import ProductSlider from './ProductSlider/';
 import LoggedInUser from './LoggedInUser';
 import utils from './utils/utils';
 

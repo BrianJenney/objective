@@ -3,11 +3,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,11 +39,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
   const [email, setEmail] = React.useState(null);
   const [password, setPassword] = React.useState(null);
+
+  console.log(props);
 
   const handleChange = e => {
     if (e.target.id === 'email') {
@@ -64,54 +64,71 @@ export default function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Log In
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            className={classes.submit}
-            color="primary"
-            fullWidth
-            onClick={handleClick}
-            variant="contained"
-          >
-            Log In
-          </Button>
-        </form>
-      </div>
-    </Container>
+    <div>
+      {typeof store.getState().account._id === 'undefined' ? (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Log In
+            </Typography>
+            <form className={classes.form} noValidate>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={handleChange}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  className={classes.submit}
+                  color="primary"
+                  fullWidth
+                  onClick={handleClick}
+                  variant="contained"
+                >
+                  Log In
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <div>
+                  Don't have an account?
+                  <Link component={RouterLink} to="/checkout">
+                    Sign Up
+                  </Link>
+                  !
+                </div>
+              </Grid>
+            </form>
+          </div>
+        </Container>
+      ) : (
+        <Redirect to='/gallery' />
+      )}
+    </div>
   );
 }

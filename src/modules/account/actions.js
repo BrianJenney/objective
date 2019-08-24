@@ -1,3 +1,4 @@
+import { BrowserRouter } from 'react-router-dom'; 
 import {
   REQUEST_CREATE_ACCOUNT,
   RECEIVED_CREATE_ACCOUNT,
@@ -151,7 +152,6 @@ export const requestLoginAttempt = (email, password) => async (
 
 export const receivedLoginSuccess = loginReply => async (dispatch, getState) => {
   localStorageClient.set('token', loginReply.jwt);
-  console.log(localStorageClient.get('token'));
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply.account.data[0]

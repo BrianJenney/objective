@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { withStyles, useTheme } from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
   Checkbox,
   Grid,
+  Link,
   TextField,
   Typography
 } from '@material-ui/core';
@@ -11,8 +14,17 @@ import { Formik, Field, Form } from 'formik';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { InputField } from '../../components/form-fields';
-import store from '../../store';
-import { requestCreateAccount } from '../../modules/account/actions';
+
+const StyledLink = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#000000',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: '16px',
+  }
+}))(Link);
 
 const CreateAccountForm = ({ onSubmit }) => {
   const INITIAL_VALUES = {
@@ -33,10 +45,21 @@ const CreateAccountForm = ({ onSubmit }) => {
 
   const renderForm = () => (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Create an Account
-      </Typography>
       <Form>
+        <Grid container spacing={3}>
+          <Grid item xs={10}>
+            <Typography variant="h6" gutterBottom>
+              Create an Account
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography variant="h6" gutterBottom>
+              <StyledLink component={RouterLink} to="/login">
+                Login
+              </StyledLink>
+            </Typography>
+          </Grid>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Field name="firstName" label="First Name" component={InputField} />
