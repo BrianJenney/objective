@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     padding: '0 !important'
   },
   wrapperMaxWidth: {
-maxWidth: '86% !important'
+    maxWidth: '86% !important'
   },
   resetButtonPadding: {
     padding: 0
@@ -89,10 +89,10 @@ maxWidth: '86% !important'
     minWidth: '110px !important',
   },
   flexEnd: {
-      alignSelf: 'flex-end',
+    alignSelf: 'flex-end',
   },
   flexStart: {
-      alignSelf: 'flex-start',
+    alignSelf: 'flex-start',
   },
 }));
 
@@ -115,9 +115,16 @@ const StyledButton = withStyles(theme => ({
   },
 }))(Button)
 
-const ProductVariant = ({ productVariant, max }) => {
-    const classes = useStyles();
-  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {max} Veggie Capsules</Typography>
+// const ProductVariant = ({ productVariant, max }) => {
+//   const classes = useStyles();
+//   return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {max} Veggie Capsules</Typography>
+//   ) : null;
+// };
+
+
+const ProductVariant = ({ productVariant }) => {
+  const classes = useStyles();
+  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {productVariant.attributes[0].size} {productVariant.attributes[0].type}</Typography>
   ) : null;
 };
 
@@ -127,17 +134,22 @@ const ProductDetail = ({ history }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const [ productType, setProductType] = useState(null);
+  const [productType, setProductType] = useState(null);
   const { product, variants } = useContext(ProductContext);
   const windowSize = useWindowSize();
   const [quantity, setQuantity, Quantity] = useQuantity('QTY');
   const { enqueueSnackbar } = useSnackbar();
   const selectedProductVariant = productType ? variants[productType] : null;
 
-  const ProductType = ({isMobile, options}) => {
+  console.log("selected varrrr");
+  console.log(selectedProductVariant);
+  console.log("------------");
+
+
+  const ProductType = ({ isMobile, options }) => {
     const handleChange = useCallback((event) => {
       setProductType(event.target.value)
-    },[]);
+    }, []);
     return (
       <Grid container direction={isMobile ? "column" : "row "} spacing={3} className="someClass">
         <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
@@ -218,43 +230,43 @@ const ProductDetail = ({ history }) => {
           <Grid item xs={12} sm={6}>
             <Carousel prodId={product._id} />
           </Grid>
-        <Grid item xs={12} sm={5}>
-          <Card className={classes.box}>
-            <CardContent className={classes.cardRootOverrides}>
-              <Box>
-                <Typography className={classes.title} variant="h1">{product.name}</Typography>
-                <ProductVariant productVariant={selectedProductVariant} max={capsuleMax}/>
-              </Box>
-              <Divider variant="fullWidth" className={classes.divider} />
-              <Box >
-                <Typography className={classes.subtitle} variant="h6">{product.subtitle}</Typography>
-              </Box>
-              <Divider variant="fullWidth" className={classes.divider} />
+          <Grid item xs={12} sm={5}>
+            <Card className={classes.box}>
+              <CardContent className={classes.cardRootOverrides}>
+                <Box>
+                  <Typography className={classes.title} variant="h1">{product.name}</Typography>
+                  <ProductVariant productVariant={selectedProductVariant} />
+                </Box>
+                <Divider variant="fullWidth" className={classes.divider} />
+                <Box >
+                  <Typography className={classes.subtitle} variant="h6">{product.subtitle}</Typography>
+                </Box>
+                <Divider variant="fullWidth" className={classes.divider} />
 
+                <br />
+                <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
+                <br />
+                <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
+                <Typography variant="body2">Take one soft gel daily with meal</Typography>
+                <br />
+                <ProductType isMobile={isMobile} options={productTypeOptions} />
+                <br />
+                <br />
+                <Quantity />
+              </CardContent>
               <br />
-              <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
-              <br />
-              <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
-              <Typography variant="body2">Take one soft gel daily with meal</Typography>
-              <br/>
-              <ProductType isMobile={isMobile} options={productTypeOptions}/>
-              <br />
-              <br />
-              <Quantity />
-            </CardContent>
-                          <br />
 
-                <Grid container xs={12} justify="left-start" alignItems="center">
+              <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
-                <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
-                ADD TO CART
+                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
+                    ADD TO CART
               </StyledButton>
-                            </CardActions>
+                </CardActions>
               </Grid>
             </Card>
           </Grid>
         </Grid>
-        </Grid>
+      </Grid>
     </>
   );
 
