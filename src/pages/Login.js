@@ -127,7 +127,7 @@ export default function Login(props) {
           </div>
         </Container>
       ) : (
-        <Redirect to='/gallery' />
+        <Redirect to='/checkout' />
       )}
     </div>
   );
