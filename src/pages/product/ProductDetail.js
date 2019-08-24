@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -15,7 +15,6 @@ import Divider from '@material-ui/core/Divider';
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useQuantity, useWindowSize } from '../../hooks';
-import VariantSelectionDialog  from './VariantSelectionDialog'
 import { requestPatchCart } from '../../modules/cart/actions';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
@@ -25,30 +24,86 @@ const localStorageClient = require('store');
 const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
+  resetButtonPadding: {
+    padding: 0
+  },
+  cardRootOverrides: {
+    padding: 0,
+    backgroundColor: 'transparent',
+    display: 'flex',
+    flexDirection: 'column',
   },
   box: {
-    backgroundColor: 'grey'
+    backgroundColor: 'transparent',
+    marginLeft: '18%',
   },
   title: {
     margin: 0,
-    paddingTop: theme.spacing(7),
-    paddingBottom: theme.spacing(7),
+    lineHeight: '1em',
+    paddingBottom: theme.spacing(2),
   },
   subtitle: {
     margin: 0,
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
   },
   gridModifications: {
     padding: '60px 81px',
     backgroundColor: '#fdf8f2'
-  }
+  },
+  variant: {
+    paddingBottom: theme.spacing(5)
+  },
+  divider: {
+    border: '.5px solid'
+  },
+  directionsHeader: {
+    fontSize: '.9rem',
+    padding: 0,
+    lineHeight: '.7rem',
+    marginBottom: theme.spacing(1),
+  },
+  dropdown: {
+    width: '220px',
+    paddingLeft: '14px',
+    border: '1px solid',
+    height: '52px',
+    fontFamily: 'p22-underground, Helvetica, sans-serif',
+  },
+  overridePadding: {
+    padding: '0 !important'
+  },
+  productType: {
+    fontSize: '.9rem',
+    padding: 0,
+    lineHeight: '.7rem',
+    marginBottom: theme.spacing(1),
+  },
+  selfAlignment: {
+      alignSelf: 'flex-end',
+  },
 }));
 
+const StyledButton = withStyles(theme => ({
+  root: {
+    backgroundColor: '#000000',
+    borderRadius: 0,
+    border: 0,
+    color: 'white',
+    width: '100%',
+    height: '80px',
+    padding: '0',
+  },
+  label: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textTransform: 'capitalize',
+  },
+}))(Button)
+
 const ProductVariant = ({ productVariant, max }) => {
-  return productVariant ? (<Typography variant="body1"><strong>${productVariant.price.$numberDecimal}</strong> / {max} Veggie Capsules</Typography>
+    const classes = useStyles();
+  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {max} Veggie Capsules</Typography>
   ) : null;
 };
 
@@ -71,16 +126,17 @@ const ProductDetail = ({ history }) => {
     },[]);
     return (
       <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
-        <Grid item >
-          <Typography variant="body1">PRODUCT TYPE</Typography>
+        <Grid item className={classes.selfAlignment}>
+          <Typography className={classes.productType} variant="h6">PRODUCT TYPE</Typography>
         </Grid>
-        <Grid item>
+        <Grid item className={classes.overridePadding}>
           <Select
+            className={classes.dropdown}
             value={productType}
             onChange={handleChange}
           >
             {options.map(option => (
-              <MenuItem key={option.key} value={option.value}>{option.label}</MenuItem>
+              <MenuItem className={classes.menuItem} key={option.key} value={option.value}>{option.label}</MenuItem>
             ))}
           </Select>
         </Grid>
@@ -148,33 +204,34 @@ const ProductDetail = ({ history }) => {
             <Carousel prodId={product._id} />
           </Grid>
         <Grid item xs={12} sm={6}>
-          <Card>
-            <CardContent>
-              <Divider variant="fullWidth" />
-              <Box className={classes.box}>
-                <Typography className={classes.title} variant="h3" align="center">{product.name}</Typography>
+          <Card className={classes.box}>
+            <CardContent className={classes.cardRootOverrides}>
+              <Box>
+                <Typography className={classes.title} variant="h1">{product.name}</Typography>
+                <ProductVariant productVariant={selectedProductVariant} max={capsuleMax}/>
               </Box>
-              <Divider variant="fullWidth" />
-              <Box className={classes.box} >
-                <Typography className={classes.subtitle} variant="h6" align="center">{product.subtitle}</Typography>
+              <Divider variant="fullWidth" className={classes.divider} />
+              <Box >
+                <Typography className={classes.subtitle} variant="h6">{product.subtitle}</Typography>
               </Box>
-              <Divider variant="fullWidth" />
-              <br/>
-              <ProductVariant productVariant={selectedProductVariant} max={capsuleMax}/>
+              <Divider variant="fullWidth" className={classes.divider} />
+
               <br />
-              <Typography component="p" color="textSecondary" variant="body1">{product.description}</Typography>
+              <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
               <br />
-              <Typography variant="body1">DIRECTIONS</Typography>
+              <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
               <Typography variant="body2">Take one soft gel daily with meal</Typography>
               <br/>
               <ProductType isMobile={isMobile} options={productTypeOptions}/>
               <br />
+              <br />
               {!isMobile && <Quantity />}
             </CardContent>
+                          <br />
             <CardActions>
-              <Button fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
+              <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
                 ADD TO CART
-              </Button>
+              </StyledButton>
             </CardActions>
             </Card>
           </Grid>

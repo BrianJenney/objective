@@ -52,7 +52,8 @@ const useStyles = makeStyles(theme => ({
     borderBottom: '1px solid #003833',
     backgroundColor: '#fdf8f2',
     padding: '30px 0',
-    fontFamily: 'Helvetica, sans',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold',
     "&:hover" : {
       backgroundColor: '#ffffff',
       color: '#000000',

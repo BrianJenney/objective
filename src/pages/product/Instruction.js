@@ -15,7 +15,7 @@ export default function Instruction() {
     justifyContent: 'center',
     fontWeight: 500,
     fontSize: 30,
-    fontFamily: 'helvetica',
+    fontFamily: 'P22-underground, Helvetica, sans',
     textAlign: "center",
     alignItems: "center",
     pt: 10,
