@@ -34,24 +34,30 @@ const useStyles = makeStyles(theme => ({
   iconButtonPlus: {
     borderLeft: 'solid 1px #100f0f',
     borderRadius: 0,
-    backgroundColor: '#ebf0e8 !important',
+    backgroundColor: '#B5C5C3 !important',
     padding: 0,
     alignSelf: 'flex-start',
     height: '78px',
     width: '100%',
     maxWidth: '17.5%',
     minWidth: '60px',
+    '&:active': {
+      backgroundColor: '#6A8C87 !important',
+    }
   },
   iconButtonMinus: {
     borderRight: 'solid 1px #100f0f',
     borderRadius: 0,
-    backgroundColor: '#ebf0e8 !important',
+    backgroundColor: '#B5C5C3 !important',
     padding: 0,
     alignSelf: 'flex-start',
     height: '78px',
     width: '100%',
     maxWidth: '17.5%',
     minWidth: '60px',
+    '&:active': {
+      backgroundColor: '#6A8C87 !important',
+    }
   }
 }));
 
