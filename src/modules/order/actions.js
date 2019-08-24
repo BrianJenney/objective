@@ -3,13 +3,13 @@ import { REQUEST_CREATE_ORDER, RECEIVED_CREATE_ORDER } from './types';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestCreateOrder = (cart, nonce) => async (
+export const requestCreateOrder = (cart, nonce1, nonce2) => async (
   dispatch,
   getState
 ) => {
   const { client, replyTo } = getState().stomp;
   const params = {
-    data: { cart, nonce }
+    data: { cart, nonce1, nonce2 }
   };
   const payload = JSON.stringify(msgpack.encode(params));
   client.send(

@@ -94,7 +94,7 @@ const Checkout = () => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  //localStorageClient.remove('token');   //This is just for development
+  localStorageClient.remove('token');   //This is just for development
   let token = localStorageClient.get('token');
   const [activeStep, setActiveStep] = useState(
     typeof token === 'undefined' ? 0 : 1
