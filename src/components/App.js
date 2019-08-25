@@ -18,15 +18,26 @@ import Product from '../pages/Product';
 import LoggedInUser from './LoggedInUser';
 import utils from './utils/utils';
 
-import { requestFetchStorefront } from '../modules/storefront/actions';
+import { requestFetchAccount } from '../modules/account/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
+import { requestFetchStorefront } from '../modules/storefront/actions';
 
+const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
-//localStorageClient.clearAll();  //Uncomment this to force creation of a new cart
 
 class App extends Component {
   componentDidMount() {
     this.props.requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
+
+    /**
+     * if the user has a jwt, decode it to find the account it,
+     * then get user details & put them in the store
+     */
+    if (utils.isLoggedIn()) {
+      const accountId = jwt.decode(localStorageClient.get('token')).account_id;
+      console.log(accountId);
+      this.props.requestFetchAccount(accountId);
+    }
 
     /**
      * We check to see if the user already has a cart, if they do
@@ -90,6 +101,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  requestFetchAccount,
   requestFetchStorefront,
   requestFetchCart,
   requestCreateCart
