@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Box, Link } from '@material-ui/core';
+import Badge from '@material-ui/core/Badge';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { Link as RouterLink } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
@@ -19,7 +21,7 @@ const StyledLink = withStyles(theme => ({
     letterSpacing: '1px',
     fontSize: '16px',
   },
-}))(Link)
+}))(Link);
 
 const StyledBox = withStyles(theme => ({
   root: {
@@ -31,18 +33,31 @@ const StyledBox = withStyles(theme => ({
     fontSize: '12px',
     lineHeight: '44px'
   },
-}))(Box)
+}))(Box);
+
+const StyledBadge = withStyles(theme => ({
+  badge: {
+    top: '50%',
+    right: -3,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    }`,
+  },
+}))(Badge);
 
 const Header = () => {
+  const cart  = useSelector(state => state.cart);
+
   const renderBurgerIcon = () => {
     return (
       <>
         <DropdownMenu
           toggleLabel={
-            <SvgIcon>
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-            </SvgIcon>
+              <SvgIcon>
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+              </SvgIcon>
           }
           panelId="my-account"
           menuItems={[
@@ -56,12 +71,16 @@ const Header = () => {
   };
 
   const renderCartIcon = () => {
+    const cartCount = cart.items.length;
+    const CartIcon = () => (
+      <SvgIcon>
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+      </SvgIcon>
+    );
     return (
       <TemporaryDrawer
         toggleContent={
-          <SvgIcon>
-            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
-          </SvgIcon>
+          <StyledBadge invisible={cartCount < 1} badgeContent={cartCount} color="secondary"><CartIcon /></StyledBadge>
         }
         closer={
           <StyledBox
