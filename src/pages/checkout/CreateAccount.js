@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Grid,
-  Link,
-  TextField,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, Grid, Link, Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
-import { InputField } from '../../components/form-fields';
+import { CheckboxField, InputField } from '../../components/form-fields';
 
 const StyledLink = withStyles(theme => ({
   root: {
@@ -22,7 +14,7 @@ const StyledLink = withStyles(theme => ({
     color: '#000000',
     textTransform: 'uppercase',
     letterSpacing: '1px',
-    fontSize: '16px',
+    fontSize: '16px'
   }
 }))(Link);
 
@@ -31,7 +23,8 @@ const CreateAccountForm = ({ onSubmit }) => {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    newsletter: false
   };
 
   const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
@@ -78,6 +71,13 @@ const CreateAccountForm = ({ onSubmit }) => {
                 <Button type="submit" children="Next" />
               </Box>
             </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Field
+              name="paymentDetails.saveCard"
+              label="Remember credit card details for next time"
+              component={CheckboxField}
+            />
           </Grid>
         </Grid>
       </Form>
