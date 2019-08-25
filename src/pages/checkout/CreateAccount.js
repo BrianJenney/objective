@@ -33,7 +33,8 @@ const CreateAccountForm = ({ onSubmit }) => {
     firstName: string().required('First name is required'),
     lastName: string().required('Last name is required'),
     email: string().required('Email is required'),
-    password: string().required('Password is required')
+    password: string().required('Password is required'),
+    newsletter: string().required('Newsletter is required')
   });
 
   const renderForm = () => (
@@ -65,20 +66,32 @@ const CreateAccountForm = ({ onSubmit }) => {
           </Grid>
           <Grid item xs={12}>
             <Field name="password" label="Password" component={InputField} />
-            <Grid item xs={12}>
-              <Box display="flex" alignItems="center">
-                <Button type="button" mr={2} />
-                <Button type="submit" children="Next" />
-              </Box>
-            </Grid>
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="paymentDetails.saveCard"
-              label="Remember credit card details for next time"
+              name="newsletter"
+              label="Subscribe to True Health news"
               component={CheckboxField}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="center">
+              <Button type="button" mr={2} />
+              <Button type="submit" children="Create Account" />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            By creating an account you agree to the True Health
+            <StyledLink component={RouterLink} to="/termsandconsitions">
+              Terms &amp; Conditions
+            </StyledLink>
+            &amp;
+            <StyledLink component={RouterLink} to="/privacypolicy">
+              Privacy Policy
+            </StyledLink>
+          </Typography>
         </Grid>
       </Form>
     </React.Fragment>

@@ -25,6 +25,7 @@ import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 import Result from './checkout/Result';
+import utils from '../components/utils/utils';
 
 const localStorageClient = require('store');
 
@@ -94,9 +95,7 @@ const Checkout = () => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { account, cart } = store.getState();
-  const [activeStep, setActiveStep] = useState(
-    typeof account._id === 'undefined' ? 0 : 1
-  );
+  const [activeStep, setActiveStep] = useState(utils.isLoggedIn() ? 1 : 0);
 
   const handleBack = () => {
     if (activeStep === 0) {

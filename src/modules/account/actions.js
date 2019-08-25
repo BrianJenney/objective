@@ -1,4 +1,3 @@
-import { BrowserRouter } from 'react-router-dom'; 
 import {
   REQUEST_CREATE_ACCOUNT,
   RECEIVED_CREATE_ACCOUNT,
@@ -25,11 +24,13 @@ export const requestCreateAccount = account => async (dispatch, getState) => {
       firstName: account.firstName,
       lastName: account.lastName,
       email: account.email,
-      password: account.password
+      password: account.password,
+      newsletter: account.newsletter
     }
   };
 
   let obj = JSON.stringify(msgpack.encode(params));
+  console.log(params);
   stompClient.send(
     '/exchange/account/account.request.create',
     {

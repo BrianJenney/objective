@@ -45,8 +45,6 @@ export default function Login(props) {
   const [email, setEmail] = React.useState(null);
   const [password, setPassword] = React.useState(null);
 
-  console.log(props);
-
   const handleChange = e => {
     if (e.target.id === 'email') {
       setEmail(e.target.value);
@@ -65,7 +63,9 @@ export default function Login(props) {
 
   return (
     <div>
-      {typeof store.getState().account._id === 'undefined' ? (
+      {utils.isLoggedIn() ? (
+        <Redirect to='/checkout' />
+      ) : (
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
@@ -126,8 +126,6 @@ export default function Login(props) {
             </form>
           </div>
         </Container>
-      ) : (
-        <Redirect to='/checkout' />
       )}
     </div>
   );
