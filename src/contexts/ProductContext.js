@@ -33,6 +33,10 @@ export class ProductStore extends Component {
         'stepBoxes': data.data.data[3].content,
       });
     });
+    EventEmitter.addListener('price.request.find', data => {
+      this.setState({ ...this.state, 'prices': data.data.data });
+    });
+
     this.getProductData();
   }
 
@@ -84,9 +88,24 @@ export class ProductStore extends Component {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     }, obj);
+
+    params = {
+      'params': {
+        'query': {
+          'product_id': this.props.productId
+        }
+      }
+    };
+    obj = JSON.stringify(msgpack.encode(params));
+    stompClient.send('/exchange/price/price.request.find', {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    }, obj);
+
   }
 
   render() {
+    console.log('********* Product State', this.state);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}
