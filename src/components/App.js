@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Navbar from './Navbar';
 import Header from './Header';
 import Footer from './Footer';
 import Home from '../pages/Home';
@@ -16,20 +15,29 @@ import ResetPassword from '../pages/account/ResetPassword';
 import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
 import Product from '../pages/Product';
-import ProductSlider from './ProductSlider/';
 import LoggedInUser from './LoggedInUser';
 import utils from './utils/utils';
 
-
-import { requestFetchStorefront } from '../modules/storefront/actions';
+import { requestFetchAccount } from '../modules/account/actions';
 import { requestFetchCart, requestCreateCart } from '../modules/cart/actions';
+import { requestFetchStorefront } from '../modules/storefront/actions';
 
+const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
-//localStorageClient.clearAll();  //Uncomment this to force creation of a new cart
 
 class App extends Component {
   componentDidMount() {
     this.props.requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
+
+    /**
+     * if the user has a jwt, decode it to find the account it,
+     * then get user details & put them in the store
+     */
+    if (utils.isLoggedIn()) {
+      const accountId = jwt.decode(localStorageClient.get('token')).account_id;
+      console.log(accountId);
+      this.props.requestFetchAccount(accountId);
+    }
 
     /**
      * We check to see if the user already has a cart, if they do
@@ -52,10 +60,6 @@ class App extends Component {
    * @note
    *
    * The order that routes are defined matters, make sure /:page is the very last one
-   *
-   * The Navbar needs to be removed; it will be replaced by the Header component.
-   * I'm leaving it in for now bc it provides easy access to the cart, checkout
-   * funnel, etc.
    */
   render() {
     return (
@@ -65,7 +69,6 @@ class App extends Component {
           <div>
             <Link to="/">{this.props.storefront.name}</Link>
           </div>
-          <Navbar />
           <Header />
           {utils.isLoggedIn() && <LoggedInUser />}
           <Switch>
@@ -98,6 +101,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  requestFetchAccount,
   requestFetchStorefront,
   requestFetchCart,
   requestCreateCart
