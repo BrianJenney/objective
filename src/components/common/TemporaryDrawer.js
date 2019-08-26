@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import Fab from '@material-ui/core/Fab';
+import { Drawer, Box, Fab } from '@material-ui/core';
+import { useQuantity, useWindowSize } from '../../hooks';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+
 
 export const SIDES = {
   TOP: 'top',
@@ -11,10 +12,36 @@ export const SIDES = {
   RIGHT: 'right'
 };
 
+const StyledFab = withStyles(theme => ({
+  root: {
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    }
+  },
+}))(Fab)
+
+const StyledDrawerWrapper = withStyles(theme => ({
+  root: {
+    padding: '36px 34px'
+  },
+}))(Box)
+
 const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) => {
   const [state, setState] = React.useState({
     open: false
   });
+
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width < 415;
+  const isNonMobile = windowSize.width > 415;
+
+  //pseudo code
+  /**
+  if isMobile width=100% padding= 24px 0 
+    else if isNonMobile width=415 padding= 24px
+   */
+
 
   const toggleDrawer = open => event => {
     if (
@@ -27,7 +54,7 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
     setState({ open });
   };
 
-  const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side) ? 1 : 250;
+  const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side) ? 1 : isMobile ? '100%' : 415;
   const closePanel = (
     <Box
       onClick={toggleDrawer(false)}
@@ -35,7 +62,7 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
     />
   );
   const listPanel = (
-    <Box
+    <StyledDrawerWrapper
       width={listPanelWidth}
       role="presentation"
       onKeyDown={toggleDrawer(false)}
@@ -45,8 +72,7 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
 
   return (
     <Box {...rest}>
-      <Fab
-        color="default"
+      <StyledFab
         size="small"
         onClick={toggleDrawer(true)}
         children={toggleContent}
