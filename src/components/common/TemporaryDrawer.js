@@ -45,7 +45,7 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
 
   const toggleDrawer = open => event => {
     if (
-      event.type === 'keydown' &&
+      event.type == 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
@@ -65,7 +65,7 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
     <StyledDrawerWrapper
       width={listPanelWidth}
       role="presentation"
-      onKeyDown={toggleDrawer(false)}
+      // onKeyDown={toggleDrawer(false)}
       children={listContent}
     />
   );

@@ -63,12 +63,7 @@ const Header = () => {
           <ShoppingBag />
         }
         closer={
-          <StyledBox
-            position="absolute"
-            right={10}
-            top={10}
-            children={<CloseIcon />}
-          />
+          <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
         }
         listContent={<CartDrawer />}
         side="right"
