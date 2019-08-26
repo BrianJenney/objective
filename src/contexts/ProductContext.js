@@ -104,7 +104,6 @@ export class ProductStore extends Component {
   }
 
   render() {
-    console.log('********* Product State', this.state);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}
