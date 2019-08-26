@@ -12,12 +12,22 @@ const Context = React.createContext();
 export class GalleryStore extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      products: null,
+      variants: [],
+      prices: []
+    };
   }
 
   componentDidMount() {
     EventEmitter.addListener('product.request.find', data => {
       this.setState({ 'products': data.data.data });
+    });
+    EventEmitter.addListener('variant.request.find', data => {
+      this.setState({ ...this.state, 'variants': data.data.data });
+    });
+    EventEmitter.addListener('price.request.find', data => {
+      this.setState({ ...this.state, 'prices': data.data.data });
     });
     this.getGalleryData();
   }
@@ -32,7 +42,7 @@ export class GalleryStore extends Component {
     const { stomp } = store.getState();
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
-    const params = {
+    let params = {
       'params': {
         'query': {
           '_id': { $in: this.props.productIds }
@@ -42,6 +52,32 @@ export class GalleryStore extends Component {
 
     var obj = JSON.stringify(msgpack.encode(params));
     stompClient.send('/exchange/product/product.request.find', {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    }, obj);
+
+    params = {
+      'params': {
+        'query': {
+          'product_id': { $in: this.props.productIds }
+        }
+      }
+    };
+    var obj = JSON.stringify(msgpack.encode(params));
+    stompClient.send('/exchange/variant/variant.request.find', {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    }, obj);
+
+    params = {
+      'params': {
+        'query': {
+          'product_id': { $in: this.props.productIds }
+        }
+      }
+    };
+    obj = JSON.stringify(msgpack.encode(params));
+    stompClient.send('/exchange/price/price.request.find', {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     }, obj);
