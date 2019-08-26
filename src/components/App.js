@@ -16,6 +16,7 @@ import Login from '../pages/Login';
 import Checkout from '../pages/Checkout';
 import Product from '../pages/Product';
 import LoggedInUser from './LoggedInUser';
+import Logout from './Logout';
 import utils from './utils/utils';
 
 import { requestFetchAccount } from '../modules/account/actions';

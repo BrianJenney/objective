@@ -1,5 +1,3 @@
-import store from '../../store';
-
 const localStorageClient = require('store');
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

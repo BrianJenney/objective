@@ -7,7 +7,8 @@ import {
   RECEIVED_LOGIN_FAILURE,
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
-  RECEIVED_PATCH_ACCOUNT
+  RECEIVED_PATCH_ACCOUNT,
+  LOGOUT
 } from './types';
 
 const INITIAL_STATE = {};
@@ -32,6 +33,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case RECEIVED_LOGIN_SUCCESS:
       return { ...state, ...action.payload };
+    case LOGOUT:
+      return {};
     default:
       return state;
   }

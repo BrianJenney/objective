@@ -7,10 +7,10 @@ import {
   RECEIVED_LOGIN_FAILURE,
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
-  RECEIVED_PATCH_ACCOUNT
+  RECEIVED_PATCH_ACCOUNT,
+  LOGOUT
 } from './types';
 
-const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -46,7 +46,10 @@ export const requestCreateAccount = account => async (dispatch, getState) => {
   });
 };
 
-export const receivedCreateAccount = createReply => async (dispatch, getState) => {
+export const receivedCreateAccount = createReply => async (
+  dispatch,
+  getState
+) => {
   localStorageClient.set('token', createReply.jwt);
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT,
@@ -151,7 +154,10 @@ export const requestLoginAttempt = (email, password) => async (
   });
 };
 
-export const receivedLoginSuccess = loginReply => async (dispatch, getState) => {
+export const receivedLoginSuccess = loginReply => async (
+  dispatch,
+  getState
+) => {
   localStorageClient.set('token', loginReply.jwt);
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
@@ -159,11 +165,19 @@ export const receivedLoginSuccess = loginReply => async (dispatch, getState) => 
   });
 };
 
-export const receivedLoginFailure = loginReply => async (dispatch, getState) => {
+export const receivedLoginFailure = loginReply => async (
+  dispatch,
+  getState
+) => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
     payload: {}
   });
 };
 
-
+export const logout = () => async (dispatch, getState) => {
+  dispatch({
+    type: LOGOUT,
+    payload: {}
+  });
+};

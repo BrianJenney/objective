@@ -1,6 +1,10 @@
 import React from 'react';
 import Button from './common/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import store from '../store';
+import { logout } from '../modules/account/actions';
+
+const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -31,9 +35,9 @@ const Logout = () => {
   const classes = useStyles();
 
   const handleClick = () => {
-    console.log();
-    alert('Click');
-  }
+    store.dispatch(logout());
+    localStorageClient.remove('token');
+  };
 
   return (
     <Button variant="outlined" className={classes.link} onClick={handleClick}>
