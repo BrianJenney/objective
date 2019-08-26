@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import { spacing } from '@material-ui/system';
 import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
@@ -139,7 +138,7 @@ const ProductDetail = ({ history }) => {
       setProductType(event.target.value)
     }, []);
     return (
-      <Grid container direction={isMobile ? "column" : "row "} spacing={3} className="someClass">
+      <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
         <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
           <Typography className={classes.productType} variant="h6">PRODUCT TYPE</Typography>
         </Grid>

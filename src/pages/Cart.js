@@ -72,7 +72,7 @@ class Cart extends React.Component {
                 <Grid item xs={4}>
                   <a
                     href={'product/' + item.product_id}
-                    style={{ color: '#3f51b5' }}
+                    style={{ color: 'red' }}
                   >
                     {item.variant_value} {item.variant_name}
                   </a>

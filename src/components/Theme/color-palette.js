@@ -16,5 +16,7 @@ export const colorPalette = {
   VANILLA: '#FEF6D3',
   RED: '#C10230',
   WHITE: '#ffffff',
-  GRAY: '#A69B95'
+  GRAY: '#A69B95',
+  LIGHT_GRAY: '#646464',
+  MEDIUM_GRAY: '#979797'
 }
