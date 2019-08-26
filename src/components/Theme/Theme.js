@@ -167,6 +167,11 @@ const nxtTheme = createMuiTheme({
     }
   },
   overrides: {
+    MuiFormLabel: {
+      root: {
+        fontFamily: 'unset'
+      }
+    },
     MuiGrid: {
       container: {
         maxWidth: 1600,

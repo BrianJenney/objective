@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { AlertPanel } from '../../components/common';
 import { Link } from 'react-router-dom';
@@ -28,7 +24,8 @@ import {
   StyledCardContent,
   StyledDrawerGrid,
   StyledGridEmptyCart,
-  StyledTotalWrapper
+  StyledTotalWrapper,
+  StyledPromoCode
 } from './StyledComponents';
 
 
@@ -191,20 +188,25 @@ class Cart extends React.Component {
             </Grid>
 
             <Grid container direction="row" xs={12} justify='space-between' >
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <StyledSmallCaps style={{'font-size': '14px'}}>
-                  Savings
+                  Promo Code
                 </StyledSmallCaps>
               </Grid>
-              <Grid item xs={3} style={{ 'text-align': 'right' }}>
-                <StyledSmallCaps style={{'font-size': '18px'}}>
-                  $XXX.xx
+              <Grid container xs={12} style={{'align-items': 'flex-end'}}>
+              <Grid item xs={8}>
+              <StyledPromoCode
+                // label="Enter Promo Code"
+                margin="dense"
+                variant="outlined" />
+              </Grid>
+              <Grid item xs={4} style={{ 'text-align': 'right' }}>
+                <StyledSmallCaps component='span' style={{'font-size': '18px'}}>
+                  <Link to='' style={{'color': BLACK}}>Apply</Link>
                 </StyledSmallCaps>
+              </Grid>
               </Grid>
             </Grid>
-            <Link to='/' style={
-              { 'margin-top': '-10px', 'font-family': $brandSans, 'text-transform': 'uppercase', 'color': BLACK, 'font-size': '14px', 'text-decoration': 'underline' }
-            }>Enter Promo Code</Link>
             <Grid container direction="row" xs={12} justify='space-between' style={
               { 'margin-bottom': '0', 'border-top': `solid 2px ${MEDIUM_GRAY}`, 'padding-top': '29px' , 'margin-top': '20px'}
             }>
@@ -232,10 +234,7 @@ class Cart extends React.Component {
                 </StyledCheckoutButton>
               </Grid>
             </Grid>
-
-
           </Grid>
-          
         </Grid>
       </Grid>
     );
