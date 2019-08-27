@@ -128,6 +128,7 @@ class Cart extends React.Component {
                         onClick={e => this.adjustQty(e, -1)}
                         style={{ 'font-size': '18pt' }}
                         value={index}
+                        disabled={item.quantity < 2}
                       >
                         -
                       </StyledCounterButton>

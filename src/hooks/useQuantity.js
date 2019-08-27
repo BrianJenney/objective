@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect  } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -67,22 +67,42 @@ const StyledIconButton = withStyles(theme => ({
     height: '80px',
     backgroundColor: '#ebf0e8 !important',
     borderRadius: '0 !important'
-}))(IconButton)
+}))(IconButton);
 
-export const useQuantity = (label, initialQty = 1, maxQty = 50) => {
+export const useQuantity = (updateQuantityToCart, label, initialQty = 1, maxQty = 50) => {
   const classes = useStyles();
   const [ quantity, setQuantity ] = useState(initialQty);
-  const adjustQuantity = useCallback((adjustment) => setQuantity(qty => qty + adjustment), [ setQuantity ]);
+  const adjustQuantity = useCallback((adjustment) => {
+      setQuantity(qty => qty + adjustment);
+    },[setQuantity]);
+
+  useEffect(() => {
+    updateQuantityToCart(quantity);
+  }, [ quantity ]);
+
   const Quantity = () => (
     <>
       <Grid container xs={12} className={classes.counterGrid} justify="left-start" alignItems="center">
         <Grid item className={classes.counterWrapper}>
           <Grid className={classes.counterBlock} container direction="row" alignItems="center" spacing={3}>
-            <StyledIconButton className={classes.iconButtonMinus} disabled={quantity <= 1} color="primary" onClick={(e) => adjustQuantity(-1)}>
+            <StyledIconButton
+              className={classes.iconButtonMinus}
+              disabled={quantity <= 1} color="primary"
+              onClick={(e) => {
+                adjustQuantity(-1);
+              }}
+            >
               <RemoveIcon  />
             </StyledIconButton>
             <Typography align="center" variant="body2">{quantity}</Typography>
-            <StyledIconButton className={classes.iconButtonPlus} disabled={quantity >= maxQty} color="primary" onClick={(e) => adjustQuantity(1)} >
+            <StyledIconButton
+              className={classes.iconButtonPlus}
+              disabled={quantity >= maxQty}
+              color="primary"
+              onClick={(e) => {
+                adjustQuantity(1);
+              }}
+            >
               <AddIcon />
             </StyledIconButton>
           </Grid>
