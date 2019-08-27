@@ -28,7 +28,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       store.dispatch(receivedFetchAccount(data.data[0]));
       break;
     case 'account.request.patch':
-      console.log(
         '****************** Account Patch Response ******************'
       );
       console.log(status);
