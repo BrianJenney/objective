@@ -78,7 +78,7 @@ export const useQuantity = (updateQuantityToCart, label, initialQty = 1, maxQty 
 
   useEffect(() => {
     updateQuantityToCart(quantity);
-  }, [quantity]);
+  }, [quantity, updateQuantityToCart]);
 
   const Quantity = () => (
     <>
