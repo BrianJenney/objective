@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -25,8 +26,8 @@ const schema = object().shape({
 });
 
 const INITIAL_VALUES = {
-  email: 'kevin@nutranext.net',
-  password: ''
+  email: 'kevinch@nutranext.net',
+  password: '44444'
 };
 
 const useStyles = makeStyles(theme => ({
@@ -54,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ authToken }) => {
+const Login = ({ authToken, account }) => {
   const classes = useStyles();
 
   const handleSubmit = ({ email, password }) => {
@@ -98,7 +99,7 @@ const Login = ({ authToken }) => {
 
   return (
     <div>
-      {authToken ? (
+      {authToken || (account && account.account_jwt) ? (
         <Redirect to="/checkout" />
       ) : (
         <Container component="main" maxWidth="xs">
@@ -124,7 +125,15 @@ const Login = ({ authToken }) => {
 };
 
 Login.propTypes = {
-  authToken: PropTypes.string
+  authToken: PropTypes.string,
+  account: PropTypes.object
 };
 
-export default withAuthToken(Login);
+const mapStateToProps = state => ({
+  account: state.account
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(withAuthToken(Login));
