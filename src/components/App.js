@@ -37,7 +37,6 @@ class App extends Component {
      */
     if (utils.isLoggedIn()) {
       const accountId = jwt.decode(localStorageClient.get('token')).account_id;
-      console.log(accountId);
       this.props.requestFetchAccount(accountId);
     }
 
