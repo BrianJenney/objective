@@ -83,7 +83,6 @@ class App extends Component {
    */
   render() {
     const { account, authToken, storefront } = this.props;
-    console.log(authToken);
 
     return (
       <React.Fragment>

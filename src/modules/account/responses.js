@@ -16,7 +16,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       );
       console.log(status);
       console.log(data);
-      console.log(data.data);
       console.log(fields);
       console.log(properties);
       store.dispatch(receivedCreateAccount(data));
