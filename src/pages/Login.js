@@ -89,7 +89,7 @@ const Login = ({ authToken }) => {
       </Grid>
       <Grid item xs={12}>
         <Box>
-          Do not have an account?
+          Don&#39;t have an account?
           <NavLink to="/signup">Sign Up</NavLink>!
         </Box>
       </Grid>

@@ -165,7 +165,7 @@ export const receivedLoginSuccess = loginReply => async (
   });
 };
 
-export const receivedLoginFailure = loginReply => async (
+export const receivedLoginFailure = () => async (
   dispatch,
   getState
 ) => {

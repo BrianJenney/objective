@@ -11,7 +11,9 @@ import {
 export const handleAccountResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'account.request.create':
-      console.log('****************** Account Response ******************');
+      console.log(
+        '****************** Account Create Response ******************'
+      );
       console.log(status);
       console.log(data);
       console.log(data.data);
@@ -20,7 +22,9 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       store.dispatch(receivedCreateAccount(data));
       break;
     case 'account.request.find':
-      console.log('****************** Account Response ******************');
+      console.log(
+        '****************** Account Find Response ******************'
+      );
       console.log(status);
       console.log(data);
       console.log(fields);
@@ -38,7 +42,9 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       store.dispatch(receivedPatchAccount(data));
       break;
     case 'account.request.login':
-      console.log('****************** Account Response ******************');
+      console.log(
+        '****************** Account Login Response ******************'
+      );
       console.log(status);
       console.log(data);
       console.log(fields);
@@ -46,7 +52,7 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       if (status === 'success') {
         store.dispatch(receivedLoginSuccess(data.data[0]));
       } else {
-        store.dispatch(receivedLoginFailure(data.data[0]));
+        store.dispatch(receivedLoginFailure());
       }
       break;
     default:
