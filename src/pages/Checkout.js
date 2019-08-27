@@ -109,7 +109,7 @@ const Checkout = () => {
     } else if (activeStep === 1) {
       store.dispatch(
         requestPatchCart(cart._id, {
-          account_id: store.getState().account._id, // we got this when an account was created
+          account_jwt: store.getState().account.account_jwt, // we got this when an account was created
           shipping: shippingMethods[values.shipping]
         })
       );

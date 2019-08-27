@@ -28,6 +28,7 @@ const localStorageClient = require('store');
 
 class App extends Component {
   componentDidMount() {
+    //localStorageClient.clearAll();
     this.props.requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
 
     /**
@@ -71,7 +72,7 @@ class App extends Component {
             <Link to="/">{this.props.storefront.name}</Link>
           </div>
           <Header />
-          {utils.isLoggedIn() && <LoggedInUser />}
+          {utils.isLoggedIn() && <div><LoggedInUser /><Logout /></div>}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />

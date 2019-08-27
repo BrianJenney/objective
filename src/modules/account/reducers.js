@@ -18,6 +18,7 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_CREATE_ACCOUNT:
       return { ...state };
     case RECEIVED_CREATE_ACCOUNT:
+      console.log(action.payload);
       return { ...state, ...action.payload };
     case REQUEST_FETCH_ACCOUNT:
       return { ...state };

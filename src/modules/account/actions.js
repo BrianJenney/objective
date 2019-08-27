@@ -50,10 +50,11 @@ export const receivedCreateAccount = createReply => async (
   dispatch,
   getState
 ) => {
+  console.log(createReply);
   localStorageClient.set('token', createReply.jwt);
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT,
-    payload: createReply.account
+    payload: createReply
   });
 };
 
