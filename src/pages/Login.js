@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 const Login = ({ authToken, account }) => {
   const classes = useStyles();
-
+console.log(authToken);
   const handleSubmit = ({ email, password }) => {
     store.dispatch(requestLoginAttempt(email, password));
   };

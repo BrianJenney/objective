@@ -94,7 +94,9 @@ const Checkout = ({ authToken }) => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { account, cart } = store.getState();
-  const [activeStep, setActiveStep] = useState(authToken ? 1 : 0);
+  const [activeStep, setActiveStep] = useState(
+    authToken || (account && account.account_jwt) ? 1 : 0
+  );
 
   const handleBack = () => {
     if (activeStep === 0) {
@@ -143,6 +145,7 @@ const Checkout = ({ authToken }) => {
   };
   const getStepContent = step => {
     console.log(store.getState());
+    console.log(authToken);
     switch (step) {
       case 0:
         return <CreateAccountForm onSubmit={handleNext} />;
