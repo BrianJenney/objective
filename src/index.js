@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
-import App from './components/App';
+import App from './App';
 import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
@@ -23,15 +23,18 @@ const replyTo = ObjectId();
  * @return none
  */
 
-
 const onStompConnectSuccess = () => {
   console.log('Successfully Connected');
   store.dispatch(connectStomp(stompClient, replyTo));
-  stompClient.subscribe('/queue/' + replyTo, body => {
-    handleResponse(body);
-  }, {
-    'auto-delete': true
-  });
+  stompClient.subscribe(
+    '/queue/' + replyTo,
+    body => {
+      handleResponse(body);
+    },
+    {
+      'auto-delete': true
+    }
+  );
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={nxtTheme}>
@@ -39,8 +42,8 @@ const onStompConnectSuccess = () => {
           maxSnack={5}
           anchorOrigin={{
             horizontal: 'right',
-            vertical: 'top'}
-          }
+            vertical: 'top'
+          }}
         >
           <App />
         </SnackbarProvider>

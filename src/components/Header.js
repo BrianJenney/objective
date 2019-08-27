@@ -11,18 +11,18 @@ import CartDrawer from '../pages/cart/CartDrawer';
 import './Header-style.scss';
 import ShoppingBag from './common/Icons/Shopping-Bag';
 
-const StyledLink = withStyles(theme => ({
+const StyledLink = withStyles(() => ({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'normal',
     color: '#000000',
     textTransform: 'uppercase',
     letterSpacing: '1px',
-    fontSize: '16px',
-  },
-}))(Link)
+    fontSize: '16px'
+  }
+}))(Link);
 
-const StyledBox = withStyles(theme => ({
+const StyledBox = withStyles(() => ({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'normal',
@@ -31,45 +31,39 @@ const StyledBox = withStyles(theme => ({
     letterSpacing: '1px',
     fontSize: '12px',
     lineHeight: '44px'
-  },
-}))(Box)
+  }
+}))(Box);
 
 const Header = () => {
-  const renderBurgerIcon = () => {
-    return (
-      <>
-        <DropdownMenu
-          toggleLabel={
-            <SvgIcon>
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-            </SvgIcon>
-          }
-          panelId="my-account"
-          menuItems={[
-            { key: 'first', to: '/gallery', children: 'Shop' },
-            { key: 'second', to: '/', children: 'Science' },
-            { key: 'third', to: '/account', children: 'Account' }
-          ]}
-        />
-      </>
-    );
-  };
+  const renderBurgerIcon = () => (
+    <>
+      <DropdownMenu
+        toggleLabel={
+          <SvgIcon>
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </SvgIcon>
+        }
+        panelId="my-account"
+        menuItems={[
+          { key: 'first', to: '/gallery', children: 'Shop' },
+          { key: 'second', to: '/', children: 'Science' },
+          { key: 'third', to: '/account', children: 'Account' }
+        ]}
+      />
+    </>
+  );
 
-  const renderCartIcon = () => {
-    return (
-      <TemporaryDrawer
-        toggleContent={
-          <ShoppingBag />
-        }
-        closer={
-          <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
-        }
-        listContent={<CartDrawer />}
-        side="right"
-      ></TemporaryDrawer>
-    );
-  };
+  const renderCartIcon = () => (
+    <TemporaryDrawer
+      toggleContent={<ShoppingBag />}
+      closer={
+        <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
+      }
+      listContent={<CartDrawer />}
+      side="right"
+    ></TemporaryDrawer>
+  );
 
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
@@ -77,74 +71,78 @@ const Header = () => {
   return (
     <Grid container xs={12} className="headerContainer">
       <Grid container xs={12} spacing={0}>
-      {burger ? (
-        <>
-          <Grid container xs={10} className="top">
-            <Grid item xs={1}>
-              {renderBurgerIcon()}
+        {burger ? (
+          <>
+            <Grid container xs={10} className="top">
+              <Grid item xs={1}>
+                {renderBurgerIcon()}
+              </Grid>
+              <Grid item xs={1}></Grid>
+              <Grid item xs={8} className="logo text-center">
+                Logo.
+              </Grid>
+              <Grid item xs={1}>
+                {!burger && (
+                  <StyledLink component={RouterLink} to="/account">
+                    Account
+                  </StyledLink>
+                )}
+              </Grid>
+              <Grid item xs={1}>
+                {renderCartIcon()}
+              </Grid>
             </Grid>
-            <Grid item xs={1}></Grid>
-            <Grid item xs={8} className="logo text-center">
-              Logo.
+            <Grid container xs={12} className="headerBar">
+              <Grid item xs={8} className="option text-right">
+                <StyledBox fontSize={9}>
+                  Free Shipping On Orders Over $75
+                </StyledBox>
+              </Grid>
+              <Grid item xs={4} className="option text-left">
+                <StyledBox fontSize={9}>Free Returns</StyledBox>
+              </Grid>
             </Grid>
-            <Grid item xs={1}>
-              {!burger && (
-                <StyledLink component={RouterLink} to="/account">
-                  Account
+          </>
+        ) : (
+          <>
+            <Grid container xs={12} className="headerBar">
+              <Grid item xs={6} className="option text-right">
+                <StyledBox fontSize={12}>
+                  Free Shipping On Orders Over $75
+                </StyledBox>
+              </Grid>
+              <Grid item xs={6} className="option text-left">
+                <StyledBox fontSize={12}>Free Returns</StyledBox>
+              </Grid>
+            </Grid>
+            <Grid container className="holder" xs={12}>
+              <Grid item xs={1}>
+                <StyledLink component={RouterLink} to="/gallery">
+                  Shop
                 </StyledLink>
-              )}
-            </Grid>
-            <Grid item xs={1}>
-              {renderCartIcon()}
-            </Grid>
-          </Grid>
-          <Grid container xs={12} className="headerBar">
-            <Grid item xs={8} className="option text-right">
-              <StyledBox fontSize={9}>Free Shipping On Orders Over $75</StyledBox>
-            </Grid>
-            <Grid item xs={4} className="option text-left">
-              <StyledBox fontSize={9}>Free Returns</StyledBox>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <>
-          <Grid container xs={12} className="headerBar">
-            <Grid item xs={6} className="option text-right">
-              <StyledBox fontSize={12}>Free Shipping On Orders Over $75</StyledBox>
-            </Grid>
-            <Grid item xs={6} className="option text-left">
-              <StyledBox fontSize={12}>Free Returns</StyledBox>
-            </Grid>
-          </Grid>
-          <Grid container className="holder" xs={12}>
-            <Grid item xs={1}>
-              <StyledLink component={RouterLink} to="/gallery">
-                Shop
-              </StyledLink>
-            </Grid>
-            <Grid item xs={1}>
-              <StyledLink component={RouterLink} to="/">
-                Science
-              </StyledLink>
-            </Grid>
-            <Grid item xs={8} className="logo text-center">
-              Logo.
-            </Grid>
-            <Grid item xs={1}>
-              {!burger && (
-                <StyledLink component={RouterLink} to="/account">
-                  Account
+              </Grid>
+              <Grid item xs={1}>
+                <StyledLink component={RouterLink} to="/">
+                  Science
                 </StyledLink>
-              )}
+              </Grid>
+              <Grid item xs={8} className="logo text-center">
+                Logo.
+              </Grid>
+              <Grid item xs={1}>
+                {!burger && (
+                  <StyledLink component={RouterLink} to="/account">
+                    Account
+                  </StyledLink>
+                )}
+              </Grid>
+              <Grid item xs={1}>
+                {renderCartIcon()}
+              </Grid>
             </Grid>
-            <Grid item xs={1}>
-              {renderCartIcon()}
-            </Grid>
-          </Grid>
-        </>
-      )}
-    </Grid>
+          </>
+        )}
+      </Grid>
     </Grid>
   );
 };
