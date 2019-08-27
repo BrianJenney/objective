@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Box, Link } from '@material-ui/core';
+import Badge from '@material-ui/core/Badge/Badge';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { Link as RouterLink } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
@@ -10,6 +12,7 @@ import TemporaryDrawer from './common/TemporaryDrawer';
 import CartDrawer from '../pages/cart/CartDrawer';
 import './Header-style.scss';
 import ShoppingBag from './common/Icons/Shopping-Bag';
+
 
 const StyledLink = withStyles(() => ({
   root: {
@@ -34,7 +37,20 @@ const StyledBox = withStyles(() => ({
   }
 }))(Box);
 
+const StyledBadge = withStyles(theme => ({
+  badge: {
+    top: '30%',
+    right: -3,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    }`,
+  },
+}))(Badge);
+
 const Header = () => {
+  const cart = useSelector(state => state.cart);
+
   const renderBurgerIcon = () => (
     <>
       <DropdownMenu
@@ -54,16 +70,23 @@ const Header = () => {
     </>
   );
 
-  const renderCartIcon = () => (
-    <TemporaryDrawer
-      toggleContent={<ShoppingBag />}
-      closer={
-        <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
-      }
-      listContent={<CartDrawer />}
-      side="right"
-    ></TemporaryDrawer>
-  );
+  const renderCartIcon = () => {
+    const cartCount = cart.items.length;
+    return (
+      <TemporaryDrawer
+        toggleContent={
+          <StyledBadge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
+            <ShoppingBag />
+          </StyledBadge>
+        }
+        closer={
+          <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
+        }
+        listContent={<CartDrawer />}
+        side="right"
+      ></TemporaryDrawer>
+    );
+  };
 
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));

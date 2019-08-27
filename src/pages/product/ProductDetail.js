@@ -6,13 +6,12 @@ import ProductContext from '../../contexts/ProductContext';
 import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
-import { requestPatchCart } from '../../modules/cart/actions';
+
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
+import { addToCart } from '../../utils/cart';
 
 const localStorageClient = require('store');
-
-const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
@@ -112,7 +111,7 @@ const StyledButton = withStyles(theme => ({
     color: '#ffffff',
     textTransform: 'capitalize',
   },
-}))(Button)
+}))(Button);
 
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();
@@ -120,8 +119,8 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
+
 const ProductDetail = ({ history }) => {
-  const capsuleMax = 60;
 
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
@@ -129,14 +128,36 @@ const ProductDetail = ({ history }) => {
   const [productType, setProductType] = useState(null);
   const { product, variants } = useContext(ProductContext);
   const windowSize = useWindowSize();
-  const [quantity, setQuantity, Quantity] = useQuantity('QTY');
+
   const { enqueueSnackbar } = useSnackbar();
   const selectedProductVariant = productType ? variants[productType] : null;
+  const [ATCEnabled, setATCEnabled] = useState(true);
+
+  const updateQuantityToCart = (qty => {
+    if (product === null || productType === null || selectedProductVariant === null)
+      return;
+    console.log('updateQuantityToCart', qty)
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, qty, dispatch);
+    enqueueSnackbar(`${qty} ${selectedProductVariant.sku} added to cart`, {
+      variant: 'success',
+    });
+  });
+  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+
+  const handleAddToCart = useCallback(() => {
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, quantity, dispatch);
+    enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
+      variant: 'success',
+    });
+    setATCEnabled(false);
+  }, [cart, product, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
   const ProductType = ({ isMobile, options }) => {
     const handleChange = useCallback((event) => {
-      setProductType(event.target.value)
-    }, []);
+      setProductType(event.target.value);
+      setQuantity(1);
+      setATCEnabled(true);
+    },[]);
     return (
       <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
         <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
@@ -157,43 +178,6 @@ const ProductDetail = ({ history }) => {
     );
   };
 
-  const handleAddToCart = useCallback(() => {
-    const newItems = cart.items;
-    let alreadyInCart = false;
-    newItems.filter(item => item.variant_id === selectedProductVariant._id)
-      .forEach(item => {
-        alreadyInCart = true;
-        item.quantity += quantity;
-      });
-    if (!alreadyInCart) {
-      const newItem = {
-        product_id: product._id,
-        product_name: product.name,
-        variant_name: selectedProductVariant.name,
-        variant_id: selectedProductVariant._id,
-        product_img: product.assets.imgs,
-        sku: selectedProductVariant.sku,
-        variant_type: selectedProductVariant.attributes[0].name,
-        variant_value: selectedProductVariant.attributes[0].value,
-        quantity: quantity,
-        unit_price: parseFloat(selectedProductVariant.price.$numberDecimal)
-      };
-      newItems.push(newItem);
-    }
-    const patches = {
-      items: newItems,
-      subtotal: calculateCartTotal(newItems),
-      total: calculateCartTotal(newItems)
-    };
-    dispatch(requestPatchCart(localStorageClient.get('cartId'), patches));
-    enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
-      variant: 'success',
-    });
-    setQuantity(1);
-    setProductType(null);
-    // history.push('/cart');
-  }, [product, selectedProductVariant, quantity, enqueueSnackbar]);
-
   if (!product) {
     return null;
   }
@@ -209,6 +193,7 @@ const ProductDetail = ({ history }) => {
         value: String(index)
       }
     });
+
 
   return (
     <>
@@ -238,18 +223,15 @@ const ProductDetail = ({ history }) => {
                 <br />
                 <ProductType isMobile={isMobile} options={productTypeOptions} />
                 <br />
-                <br />
-                <Quantity />
+                {!ATCEnabled && <Quantity />}
               </CardContent>
-              <br />
-
-              <Grid container xs={12} justify="left-start" alignItems="center">
+              { ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
                   <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
                     ADD TO CART
-              </StyledButton>
+                  </StyledButton>
                 </CardActions>
-              </Grid>
+              </Grid> }
             </Card>
           </Grid>
         </Grid>
