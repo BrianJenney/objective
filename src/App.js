@@ -82,7 +82,8 @@ class App extends Component {
    * The order that routes are defined matters, make sure /:page is the very last one
    */
   render() {
-    const { authToken, storefront } = this.props;
+    const { account, authToken, storefront } = this.props;
+    console.log(authToken);
 
     return (
       <React.Fragment>
@@ -92,7 +93,7 @@ class App extends Component {
             <Link to="/">{storefront.name}</Link>
           </div>
           <Header />
-          {authToken && <LoggedInUser />}
+          {authToken || (account && account.account_jwt)&& <LoggedInUser />}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
