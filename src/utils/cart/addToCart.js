@@ -1,6 +1,6 @@
 import {requestPatchCart} from "../../modules/cart/actions";
 
-const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
+export const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
 export const addToCart = (cartId, cart, selectedProductVariant, product, quantity, dispatch) => {
   const newItems = cart.items;
