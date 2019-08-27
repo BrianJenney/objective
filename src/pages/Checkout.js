@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import {
   CssBaseline,
@@ -11,6 +12,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import store from '../store';
 import { PAYMENT_METHODS } from '../constants/payment';
+import { withAuthToken } from '../hoc';
 import {
   fetchCreditCardBrainTreeNonce,
   fetchPaypalCheckoutBrainTreeNonce
@@ -25,9 +27,6 @@ import PaymentForm from './checkout/PaymentForm';
 import ShippingForm from './checkout/ShippingForm';
 import Review from './checkout/Review';
 import Result from './checkout/Result';
-import utils from '../components/utils/utils';
-
-const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -91,11 +90,11 @@ const shippingMethods = {
   }
 };
 
-const Checkout = () => {
+const Checkout = ({ authToken }) => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { account, cart } = store.getState();
-  const [activeStep, setActiveStep] = useState(utils.isLoggedIn() ? 1 : 0);
+  const [activeStep, setActiveStep] = useState(authToken ? 1 : 0);
 
   const handleBack = () => {
     if (activeStep === 0) {
@@ -210,4 +209,8 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+Checkout.propTypes = {
+  authToken: PropTypes.string
+};
+
+export default withAuthToken(Checkout);

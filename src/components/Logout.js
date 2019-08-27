@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from './common/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from './common/Button';
 import store from '../store';
 import { logout } from '../modules/account/actions';
 

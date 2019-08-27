@@ -63,7 +63,8 @@ export class GalleryStore extends Component {
         }
       }
     };
-    var obj = JSON.stringify(msgpack.encode(params));
+
+    obj = JSON.stringify(msgpack.encode(params));
     stompClient.send('/exchange/variant/variant.request.find', {
       'reply-to': replyTo,
       'correlation-id': ObjectId()

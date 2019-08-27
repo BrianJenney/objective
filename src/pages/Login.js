@@ -1,18 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { object, string } from 'yup';
+import { Formik, Field, Form } from 'formik';
+import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import utils from '../components/utils/utils';
+import { Button, NavLink } from '../components/common';
+import { InputField } from '../components/form-fields';
+import { withAuthToken } from '../hoc';
 import store from '../store';
 import { requestLoginAttempt } from '../modules/account/actions';
+
+const schema = object().shape({
+  email: string()
+    .required('Email is required')
+    .email('Input valid email'),
+  password: string().required('Password is required')
+});
+
+const INITIAL_VALUES = {
+  email: 'kevin@nutranext.net',
+  password: ''
+};
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -39,32 +54,52 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Login(props) {
+const Login = ({ authToken }) => {
   const classes = useStyles();
 
-  const [email, setEmail] = React.useState(null);
-  const [password, setPassword] = React.useState(null);
-
-  const handleChange = e => {
-    if (e.target.id === 'email') {
-      setEmail(e.target.value);
-    } else if (e.target.id === 'password') {
-      setPassword(e.target.value);
-    }
+  const handleSubmit = ({ email, password }) => {
+    store.dispatch(requestLoginAttempt(email, password));
   };
 
-  const handleClick = () => {
-    if (utils.validateEmailAddress(email)) {
-      store.dispatch(requestLoginAttempt(email, password));
-    } else {
-      alert('Please enter a valid email address');
-    }
-  };
+  const renderForm = () => (
+    <Form className={classes.form}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Field
+            name="email"
+            label="Email Address"
+            component={InputField}
+            autoComplete="email"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="password"
+            label="Password"
+            component={InputField}
+            type="password"
+            autoComplete="current-password"
+          />
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Button type="submit" className={classes.submit} fullWidth>
+          Log In
+        </Button>
+      </Grid>
+      <Grid item xs={12}>
+        <Box>
+          Do not have an account?
+          <NavLink to="/signup">Sign Up</NavLink>!
+        </Box>
+      </Grid>
+    </Form>
+  );
 
   return (
     <div>
-      {utils.isLoggedIn() ? (
-        <Redirect to='/checkout' />
+      {authToken ? (
+        <Redirect to="/checkout" />
       ) : (
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -75,58 +110,21 @@ export default function Login(props) {
             <Typography component="h1" variant="h5">
               Log In
             </Typography>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={handleChange}
-                  />
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  className={classes.submit}
-                  color="primary"
-                  fullWidth
-                  onClick={handleClick}
-                  variant="contained"
-                >
-                  Log In
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <div>
-                  Don't have an account?
-                  <Link component={RouterLink} to="/checkout">
-                    Sign Up
-                  </Link>
-                  !
-                </div>
-              </Grid>
-            </form>
+            <Formik
+              initialValues={INITIAL_VALUES}
+              onSubmit={handleSubmit}
+              validationSchema={schema}
+              render={renderForm}
+            />
           </div>
         </Container>
       )}
     </div>
   );
-}
+};
+
+Login.propTypes = {
+  authToken: PropTypes.string
+};
+
+export default withAuthToken(Login);
