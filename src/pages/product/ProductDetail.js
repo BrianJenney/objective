@@ -119,6 +119,7 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
+
 const ProductDetail = ({ history }) => {
 
   const classes = useStyles();
@@ -132,24 +133,31 @@ const ProductDetail = ({ history }) => {
   const selectedProductVariant = productType ? variants[productType] : null;
   const [ATCEnabled, setATCEnabled] = useState(true);
 
-  const updateQuantityToCart = useCallback(qty => {
+  const updateQuantityToCart = (qty => {
     if (product === null || productType === null || selectedProductVariant === null)
       return;
+    console.log('updateQuantityToCart', qty)
     addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, qty, dispatch);
     enqueueSnackbar(`${qty} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
-
-  },[cart, product, productType, selectedProductVariant, enqueueSnackbar, dispatch]);
-
+  });
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+
+  const handleAddToCart = useCallback(() => {
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, quantity, dispatch);
+    enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
+      variant: 'success',
+    });
+    setATCEnabled(false);
+  }, [cart, product, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
   const ProductType = ({ isMobile, options }) => {
     const handleChange = useCallback((event) => {
       setProductType(event.target.value);
       setQuantity(1);
       setATCEnabled(true);
-    }, []);
+    },[]);
     return (
       <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
         <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
@@ -169,14 +177,6 @@ const ProductDetail = ({ history }) => {
       </Grid>
     );
   };
-
-  const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, quantity, dispatch);
-    enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
-      variant: 'success',
-    });
-    setATCEnabled(false);
-  }, [cart, product, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
   if (!product) {
     return null;
