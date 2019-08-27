@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,7 +6,7 @@ import ProductContext from '../../contexts/ProductContext';
 import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
-import { requestPatchCart } from '../../modules/cart/actions';
+
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
@@ -140,7 +140,7 @@ const ProductDetail = ({ history }) => {
       variant: 'success',
     });
 
-  },[product, productType, selectedProductVariant, enqueueSnackbar]);
+  },[cart, product, productType, selectedProductVariant, enqueueSnackbar, dispatch]);
 
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
@@ -176,7 +176,7 @@ const ProductDetail = ({ history }) => {
       variant: 'success',
     });
     setATCEnabled(false);
-  }, [product, selectedProductVariant, quantity, enqueueSnackbar]);
+  }, [cart, product, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
   if (!product) {
     return null;
