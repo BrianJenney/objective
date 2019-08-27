@@ -161,7 +161,7 @@ export const receivedLoginSuccess = loginReply => async (
   localStorageClient.set('token', loginReply.jwt);
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
-    payload: loginReply.account.data[0]
+    payload: loginReply
   });
 };
 
