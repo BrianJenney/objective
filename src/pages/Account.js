@@ -12,8 +12,6 @@ import AccountMenu from './account/AccountMenu';
 import ManageProfile from './account/ManageProfile';
 import OrderList from './account/OrderList';
 
-import { CropLandscapeOutlined } from '@material-ui/icons';
-
 const Account = ({ authToken }) => {
   const { account } = store.getState();
 
@@ -27,7 +25,6 @@ const Account = ({ authToken }) => {
   };
 
   const getPanel = () => {
-    console.log(currentComponent);
     switch (currentComponent) {
       case 'overview':
         return <AccountHome account={account} />;

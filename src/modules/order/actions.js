@@ -1,4 +1,9 @@
-import { REQUEST_CREATE_ORDER, RECEIVED_CREATE_ORDER } from './types';
+import {
+  REQUEST_CREATE_ORDER,
+  RECEIVED_CREATE_ORDER,
+  REQUEST_FIND_ORDERS_BY_ACCOUNT,
+  RECEIVED_FIND_ORDERS_BY_ACCOUNT
+} from './types';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -33,3 +38,39 @@ export const receivedCreateOrder = order => {
     payload: order
   };
 };
+
+export const requestFindOrdersByAccount = accountJwt => (
+  dispatch,
+  getState
+) => {
+  const { client, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      query: {
+        'cart.account_id': accountJwt
+      }
+    }
+  };
+  console.log(params);
+  const payload = JSON.stringify(msgpack.encode(params));
+  client.send(
+    '/exchange/order/order.request.find',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
+  dispatch({
+    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
+    payload: {}
+  });
+};
+
+export const receivedFindOrdersByAccount = order => {
+  return {
+    type: RECEIVED_FIND_ORDERS_BY_ACCOUNT,
+    payload: order
+  };
+};
+
