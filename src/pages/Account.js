@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import {
@@ -9,7 +10,10 @@ import {
   Paper,
   Grid
 } from '@material-ui/core';
-import { requestFetchAccount } from '../modules/account/actions';
+import {
+  requestFetchAccount as requestFetchAccountAction,
+  requestPatchAccount as requestPatchAccountAction
+} from '../modules/account/actions';
 import {
   ShippingAddressForm,
   BillingAddressForm,
@@ -24,31 +28,41 @@ const pStyle = {
 const FORMS = {
   SHIPPING_ADDRESS: 'shippingAddress',
   BILLING_ADDRESS: 'billingAddress',
-  PAYMENT: 'payment'
+  PAYMENT: 'paymentDetails'
 };
 
-class Account extends React.Component {
+class Account extends Component {
+  static propTypes = {
+    account: PropTypes.object.isRequired,
+    requestFetchAccount: PropTypes.func.isRequired,
+    requestPatchAccount: PropTypes.func.isRequired
+  };
+
   state = {
     shippingAddress: {}
   };
 
   componentDidMount() {
-    this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
-    console.log('******************MOUNTED****************************');
+    const { requestFetchAccount } = this.props;
+
+    requestFetchAccount('5cdc7405da53494ee0f3bafe');
   }
 
   saveFormValues = (form, values) => {
+    const { account, requestPatchAccount } = this.props;
+
     if (form === FORMS.SHIPPING_ADDRESS) {
       this.setState({ shippingAddress: values });
     }
-    // @TODO Save form values
+    requestPatchAccount(account._id, { [form]: values });
   };
 
   render() {
-    if (!this.props.account.contactPreferences) {
+    const { account } = this.props;
+
+    if (!account.contactPreferences) {
       return <div>No Account</div>;
     }
-    let user = this.props.account;
     const { shippingAddress } = this.state;
 
     return (
@@ -81,23 +95,24 @@ class Account extends React.Component {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item xs={12} key={user._id}>
+          <Grid item xs={12} key={account._id}>
             <Link variant="button" color="textPrimary">
               <RouterLink to="/manage-profile">Manage Profile</RouterLink>
             </Link>
             <Grid item xs={12}>
               <Paper style={pStyle}>
                 <Typography variant="h3" gutterBottom>
-                  {user.firstName} {user.lastName}
+                  {account.firstName} {account.lastName}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  Email: {user.email}
+                  Email: {account.email}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  Phone: {user.phoneBook.defaultNum}
+                  Phone: {account.phoneBook.defaultNum}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                  Preferred Contact Method: {user.contactPreferences.preferred}
+                  Preferred Contact Method:{' '}
+                  {account.contactPreferences.preferred}
                 </Typography>
               </Paper>
             </Grid>
@@ -111,14 +126,16 @@ class Account extends React.Component {
                     Default Address
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    {user.defaultAddress.address1}
-                    {user.defaultAddress.address2}
+                    {account.defaultAddress.address1}
+                    {account.defaultAddress.address2}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    {user.defaultAddress.city}, {user.defaultAddress.state}
+                    {account.defaultAddress.city},{' '}
+                    {account.defaultAddress.state}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    {user.defaultAddress.zipcode} {user.defaultAddress.country}
+                    {account.defaultAddress.zipcode}{' '}
+                    {account.defaultAddress.country}
                   </Typography>
                 </Paper>
               </Grid>
@@ -130,15 +147,13 @@ class Account extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
-};
+const mapStateToProps = state => ({
+  account: state.account
+});
 
 const mapDispatchToProps = {
-  requestFetchAccount
+  requestFetchAccount: requestFetchAccountAction,
+  requestPatchAccount: requestPatchAccountAction
 };
 
 export default connect(
