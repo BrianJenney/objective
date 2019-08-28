@@ -101,7 +101,7 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
               {onBack && (
                 <Button type="button" onClick={onBack} children="Back" mr={2} />
               )}
-              <Button type="submit" children="Next" />
+              <Button type="submit" children={onBack ? 'Next' : 'Save'} />
             </Box>
           </Grid>
         </Grid>
