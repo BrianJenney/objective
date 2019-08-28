@@ -176,9 +176,7 @@ const Account = ({ authToken }) => {
   let [currentComponent, setCurrentComponent] = useState('overview');
 
   const handleClick = e => {
-    currentComponent = e.currentTarget.textContent
-      .toLowerCase()
-      .replace(/\s/g, '');
+    setCurrentComponent(e.currentTarget.textContent.toLowerCase().replace(/\s/g, ''));
     console.log(currentComponent);
   };
 
@@ -187,8 +185,16 @@ const Account = ({ authToken }) => {
     switch (currentComponent) {
       case 'overview':
         return <AccountHome account={account} />;
+      case 'yourorders':
+        return <h2>Your Orders</h2>;
+      case 'savedaddresses':
+        return <h2>Saved Addresses</h2>;
+      case 'paymentdetails':
+        return <h2>Payment Details</h2>;
       case 'yourprofile':
         return <ManageProfile account={account} />;
+      case 'logout':
+        return <h2>Logout</h2>;
       default:
         return null;
     }
