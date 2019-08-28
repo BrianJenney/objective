@@ -15,7 +15,7 @@ const ProductSummary = ({ product }) => {
       <Card>
         <CardMedia
           style={{ height: 355, width: 200, margin: '20px 90px' }}
-          image={product.assets.imgs}
+          image={product.assets.img_front}
           title={product.name}
         />
         <CardContent>
