@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import {
+  Link,
+  Box,
+  Container,
+  Typography,
+  Paper,
+  Grid
+} from '@material-ui/core';
 import { requestFetchAccount } from '../modules/account/actions';
 import {
   ShippingAddressForm,
@@ -50,10 +53,12 @@ class Account extends React.Component {
 
     return (
       <Container>
-        <Typography variant="h2" gutterBottom>
-          My Account
-        </Typography>
-        <Grid container>
+        <Box my={2}>
+          <Typography variant="h2" gutterBottom>
+            My Account
+          </Typography>
+        </Box>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <ShippingAddressForm
               onSubmit={values =>
