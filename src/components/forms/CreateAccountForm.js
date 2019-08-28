@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { withStyles, useTheme } from '@material-ui/core/styles';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import { Box, Button, Grid, Link, Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
-import { CheckboxField, InputField } from '../../components/form-fields';
+import { CheckboxField, InputField } from '../form-fields';
 
-const StyledLink = withStyles(theme => ({
+const StyledLink = withStyles(() => ({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'normal',
@@ -18,25 +18,23 @@ const StyledLink = withStyles(theme => ({
   }
 }))(Link);
 
+const INITIAL_VALUES = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  newsletter: false
+};
+
+const schema = object().shape({
+  firstName: string().required('First name is required'),
+  lastName: string().required('Last name is required'),
+  email: string().required('Email is required'),
+  password: string().required('Password is required'),
+  newsletter: string().required('Newsletter is required')
+});
+
 const CreateAccountForm = ({ onSubmit }) => {
-  const INITIAL_VALUES = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    newsletter: false
-  };
-
-  const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
-
-  const schema = object().shape({
-    firstName: string().required('First name is required'),
-    lastName: string().required('Last name is required'),
-    email: string().required('Email is required'),
-    password: string().required('Password is required'),
-    newsletter: string().required('Newsletter is required')
-  });
-
   const renderForm = () => (
     <React.Fragment>
       <Form>
@@ -99,11 +97,10 @@ const CreateAccountForm = ({ onSubmit }) => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={INITIAL_VALUES}
       onSubmit={onSubmit}
       validationSchema={schema}
       render={renderForm}
-      enableReinitialize
     />
   );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Paper } from '@material-ui/core';
-import { Button } from '../../components/common';
+import { Button } from '../common';
 
-const Result = ({ onSubmit }) => (
+const ResultForm = ({ onSubmit }) => (
   <Paper>
     <Typography component="h1" variant="h4" align="center">
       Things
@@ -12,8 +12,8 @@ const Result = ({ onSubmit }) => (
   </Paper>
 );
 
-Result.propTypes = {
+ResultForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-export default Result;
+export default ResultForm;

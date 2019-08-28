@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -127,7 +128,12 @@ const mapDispatchToProps = {
   requestCreateCart: requestCreateCartAction
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withAuthToken(App));
+const enhance = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  withAuthToken
+);
+
+export default enhance(App);

@@ -8,8 +8,8 @@ import {
   CheckboxField,
   DatePickerField,
   SelectField
-} from '../../components/form-fields';
-import { Button } from '../../components/common';
+} from '../form-fields';
+import { Button } from '../common';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
@@ -108,7 +108,9 @@ const PaymentForm = ({ onSubmit, onBack }) => {
           )}
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
-              <Button type="button" onClick={onBack} children="Back" mr={2} />
+              {onBack && (
+                <Button type="button" onClick={onBack} children="Back" mr={2} />
+              )}
               <Button type="submit" children="Next" />
             </Box>
           </Grid>
@@ -129,7 +131,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
 
 PaymentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func.isRequired
+  onBack: PropTypes.func
 };
 
 export default PaymentForm;

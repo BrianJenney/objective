@@ -1,36 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import { requestFetchAccount } from '../modules/account/actions';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { requestFetchAccount } from '../modules/account/actions';
+import {
+  ShippingAddressForm,
+  BillingAddressForm,
+  PaymentForm
+} from '../components/forms';
 
 const pStyle = {
   padding: 20,
   textAlign: 'center'
 };
 
+const FORMS = {
+  SHIPPING_ADDRESS: 'shippingAddress',
+  BILLING_ADDRESS: 'billingAddress',
+  PAYMENT: 'payment'
+};
+
 class Account extends React.Component {
+  state = {
+    shippingAddress: {}
+  };
+
   componentDidMount() {
     this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
     console.log('******************MOUNTED****************************');
   }
+
+  saveFormValues = (form, values) => {
+    if (form === FORMS.SHIPPING_ADDRESS) {
+      this.setState({ shippingAddress: values });
+    }
+    // @TODO Save form values
+  };
 
   render() {
     if (!this.props.account.contactPreferences) {
       return <div>No Account</div>;
     }
     let user = this.props.account;
+    const { shippingAddress } = this.state;
 
     return (
       <Container>
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           My Account
         </Typography>
+        <Grid container>
+          <Grid item xs={12} sm={6}>
+            <ShippingAddressForm
+              onSubmit={values =>
+                this.saveFormValues(FORMS.SHIPPING_ADDRESS, values)
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <BillingAddressForm
+              shippingAddressSeed={{ shippingAddress }}
+              onSubmit={values =>
+                this.saveFormValues(FORMS.BILLING_ADDRESS, values)
+              }
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <PaymentForm
+              onSubmit={values => this.saveFormValues(FORMS.PAYMENT, values)}
+            />
+          </Grid>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} key={user._id}>
             <Link variant="button" color="textPrimary">

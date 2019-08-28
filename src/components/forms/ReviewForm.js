@@ -9,7 +9,7 @@ import {
   Grid
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '../../components/common';
+import { Button } from '../common';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_LABELS_MAP
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Review = ({ cart, onBack, onSubmit }) => {
+const ReviewForm = ({ cart, onBack, onSubmit }) => {
   const classes = useStyles();
   const {
     items,
@@ -154,10 +154,10 @@ const Review = ({ cart, onBack, onSubmit }) => {
   /* eslint-enable */
 };
 
-Review.propTypes = {
+ReviewForm.propTypes = {
   cart: PropTypes.object.isRequired,
   onBack: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
 
-export default Review;
+export default ReviewForm;
