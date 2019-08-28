@@ -20,13 +20,15 @@ import {
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
 import { requestCreateAccount } from '../modules/account/actions';
-import CreateAccountForm from './checkout/CreateAccount';
-import ShippingAddressForm from './checkout/ShippingAddressForm';
-import BillingAddressForm from './checkout/BillingAddressForm';
-import PaymentForm from './checkout/PaymentForm';
-import ShippingForm from './checkout/ShippingForm';
-import Review from './checkout/Review';
-import Result from './checkout/Result';
+import {
+  CreateAccountForm,
+  ShippingAddressForm,
+  BillingAddressForm,
+  PaymentForm,
+  ShippingForm,
+  ReviewForm,
+  ResultForm
+} from '../components/forms';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -166,9 +168,11 @@ const Checkout = ({ authToken }) => {
       case 4:
         return <PaymentForm onBack={handleBack} onSubmit={handleNext} />;
       case 5:
-        return <Review cart={cart} onBack={handleBack} onSubmit={handleNext} />;
+        return (
+          <ReviewForm cart={cart} onBack={handleBack} onSubmit={handleNext} />
+        );
       case 6:
-        return <Result onSubmit={handleNext} />;
+        return <ResultForm onSubmit={handleNext} />;
       default:
         enqueueSnackbar('Unknown step', { variant: 'error' });
         return null;

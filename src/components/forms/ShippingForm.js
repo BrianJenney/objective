@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
-import { RadioGroupField } from '../../components/form-fields';
-import { Button } from '../../components/common';
+import { RadioGroupField } from '../form-fields';
+import { Button } from '../common';
 
 const schema = object().shape({
   shipping: string().required('Shipping method is required')

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Box, Grid, Typography, Checkbox } from '@material-ui/core';
-import { InputField, SelectField } from '../../components/form-fields';
-import { Button } from '../../components/common';
+import { Box, Grid, Typography } from '@material-ui/core';
+import { InputField, SelectField } from '../form-fields';
+import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
 
 const schema = object().shape({
-  billingAddress: object().shape({
+  shippingAddress: object().shape({
     firstName: string().required('First name is required'),
     lastName: string().required('Last name is required'),
     line1: string().required('Address1 is required'),
@@ -21,7 +21,7 @@ const schema = object().shape({
 });
 
 const INITIAL_VALUES = {
-  billingAddress: {
+  shippingAddress: {
     firstName: 'Kevin',
     lastName: 'Christian',
     line1: '1111 Sprng Street',
@@ -33,85 +33,64 @@ const INITIAL_VALUES = {
   }
 };
 
-const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
-  const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
-  const handleUseShippingAddressToggle = event => {
-    if (event.target.checked) {
-      setInitialValues({
-        billingAddress: {
-          ...shippingAddressSeed.shippingAddress
-        }
-      });
-    } else {
-      setInitialValues(INITIAL_VALUES);
-    }
-  };
+const ShippingAddressForm = ({ onSubmit, onBack }) => {
   const renderForm = () => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Billing Address" />
+      <Typography variant="h6" gutterBottom children="Shipping address" />
       <Form>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Box display="flex" alignItems="center">
-              <Checkbox
-                id="useShippingAddressToggle"
-                onChange={handleUseShippingAddressToggle}
-              />
-              <Typography children="Use shipping address" />
-            </Box>
-          </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.firstName"
+              name="shippingAddress.firstName"
               label="First name"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.lastName"
+              name="shippingAddress.lastName"
               label="Last name"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="billingAddress.line1"
+              name="shippingAddress.line1"
               label="Address line 1"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="billingAddress.line2"
+              name="shippingAddress.line2"
               label="Address line 2"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.city"
+              name="shippingAddress.city"
               label="City"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.state"
+              name="shippingAddress.state"
               label="State/Province/Region"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.postalCode"
+              name="shippingAddress.postalCode"
               label="Zip/Postal code"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.countryCode"
+              name="shippingAddress.countryCode"
               label="Country"
               component={SelectField}
               options={COUNTRY_OPTIONS}
@@ -119,7 +98,9 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
           </Grid>
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
-              <Button type="button" onClick={onBack} children="Back" mr={2} />
+              {onBack && (
+                <Button type="button" onClick={onBack} children="Back" mr={2} />
+              )}
               <Button type="submit" children="Next" />
             </Box>
           </Grid>
@@ -130,19 +111,17 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={INITIAL_VALUES}
       onSubmit={onSubmit}
       validationSchema={schema}
       render={renderForm}
-      enableReinitialize
     />
   );
 };
 
-BillingAddressForm.propTypes = {
-  shippingAddressSeed: PropTypes.object.isRequired,
+ShippingAddressForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func.isRequired
+  onBack: PropTypes.func
 };
 
-export default BillingAddressForm;
+export default ShippingAddressForm;
