@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Link,
@@ -115,6 +115,7 @@ class Account extends Component {
                   {account.contactPreferences.preferred}
                 </Typography>
               </Paper>
+<<<<<<< HEAD
             </Grid>
             <Link variant="button" color="textPrimary">
               <RouterLink to="/manage-addresses">Manage Addresses</RouterLink>
@@ -154,9 +155,68 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   requestFetchAccount: requestFetchAccountAction,
   requestPatchAccount: requestPatchAccountAction
+=======
+=======
+import { Link as RouterLink, Redirect } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import store from '../store';
+import { withAuthToken } from '../hoc';
+import AccountHome from './account/AccountHome';
+import AccountMenu from './account/AccountMenu';
+import ManageProfile from './account/ManageProfile';
+import { CropLandscapeOutlined } from '@material-ui/icons';
+
+const Account = ({ authToken }) => {
+  const { account } = store.getState();
+
+  let [currentComponent, setCurrentComponent] = useState('overview');
+
+  const handleClick = e => {
+    currentComponent = e.currentTarget.textContent
+      .toLowerCase()
+      .replace(/\s/g, '');
+    console.log(currentComponent);
+  };
+
+  const getPanel = () => {
+    console.log(currentComponent);
+    switch (currentComponent) {
+      case 'overview':
+        return <AccountHome account={account} />;
+      case 'yourprofile':
+        return <ManageProfile account={account} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div>
+      {authToken || (account && account.account_jwt) ? (
+        <Container>
+          <Typography variant="h3" gutterBottom>
+            My Account
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={3} key={account.firstName}>
+              <AccountMenu onClick={handleClick} />
+>>>>>>> Making account section more like mockup
+            </Grid>
+            <Grid item xs={9} key={account.firstName}>
+              <>{getPanel()}</>
+            </Grid>
+          </Grid>
+        </Container>
+      ) : (
+        <Redirect to="/login" />
+      )}
+    </div>
+  );
+>>>>>>> Making account section more like mockup
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Account);
+export default withAuthToken(Account);

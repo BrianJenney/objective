@@ -11,9 +11,9 @@ class Static extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    EventEmitter.addListener('content.request.find', data => {
-      this.setState({ 'content': data.data.data[0].content });
-    });
+    // EventEmitter.addListener('content.request.find', data => {
+    //   this.setState({ 'content': data.data.data[0].content });
+    // });
   }
 
   componentDidMount() {
