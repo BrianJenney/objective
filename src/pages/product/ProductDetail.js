@@ -115,7 +115,7 @@ const StyledButton = withStyles(theme => ({
 
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();
-  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {productVariant.attributes[0].size} {productVariant.attributes[0].type}</Typography>
+  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}</Typography>
   ) : null;
 };
 
@@ -157,7 +157,7 @@ const ProductDetail = ({ history }) => {
       setProductType(event.target.value);
       setQuantity(1);
       setATCEnabled(true);
-    },[]);
+    }, []);
     return (
       <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
         <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
@@ -225,13 +225,13 @@ const ProductDetail = ({ history }) => {
                 <br />
                 {!ATCEnabled && <Quantity />}
               </CardContent>
-              { ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
+              {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
                   <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
                     ADD TO CART
                   </StyledButton>
                 </CardActions>
-              </Grid> }
+              </Grid>}
             </Card>
           </Grid>
         </Grid>
