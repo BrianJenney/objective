@@ -14,6 +14,7 @@ export const colorPalette = {
   LEMON: '#FFE671',
   ORANGE: '#FABA91',
   VANILLA: '#FEF6D3',
+  LIGHT_VANILLA: '#fdf8f2',
   RED: '#C10230',
   WHITE: '#ffffff',
   GRAY: '#A69B95',

@@ -23,9 +23,12 @@ import {
   StyledDrawerGrid,
   StyledGridEmptyCart,
   StyledTotalWrapper,
-  StyledPromoCode
+  StyledPromoCode,
+  StyledCheckoutButton
 } from './StyledComponents';
+import { fonts } from '../../components/Theme/fonts';
 
+const { $brandSans } = fonts;
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 
 class Cart extends React.Component {
@@ -72,7 +75,12 @@ class Cart extends React.Component {
       <Grid
         container
         xs={12}
-        style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
+        style={{
+          width: '100%',
+          'min-width': '90%',
+          margin: '0 auto',
+          'background-color': '#ffffff'
+        }}
       >
         <div>
           <StyledHeaderWrapper container direction="column">
@@ -110,8 +118,8 @@ class Cart extends React.Component {
                     <Card>
                       <CardMedia
                         style={{ height: 126, width: 126 }}
-                        image={item.variant_img}
-                        title={item.variant_name}
+                        image={item.product_img}
+                        title={item.product_name}
                       />
                     </Card>
                   </Grid>
@@ -151,31 +159,29 @@ class Cart extends React.Component {
                             onClick={e => this.adjustQty(e, 1)}
                             style={{ 'font-size': '18pt' }}
                             value={index}
-                          >
-                            +
-                          </StyledCounterButton>
+                          ></StyledCounterButton>
                         </StyledCardActions>
-                      </Grid>
-                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
-                        <StyledFinePrint
-                          component="div"
-                          onClick={e => this.removeFromCart(e)}
-                          value={index}
-                        >
-                          <Link
-                            style={{
-                              'text-transform': 'uppercase',
-                              color: LIGHT_GRAY
-                            }}
+                        <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                          <StyledFinePrint
+                            component="div"
+                            onClick={e => this.removeFromCart(e)}
+                            value={index}
                           >
-                            Remove
-                          </Link>
-                        </StyledFinePrint>
-                        {/* <StyledSmallCaps>{item.unit_price.toFixed(2)}</StyledSmallCaps> */}
-                        <StyledSmallCaps>
-                          {(item.quantity * item.unit_price).toFixed(2)}
-                        </StyledSmallCaps>
-                      </StyledCardContent>
+                            <Link
+                              style={{
+                                'text-transform': 'uppercase',
+                                color: LIGHT_GRAY
+                              }}
+                            >
+                              Remove
+                            </Link>
+                          </StyledFinePrint>
+                          {/* <StyledSmallCaps>{item.unit_price.toFixed(2)}</StyledSmallCaps> */}
+                          <StyledSmallCaps>
+                            {(item.quantity * item.unit_price).toFixed(2)}
+                          </StyledSmallCaps>
+                        </StyledCardContent>
+                      </Grid>
                     </Card>
                   </Grid>
                 </StyledDrawerGrid>
@@ -234,6 +240,7 @@ class Cart extends React.Component {
                     // label="Enter Promo Code"
                     margin="dense"
                     variant="outlined"
+                    style={{ height: '42px' }}
                   />
                 </Grid>
                 <Grid item xs={4} style={{ 'text-align': 'right' }}>
@@ -257,7 +264,7 @@ class Cart extends React.Component {
                 'margin-bottom': '0',
                 'border-top': `solid 2px ${MEDIUM_GRAY}`,
                 'padding-top': '29px',
-                'margin-top': '20px'
+                'margin-top': '80px'
               }}
             >
               <Grid item xs={6}>
@@ -275,6 +282,21 @@ class Cart extends React.Component {
                 <StyledFinePrint component="div">
                   Tax is calculated at checkout
                 </StyledFinePrint>
+              </Grid>
+              <Grid item xs={12}>
+                <StyledCheckoutButton color="primary" variant="contained">
+                  <Link
+                    to="/checkout"
+                    style={{
+                      color: 'white',
+                      'text-decoration': 'none',
+                      'font-family': $brandSans,
+                      'font-weight': 'bold'
+                    }}
+                  >
+                    Checkout
+                  </Link>
+                </StyledCheckoutButton>
               </Grid>
             </Grid>
           </Grid>

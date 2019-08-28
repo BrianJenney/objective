@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { RadioGroupField } from '../form-fields';
-import { Button } from '../common';
+import { Box, Grid } from '@material-ui/core';
+import { RadioGroupField } from '../../components/form-fields';
+import { Button } from '../../components/common';
+import { StyledSectionHeader } from '../../pages/checkout/StyledComponents';
 
 const schema = object().shape({
   shipping: string().required('Shipping method is required')
@@ -30,7 +31,12 @@ const INITIAL_VALUES = {
 const ShippingForm = ({ onBack, onSubmit }) => {
   const renderForm = () => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Shipping Method" />
+      <StyledSectionHeader
+        style={{ margin: '20px 0' }}
+        variant="h6"
+        gutterBottom
+        children="Shipping Method"
+      />
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Form>

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
-import { InputField, SelectField } from '../form-fields';
+import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
+import { StyledSectionHeader } from '../../pages/checkout/StyledComponents';
 
 const schema = object().shape({
   shippingAddress: object().shape({
@@ -36,7 +37,12 @@ const INITIAL_VALUES = {
 const ShippingAddressForm = ({ onSubmit, onBack }) => {
   const renderForm = () => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Shipping address" />
+      <StyledSectionHeader
+        style={{ 'margin-bottom': '20px' }}
+        variant="h6"
+        gutterBottom
+        children="Shipping address"
+      />
       <Form>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -97,13 +103,20 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
             />
           </Grid>
           <Grid item xs={12}>
+            <Field
+              name="default"
+              label="Save as default address"
+              component={CheckboxField}
+            />
+          </Grid>
+          {/* <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               {onBack && (
                 <Button type="button" onClick={onBack} children="Back" mr={2} />
               )}
               <Button type="submit" children={onBack ? 'Next' : 'Save'} />
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Form>
     </Box>

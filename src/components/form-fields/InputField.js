@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getIn } from 'formik';
 import { TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { colorPalette } from '../../components/Theme/color-palette';
 
 InputField.propTypes = {
   field: PropTypes.object,
@@ -17,6 +19,15 @@ InputField.defaultProps = {
   variant: 'outlined'
 };
 
+const { BLACK } = colorPalette;
+
+const StyledTextField = withStyles(theme => ({
+  root: {
+    height: '80px',
+    padding: '30px'
+  }
+}))(TextField);
+
 export default function InputField(props) {
   const { field, form, helperText, disabled, ...rest } = props;
   const error = getIn(form.errors, field.name);
@@ -24,6 +35,7 @@ export default function InputField(props) {
 
   return (
     <TextField
+      variant=""
       id={field.name}
       error={!!(touched && error)}
       helperText={(touched && error) || helperText}

@@ -30,13 +30,14 @@ const INITIAL_VALUES = {
 };
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white
-    }
-  },
+  // '@global': {
+  //   body: {
+  //     backgroundColor: theme.palette.common.white
+  //   }
+  // },
   paper: {
-    marginTop: theme.spacing(8),
+    width: '100%',
+    maxWidth: '670px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
@@ -54,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = (props) => {
+const Login = props => {
   const classes = useStyles();
   const account = props.account;
   const authToken = props.authToken;

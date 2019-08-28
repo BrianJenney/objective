@@ -6,6 +6,10 @@ import { Box, Grid, Typography, Checkbox } from '@material-ui/core';
 import { InputField, SelectField } from '../form-fields';
 import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
+import { fonts, sizes, lineHeight } from '../../components/Theme/fonts';
+import { StyledSectionHeader } from '../../pages/checkout/StyledComponents';
+
+const { $brandSans, $brandSerif } = fonts;
 
 const schema = object().shape({
   billingAddress: object().shape({
@@ -48,7 +52,12 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
   };
   const renderForm = () => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Billing Address" />
+      <StyledSectionHeader
+        style={{ margin: '20px 0' }}
+        variant="h6"
+        gutterBottom
+        children="Billing Address"
+      />
       <Form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -57,7 +66,14 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
                 id="useShippingAddressToggle"
                 onChange={handleUseShippingAddressToggle}
               />
-              <Typography children="Use shipping address" />
+              <Typography
+                style={{
+                  'font-family': $brandSans,
+                  'font-size': '18px',
+                  'margin-left': '10px'
+                }}
+                children="Use shipping address"
+              />
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -74,21 +90,31 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
               component={InputField}
             />
           </Grid>
+          <Grid item xs={12} style={{ padding: '0', margin: '0 0 0 10px' }}>
+            <Typography
+              style={{
+                'font-size': '11',
+                'font-family': $brandSans
+              }}
+            >
+              *No PO Boxes or APO/FPO addresses
+            </Typography>
+          </Grid>
           <Grid item xs={12}>
             <Field
               name="billingAddress.line1"
-              label="Address line 1"
+              label="Street Address"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12}>
             <Field
               name="billingAddress.line2"
-              label="Address line 2"
+              label="Apt, suite, bldg, c/o (optional)"
               component={InputField}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Field
               name="billingAddress.city"
               label="City"
@@ -98,25 +124,32 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
           <Grid item xs={12} sm={6}>
             <Field
               name="billingAddress.state"
-              label="State/Province/Region"
+              label="State"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
               name="billingAddress.postalCode"
-              label="Zip/Postal code"
+              label="Zip Code"
               component={InputField}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
+            <Field
+              name="billingAddress.phone"
+              label="Phone #"
+              component={InputField}
+            />
+          </Grid>
+          {/* <Grid item xs={12} sm={6}>
             <Field
               name="billingAddress.countryCode"
               label="Country"
               component={SelectField}
               options={COUNTRY_OPTIONS}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               {onBack && (

@@ -1,20 +1,85 @@
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import Typography from '@material-ui/core/Typography';
 import { colorPalette } from '../../components/Theme/color-palette';
 import { fonts, sizes, lineHeight } from '../../components/Theme/fonts';
 
-const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
+const {
+  LIGHT_GRAY,
+  MEDIUM_GRAY,
+  BLACK,
+  WHITE,
+  LIGHT_VANILLA,
+  FOREST_GREEN
+} = colorPalette;
 const { $brandSans, $brandSerif } = fonts;
-const { microText, miniText, smallText2 } = sizes;
+const { microText, miniText, smallText2, productHeavy } = sizes;
 const { semiTight } = lineHeight;
 
 const $thin1pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
 const $thin2pxRuler_gray = `solid 2px ${MEDIUM_GRAY}`;
+
+// container
+export const StyledContainerGrid = withStyles(theme => ({
+  root: {
+    width: '100%',
+    backgroundColor: LIGHT_VANILLA
+  }
+}))(Grid);
+// main wrapper
+export const StyledMainWrapper = withStyles(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 1215,
+    justifyContent: 'space-between',
+    paddingTop: '90px'
+  }
+}))(Grid);
+
+export const StyledSubmitButton = withStyles(theme => ({
+  root: {
+    fontFamily: $brandSans,
+    fontWeight: '900',
+    fontSize: '16px',
+    color: WHITE,
+    backgroundColor: BLACK,
+    width: '100%',
+    height: '80px'
+  }
+}))(Button);
+
+export const StyledSectionHeader = withStyles(theme => ({
+  root: {
+    fontFamily: $brandSerif,
+    fontSize: productHeavy,
+    color: BLACK
+  }
+}))(Typography);
+
+// checkout wrapper
+export const StyledCheckoutWrapper = withStyles(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 900,
+    backgroundColor: WHITE
+  }
+}))(Grid);
+
+// cart wrapper
+export const StyledCartWrapper = withStyles(theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 330,
+    padding: '24px 20px',
+    backgroundColor: WHITE
+  }
+}))(Grid);
 
 export const StyledCartHeader = withStyles(theme => ({
   root: {
@@ -22,6 +87,41 @@ export const StyledCartHeader = withStyles(theme => ({
     fontFamily: $brandSerif
   }
 }))(Typography);
+
+export const StyledExpansionPanel = withStyles(theme => ({
+  root: {
+    height: 60,
+    padding: '0 20px',
+    '&$expanded': {
+      margin: '0 !important'
+    }
+  },
+  content: {
+    '&$expanded': {
+      margin: '0'
+    }
+  }
+}))(ExpansionPanel);
+
+// .MuiExpansionPanelSummary-root.Mui-expanded
+export const StyledExpansionPanelSummary = withStyles(theme => ({
+  root: {
+    padding: '0',
+    // backgroundColor: `${FOREST_GREEN} !important`,
+    '&$expanded': {
+      backgroundColor: 'red'
+    }
+  },
+  '&$expanded': {
+    backgroundColor: FOREST_GREEN
+  },
+  content: {
+    padding: '0 20px',
+    '&$expanded': {
+      backgroundColor: FOREST_GREEN
+    }
+  }
+}))(ExpansionPanelSummary);
 
 export const StyledSmallCaps = withStyles(theme => ({
   root: {
@@ -74,9 +174,7 @@ export const StyledHeaderWrapper = withStyles(theme => ({
 
 export const StyledPromoCode = withStyles(theme => ({
   root: {
-    height: '42px !important',
     margin: '-6px 0 0 -14px',
-    padding: 0,
     fontFamily: $brandSans,
     textTransform: 'uppercase',
     color: BLACK,

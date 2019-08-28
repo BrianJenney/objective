@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography, Checkbox } from '@material-ui/core';
+import { fonts, sizes, lineHeight } from '../../components/Theme/fonts';
+
+const { $brandSans, $brandSerif } = fonts;
 
 const CheckboxField = ({ field, form, disabled, label, ...rest }) => (
   <Box display="flex" alignItems="center">
@@ -11,7 +14,14 @@ const CheckboxField = ({ field, form, disabled, label, ...rest }) => (
       {...field}
       {...rest}
     />
-    <Typography children={label} />
+    <Typography
+      children={label}
+      style={{
+        'font-family': $brandSans,
+        'font-size': '18px',
+        'margin-left': '10px'
+      }}
+    />
   </Box>
 );
 

@@ -14,6 +14,7 @@ import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
+import { StyledSectionHeader } from '../../pages/checkout/StyledComponents';
 
 const validateTextField = value => {
   if (value) {
@@ -47,7 +48,12 @@ const PaymentForm = ({ onSubmit, onBack }) => {
   /* eslint-disable */
   const renderForm = ({ values }) => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Payment details" />
+      <StyledSectionHeader
+        style={{ margin: '20px 0' }}
+        variant="h6"
+        gutterBottom
+        children="Payment details"
+      />
       <Form>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -106,14 +112,14 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
             </>
           )}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               {onBack && (
                 <Button type="button" onClick={onBack} children="Back" mr={2} />
               )}
               <Button type="submit" children={onBack ? 'Next' : 'Save'} />
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Form>
     </Box>

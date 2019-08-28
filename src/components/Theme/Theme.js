@@ -5,7 +5,7 @@ import { fonts, sizes, backupFontStack } from './fonts';
 const { ...color } = colorPalette;
 
 const nxtTheme = createMuiTheme({
-  shadows: ["none"],
+  shadows: ['none'],
   breakpoints: {
     values: {
       xs: 0,
@@ -18,10 +18,10 @@ const nxtTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: color.BLACK,
+      main: color.BLACK
     },
     secondary: {
-      main: color.VANILLA,
+      main: color.VANILLA
     },
     brand: {
       forestGreen: color.FOREST_GREEN,
@@ -35,7 +35,8 @@ const nxtTheme = createMuiTheme({
       offWhite: color.OFF_WHITE,
       lemon: color.LEMON,
       orange: color.ORANGE,
-      vanilla: color.VANILLA
+      vanilla: color.VANILLA,
+      lightVanilla: color.LIGHT_VANILLA
     },
     error: {
       main: color.RED,
@@ -44,9 +45,10 @@ const nxtTheme = createMuiTheme({
     },
     text: {
       primary: color.BLACK,
-      secondary: color.BLACK,
+      secondary: color.PLUM,
       disabled: color.GRAY,
-      hint: color.ORANGE
+      hint: color.ORANGE,
+      reversed: color.WHITE
     },
     background: {
       paper: color.WHITE,
@@ -56,6 +58,7 @@ const nxtTheme = createMuiTheme({
   typography: {
     htmlFontSize: 16,
     fontSize: 16,
+    fontSans: fonts.$brandSans,
     fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
     body2: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
@@ -99,7 +102,7 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
       fontSize: sizes.productDetailSubTitle,
       fontWeight: 400,
-      lineHeight: '2.75rem',
+      lineHeight: '2.75rem'
     },
     subtitle1: {
       // subhead S1
@@ -145,7 +148,7 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
       textTransform: 'uppercase',
       textDecoration: 'none',
-      color: color.WHITE,
+      color: color.WHITE
     },
     bodyMd: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
@@ -159,31 +162,78 @@ const nxtTheme = createMuiTheme({
       fontWeight: `${fonts.bodyWeight}`,
       lineHeight: '2.125rem'
     },
+    panelHeader: {
+      fontFamily: `${fonts.$brandSans}, ${backupFontStack.sans}`,
+      fontSize: sizes.smallText2,
+      fontWeight: `${fonts.bodyWeight}`
+    },
     fineprint: {
       fontFamily: `${fonts.captionBook.header}, ${backupFontStack.sans}`,
       fontSize: sizes.fineprint,
       lineHeight: '.5rem',
-      fontWeight: `${fonts.captionBook.weight}`,
+      fontWeight: `${fonts.captionBook.weight}`
     }
   },
   overrides: {
+    MuiInputBase: {
+      root: {
+        width: '100%',
+        height: '80px',
+        padding: '30px'
+      }
+    },
+    MuiOutlinedInput: {
+      notchedOutline: {
+        borderColor: 'rgba(0, 0, 0, 1)'
+      },
+      input: {
+        fontFamily: fonts.$brandSans,
+        color: color.BLACK,
+        padding: '0'
+      }
+    },
+    MuiCheckbox: {
+      root: {
+        padding: 0,
+        color: color.BLACK
+      },
+      MuiChecked: {
+        color: color.BLACK
+      },
+      colorSecondary: {
+        color: color.BLACK,
+        MuiChecked: {
+          color: color.BLACK
+        }
+      }
+    },
+    MuiChecked: {
+      color: color.BLACK
+    },
     MuiFormLabel: {
       root: {
         fontFamily: 'unset'
       }
     },
+    MuiInputLabel: {
+      outlined: {
+        transform: 'translate(24px, 34px) scale(1)',
+        fontFamily: fonts.$brandSans,
+        color: color.BLACK
+      }
+    },
     MuiGrid: {
       container: {
         maxWidth: 1600,
-        margin: '0 auto',
+        margin: '0 auto'
       }
     },
     MuiTab: {
       root: {
         '&$selected': {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#ffffff'
         }
-      },
+      }
     },
     MuiContainer: {
       maxWidth: 1504
@@ -195,8 +245,8 @@ const nxtTheme = createMuiTheme({
   props: {
     MuiButtonBase: {
       disableRipple: true
-    },
+    }
   }
 });
 
-export default nxtTheme
+export default nxtTheme;

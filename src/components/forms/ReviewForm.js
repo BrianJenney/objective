@@ -1,19 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Grid
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '../common';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Typography, Grid, Link } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { Button } from '../../components/common';
+import { fonts, sizes } from '../../components/Theme/fonts';
+import { colorPalette } from '../../components/Theme/color-palette';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_LABELS_MAP
 } from '../../constants/payment';
+import {
+  StyledSectionHeader,
+  StyledSubmitButton
+} from '../../pages/checkout/StyledComponents';
+
+const { BLACK } = colorPalette;
+const { $brandSans, $brandSerif } = fonts;
+const { microText, miniText, smallText2, productHeavy } = sizes;
+
+const StyledLink = withStyles(theme => ({
+  root: {
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'normal',
+    color: '#000000',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: '16px'
+  }
+}))(Link);
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -24,6 +39,11 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     marginTop: theme.spacing(2)
+  },
+  agreement: {
+    fontSize: miniText,
+    fontColor: BLACK,
+    fontFamily: $brandSans
   }
 }));
 
@@ -53,10 +73,13 @@ const ReviewForm = ({ cart, onBack, onSubmit }) => {
   /* eslint-disable */
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        Order summary
-      </Typography>
-      <List disablePadding>
+      <StyledSectionHeader
+        style={{ margin: '20px 0', 'text-align': 'center' }}
+        gutterBottom
+      >
+        Please take a moment to review your order
+      </StyledSectionHeader>
+      {/* <List disablePadding>
         {items.map(({ product_id, product_name, desc, unit_price }) => (
           <ListItem className={classes.listItem} key={product_id}>
             <ListItemText primary={product_name} secondary={desc} />
@@ -144,11 +167,40 @@ const ReviewForm = ({ cart, onBack, onSubmit }) => {
             )}
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
       <Box display="flex" alignItems="center">
-        <Button type="button" onClick={onBack} children="Back" mr={2} />
-        <Button type="button" onClick={onSubmit} children="Place order" />
+        {/* <Button type="button" onClick={onBack} children="Back" mr={2} /> */}
+        <StyledSubmitButton
+          type="button"
+          onClick={onSubmit}
+          children="Place order"
+          style={{ width: '530px', margin: '0 auto' }}
+        />
       </Box>
+      <Grid
+        item
+        xs={12}
+        style={{ 'text-align': 'center', 'margin-top': '10px' }}
+      >
+        <Typography gutterBottom className={classes.agreement}>
+          By placing this order I agree to the&nbsp;
+          <StyledLink
+            className={classes.agreement}
+            component={RouterLink}
+            to="/termsandconsitions"
+          >
+            Terms &nbsp;&amp;&nbsp; Conditions
+          </StyledLink>
+          &nbsp;&amp;&nbsp;
+          <StyledLink
+            className={classes.agreement}
+            component={RouterLink}
+            to="/privacypolicy"
+          >
+            Privacy Policy
+          </StyledLink>
+        </Typography>
+      </Grid>
     </Box>
   );
   /* eslint-enable */

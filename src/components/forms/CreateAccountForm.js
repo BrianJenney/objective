@@ -1,20 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Box, Button, Grid, Link, Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { CheckboxField, InputField } from '../form-fields';
+import { fonts, sizes } from '../Theme/fonts';
+import { colorPalette } from '../Theme/color-palette';
+import {
+  StyledSectionHeader,
+  StyledSubmitButton
+} from '../../pages/checkout/StyledComponents';
+
+const { $brandSans } = fonts;
+const { miniText } = sizes;
+const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
+
+const useStyles = makeStyles(theme => ({
+  listItem: {
+    padding: theme.spacing(1, 0)
+  },
+  total: {
+    fontWeight: '700'
+  },
+  title: {
+    marginTop: theme.spacing(2)
+  },
+  agreement: {
+    fontSize: miniText,
+    fontColor: BLACK,
+    fontFamily: $brandSans
+  }
+}));
 
 const StyledLink = withStyles(() => ({
   root: {
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'normal',
-    color: '#000000',
+    fontFamily: $brandSans,
+    fontWeight: 'bold',
+    color: BLACK,
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    fontSize: '16px'
+    textDecoration: 'underline',
+    fontSize: miniText
   }
 }))(Link);
 
@@ -35,19 +62,28 @@ const schema = object().shape({
 });
 
 const CreateAccountForm = ({ onSubmit }) => {
+  const classes = useStyles();
   const renderForm = () => (
-    <React.Fragment>
+    <>
       <Form>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} justify="space-between">
           <Grid item xs={10}>
-            <Typography variant="h6" gutterBottom>
+            <StyledSectionHeader component="h2" gutterBottom>
               Create an Account
-            </Typography>
+            </StyledSectionHeader>
           </Grid>
-          <Grid item xs={2}>
-            <Typography variant="h6" gutterBottom>
-              <StyledLink component={RouterLink} to="/login">
-                Login
+          <Grid item xs={2} style={{ 'margin-right': '0 !important' }}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              style={{ 'text-align': 'right' }}
+            >
+              <StyledLink
+                component={RouterLink}
+                to="/login"
+                style={{ 'font-size': '18px' }}
+              >
+                Log in
               </StyledLink>
             </Typography>
           </Grid>
@@ -74,25 +110,37 @@ const CreateAccountForm = ({ onSubmit }) => {
           </Grid>
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
-              <Button type="button" mr={2} />
-              <Button type="submit" children="Create Account" />
+              {/* <Button type="button" mr={2} /> */}
+              <StyledSubmitButton type="submit" children="Create Account" />
             </Box>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom>
-            By creating an account you agree to the True Health
-            <StyledLink component={RouterLink} to="/termsandconsitions">
+        <Grid
+          item
+          xs={12}
+          style={{ 'text-align': 'center', 'margin-top': '10px' }}
+        >
+          <Typography gutterBottom className={classes.agreement}>
+            By creating an account you agree to the True Health&nbsp;
+            <StyledLink
+              className={classes.agreement}
+              component={RouterLink}
+              to="/termsandconsitions"
+            >
               Terms &amp; Conditions
             </StyledLink>
-            &amp;
-            <StyledLink component={RouterLink} to="/privacypolicy">
+            &nbsp;&amp;&nbsp;
+            <StyledLink
+              className={classes.agreement}
+              component={RouterLink}
+              to="/privacypolicy"
+            >
               Privacy Policy
             </StyledLink>
           </Typography>
         </Grid>
       </Form>
-    </React.Fragment>
+    </>
   );
 
   return (
