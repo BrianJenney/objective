@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import {CardActions, Grid, Button} from "@material-ui/core";
 
 const PriceVariantInfo = ({ variant }) => {
-  return variant ? (<Typography variant="h6"><strong>${variant.effectivePrice}</strong> / {variant.variantInfo.size} {variant.variantInfo.prodType}</Typography>
+  return variant ? (<Typography variant="body1"><strong>${variant.effectivePrice}</strong> / {variant.variantInfo.size} {variant.variantInfo.prodType}</Typography>
   ) : null;
 };
 
@@ -16,12 +16,12 @@ const VariantCard =  ({variant}) => {
   return (
     <Card>
       <CardMedia
-        style={{ height: 355, width: 200, margin: '20px 90px' }}
+        style={{ height: 355, width: 200, margin: '10px 90px' }}
         image={variant.image}
         title={variant.name}
       />
       <CardContent>
-        <Typography gutterBottom variant="h6" >
+        <Typography variant="body1" >
           {variant.name}
         </Typography>
         <PriceVariantInfo variant={variant} />
