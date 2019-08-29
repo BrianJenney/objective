@@ -10,6 +10,9 @@ import AccountMenu from './account/AccountMenu';
 import ManageAddresses from './account/ManageAddresses';
 import ManageProfile from './account/ManageProfile';
 import OrderList from './account/OrderList';
+import { logout } from '../modules/account/actions';
+
+const localStorageClient = require('store');
 
 const Account = ({ authToken }) => {
   const { account } = store.getState();
@@ -34,7 +37,9 @@ const Account = ({ authToken }) => {
       case 'yourprofile':
         return <ManageProfile account={account} />;
       case 'logout':
-        return <h2>Logout</h2>;
+        store.dispatch(logout());
+        localStorageClient.remove('token');
+        return <Redirect to='/gallery' />
       default:
         return null;
     }
