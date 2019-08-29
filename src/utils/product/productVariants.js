@@ -69,7 +69,7 @@ export const getVariants = (products, variants, priceMap) => {
                 slug: variant.slug,
                 title: variant.title,
                 description: variant.description,
-                image: variant.assets.imgs,
+                assets: variant.assets,
                 variantInfo: variant.variantInfo,
                 attributes: variant.attributes,
                 effectivePrice: getEffectivePrice(variant.sku, priceMap)
