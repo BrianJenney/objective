@@ -62,7 +62,7 @@ const Account = ({ authToken }) => {
           </Grid>
         </Container>
       ) : (
-        <Redirect to="/login" />
+        <Redirect push to="/login" />
       )}
     </div>
   );

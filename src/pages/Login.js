@@ -6,7 +6,6 @@ import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -55,9 +54,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ authToken, account }) => {
+const Login = (props) => {
   const classes = useStyles();
-console.log(store.getState());
+  const account = props.account;
+  const authToken = props.authToken;
+  console.log(props.history);
   const handleSubmit = ({ email, password }) => {
     store.dispatch(requestLoginAttempt(email, password));
   };
@@ -97,30 +98,28 @@ console.log(store.getState());
     </Form>
   );
 
+  if (authToken || (account && account.account_jwt)) {
+    props.history.goBack();
+  }
+
   return (
-    <div>
-      {authToken || (account && account.account_jwt) ? (
-        <Redirect to="/checkout" />
-      ) : (
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Log In
-            </Typography>
-            <Formik
-              initialValues={INITIAL_VALUES}
-              onSubmit={handleSubmit}
-              validationSchema={schema}
-              render={renderForm}
-            />
-          </div>
-        </Container>
-      )}
-    </div>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Log In
+        </Typography>
+        <Formik
+          initialValues={INITIAL_VALUES}
+          onSubmit={handleSubmit}
+          validationSchema={schema}
+          render={renderForm}
+        />
+      </div>
+    </Container>
   );
 };
 
