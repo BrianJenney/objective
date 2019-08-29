@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Drawer, Box, Fab } from '@material-ui/core';
-import { useQuantity, useWindowSize } from '../../hooks';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-
+import { useWindowSize } from '../../hooks';
+import { withStyles } from '@material-ui/core/styles';
+import CheckoutButton from '../../pages/cart/CheckoutButton';
 
 export const SIDES = {
   TOP: 'top',
@@ -16,32 +16,28 @@ const StyledFab = withStyles(theme => ({
   root: {
     backgroundColor: 'transparent',
     '&:hover': {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
     }
-  },
-}))(Fab)
+  }
+}))(Fab);
 
 const StyledDrawerWrapper = withStyles(theme => ({
   root: {
     padding: '36px 34px'
-  },
-}))(Box)
+  }
+}))(Box);
 
-const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) => {
-  const [state, setState] = React.useState({
+const TemporaryDrawer = ({
+  toggleContent,
+  listContent,
+  closer,
+  cart,
+  side,
+  ...rest
+}) => {
+  const [drawer, setDrawer] = React.useState({
     open: false
   });
-
-  const windowSize = useWindowSize();
-  const isMobile = windowSize.width < 415;
-  const isNonMobile = windowSize.width > 415;
-
-  //pseudo code
-  /**
-  if isMobile width=100% padding= 24px 0 
-    else if isNonMobile width=415 padding= 24px
-   */
-
 
   const toggleDrawer = open => event => {
     if (
@@ -50,24 +46,22 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
     ) {
       return;
     }
-
-    setState({ open });
+    setDrawer({ open });
   };
 
-  const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side) ? 1 : isMobile ? '100%' : 415;
-  const closePanel = (
-    <Box
-      onClick={toggleDrawer(false)}
-      children={closer}
-    />
-  );
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width < 415;
+  const isNonMobile = windowSize.width > 415;
+
+  const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
+    ? 1
+    : isMobile
+    ? '100%'
+    : 415;
+  const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
+
   const listPanel = (
-    <StyledDrawerWrapper
-      width={listPanelWidth}
-      role="presentation"
-      // onKeyDown={toggleDrawer(false)}
-      children={listContent}
-    />
+    <StyledDrawerWrapper width={listPanelWidth} children={listContent} />
   );
 
   return (
@@ -77,13 +71,10 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, side, ...rest }) 
         onClick={toggleDrawer(true)}
         children={toggleContent}
       />
-      <Drawer
-        anchor={side}
-        open={state.open}
-        onClose={toggleDrawer(false)}
-      >
+      <Drawer anchor={side} open={drawer.open} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
+        <CheckoutButton onClick={toggleDrawer(false)} />
       </Drawer>
     </Box>
   );

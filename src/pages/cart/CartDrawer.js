@@ -9,7 +9,6 @@ import { calculateCartTotal } from './CartFunctions';
 import { requestFetchCart, requestPatchCart } from '../../modules/cart/actions';
 import store from '../../store';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
-import { fonts } from '../../components/Theme/fonts';
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
   StyledCartHeader,
@@ -17,7 +16,6 @@ import {
   StyledFinePrint,
   StyledCartCount,
   StyledHeaderWrapper,
-  StyledCheckoutButton,
   StyledProductLink,
   StyledCounterButton,
   StyledCardActions,
@@ -28,7 +26,6 @@ import {
   StyledPromoCode
 } from './StyledComponents';
 
-const { $brandSans } = fonts;
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 
 class Cart extends React.Component {
@@ -70,8 +67,6 @@ class Cart extends React.Component {
     if (!this.props.cart.items) {
       return null;
     }
-
-    const emptyCart = this.props.cart.items === 0;
 
     return (
       <Grid
@@ -280,25 +275,6 @@ class Cart extends React.Component {
                 <StyledFinePrint component="div">
                   Tax is calculated at checkout
                 </StyledFinePrint>
-              </Grid>
-              <Grid item xs={12}>
-                <StyledCheckoutButton
-                  color="primary"
-                  variant="contained"
-                  disabled={this.props.cart.items.length === 0}
-                >
-                  <Link
-                    to="/checkout"
-                    style={{
-                      color: 'white',
-                      'text-decoration': 'none',
-                      'font-family': $brandSans,
-                      'font-weight': 'bold'
-                    }}
-                  >
-                    Checkout
-                  </Link>
-                </StyledCheckoutButton>
               </Grid>
             </Grid>
           </Grid>
