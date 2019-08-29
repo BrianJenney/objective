@@ -59,18 +59,13 @@ const TemporaryDrawer = ({
     ? '100%'
     : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
-
   const listPanel = (
     <StyledDrawerWrapper width={listPanelWidth} children={listContent} />
   );
 
   return (
     <Box {...rest}>
-      <StyledFab
-        size="small"
-        onClick={toggleDrawer(true)}
-        children={toggleContent}
-      />
+      <StyledFab onClick={toggleDrawer(true)} children={toggleContent} />
       <Drawer anchor={side} open={drawer.open} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}

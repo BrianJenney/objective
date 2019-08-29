@@ -11,6 +11,7 @@
     "braintree-web": "^3.50.1",
     "bson-objectid": "^1.3.0",
     "chalk": "^2.4.2",
+    "clsx": "^1.0.4",
     "dotenv": "^8.1.0",
     "fbemitter": "^2.1.1",
     "formik": "^1.5.8",

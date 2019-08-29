@@ -12,7 +12,9 @@ import TemporaryDrawer from './common/TemporaryDrawer';
 import CartDrawer from '../pages/cart/CartDrawer';
 import './Header-style.scss';
 import ShoppingBag from './common/Icons/Shopping-Bag';
+import { fonts, sizes, lineHeight } from './Theme/fonts';
 
+const { $brandSans, $brandSerif } = fonts;
 
 const StyledLink = withStyles(() => ({
   root: {
@@ -38,14 +40,16 @@ const StyledBox = withStyles(() => ({
 }))(Box);
 
 const StyledBadge = withStyles(theme => ({
-  badge: {
-    top: '30%',
-    right: -3,
-    // The border color match the background color.
-    border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
+  root: {
+    fontSize: 20,
+    fontFamily: $brandSans
   },
+  badge: {
+    top: '45%',
+    right: -8,
+    fontSize: 20,
+    fontFamily: $brandSans
+  }
 }))(Badge);
 
 const Header = () => {
@@ -75,12 +79,17 @@ const Header = () => {
     return (
       <TemporaryDrawer
         toggleContent={
-          <StyledBadge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
+          <StyledBadge invisible={cartCount < 1} badgeContent={cartCount}>
             <ShoppingBag />
           </StyledBadge>
         }
         closer={
-          <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
+          <Box
+            position="absolute"
+            right={10}
+            top={10}
+            children={<CloseIcon />}
+          />
         }
         listContent={<CartDrawer />}
         side="right"
