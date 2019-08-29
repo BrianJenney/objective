@@ -3,6 +3,7 @@ import {
   RECEIVED_CREATE_ACCOUNT,
   REQUEST_FETCH_ACCOUNT,
   RECEIVED_FETCH_ACCOUNT,
+  RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_LOGIN_ATTEMPT,
   RECEIVED_LOGIN_FAILURE,
   RECEIVED_LOGIN_SUCCESS,
@@ -10,6 +11,7 @@ import {
   RECEIVED_PATCH_ACCOUNT,
   LOGOUT
 } from './types';
+
 
 const INITIAL_STATE = {};
 
@@ -35,6 +37,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload };
     case LOGOUT:
       return {};
+    case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
+      return { ...state, orders: action.payload }
     default:
       return state;
   }

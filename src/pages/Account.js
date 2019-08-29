@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import store from '../store';
 import { withAuthToken } from '../hoc';
 import AccountHome from './account/AccountHome';
 import AccountMenu from './account/AccountMenu';
+import ManageAddresses from './account/ManageAddresses';
 import ManageProfile from './account/ManageProfile';
 import OrderList from './account/OrderList';
 
 const Account = ({ authToken }) => {
   const { account } = store.getState();
-
-  let [currentComponent, setCurrentComponent] = useState('overview');
+  const [currentComponent, setCurrentComponent] = useState('overview');
 
   const handleClick = e => {
     setCurrentComponent(
       e.currentTarget.textContent.toLowerCase().replace(/\s/g, '')
     );
-    console.log(currentComponent);
   };
 
   const getPanel = () => {
@@ -31,13 +28,13 @@ const Account = ({ authToken }) => {
       case 'yourorders':
         return <OrderList account={account} />;
       case 'savedaddresses':
-        return <h2>Saved Addresses</h2>;
+        return <ManageAddresses account={account} />;
       case 'paymentdetails':
         return <h2>Payment Details</h2>;
       case 'yourprofile':
         return <ManageProfile account={account} />;
       case 'logout':
-        return <h2>logout</h2>;
+        return <h2>Logout</h2>;
       default:
         return null;
     }

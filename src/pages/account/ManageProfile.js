@@ -78,9 +78,6 @@ class ManageProfile extends React.Component {
         <Typography variant="h3" gutterBottom>
           Manage Profile
         </Typography>
-        <Link variant="button" color="textPrimary">
-          <RouterLink to="/account">Back</RouterLink>
-        </Link>
 
         <Grid container spacing={3}>
           <Grid item xs={6}>

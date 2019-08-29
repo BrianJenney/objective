@@ -51,7 +51,6 @@ export const requestFindOrdersByAccount = accountJwt => (
       }
     }
   };
-  console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
   client.send(
     '/exchange/order/order.request.find',
@@ -66,11 +65,3 @@ export const requestFindOrdersByAccount = accountJwt => (
     payload: {}
   });
 };
-
-export const receivedFindOrdersByAccount = order => {
-  return {
-    type: RECEIVED_FIND_ORDERS_BY_ACCOUNT,
-    payload: order
-  };
-};
-

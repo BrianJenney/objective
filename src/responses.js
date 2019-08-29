@@ -13,25 +13,26 @@ export default body => {
   let data = json.data;
   let fields = json.fields;
   let properties = json.properties;
+  console.log(fields);
   switch (fields.exchange) {
-  case 'store':
-    handleStorefrontResponse(status, data, fields, properties);
-    break;
-  case 'cart':
-    handleCartResponse(status, data, fields, properties);
-    break;
-  case 'account':
-    handleAccountResponse(status, data, fields, properties);
-    break;
-  case 'order':
-    handleOrderResponse(status, data, fields, properties);
-    break;
-  default:
-    EventEmitter.emit(fields.routingKey, {
-      'status': status,
-      'data': data,
-      'fields': fields,
-      'properties': properties
-    });
+    case 'store':
+      handleStorefrontResponse(status, data, fields, properties);
+      break;
+    case 'cart':
+      handleCartResponse(status, data, fields, properties);
+      break;
+    case 'account':
+      handleAccountResponse(status, data, fields, properties);
+      break;
+    case 'order':
+      handleOrderResponse(status, data, fields, properties);
+      break;
+    default:
+      EventEmitter.emit(fields.routingKey, {
+        'status': status,
+        'data': data,
+        'fields': fields,
+        'properties': properties
+      });
   }
 };

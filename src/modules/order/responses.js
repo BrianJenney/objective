@@ -1,5 +1,6 @@
 import store from '../../store';
-import { receivedCreateOrder, receivedFindOrdersByAccount } from './actions';
+import { receivedCreateOrder } from './actions';
+import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart } from '../cart/actions';
 
 export const handleOrderResponse = (status, data, fields, properties) => {
@@ -26,13 +27,14 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       break;
     case 'order.request.find':
       console.log(
-        '****************** Order Create Response ******************'
+        '****************** Order Find By Account Response ******************'
       );
       console.log(status);
       console.log(data);
       console.log(fields);
       console.log(properties);
-      store.dispatch(receivedFindOrdersByAccount(data));
+      // This is in the *account* module, so state updates are made in that reducer.
+      store.dispatch(receivedFindOrdersByAccount(data.data));
       break;
     default:
       console.log('bad response ' + fields.routingKey);

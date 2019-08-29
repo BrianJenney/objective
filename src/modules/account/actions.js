@@ -3,6 +3,7 @@ import {
   RECEIVED_CREATE_ACCOUNT,
   REQUEST_FETCH_ACCOUNT,
   RECEIVED_FETCH_ACCOUNT,
+  RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_LOGIN_ATTEMPT,
   RECEIVED_LOGIN_FAILURE,
   RECEIVED_LOGIN_SUCCESS,
@@ -180,4 +181,11 @@ export const logout = () => async (dispatch, getState) => {
     type: LOGOUT,
     payload: {}
   });
+};
+
+export const receivedFindOrdersByAccount = orders => {
+  return {
+    type: RECEIVED_FIND_ORDERS_BY_ACCOUNT,
+    payload: orders
+  };
 };

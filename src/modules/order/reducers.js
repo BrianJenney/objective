@@ -1,8 +1,7 @@
 import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER,
-  REQUEST_FIND_ORDERS_BY_ACCOUNT,
-  RECEIVED_FIND_ORDERS_BY_ACCOUNT
+  REQUEST_FIND_ORDERS_BY_ACCOUNT
 } from './types';
 
 const INITIAL_STATE = {};
@@ -15,8 +14,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload };
     case REQUEST_FIND_ORDERS_BY_ACCOUNT:
       return { ...state };
-    case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
-      return { ...state, ...action.payload };
     default:
       return state;
   }

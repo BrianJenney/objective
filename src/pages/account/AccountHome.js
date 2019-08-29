@@ -21,9 +21,6 @@ const AccountHome = props => {
           <Typography variant="h3" gutterBottom>
             Name {account.firstName} {account.lastName}
           </Typography>
-          <Typography variant="h3" gutterBottom>
-            {account.firstName} {account.lastName}
-          </Typography>
           <Typography variant="subtitle1" gutterBottom>
             Email: {account.email}
           </Typography>
