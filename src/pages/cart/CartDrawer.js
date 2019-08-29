@@ -110,8 +110,8 @@ class Cart extends React.Component {
                     <Card>
                       <CardMedia
                         style={{ height: 126, width: 126 }}
-                        image={item.product_img}
-                        title={item.product_name}
+                        image={item.variant_img}
+                        title={item.variant_name}
                       />
                     </Card>
                   </Grid>

@@ -7,7 +7,6 @@ export default class Home extends Component {
   render() {
     return (
       <Container>
-        <Typography gutterBottom variant="h3">Homepage</Typography>
         <Gallery />
       </Container>
     );

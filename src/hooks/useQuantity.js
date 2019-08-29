@@ -73,11 +73,11 @@ export const useQuantity = (updateQuantityToCart, label, initialQty = 1, maxQty 
   const classes = useStyles();
   const [ quantity, setQuantity ] = useState(initialQty);
   const adjustQuantity = useCallback((adjustment) => {
-      setQuantity(qty => qty + adjustment);
+    setQuantity(qty => qty + adjustment);
     },[setQuantity]);
 
   useEffect(() => {
-    updateQuantityToCart(quantity);
+    if (quantity > 1) updateQuantityToCart(quantity);
   }, [ quantity ]);
 
   const Quantity = () => (
