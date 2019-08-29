@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Button } from '../common';
 import store from '../../store';
-import Cart from '../../pages/Cart';
+import OrderSummary from './OrderSummary';
 
 const ResultForm = ({ onSubmit }) => {
   const { account, cart, order } = store.getState();
@@ -19,6 +19,10 @@ const ResultForm = ({ onSubmit }) => {
   const isEmptyOrSpaces = str => {
     return str === null || str.match(/^ *$/) !== null;
   };
+
+  // This is how you test for an empty object literal:
+  if (Object.keys(order).length === 0 && order.constructor === Object)
+    return <div></div>;
 
   return (
     <Grid container xs={12}>
@@ -68,7 +72,7 @@ const ResultForm = ({ onSubmit }) => {
         </Grid>
       </Grid>
       <Grid item xs={cartWidth}>
-        <Cart />
+        <OrderSummary cart={order.cart} />
       </Grid>
       <Grid item xs={12}>
         <Typography component="h1" variant="h4" align="left">
