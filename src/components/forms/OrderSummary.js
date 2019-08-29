@@ -4,8 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 const OrderSummary = ({ cart }) => {
-  console.log(cart);
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
