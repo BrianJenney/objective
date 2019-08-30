@@ -6,9 +6,9 @@ import {
   Typography,
   ExpansionPanel,
   ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  ExpandMoreIcon
+  ExpansionPanelSummary
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const Panel = ({ title, collapsible, children }) => {
   const [expanded, setExpanded] = useState(false);
