@@ -26,16 +26,19 @@ const AccountPaymentDetails = ({ account }) => {
     <Box>
       <Typography variant="h5" children="Payment Details" />
       <Typography variant="h6" children="Credit Card" />
-      {paymentDetails.map((entity, index) => (
-        <EditablePanel
-          key={`entity_${index}`}
-          title=""
-          defaultValues={entity}
-          onSubmit={() => null}
-          Form={PaymentForm}
-          Summary={PaymentSummary}
-        />
-      ))}
+      <Box display="flex">
+        {paymentDetails.map((entity, index) => (
+          <Box key={`entity_${index}`} border="1px solid #979797" m={1} p={4}>
+            <EditablePanel
+              title=""
+              defaultValues={entity}
+              onSubmit={() => null}
+              Form={PaymentForm}
+              Summary={PaymentSummary}
+            />
+          </Box>
+        ))}
+      </Box>
       <MenuLink onClick={() => null} children="Add New Card" />
     </Box>
   );
