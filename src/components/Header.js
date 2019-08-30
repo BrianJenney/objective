@@ -13,6 +13,10 @@ import CartDrawer from '../pages/cart/CartDrawer';
 import './Header-style.scss';
 import ShoppingBag from './common/Icons/Shopping-Bag';
 import { fonts, sizes, lineHeight } from './Theme/fonts';
+import {
+  DrawerStatusContext,
+  useDrawerStatus
+} from '../contexts/DrawerContext';
 
 const { $brandSans, $brandSerif } = fonts;
 
@@ -54,7 +58,7 @@ const StyledBadge = withStyles(theme => ({
 
 const Header = () => {
   const cart = useSelector(state => state.cart);
-
+  const isDrawerOpen = useDrawerStatus();
   const renderBurgerIcon = () => (
     <>
       <DropdownMenu
@@ -101,81 +105,83 @@ const Header = () => {
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Grid container xs={12} className="headerContainer">
-      <Grid container xs={12} spacing={0}>
-        {burger ? (
-          <>
-            <Grid container xs={10} className="top">
-              <Grid item xs={1}>
-                {renderBurgerIcon()}
+    <DrawerStatusContext.Provider value={isDrawerOpen}>
+      <Grid container xs={12} className="headerContainer">
+        <Grid container xs={12} spacing={0}>
+          {burger ? (
+            <>
+              <Grid container xs={10} className="top">
+                <Grid item xs={1}>
+                  {renderBurgerIcon()}
+                </Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={8} className="logo text-center">
+                  Logo.
+                </Grid>
+                <Grid item xs={1}>
+                  {!burger && (
+                    <StyledLink component={RouterLink} to="/account">
+                      Account
+                    </StyledLink>
+                  )}
+                </Grid>
+                <Grid item xs={1}>
+                  {renderCartIcon()}
+                </Grid>
               </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={8} className="logo text-center">
-                Logo.
+              <Grid container xs={12} className="headerBar">
+                <Grid item xs={8} className="option text-right">
+                  <StyledBox fontSize={9}>
+                    Free Shipping On Orders Over $75
+                  </StyledBox>
+                </Grid>
+                <Grid item xs={4} className="option text-left">
+                  <StyledBox fontSize={9}>Free Returns</StyledBox>
+                </Grid>
               </Grid>
-              <Grid item xs={1}>
-                {!burger && (
-                  <StyledLink component={RouterLink} to="/account">
-                    Account
+            </>
+          ) : (
+            <>
+              <Grid container xs={12} className="headerBar">
+                <Grid item xs={6} className="option text-right">
+                  <StyledBox fontSize={12}>
+                    Free Shipping On Orders Over $75
+                  </StyledBox>
+                </Grid>
+                <Grid item xs={6} className="option text-left">
+                  <StyledBox fontSize={12}>Free Returns</StyledBox>
+                </Grid>
+              </Grid>
+              <Grid container className="holder" xs={12}>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} to="/gallery">
+                    Shop
                   </StyledLink>
-                )}
-              </Grid>
-              <Grid item xs={1}>
-                {renderCartIcon()}
-              </Grid>
-            </Grid>
-            <Grid container xs={12} className="headerBar">
-              <Grid item xs={8} className="option text-right">
-                <StyledBox fontSize={9}>
-                  Free Shipping On Orders Over $75
-                </StyledBox>
-              </Grid>
-              <Grid item xs={4} className="option text-left">
-                <StyledBox fontSize={9}>Free Returns</StyledBox>
-              </Grid>
-            </Grid>
-          </>
-        ) : (
-          <>
-            <Grid container xs={12} className="headerBar">
-              <Grid item xs={6} className="option text-right">
-                <StyledBox fontSize={12}>
-                  Free Shipping On Orders Over $75
-                </StyledBox>
-              </Grid>
-              <Grid item xs={6} className="option text-left">
-                <StyledBox fontSize={12}>Free Returns</StyledBox>
-              </Grid>
-            </Grid>
-            <Grid container className="holder" xs={12}>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/gallery">
-                  Shop
-                </StyledLink>
-              </Grid>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/">
-                  Science
-                </StyledLink>
-              </Grid>
-              <Grid item xs={8} className="logo text-center">
-                Logo.
-              </Grid>
-              <Grid item xs={1}>
-                {!burger && (
-                  <StyledLink component={RouterLink} to="/account">
-                    Account
+                </Grid>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} to="/">
+                    Science
                   </StyledLink>
-                )}
+                </Grid>
+                <Grid item xs={8} className="logo text-center">
+                  Logo.
+                </Grid>
+                <Grid item xs={1}>
+                  {!burger && (
+                    <StyledLink component={RouterLink} to="/account">
+                      Account
+                    </StyledLink>
+                  )}
+                </Grid>
+                <Grid item xs={1}>
+                  {renderCartIcon()}
+                </Grid>
               </Grid>
-              <Grid item xs={1}>
-                {renderCartIcon()}
-              </Grid>
-            </Grid>
-          </>
-        )}
+            </>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </DrawerStatusContext.Provider>
   );
 };
 

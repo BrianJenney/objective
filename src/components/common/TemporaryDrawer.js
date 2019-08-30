@@ -1,9 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Drawer, Box, Fab } from '@material-ui/core';
 import { useWindowSize } from '../../hooks';
 import { withStyles } from '@material-ui/core/styles';
 import CheckoutButton from '../../pages/cart/CheckoutButton';
+import { DrawerStatusContext } from '../../contexts/DrawerContext';
 
 export const SIDES = {
   TOP: 'top',
@@ -39,6 +40,8 @@ const TemporaryDrawer = ({
     open: false
   });
 
+  const { isDrawerOpen, setIsDrawerOpen } = useContext(DrawerStatusContext);
+
   const toggleDrawer = open => event => {
     if (
       event.type == 'keydown' &&
@@ -47,6 +50,7 @@ const TemporaryDrawer = ({
       return;
     }
     setDrawer({ open });
+    setIsDrawerOpen({ open });
   };
 
   const windowSize = useWindowSize();
@@ -77,7 +81,7 @@ const TemporaryDrawer = ({
 
 TemporaryDrawer.propTypes = {
   side: PropTypes.oneOf(Object.values(SIDES)).isRequired,
-  toggleContent: PropTypes.node.isRequired,
+  toggleContent: PropTypes.node,
   closer: PropTypes.node,
   listContent: PropTypes.node.isRequired
 };

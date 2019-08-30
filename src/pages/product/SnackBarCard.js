@@ -2,15 +2,12 @@ import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
-import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TemporaryDrawer from '../../components/common/TemporaryDrawer';
 import CartDrawer from '../../pages/cart/CartDrawer';
-import ShoppingBag from '../../components/common/Icons/Shopping-Bag';
 
 import {
   Box,
@@ -20,14 +17,12 @@ import {
   CardActions,
   Button,
   Grid,
-  Divider,
-  Select,
-  MenuItem,
   CardMedia,
   SvgIcon,
   Badge
 } from '@material-ui/core';
 import { fonts, sizes } from '../../components/Theme/fonts';
+import { DrawerStatusContext } from '../../contexts/DrawerContext';
 
 const useStyles = makeStyles(theme => ({
   snackCard: {
@@ -66,51 +61,32 @@ const checkMarkIcon = (
 
 const { $brandSans, $brandSerif } = fonts;
 const { smallText1 } = sizes;
-const StyledBadge = withStyles(theme => ({
-  root: {
-    fontSize: 20,
-    fontFamily: $brandSans
-  },
-  badge: {
-    top: '45%',
-    right: -8,
-    fontSize: 20,
-    fontFamily: $brandSans
-  }
-}))(Badge);
 
 const SnackBarCard = React.forwardRef((props, ref) => {
-  const cart = useSelector(state => state.cart);
+  const { image, title } = props;
 
-  const cartCount = cart.items.length;
-  const { image, title, closer } = props;
   const classes = useStyles();
 
   const { closeSnackbar } = useSnackbar();
-  const [expanded, setExpanded] = useState(false);
-  const [drawer, setDrawer] = React.useState({
-    open: undefined
-  });
 
-  const openDrawer = event => {
-    closeSnackbar(props.id);
-    setDrawer({ open: true });
-  };
+  // const viewCartDrawer = () => (
+  //   <TemporaryDrawer
+  //     drawer={true}
+  //     closer={
+  //       <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
+  //     }
+  //     listContent={<CartDrawer />}
+  //     side="right"
+  //   ></TemporaryDrawer>
+  // );
 
-  const viewCartDrawer = (
-    <TemporaryDrawer
-      toggleContent={
-        <StyledBadge invisible={cartCount < 1} badgeContent={cartCount}>
-          <ShoppingBag />
-        </StyledBadge>
-      }
-      closer={
-        <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
-      }
-      listContent={<CartDrawer />}
-      side="right"
-    ></TemporaryDrawer>
-  );
+  // const handleDismiss = () => {
+  //   closeSnackbar(props.id);
+  // };
+
+  // const handleOpenDrawer = event => {
+  //   toggleDrawer();
+  // };
 
   return (
     <Box boxShadow={3} className={classes.snackCardItem} ref={ref}>
@@ -121,6 +97,9 @@ const SnackBarCard = React.forwardRef((props, ref) => {
         alignItems="center"
       >
         <Grid item style={{ width: '13px' }}>
+          {/* <IconButton onClick={handleDismiss}>
+            <CloseIcon  />
+          </IconButton> */}
           <SvgIcon style={{ 'margin-right': '3px' }}>{checkMarkIcon}</SvgIcon>
         </Grid>
         <Grid item style={{ width: '59px', height: '68px' }}>
@@ -139,19 +118,16 @@ const SnackBarCard = React.forwardRef((props, ref) => {
             >
               Added to cart
             </Typography>
-            <Button onClick={() => openDrawer()} children={closer}>
-              <Typography
-                style={{
-                  'font-family': $brandSans,
-                  'font-size': smallText1,
-                  'text-transform': 'uppercase',
-                  'font-weight': 'bold',
-                  'text-decoration': 'underline'
-                }}
-                component="p"
-              ></Typography>
-              Alert Cart
-            </Button>
+            <Typography
+              style={{
+                'font-family': $brandSans,
+                'font-size': smallText1,
+                'text-transform': 'uppercase',
+                'font-weight': 'bold',
+                'text-decoration': 'underline'
+              }}
+              component="p"
+            ></Typography>
           </CardContent>
         </Grid>
       </Grid>
@@ -160,7 +136,8 @@ const SnackBarCard = React.forwardRef((props, ref) => {
 });
 
 SnackBarCard.propTypes = {
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  onClick: PropTypes.func
 };
 
 export default SnackBarCard;

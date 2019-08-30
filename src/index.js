@@ -1,6 +1,6 @@
 import './config';
 import Stomp from 'stompjs';
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
@@ -10,13 +10,12 @@ import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
 import nxtTheme from './components/Theme/Theme';
-
+import { DrawerStatusContext, useDrawerStatus } from './contexts/DrawerContext';
 const ObjectId = require('bson-objectid');
 
 const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
 const stompClient = Stomp.over(wss);
 const replyTo = ObjectId();
-
 /**
  * STOMP connect success callback handler
  *
@@ -39,6 +38,7 @@ const onStompConnectSuccess = () => {
     <Provider store={store}>
       <ThemeProvider theme={nxtTheme}>
         <SnackbarProvider
+          autoHideDuration={2500}
           maxSnack={5}
           anchorOrigin={{
             horizontal: 'right',

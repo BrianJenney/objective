@@ -21,12 +21,9 @@ import {
 
 const Product = ({ match }) => {
   const productId = match.params.id;
-  const message = 'Your notification here';
+
   return (
     <ProductStore productId={productId}>
-      {/* <SnackbarProvider
-        action={<Button onClick={() => alert(message)}>{'Alert'}</Button>}
-      ></SnackbarProvider> */}
       <ProductDetail />
       <TabSection />
       <Instruction />

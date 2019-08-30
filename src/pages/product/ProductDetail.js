@@ -4,8 +4,7 @@ import { SvgIcon } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar, SnackbarProvider } from 'notistack';
 import CloseIcon from '@material-ui/icons/Close';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import clsx from 'clsx';
+import ShoppingBag from '../../components/common/Icons/Shopping-Bag';
 
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
@@ -20,7 +19,8 @@ import {
   Divider,
   Select,
   MenuItem,
-  CardMedia
+  CardMedia,
+  Badge
 } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
@@ -205,6 +205,42 @@ const ProductDetail = ({ history }) => {
   const selectedProductVariant = productType ? variants[productType] : null;
   const [ATCEnabled, setATCEnabled] = useState(true);
 
+  const StyledBadge = withStyles(theme => ({
+    root: {
+      fontSize: 20,
+      fontFamily: $brandSans
+    },
+    badge: {
+      top: '45%',
+      right: -8,
+      fontSize: 20,
+      fontFamily: $brandSans
+    }
+  }))(Badge);
+
+  const renderCartIcon = () => {
+    const cartCount = cart.items.length;
+    return (
+      <TemporaryDrawer
+        toggleContent={
+          <StyledBadge invisible={cartCount < 1} badgeContent={cartCount}>
+            <ShoppingBag />
+          </StyledBadge>
+        }
+        closer={
+          <Box
+            position="absolute"
+            right={10}
+            top={10}
+            children={<CloseIcon />}
+          />
+        }
+        listContent={<CartDrawer />}
+        side="right"
+      ></TemporaryDrawer>
+    );
+  };
+
   const updateQuantityToCart = qty => {
     if (
       product === null ||
@@ -227,9 +263,13 @@ const ProductDetail = ({ history }) => {
 
     enqueueSnackbar('', {
       variant: 'success',
-      persist: true,
       children: key => (
-        <SnackBarCard id={key} image={imgUrl[0]} title={product.name} />
+        <SnackBarCard
+          id={key}
+          image={imgUrl[0]}
+          title={product.name}
+          onClick={renderCartIcon()}
+        />
       )
     });
   };
@@ -253,25 +293,16 @@ const ProductDetail = ({ history }) => {
     const { assets } = product;
     const imgUrl = Object.values(assets);
 
-    const action = key => (
-      <>
-        <Button
-          onClick={() => {
-            alert(`I belong to snackbar with key ${key}`);
-          }}
-        >
-          {'Alert'}
-        </Button>
-      </>
-    );
-
     enqueueSnackbar('', {
       variant: 'success',
       children: key => (
-        <SnackBarCard id={key} image={imgUrl[0]} title={product.name} />
-      ),
-      persist: true,
-      action
+        <SnackBarCard
+          id={key}
+          image={imgUrl[0]}
+          title={product.name}
+          onClick={() => renderCartIcon()}
+        />
+      )
     });
 
     setATCEnabled(false);
