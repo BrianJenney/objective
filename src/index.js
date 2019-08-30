@@ -3,13 +3,13 @@ import Stomp from 'stompjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@material-ui/styles';
 import App from './App';
 import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
 import nxtTheme from './components/Theme/Theme';
-import { SnackbarProvider } from 'notistack';
 
 const ObjectId = require('bson-objectid');
 
