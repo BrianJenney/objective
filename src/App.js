@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Box, CssBaseline } from '@material-ui/core';
 import { withAuthToken } from './hoc';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -88,30 +88,31 @@ class App extends Component {
     const { account, authToken, storefront } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         <CssBaseline />
         <BrowserRouter>
           <div>
             <Link to="/">{storefront.name}</Link>
           </div>
           <Header />
-          {authToken || (account && account.account_jwt && <LoggedInUser />)}
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/gallery" component={Gallery} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/login" component={Login} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/account" component={Account} />
-            <Route path="/manage-profile" component={AccountProfile} />
-            <Route path="/manage-addresses" component={AccountAddresses} />
-            <Route path="/reset-password" component={AccountResetPassword} />
-            <Route path="/product/:id" component={Product} />
-            <Route path="/:page" component={Static} />
-          </Switch>
+          <Box bgcolor="rgba(252, 248, 244, 0.5)" px={15} py={10}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/gallery" component={Gallery} />
+              <Route path="/cart" component={Cart} />
+              <Route path="/login" component={Login} />
+              <Route path="/checkout" component={Checkout} />
+              <Route path="/account" component={Account} />
+              <Route path="/manage-profile" component={AccountProfile} />
+              <Route path="/manage-addresses" component={AccountAddresses} />
+              <Route path="/reset-password" component={AccountResetPassword} />
+              <Route path="/product/:id" component={Product} />
+              <Route path="/:page" component={Static} />
+            </Switch>
+          </Box>
           <Footer />
         </BrowserRouter>
-      </React.Fragment>
+      </>
     );
   }
 }

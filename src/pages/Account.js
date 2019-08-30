@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Typography, Grid, Box } from '@material-ui/core';
+import { Typography, Grid, Box, Paper } from '@material-ui/core';
 import { withAuthToken } from '../hoc';
 import { ACCOUNT_MENU_KEYS } from '../constants/menu';
 import { If } from '../components/common';
@@ -29,15 +29,14 @@ const Account = ({ authToken, account, logout }) => {
   };
 
   return (
-    <Box>
+    <Box component={Paper} py={7}>
       {authToken || (account && account.account_jwt) ? (
         <Box>
-          <Typography variant="h3" gutterBottom>
-            My Account
-          </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={3}>
-              <AccountMenu onMenuItemClick={handleMenuItemClick} />
+              <Box borderColor="#979797" borderRight={1}>
+                <AccountMenu onMenuItemClick={handleMenuItemClick} />
+              </Box>
             </Grid>
             <Grid item xs={12} sm={9}>
               <If condition={currentMenuKey === ACCOUNT_MENU_KEYS.OVERVIEW}>
