@@ -16,7 +16,7 @@ const ProductSummary = ({ product, variantMap }) => {
         const variant = variantMap.get(variantSlug);
         return (
           <Grid item xs={12} sm={3} md={3} lg={3}>
-            <VariantCard variant={variant} />
+            <VariantCard variant={variant} product={product} />
           </Grid>
         );
       })}

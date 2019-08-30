@@ -11,6 +11,8 @@ import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
 
+import { getVariantTypes } from '../../utils/product';
+
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
@@ -113,64 +115,70 @@ const StyledButton = withStyles(theme => ({
   },
 }))(Button);
 
+const getVariantAttributes = (variants, variantSlug) => {
+  let variant = (variants.filter(variant => variant.slug === variantSlug))[0];
+  console.log('get Variant attributes', variantSlug, variant)
+  // console.log('get Variant attributes', variant.attributes)
+  // return variant.attributes.map(attribute => ({ [attribute.name ]: attribute.value}));
+};
+
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();
   return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}</Typography>
   ) : null;
 };
 
-
-const ProductDetail = ({ history }) => {
+const ProductDetail = ({ variantSlug, history }) => {
 
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const [productType, setProductType] = useState(null);
-  const { product, variants } = useContext(ProductContext);
+  const { product, variants, prices } = useContext(ProductContext);
   const windowSize = useWindowSize();
-
   const { enqueueSnackbar } = useSnackbar();
-  const selectedProductVariant = productType ? variants[productType] : null;
+  const [selectedVariantSku, setSelectedVariantSku] = useState(null);
+
+  const selectedProductVariant = null;
   const [ATCEnabled, setATCEnabled] = useState(true);
+console.log('ProductDetail', product, variants, prices)
 
   const updateQuantityToCart = (qty => {
-    if (product === null || productType === null || selectedProductVariant === null)
+    if (selectedProductVariant === null)
       return;
     console.log('updateQuantityToCart', qty)
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, qty, dispatch);
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, qty, dispatch);
     enqueueSnackbar(`${qty} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
   });
+
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, quantity, dispatch);
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, quantity, dispatch);
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
     setATCEnabled(false);
-  }, [cart, product, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
-  const ProductType = ({ isMobile, options }) => {
+  const ProductType = ({ isMobile, variantType, options, variantValue }) => {
     const handleChange = useCallback((event) => {
-      setProductType(event.target.value);
-      setQuantity(1);
-      setATCEnabled(true);
+      // setProductType(event.target.value);
     }, []);
     return (
       <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
         <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
-          <Typography className={classes.productType} variant="h6">PRODUCT TYPE</Typography>
+          <Typography className={classes.productType} variant="h6">{variantType.toUpperCase()}</Typography>
         </Grid>
         <Grid item xs={12} sm={7} className={classes.overridePadding} justify={isMobile ? "flex-end" : "flex-start"}>
           <Select
             className={classes.dropdown}
-            value={productType}
+            value={variantValue}
             onChange={handleChange}
           >
-            {options.map(option => (
-              <MenuItem className={classes.menuItem} key={option.key} value={option.value}>{option.label}</MenuItem>
+            {options.map((option, index) => (
+              <MenuItem className={classes.menuItem} key={`${variantType}-${index}`} value={option}>{option}</MenuItem>
             ))}
           </Select>
         </Grid>
@@ -181,19 +189,12 @@ const ProductDetail = ({ history }) => {
   if (!product) {
     return null;
   }
+  const defaultVariantType = getVariantAttributes(variants, variantSlug);
 
+  const variantTypes = getVariantTypes(product, variants);
   const isMobile = windowSize.width < 944;
-  const dropdownType = product.attributes[0].value;
-  const productTypeOptions = variants.filter(variant => variant.attributes[0].name === dropdownType)
-    .map((variant, index) => {
-      const dropdownValue = variant.attributes[0].value;
-      return {
-        key: variant._id,
-        label: `${dropdownValue}`,
-        value: String(index)
-      }
-    });
 
+  console.log('varaintTypeMap', variantTypes)
 
   return (
     <>
@@ -221,13 +222,20 @@ const ProductDetail = ({ history }) => {
                 <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
                 <Typography variant="body2">Take one soft gel daily with meal</Typography>
                 <br />
-                <ProductType isMobile={isMobile} options={productTypeOptions} />
-                <br />
+                {Object.keys(variantTypes).map(key => {
+                  return (
+                    <>
+                      <ProductType isMobile={isMobile} variantType={key} options={variantTypes[key]}/>
+                      < br/>
+                    </>
+                  );
+                })
+                }
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
-                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
+                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedVariantSku === null}>
                     ADD TO CART
                   </StyledButton>
                 </CardActions>

@@ -81,3 +81,24 @@ export const getVariants = (products, variants, priceMap) => {
   return [variantSlugs, variantMap];
 };
 
+export const getVariantTypes = (product, variants) => {
+  const variantTypeMap = new Map();
+  product.attributes.forEach(attribute => {
+    const variantType = attribute.value;
+    const variantTypeOptions = [];
+    variants.forEach(variant => {
+      variant.attributes.forEach(attribute => {
+        if (attribute.name === variantType) {
+          const value = attribute.value;
+          if (!variantTypeOptions.includes(value))
+          variantTypeOptions.push(value);
+        }
+      })
+    });
+    variantTypeMap.set(variantType, variantTypeOptions);
+  });
+  const map = {};
+  variantTypeMap.forEach((k, v) => map[v] = k);
+  return map;
+};
+
