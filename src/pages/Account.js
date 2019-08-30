@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Typography, Grid, Box, Paper } from '@material-ui/core';
+import { Grid, Box, Paper } from '@material-ui/core';
 import { withAuthToken } from '../hoc';
 import { ACCOUNT_MENU_KEYS } from '../constants/menu';
 import { If } from '../components/common';
