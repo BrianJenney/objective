@@ -18,18 +18,24 @@ const labelsMap = {
   cvv: 'CVV'
 };
 
-const PaymentSummary = ({ values }) => {
+const PaymentSummary = ({ values, children }) => {
   const neededValues = pick(values, PAYMENT_FIELDS);
   const pairs = Object.keys(neededValues).map(key => ({
     label: labelsMap[key],
     value: neededValues[key]
   }));
 
-  return <FormSummarySection title="" pairs={pairs} />;
+  return (
+    <>
+      {children}
+      <FormSummarySection title="" pairs={pairs} />
+    </>
+  );
 };
 
 PaymentSummary.propTypes = {
-  values: PropTypes.object.isRequired
+  values: PropTypes.object.isRequired,
+  children: PropTypes.node
 };
 
 export default PaymentSummary;
