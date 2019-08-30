@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import { omit } from 'lodash';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -15,7 +13,7 @@ import {
   requestPatchAccount
 } from '../../modules/account/actions';
 import store from '../../store';
-import { InputField } from '../../components/form-fields';
+import { InputField } from '../form-fields';
 
 const pStyle = {
   padding: 20,
@@ -34,7 +32,7 @@ const INITIAL_VALUES = {
   phoneNumber: ''
 };
 
-class ManageProfile extends React.Component {
+class AccountProfile extends React.Component {
   componentDidMount() {
     this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
     console.log('******************MOUNTED****************************');
@@ -129,4 +127,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ManageProfile);
+)(AccountProfile);

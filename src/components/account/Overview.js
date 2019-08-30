@@ -1,7 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -12,7 +9,7 @@ const pStyle = {
   textAlign: 'center'
 };
 
-const AccountHome = props => {
+const AccountOverview = props => {
   const { account } = props;
   return (
     <Container>
@@ -33,4 +30,4 @@ const AccountHome = props => {
   );
 };
 
-export default AccountHome;
+export default AccountOverview;
