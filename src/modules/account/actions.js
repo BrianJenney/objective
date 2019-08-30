@@ -159,17 +159,14 @@ export const receivedLoginSuccess = loginReply => async (
   dispatch,
   getState
 ) => {
-  localStorageClient.set('token', loginReply.jwt);
+  localStorageClient.set('token', loginReply.account_jwt);
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply
   });
 };
 
-export const receivedLoginFailure = () => async (
-  dispatch,
-  getState
-) => {
+export const receivedLoginFailure = () => async (dispatch, getState) => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
     payload: {}
