@@ -12,9 +12,11 @@ import Static from './pages/Static';
 import Gallery from './pages/Gallery';
 import Cart from './pages/Cart';
 import Account from './pages/Account';
-import ManageProfile from './pages/account/ManageProfile';
-import ManageAddresses from './pages/account/ManageAddresses';
-import ResetPassword from './pages/account/ResetPassword';
+import {
+  AccountProfile,
+  AccountAddresses,
+  AccountResetPassword
+} from './components/account';
 import Login from './pages/Login';
 import Checkout from './pages/Checkout';
 import Product from './pages/Product';
@@ -93,7 +95,7 @@ class App extends Component {
             <Link to="/">{storefront.name}</Link>
           </div>
           <Header />
-          {authToken || (account && account.account_jwt)&& <LoggedInUser />}
+          {authToken || (account && account.account_jwt && <LoggedInUser />)}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/gallery" component={Gallery} />
@@ -101,9 +103,9 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/account" component={Account} />
-            <Route path="/manage-profile" component={ManageProfile} />
-            <Route path="/manage-addresses" component={ManageAddresses} />
-            <Route path="/reset-password" component={ResetPassword} />
+            <Route path="/manage-profile" component={AccountProfile} />
+            <Route path="/manage-addresses" component={AccountAddresses} />
+            <Route path="/reset-password" component={AccountResetPassword} />
             <Route path="/product/:id" component={Product} />
             <Route path="/:page" component={Static} />
           </Switch>

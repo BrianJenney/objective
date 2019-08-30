@@ -2,7 +2,7 @@ import React from 'react';
 import store from '../../store';
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 
-const OrderList = props => {
+const AccountOrders = props => {
   const { account } = props;
 
   if (!account.orders) {
@@ -13,7 +13,9 @@ const OrderList = props => {
   const orderList = account.orders.map(order => (
     <tr>
       <td>{order._id}</td>
-      <td>{order.createdAt.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1')}</td>
+      <td>
+        {order.createdAt.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1')}
+      </td>
       <td>{order.cart.total}</td>
       <td>-</td>
     </tr>
@@ -35,4 +37,4 @@ const OrderList = props => {
   );
 };
 
-export default OrderList;
+export default AccountOrders;

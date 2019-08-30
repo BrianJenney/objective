@@ -1,3 +1,4 @@
+export { default as If } from './If';
 export { default as AlertPanel } from './AlertPanel';
 export { default as Button } from './Button';
 export { default as Carousel } from './Carousel';

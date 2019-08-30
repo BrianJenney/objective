@@ -1,71 +1,92 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import store from '../store';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { Typography, Grid, Box } from '@material-ui/core';
 import { withAuthToken } from '../hoc';
-import AccountHome from './account/AccountHome';
-import AccountMenu from './account/AccountMenu';
-import ManageAddresses from './account/ManageAddresses';
-import ManageProfile from './account/ManageProfile';
-import OrderList from './account/OrderList';
-import { logout } from '../modules/account/actions';
+import { ACCOUNT_MENU_KEYS } from '../constants/menu';
+import { If } from '../components/common';
+import {
+  AccountMenu,
+  AccountOverview,
+  AccountOrders,
+  AccountAddresses,
+  AccountPaymentDetails,
+  AccountProfile
+} from '../components/account';
+import { logout as logoutAction } from '../modules/account/actions';
 
-const localStorageClient = require('store');
-
-const Account = ({ authToken }) => {
-  const { account } = store.getState();
-  const [currentComponent, setCurrentComponent] = useState('overview');
-
-  const handleClick = e => {
-    setCurrentComponent(
-      e.currentTarget.textContent.toLowerCase().replace(/\s/g, '')
-    );
-  };
-
-  const getPanel = () => {
-    switch (currentComponent) {
-      case 'overview':
-        return <AccountHome account={account} />;
-      case 'yourorders':
-        return <OrderList account={account} />;
-      case 'savedaddresses':
-        return <ManageAddresses account={account} />;
-      case 'paymentdetails':
-        return <h2>Payment Details</h2>;
-      case 'yourprofile':
-        return <ManageProfile account={account} />;
-      case 'logout':
-        store.dispatch(logout());
-        localStorageClient.remove('token');
-        return <Redirect to='/gallery' />
-      default:
-        return null;
+const Account = ({ authToken, account, logout }) => {
+  const [currentMenuKey, setCurrentMenuKey] = useState(
+    ACCOUNT_MENU_KEYS.OVERVIEW
+  );
+  const handleMenuItemClick = menuKey => {
+    if (menuKey === ACCOUNT_MENU_KEYS.LOGOUT) {
+      logout();
     }
+    setCurrentMenuKey(menuKey);
   };
 
   return (
-    <div>
+    <Box>
       {authToken || (account && account.account_jwt) ? (
-        <Container>
+        <Box>
           <Typography variant="h3" gutterBottom>
             My Account
           </Typography>
           <Grid container spacing={3}>
-            <Grid item xs={3} key={account.firstName}>
-              <AccountMenu onClick={handleClick} />
+            <Grid item xs={12} sm={3}>
+              <AccountMenu onMenuItemClick={handleMenuItemClick} />
             </Grid>
-            <Grid item xs={9} key={account.firstName}>
-              <>{getPanel()}</>
+            <Grid item xs={12} sm={9}>
+              <If condition={currentMenuKey === ACCOUNT_MENU_KEYS.OVERVIEW}>
+                <AccountOverview account={account} />
+              </If>
+              <If condition={currentMenuKey === ACCOUNT_MENU_KEYS.YOUR_ORDERS}>
+                <AccountOrders account={account} />
+              </If>
+              <If
+                condition={currentMenuKey === ACCOUNT_MENU_KEYS.SAVED_ADDRESSES}
+              >
+                <AccountAddresses account={account} />
+              </If>
+              <If
+                condition={currentMenuKey === ACCOUNT_MENU_KEYS.PAYMENT_DETAILS}
+              >
+                <AccountPaymentDetails account={account} />
+              </If>
+              <If condition={currentMenuKey === ACCOUNT_MENU_KEYS.YOUR_PROFILE}>
+                <AccountProfile account={account} />
+              </If>
             </Grid>
           </Grid>
-        </Container>
+        </Box>
       ) : (
         <Redirect push to="/login" />
       )}
-    </div>
+    </Box>
   );
 };
 
-export default withAuthToken(Account);
+Account.propTypes = {
+  authToken: PropTypes.string,
+  account: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  account: state.account
+});
+
+const mapDispatchToProps = {
+  logout: logoutAction
+};
+
+export default compose(
+  withAuthToken,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Account);

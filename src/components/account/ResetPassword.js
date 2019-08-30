@@ -8,8 +8,8 @@ import {
   requestPatchAccount
 } from '../../modules/account/actions';
 import store from '../../store';
-import { InputField } from '../../components/form-fields';
-import { AlertPanel, Button } from '../../components/common';
+import { InputField } from '../form-fields';
+import { AlertPanel, Button } from '../common';
 
 const schema = Yup.object({
   password: Yup.string().required('Password is required'),
