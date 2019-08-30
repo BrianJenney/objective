@@ -93,7 +93,8 @@ const useStyles = makeStyles(theme => ({
   },
   subtitle: {
     margin: 0,
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    fontFamily: 'p22-underground, Helvetica, sans-serif'
   },
   gridModifications: {
     paddingTop: theme.spacing(8),
@@ -118,10 +119,14 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     minWidth: '180px',
     maxWidth: '220px',
-    paddingLeft: '0 !important',
+    paddingLeft: '10px',
     border: '1px solid',
     height: '52px',
     fontFamily: 'p22-underground, Helvetica, sans-serif'
+  },
+  menuItem: {
+    fontFamily: 'p22-underground, Helvetica, sans-serif',
+    marginLeft: '10px'
   },
   overridePadding: {
     padding: '0 0 0 12px !important',

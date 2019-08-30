@@ -1,26 +1,36 @@
-import { requestPatchCart } from "../../modules/cart/actions";
+import { requestPatchCart } from '../../modules/cart/actions';
 
-export const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
+export const calculateCartTotal = cartItems =>
+  cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
-export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isFromGallery=false) => {
+export const addToCart = (
+  cartId,
+  cart,
+  selectedProductVariant,
+  product,
+  quantity,
+  dispatch
+) => {
   const newItems = cart.items;
-  // console.log('add to cart', newItems, selectedVariant)
   let alreadyInCart = false;
-  newItems.filter(item => item.sku === selectedVariant.sku)
+  newItems
+    .filter(item => item.variant_id === selectedProductVariant._id)
     .forEach(item => {
       alreadyInCart = true;
       item.quantity += quantity;
     });
   if (!alreadyInCart) {
     const newItem = {
-      variant_name: selectedVariant.name,
-      variant_id: selectedVariant._id,
-      variant_img: selectedVariant.assets.imgs,
-      sku: selectedVariant.sku,
-      variantInfo: selectedVariant.variantInfo,
-      attributes: selectedVariant.attributes,
+      product_id: product._id,
+      product_name: product.name,
+      variant_name: selectedProductVariant.name,
+      variant_id: selectedProductVariant._id,
+      product_img: product.assets.img_front,
+      sku: selectedProductVariant.sku,
+      variant_type: selectedProductVariant.attributes[0].name,
+      variant_value: selectedProductVariant.attributes[0].value,
       quantity: quantity,
-      unit_price: parseFloat(isFromGallery ? selectedVariant.effectivePrice : selectedVariant.price.$numberDecimal)
+      unit_price: parseFloat(selectedProductVariant.price.$numberDecimal)
     };
     newItems.push(newItem);
   }

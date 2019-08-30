@@ -39,7 +39,7 @@ const onStompConnectSuccess = () => {
       <ThemeProvider theme={nxtTheme}>
         <SnackbarProvider
           autoHideDuration={2500}
-          maxSnack={5}
+          maxSnack={1}
           anchorOrigin={{
             horizontal: 'right',
             vertical: 'top'
