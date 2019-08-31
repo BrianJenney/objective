@@ -11,7 +11,7 @@ import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
 
-import { getVariantTypes } from '../../utils/product';
+import { getVariantTypes, getVariantAttributes } from '../../utils/product';
 
 const localStorageClient = require('store');
 
@@ -114,13 +114,6 @@ const StyledButton = withStyles(theme => ({
     textTransform: 'capitalize',
   },
 }))(Button);
-
-const getVariantAttributes = (variants, variantSlug) => {
-  let variant = (variants.filter(variant => variant.slug === variantSlug))[0];
-  console.log('get Variant attributes', variantSlug, variant)
-  // console.log('get Variant attributes', variant.attributes)
-  // return variant.attributes.map(attribute => ({ [attribute.name ]: attribute.value}));
-};
 
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();

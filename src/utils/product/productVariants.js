@@ -102,3 +102,10 @@ export const getVariantTypes = (product, variants) => {
   return map;
 };
 
+export const getVariantAttributes = (variants, variantSlug) => {
+  const variant = variants.filter(v => v.slug === variantSlug);
+  console.log('get Variant attributes', variantSlug, variant[0])
+  console.log('get Variant attributes', variant[0].attributes)
+  return variant[0].attributes.map(attribute => attribute.value);
+};
+
