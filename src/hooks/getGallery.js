@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import GalleryContext from '../contexts/GalleryContext';
+// import GalleryContext from '../contexts/GalleryContext';
 import { getProducts, getVariants, getPrices } from '../utils/product';
 
 export const getGallery = (products, variants, prices) => {
