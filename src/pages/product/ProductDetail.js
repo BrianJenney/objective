@@ -11,7 +11,7 @@ import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
 
-import { getVariantTypes, getVariantAttributes } from '../../utils/product';
+import ProductType from './ProductType';
 
 const localStorageClient = require('store');
 
@@ -64,30 +64,6 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '.7rem',
     marginBottom: theme.spacing(1),
   },
-  dropdown: {
-    width: '100%',
-    minWidth: '180px',
-    maxWidth: '220px',
-    paddingLeft: '0 !important',
-    border: '1px solid',
-    height: '52px',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
-  },
-  overridePadding: {
-    padding: '0 0 0 12px !important',
-    width: '59%',
-  },
-  rightPadding: {
-    paddingRight: '0 !important',
-    maxWidth: '130px !important'
-  },
-  productType: {
-    fontSize: '.9rem',
-    padding: 0,
-    lineHeight: '.7rem',
-    marginTop: theme.spacing(1),
-    minWidth: '110px !important',
-  },
   flexEnd: {
     alignSelf: 'flex-end',
   },
@@ -133,8 +109,8 @@ const ProductDetail = ({ variantSlug, history }) => {
 
   const selectedProductVariant = null;
   const [ATCEnabled, setATCEnabled] = useState(true);
-console.log('ProductDetail', product, variants, prices)
-
+console.log('ProductDetail', {product, variants, prices})
+//  const [selectedTerminalVariant, setSelectedTerminalVariant, ProductType ] = useProductType()
   const updateQuantityToCart = (qty => {
     if (selectedProductVariant === null)
       return;
@@ -144,7 +120,6 @@ console.log('ProductDetail', product, variants, prices)
       variant: 'success',
     });
   });
-
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
@@ -155,39 +130,10 @@ console.log('ProductDetail', product, variants, prices)
     setATCEnabled(false);
   }, [cart, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
-  const ProductType = ({ isMobile, variantType, options, variantValue }) => {
-    const handleChange = useCallback((event) => {
-      // setProductType(event.target.value);
-    }, []);
-    return (
-      <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
-        <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
-          <Typography className={classes.productType} variant="h6">{variantType.toUpperCase()}</Typography>
-        </Grid>
-        <Grid item xs={12} sm={7} className={classes.overridePadding} justify={isMobile ? "flex-end" : "flex-start"}>
-          <Select
-            className={classes.dropdown}
-            value={variantValue}
-            onChange={handleChange}
-          >
-            {options.map((option, index) => (
-              <MenuItem className={classes.menuItem} key={`${variantType}-${index}`} value={option}>{option}</MenuItem>
-            ))}
-          </Select>
-        </Grid>
-      </Grid>
-    );
-  };
-
-  if (!product) {
+  if (product === null || variants.length === 0)
     return null;
-  }
-  const defaultVariantType = getVariantAttributes(variants, variantSlug);
 
-  const variantTypes = getVariantTypes(product, variants);
   const isMobile = windowSize.width < 944;
-
-  console.log('varaintTypeMap', variantTypes)
 
   return (
     <>
@@ -208,22 +154,13 @@ console.log('ProductDetail', product, variants, prices)
                   <Typography className={classes.subtitle} variant="h6">{product.subtitle}</Typography>
                 </Box>
                 <Divider variant="fullWidth" className={classes.divider} />
-
                 <br />
                 <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
                 <br />
                 <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
                 <Typography variant="body2">Take one soft gel daily with meal</Typography>
-                <br />
-                {Object.keys(variantTypes).map(key => {
-                  return (
-                    <>
-                      <ProductType isMobile={isMobile} variantType={key} options={variantTypes[key]}/>
-                      < br/>
-                    </>
-                  );
-                })
-                }
+                <br/>
+                <ProductType isMobile={isMobile} variantSlug={variantSlug} />
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">

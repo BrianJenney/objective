@@ -91,21 +91,28 @@ export const getVariantTypes = (product, variants) => {
         if (attribute.name === variantType) {
           const value = attribute.value;
           if (!variantTypeOptions.includes(value))
-          variantTypeOptions.push(value);
+            variantTypeOptions.push(value);
         }
       })
     });
     variantTypeMap.set(variantType, variantTypeOptions);
   });
+  // console.log('variantTypes', variantTypeMap);
   const map = {};
-  variantTypeMap.forEach((k, v) => map[v] = k);
+  variantTypeMap.forEach((v, k) => map[k] = v);
   return map;
 };
 
 export const getVariantAttributes = (variants, variantSlug) => {
   const variant = variants.filter(v => v.slug === variantSlug);
-  console.log('get Variant attributes', variantSlug, variant[0])
-  console.log('get Variant attributes', variant[0].attributes)
-  return variant[0].attributes.map(attribute => attribute.value);
+  const defaultVariantTypes = {};
+  variant[0].attributes.forEach(attribute => defaultVariantTypes[attribute.name] = attribute.value);
+  return defaultVariantTypes;
 };
 
+export const getVariantOptionsByVariantType = (variants, variantName, variantValue) => {
+  const options = variants.filter(variant => (variant.attributes[0].name === variantName &&
+                                              variant.attributes[0].value === variantValue))
+                          .map(variant => variant.attributes[1].value);
+  return options;
+}
