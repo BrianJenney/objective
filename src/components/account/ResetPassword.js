@@ -4,7 +4,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { Container, Box, Grid, Typography } from '@material-ui/core';
 import {
-  requestFetchAccount,
+  requestGetAccount,
   requestPatchAccount
 } from '../../modules/account/actions';
 import store from '../../store';
@@ -27,7 +27,7 @@ class ResetPassword extends React.Component {
   componentDidMount() {
     // In the future this will be updated to grab token based off of email sent to user and will not be hard coded. Also this page will not be accessible unless the user has gotten an email and clicked on the link
     // We do not have email functionality as of yet
-    this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
+    //this.props.requestGetAccount('5cdc7405da53494ee0f3bafe');
   }
 
   renderForm = () => {
@@ -100,7 +100,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  requestFetchAccount
+  requestGetAccount
 };
 
 export default connect(

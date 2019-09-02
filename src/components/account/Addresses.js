@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {
-  requestFetchAccount,
+  requestGetAccount,
   requestPatchAccount
 } from '../../modules/account/actions';
 import store from '../../store';
@@ -40,7 +40,6 @@ const INITIAL_VALUES = {
 
 class AccountAddresses extends React.Component {
   componentDidMount() {
-    this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
     console.log('******************MOUNTED****************************');
   }
 
@@ -130,7 +129,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  requestFetchAccount
+  requestGetAccount
 };
 
 export default connect(
