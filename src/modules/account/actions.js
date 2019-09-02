@@ -58,20 +58,17 @@ export const receivedCreateAccount = createReply => async (
   });
 };
 
-export const requestFetchAccount = url => async (dispatch, getState) => {
+export const requestGetAccount = acctId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
-  const params = {
-    params: {
-      query: {
-        _id: '5cdc7405da53494ee0f3bafe'
-      }
-    }
-  };
 
+  const params = {
+    id: acctId
+  };
+  console.log(params);
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
-    '/exchange/account/account.request.find',
+    '/exchange/account/account.request.get',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
@@ -92,14 +89,16 @@ export const receivedFetchAccount = account => async (dispatch, getState) => {
   });
 };
 
-export const requestPatchAccount = (accountId, patches) => async (
+export const requestPatchAccount = (accountJwt, patches) => async (
   dispatch,
   getState
 ) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
+  console.log(accountJwt);
+  console.log(patches);
   const params = {
-    id: accountId,
+    id: accountJwt,
     data: patches
   };
   const obj = JSON.stringify(msgpack.encode(params));

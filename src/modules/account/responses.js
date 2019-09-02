@@ -20,15 +20,15 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       console.log(properties);
       store.dispatch(receivedCreateAccount(data));
       break;
-    case 'account.request.find':
+    case 'account.request.get':
       console.log(
-        '****************** Account Find Response ******************'
+        '****************** Account Get Response ******************'
       );
       console.log(status);
       console.log(data);
       console.log(fields);
       console.log(properties);
-      store.dispatch(receivedFetchAccount(data.data[0]));
+      store.dispatch(receivedFetchAccount(data));
       break;
     case 'account.request.patch':
       console.log(

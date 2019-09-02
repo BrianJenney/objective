@@ -22,7 +22,7 @@ import Checkout from './pages/Checkout';
 import Product from './pages/Product';
 import LoggedInUser from './components/LoggedInUser';
 
-import { requestFetchAccount as requestFetchAccountAction } from './modules/account/actions';
+import { requestGetAccount as requestGetAccountAction } from './modules/account/actions';
 import {
   requestFetchCart as requestFetchCartAction,
   requestCreateCart as requestCreateCartAction
@@ -36,7 +36,7 @@ const localStorageClient = require('store');
 class App extends Component {
   static propTypes = {
     authToken: PropTypes.string,
-    requestFetchAccount: PropTypes.func.isRequired,
+    requestGetAccount: PropTypes.func.isRequired,
     requestFetchCart: PropTypes.func.isRequired,
     requestCreateCart: PropTypes.func.isRequired,
     requestFetchStorefront: PropTypes.func.isRequired,
@@ -51,9 +51,7 @@ class App extends Component {
       requestFetchCart,
       requestCreateCart,
       requestFetchStorefront,
-      requestFetchAccount,
-      requestFetchCatalog,
-      request
+      requestGetAccount
     } = this.props;
 
     requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
@@ -62,9 +60,11 @@ class App extends Component {
      * if the user has a jwt, decode it to find the account it,
      * then get user details & put them in the store
      */
+    console.log(authToken);
     if (authToken) {
       const accountId = jwt.decode(localStorageClient.get('token')).account_id;
-      requestFetchAccount(accountId);
+      console.log('this is the account id:  ' + accountId);
+      requestGetAccount(accountId);
     }
 
     /**
@@ -134,7 +134,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestFetchAccount: requestFetchAccountAction,
+  requestGetAccount: requestGetAccountAction,
   requestFetchStorefront: requestFetchStorefrontAction,
   requestFetchCart: requestFetchCartAction,
   requestCreateCart: requestCreateCartAction,
