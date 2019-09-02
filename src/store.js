@@ -6,13 +6,15 @@ import storefrontReducer from './modules/storefront/reducers';
 import cartReducer from './modules/cart/reducers';
 import accountReducer from './modules/account/reducers';
 import orderReducer from './modules/order/reducers';
+import catalogReducer from './modules/catalog/reducers';
 
 const rootReducer = combineReducers({
   stomp: stompReducer,
   storefront: storefrontReducer,
   cart: cartReducer,
   account: accountReducer,
-  order: orderReducer
+  order: orderReducer,
+  products: catalogReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
