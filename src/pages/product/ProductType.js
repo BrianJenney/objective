@@ -1,4 +1,4 @@
-import React, {useContext, useReducer, useCallback} from "react";
+import React, {useContext, useReducer, useEffect} from "react";
 
 import ProductContext from '../../contexts/ProductContext';
 
@@ -9,7 +9,7 @@ import VariantType from './VariantType';
 const productTypeReducer = (state, action) => {
   switch (action.type) {
     case 'Pill Type':
-      return {...state, 'Pill Type': action.payload};
+      return {...state, 'Pill Type': action.payload, 'Diet Type': null};
 
     case 'Diet Type':
       return {...state, 'Diet Type': action.payload};
@@ -19,11 +19,16 @@ const productTypeReducer = (state, action) => {
   }
 };
 
-const ProductType = ({isMobile, variantSlug }) => {
-  const { product, variants, prices } = useContext(ProductContext);
+const ProductType = ({isMobile, variantSlug, updateTerminalVariant }) => {
+  const { product, variants } = useContext(ProductContext);
   const defaultTerminalVariantType = getVariantAttributes(variants, variantSlug);
   const [ terminalVariant, dispatch ] = useReducer(productTypeReducer, defaultTerminalVariantType);
   const variantTypes = getVariantTypes(product, variants);
+
+  useEffect(() => {
+    updateTerminalVariant(terminalVariant);
+  }, [ terminalVariant, updateTerminalVariant ]);
+
   return (
     <>
       {Object.keys(variantTypes).map(key => {

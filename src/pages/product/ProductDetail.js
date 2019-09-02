@@ -10,7 +10,7 @@ import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
-import { getTerminalVariant } from '../../utils/product';
+import { getPrices, getVariantByVariantSlug, getVariantByTerminalVariant } from '../../utils/product';
 
 import ProductType from './ProductType';
 
@@ -104,22 +104,20 @@ const ProductDetail = ({ variantSlug, history }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices } = useContext(ProductContext);
+  const pricesMap = getPrices(prices);
   const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-console.log('ProductDetail', {product, variants, prices})
+  const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
   const updateQuantityToCart = (qty => {
     if (selectedProductVariant === null)
       return;
-    console.log('updateQuantityToCart', qty)
     addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, qty, dispatch);
     enqueueSnackbar(`${qty} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
   });
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
-  const [selectedVariantSku, selectedProductVariant] = getTerminalVariant(variants, prices, variantSlug);
-
   const handleAddToCart = useCallback(() => {
     addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, quantity, dispatch);
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
@@ -132,6 +130,16 @@ console.log('ProductDetail', {product, variants, prices})
     return null;
 
   const isMobile = windowSize.width < 944;
+
+  const updateTerminalVariant = (terminalVariant) => {
+    if (terminalVariant['Diet Type'] === null) {
+      setATCEnabled(true);
+      setQuantity(1);
+      setSelectedProductVariant(null);
+    } else {
+      setSelectedProductVariant(getVariantByTerminalVariant(variants, pricesMap, terminalVariant));
+    }
+  };
 
   return (
     <>
@@ -158,12 +166,12 @@ console.log('ProductDetail', {product, variants, prices})
                 <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
                 <Typography variant="body2">Take one soft gel daily with meal</Typography>
                 <br/>
-                <ProductType isMobile={isMobile} variantSlug={variantSlug} />
+                <ProductType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
-                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedVariantSku === null}>
+                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant === null}>
                     ADD TO CART
                   </StyledButton>
                 </CardActions>
@@ -174,7 +182,6 @@ console.log('ProductDetail', {product, variants, prices})
       </Grid>
     </>
   );
-
 };
 
 export default withRouter(ProductDetail);
