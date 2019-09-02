@@ -28,6 +28,7 @@ import {
   requestCreateCart as requestCreateCartAction
 } from './modules/cart/actions';
 import { requestFetchStorefront as requestFetchStorefrontAction } from './modules/storefront/actions';
+import { requestFetchCatalog as requestFetchCatalogAction } from './modules/catalog/actions';
 
 const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
@@ -39,7 +40,9 @@ class App extends Component {
     requestFetchCart: PropTypes.func.isRequired,
     requestCreateCart: PropTypes.func.isRequired,
     requestFetchStorefront: PropTypes.func.isRequired,
-    storefront: PropTypes.object
+    storefront: PropTypes.object,
+    requestFetchCatalog: PropTypes.func.isRequired,
+    products: PropTypes.object
   };
 
   componentDidMount() {
@@ -48,7 +51,9 @@ class App extends Component {
       requestFetchCart,
       requestCreateCart,
       requestFetchStorefront,
-      requestFetchAccount
+      requestFetchAccount,
+      requestFetchCatalog,
+      request
     } = this.props;
 
     requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
@@ -73,6 +78,12 @@ class App extends Component {
     } else {
       requestCreateCart();
     }
+
+    if (localStorageClient.get('catalogId')) {
+      requestFetchCatalog(localStorageClient.get('catalogId'));
+    } else {
+      console.log('no catalog id, cannot fetch catalog');
+    }
   }
 
   /**
@@ -85,15 +96,12 @@ class App extends Component {
    * The order that routes are defined matters, make sure /:page is the very last one
    */
   render() {
-    const { account, authToken, storefront } = this.props;
+    const { account, authToken, storefront, products } = this.props;
 
     return (
       <>
         <CssBaseline />
         <BrowserRouter>
-          <div>
-            <Link to="/">{storefront.name}</Link>
-          </div>
           <Header />
           <Box bgcolor="rgba(252, 248, 244, 0.5)" px={15} py={10}>
             <Switch>
@@ -121,14 +129,16 @@ const mapStateToProps = state => ({
   stompClient: state.stomp.client,
   storefront: state.storefront,
   cart: state.cart,
-  account: state.account
+  account: state.account,
+  products: state.products
 });
 
 const mapDispatchToProps = {
   requestFetchAccount: requestFetchAccountAction,
   requestFetchStorefront: requestFetchStorefrontAction,
   requestFetchCart: requestFetchCartAction,
-  requestCreateCart: requestCreateCartAction
+  requestCreateCart: requestCreateCartAction,
+  requestFetchCatalog: requestFetchCatalogAction
 };
 
 const enhance = compose(
