@@ -51,7 +51,8 @@ class App extends Component {
       requestFetchCart,
       requestCreateCart,
       requestFetchStorefront,
-      requestGetAccount
+      requestGetAccount,
+      requestFetchCatalog
     } = this.props;
 
     requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
