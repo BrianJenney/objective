@@ -10,6 +10,7 @@ import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
+import { getTerminalVariant } from '../../utils/product';
 
 import ProductType from './ProductType';
 
@@ -105,12 +106,8 @@ const ProductDetail = ({ variantSlug, history }) => {
   const { product, variants, prices } = useContext(ProductContext);
   const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
-  const [selectedVariantSku, setSelectedVariantSku] = useState(null);
-
-  const selectedProductVariant = null;
   const [ATCEnabled, setATCEnabled] = useState(true);
 console.log('ProductDetail', {product, variants, prices})
-//  const [selectedTerminalVariant, setSelectedTerminalVariant, ProductType ] = useProductType()
   const updateQuantityToCart = (qty => {
     if (selectedProductVariant === null)
       return;
@@ -121,6 +118,7 @@ console.log('ProductDetail', {product, variants, prices})
     });
   });
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+  const [selectedVariantSku, selectedProductVariant] = getTerminalVariant(variants, prices, variantSlug);
 
   const handleAddToCart = useCallback(() => {
     addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, quantity, dispatch);

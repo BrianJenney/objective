@@ -115,4 +115,16 @@ export const getVariantOptionsByVariantType = (variants, variantName, variantVal
                                               variant.attributes[0].value === variantValue))
                           .map(variant => variant.attributes[1].value);
   return options;
-}
+};
+
+export const getTerminalVariant = ( variants, prices, variantSlug) => {
+  let selectedVariantSku = null;
+  let variant = null;
+  if (variants.length > 0 && prices.length > 0) {
+    const pricesMap = getPrices(prices);
+    variant = (variants.filter(variant => variant.slug === variantSlug))[0];
+    selectedVariantSku = variant.sku;
+    variant.price.$numberDecimal = pricesMap.get(selectedVariantSku);
+  }
+  return [selectedVariantSku, variant];
+};
