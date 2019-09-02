@@ -4,9 +4,43 @@ import { Box, Typography } from '@material-ui/core';
 import { EditablePanel, MenuLink } from '../common';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
+import { fetchCreditCardBrainTreeNonce } from '../../utils/checkout';
+import store from '../../store';
+import { requestPatchAccount } from '../../modules/account/actions';
 
 const AccountPaymentDetails = ({ account }) => {
-  const paymentDetails = account.paymentDetails || [
+  const addCard = async values => {
+    // This is a hardcoded billingAddress that will have to get
+    // replaced once addresses are done.
+    const billingAddress = {
+      postalCode: '11111'
+    };
+
+    const { paymentDetails } = values;
+    const nonce = await fetchCreditCardBrainTreeNonce({
+      paymentDetails,
+      billingAddress
+    });
+
+    const paymentMethods = {
+      newPaymentMethod: {
+        name: values.paymentDetails.cardholderName,
+        last4: values.paymentDetails.number.substring(values.paymentDetails.number.length-4, 
+          values.paymentDetails.number.length),
+        expirationDate: values.paymentDetails.expirationDate
+      },
+      nonce: nonce
+    };
+    console.log(paymentMethods);
+
+    store.dispatch(requestPatchAccount(account.account_jwt, paymentMethods));
+  };
+
+  const editCard = () => {
+    alert('editing payment details');
+  };
+
+  const paymentDetails = account.paymentMethods || [
     {
       paymentMethod: 'creditCard',
       cardholderName: 'Leonardo Kim',
@@ -32,7 +66,7 @@ const AccountPaymentDetails = ({ account }) => {
             <EditablePanel
               title=""
               defaultValues={entity}
-              onSubmit={() => null}
+              onSubmit={editCard}
               Form={PaymentForm}
               Summary={PaymentSummary}
             />
@@ -40,6 +74,7 @@ const AccountPaymentDetails = ({ account }) => {
         ))}
       </Box>
       <MenuLink onClick={() => null} children="Add New Card" />
+      <PaymentForm onSubmit={addCard} />
     </Box>
   );
 };
