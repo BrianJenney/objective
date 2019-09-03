@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import {
-  requestGetAccount,
+  requestFetchAccount,
   requestPatchAccount
 } from '../../modules/account/actions';
 import store from '../../store';
@@ -123,7 +123,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  requestGetAccount
+  requestFetchAccount
 };
 
 export default connect(

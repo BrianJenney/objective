@@ -9,36 +9,35 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
-  LOGOUT
+  REQUEST_LOGOUT
 } from './types';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestCreateAccount = account => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+export const requestCreateAccount = account => (dispatch, getState) => {
+  const { client, replyTo } = getState().stomp;
+  const { firstName, lastName, email, password, newsletter } = account;
 
   const params = {
     data: {
-      firstName: account.firstName,
-      lastName: account.lastName,
-      email: account.email,
-      password: account.password,
-      newsletter: account.newsletter
+      firstName,
+      lastName,
+      email,
+      password,
+      newsletter
     }
   };
 
-  let obj = JSON.stringify(msgpack.encode(params));
-  console.log(params);
-  stompClient.send(
+  const payload = JSON.stringify(msgpack.encode(params));
+  client.send(
     '/exchange/account/account.request.create',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     },
-    obj
+    payload
   );
 
   dispatch({
@@ -47,10 +46,7 @@ export const requestCreateAccount = account => async (dispatch, getState) => {
   });
 };
 
-export const receivedCreateAccount = createReply => async (
-  dispatch,
-  getState
-) => {
+export const receivedCreateAccount = createReply => dispatch => {
   localStorageClient.set('token', createReply.jwt);
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT,
@@ -58,22 +54,18 @@ export const receivedCreateAccount = createReply => async (
   });
 };
 
-export const requestGetAccount = acctId => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+export const requestFetchAccount = id => (dispatch, getState) => {
+  const { client, replyTo } = getState().stomp;
+  const params = { id };
+  const payload = JSON.stringify(msgpack.encode(params));
 
-  const params = {
-    id: acctId
-  };
-  console.log(params);
-  const obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
+  client.send(
     '/exchange/account/account.request.get',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     },
-    obj
+    payload
   );
 
   dispatch({
@@ -82,53 +74,51 @@ export const requestGetAccount = acctId => async (dispatch, getState) => {
   });
 };
 
-export const receivedFetchAccount = account => async (dispatch, getState) => {
+export const receivedFetchAccount = account => dispatch => {
   dispatch({
     type: RECEIVED_FETCH_ACCOUNT,
     payload: account
   });
 };
 
-export const requestPatchAccount = (accountJwt, patches) => async (
+export const requestPatchAccount = (authToken, patches) => (
   dispatch,
   getState
 ) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
-  console.log(accountJwt);
-  console.log(patches);
+  const { client, replyTo } = getState().stomp;
   const params = {
-    id: accountJwt,
+    id: authToken,
     data: patches
   };
-  const obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  client.send(
     '/exchange/account/account.request.patch',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     },
-    obj
+    payload
   );
-  await dispatch({
+
+  dispatch({
     type: REQUEST_PATCH_ACCOUNT,
     payload: {}
   });
 };
 
-export const receivedPatchAccount = account => {
-  return {
+export const receivedPatchAccount = account => dispatch => {
+  dispatch({
     type: RECEIVED_PATCH_ACCOUNT,
     payload: account
-  };
+  });
 };
 
-export const requestLoginAttempt = (email, password) => async (
+export const requestLoginAttempt = (email, password) => (
   dispatch,
   getState
 ) => {
-  const stompClient = getState().stomp.client;
-  const { replyTo } = getState().stomp;
+  const { client, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
@@ -137,15 +127,15 @@ export const requestLoginAttempt = (email, password) => async (
       }
     }
   };
+  const payload = JSON.stringify(msgpack.encode(params));
 
-  let obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
+  client.send(
     '/exchange/account/account.request.login',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     },
-    obj
+    payload
   );
 
   dispatch({
@@ -154,10 +144,7 @@ export const requestLoginAttempt = (email, password) => async (
   });
 };
 
-export const receivedLoginSuccess = loginReply => async (
-  dispatch,
-  getState
-) => {
+export const receivedLoginSuccess = loginReply => dispatch => {
   localStorageClient.set('token', loginReply.account_jwt);
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
@@ -165,23 +152,23 @@ export const receivedLoginSuccess = loginReply => async (
   });
 };
 
-export const receivedLoginFailure = () => async (dispatch, getState) => {
+export const receivedLoginFailure = () => dispatch => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
     payload: {}
   });
 };
 
-export const logout = () => async (dispatch, getState) => {
+export const requestLogout = () => dispatch => {
   dispatch({
-    type: LOGOUT,
+    type: REQUEST_LOGOUT,
     payload: {}
   });
 };
 
-export const receivedFindOrdersByAccount = orders => {
-  return {
+export const receivedFindOrdersByAccount = orders => dispatch => {
+  dispatch({
     type: RECEIVED_FIND_ORDERS_BY_ACCOUNT,
     payload: orders
-  };
+  });
 };
