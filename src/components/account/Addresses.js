@@ -26,9 +26,9 @@ class AccountAddresses extends React.Component {
   }
 
   deleteAddress = id => {
-    const { account: user } = this.props;
+    const { account } = this.props;
 
-    let existing = user.addressBook;
+    let existing = account.addressBook;
     existing.splice(id, 1)
 
     const payload = {
@@ -36,7 +36,7 @@ class AccountAddresses extends React.Component {
     }
 
     store.dispatch(
-      requestPatchAccount(user._id, payload)
+      requestPatchAccount(account.account_jwt, payload)
     );
   }
 
