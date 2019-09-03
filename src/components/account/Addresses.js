@@ -5,7 +5,7 @@ import { omit } from 'lodash';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import { Box, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -56,8 +56,7 @@ class AccountAddresses extends React.Component {
 
     });
 
-    // selected default address move to the beginning of the array
-    // newAddressBook.unshift(newAddressBook.splice(targetIndex, 1))
+    [newAddressBook[0], newAddressBook[targetIndex]] = [newAddressBook[targetIndex], newAddressBook[0]];
 
     const payload = {
       addressBook: newAddressBook
@@ -76,44 +75,42 @@ class AccountAddresses extends React.Component {
     }
 
     return (
-      <Container>
-        <Grid container spacing={3}>
-          <Typography variant="h2" gutterBottom>
-            Saved Addresses
+      <Grid container>
+        <Typography variant="h2" gutterBottom>
+          Saved Addresses
           </Typography>
-          <Grid item xs={6} container direction="row">
-            {account.addressBook.map((address, i) =>
-              (address.isDefault === true) ?
+        <Grid container direction="row">
+          {account.addressBook.map((address, i) =>
+            (address.isDefault === true) ?
 
-                <Paper style={pStyle}>
-                  <Typography key={i} variant="body1" gutterBottom>{address.firstName} {address.lastName}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.address1}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.address2}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
-                  <Typography>**Saved as default**</Typography>
-                  <Link variant="button" color="textPrimary">
-                    <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink>
-                  </Link>
-                </Paper>
-                :
-                <Paper style={pStyle}>
-                  <Typography key={i} variant="body1" gutterBottom>{address.firstName} {address.lastName}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.address1}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.address2}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
-                  <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
-                  <Link variant="button" color="textPrimary">
-                    <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
-                  </Link>
-                </Paper>
-            )}
-          </Grid>
+              <Box border="1px solid #979797" m={1} p={4}>
+                <Typography key={i} variant="body1" gutterBottom>{address.firstName} {address.lastName}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address1}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address2}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
+                <Typography>**Saved as default**</Typography>
+                <Link variant="button" color="textPrimary">
+                  <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink>
+                </Link>
+              </Box>
+              :
+              <Box border="1px solid #979797" m={1} p={4}>
+                <Typography key={i} variant="body1" gutterBottom>{address.firstName} {address.lastName}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address1}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address2}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
+                <Link variant="button" color="textPrimary">
+                  <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
+                </Link>
+              </Box >
+          )}
         </Grid>
         <Link variant="button" color="textPrimary">
           <RouterLink to="add-address">Add Address</RouterLink>
         </Link>
-      </Container >
+      </Grid>
     );
   }
 }
