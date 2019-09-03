@@ -93,7 +93,7 @@ class AccountAddresses extends React.Component {
                   <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
                   <Typography>**Saved as default**</Typography>
                   <Link variant="button" color="textPrimary">
-                    <RouterLink to={`/edit-address/${account._id}/${i}`}>Edit</RouterLink>
+                    <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink>
                   </Link>
                 </Paper>
                 :
@@ -104,7 +104,7 @@ class AccountAddresses extends React.Component {
                   <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
                   <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
                   <Link variant="button" color="textPrimary">
-                    <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${account._id}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
+                    <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
                   </Link>
                 </Paper>
             )}

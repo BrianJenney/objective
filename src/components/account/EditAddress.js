@@ -85,7 +85,7 @@ class EditAddress extends React.Component {
             requestPatchAccount(account.account_jwt, payload)
         );
 
-        window.location = '/saved-addresses';
+        window.location = '/account';
     };
 
     render() {
@@ -109,7 +109,7 @@ class EditAddress extends React.Component {
                     Manage Addresses
         </Typography>
                 <Link variant="button" color="textPrimary">
-                    <RouterLink to="/saved-addresses">Back</RouterLink>
+                    <RouterLink to="/account">Back</RouterLink>
                 </Link>
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
