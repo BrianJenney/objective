@@ -115,7 +115,7 @@ class App extends Component {
               <Route path="/manage-profile" component={AccountProfile} />
               <Route path="/manage-addresses" component={AccountAddresses} />
               <Route path="/reset-password" component={AccountResetPassword} />
-              <Route path="/product/:id/:variant_slug" component={Product} />
+              <Route path="/product/:product_slug/:variant_slug" component={Product} />
               <Route path="/:page" component={Static} />
             </Switch>
           </Box>

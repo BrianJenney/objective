@@ -19,8 +19,8 @@ export class ProductStore extends Component {
   }
 
   componentDidMount() {
-    EventEmitter.addListener('product.request.get', data => {
-      this.setState({ ...this.state, 'product': data.data });
+    EventEmitter.addListener('product.request.find', data => {
+      this.setState({ ...this.state, 'product': data.data.data[0] });
     });
     EventEmitter.addListener('variant.request.find', data => {
       this.setState({ ...this.state, 'variants': data.data.data });
@@ -41,7 +41,7 @@ export class ProductStore extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.productId !== this.props.productId)
+    if (prevProps.productSlug !== this.props.productSlug)
       this.getProductData();
   }
 
@@ -56,11 +56,15 @@ export class ProductStore extends Component {
     const replyTo = stomp.replyTo;
 
     let params = {
-      'id': this.props.productId
+      'params': {
+        'query': {
+          'slug': this.props.productSlug
+        }
+      }
     };
 
     let obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/product/product.request.get', {
+    stompClient.send('/exchange/product/product.request.find', {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     }, obj);
@@ -68,7 +72,7 @@ export class ProductStore extends Component {
     params = {
       'params': {
         'query': {
-          'product_id': this.props.productId
+          'prodSlug': this.props.productSlug
         }
       }
     };
@@ -79,11 +83,11 @@ export class ProductStore extends Component {
       'correlation-id': ObjectId()
     }, obj);
 
-    let re = new RegExp(this.props.productId + '$');
+    let re = new RegExp(this.props.productSlug + '$');
     params = {
       'params': {
         'query': {
-          'component': re
+          'comp': re
         }
       }
     };
@@ -97,7 +101,7 @@ export class ProductStore extends Component {
     params = {
       'params': {
         'query': {
-          'product_id': this.props.productId
+          'prodSlug': this.props.productSlug
         }
       }
     };
