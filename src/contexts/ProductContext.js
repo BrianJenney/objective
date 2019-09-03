@@ -45,6 +45,11 @@ export class ProductStore extends Component {
       this.getProductData();
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const updated = !(nextState.product === null || nextState.variants.length === 0 || nextState.prices.length === 0)
+    return updated;
+  }
+
   getProductData() {
     const { stomp } = store.getState();
     const stompClient = stomp.client;

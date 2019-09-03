@@ -81,3 +81,60 @@ export const getVariants = (products, variants, priceMap) => {
   return [variantSlugs, variantMap];
 };
 
+export const getVariantTypes = (product, variants) => {
+  const variantTypeMap = new Map();
+  product.attributes.forEach(attribute => {
+    const variantType = attribute.value;
+    const variantTypeOptions = [];
+    variants.forEach(variant => {
+      variant.attributes.forEach(attribute => {
+        if (attribute.name === variantType) {
+          const value = attribute.value;
+          if (!variantTypeOptions.includes(value))
+            variantTypeOptions.push(value);
+        }
+      })
+    });
+    variantTypeMap.set(variantType, variantTypeOptions);
+  });
+  // console.log('variantTypes', variantTypeMap);
+  const map = {};
+  variantTypeMap.forEach((v, k) => map[k] = v);
+  return map;
+};
+
+export const getVariantAttributes = (variants, variantSlug) => {
+  const variant = variants.filter(v => v.slug === variantSlug);
+  const defaultVariantTypes = {};
+  variant[0].attributes.forEach(attribute => defaultVariantTypes[attribute.name] = attribute.value);
+  return defaultVariantTypes;
+};
+
+export const getVariantOptionsByVariantType = (variants, variantName, variantValue) => {
+  const options = variants.filter(variant => (variant.attributes[0].name === variantName &&
+                                              variant.attributes[0].value === variantValue))
+                          .map(variant => variant.attributes[1].value);
+  return options;
+};
+
+export const getVariantByVariantSlug = ( variants, pricesMap, variantSlug) => {
+  let variant = null;
+  if (variants.length > 0) {
+    variant = (variants.filter(variant => variant.slug === variantSlug))[0];
+    variant.price.$numberDecimal = pricesMap.get(variant.sku);
+  }
+  return variant;
+};
+
+export const getVariantByTerminalVariant = (variants, pricesMap, terminalVariant) => {
+  let variant = null;
+  if (variants.length > 0) {
+    const found = variants.filter(variant => variant.attributes[0].value === terminalVariant['Pill Type'] &&
+                                  variant.attributes[1].value === terminalVariant['Diet Type']);
+    if (found.length > 0) {
+      variant = found[0];
+      variant.price.$numberDecimal = pricesMap.get(variant.sku);
+    }
+  }
+  return variant;
+};
