@@ -45,7 +45,6 @@ const INITIAL_VALUES = {
 
 class AddAddress extends React.Component {
     componentDidMount() {
-        this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
         console.log('******************MOUNTED****************************');
     }
 

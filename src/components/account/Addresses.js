@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import { omit } from 'lodash';
 import { Link as RouterLink } from 'react-router-dom';
@@ -19,7 +18,6 @@ import { InputField } from '../form-fields';
 
 const pStyle = {
   padding: 20,
-  // textAlign: 'center'
 };
 
 class AccountAddresses extends React.Component {
@@ -72,6 +70,7 @@ class AccountAddresses extends React.Component {
 
   render() {
     const { account: user } = this.props;
+    console.log('USSSER', user)
 
     // if (!user.contactPreferences) {
     //   return <div>No Account</div>;
