@@ -11,8 +11,6 @@ import Button from '@material-ui/core/Button';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
-import ProfileDetails from './ProfileDetails';
-import ChangePassword from './ChangePassword';
 
 const pStyle = {
   padding: 20,
@@ -21,16 +19,28 @@ const pStyle = {
 const schema = object().shape({
   firstName: string(),
   lastName: string(),
-  email: string()
+  email: string().email('Please enter a valid email.')
 });
 
-class AccountProfile extends React.Component {
+class ProfileDetails extends React.Component {
   renderForm = () => {
     return (
-      <>
-        <ProfileDetails />
-        <ChangePassword />
-      </>
+      <Form>
+        <Grid container>
+          <Grid item xs={6}>
+            <Field label="First Name" name="firstName" component={InputField} />
+          </Grid>
+          <Grid item xs={6}>
+            <Field label="Last Name" name="lastName" component={InputField} />
+          </Grid>
+          <Grid item xs={12}>
+            <Field label="Email" name="email" component={InputField} />
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit">Save Changes</Button>
+          </Grid>
+        </Grid>
+      </Form>
     );
   };
 
@@ -53,8 +63,22 @@ class AccountProfile extends React.Component {
 
     return (
       <Container>
-        <ProfileDetails />
-        <ChangePassword />
+        <Typography variant="h3" gutterBottom>
+          Your Profile
+        </Typography>
+
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper style={pStyle}>
+              <Formik
+                initialValues={INITIAL_VALUES}
+                onSubmit={this.handleSubmit}
+                validationSchema={schema}
+                render={this.renderForm}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
@@ -72,4 +96,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountProfile);
+)(ProfileDetails);
