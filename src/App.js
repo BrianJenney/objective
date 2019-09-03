@@ -15,8 +15,10 @@ import Account from './pages/Account';
 import {
   AccountProfile,
   AccountAddresses,
-  AccountResetPassword
+  AccountResetPassword,
 } from './components/account';
+import AddAddress from './components/account/AddAddress'
+import EditAddress from './components/account/EditAddress'
 import Login from './pages/Login';
 import Checkout from './pages/Checkout';
 import Product from './pages/Product';
@@ -112,6 +114,8 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/checkout" component={Checkout} />
               <Route path="/account" component={Account} />
+              <Route path="/add-address" component={AddAddress} />
+              <Route path="/edit-address/:userId/:addressKey" component={EditAddress} />
               <Route path="/manage-profile" component={AccountProfile} />
               <Route path="/manage-addresses" component={AccountAddresses} />
               <Route path="/reset-password" component={AccountResetPassword} />

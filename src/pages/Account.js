@@ -62,8 +62,8 @@ const Account = ({ authToken, account, logout }) => {
           </Grid>
         </Box>
       ) : (
-        <Redirect push to="/login" />
-      )}
+          <Redirect push to="/login" />
+        )}
     </Box>
   );
 };
