@@ -58,9 +58,10 @@ class ChangePassword extends React.Component {
   };
 
   handleSubmit = values => {
-    // if (values.newPassword1 !== values.newPassword2) {
-    //   return false;
-    // }
+    // can this be some with formik?
+    if (values.newPassword1 !== values.newPassword2) {
+      return false;
+    }
     store.dispatch(requestPatchAccount(this.props.account.account_jwt, values));
   };
 
