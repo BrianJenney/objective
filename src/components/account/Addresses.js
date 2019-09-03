@@ -76,7 +76,7 @@ class AccountAddresses extends React.Component {
 
     return (
       <Grid container>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h1" gutterBottom>
           Saved Addresses
           </Typography>
         <Grid container direction="row">
