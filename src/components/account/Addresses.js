@@ -64,17 +64,16 @@ class AccountAddresses extends React.Component {
     };
 
     store.dispatch(
-      requestPatchAccount(account._id, payload)
+      requestPatchAccount(account.account_jwt, payload)
     );
   }
 
   render() {
-    const { account: user } = this.props;
-    console.log('USSSER', user)
+    const { account } = this.props;
 
-    // if (!user.contactPreferences) {
-    //   return <div>No Account</div>;
-    // }
+    if (!account.contactPreferences) {
+      return <div>No Account</div>;
+    }
 
     return (
       <Container>
@@ -83,7 +82,7 @@ class AccountAddresses extends React.Component {
             Saved Addresses
           </Typography>
           <Grid item xs={6} container direction="row">
-            {user.addressBook.map((address, i) =>
+            {account.addressBook.map((address, i) =>
               (address.isDefault === true) ?
 
                 <Paper style={pStyle}>
@@ -94,7 +93,7 @@ class AccountAddresses extends React.Component {
                   <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
                   <Typography>**Saved as default**</Typography>
                   <Link variant="button" color="textPrimary">
-                    <RouterLink to={`/edit-address/${user._id}/${i}`}>Edit</RouterLink>
+                    <RouterLink to={`/edit-address/${account._id}/${i}`}>Edit</RouterLink>
                   </Link>
                 </Paper>
                 :
@@ -105,7 +104,7 @@ class AccountAddresses extends React.Component {
                   <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
                   <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
                   <Link variant="button" color="textPrimary">
-                    <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${user._id}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
+                    <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${account._id}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
                   </Link>
                 </Paper>
             )}

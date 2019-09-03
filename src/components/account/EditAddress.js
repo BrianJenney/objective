@@ -82,7 +82,7 @@ class EditAddress extends React.Component {
         }
 
         store.dispatch(
-            requestPatchAccount(account._id, payload)
+            requestPatchAccount(account.account_jwt, payload)
         );
 
         window.location = '/saved-addresses';

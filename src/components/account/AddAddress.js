@@ -65,37 +65,35 @@ class AddAddress extends React.Component {
     };
 
     handleSubmit = values => {
-        const { account: user } = this.props;
+        const { account } = this.props;
+        console.log('USERR', account)
 
-        let existing = user.addressBook;
+        let existing = account.addressBook;
         existing.push(values);
         existing[existing.length - 1].isDefault = false;
-
-        // onSubmit check to see if the address exist
-        // if address exist throw error
 
         const payload = {
             addressBook: existing
         }
 
         store.dispatch(
-            requestPatchAccount(user._id, payload)
+            requestPatchAccount(account.account_jwt, payload)
         );
 
-        window.location = '/saved-addresses';
+        window.location = '/account';
     };
 
     render() {
-        const { account: user } = this.props;
+        const { account } = this.props;
 
-        if (!user.contactPreferences) {
+        if (!account.contactPreferences) {
             return <div>No Account</div>;
         }
 
         return (
             <Container>
                 <Link variant="button" color="textPrimary">
-                    <RouterLink to="saved-addresses">Back</RouterLink>
+                    <RouterLink to="account">Back</RouterLink>
                 </Link>
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
