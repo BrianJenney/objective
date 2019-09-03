@@ -1,5 +1,7 @@
 import './config';
-import Stomp from 'stompjs';
+import Stomp from 'stompjs'; //simple text-based protocol for message-oriented middleware.
+//It provides interoperable wire format allows STOMP clients to talk with any message broker supporting the protocol
+//without it, message will send lack of info to make Spring route it to a specific message handler method
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

@@ -44,7 +44,7 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       console.log(
         '****************** Account Login Response ******************'
       );
-      console.log(status);
+      console.log('error', status);
       console.log(data);
       console.log(fields);
       console.log(properties);
