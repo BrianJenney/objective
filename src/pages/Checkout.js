@@ -12,7 +12,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import store from '../store';
 import { PAYMENT_METHODS } from '../constants/payment';
-import { withAuthToken } from '../hoc';
+import { withCurrentUser } from '../hoc';
 import {
   fetchCreditCardBrainTreeNonce,
   fetchPaypalCheckoutBrainTreeNonce
@@ -92,13 +92,11 @@ const shippingMethods = {
   }
 };
 
-const Checkout = ({ authToken }) => {
+const Checkout = ({ currentUser }) => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { account, cart } = store.getState();
-  const [activeStep, setActiveStep] = useState(
-    authToken || (account && account.account_jwt) ? 1 : 0
-  );
+  const [activeStep, setActiveStep] = useState(currentUser.account_jwt ? 1 : 0);
 
   const handleBack = () => {
     if (activeStep === 0) {
@@ -146,8 +144,6 @@ const Checkout = ({ authToken }) => {
     setActiveStep(activeStep + 1);
   };
   const getStepContent = step => {
-    console.log(store.getState());
-    console.log(authToken);
     switch (step) {
       case 0:
         return <CreateAccountForm onSubmit={handleNext} />;
@@ -217,7 +213,7 @@ const Checkout = ({ authToken }) => {
 };
 
 Checkout.propTypes = {
-  authToken: PropTypes.string
+  currentUser: PropTypes.string
 };
 
-export default withAuthToken(Checkout);
+export default withCurrentUser(Checkout);

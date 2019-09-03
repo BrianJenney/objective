@@ -9,36 +9,38 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
-  LOGOUT
+  REQUEST_LOGOUT
 } from './types';
-
-
-const INITIAL_STATE = {};
+const localStorageClient = require('store');
+const authToken = localStorageClient.get('token');
+const INITIAL_STATE = {
+  ...(authToken ? { account_jwt: authToken } : {})
+};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CREATE_ACCOUNT:
-      return { ...state };
+      return state;
     case RECEIVED_CREATE_ACCOUNT:
       return { ...state, ...action.payload };
     case REQUEST_FETCH_ACCOUNT:
-      return { ...state };
+      return state;
     case RECEIVED_FETCH_ACCOUNT:
       return { ...state, ...action.payload };
     case REQUEST_PATCH_ACCOUNT:
-      return { ...state };
+      return state;
     case RECEIVED_PATCH_ACCOUNT:
       return { ...state, ...action.payload };
     case REQUEST_LOGIN_ATTEMPT:
-      return { ...state };
+      return state;
     case RECEIVED_LOGIN_FAILURE:
-      return { ...state };
+      return state;
     case RECEIVED_LOGIN_SUCCESS:
       return { ...state, ...action.payload };
-    case LOGOUT:
-      return {};
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
-      return { ...state, orders: action.payload }
+      return { ...state, orders: action.payload };
+    case REQUEST_LOGOUT:
+      return INITIAL_STATE;
     default:
       return state;
   }

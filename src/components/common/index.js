@@ -14,3 +14,4 @@ export { default as NavLink } from './NavLink';
 export { default as Popover } from './Popover';
 export { default as Slider } from './Slider';
 export { default as TemporaryDrawer } from './TemporaryDrawer';
+export { default as RouteWithSubRoutes } from './RouteWithSubRoutes';

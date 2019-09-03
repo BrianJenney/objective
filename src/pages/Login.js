@@ -13,7 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Button, NavLink } from '../components/common';
 import { InputField } from '../components/form-fields';
-import { withAuthToken } from '../hoc';
 import store from '../store';
 import { requestLoginAttempt } from '../modules/account/actions';
 
@@ -54,11 +53,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = (props) => {
+const Login = ({ account }) => {
   const classes = useStyles();
-  const account = props.account;
-  const authToken = props.authToken;
-  console.log(props.history);
+
   const handleSubmit = ({ email, password }) => {
     store.dispatch(requestLoginAttempt(email, password));
   };
@@ -98,10 +95,6 @@ const Login = (props) => {
     </Form>
   );
 
-  if (authToken || (account && account.account_jwt)) {
-    props.history.goBack();
-  }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -124,7 +117,6 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  authToken: PropTypes.string,
   account: PropTypes.object
 };
 
@@ -135,4 +127,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(withAuthToken(Login));
+)(Login);

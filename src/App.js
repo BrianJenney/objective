@@ -1,74 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import { Box, CssBaseline } from '@material-ui/core';
-import { withAuthToken } from './hoc';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Static from './pages/Static';
-import Gallery from './pages/Gallery';
-import Cart from './pages/Cart';
-import Account from './pages/Account';
-import {
-  AccountProfile,
-  AccountAddresses,
-  AccountResetPassword,
-} from './components/account';
-import AddAddress from './components/account/AddAddress'
-import EditAddress from './components/account/EditAddress'
-import Login from './pages/Login';
-import Checkout from './pages/Checkout';
-import Product from './pages/Product';
-import LoggedInUser from './components/LoggedInUser';
-
-import { requestGetAccount as requestGetAccountAction } from './modules/account/actions';
+import { requestFetchAccount as requestFetchAccountAction } from './modules/account/actions';
 import {
   requestFetchCart as requestFetchCartAction,
   requestCreateCart as requestCreateCartAction
 } from './modules/cart/actions';
 import { requestFetchStorefront as requestFetchStorefrontAction } from './modules/storefront/actions';
 import { requestFetchCatalog as requestFetchCatalogAction } from './modules/catalog/actions';
+import { RouteWithSubRoutes } from './components/common';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import routes from './routes';
 
 const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
 
 class App extends Component {
   static propTypes = {
-    authToken: PropTypes.string,
-    requestGetAccount: PropTypes.func.isRequired,
+    account: PropTypes.object.isRequired,
+    storefront: PropTypes.object.isRequired,
+    products: PropTypes.object.isRequired,
+    requestFetchAccount: PropTypes.func.isRequired,
     requestFetchCart: PropTypes.func.isRequired,
     requestCreateCart: PropTypes.func.isRequired,
     requestFetchStorefront: PropTypes.func.isRequired,
-    storefront: PropTypes.object,
-    requestFetchCatalog: PropTypes.func.isRequired,
-    products: PropTypes.object
+    requestFetchCatalog: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     const {
-      authToken,
+      account,
+      requestFetchAccount,
       requestFetchCart,
       requestCreateCart,
       requestFetchStorefront,
-      requestGetAccount,
       requestFetchCatalog
     } = this.props;
 
-    requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
-
-    /**
-     * if the user has a jwt, decode it to find the account it,
-     * then get user details & put them in the store
-     */
-    console.log(authToken);
-    if (authToken) {
-      const accountId = jwt.decode(localStorageClient.get('token')).account_id;
-      console.log('this is the account id:  ' + accountId);
-      requestGetAccount(accountId);
+    if (account.account_jwt && !account.account_id) {
+      const accountId = jwt.decode(account.account_jwt).account_id;
+      requestFetchAccount(accountId);
     }
+
+    requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
 
     /**
      * We check to see if the user already has a cart, if they do
@@ -99,8 +76,6 @@ class App extends Component {
    * The order that routes are defined matters, make sure /:page is the very last one
    */
   render() {
-    const { account, authToken, storefront, products } = this.props;
-
     return (
       <>
         <CssBaseline />
@@ -108,19 +83,9 @@ class App extends Component {
           <Header />
           <Box bgcolor="rgba(252, 248, 244, 0.5)" px={15} py={10}>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/gallery" component={Gallery} />
-              <Route path="/cart" component={Cart} />
-              <Route path="/login" component={Login} />
-              <Route path="/checkout" component={Checkout} />
-              <Route path="/account" component={Account} />
-              <Route path="/add-address" component={AddAddress} />
-              <Route path="/edit-address/:userId/:addressKey" component={EditAddress} />
-              <Route path="/manage-profile" component={AccountProfile} />
-              <Route path="/manage-addresses" component={AccountAddresses} />
-              <Route path="/reset-password" component={AccountResetPassword} />
-              <Route path="/product/:product_slug/:variant_slug" component={Product} />
-              <Route path="/:page" component={Static} />
+              {routes.map(route => (
+                <RouteWithSubRoutes key={route.path} {...route} />
+              ))}
             </Switch>
           </Box>
           <Footer />
@@ -139,19 +104,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestGetAccount: requestGetAccountAction,
+  requestFetchAccount: requestFetchAccountAction,
   requestFetchStorefront: requestFetchStorefrontAction,
   requestFetchCart: requestFetchCartAction,
   requestCreateCart: requestCreateCartAction,
   requestFetchCatalog: requestFetchCatalogAction
 };
 
-const enhance = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  withAuthToken
-);
-
-export default enhance(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
