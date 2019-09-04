@@ -1,0 +1,28 @@
+# enable Docker for your repository
+options:
+  docker: true
+
+pipelines:
+  custom: # Pipelines that can only be triggered manually
+    sonar:
+      - step:
+          script:
+            - echo "Manual triggers for Sonar are awesome!"
+    deployment-to-prod:
+      - step:
+          script:
+            - echo "Manual triggers for deployments are awesome!"
+  branches:
+    master:
+      - step:
+          #python image with aws-cli installed
+          image: atlassian/pipelines-awscli
+          script:
+            # aws login
+            - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
+            # docker
+            - export AWS_REGISTRY_URL=${AWS_REGISTRY_URL}/${BITBUCKET_REPO_SLUG}
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            - docker image build -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest --build-arg NPM_TOKEN=${NPM_TOKEN} .
+            - docker push ${AWS_REGISTRY_URL}:latest
+            - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
