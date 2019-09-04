@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Select, MenuItem } from '@material-ui/core';
+import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 
@@ -13,7 +13,7 @@ import { addToCart } from '../../utils/cart';
 import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
 
 // import ProductType from './ProductType';
-import ProductVariantType from './ProductVariantType';
+// import ProductVariantType from './ProductVariantType';
 
 const localStorageClient = require('store');
 
@@ -128,7 +128,7 @@ const ProductDetail = ({ variantSlug, history }) => {
       variant: 'success',
     });
     setATCEnabled(false);
-  }, [cart, selectedVariantSku, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, selectedVariantSku, variantMap, quantity, enqueueSnackbar, dispatch]);
 
   const updateTerminalVariant = useCallback((terminalVariant) => {
     /*
