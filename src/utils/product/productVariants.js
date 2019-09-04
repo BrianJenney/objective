@@ -138,3 +138,26 @@ export const getVariantByTerminalVariant = (variants, pricesMap, terminalVariant
   }
   return variant;
 };
+
+export const getVariantOptions = (variants) => {
+  return variants.map(variant => variant.sku);
+};
+
+export const getVariantSkuBySlug = (variants, variantSlug) => {
+  let variantSku = null;
+  const variant = variants.filter(variant => variant.slug === variantSlug);
+  if (variant.length > 0) {
+    variantSku = variant[0].sku;
+  }
+  console.log('getVariantSkuBySlug', { variants, variantSku})
+  return variantSku;
+};
+
+export const getVariantMap = (variants, pricesMap) => {
+  const variantMap = new Map();
+  variants.forEach(variant => {
+    variant.price.$numberDecimal = pricesMap.get(variant.sku);
+    variantMap.set(variant.sku, variant);
+  });
+  return variantMap;
+};
