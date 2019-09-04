@@ -16,7 +16,7 @@ import { withCurrentUser } from '../hoc';
 import {
   fetchCreditCardBrainTreeNonce,
   fetchPaypalCheckoutBrainTreeNonce
-} from '../utils/checkout';
+} from '../utils/braintree';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
 import { requestCreateAccount } from '../modules/account/actions';

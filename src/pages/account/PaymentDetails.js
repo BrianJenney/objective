@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { get, isEmpty } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { Box, Grid, Typography } from '@material-ui/core';
-import { fetchCreditCardBrainTreeNonce } from '../../utils/checkout';
+import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { EditablePanel, MenuLink, AlertPanel } from '../../components/common';
 import { PaymentSummary } from '../../components/summaries';
 import { PaymentForm } from '../../components/forms';
