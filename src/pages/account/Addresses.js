@@ -42,7 +42,7 @@ const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
     requestPatchAccount(currentUser.account_jwt, payload);
   };
 
-  const saveAddress = (values, targetIndex) => {
+  const saveAddress = (values, actions, targetIndex) => {
     let newAddressBook = null;
     if (isNil(targetIndex)) {
       newAddressBook = [...addressBook, values];
@@ -58,6 +58,8 @@ const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
     const payload = { addressBook: newAddressBook };
 
     requestPatchAccount(currentUser.account_jwt, payload);
+    actions.setSubmitting(false);
+    setAddModeEnabled(false);
   };
 
   if (isEmpty(addressBook)) {
@@ -74,7 +76,7 @@ const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
               <EditablePanel
                 title=""
                 defaultValues={addressEntity}
-                onSubmit={values => saveAddress(values, index)}
+                onSubmit={(...args) => saveAddress(...args, index)}
                 Form={AddressForm}
                 Summary={AddressSummary}
                 onRemove={
@@ -96,7 +98,7 @@ const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
         {addModeEnabled ? (
           <AddressForm
             title=""
-            onSubmit={values => saveAddress(values)}
+            onSubmit={saveAddress}
             onBack={() => setAddModeEnabled(false)}
           />
         ) : (
