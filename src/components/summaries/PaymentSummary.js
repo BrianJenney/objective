@@ -5,20 +5,11 @@ import { Box, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { FormSummarySection } from '../common';
 
-const PAYMENT_FIELDS = [
-  'paymentMethod',
-  'cardholderName',
-  'number',
-  'expirationDate',
-  'cvv',
-  'isDefault'
-];
+const PAYMENT_FIELDS = ['name', 'last4', 'expirationDate', 'isDefault'];
 const labelsMap = {
-  paymentMethod: 'Payment Method',
-  cardholderName: 'Name',
-  number: 'Card Number',
+  name: 'Name',
+  last4: 'Last 4 digits',
   expirationDate: 'Expiration Date',
-  cvv: 'CVV',
   isDefault: ''
 };
 
