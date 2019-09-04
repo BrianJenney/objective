@@ -29,7 +29,7 @@ export const getPrices = (prices) => {
 
 const getVariantSlugs = (productId, variants) => {
   return variants.filter(variant => variant.product_id === productId)
-                 .map(variant => variant.slug)
+    .map(variant => variant.slug)
 };
 
 export const getProducts = (products, variants) => {
@@ -60,23 +60,23 @@ export const getVariants = (products, variants, priceMap) => {
   const variantMap = new Map();
   products.forEach(product => {
     variants.filter(variant => variant.product_id === product._id)
-            .forEach(variant => {
-              const item = {
-                id: variant._id,
-                productSlug: product.slug,
-                name: variant.name,
-                sku: variant.sku,
-                slug: variant.slug,
-                title: variant.title,
-                description: variant.description,
-                assets: variant.assets,
-                variantInfo: variant.variantInfo,
-                attributes: variant.attributes,
-                effectivePrice: getEffectivePrice(variant.sku, priceMap)
-              };
-              variantSlugs.push(variant.slug);
-              variantMap.set(variant.slug, item);
-            })
+      .forEach(variant => {
+        const item = {
+          id: variant._id,
+          productSlug: product.slug,
+          name: variant.name,
+          sku: variant.sku,
+          slug: variant.slug,
+          title: variant.title,
+          description: variant.description,
+          assets: variant.assets,
+          variantInfo: variant.variantInfo,
+          attributes: variant.attributes,
+          effectivePrice: getEffectivePrice(variant.sku, priceMap)
+        };
+        variantSlugs.push(variant.slug);
+        variantMap.set(variant.slug, item);
+      })
   });
   return [variantSlugs, variantMap];
 };
@@ -112,12 +112,12 @@ export const getVariantAttributes = (variants, variantSlug) => {
 
 export const getVariantOptionsByVariantType = (variants, variantName, variantValue) => {
   const options = variants.filter(variant => (variant.attributes[0].name === variantName &&
-                                              variant.attributes[0].value === variantValue))
-                          .map(variant => variant.attributes[1].value);
+    variant.attributes[0].value === variantValue))
+    .map(variant => variant.attributes[1].value);
   return options;
 };
 
-export const getVariantByVariantSlug = ( variants, pricesMap, variantSlug) => {
+export const getVariantByVariantSlug = (variants, pricesMap, variantSlug) => {
   let variant = null;
   if (variants.length > 0) {
     variant = (variants.filter(variant => variant.slug === variantSlug))[0];
@@ -130,7 +130,7 @@ export const getVariantByTerminalVariant = (variants, pricesMap, terminalVariant
   let variant = null;
   if (variants.length > 0) {
     const found = variants.filter(variant => variant.attributes[0].value === terminalVariant['Pill Type'] &&
-                                  variant.attributes[1].value === terminalVariant['Diet Type']);
+      (variant.attributes.length > 1 && variant.attributes[1].value === terminalVariant['Diet Type']));
     if (found.length > 0) {
       variant = found[0];
       variant.price.$numberDecimal = pricesMap.get(variant.sku);
