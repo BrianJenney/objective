@@ -33,38 +33,37 @@ const validateNumberField = value => {
 };
 
 const INITIAL_VALUES = {
-  paymentDetails: {
-    paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
-    cardholderName: 'Kevin C',
-    number: '4111111111111111',
-    expirationDate: '02/20/2023',
-    cvv: '837',
-    saveCard: true
-  }
+  paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
+  cardholderName: 'Kevin C',
+  number: '4111111111111111',
+  expirationDate: '02/20/2023',
+  cvv: '837',
+  saveCard: true
 };
 
-const PaymentForm = ({ onSubmit, onBack }) => {
+const PaymentForm = ({ onSubmit, onBack, onlyCard }) => {
   /* eslint-disable */
   const renderForm = ({ values }) => (
     <Box>
       <Typography variant="h6" gutterBottom children="Payment details" />
       <Form>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Field
-              name="paymentDetails.paymentMethod"
-              label="Payment Method"
-              component={SelectField}
-              options={PAYMENT_METHOD_OPTIONS}
-              validate={validateTextField}
-            />
-          </Grid>
-          {values.paymentDetails.paymentMethod ===
-            PAYMENT_METHODS.CREDIT_CARD && (
+          {!onlyCard && (
+            <Grid item xs={12}>
+              <Field
+                name="paymentMethod"
+                label="Payment Method"
+                component={SelectField}
+                options={PAYMENT_METHOD_OPTIONS}
+                validate={validateTextField}
+              />
+            </Grid>
+          )}
+          {values.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
             <>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.cardholderName"
+                  name="cardholderName"
                   label="Name on Card"
                   component={InputField}
                   validate={validateTextField}
@@ -72,7 +71,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.number"
+                  name="number"
                   label="Card Number"
                   component={InputField}
                   validate={validateNumberField}
@@ -80,7 +79,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.expirationDate"
+                  name="expirationDate"
                   component={DatePickerField}
                   variant="inline"
                   label="Expiry Date"
@@ -91,7 +90,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.cvv"
+                  name="cvv"
                   label="CVV"
                   component={InputField}
                   validate={validateNumberField}
@@ -99,7 +98,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12}>
                 <Field
-                  name="paymentDetails.saveCard"
+                  name="saveCard"
                   label="Remember credit card details for next time"
                   component={CheckboxField}
                 />
@@ -131,7 +130,8 @@ const PaymentForm = ({ onSubmit, onBack }) => {
 
 PaymentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func
+  onBack: PropTypes.func,
+  onlyCard: PropTypes.bool
 };
 
 export default PaymentForm;

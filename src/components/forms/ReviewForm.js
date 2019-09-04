@@ -31,7 +31,7 @@ const ReviewForm = ({ cart, onBack, onSubmit }) => {
   const classes = useStyles();
   const {
     items,
-    shipping,
+    shippingMethod,
     shippingAddress,
     billingAddress,
     paymentDetails,
@@ -40,7 +40,7 @@ const ReviewForm = ({ cart, onBack, onSubmit }) => {
 
   if (
     !items ||
-    !shipping ||
+    !shippingMethod ||
     !shippingAddress ||
     !billingAddress ||
     !paymentDetails
@@ -48,7 +48,7 @@ const ReviewForm = ({ cart, onBack, onSubmit }) => {
     return null;
   }
 
-  const shippingMethodLabel = `${shipping.displayName} - ${shipping.price} (Estimated Delivery: ${shipping.deliveryEstimate})`; // eslint-disable-line
+  const shippingMethodLabel = `${shippingMethod.displayName} - ${shippingMethod.price} (Estimated Delivery: ${shippingMethod.deliveryEstimate})`; // eslint-disable-line
 
   /* eslint-disable */
   return (

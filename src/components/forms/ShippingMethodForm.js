@@ -7,7 +7,7 @@ import { RadioGroupField } from '../form-fields';
 import { Button } from '../common';
 
 const schema = object().shape({
-  shipping: string().required('Shipping method is required')
+  shippingMethod: string().required('Shipping method is required')
 });
 
 const SHIPPING_METHOD_OPTIONS = [
@@ -24,10 +24,10 @@ const SHIPPING_METHOD_OPTIONS = [
 ];
 
 const INITIAL_VALUES = {
-  shipping: ''
+  shippingMethod: ''
 };
 
-const ShippingForm = ({ onBack, onSubmit }) => {
+const ShippingMethodForm = ({ onBack, onSubmit }) => {
   const renderForm = () => (
     <Box>
       <Typography variant="h6" gutterBottom children="Shipping Method" />
@@ -37,13 +37,15 @@ const ShippingForm = ({ onBack, onSubmit }) => {
             <Box>
               <Field
                 component={RadioGroupField}
-                name="shipping"
+                name="shippingMethod"
                 options={SHIPPING_METHOD_OPTIONS}
               />
             </Box>
             <Box>
-              <Button type="button" onClick={onBack} children="Back" mr={2} />
-              <Button type="submit" children="Next" />
+              {onBack && (
+                <Button type="button" onClick={onBack} children="Back" mr={2} />
+              )}
+              <Button type="submit" children={onBack ? 'Next' : 'Save'} />
             </Box>
           </Form>
         </Grid>
@@ -61,9 +63,9 @@ const ShippingForm = ({ onBack, onSubmit }) => {
   );
 };
 
-ShippingForm.propTypes = {
+ShippingMethodForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired
 };
 
-export default ShippingForm;
+export default ShippingMethodForm;

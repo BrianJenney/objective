@@ -8,40 +8,32 @@ import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
 
 const schema = object().shape({
-  billingAddress: object().shape({
-    firstName: string().required('First name is required'),
-    lastName: string().required('Last name is required'),
-    line1: string().required('Address1 is required'),
-    line2: string(),
-    city: string().required('City is required'),
-    state: string().required('State is required'),
-    postalCode: string().required('Postal code is required'),
-    countryCode: string().required('Country is required')
-  })
+  firstName: string().required('First name is required'),
+  lastName: string().required('Last name is required'),
+  line1: string().required('Address1 is required'),
+  line2: string(),
+  city: string().required('City is required'),
+  state: string().required('State is required'),
+  postalCode: string().required('Postal code is required'),
+  countryCode: string().required('Country is required')
 });
 
 const INITIAL_VALUES = {
-  billingAddress: {
-    firstName: 'Kevin',
-    lastName: 'Christian',
-    line1: '1111 Sprng Street',
-    line2: '',
-    city: 'Raleigh',
-    state: 'NC',
-    postalCode: '22222',
-    countryCode: 'AD'
-  }
+  firstName: 'Kevin',
+  lastName: 'Christian',
+  line1: '1111 Sprng Street',
+  line2: '',
+  city: 'Raleigh',
+  state: 'NC',
+  postalCode: '22222',
+  countryCode: 'US'
 };
 
 const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
   const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
   const handleUseShippingAddressToggle = event => {
     if (event.target.checked) {
-      setInitialValues({
-        billingAddress: {
-          ...shippingAddressSeed.shippingAddress
-        }
-      });
+      setInitialValues({ ...shippingAddressSeed });
     } else {
       setInitialValues(INITIAL_VALUES);
     }
@@ -61,57 +53,37 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Field
-              name="billingAddress.firstName"
-              label="First name"
-              component={InputField}
-            />
+            <Field name="firstName" label="First name" component={InputField} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Field
-              name="billingAddress.lastName"
-              label="Last name"
-              component={InputField}
-            />
+            <Field name="lastName" label="Last name" component={InputField} />
           </Grid>
           <Grid item xs={12}>
-            <Field
-              name="billingAddress.line1"
-              label="Address line 1"
-              component={InputField}
-            />
+            <Field name="line1" label="Address line 1" component={InputField} />
           </Grid>
           <Grid item xs={12}>
-            <Field
-              name="billingAddress.line2"
-              label="Address line 2"
-              component={InputField}
-            />
+            <Field name="line2" label="Address line 2" component={InputField} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Field name="city" label="City" component={InputField} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.city"
-              label="City"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Field
-              name="billingAddress.state"
+              name="state"
               label="State/Province/Region"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.postalCode"
+              name="postalCode"
               label="Zip/Postal code"
               component={InputField}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Field
-              name="billingAddress.countryCode"
+              name="countryCode"
               label="Country"
               component={SelectField}
               options={COUNTRY_OPTIONS}
@@ -142,9 +114,13 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
 };
 
 BillingAddressForm.propTypes = {
-  shippingAddressSeed: PropTypes.object.isRequired,
+  shippingAddressSeed: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func
+};
+
+BillingAddressForm.defaultProps = {
+  shippingAddressSeed: {}
 };
 
 export default BillingAddressForm;
