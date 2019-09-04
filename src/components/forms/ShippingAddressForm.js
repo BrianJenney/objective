@@ -6,6 +6,7 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import { InputField, SelectField } from '../form-fields';
 import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
+import { getInitialValues } from '../../utils/misc';
 
 const schema = object().shape({
   firstName: string().required('First name is required'),
@@ -26,10 +27,10 @@ const INITIAL_VALUES = {
   city: 'Raleigh',
   state: 'NC',
   postalCode: '22222',
-  countryCode: 'AD'
+  countryCode: 'US'
 };
 
-const ShippingAddressForm = ({ onSubmit, onBack }) => {
+const ShippingAddressForm = ({ defaultValues, onSubmit, onBack }) => {
   const renderForm = () => (
     <Box>
       <Typography variant="h6" gutterBottom children="Shipping address" />
@@ -87,7 +88,7 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
 
   return (
     <Formik
-      initialValues={INITIAL_VALUES}
+      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
       onSubmit={onSubmit}
       validationSchema={schema}
       render={renderForm}
@@ -96,8 +97,13 @@ const ShippingAddressForm = ({ onSubmit, onBack }) => {
 };
 
 ShippingAddressForm.propTypes = {
+  defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func
+};
+
+ShippingAddressForm.defaultProps = {
+  defaultValues: {}
 };
 
 export default ShippingAddressForm;

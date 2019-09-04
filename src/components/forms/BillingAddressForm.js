@@ -6,6 +6,7 @@ import { Box, Grid, Typography, Checkbox } from '@material-ui/core';
 import { InputField, SelectField } from '../form-fields';
 import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
+import { getInitialValues } from '../../utils/misc';
 
 const schema = object().shape({
   firstName: string().required('First name is required'),
@@ -29,13 +30,20 @@ const INITIAL_VALUES = {
   countryCode: 'US'
 };
 
-const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
-  const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
+const BillingAddressForm = ({
+  shippingAddressSeed,
+  defaultValues,
+  onSubmit,
+  onBack
+}) => {
+  const [initialValues, setInitialValues] = useState(
+    getInitialValues(INITIAL_VALUES, defaultValues)
+  );
   const handleUseShippingAddressToggle = event => {
     if (event.target.checked) {
       setInitialValues({ ...shippingAddressSeed });
     } else {
-      setInitialValues(INITIAL_VALUES);
+      setInitialValues(getInitialValues(INITIAL_VALUES, defaultValues));
     }
   };
   const renderForm = () => (
@@ -115,12 +123,14 @@ const BillingAddressForm = ({ shippingAddressSeed, onSubmit, onBack }) => {
 
 BillingAddressForm.propTypes = {
   shippingAddressSeed: PropTypes.object,
+  defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func
 };
 
 BillingAddressForm.defaultProps = {
-  shippingAddressSeed: {}
+  shippingAddressSeed: {},
+  defaultValues: {}
 };
 
 export default BillingAddressForm;

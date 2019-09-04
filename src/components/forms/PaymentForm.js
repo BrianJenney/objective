@@ -14,6 +14,7 @@ import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
+import { getInitialValues } from '../../utils/misc';
 
 const validateTextField = value => {
   if (value) {
@@ -41,7 +42,7 @@ const INITIAL_VALUES = {
   saveCard: true
 };
 
-const PaymentForm = ({ onSubmit, onBack, onlyCard }) => {
+const PaymentForm = ({ defaultValues, onSubmit, onBack, onlyCard }) => {
   /* eslint-disable */
   const renderForm = ({ values }) => (
     <Box>
@@ -121,7 +122,7 @@ const PaymentForm = ({ onSubmit, onBack, onlyCard }) => {
 
   return (
     <Formik
-      initialValues={INITIAL_VALUES}
+      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
       onSubmit={onSubmit}
       render={renderForm}
     />
@@ -129,9 +130,14 @@ const PaymentForm = ({ onSubmit, onBack, onlyCard }) => {
 };
 
 PaymentForm.propTypes = {
+  defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onlyCard: PropTypes.bool
+};
+
+PaymentForm.defaultProps = {
+  defaultValues: {}
 };
 
 export default PaymentForm;
