@@ -24,7 +24,7 @@ const AccountPaymentDetails = ({ currentUser, requestPatchAccount }) => {
 
     requestPatchAccount(currentUser.account_jwt, payload);
   };
-  const addCreditCard = async paymentDetails => {
+  const addCreditCard = async (paymentDetails, actions) => {
     const addressBook = currentUser.addressBook || [];
     const billingAddress = addressBook.find(address => !!address.isDefault);
     if (!billingAddress) {
@@ -54,6 +54,8 @@ const AccountPaymentDetails = ({ currentUser, requestPatchAccount }) => {
     } catch (err) {
       enqueueSnackbar(err.message, { variant: 'error' });
     }
+    actions.setSubmitting(false);
+    setAddModeEnabled(false);
 
     return true;
   };
