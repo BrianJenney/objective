@@ -42,11 +42,19 @@ const INITIAL_VALUES = {
   saveCard: true
 };
 
-const PaymentForm = ({ defaultValues, onSubmit, onBack, onlyCard }) => {
+const PaymentForm = ({
+  title,
+  defaultValues,
+  onSubmit,
+  onBack,
+  onlyCard,
+  submitLabel,
+  backLabel
+}) => {
   /* eslint-disable */
   const renderForm = ({ values }) => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Payment details" />
+      <Typography variant="h6" gutterBottom children={title} />
       <Form>
         <Grid container spacing={3}>
           {!onlyCard && (
@@ -109,9 +117,14 @@ const PaymentForm = ({ defaultValues, onSubmit, onBack, onlyCard }) => {
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               {onBack && (
-                <Button type="button" onClick={onBack} children="Back" mr={2} />
+                <Button
+                  type="button"
+                  onClick={onBack}
+                  children={backLabel}
+                  mr={2}
+                />
               )}
-              <Button type="submit" children={onBack ? 'Next' : 'Save'} />
+              <Button type="submit" children={submitLabel} />
             </Box>
           </Grid>
         </Grid>
@@ -130,14 +143,19 @@ const PaymentForm = ({ defaultValues, onSubmit, onBack, onlyCard }) => {
 };
 
 PaymentForm.propTypes = {
+  title: PropTypes.string,
   defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func,
-  onlyCard: PropTypes.bool
+  onlyCard: PropTypes.bool,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
 };
 
 PaymentForm.defaultProps = {
-  defaultValues: {}
+  defaultValues: {},
+  submitLabel: 'Save',
+  backLabel: 'Cancel'
 };
 
 export default PaymentForm;
