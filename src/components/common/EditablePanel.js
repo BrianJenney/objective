@@ -17,7 +17,9 @@ const EditablePanel = ({
   const [editing, setEditing] = useState(false);
   const handleSave = async (...args) => {
     try {
-      await onSubmit(...args);
+      if (onSubmit) {
+        await onSubmit(...args);
+      }
       setEditing(false);
     } catch (err) {
       throw err;
@@ -26,7 +28,7 @@ const EditablePanel = ({
 
   return (
     <Panel title={title}>
-      {editing ? (
+      {editing && Form ? (
         <Form defaultValues={defaultValues} onSubmit={handleSave} {...rest} />
       ) : (
         <Summary values={defaultValues} {...rest}>
@@ -49,12 +51,14 @@ const EditablePanel = ({
                 variant="text"
               />
             )}
-            <Button
-              type="button"
-              onClick={() => setEditing(true)}
-              children="Edit"
-              variant="text"
-            />
+            {onSubmit && (
+              <Button
+                type="button"
+                onClick={() => setEditing(true)}
+                children="Edit"
+                variant="text"
+              />
+            )}
           </Box>
         </Summary>
       )}
@@ -65,11 +69,11 @@ const EditablePanel = ({
 EditablePanel.propTypes = {
   title: PropTypes.string,
   defaultValues: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
   onRemove: PropTypes.func,
   onSetDefault: PropTypes.func,
-  Form: PropTypes.node.isRequired,
-  Summary: PropTypes.node.isRequired
+  Form: PropTypes.any,
+  Summary: PropTypes.any.isRequired
 };
 
 EditablePanel.defaultProps = {
