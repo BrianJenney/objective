@@ -15,7 +15,7 @@ const Account = ({ routes }) => (
   <Box component={Paper} py={7}>
     <Grid container spacing={3}>
       <Grid item xs={12} sm={3}>
-        <Box borderColor="#979797" borderRight={1}>
+        <Box borderColor="#979797" borderRight={1} height={1}>
           <AccountMenu />
         </Box>
       </Grid>
