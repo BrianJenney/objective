@@ -154,7 +154,7 @@ const ProductDetail = ({ variantSlug, history }) => {
     return null;
 
   const isMobile = windowSize.width < 944;
-  console.log('ProductDetail', {selectedVariantSku, variantMap})
+  // console.log('ProductDetail', {selectedVariantSku, variantMap})
 
   return (
     <>

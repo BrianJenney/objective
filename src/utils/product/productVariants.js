@@ -149,7 +149,7 @@ export const getVariantSkuBySlug = (variants, variantSlug) => {
   if (variant.length > 0) {
     variantSku = variant[0].sku;
   }
-  console.log('getVariantSkuBySlug', { variants, variantSku})
+  // console.log('getVariantSkuBySlug', { variants, variantSku})
   return variantSku;
 };
 
