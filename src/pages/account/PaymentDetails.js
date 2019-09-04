@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography } from '@material-ui/core';
-import { EditablePanel, MenuLink } from '../common';
-import { PaymentSummary } from '../summaries';
-import { PaymentForm } from '../forms';
+import { EditablePanel, MenuLink } from '../../components/common';
+import { PaymentSummary } from '../../components/summaries';
+import { PaymentForm } from '../../components/forms';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/checkout';
 import store from '../../store';
 import { requestPatchAccount } from '../../modules/account/actions';
@@ -25,8 +25,10 @@ const AccountPaymentDetails = ({ account }) => {
     const paymentMethods = {
       newPaymentMethod: {
         name: values.paymentDetails.cardholderName,
-        last4: values.paymentDetails.number.substring(values.paymentDetails.number.length-4, 
-          values.paymentDetails.number.length),
+        last4: values.paymentDetails.number.substring(
+          values.paymentDetails.number.length - 4,
+          values.paymentDetails.number.length
+        ),
         expirationDate: values.paymentDetails.expirationDate
       },
       nonce: nonce
