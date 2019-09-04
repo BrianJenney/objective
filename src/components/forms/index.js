@@ -1,3 +1,4 @@
+export { default as AddressForm } from './AddressForm';
 export { default as BillingAddressForm } from './BillingAddressForm';
 export { default as CreateAccountForm } from './CreateAccountForm';
 export { default as PaymentForm } from './PaymentForm';
