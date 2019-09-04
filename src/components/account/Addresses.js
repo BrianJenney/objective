@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import { omit } from 'lodash';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
+import { Box, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -19,105 +18,99 @@ import { InputField } from '../form-fields';
 
 const pStyle = {
   padding: 20,
-  textAlign: 'center'
-};
-const schema = object().shape({
-  address1: string(),
-  address2: string(),
-  city: string(),
-  state: string(),
-  zipcode: string(),
-  country: string()
-});
-const INITIAL_VALUES = {
-  address1: '',
-  address2: '',
-  city: '',
-  state: '',
-  zipcode: '',
-  country: ''
 };
 
 class AccountAddresses extends React.Component {
   componentDidMount() {
-    this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
     console.log('******************MOUNTED****************************');
   }
 
-  renderForm = () => {
-    return (
-      <Form>
-        <Field label="Address" name="address1" component={InputField} />
-        <Field label="Address 2" name="address2" component={InputField} />
-        <Field label="City" name="city" component={InputField} />
-        <Field label="State" name="state" component={InputField} />
-        <Field label="Zipcode" name="zipcode" component={InputField} />
-        <Field label="Country" name="country" component={InputField} />
-        <Button type="submit">Submit</Button>
-      </Form>
-    );
-  };
+  deleteAddress = id => {
+    const { account } = this.props;
 
-  handleSubmit = values => {
-    const { account: user } = this.props;
+    let existing = account.addressBook;
+    existing.splice(id, 1)
+
     const payload = {
-      defaultAddress: {
-        ...values
+      addressBook: existing
+    }
+
+    store.dispatch(
+      requestPatchAccount(account.account_jwt, payload)
+    );
+  }
+
+  setDefaultAddress = targetIndex => {
+    const { account } = this.props;
+    const newAddressBook = account.addressBook.map((addressEntity, index) => {
+      if (index === targetIndex) {
+        return {
+          ...addressEntity,
+          isDefault: true
+        };
       }
+      return {
+        ...addressEntity,
+        isDefault: false
+      };
+
+    });
+
+    [newAddressBook[0], newAddressBook[targetIndex]] = [newAddressBook[targetIndex], newAddressBook[0]];
+
+    const payload = {
+      addressBook: newAddressBook
     };
-    store.dispatch(requestPatchAccount(user._id, omit(payload)));
-  };
+
+    store.dispatch(
+      requestPatchAccount(account.account_jwt, payload)
+    );
+  }
 
   render() {
-    const { account: user } = this.props;
+    const { account } = this.props;
 
-    if (!user.contactPreferences) {
+    if (!account.contactPreferences) {
       return <div>No Account</div>;
     }
 
     return (
-      <Container>
-        <Typography variant="h3" gutterBottom>
-          Manage Addresses
-        </Typography>
-        <Link variant="button" color="textPrimary">
-          <RouterLink to="/account">Back</RouterLink>
-        </Link>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Paper style={pStyle}>
-              <Typography variant="h6" gutterBottom>
-                Address
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {user.defaultAddress.address1}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {user.defaultAddress.address2}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {user.defaultAddress.city}, {user.defaultAddress.state}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {user.defaultAddress.zipcode} {user.defaultAddress.country}
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper style={pStyle}>
-              <Typography variant="h3" gutterBottom>
-                Edit Default Address Here
-              </Typography>
-              <Formik
-                initialValues={INITIAL_VALUES}
-                onSubmit={this.handleSubmit}
-                validationSchema={schema}
-                render={this.renderForm}
-              />
-            </Paper>
-          </Grid>
+      <Grid container>
+        <Typography variant="h1" gutterBottom>
+          Saved Addresses
+          </Typography>
+        <Grid container direction="row">
+          {account.addressBook.map((address, i) =>
+            (address.isDefault === true) ?
+
+              <Box border="1px solid #979797" m={1} p={4}>
+                <Typography key={i} variant="body1" gutterBottom>{address.firstName} {address.lastName}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address1}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address2}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
+                <Typography>**Saved as default**</Typography>
+                <Link variant="button" color="textPrimary">
+                  <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink>
+                </Link>
+              </Box>
+              :
+              <Box border="1px solid #979797" m={1} p={4}>
+                <Typography key={i} variant="body1" gutterBottom>{address.firstName} {address.lastName}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address1}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.address2}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.city}, {address.state} {address.zipcode}</Typography>
+                <Typography key={i} variant="body1" gutterBottom>{address.country}</Typography>
+                <Link variant="button" color="textPrimary">
+                  <a href='#' onClick={() => { this.deleteAddress(i) }}>Remove</a> | <RouterLink to={`/edit-address/${account.account_jwt}/${i}`}>Edit</RouterLink> | <a href='#' onClick={() => { this.setDefaultAddress(i) }}>Set as Default</a>
+                </Link>
+              </Box >
+          )}
         </Grid>
-      </Container>
+        <Link variant="button" color="textPrimary">
+          <RouterLink to="add-address">Add Address</RouterLink>
+        </Link>
+      </Grid>
     );
   }
 }

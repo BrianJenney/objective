@@ -1,2 +1,2 @@
 export { default as withDialog } from './withDialog';
-export { default as withAuthToken } from './withAuthToken';
+export { default as withCurrentUser } from './withCurrentUser';

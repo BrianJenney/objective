@@ -10,6 +10,9 @@ import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
+import { getPrices, getVariantByVariantSlug, getVariantByTerminalVariant } from '../../utils/product';
+
+import ProductType from './ProductType';
 
 const localStorageClient = require('store');
 
@@ -62,30 +65,6 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '.7rem',
     marginBottom: theme.spacing(1),
   },
-  dropdown: {
-    width: '100%',
-    minWidth: '180px',
-    maxWidth: '220px',
-    paddingLeft: '0 !important',
-    border: '1px solid',
-    height: '52px',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
-  },
-  overridePadding: {
-    padding: '0 0 0 12px !important',
-    width: '59%',
-  },
-  rightPadding: {
-    paddingRight: '0 !important',
-    maxWidth: '130px !important'
-  },
-  productType: {
-    fontSize: '.9rem',
-    padding: 0,
-    lineHeight: '.7rem',
-    marginTop: theme.spacing(1),
-    minWidth: '110px !important',
-  },
   flexEnd: {
     alignSelf: 'flex-end',
   },
@@ -119,81 +98,48 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
-
-const ProductDetail = ({ history }) => {
+const ProductDetail = ({ variantSlug, history }) => {
 
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const [productType, setProductType] = useState(null);
-  const { product, variants } = useContext(ProductContext);
+  const { product, variants, prices } = useContext(ProductContext);
+  const pricesMap = getPrices(prices);
   const windowSize = useWindowSize();
-
   const { enqueueSnackbar } = useSnackbar();
-  const selectedProductVariant = productType ? variants[productType] : null;
   const [ATCEnabled, setATCEnabled] = useState(true);
-
+  const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
   const updateQuantityToCart = (qty => {
-    if (product === null || productType === null || selectedProductVariant === null)
+    if (selectedProductVariant === null)
       return;
-    console.log('updateQuantityToCart', qty)
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, qty, dispatch);
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, qty, dispatch);
     enqueueSnackbar(`${qty} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
   });
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
-
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, product, quantity, dispatch);
+    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, quantity, dispatch);
     enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
       variant: 'success',
     });
     setATCEnabled(false);
-  }, [cart, product, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
 
-  const ProductType = ({ isMobile, options }) => {
-    const handleChange = useCallback((event) => {
-      setProductType(event.target.value);
-      setQuantity(1);
-      setATCEnabled(true);
-    }, []);
-    return (
-      <Grid container direction={isMobile ? "column" : "row "} spacing={3}>
-        <Grid item xs={12} sm={4} lg={3} alignItems="flex-start" className={classes.rightPadding}>
-          <Typography className={classes.productType} variant="h6">PRODUCT TYPE</Typography>
-        </Grid>
-        <Grid item xs={12} sm={7} className={classes.overridePadding} justify={isMobile ? "flex-end" : "flex-start"}>
-          <Select
-            className={classes.dropdown}
-            value={productType}
-            onChange={handleChange}
-          >
-            {options.map(option => (
-              <MenuItem className={classes.menuItem} key={option.key} value={option.value}>{option.label}</MenuItem>
-            ))}
-          </Select>
-        </Grid>
-      </Grid>
-    );
-  };
-
-  if (!product) {
+  if (product === null || variants.length === 0)
     return null;
-  }
 
   const isMobile = windowSize.width < 944;
-  const dropdownType = product.attributes[0].value;
-  const productTypeOptions = variants.filter(variant => variant.attributes[0].name === dropdownType)
-    .map((variant, index) => {
-      const dropdownValue = variant.attributes[0].value;
-      return {
-        key: variant._id,
-        label: `${dropdownValue}`,
-        value: String(index)
-      }
-    });
 
+  const updateTerminalVariant = (terminalVariant) => {
+    if (terminalVariant['Diet Type'] === null) {
+      setATCEnabled(true);
+      setQuantity(1);
+      setSelectedProductVariant(null);
+    } else {
+      setSelectedProductVariant(getVariantByTerminalVariant(variants, pricesMap, terminalVariant));
+    }
+  };
 
   return (
     <>
@@ -214,20 +160,18 @@ const ProductDetail = ({ history }) => {
                   <Typography className={classes.subtitle} variant="h6">{product.subtitle}</Typography>
                 </Box>
                 <Divider variant="fullWidth" className={classes.divider} />
-
                 <br />
                 <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
                 <br />
                 <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
                 <Typography variant="body2">Take one soft gel daily with meal</Typography>
-                <br />
-                <ProductType isMobile={isMobile} options={productTypeOptions} />
-                <br />
+                <br/>
+                <ProductType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
-                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={productType == null}>
+                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant === null}>
                     ADD TO CART
                   </StyledButton>
                 </CardActions>
@@ -238,7 +182,6 @@ const ProductDetail = ({ history }) => {
       </Grid>
     </>
   );
-
 };
 
 export default withRouter(ProductDetail);

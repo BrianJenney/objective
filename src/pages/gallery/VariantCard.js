@@ -1,15 +1,15 @@
-import React, {useCallback, useState} from 'react';
-
+import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import {CardActions, Grid, Button} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {useQuantity, useWindowSize} from "../../hooks";
-import {useSnackbar} from "notistack";
-import {addToCart} from "../../utils/cart";
+
+import { CardActions, Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { useQuantity, useWindowSize } from "../../hooks";
+import { useSnackbar } from "notistack";
+import { addToCart } from "../../utils/cart";
 
 const localStorageClient = require('store');
 
@@ -18,7 +18,7 @@ const PriceVariantInfo = ({ variant }) => {
   ) : null;
 };
 
-const VariantCard =  ({variant}) => {
+const VariantCard = ({ variant, product }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const windowSize = useWindowSize();
@@ -50,17 +50,19 @@ const VariantCard =  ({variant}) => {
       />
       <CardContent>
         <Typography variant="body1" >
-          {variant.name}
+          <Link to={`/product/${product.slug}/${variant.slug}`} >
+            {variant.name}
+          </Link>
         </Typography>
         <PriceVariantInfo variant={variant} />
         {!ATCEnabled && <Quantity />}
       </CardContent>
       {ATCEnabled &&
-      <CardActions>
-        <Button variant="contained" color="primary" onClick={handleAddToCart}>
-          ADD TO CART
+        <CardActions>
+          <Button variant="contained" color="primary" onClick={handleAddToCart}>
+            ADD TO CART
         </Button>
-      </CardActions>
+        </CardActions>
       }
     </Card>
   );

@@ -6,7 +6,6 @@ import { Formik, Field, Form } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from '../components/common';
 import { InputField } from '../components/form-fields';
-import { withAuthToken } from '../hoc';
 import store from '../store';
 import { requestLoginAttempt } from '../modules/account/actions';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -50,14 +49,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = props => {
+const Login = ({ account }) => {
   const classes = useStyles();
-  const account = props.account;
-  const authToken = props.authToken;
 
   const handleSubmit = ({ email, password }) => {
     store.dispatch(requestLoginAttempt(email, password));
   };
+
+  /* Implement handleChange 
+  const handleChange = (e) => {
+    const {email, password} = e.target;
+  } 
+  */
+  /* Display error message when password/email is incorrect */
+  let displayMessage;
+  // if (authToken || (account && account.account_jwt)) {
+
+  //   displayMessage = null;
+  // } else {
+  //   displayMessage = (
+  //     <Typography fontFamily="Roboto">
+  //       <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
+  //         Password or username is not valid. Please check your spelling and try
+  //         again.
+  //       </Box>
+  //     </Typography>
+  //   );
+  // }
 
   const renderForm = () => (
     <Form>
@@ -107,22 +125,6 @@ const Login = props => {
     </Form>
   );
 
-  /* Display error message when password/email is incorrect */
-  let displayMessage;
-  if (authToken || (account && account.account_jwt)) {
-    // props.history.goBack()
-    displayMessage = null;
-  } else {
-    displayMessage = (
-      <Typography fontFamily="Roboto">
-        <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
-          Password or username is not valid. Please check your spelling and try
-          again.
-        </Box>
-      </Typography>
-    );
-  }
-
   return (
     <Container component="main">
       <CssBaseline />
@@ -144,8 +146,7 @@ const Login = props => {
 };
 
 Login.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  account: PropTypes.object.isRequired
+  account: PropTypes.object
 };
 
 const mapStateToProps = state => ({
@@ -155,4 +156,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(withAuthToken(Login));
+)(Login);

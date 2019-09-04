@@ -6,11 +6,11 @@ import { ProductStore } from '../contexts/ProductContext';
 import ProductDetail from './product/ProductDetail';
 
 const Product = ({ match }) => {
-  const productId = match.params.id;
+  const { product_slug, variant_slug } = match.params;
 
   return (
-    <ProductStore productId={productId}>
-      <ProductDetail />
+    <ProductStore productSlug={product_slug} >
+      <ProductDetail variantSlug={variant_slug} />
       <TabSection />
       <Instruction />
       <Step />
