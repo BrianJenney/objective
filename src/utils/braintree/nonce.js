@@ -1,14 +1,12 @@
-import {
-  sendCreditCardBraintreeRequest,
-  sendPaypalCheckoutBraintreeRequest
-} from '../braintree';
+import { sendCreditCardRequest } from './creditCard';
+import { sendPaypalCheckoutRequest } from './paypal';
 
 export const fetchCreditCardBrainTreeNonce = async ({
   paymentDetails,
   billingAddress
 }) => {
   try {
-    const creditCardResponse = await sendCreditCardBraintreeRequest({
+    const creditCardResponse = await sendCreditCardRequest({
       ...paymentDetails,
       postalCode: billingAddress.postalCode
     });
@@ -25,7 +23,7 @@ export const fetchPaypalCheckoutBrainTreeNonce = async ({
   shippingAddress
 }) => {
   try {
-    const paypalCheckoutResponse = await sendPaypalCheckoutBraintreeRequest(
+    const paypalCheckoutResponse = await sendPaypalCheckoutRequest(
       total,
       shippingAddress
     );
