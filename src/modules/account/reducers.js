@@ -12,7 +12,6 @@ import {
   LOGOUT
 } from './types';
 
-
 const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
@@ -38,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
     case LOGOUT:
       return {};
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
-      return { ...state, orders: action.payload }
+      return { ...state, orders: action.payload };
     default:
       return state;
   }

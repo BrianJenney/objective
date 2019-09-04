@@ -49,16 +49,15 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
+
 const Login = props => {
-  // console.log('props', props);
   const classes = useStyles();
   const account = props.account;
   const authToken = props.authToken;
-  // console.log(props.history);
+
   const handleSubmit = ({ email, password }) => {
     store.dispatch(requestLoginAttempt(email, password));
   };
-  // console.log('testing', handleSubmit);
 
   const renderForm = () => (
     <Form>
@@ -68,6 +67,7 @@ const Login = props => {
           name="email"
           label="Email Address"
           component={InputField}
+          // onChange={handleChange}
         />
 
         <Field
@@ -76,6 +76,7 @@ const Login = props => {
           type="password"
           name="password"
           component={InputField}
+          // onChange={handleChange}
         />
 
         <FormControlLabel
@@ -90,7 +91,7 @@ const Login = props => {
 
       <Grid>
         <Grid container item xs={12} justify="center">
-          <NavLink href="#" variant="body1" underline="always">
+          <NavLink href="/reset-password" variant="body1" underline="always">
             Forgot your email/password?
           </NavLink>
         </Grid>
@@ -106,8 +107,20 @@ const Login = props => {
     </Form>
   );
 
+  /* Display error message when password/email is incorrect */
+  let displayMessage;
   if (authToken || (account && account.account_jwt)) {
-    props.history.goBack();
+    // props.history.goBack()
+    displayMessage = null;
+  } else {
+    displayMessage = (
+      <Typography fontFamily="Roboto">
+        <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
+          Password or username is not valid. Please check your spelling and try
+          again.
+        </Box>
+      </Typography>
+    );
   }
 
   return (
@@ -118,13 +131,7 @@ const Login = props => {
         <Typography variant="h1" gutterBottom>
           <Box fontFamily="Roboto">Log in to your account</Box>
         </Typography>
-        {/* Display error message when password/email is incorrect */}
-        <Typography fontFamily="Roboto">
-          <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
-            Password or username is not valid. Please check your spelling and
-            try again.
-          </Box>
-        </Typography>
+        {displayMessage}
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
@@ -137,8 +144,8 @@ const Login = props => {
 };
 
 Login.propTypes = {
-  authToken: PropTypes.string,
-  account: PropTypes.object
+  authToken: PropTypes.string.isRequired,
+  account: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

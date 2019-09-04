@@ -51,7 +51,7 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       if (status === 'success') {
         store.dispatch(receivedLoginSuccess(data.data[0]));
       } else {
-        store.dispatch(receivedLoginFailure());
+        store.dispatch(receivedLoginFailure('Error Message'));
       }
       break;
     default:

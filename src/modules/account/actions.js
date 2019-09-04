@@ -31,7 +31,7 @@ export const requestCreateAccount = account => async (dispatch, getState) => {
   };
 
   let obj = JSON.stringify(msgpack.encode(params));
-  console.log(params);
+  // console.log(params);
   stompClient.send(
     '/exchange/account/account.request.create',
     {
