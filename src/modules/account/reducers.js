@@ -14,7 +14,7 @@ import {
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
 const INITIAL_STATE = {
-  ...(authToken ? { account_jwt: authToken } : {})
+  ...(authToken ? { account_jwt: authToken, errMsg: '' } : {})
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,11 +32,11 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_PATCH_ACCOUNT:
       return { ...state, ...action.payload };
     case REQUEST_LOGIN_ATTEMPT:
-      return state;
-    case RECEIVED_LOGIN_FAILURE:
-      return state;
-    case RECEIVED_LOGIN_SUCCESS:
       return { ...state, ...action.payload };
+    case RECEIVED_LOGIN_FAILURE:
+      return { ...state, ...action.payload };
+    case RECEIVED_LOGIN_SUCCESS:
+      return { ...state, errMsg: action.payload };
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
       return { ...state, orders: action.payload };
     case REQUEST_LOGOUT:

@@ -26,9 +26,10 @@ const schema = object().shape({
   password: string().required('Password is required')
 });
 
+// testing account:  {email: 'kevinch@nutranext.net', password: '44444'}
 const INITIAL_VALUES = {
-  email: 'kevinch@nutranext.net',
-  password: '44444'
+  email: '',
+  password: ''
 };
 
 const useStyles = makeStyles(theme => ({
@@ -56,26 +57,20 @@ const Login = ({ account }) => {
     store.dispatch(requestLoginAttempt(email, password));
   };
 
-  /* Implement handleChange 
-  const handleChange = (e) => {
-    const {email, password} = e.target;
-  } 
-  */
   /* Display error message when password/email is incorrect */
   let displayMessage;
-  // if (authToken || (account && account.account_jwt)) {
-
-  //   displayMessage = null;
-  // } else {
-  //   displayMessage = (
-  //     <Typography fontFamily="Roboto">
-  //       <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
-  //         Password or username is not valid. Please check your spelling and try
-  //         again.
-  //       </Box>
-  //     </Typography>
-  //   );
-  // }
+  if (!account.msg) {
+    displayMessage = null;
+  } else {
+    displayMessage = (
+      <Typography fontFamily="Roboto">
+        <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
+          Password or username is not valid. Please check your spelling and try
+          again.
+        </Box>
+      </Typography>
+    );
+  }
 
   const renderForm = () => (
     <Form>

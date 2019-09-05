@@ -22,7 +22,11 @@ export const handleAccountResponse = (status, data, fields) => {
       if (status === 'success') {
         store.dispatch(receivedLoginSuccess(data.data[0]));
       } else {
-        store.dispatch(receivedLoginFailure('Error Message'));
+        store.dispatch(
+          receivedLoginFailure(
+            'Password or username is not valid. Please check your spelling and try again.'
+          )
+        );
       }
       break;
     default:

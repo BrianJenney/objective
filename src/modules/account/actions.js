@@ -140,7 +140,7 @@ export const requestLoginAttempt = (email, password) => (
 
   dispatch({
     type: REQUEST_LOGIN_ATTEMPT,
-    payload: {}
+    payload: { msg: 'Login attempt' }
   });
 };
 
@@ -152,10 +152,10 @@ export const receivedLoginSuccess = loginReply => dispatch => {
   });
 };
 
-export const receivedLoginFailure = () => dispatch => {
+export const receivedLoginFailure = loginError => dispatch => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
-    payload: {}
+    payload: loginError
   });
 };
 
