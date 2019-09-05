@@ -32,11 +32,11 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_PATCH_ACCOUNT:
       return { ...state, ...action.payload };
     case REQUEST_LOGIN_ATTEMPT:
-      return { ...state, ...action.payload };
+      return state;
     case RECEIVED_LOGIN_FAILURE:
-      return { ...state, ...action.payload };
+      return { ...state, msg: action.payload };
     case RECEIVED_LOGIN_SUCCESS:
-      return { ...state, errMsg: action.payload };
+      return { ...state, ...action.payload };
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
       return { ...state, orders: action.payload };
     case REQUEST_LOGOUT:

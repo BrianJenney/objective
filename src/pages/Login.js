@@ -65,19 +65,19 @@ const Login = ({ account }) => {
     displayMessage = (
       <Typography fontFamily="Roboto">
         <Box fontSize={15} border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
-          Password or username is not valid. Please check your spelling and try
-          again.
+          {account.msg}
         </Box>
       </Typography>
     );
   }
-
+  console.log('INPUT', { InputField });
   const renderForm = () => (
     <Form>
       <Grid>
         <Field
           margin="normal"
           name="email"
+          type="email"
           label="Email Address"
           component={InputField}
         />
