@@ -23,7 +23,14 @@ pipelines:
             # docker
             - export AWS_REGISTRY_URL=${AWS_REGISTRY_URL}/${BITBUCKET_REPO_SLUG}
             - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            - export REACT_APP_STORE_ID=$REACT_APP_STORE_ID
+            - export REACT_APP_CLOUDAMQP_HOSTNAME=$REACT_APP_CLOUDAMQP_HOSTNAME
+            - export REACT_APP_CLOUDAMQP_USERNAME=$REACT_APP_CLOUDAMQP_USERNAME
+            - export REACT_APP_CLOUDAMQP_PASSWORD=$REACT_APP_CLOUDAMQP_PASSWORD
+            - export REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV
+            - export REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION
             - docker image build -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
+            # push to repo
             - docker push ${AWS_REGISTRY_URL}:latest
             - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
         services:
