@@ -26,3 +26,12 @@ pipelines:
             - docker image build -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
             - docker push ${AWS_REGISTRY_URL}:latest
             - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
+        services:
+          - docker
+        caches:
+          - docker
+
+definitions:
+  services:
+    docker:
+      memory: 3072
