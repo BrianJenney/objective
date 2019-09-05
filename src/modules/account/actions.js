@@ -140,7 +140,7 @@ export const requestLoginAttempt = (email, password) => (
 
   dispatch({
     type: REQUEST_LOGIN_ATTEMPT,
-    payload: { msg: 'Login attempt' }
+    payload: { email, password, msg: 'Login attempt' }
   });
 };
 

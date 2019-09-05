@@ -80,7 +80,6 @@ const Login = ({ account }) => {
           name="email"
           label="Email Address"
           component={InputField}
-          // onChange={handleChange}
         />
 
         <Field
@@ -89,7 +88,6 @@ const Login = ({ account }) => {
           type="password"
           name="password"
           component={InputField}
-          // onChange={handleChange}
         />
 
         <FormControlLabel
