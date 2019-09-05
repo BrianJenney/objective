@@ -6,6 +6,11 @@ import {
   ProductPage,
   CartPage,
   AccountPage,
+  AccountOverviewPage,
+  AccountOrdersPage,
+  AccountAddressesPage,
+  AccountPaymentDetailsPage,
+  AccountProfilePage,
   CheckoutPage
 } from './pages';
 
@@ -15,7 +20,47 @@ export default [
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/cart', exact: true, component: CartPage },
   { path: '/checkout', exact: true, component: CheckoutPage },
-  { path: '/account', exact: true, auth: true, component: AccountPage },
-  { path: '/products/:id/:variant_slug', exact: true, component: ProductPage },
+  {
+    path: '/account',
+    auth: true,
+    component: AccountPage,
+    routes: [
+      {
+        path: '/account/overview',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountOverviewPage
+      },
+      {
+        path: '/account/orders',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountOrdersPage
+      },
+      {
+        path: '/account/addresses',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountAddressesPage
+      },
+      {
+        path: '/account/payment-details',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountPaymentDetailsPage
+      },
+      {
+        path: '/account/profile',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountProfilePage
+      }
+    ]
+  },
+  {
+    path: '/products/:product_slug/:variant_slug',
+    exact: true,
+    component: ProductPage
+  },
   { path: '/:page', exact: true, component: StaticPage }
 ];

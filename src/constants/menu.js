@@ -8,10 +8,18 @@ export const ACCOUNT_MENU_KEYS = {
 };
 
 export const ACCOUNT_MENU_ITEMS = [
-  { key: 'overview', label: 'Overview' },
-  { key: 'yourOrders', label: 'Your Orders' },
-  { key: 'savedAddresses', label: 'Saved Addresses' },
-  { key: 'paymentDetails', label: 'Payment Details' },
-  { key: 'yourProfile', label: 'Your Profile' },
+  { key: 'overview', label: 'Overview', to: '/account/overview' },
+  { key: 'yourOrders', label: 'Your Orders', to: '/account/orders' },
+  {
+    key: 'savedAddresses',
+    label: 'Saved Addresses',
+    to: '/account/addresses'
+  },
+  {
+    key: 'paymentDetails',
+    label: 'Payment Details',
+    to: '/account/payment-details'
+  },
+  { key: 'yourProfile', label: 'Your Profile', to: '/account/profile' },
   { key: 'logout', label: 'Logout' }
 ];

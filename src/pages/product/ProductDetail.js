@@ -1,18 +1,19 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Select, MenuItem } from '@material-ui/core';
+import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
-import { getPrices, getVariantByVariantSlug, getVariantByTerminalVariant } from '../../utils/product';
+import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
 
-import ProductType from './ProductType';
+// import ProductType from './ProductType';
+// import ProductVariantType from './ProductVariantType';
 
 const localStorageClient = require('store');
 
@@ -104,34 +105,33 @@ const ProductDetail = ({ variantSlug, history }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices } = useContext(ProductContext);
-  const pricesMap = getPrices(prices);
   const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
+  // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
+  const defaultSku = getVariantSkuBySlug(variants, variantSlug);
+  const [selectedVariantSku, setSelectedVariantSku] = useState(null);
+  const pricesMap = getPrices(prices);
+  const variantMap = getVariantMap(variants, pricesMap);
   const updateQuantityToCart = (qty => {
-    if (selectedProductVariant === null)
+    if (selectedVariantSku === null)
       return;
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, qty, dispatch);
-    enqueueSnackbar(`${qty} ${selectedProductVariant.sku} added to cart`, {
+    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
+    enqueueSnackbar(`${qty} ${selectedVariantSku} added to cart`, {
       variant: 'success',
     });
   });
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, selectedProductVariant, quantity, dispatch);
-    enqueueSnackbar(`${quantity} ${selectedProductVariant.sku} added to cart`, {
+    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
+    enqueueSnackbar(`${quantity} ${selectedVariantSku} added to cart`, {
       variant: 'success',
     });
     setATCEnabled(false);
-  }, [cart, selectedProductVariant, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, selectedVariantSku, variantMap, quantity, enqueueSnackbar, dispatch]);
 
-  if (product === null || variants.length === 0)
-    return null;
-
-  const isMobile = windowSize.width < 944;
-
-  const updateTerminalVariant = (terminalVariant) => {
+  const updateTerminalVariant = useCallback((terminalVariant) => {
+    /*
     if (terminalVariant['Diet Type'] === null) {
       setATCEnabled(true);
       setQuantity(1);
@@ -139,7 +139,22 @@ const ProductDetail = ({ variantSlug, history }) => {
     } else {
       setSelectedProductVariant(getVariantByTerminalVariant(variants, pricesMap, terminalVariant));
     }
-  };
+     */
+    setSelectedVariantSku(terminalVariant['Product Type']);
+    setQuantity(1);
+    setATCEnabled(true);
+
+  },[setSelectedVariantSku, setQuantity]);
+
+  useEffect(() => {
+    setSelectedVariantSku(defaultSku);
+  }, [defaultSku]);
+
+  if (product === null || variants.length === 0)
+    return null;
+
+  const isMobile = windowSize.width < 944;
+  // console.log('ProductDetail', {selectedVariantSku, variantMap})
 
   return (
     <>
@@ -153,7 +168,7 @@ const ProductDetail = ({ variantSlug, history }) => {
               <CardContent className={classes.cardRootOverrides}>
                 <Box>
                   <Typography className={classes.title} variant="h1">{product.name}</Typography>
-                  <ProductVariant productVariant={selectedProductVariant} />
+                  <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
                 </Box>
                 <Divider variant="fullWidth" className={classes.divider} />
                 <Box >
@@ -166,12 +181,12 @@ const ProductDetail = ({ variantSlug, history }) => {
                 <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
                 <Typography variant="body2">Take one soft gel daily with meal</Typography>
                 <br/>
-                <ProductType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>
+                {/*<ProductVariantType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>*/}
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
                 <CardActions className={classes.maxWidth}>
-                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedProductVariant === null}>
+                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedVariantSku === null}>
                     ADD TO CART
                   </StyledButton>
                 </CardActions>

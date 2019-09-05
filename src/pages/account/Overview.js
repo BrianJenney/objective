@@ -10,16 +10,17 @@ const pStyle = {
 };
 
 const AccountOverview = props => {
-  const { account } = props;
+  const { currentUser } = props;
+
   return (
     <Container>
       <Grid item xs={12}>
         <Paper style={pStyle}>
           <Typography variant="h3" gutterBottom>
-            Name {account.firstName} {account.lastName}
+            Name {currentUser.firstName} {currentUser.lastName}
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
-            Email: {account.email}
+            Email: {currentUser.email}
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
             Password: XXXXXXXX

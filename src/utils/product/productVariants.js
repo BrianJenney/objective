@@ -130,11 +130,34 @@ export const getVariantByTerminalVariant = (variants, pricesMap, terminalVariant
   let variant = null;
   if (variants.length > 0) {
     const found = variants.filter(variant => variant.attributes[0].value === terminalVariant['Pill Type'] &&
-                                  variant.attributes[1].value === terminalVariant['Diet Type']);
+                                            (variants.attributes.length > 1 && variant.attributes[1].value === terminalVariant['Diet Type']));
     if (found.length > 0) {
       variant = found[0];
       variant.price.$numberDecimal = pricesMap.get(variant.sku);
     }
   }
   return variant;
+};
+
+export const getVariantOptions = (variants) => {
+  return variants.map(variant => variant.sku);
+};
+
+export const getVariantSkuBySlug = (variants, variantSlug) => {
+  let variantSku = null;
+  const variant = variants.filter(variant => variant.slug === variantSlug);
+  if (variant.length > 0) {
+    variantSku = variant[0].sku;
+  }
+  // console.log('getVariantSkuBySlug', { variants, variantSku})
+  return variantSku;
+};
+
+export const getVariantMap = (variants, pricesMap) => {
+  const variantMap = new Map();
+  variants.forEach(variant => {
+    variant.price.$numberDecimal = pricesMap.get(variant.sku);
+    variantMap.set(variant.sku, variant);
+  });
+  return variantMap;
 };
