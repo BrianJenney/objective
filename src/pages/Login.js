@@ -35,7 +35,7 @@ const INITIAL_VALUES = {
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
-      backgroundColor: theme.palette.common.black
+      backgroundColor: theme.palette.common.grey
     }
   },
 
@@ -70,7 +70,7 @@ const Login = ({ account }) => {
       </Typography>
     );
   }
-  console.log('INPUT', { InputField });
+
   const renderForm = () => (
     <Form>
       <Grid>

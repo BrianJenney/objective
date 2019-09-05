@@ -21,7 +21,7 @@ export default function InputField(props) {
   const { field, form, helperText, disabled, ...rest } = props;
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);
-  console.log('PROPS', props);
+
   return (
     <TextField
       id={field.name}
