@@ -5,15 +5,30 @@ import { Box, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { FormSummarySection } from '../common';
 
-const PAYMENT_FIELDS = ['name', 'last4', 'expirationDate', 'isDefault'];
+const ADDRESS_FIELDS = [
+  'firstName',
+  'lastName',
+  'line1',
+  'line2',
+  'city',
+  'state',
+  'postalCode',
+  'countryCode',
+  'isDefault'
+];
 const labelsMap = {
-  name: 'Name',
-  last4: 'Last 4 digits',
-  expirationDate: 'Expiration Date',
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  line1: 'Address Line 1',
+  line2: 'Address Line 2',
+  city: 'City',
+  state: 'State',
+  postalCode: 'Postal Code',
+  countryCode: 'Country',
   isDefault: ''
 };
 
-const PaymentSummary = ({ values, children }) => {
+const AddressSummary = ({ values, children }) => {
   const defaultIndicator = values.isDefault ? (
     <Box height={30} display="flex" alignItems="center">
       <CheckIcon />
@@ -22,7 +37,7 @@ const PaymentSummary = ({ values, children }) => {
   ) : (
     <Box height={30} />
   );
-  const neededValues = pick(values, PAYMENT_FIELDS);
+  const neededValues = pick(values, ADDRESS_FIELDS);
   const pairs = Object.keys(neededValues).map(key => ({
     label: labelsMap[key],
     value: key === 'isDefault' ? defaultIndicator : neededValues[key]
@@ -36,9 +51,9 @@ const PaymentSummary = ({ values, children }) => {
   );
 };
 
-PaymentSummary.propTypes = {
+AddressSummary.propTypes = {
   values: PropTypes.object.isRequired,
   children: PropTypes.node
 };
 
-export default PaymentSummary;
+export default AddressSummary;

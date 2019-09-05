@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Typography } from '@material-ui/core';
 import { Button } from '../common';
 import store from '../../store';
-import OrderSummary from './OrderSummary';
+import { OrderSummary } from '../summaries';
 
 const ResultForm = ({ onSubmit }) => {
   const { account, cart, order } = store.getState();
@@ -53,7 +53,8 @@ const ResultForm = ({ onSubmit }) => {
             <br />
             {cart.billingAddress.line1}
             <br />
-            {!isEmptyOrSpaces(cart.billingAddress.line2) && cart.billingAddress.line2(<br />)}
+            {!isEmptyOrSpaces(cart.billingAddress.line2) &&
+              cart.billingAddress.line2(<br />)}
             {account.email}
           </Typography>
         </Grid>
@@ -66,7 +67,8 @@ const ResultForm = ({ onSubmit }) => {
             <br />
             {cart.shippingAddress.line1}
             <br />
-            {!isEmptyOrSpaces(cart.shippingAddress.line2) && cart.shippingAddress.line2 (<br />)}
+            {!isEmptyOrSpaces(cart.shippingAddress.line2) &&
+              cart.shippingAddress.line2(<br />)}
             {account.email}
           </Typography>
         </Grid>

@@ -16,7 +16,7 @@ import { withCurrentUser } from '../hoc';
 import {
   fetchCreditCardBrainTreeNonce,
   fetchPaypalCheckoutBrainTreeNonce
-} from '../utils/checkout';
+} from '../utils/braintree';
 import { requestPatchCart } from '../modules/cart/actions';
 import { requestCreateOrder } from '../modules/order/actions';
 import { requestCreateAccount } from '../modules/account/actions';
@@ -25,7 +25,7 @@ import {
   ShippingAddressForm,
   BillingAddressForm,
   PaymentForm,
-  ShippingForm,
+  ShippingMethodForm,
   ReviewForm,
   ResultForm
 } from '../components/forms';
@@ -148,7 +148,7 @@ const Checkout = ({ currentUser }) => {
       case 0:
         return <CreateAccountForm onSubmit={handleNext} />;
       case 1:
-        return <ShippingForm onBack={handleBack} onSubmit={handleNext} />;
+        return <ShippingMethodForm onBack={handleBack} onSubmit={handleNext} />;
       case 2:
         return (
           <ShippingAddressForm onBack={handleBack} onSubmit={handleNext} />

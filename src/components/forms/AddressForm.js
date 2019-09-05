@@ -27,39 +27,47 @@ const INITIAL_VALUES = {
   city: 'Raleigh',
   state: 'NC',
   postalCode: '22222',
-  countryCode: 'US'
+  countryCode: 'US',
+  isDefault: false
 };
 
-const BillingAddressForm = ({
-  shippingAddressSeed,
+const AddressForm = ({
+  title,
+  seedEnabled,
+  addressSeed,
+  useSeedLabel,
   defaultValues,
   onSubmit,
-  onBack
+  onBack,
+  submitLabel,
+  backLabel
 }) => {
   const [initialValues, setInitialValues] = useState(
     getInitialValues(INITIAL_VALUES, defaultValues)
   );
-  const handleUseShippingAddressToggle = event => {
+  const handleUseAddressSeedToggle = event => {
     if (event.target.checked) {
-      setInitialValues({ ...shippingAddressSeed });
+      setInitialValues({ ...addressSeed });
     } else {
       setInitialValues(getInitialValues(INITIAL_VALUES, defaultValues));
     }
   };
   const renderForm = () => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Billing Address" />
+      <Typography variant="h6" gutterBottom children={title} />
       <Form>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Box display="flex" alignItems="center">
-              <Checkbox
-                id="useShippingAddressToggle"
-                onChange={handleUseShippingAddressToggle}
-              />
-              <Typography children="Use shipping address" />
-            </Box>
-          </Grid>
+          {seedEnabled && (
+            <Grid item xs={12}>
+              <Box display="flex" alignItems="center">
+                <Checkbox
+                  id="useAddressSeedToggle"
+                  onChange={handleUseAddressSeedToggle}
+                />
+                <Typography children={useSeedLabel} />
+              </Box>
+            </Grid>
+          )}
           <Grid item xs={12} sm={6}>
             <Field name="firstName" label="First name" component={InputField} />
           </Grid>
@@ -100,9 +108,14 @@ const BillingAddressForm = ({
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               {onBack && (
-                <Button type="button" onClick={onBack} children="Back" mr={2} />
+                <Button
+                  type="button"
+                  onClick={onBack}
+                  children={backLabel}
+                  mr={2}
+                />
               )}
-              <Button type="submit" children={onBack ? 'Next' : 'Save'} />
+              <Button type="submit" children={submitLabel} />
             </Box>
           </Grid>
         </Grid>
@@ -121,16 +134,24 @@ const BillingAddressForm = ({
   );
 };
 
-BillingAddressForm.propTypes = {
-  shippingAddressSeed: PropTypes.object,
+AddressForm.propTypes = {
+  title: PropTypes.string,
+  seedEnabled: PropTypes.bool,
+  addressSeed: PropTypes.object,
+  useSeedLabel: PropTypes.string,
   defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func
+  onBack: PropTypes.func,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
 };
 
-BillingAddressForm.defaultProps = {
-  shippingAddressSeed: {},
-  defaultValues: {}
+AddressForm.defaultProps = {
+  seedEnabled: false,
+  addressSeed: {},
+  defaultValues: {},
+  submitLabel: 'Save',
+  backLabel: 'Cancel'
 };
 
-export default BillingAddressForm;
+export default AddressForm;

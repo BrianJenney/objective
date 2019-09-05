@@ -10,9 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
-import { InputField } from '../form-fields';
-import ProfileDetails from './ProfileDetails';
-import ChangePassword from './ChangePassword';
+import { InputField } from '../../components/form-fields';
+import ProfileDetails from '../../components/account/ProfileDetails';
+import ChangePassword from '../../components/account/ChangePassword';
 
 const pStyle = {
   padding: 20,
@@ -34,7 +34,7 @@ class AccountProfile extends React.Component {
     );
   };
 
-  handleSubmit = (values) => {
+  handleSubmit = values => {
     store.dispatch(requestPatchAccount(this.props.account.account_jwt, values));
   };
 

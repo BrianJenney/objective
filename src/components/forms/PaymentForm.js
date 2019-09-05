@@ -14,6 +14,7 @@ import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
+import { getInitialValues } from '../../utils/misc';
 
 const validateTextField = value => {
   if (value) {
@@ -33,38 +34,45 @@ const validateNumberField = value => {
 };
 
 const INITIAL_VALUES = {
-  paymentDetails: {
-    paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
-    cardholderName: 'Kevin C',
-    number: '4111111111111111',
-    expirationDate: '02/20/2023',
-    cvv: '837',
-    saveCard: true
-  }
+  paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
+  cardholderName: 'Kevin C',
+  number: '4111111111111111',
+  expirationDate: '02/20/2023',
+  cvv: '837',
+  saveCard: true
 };
 
-const PaymentForm = ({ onSubmit, onBack }) => {
+const PaymentForm = ({
+  title,
+  defaultValues,
+  onSubmit,
+  onBack,
+  onlyCard,
+  submitLabel,
+  backLabel
+}) => {
   /* eslint-disable */
   const renderForm = ({ values }) => (
     <Box>
-      <Typography variant="h6" gutterBottom children="Payment details" />
+      <Typography variant="h6" gutterBottom children={title} />
       <Form>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Field
-              name="paymentDetails.paymentMethod"
-              label="Payment Method"
-              component={SelectField}
-              options={PAYMENT_METHOD_OPTIONS}
-              validate={validateTextField}
-            />
-          </Grid>
-          {values.paymentDetails.paymentMethod ===
-            PAYMENT_METHODS.CREDIT_CARD && (
+          {!onlyCard && (
+            <Grid item xs={12}>
+              <Field
+                name="paymentMethod"
+                label="Payment Method"
+                component={SelectField}
+                options={PAYMENT_METHOD_OPTIONS}
+                validate={validateTextField}
+              />
+            </Grid>
+          )}
+          {values.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
             <>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.cardholderName"
+                  name="cardholderName"
                   label="Name on Card"
                   component={InputField}
                   validate={validateTextField}
@@ -72,7 +80,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.number"
+                  name="number"
                   label="Card Number"
                   component={InputField}
                   validate={validateNumberField}
@@ -80,7 +88,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.expirationDate"
+                  name="expirationDate"
                   component={DatePickerField}
                   variant="inline"
                   label="Expiry Date"
@@ -91,7 +99,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Field
-                  name="paymentDetails.cvv"
+                  name="cvv"
                   label="CVV"
                   component={InputField}
                   validate={validateNumberField}
@@ -99,7 +107,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
               </Grid>
               <Grid item xs={12}>
                 <Field
-                  name="paymentDetails.saveCard"
+                  name="saveCard"
                   label="Remember credit card details for next time"
                   component={CheckboxField}
                 />
@@ -109,9 +117,14 @@ const PaymentForm = ({ onSubmit, onBack }) => {
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               {onBack && (
-                <Button type="button" onClick={onBack} children="Back" mr={2} />
+                <Button
+                  type="button"
+                  onClick={onBack}
+                  children={backLabel}
+                  mr={2}
+                />
               )}
-              <Button type="submit" children={onBack ? 'Next' : 'Save'} />
+              <Button type="submit" children={submitLabel} />
             </Box>
           </Grid>
         </Grid>
@@ -122,7 +135,7 @@ const PaymentForm = ({ onSubmit, onBack }) => {
 
   return (
     <Formik
-      initialValues={INITIAL_VALUES}
+      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
       onSubmit={onSubmit}
       render={renderForm}
     />
@@ -130,8 +143,19 @@ const PaymentForm = ({ onSubmit, onBack }) => {
 };
 
 PaymentForm.propTypes = {
+  title: PropTypes.string,
+  defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func
+  onBack: PropTypes.func,
+  onlyCard: PropTypes.bool,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
+};
+
+PaymentForm.defaultProps = {
+  defaultValues: {},
+  submitLabel: 'Save',
+  backLabel: 'Cancel'
 };
 
 export default PaymentForm;
