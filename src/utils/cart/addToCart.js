@@ -20,7 +20,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isF
       variantInfo: selectedVariant.variantInfo,
       attributes: selectedVariant.attributes,
       quantity: quantity,
-      unit_price: parseFloat(isFromGallery ? selectedVariant.effectivePrice : selectedVariant.price.$numberDecimal)
+      unit_price: parseFloat(selectedVariant.effectivePrice)
     };
     newItems.push(newItem);
   }
