@@ -95,7 +95,7 @@ const StyledButton = withStyles(theme => ({
 
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();
-  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.price.$numberDecimal}</strong> / {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}</Typography>
+  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.effectivePrice}</strong> / {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}</Typography>
   ) : null;
 };
 

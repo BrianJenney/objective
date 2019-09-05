@@ -121,7 +121,7 @@ export const getVariantByVariantSlug = ( variants, pricesMap, variantSlug) => {
   let variant = null;
   if (variants.length > 0) {
     variant = (variants.filter(variant => variant.slug === variantSlug))[0];
-    variant.price.$numberDecimal = pricesMap.get(variant.sku);
+    variant.effectivePrice = pricesMap.get(variant.sku);
   }
   return variant;
 };
@@ -133,7 +133,7 @@ export const getVariantByTerminalVariant = (variants, pricesMap, terminalVariant
                                             (variants.attributes.length > 1 && variant.attributes[1].value === terminalVariant['Diet Type']));
     if (found.length > 0) {
       variant = found[0];
-      variant.price.$numberDecimal = pricesMap.get(variant.sku);
+      variant.effectivePrice = pricesMap.get(variant.sku);
     }
   }
   return variant;
@@ -156,7 +156,7 @@ export const getVariantSkuBySlug = (variants, variantSlug) => {
 export const getVariantMap = (variants, pricesMap) => {
   const variantMap = new Map();
   variants.forEach(variant => {
-    variant.price.$numberDecimal = pricesMap.get(variant.sku);
+    variant.effectivePrice = pricesMap.get(variant.sku);
     variantMap.set(variant.sku, variant);
   });
   return variantMap;
