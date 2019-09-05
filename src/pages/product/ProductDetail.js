@@ -11,6 +11,7 @@ import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css'
 import { addToCart } from '../../utils/cart';
 import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
+import './PDP-style.css';
 
 // import ProductType from './ProductType';
 // import ProductVariantType from './ProductVariantType';
@@ -144,7 +145,7 @@ const ProductDetail = ({ variantSlug, history }) => {
     setQuantity(1);
     setATCEnabled(true);
 
-  },[setSelectedVariantSku, setQuantity]);
+  }, [setSelectedVariantSku, setQuantity]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -167,20 +168,18 @@ const ProductDetail = ({ variantSlug, history }) => {
             <Card className={classes.box}>
               <CardContent className={classes.cardRootOverrides}>
                 <Box>
-                  <Typography className={classes.title} variant="h1">{product.name}</Typography>
-                  <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
+                  <Typography className={classes.title} className="pdp-header" variant="h1">{product.name}</Typography>
                 </Box>
-                <Divider variant="fullWidth" className={classes.divider} />
-                <Box >
-                  <Typography className={classes.subtitle} variant="h6">{product.subtitle}</Typography>
+                <Box borderTop={1} borderBottom={1}>
+                  <Typography className={classes.subtitle}>{product.subtitle}</Typography>
                 </Box>
-                <Divider variant="fullWidth" className={classes.divider} />
                 <br />
+                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
                 <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
                 <br />
                 <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
                 <Typography variant="body2">Take one soft gel daily with meal</Typography>
-                <br/>
+                <br />
                 {/*<ProductVariantType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>*/}
                 {!ATCEnabled && <Quantity />}
               </CardContent>

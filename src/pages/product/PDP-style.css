@@ -1,0 +1,13 @@
+html,
+
+.pdp-header {
+  font-family: CanelaText;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.1;
+  letter-spacing: normal;
+  text-align: center;
+  color: #003732;
+  padding-bottom: 15px;
+}
