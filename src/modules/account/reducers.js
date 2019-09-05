@@ -14,7 +14,7 @@ import {
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
 const INITIAL_STATE = {
-  ...(authToken ? { account_jwt: authToken, errMsg: '' } : {})
+  ...(authToken ? { account_jwt: authToken } : {})
 };
 
 export default (state = INITIAL_STATE, action) => {
