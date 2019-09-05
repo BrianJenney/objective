@@ -29,7 +29,8 @@ pipelines:
             - echo REACT_APP_CLOUDAMQP_PASSWORD=$REACT_APP_CLOUDAMQP_PASSWORD >> .env
             - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> .env
             - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> .env
-            - docker image build -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
+            - cat .env
+            #- docker image build -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
             - rm -rf .env
             # push to repo
             - docker push ${AWS_REGISTRY_URL}:latest
