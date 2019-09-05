@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm install
 COPY ./ /app/
+COPY build_env /app/.env
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app,
