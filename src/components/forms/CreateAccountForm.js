@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import { object, string, boolean } from 'yup';
 import { CheckboxField, InputField } from '../form-fields';
@@ -22,10 +22,17 @@ const schema = object().shape({
   newsletter: boolean()
 });
 
-const CreateAccountForm = ({ onSubmit }) => {
+const CreateAccountForm = ({
+  title,
+  onSubmit,
+  onBack,
+  submitLabel,
+  backLabel
+}) => {
   const renderForm = () => (
     <Form>
-      <Grid container spacing={3}>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
         <Grid item xs={10}>
           <Typography variant="h6" gutterBottom>
             Create an Account
@@ -37,7 +44,7 @@ const CreateAccountForm = ({ onSubmit }) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Field name="firstName" label="First Name" component={InputField} />
         </Grid>
@@ -58,16 +65,28 @@ const CreateAccountForm = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" children="Create Account" />
+          <Box display="flex" alignItems="center">
+            {onBack && (
+              <Button
+                type="button"
+                onClick={onBack}
+                children={backLabel}
+                mr={2}
+              />
+            )}
+            <Button type="submit" children={submitLabel} />
+          </Box>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h6" gutterBottom>
-          By creating an account you agree to the True Health
-          <NavLink to="/termsandconsitions">Terms &amp; Conditions</NavLink>
-          &amp;
-          <NavLink to="/privacypolicy">Privacy Policy</NavLink>
-        </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            By creating an account you agree to the True Health
+            <NavLink to="/termsandconsitions">Terms &amp; Conditions</NavLink>
+            &amp;
+            <NavLink to="/privacypolicy">Privacy Policy</NavLink>
+          </Typography>
+        </Grid>
       </Grid>
     </Form>
   );
@@ -83,7 +102,16 @@ const CreateAccountForm = ({ onSubmit }) => {
 };
 
 CreateAccountForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  title: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
+};
+
+CreateAccountForm.defaultProps = {
+  submitLabel: 'Create Account',
+  backLabel: 'Cancel'
 };
 
 export default CreateAccountForm;
