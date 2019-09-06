@@ -6,7 +6,8 @@ import {
   REQUEST_UPDATE_CART,
   RECEIVED_UPDATE_CART,
   REQUEST_PATCH_CART,
-  RECEIVED_PATCH_CART
+  RECEIVED_PATCH_CART,
+  SET_CART_DRAWER_OPENED,
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -137,5 +138,12 @@ export const receivedPatchCart = cart => {
   return {
     type: RECEIVED_PATCH_CART,
     payload: cart
+  };
+};
+
+export const setCartDrawerOpened = (open) => {
+  return {
+    type: SET_CART_DRAWER_OPENED,
+    payload: open
   };
 };
