@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import { object, string, boolean } from 'yup';
 import { CheckboxField, InputField } from '../form-fields';
@@ -22,28 +22,10 @@ const schema = object().shape({
   newsletter: boolean()
 });
 
-const CreateAccountForm = ({
-  title,
-  onSubmit,
-  onBack,
-  submitLabel,
-  backLabel
-}) => {
+const SignupForm = ({ title, onSubmit }) => {
   const renderForm = () => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
-      <Grid container spacing={2}>
-        <Grid item xs={10}>
-          <Typography variant="h6" gutterBottom>
-            Create an Account
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="h6" gutterBottom>
-            <NavLink to="/login">Login</NavLink>
-          </Typography>
-        </Grid>
-      </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Field name="firstName" label="First Name" component={InputField} />
@@ -52,10 +34,21 @@ const CreateAccountForm = ({
           <Field name="lastName" label="Last Name" component={InputField} />
         </Grid>
         <Grid item xs={12}>
-          <Field name="email" label="Email Address" component={InputField} />
+          <Field
+            name="email"
+            label="Email Address"
+            component={InputField}
+            autoComplete="email"
+          />
         </Grid>
         <Grid item xs={12}>
-          <Field name="password" label="Password" component={InputField} />
+          <Field
+            name="password"
+            label="Password"
+            component={InputField}
+            type="password"
+            autoComplete="current-password"
+          />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -65,17 +58,7 @@ const CreateAccountForm = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Box display="flex" alignItems="center">
-            {onBack && (
-              <Button
-                type="button"
-                onClick={onBack}
-                children={backLabel}
-                mr={2}
-              />
-            )}
-            <Button type="submit" children={submitLabel} />
-          </Box>
+          <Button fullWidth type="submit" children="Create an Account" />
         </Grid>
       </Grid>
       <Grid container spacing={2}>
@@ -101,17 +84,9 @@ const CreateAccountForm = ({
   );
 };
 
-CreateAccountForm.propTypes = {
+SignupForm.propTypes = {
   title: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func,
-  submitLabel: PropTypes.string,
-  backLabel: PropTypes.string
+  onSubmit: PropTypes.func.isRequired
 };
 
-CreateAccountForm.defaultProps = {
-  submitLabel: 'Create Account',
-  backLabel: 'Cancel'
-};
-
-export default CreateAccountForm;
+export default SignupForm;

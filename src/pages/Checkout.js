@@ -1,5 +1,27 @@
-import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import Checkout from '../components/checkout';
+import {
+  requestCreateAccount,
+  requestLoginAttempt,
+  requestPatchAccount
+} from '../modules/account/actions';
+import { requestCreateOrder } from '../modules/order/actions';
+import { withCart } from '../hoc';
 
-const CheckoutPage = () => <div>damn</div>;
+const mapDispatchToProps = {
+  requestCreateAccount,
+  requestLoginAttempt,
+  requestPatchAccount,
+  requestCreateOrder
+};
 
-export default CheckoutPage;
+const enhance = compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withCart
+);
+
+export default enhance(Checkout);

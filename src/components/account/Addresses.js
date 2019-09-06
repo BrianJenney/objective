@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, isNil } from 'lodash';
 import { Box, Grid, Typography } from '@material-ui/core';
-import { EditablePanel, MenuLink, AlertPanel } from '../common';
+import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
 
-const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
+const AccountAddresses = ({
+  currentUser,
+  requestPatchAccount,
+  onBack,
+  onSubmit
+}) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const addressBook = get(currentUser, 'addressBook', []);
   const deleteAddress = deletedIndex => {
@@ -88,7 +93,7 @@ const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
           </Grid>
         ))}
       </Grid>
-      <Box mt={2}>
+      <Box my={2}>
         {isEmpty(addressBook) && (
           <AlertPanel type="info" text="No Addresses. Please add." />
         )}
@@ -105,13 +110,23 @@ const AccountAddresses = ({ currentUser, requestPatchAccount }) => {
           />
         )}
       </Box>
+      <Box display="flex" alignItems="center">
+        {onBack && (
+          <Button type="button" onClick={onBack} children="Back" mr={2} />
+        )}
+        {onSubmit && (
+          <Button type="button" onClick={onSubmit} children="Next" />
+        )}
+      </Box>
     </Box>
   );
 };
 
 AccountAddresses.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  requestPatchAccount: PropTypes.func.isRequired
+  requestPatchAccount: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 export default AccountAddresses;

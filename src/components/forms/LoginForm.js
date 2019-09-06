@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Button, NavLink } from '../common';
+import { Button } from '../common';
 import { InputField } from '../form-fields';
 
 const schema = object().shape({
@@ -41,15 +41,7 @@ const LoginForm = ({ title, onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box>
-            <Button fullWidth type="submit" children="Login" />
-          </Box>
-          <Box mt={2}>
-            <Typography variant="body1">
-              Don&#39;t have an account?&nbsp;
-              <NavLink to="/signup">Sign Up</NavLink>!
-            </Typography>
-          </Box>
+          <Button fullWidth type="submit" children="Login" />
         </Grid>
       </Grid>
     </Form>
