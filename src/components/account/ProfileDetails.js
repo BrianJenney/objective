@@ -37,6 +37,9 @@ class ProfileDetails extends React.Component {
             <Field label="Email" name="email" component={InputField} />
           </Grid>
           <Grid item xs={12}>
+            <Field label="Phone Number" name="phone" component={InputField} />
+          </Grid>
+          <Grid item xs={12}>
             <Button type="submit">Save Changes</Button>
           </Grid>
         </Grid>
@@ -54,7 +57,8 @@ class ProfileDetails extends React.Component {
     const INITIAL_VALUES = {
       firstName: account.firstName,
       lastName: account.lastName,
-      email: account.email
+      email: account.email,
+      phone:account.phone
     };
 
     if (!account.account_jwt) {
