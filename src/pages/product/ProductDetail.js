@@ -39,15 +39,6 @@ const useStyles = makeStyles(theme => ({
   box: {
     backgroundColor: 'transparent',
   },
-  title: {
-    margin: 0,
-    lineHeight: '1em',
-    paddingBottom: theme.spacing(2),
-  },
-  subtitle: {
-    margin: 0,
-    marginTop: theme.spacing(1),
-  },
   gridModifications: {
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
@@ -60,12 +51,6 @@ const useStyles = makeStyles(theme => ({
   },
   divider: {
     border: '.5px solid'
-  },
-  directionsHeader: {
-    fontSize: '.9rem',
-    padding: 0,
-    lineHeight: '.7rem',
-    marginBottom: theme.spacing(1),
   },
   flexEnd: {
     alignSelf: 'flex-end',
@@ -173,10 +158,10 @@ const ProductDetail = ({ variantSlug, history }) => {
                 <Typography className="pdp-subtitle">{product.subtitle}</Typography>
                 <br />
                 <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
-                <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
+                <Typography className="pdp-description">{product.description}</Typography>
                 <br />
-                <Typography className={classes.directionsHeader} variant="h6">DIRECTIONS</Typography>
-                <Typography variant="body2">Take one soft gel daily with meal</Typography>
+                <Typography className="pdp-direction">DIRECTIONS</Typography>
+                <Typography className="pdp-direction-description">Take one soft gel daily with meal</Typography>
                 <br />
                 {/*<ProductVariantType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>*/}
                 {!ATCEnabled && <Quantity />}
