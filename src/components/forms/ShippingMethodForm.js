@@ -10,6 +10,10 @@ const schema = object().shape({
   shippingMethod: string().required('Shipping method is required')
 });
 
+const INITIAL_VALUES = {
+  shippingMethod: ''
+};
+
 const SHIPPING_METHOD_OPTIONS = [
   {
     key: 'ground',
@@ -23,34 +27,39 @@ const SHIPPING_METHOD_OPTIONS = [
   }
 ];
 
-const INITIAL_VALUES = {
-  shippingMethod: ''
-};
-
-const ShippingMethodForm = ({ onBack, onSubmit }) => {
+const ShippingMethodForm = ({
+  title,
+  onBack,
+  onSubmit,
+  submitLabel,
+  backLabel
+}) => {
   const renderForm = () => (
-    <Box>
-      <Typography variant="h6" gutterBottom children="Shipping Method" />
-      <Grid container spacing={3}>
+    <Form>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Form>
-            <Box>
-              <Field
-                component={RadioGroupField}
-                name="shippingMethod"
-                options={SHIPPING_METHOD_OPTIONS}
+          <Box>
+            <Field
+              component={RadioGroupField}
+              name="shippingMethod"
+              options={SHIPPING_METHOD_OPTIONS}
+            />
+          </Box>
+          <Box display="flex" alignItems="center">
+            {onBack && (
+              <Button
+                type="button"
+                onClick={onBack}
+                children={backLabel}
+                mr={2}
               />
-            </Box>
-            <Box>
-              {onBack && (
-                <Button type="button" onClick={onBack} children="Back" mr={2} />
-              )}
-              <Button type="submit" children={onBack ? 'Next' : 'Save'} />
-            </Box>
-          </Form>
+            )}
+            <Button type="submit" children={submitLabel} />
+          </Box>
         </Grid>
       </Grid>
-    </Box>
+    </Form>
   );
 
   return (
@@ -64,8 +73,16 @@ const ShippingMethodForm = ({ onBack, onSubmit }) => {
 };
 
 ShippingMethodForm.propTypes = {
+  title: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func.isRequired
+  onBack: PropTypes.func,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
+};
+
+ShippingMethodForm.defaultProps = {
+  submitLabel: 'Next',
+  backLabel: 'Back'
 };
 
 export default ShippingMethodForm;

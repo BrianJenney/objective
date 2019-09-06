@@ -19,7 +19,12 @@ export default [
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/cart', exact: true, component: CartPage },
-  { path: '/checkout', exact: true, component: CheckoutPage },
+  {
+    path: '/checkout',
+    exact: true,
+    injectCurrentUser: true,
+    component: CheckoutPage
+  },
   {
     path: '/account',
     auth: true,

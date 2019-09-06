@@ -114,7 +114,7 @@ export const receivedPatchAccount = account => dispatch => {
   });
 };
 
-export const requestLoginAttempt = (email, password) => (
+export const requestLoginAttempt = ({ email, password }) => (
   dispatch,
   getState
 ) => {

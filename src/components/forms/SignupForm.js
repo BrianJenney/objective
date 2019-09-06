@@ -22,22 +22,11 @@ const schema = object().shape({
   newsletter: boolean()
 });
 
-const CreateAccountForm = ({ onSubmit }) => {
+const SignupForm = ({ title, onSubmit }) => {
   const renderForm = () => (
     <Form>
-      <Grid container spacing={3}>
-        <Grid item xs={10}>
-          <Typography variant="h6" gutterBottom>
-            Create an Account
-          </Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Typography variant="h6" gutterBottom>
-            <NavLink to="/login">Login</NavLink>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Field name="firstName" label="First Name" component={InputField} />
         </Grid>
@@ -45,10 +34,21 @@ const CreateAccountForm = ({ onSubmit }) => {
           <Field name="lastName" label="Last Name" component={InputField} />
         </Grid>
         <Grid item xs={12}>
-          <Field name="email" label="Email Address" component={InputField} />
+          <Field
+            name="email"
+            label="Email Address"
+            component={InputField}
+            autoComplete="email"
+          />
         </Grid>
         <Grid item xs={12}>
-          <Field name="password" label="Password" component={InputField} />
+          <Field
+            name="password"
+            label="Password"
+            component={InputField}
+            type="password"
+            autoComplete="current-password"
+          />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -58,16 +58,18 @@ const CreateAccountForm = ({ onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" children="Create Account" />
+          <Button fullWidth type="submit" children="Create an Account" />
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h6" gutterBottom>
-          By creating an account you agree to the True Health
-          <NavLink to="/termsandconsitions">Terms &amp; Conditions</NavLink>
-          &amp;
-          <NavLink to="/privacypolicy">Privacy Policy</NavLink>
-        </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            By creating an account you agree to the True Health
+            <NavLink to="/termsandconsitions">Terms &amp; Conditions</NavLink>
+            &amp;
+            <NavLink to="/privacypolicy">Privacy Policy</NavLink>
+          </Typography>
+        </Grid>
       </Grid>
     </Form>
   );
@@ -82,8 +84,9 @@ const CreateAccountForm = ({ onSubmit }) => {
   );
 };
 
-CreateAccountForm.propTypes = {
+SignupForm.propTypes = {
+  title: PropTypes.string,
   onSubmit: PropTypes.func.isRequired
 };
 
-export default CreateAccountForm;
+export default SignupForm;
