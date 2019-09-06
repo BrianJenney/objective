@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { isNil } from 'lodash';
 import {
   Box,
   Paper,
@@ -10,17 +11,20 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const Panel = ({ title, collapsible, children }) => {
-  const [expanded, setExpanded] = useState(false);
+const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
+  const [expandedInternal, setExpandedInternal] = useState(false);
 
   if (collapsible) {
     return (
       <ExpansionPanel
-        expanded={expanded}
+        expanded={expanded || expandedInternal}
         elevation={0}
         onChange={(event, isExpanded) => {
-          setExpanded(isExpanded);
+          if (isNil(expanded)) {
+            setExpandedInternal(isExpanded);
+          }
         }}
+        {...rest}
       >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h2" children={title} />
@@ -35,13 +39,14 @@ const Panel = ({ title, collapsible, children }) => {
   return (
     <Paper>
       <Typography variant="h2" children={title} gutterBottom />
-      <Box width={1} children={children} />
+      <Box width={1} children={children} {...rest} />
     </Paper>
   );
 };
 
 Panel.propTypes = {
   title: PropTypes.string,
+  expanded: PropTypes.bool,
   collapsible: PropTypes.bool,
   children: PropTypes.node
 };
