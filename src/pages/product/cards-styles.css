@@ -3,6 +3,10 @@ html,
   box-sizing: border-box;
 }
 
+h2 {
+  font-size: 22px !important;
+}
+
 .label-info-wrapper {
   width: 100%;
   margin: 0 auto;
@@ -253,21 +257,20 @@ html,
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding-top: 95px;
+  padding-top: 30px;
   padding-bottom: 50px;
   color: #000000;
 }
 
 .how-it-works-wrapper h2 {
   max-width: 700px;
-  margin: 0 auto 90px auto;
+  margin: 0 auto 50px auto;
   font-size: 43px;
-  line-height: 50px;
   text-align: center;
 }
 
 .how-it-works-wrapper .coreBenefits {
-  margin: 60px auto 0 auto;
+  margin: 30px auto 0 auto;
 }
 
 .how-it-works-wrapper .topBlock,
@@ -319,11 +322,8 @@ html,
   font-family: FreightTextProBook;
   font-size: 20px;
   font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.6;
-  letter-spacing: normal;
-  padding: 0;
+  padding-bottom: 40px;
+  text-align: left;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -400,6 +400,7 @@ html,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
   width: 100%;
   min-width: 200px;
+  text-align: left;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -414,7 +415,7 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol {
   border-top: solid 1px #003833;
-  border-right: solid 1px #003833;
+  padding-bottom: 50px;
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
@@ -475,7 +476,7 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTextBody,
 .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTextBody {
   width: 90%;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 40px 25px;
   font-family: FreightTextProBook;
   font-size: 20px;
   font-weight: normal;
@@ -483,6 +484,7 @@ html,
   font-stretch: normal;
   line-height: 1.6;
   letter-spacing: normal;
+  text-align: left;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -585,7 +587,7 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .cardBottom ul li,
 .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom ul li {
   font-family: Canela;
-  font-size: 40px;
+  font-size: 25px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
