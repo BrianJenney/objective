@@ -42,7 +42,10 @@ const Checkout = ({
         return false;
       }
 
-      requestCreateOrder({ ...cart, ...payload }, { creditCardToken });
+      requestCreateOrder(
+        { ...cart, ...payload, account_jwt: currentUser.account_jwt },
+        { creditCardToken }
+      );
     }
 
     setActiveStep(activeStep + 1);
