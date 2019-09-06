@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import App from './App';
 import { connectStomp } from './modules/stomp/actions';
 import store from './store';
@@ -18,6 +19,38 @@ const ObjectId = require('bson-objectid');
 const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
 const stompClient = Stomp.over(wss);
 const replyTo = ObjectId();
+
+const useStyles = makeStyles(theme => ({
+  success: {backgroundColor: 'green'},
+  error: {backgroundColor: 'blue'},
+  warning: {backgroundColor: 'green'},
+  info: {backgroundColor: 'yellow'},
+}));
+
+const Main = () => {
+  const classes = useStyles();
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={nxtTheme}>
+        <SnackbarProvider
+          maxSnack={5}
+          anchorOrigin={{
+            horizontal: 'right',
+            vertical: 'top'
+          }}
+          classes={{
+            variantSuccess: classes.success,
+            variantError: classes.error,
+            variantWarning: classes.warning,
+            variantInfo: classes.info,
+          }}
+        >
+          <App />
+        </SnackbarProvider>
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 /**
  * STOMP connect success callback handler
@@ -37,21 +70,8 @@ const onStompConnectSuccess = () => {
       'auto-delete': true
     }
   );
-  ReactDOM.render(
-    <Provider store={store}>
-      <ThemeProvider theme={nxtTheme}>
-        <SnackbarProvider
-          maxSnack={5}
-          anchorOrigin={{
-            horizontal: 'right',
-            vertical: 'top'
-          }}
-        >
-          <App />
-        </SnackbarProvider>
-      </ThemeProvider>
-    </Provider>,
-    document.querySelector('#root')
+
+  ReactDOM.render(<Main />, document.querySelector('#root')
   );
 };
 
