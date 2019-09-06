@@ -8,3 +8,4 @@ export { default as ProductPage } from './Product';
 export { default as CartPage } from './Cart';
 export { default as CheckoutPage } from './Checkout';
 export { default as ForgotPassword } from './password/ForgotPassword';
+export { default as ConfirmPassword } from './password/ConfirmPassword';
