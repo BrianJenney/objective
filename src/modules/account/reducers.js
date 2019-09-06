@@ -9,7 +9,8 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
-  REQUEST_LOGOUT
+  REQUEST_LOGOUT,
+  REQUEST_FORGOT_PASSWORD
 } from './types';
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
@@ -41,6 +42,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, orders: action.payload };
     case REQUEST_LOGOUT:
       return INITIAL_STATE;
+    case REQUEST_FORGOT_PASSWORD:
+      return state;
     default:
       return state;
   }
