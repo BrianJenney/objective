@@ -115,33 +115,16 @@ const ReviewForm = ({ cart, onBack, onSubmit }) => {
           </Typography>
           <Grid container>
             <Grid item xs={6}>
+              <Typography gutterBottom>{paymentDetails.name}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography gutterBottom>*****{paymentDetails.last4}</Typography>
+            </Grid>
+            <Grid item xs={6}>
               <Typography gutterBottom>
-                {PAYMENT_METHOD_LABELS_MAP[paymentDetails.paymentMethod]}
+                {paymentDetails.expirationDate}
               </Typography>
             </Grid>
-            {paymentDetails.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
-              <>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>
-                    {paymentDetails.cardholderName}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{paymentDetails.number}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>
-                    {paymentDetails.expirationDate}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{paymentDetails.cvv}</Typography>
-                </Grid>
-              </>
-            )}
-            {paymentDetails.paymentMethod === PAYMENT_METHODS.PAYPAL && (
-              <div id="paypal-checkout-button" />
-            )}
           </Grid>
         </Grid>
       </Grid>
