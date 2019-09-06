@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useDispatch } from 'react-redux';
+
 import { makeStyles} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
 import Grid from "@material-ui/core/Grid";
+
+import { setCartDrawerOpened} from '../../modules/cart/actions';
 
 const useStyles = makeStyles({
   card: {
@@ -14,8 +17,13 @@ const useStyles = makeStyles({
   },
 });
 
-const ATCSnackbarAction = ({variant, viewCart} ) => {
+const ATCSnackbarAction = ({variant}) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const viewCart = () => {
+    dispatch(setCartDrawerOpened(true));
+  };
 
   return (
     <Card>
@@ -32,7 +40,7 @@ const ATCSnackbarAction = ({variant, viewCart} ) => {
           <Grid container xs={12} direction="column" alignItems="flex-start">
             <Typography variant="body1">Added to cart</Typography>
             <br/>
-            <Button variant="default" onClick={viewCart}>
+            <Button color="default" onClick={viewCart}>
                 <Typography variant="caption">View Cart</Typography>
             </Button>
           </Grid>
