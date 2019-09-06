@@ -9,13 +9,12 @@ import {
   Card,
   CardContent,
   CardActions,
-  Button,
   Grid,
   Divider
 } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
-
+import { Button } from '../../components/common';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css';
 import { addToCart } from '../../utils/cart';
@@ -25,8 +24,8 @@ import {
   getVariantMap
 } from '../../utils/product';
 
-// import ProductType from './ProductType';
-// import ProductVariantType from './ProductVariantType';
+import ProductType from './ProductType';
+import ProductVariantType from './ProductVariantType';
 
 const localStorageClient = require('store');
 
@@ -85,25 +84,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const StyledButton = withStyles(theme => ({
-  root: {
-    backgroundColor: '#000000',
-    borderRadius: 0,
-    border: 0,
-    color: 'white',
-    width: '100%',
-    maxWidth: '464px',
-    height: '80px',
-    padding: '0'
-  },
-  label: {
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textTransform: 'capitalize'
-  }
-}))(Button);
-
 const ProductVariant = ({ productVariant }) => {
   return productVariant ? (
     <Grid container alignItems="center" spacing={2}>
@@ -130,7 +110,9 @@ const ProductDetail = ({ variantSlug, history }) => {
   const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
+  // const [selectedProductVariant, setSelectedProductVariant] = useState(
+  //   getVariantByVariantSlug(variants, pricesMap, variantSlug)
+  // );
   const defaultSku = getVariantSkuBySlug(variants, variantSlug);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
@@ -244,11 +226,11 @@ const ProductDetail = ({ variantSlug, history }) => {
                 </Typography>
                 <br />
 
-                {/* <ProductVariantType
+                <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
-                /> */}
+                />
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && (
@@ -259,16 +241,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                   alignItems="center"
                 >
                   <CardActions className={classes.maxWidth}>
-                    <StyledButton
-                      className={classes.resetButtonPadding}
-                      fullWidth={isMobile}
-                      variant="contained"
-                      color="primary"
-                      onClick={handleAddToCart}
-                      disabled={selectedVariantSku === null}
-                    >
-                      ADD TO CART
-                    </StyledButton>
+                    <Button fullWidth type="submit" children="Add to cart" />
                   </CardActions>
                 </Grid>
               )}
