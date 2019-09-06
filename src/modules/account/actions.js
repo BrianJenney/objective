@@ -153,10 +153,10 @@ export const receivedLoginSuccess = loginReply => dispatch => {
   });
 };
 
-export const receivedLoginFailure = () => dispatch => {
+export const receivedLoginFailure = loginError => dispatch => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
-    payload: {}
+    payload: loginError
   });
 };
 

@@ -35,7 +35,7 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_LOGIN_ATTEMPT:
       return state;
     case RECEIVED_LOGIN_FAILURE:
-      return state;
+      return { ...state, msg: action.payload };
     case RECEIVED_LOGIN_SUCCESS:
       return { ...state, ...action.payload };
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
