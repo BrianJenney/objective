@@ -9,7 +9,8 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
-  REQUEST_LOGOUT
+  REQUEST_LOGOUT,
+  REQUEST_FORGOT_PASSWORD
 } from './types';
 
 const localStorageClient = require('store');
@@ -152,10 +153,10 @@ export const receivedLoginSuccess = loginReply => dispatch => {
   });
 };
 
-export const receivedLoginFailure = () => dispatch => {
+export const receivedLoginFailure = loginError => dispatch => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
-    payload: {}
+    payload: loginError
   });
 };
 
@@ -170,5 +171,31 @@ export const receivedFindOrdersByAccount = orders => dispatch => {
   dispatch({
     type: RECEIVED_FIND_ORDERS_BY_ACCOUNT,
     payload: orders
+  });
+};
+
+export const requestForgotPassword = email => (dispatch, getState) => {
+  const { client, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      query: {
+        email
+      }
+    }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  client.send(
+    '/exchange/account/account.request.forgotpassword',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_FORGOT_PASSWORD,
+    payload: {}
   });
 };
