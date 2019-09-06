@@ -8,13 +8,15 @@ import {
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestCreateOrder = (cart, nonce) => async (
+export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
+  console.log(cart);
+  console.log(nonceOrToken);
   const { client, replyTo } = getState().stomp;
   const params = {
-    data: { cart, nonce }
+    data: { cart, nonceOrToken }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
