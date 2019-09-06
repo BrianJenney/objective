@@ -1,47 +1,135 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Menu, MenuItem, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Drawer,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Divider,
+  List,
+  Box,
+  Typography
+} from '@material-ui/core';
 import MenuLink from './MenuLink';
+import Close from '@material-ui/icons/Close';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import MenuIcon from '@material-ui/icons/Menu';
+import { fonts, sizes } from '../../components/Theme/fonts';
+
+const drawerWidth = 300;
+const { smallText2 } = sizes;
+const { $brandSans } = fonts;
+const useStyles = makeStyles(theme => ({
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    marginTop: '26px',
+    justifyContent: 'flex-start'
+  },
+  styledMenu: {
+    fontSize: smallText2,
+    textTransform: 'uppercase',
+    fontFamily: $brandSans
+  }
+}));
 
 const DropdownMenu = ({
   toggleLabel,
   dropdownTitle,
   panelId,
   menuItems,
+  side,
   ...rest
 }) => {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleMenu = event => setAnchorEl(event.currentTarget);
+  const handleMenu = event => {
+    if (
+      event.type == 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => setAnchorEl(null);
 
   return (
     <Box {...rest}>
-      <Button
-        aria-owns={open ? panelId : undefined}
-        aria-haspopup="true"
-        onClick={handleMenu}
-        children={toggleLabel}
+      <CssBaseline />
+      <AppBar
+        color="inherit"
+        position="fixed"
+        aria-label="Menu"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open
+        })}
       />
-      <Menu
-        id={panelId}
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <Toolbar background="transparent">
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleMenu}
+          edge="start"
+          className={clsx(classes.menuButton, open && classes.hide)}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Toolbar>
+
+      <Drawer
+        className={classes.drawer}
+        anchor="left"
         open={open}
         onClose={handleClose}
+        classes={{
+          paper: classes.drawerPaper
+        }}
       >
-        {dropdownTitle && (
-          <Box p={2}>
-            <Typography color="primary" children={dropdownTitle} />
-          </Box>
-        )}
-        {menuItems.map(({ key, ...itemRestProps }) => (
-          <MenuItem key={key} onClick={handleClose}>
-            <MenuLink {...itemRestProps} />
-          </MenuItem>
-        ))}
-      </Menu>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleClose}>
+            <Close />
+          </IconButton>
+        </div>
+        <Divider />
+        <List id={panelId} anchorEl={anchorEl}>
+          {menuItems.map(({ key, ...itemRestProps }) => (
+            <>
+              <ListItem key={key} justify="center" button onClick={handleClose}>
+                <Typography className={classes.styledMenu}>
+                  <MenuLink {...itemRestProps} />
+                </Typography>
+                <ChevronRightIcon />
+              </ListItem>
+              <Divider />
+            </>
+          ))}
+        </List>
+      </Drawer>
     </Box>
   );
 };
