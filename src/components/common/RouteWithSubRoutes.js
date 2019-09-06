@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { withCurrentUser } from '../../hoc';
 
 const RouteWithSubRoutes = ({
+  injectCurrentUser,
   currentUser,
   path,
   component,
@@ -13,6 +14,7 @@ const RouteWithSubRoutes = ({
   redirectTo,
   ...rest
 }) => {
+  const currentUserProp = injectCurrentUser ? { currentUser } : {};
   let Component = component;
   let redirectPath = redirectTo;
 
@@ -32,12 +34,13 @@ const RouteWithSubRoutes = ({
     <Route
       path={path}
       exact={exact}
-      render={props => <Component {...props} {...rest} />}
+      render={props => <Component {...currentUserProp} {...props} {...rest} />}
     />
   );
 };
 
 RouteWithSubRoutes.propTypes = {
+  injectCurrentUser: PropTypes.bool,
   currentUser: PropTypes.object.isRequired,
   path: PropTypes.string,
   exact: PropTypes.bool,
@@ -49,6 +52,7 @@ RouteWithSubRoutes.propTypes = {
 };
 
 RouteWithSubRoutes.defaultProps = {
+  injectCurrentUser: false,
   exact: false
 };
 

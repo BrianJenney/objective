@@ -6,7 +6,14 @@ import {
   ProductPage,
   CartPage,
   AccountPage,
-  CheckoutPage
+  AccountOverviewPage,
+  AccountOrdersPage,
+  AccountAddressesPage,
+  AccountPaymentDetailsPage,
+  AccountProfilePage,
+  CheckoutPage,
+  ForgotPassword,
+  ConfirmPassword
 } from './pages';
 
 export default [
@@ -14,8 +21,56 @@ export default [
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/cart', exact: true, component: CartPage },
-  { path: '/checkout', exact: true, component: CheckoutPage },
-  { path: '/account', exact: true, auth: true, component: AccountPage },
-  { path: '/product/:product_slug/:variant_slug', exact: true, component: ProductPage },
+  {
+    path: '/checkout',
+    exact: true,
+    injectCurrentUser: true,
+    component: CheckoutPage
+  },
+  {
+    path: '/account',
+    auth: true,
+    component: AccountPage,
+    routes: [
+      {
+        path: '/account/overview',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountOverviewPage
+      },
+      {
+        path: '/account/orders',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountOrdersPage
+      },
+      {
+        path: '/account/addresses',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountAddressesPage
+      },
+      {
+        path: '/account/payment-details',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountPaymentDetailsPage
+      },
+      {
+        path: '/account/profile',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountProfilePage
+      }
+    ]
+  },
+  {
+    path: '/products/:product_slug/:variant_slug',
+    exact: true,
+    component: ProductPage
+  },
+  { path: '/password/forgot', exact: true, component: ForgotPassword },
+  { path: '/password/confirm', exact: true, component: ConfirmPassword },
+  { path: '/password/reset', exact: true, component: ConfirmPassword },
   { path: '/:page', exact: true, component: StaticPage }
 ];

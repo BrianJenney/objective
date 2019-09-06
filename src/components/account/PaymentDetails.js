@@ -1,86 +1,130 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Typography } from '@material-ui/core';
-import { EditablePanel, MenuLink } from '../common';
+import { get, isEmpty } from 'lodash';
+import { useSnackbar } from 'notistack';
+import { Box, Grid, Typography } from '@material-ui/core';
+import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
+import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
-import { fetchCreditCardBrainTreeNonce } from '../../utils/checkout';
-import store from '../../store';
-import { requestPatchAccount } from '../../modules/account/actions';
 
-const AccountPaymentDetails = ({ account }) => {
-  const addCard = async values => {
-    // This is a hardcoded billingAddress that will have to get
-    // replaced once addresses are done.
-    const billingAddress = {
-      postalCode: '11111'
-    };
+const AccountPaymentDetails = ({
+  currentUser,
+  requestPatchAccount,
+  onBack,
+  onSubmit
+}) => {
+  const [addModeEnabled, setAddModeEnabled] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const creditCards = get(currentUser, 'paymentMethods', []);
+  const deleteCreditCard = deletedCreditCardToken => {
+    const payload = { deletedCreditCardToken };
 
-    const { paymentDetails } = values;
-    const nonce = await fetchCreditCardBrainTreeNonce({
-      paymentDetails,
-      billingAddress
-    });
-
-    const paymentMethods = {
-      newPaymentMethod: {
-        name: values.paymentDetails.cardholderName,
-        last4: values.paymentDetails.number.substring(values.paymentDetails.number.length-4, 
-          values.paymentDetails.number.length),
-        expirationDate: values.paymentDetails.expirationDate
-      },
-      nonce: nonce
-    };
-    console.log(paymentMethods);
-
-    store.dispatch(requestPatchAccount(account.account_jwt, paymentMethods));
+    requestPatchAccount(currentUser.account_jwt, payload);
   };
+  const setDefaultCreditCard = defaultCreditCardToken => {
+    const payload = { defaultCreditCardToken };
 
-  const editCard = () => {
-    alert('editing payment details');
+    requestPatchAccount(currentUser.account_jwt, payload);
   };
-
-  const paymentDetails = account.paymentMethods || [
-    {
-      paymentMethod: 'creditCard',
-      cardholderName: 'Leonardo Kim',
-      number: 'XXXXXX2234',
-      expirationDate: '02/2023',
-      cvv: '434'
-    },
-    {
-      paymentMethod: 'creditCard',
-      cardholderName: 'Kevin Christian',
-      number: 'XXXXXX1234',
-      expirationDate: '02/2023',
-      cvv: '534'
+  const addCreditCard = async (paymentDetails, actions) => {
+    const addressBook = currentUser.addressBook || [];
+    const billingAddress = addressBook.find(address => !!address.isDefault);
+    if (!billingAddress) {
+      return enqueueSnackbar(
+        'Please fill in billing address first in addresses section.',
+        { variant: 'error' }
+      );
     }
-  ];
+
+    try {
+      const nonce = await fetchCreditCardBrainTreeNonce({
+        paymentDetails,
+        billingAddress
+      });
+      const payload = {
+        newCreditCard: {
+          name: paymentDetails.cardholderName,
+          last4: paymentDetails.number.substring(
+            paymentDetails.number.length - 4
+          ),
+          expirationDate: paymentDetails.expirationDate
+        },
+        nonce
+      };
+
+      requestPatchAccount(currentUser.account_jwt, payload);
+    } catch (err) {
+      enqueueSnackbar(err.message, { variant: 'error' });
+    }
+    actions.setSubmitting(false);
+    setAddModeEnabled(false);
+
+    return true;
+  };
+
   return (
     <Box>
-      <Typography variant="h5" children="Payment Details" />
-      <Typography variant="h6" children="Credit Card" />
-      <Box display="flex">
-        {paymentDetails.map((entity, index) => (
-          <Box key={`entity_${index}`} border="1px solid #979797" m={1} p={4}>
-            <EditablePanel
-              title=""
-              defaultValues={entity}
-              onSubmit={editCard}
-              Form={PaymentForm}
-              Summary={PaymentSummary}
-            />
-          </Box>
+      <Typography variant="h5" children="Payment Details" gutterBottom />
+      <Typography variant="h6" children="Credit Cards" gutterBottom />
+      <Grid container>
+        {creditCards.map((creditCardEntity, index) => (
+          <Grid key={`credit_card_entity_${index}`} item xs={12} sm={4}>
+            <Box border="1px solid #979797" m={1} p={4}>
+              <EditablePanel
+                title=""
+                defaultValues={creditCardEntity}
+                Summary={PaymentSummary}
+                onRemove={
+                  creditCardEntity.isDefault
+                    ? undefined
+                    : () => deleteCreditCard(creditCardEntity.token)
+                }
+                onSetDefault={
+                  creditCardEntity.isDefault
+                    ? undefined
+                    : () => setDefaultCreditCard(creditCardEntity.token)
+                }
+              />
+            </Box>
+          </Grid>
         ))}
+      </Grid>
+      <Box my={2}>
+        {isEmpty(creditCards) && (
+          <AlertPanel type="info" text="No Credit Cards. Please add." />
+        )}
+        {addModeEnabled ? (
+          <PaymentForm
+            title=""
+            onlyCard
+            onSubmit={addCreditCard}
+            onBack={() => setAddModeEnabled(false)}
+          />
+        ) : (
+          <MenuLink
+            onClick={() => setAddModeEnabled(true)}
+            children="Add New Credit Card"
+          />
+        )}
       </Box>
-      <MenuLink onClick={() => null} children="Add New Card" />
-      <PaymentForm onSubmit={addCard} />
+      <Box display="flex" alignItems="center">
+        {onBack && (
+          <Button type="button" onClick={onBack} children="Back" mr={2} />
+        )}
+        {onSubmit && (
+          <Button type="button" onClick={onSubmit} children="Next" />
+        )}
+      </Box>
     </Box>
   );
 };
 
 AccountPaymentDetails.propTypes = {
-  account: PropTypes.object.isRequired
+  currentUser: PropTypes.object.isRequired,
+  requestPatchAccount: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 export default AccountPaymentDetails;

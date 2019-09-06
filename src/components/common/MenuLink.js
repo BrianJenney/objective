@@ -8,7 +8,7 @@ const MenuLink = ({ to, ...rest }) => {
     return <NavLink to={to} {...rest} />;
   }
 
-  return <Link css={{ cursor: 'pointer' }} {...rest} />;
+  return <Link style={{ cursor: 'pointer' }} {...rest} />;
 };
 
 MenuLink.propTypes = {

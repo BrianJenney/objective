@@ -13,7 +13,6 @@ import CartDrawer from '../pages/cart/CartDrawer';
 import './Header-style.scss';
 import ShoppingBag from './common/Icons/Shopping-Bag';
 
-
 const StyledLink = withStyles(() => ({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',
@@ -43,9 +42,11 @@ const StyledBadge = withStyles(theme => ({
     right: -3,
     // The border color match the background color.
     border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
-  },
+      theme.palette.type === 'light'
+        ? theme.palette.grey[200]
+        : theme.palette.grey[900]
+    }`
+  }
 }))(Badge);
 
 const Header = () => {
@@ -63,8 +64,9 @@ const Header = () => {
         panelId="my-account"
         menuItems={[
           { key: 'first', to: '/gallery', children: 'Shop' },
-          { key: 'second', to: '/', children: 'Science' },
-          { key: 'third', to: '/account', children: 'Account' }
+          { key: 'second', to: '/', children: 'Journal' },
+          { key: 'third', to: '/account', children: 'Account' },
+          { key: 'third', to: '/account', children: 'Help' }
         ]}
       />
     </>
@@ -75,12 +77,21 @@ const Header = () => {
     return (
       <TemporaryDrawer
         toggleContent={
-          <StyledBadge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
+          <StyledBadge
+            invisible={cartCount < 1}
+            badgeContent={cartCount}
+            color="secondary"
+          >
             <ShoppingBag />
           </StyledBadge>
         }
         closer={
-          <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
+          <Box
+            position="absolute"
+            right={10}
+            top={10}
+            children={<CloseIcon />}
+          />
         }
         listContent={<CartDrawer />}
         side="right"
