@@ -1,5 +1,4 @@
 html,
-
 .pdp-header {
   font-family: CanelaText;
   font-weight: 300;
@@ -11,3 +10,10 @@ html,
   color: #003732;
   padding-bottom: 15px;
 }
+
+.pdp-subtitle {
+  border-top: 0.01rem solid;
+  border-bottom: 0.1rem solid;
+  border-width: 100%;
+}
+

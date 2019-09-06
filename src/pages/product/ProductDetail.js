@@ -168,11 +168,9 @@ const ProductDetail = ({ variantSlug, history }) => {
             <Card className={classes.box}>
               <CardContent className={classes.cardRootOverrides}>
                 <Box>
-                  <Typography className={classes.title} className="pdp-header" variant="h1">{product.name}</Typography>
+                  <Typography className="pdp-header" variant="h1">{product.name}</Typography>
                 </Box>
-                <Box borderTop={1} borderBottom={1}>
-                  <Typography className={classes.subtitle}>{product.subtitle}</Typography>
-                </Box>
+                <Typography className="pdp-subtitle">{product.subtitle}</Typography>
                 <br />
                 <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
                 <Typography component="p" color="textSecondary" variant="body2">{product.description}</Typography>
