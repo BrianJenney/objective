@@ -136,26 +136,21 @@ const ProductDetail = ({ variantSlug, history }) => {
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
 
-  const message = <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} viewCart={viewCart} />
+  const message = <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
 
-  const updateQuantityToCart = (qty => {
+  const updateQuantityToCart = useCallback(qty => {
     if (selectedVariantSku === null)
       return;
     addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
-    enqueueSnackbar(message, {
-      variant: 'success',
-      // persist: true
-    });
-  });
+    enqueueSnackbar(message, {variant: 'success'});
+  }, [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]);
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+
   const handleAddToCart = useCallback(() => {
     addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
-    enqueueSnackbar(message, {
-      variant: 'success',
-      // persist: true
-    });
+    enqueueSnackbar(message, {variant: 'success'});
     setATCEnabled(false);
-  }, [cart, selectedVariantSku, variantMap, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, selectedVariantSku, variantMap, message, quantity, enqueueSnackbar, dispatch]);
 
   const updateTerminalVariant = useCallback((terminalVariant) => {
     /*
