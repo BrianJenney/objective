@@ -10,20 +10,20 @@ import {
   IconButton,
   Divider,
   List,
-  Box
+  Box,
+  Typography
 } from '@material-ui/core';
 import MenuLink from './MenuLink';
 import Close from '@material-ui/icons/Close';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import { StyledSmallCaps } from '../../pages/cart/StyledComponents';
+import { fonts, sizes } from '../../components/Theme/fonts';
 
 const drawerWidth = 300;
+const { smallText2 } = sizes;
+const { $brandSans } = fonts;
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex'
-  },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -48,6 +48,11 @@ const useStyles = makeStyles(theme => ({
   drawerHeader: {
     marginTop: '26px',
     justifyContent: 'flex-start'
+  },
+  styledMenu: {
+    fontSize: smallText2,
+    textTransform: 'uppercase',
+    fontFamily: $brandSans
   }
 }));
 
@@ -74,7 +79,7 @@ const DropdownMenu = ({
   const handleClose = () => setAnchorEl(null);
 
   return (
-    <Box className={classes.root} {...rest}>
+    <Box {...rest}>
       <CssBaseline />
       <AppBar
         color="inherit"
@@ -115,10 +120,9 @@ const DropdownMenu = ({
           {menuItems.map(({ key, ...itemRestProps }) => (
             <>
               <ListItem key={key} justify="center" button onClick={handleClose}>
-                <StyledSmallCaps component="span">
+                <Typography className={classes.styledMenu}>
                   <MenuLink {...itemRestProps} />
-                </StyledSmallCaps>
-
+                </Typography>
                 <ChevronRightIcon />
               </ListItem>
               <Divider />
