@@ -44,6 +44,7 @@ const Main = () => {
             variantWarning: classes.warning,
             variantInfo: classes.info,
           }}
+          autoHideDuration={1500}
         >
           <App />
         </SnackbarProvider>
