@@ -27,7 +27,7 @@ import {
 
 // import ProductType from './ProductType';
 // import ProductVariantType from './ProductVariantType';
-
+import ATCSnackbarAction from '../../components/common/ATCSnackbarAction'
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
@@ -135,47 +135,25 @@ const ProductDetail = ({ variantSlug, history }) => {
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
-  const updateQuantityToCart = qty => {
-    if (selectedVariantSku === null) return;
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variantMap.get(selectedVariantSku),
-      qty,
-      dispatch
-    );
-    enqueueSnackbar(`${qty} ${selectedVariantSku} added to cart`, {
-      variant: 'success'
-    });
-  };
-  const [quantity, setQuantity, Quantity] = useQuantity(
-    updateQuantityToCart,
-    'QTY'
-  );
-  const handleAddToCart = useCallback(() => {
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variantMap.get(selectedVariantSku),
-      quantity,
-      dispatch
-    );
-    enqueueSnackbar(`${quantity} ${selectedVariantSku} added to cart`, {
-      variant: 'success'
-    });
-    setATCEnabled(false);
-  }, [
-    cart,
-    selectedVariantSku,
-    variantMap,
-    quantity,
-    enqueueSnackbar,
-    dispatch
-  ]);
 
-  const updateTerminalVariant = useCallback(
-    terminalVariant => {
-      /*
+  const message = <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+
+  const updateQuantityToCart = useCallback(qty => {
+    if (selectedVariantSku === null)
+      return;
+    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
+    enqueueSnackbar(message, {variant: 'success'});
+  }, [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]);
+  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+
+  const handleAddToCart = useCallback(() => {
+    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
+    enqueueSnackbar(message, {variant: 'success'});
+    setATCEnabled(false);
+  }, [cart, selectedVariantSku, variantMap, message, quantity, enqueueSnackbar, dispatch]);
+
+  const updateTerminalVariant = useCallback((terminalVariant) => {
+    /*
     if (terminalVariant['Diet Type'] === null) {
       setATCEnabled(true);
       setQuantity(1);
@@ -195,7 +173,8 @@ const ProductDetail = ({ variantSlug, history }) => {
     setSelectedVariantSku(defaultSku);
   }, [defaultSku]);
 
-  if (product === null || variants.length === 0) return null;
+  if (product === null || variants.length === 0)
+    return null;
 
   const isMobile = windowSize.width < 944;
   // console.log('ProductDetail', {selectedVariantSku, variantMap})

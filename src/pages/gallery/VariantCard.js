@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuantity, useWindowSize } from '../../hooks';
 import { useSnackbar } from 'notistack';
 import { addToCart } from '../../utils/cart';
+import ATCSnackbarAction from "../../components/common/ATCSnackbarAction";
 
 const localStorageClient = require('store');
 
@@ -28,42 +29,21 @@ const VariantCard = ({ variant, product }) => {
   const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const message = <ATCSnackbarAction variant={variant} />
 
-  const updateQuantityToCart = useCallback(
-    qty => {
-      addToCart(
-        localStorageClient.get('cartId'),
-        cart,
-        variant,
-        qty,
-        dispatch,
-        true
-      );
-      enqueueSnackbar(`${qty} ${variant.sku} added to cart`, {
-        variant: 'success'
-      });
+  const updateQuantityToCart = useCallback(qty => {
+      addToCart(localStorageClient.get('cartId'), cart, variant, qty, dispatch);
+      enqueueSnackbar(message, { variant: 'success' });
     },
-    [cart, variant, dispatch, enqueueSnackbar]
+    [cart, variant, message, dispatch, enqueueSnackbar]
   );
-  const [quantity, setQuantity, Quantity] = useQuantity(
-    updateQuantityToCart,
-    'QTY'
-  );
+  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variant,
-      quantity,
-      dispatch,
-      true
-    );
-    enqueueSnackbar(`${quantity} ${variant.sku} added to cart`, {
-      variant: 'success'
-    });
+    addToCart(localStorageClient.get('cartId'), cart, variant, quantity, dispatch);
+    enqueueSnackbar(message, {variant: 'success'});
     setATCEnabled(false);
-  }, [cart, variant, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, variant, message, quantity, enqueueSnackbar, dispatch]);
 
   return (
     <Card>

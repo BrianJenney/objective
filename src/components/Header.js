@@ -6,12 +6,10 @@ import { Grid, Box, Link } from '@material-ui/core';
 import Badge from '@material-ui/core/Badge/Badge';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { Link as RouterLink } from 'react-router-dom';
-import CloseIcon from '@material-ui/icons/Close';
 import DropdownMenu from './common/DropdownMenu';
-import TemporaryDrawer from './common/TemporaryDrawer';
-import CartDrawer from '../pages/cart/CartDrawer';
+import ShoppingCart from '../pages/cart/ShoppingCart';
+
 import './Header-style.scss';
-import ShoppingBag from './common/Icons/Shopping-Bag';
 
 const StyledLink = withStyles(() => ({
   root: {
@@ -50,7 +48,6 @@ const StyledBadge = withStyles(theme => ({
 }))(Badge);
 
 const Header = () => {
-  const cart = useSelector(state => state.cart);
 
   const renderBurgerIcon = () => (
     <>
@@ -71,33 +68,6 @@ const Header = () => {
       />
     </>
   );
-
-  const renderCartIcon = () => {
-    const cartCount = cart.items.length;
-    return (
-      <TemporaryDrawer
-        toggleContent={
-          <StyledBadge
-            invisible={cartCount < 1}
-            badgeContent={cartCount}
-            color="secondary"
-          >
-            <ShoppingBag />
-          </StyledBadge>
-        }
-        closer={
-          <Box
-            position="absolute"
-            right={10}
-            top={10}
-            children={<CloseIcon />}
-          />
-        }
-        listContent={<CartDrawer />}
-        side="right"
-      ></TemporaryDrawer>
-    );
-  };
 
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
@@ -123,7 +93,7 @@ const Header = () => {
                 )}
               </Grid>
               <Grid item xs={1}>
-                {renderCartIcon()}
+                <ShoppingCart />
               </Grid>
             </Grid>
             <Grid container xs={12} className="headerBar">
@@ -171,7 +141,7 @@ const Header = () => {
                 )}
               </Grid>
               <Grid item xs={1}>
-                {renderCartIcon()}
+                <ShoppingCart />
               </Grid>
             </Grid>
           </>
