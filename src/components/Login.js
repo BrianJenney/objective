@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Box,
   Container,
@@ -10,7 +11,9 @@ import {
 import { LoginForm } from './forms';
 import { MenuLink, NavLink } from './common';
 
-const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
+import withDialog from '../hoc/withDialog'
+
+const Login = ({ requestLoginAttempt, account, switchToSignup, closeDialog }) => {
   let displayMessage;
   if (!account.msg) {
     displayMessage = null;
@@ -56,7 +59,8 @@ const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
 Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
   account: PropTypes.object,
-  switchToSignup: PropTypes.func
+  switchToSignup: PropTypes.func,
+  closeDialog: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default withDialog(Login);
