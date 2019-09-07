@@ -10,6 +10,8 @@ import {
 import { LoginForm } from './forms';
 import { MenuLink, NavLink } from './common';
 
+import withDialog from '../hoc/withDialog'
+
 const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
   let displayMessage;
   if (!account.msg) {
@@ -59,4 +61,4 @@ Login.propTypes = {
   switchToSignup: PropTypes.func
 };
 
-export default Login;
+export default withDialog(Login);
