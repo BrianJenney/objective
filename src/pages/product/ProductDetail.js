@@ -71,7 +71,6 @@ const useStyles = makeStyles(theme => ({
     border: '.5px solid'
   },
   directionsHeader: {
-    fontSize: '.9rem',
     padding: 0,
     lineHeight: '.7rem',
     marginBottom: theme.spacing(1)
@@ -218,7 +217,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                   {product.description}
                 </Typography>
                 <br />
-                <Typography className={classes.directionsHeader} variant="h6">
+                <Typography className={classes.directionsHeader} variant="h4">
                   DIRECTIONS
                 </Typography>
                 <Typography variant="body1">
