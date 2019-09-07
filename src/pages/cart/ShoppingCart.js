@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Box,  withStyles} from '@material-ui/core';
-import CloseIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import CloseIcon from '@material-ui/icons/Close';
 import CartDrawer from './CartDrawer';
 import Badge from '@material-ui/core/Badge/Badge';
 
