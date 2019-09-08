@@ -25,7 +25,7 @@ const RouteWithSubRoutes = ({
     Component = () => <Redirect to={redirectPath} />;
   } else if (nonAuth && currentUser.account_jwt) {
     if (!redirectPath) {
-      redirectPath = '/account';
+      redirectPath = '/gallery';
     }
     Component = () => <Redirect to={redirectPath} />;
   }
