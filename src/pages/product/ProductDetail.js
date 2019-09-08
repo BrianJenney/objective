@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider } from '@material-ui/core';
+import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Container } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 
@@ -81,7 +81,18 @@ const StyledButton = withStyles(theme => ({
 
 const ProductVariant = ({ productVariant }) => {
   const classes = useStyles();
-  return productVariant ? (<Typography className={classes.variant} variant="h5"><strong>${productVariant.effectivePrice}</strong> / {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}</Typography>
+  return productVariant ? (
+    <Box display="flex" flexDirection="row" alignItems="flex-start" className="pdp-product-variant">
+      <div className="pdp-price">
+        ${productVariant.effectivePrice}
+      </div>
+      <div className="pdp-price-slash">
+        /
+        </div>
+      <div className="pdp-price-description">
+        {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
+      </div>
+    </Box>
   ) : null;
 };
 
@@ -157,7 +168,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                 </Box>
                 <Typography className="pdp-subtitle">{product.subtitle}</Typography>
                 <br />
-                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
+                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} className="emily" />
                 <Typography className="pdp-description">{product.description}</Typography>
                 <br />
                 <Typography className="pdp-direction">DIRECTIONS</Typography>

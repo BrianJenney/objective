@@ -8,13 +8,14 @@ html,
   letter-spacing: normal;
   text-align: center;
   color: #003732;
-  padding-bottom: 15px;
+  padding-bottom: 30px;
 }
 
 .pdp-subtitle {
   border-top: 0.01rem solid;
-  border-bottom: 0.1rem solid;
+  border-bottom: 0.01rem solid;
   border-width: 100%;
+  padding: 10px 0 10px 0;
 }
 
 .pdp-description {
@@ -57,6 +58,40 @@ html,
   text-align: left;
 }
 
+.pdp-product-variant {
+  padding-bottom: 30px;
+}
+
+.pdp-price {
+  font-family: P22Underground, Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: #231f20;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 2px;
+  color: #231f20;
+  padding-top: 2px;
+}
+
+.pdp-price-slash {
+  width: 10px;
+  font-size: 30px;
+  color: #979797;
+}
+
+.pdp-price-description {
+  width: 170px;
+  height: 11px;
+  font-family: P22Underground, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #000000;
+  padding-top: 4px;
+}
+  
 @media only screen and (min-width: 735.99px) {
   .pdp-subtitle {
   font-size: 22px;
