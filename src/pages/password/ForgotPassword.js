@@ -43,11 +43,21 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  title: {
+    width: theme.spacing(55),
+    textAlign: 'center',
+    fontSize: '32px'
+  },
+  subTitle: {
+    width: theme.spacing(70),
+    textAlign: 'center',
+    paddingTop: '10px'
   }
 }));
 
 const ForgotPassword = () => {
-  console.log('heree forgot password');
+  console.log('here forgot password');
   const classes = useStyles();
 
   const handleSubmit = ({ email }) => {
@@ -79,9 +89,10 @@ const ForgotPassword = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Forgot your email / password ?
+        <Typography className={classes.title} component="h1" variant="h5">
+          Forgot your email / password?
         </Typography>
+        <Typography component='subtitle1' className={classes.subTitle}>It's easy to forget. Enter your email address and we'll send you a reset link.</Typography>
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
