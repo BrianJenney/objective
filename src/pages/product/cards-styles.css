@@ -13,6 +13,12 @@ h2 {
   color: #000000;
 }
 
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper {
+    margin-bottom: 50px;
+  }
+}
+
 .label-info-wrapper h2 {
   font-size: 2rem;
   font-family: Canela, serif;

@@ -162,7 +162,7 @@ const ProductDetail = ({ variantSlug, history }) => {
           </Grid>
           <Grid item xs={12} sm={5}>
             <Card className={classes.box}>
-              <CardContent className={classes.cardRootOverrides}>
+              <CardContent className={classes.cardRootOverrides} className="pdp-content">
                 <Box>
                   <Typography className="pdp-header" variant="h1">{product.name}</Typography>
                 </Box>
