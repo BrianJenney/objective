@@ -13,7 +13,9 @@ import {
   AccountProfilePage,
   CheckoutPage,
   ForgotPassword,
-  ConfirmPassword
+  ConfirmPassword,
+  ResetPassword,
+  ResetSuccess
 } from './pages';
 
 export default [
@@ -71,6 +73,7 @@ export default [
   },
   { path: '/password/forgot', exact: true, component: ForgotPassword },
   { path: '/password/confirm', exact: true, component: ConfirmPassword },
-  { path: '/password/reset', exact: true, component: ConfirmPassword },
+  { path: '/password/reset', exact: true, component: ResetPassword },
+  { path: '/password/success', exact: true, component: ResetSuccess },
   { path: '/:page', exact: true, component: StaticPage }
 ];
