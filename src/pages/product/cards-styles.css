@@ -94,12 +94,26 @@ h2 {
   letter-spacing: normal;
 }
 
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper .top-block .card ul.fineprint li,
+  .label-info-wrapper .bottom-block .card ul.fineprint li {
+    font-size: 18px;
+    margin-left: 50px;
+  }
+}
+
 .label-info-wrapper .top-block {
   border-top: 1px solid;
   margin-top: 30px;
   padding-bottom: 45px;
   padding-top: 20px;
   text-align: left;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper .top-block {
+  padding-top: 60px !important;
+  }
 }
 
 .label-info-wrapper .top-block ul {
@@ -168,6 +182,10 @@ h2 {
   .label-info-wrapper .top-block .facts-table table th:nth-child(2) {
     width: 19.380531%;
   }
+  .label-info-wrapper .top-block .facts-table table td,
+.label-info-wrapper .top-block .facts-table table th {
+  padding: 30px 20px;
+}
 }
 
 .label-info-wrapper .bottom-block {
@@ -194,14 +212,17 @@ h2 {
 }
 
 .label-info-wrapper .bottom-block .other-ingredients {
-  /* border-right: solid 1px #003833;
-  border-left: solid 1px #003833;
-  border-bottom: solid 1px #003833; */
   text-align: left;
 }
 
 .label-info-wrapper .bottom-block .other-ingredients h6 {
   margin-left: 20px;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper .bottom-block .other-ingredients h6 {
+    margin: 0;
+  }
 }
 
 .label-info-wrapper .bottom-block .other-ingredients ul {
@@ -214,8 +235,7 @@ h2 {
 
 @media only screen and (min-width: 735.99px) {
   .label-info-wrapper .bottom-block .other-ingredients {
-    border-left: 0;
-    border-bottom: 0;
+    border-right: solid 1px;
   }
 
   .label-info-wrapper .bottom-block .other-ingredients h6 {
