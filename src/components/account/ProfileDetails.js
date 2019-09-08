@@ -67,8 +67,11 @@ class ProfileDetails extends React.Component {
 
     return (
       <Container>
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h1" gutterBottom>
           Your Profile
+        </Typography>
+        <Typography variant="h3" gutterBottom>
+          NAME {'&'} EMAIL
         </Typography>
 
         <Grid container spacing={3}>

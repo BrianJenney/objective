@@ -76,7 +76,7 @@ class ChangePassword extends React.Component {
     return (
       <Container>
         <Typography variant="h3" gutterBottom>
-          Change Password
+          CHANGE PASSWORD
         </Typography>
 
         <Grid container spacing={3}>

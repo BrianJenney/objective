@@ -22,6 +22,11 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  body: {
+    width: theme.spacing(50),
+    paddingTop: '10px',
+    textAlign: 'center'
   }
 }));
 
@@ -32,11 +37,11 @@ const ConfirmPassword = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography variant="h5">
+        <Typography component='h2' variant="h5">
           We have sent you an email
         </Typography>
       </div>
-      <Typography variant="body1">
+      <Typography className={classes.body} variant="body1">
         If you email exists in our system you will receive a link to reset your password shortly.
         </Typography>
     </Container>

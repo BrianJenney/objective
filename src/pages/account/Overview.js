@@ -3,31 +3,38 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 const pStyle = {
   padding: 15
 };
 
+const useStyles = makeStyles(theme => ({
+  space: {
+    padding: '15px'
+  }
+}));
+
 const AccountOverview = props => {
   const { currentUser } = props;
-
+  const classes = useStyles();
   return (
     <Container style={pStyle}>
       <Grid item xs={12}>
         <Paper>
-        <Typography variant="h1" gutterBottom>
+        <Typography className={classes.space} variant="h1" gutterBottom>
             Welcome, {currentUser.firstName} {currentUser.lastName}!
           </Typography>
-          <Typography variant="h2" gutterBottom>
-            NAME <span>{currentUser.firstName} {currentUser.lastName}</span>
+          <Typography className={classes.space} variant="h3" gutterBottom>
+            NAME {currentUser.firstName} {currentUser.lastName}
           </Typography>
-          <Typography variant="h2" gutterBottom>
-            EMAIL <span>{currentUser.email}</span>
+          <Typography className={classes.space} variant="h3" gutterBottom>
+            EMAIL {currentUser.email}
           </Typography>
-          <Typography variant="h2" gutterBottom>
-            PASSWORD <span>******</span>
+          <Typography className={classes.space} variant="h3" gutterBottom>
+            PASSWORD ******
           </Typography>
-          <Typography variant="h2" gutterBottom>
+          <Typography className={classes.space} variant="h3" gutterBottom>
             SAVED PAYMENT METHOD 
           </Typography>
         </Paper>
