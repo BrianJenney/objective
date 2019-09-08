@@ -13,7 +13,11 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_FETCH_STOREFRONT:
       return { ...state };
     case RECEIVED_FETCH_STOREFRONT:
-      localStorageClient.set('catalogId', action.payload.catalogId);
+      if (typeof action.payload == 'undefined') {
+        console.log('need to handle this gracefully');
+      } else {
+        localStorageClient.set('catalogId', action.payload.catalogId);
+      }
       return { ...state, ...action.payload };
     default:
       return state;
