@@ -35,6 +35,9 @@ h2 {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+  h2 {
+  font-size: 40px !important;
+  }
 }
 
 .label-info-wrapper .top-block,
@@ -340,6 +343,12 @@ h2 {
   .how-it-works-wrapper .topBlock .leftCol,
   .how-it-works-wrapper .topBlock .rightCol {
     width: 49%;
+    text-align: left;
+  }
+
+  .colTextBody {
+    text-align: left;
+    margin: 0 !important;
   }
 }
 
@@ -427,6 +436,15 @@ h2 {
   border-top: solid 1px #003833;
 }
 
+@media only screen and (min-width: 735.99px) {
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
+  border-top: solid 1px #003833;
+  border-left: solid 1px #003833;
+  margin-right: 2.2px;
+}
+}
+
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle,
 .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle {
   display: flex;
@@ -446,7 +464,11 @@ h2 {
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle img,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle img {
-    margin: 0 40px 0 20px;
+    margin: 0 0 0 20px;
+    border-bottom: none !important;
+  }
+  .blockTitle {
+    margin: 0 !important;
   }
 }
 
@@ -466,7 +488,7 @@ h2 {
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle h6,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle h6 {
-    margin: 70px 0;
+    margin: 70px 0 70px 20px;
   }
 }
 
@@ -474,6 +496,7 @@ h2 {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle {
     flex-direction: row;
+    border-bottom: none !important;
   }
 }
 
@@ -575,8 +598,9 @@ h2 {
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTextBody,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTextBody {
-    margin-left: 40px;
+    margin-left: 15px;
     margin-right: 70px;
+    margin-top: 60px;
   }
 }
 
