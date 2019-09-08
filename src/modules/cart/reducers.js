@@ -5,6 +5,7 @@ import {
   RECEIVED_FETCH_CART,
   REQUEST_PATCH_CART,
   RECEIVED_PATCH_CART,
+  SET_CART_DRAWER_OPENED,
 } from './types';
 
 const localStorageClient = require('store');
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
   items: [],
   subtotal: 0,
   total: 0,
+  cartDrawerOpened: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -30,6 +32,8 @@ export default (state = INITIAL_STATE, action) => {
     return { ...state };
   case RECEIVED_PATCH_CART:
     return { ...state, ...action.payload };
+  case SET_CART_DRAWER_OPENED:
+    return {...state, cartDrawerOpened: action.payload};
   default:
     return state;
   }
