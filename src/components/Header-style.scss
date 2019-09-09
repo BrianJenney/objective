@@ -68,3 +68,9 @@
 .text-center {
   text-align: center;
 }
+
+@media (max-width: 450px) {
+  .headerContainer {
+    min-height: 117px;
+  }
+}

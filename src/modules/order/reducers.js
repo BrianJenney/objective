@@ -1,6 +1,8 @@
 import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER,
+  REQUEST_FIND_ALL_ORDERS,
+  RECEIVED_FIND_ALL_ORDERS,
   REQUEST_FIND_ORDERS_BY_ACCOUNT
 } from './types';
 
@@ -11,6 +13,10 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_CREATE_ORDER:
       return { ...state };
     case RECEIVED_CREATE_ORDER:
+      return { ...state, ...action.payload };
+    case REQUEST_FIND_ALL_ORDERS:
+      return { ...state };
+    case RECEIVED_FIND_ALL_ORDERS:
       return { ...state, ...action.payload };
     case REQUEST_FIND_ORDERS_BY_ACCOUNT:
       return { ...state };

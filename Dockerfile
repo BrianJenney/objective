@@ -1,19 +1,19 @@
-FROM node:10
+# Stage 1 build the app with node
+FROM node:10 as build-stage
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /app/package.json
+RUN npm install --silent
+COPY . /app
+COPY build_env /app/.env
+RUN npm run build
 
-# Create app directory
-WORKDIR /usr/src/app
+# Stage 2, based on Nginx, to have only the compiled app,
+FROM nginx:1.16.0-alpine
+COPY --from=build-stage /app/build/ /usr/share/nginx/html
 
-# Install app dependencies
-ARG NPM_TOKEN
-ENV NPM_TOKEN=$NPM_TOKEN
-RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-COPY package*.json ./
-RUN npm install
-RUN rm -f .npmrc
+# Copy the default nginx.conf provided by tiangolo/node-frontend
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
-# If you are building your code for production
-RUN npm ci --only=production
-
-# Bundle app source
-COPY . .
-CMD [ "npm", "start" ]
