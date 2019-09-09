@@ -81,13 +81,11 @@ class App extends Component {
         <CssBaseline />
         <BrowserRouter>
           <Header />
-          <Box bgcolor="rgba(252, 248, 244, 0.5)" px={15} py={10}>
-            <Switch>
-              {routes.map(route => (
-                <RouteWithSubRoutes key={route.path} {...route} />
-              ))}
-            </Switch>
-          </Box>
+          <Switch>
+            {routes.map(route => (
+              <RouteWithSubRoutes key={route.path} {...route} />
+            ))}
+          </Switch>
           <Footer />
         </BrowserRouter>
       </>

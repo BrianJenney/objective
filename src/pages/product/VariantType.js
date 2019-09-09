@@ -9,7 +9,7 @@ import {
   InputLabel,
   FormControl
 } from '@material-ui/core';
-
+import './PDP-style.css';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -36,11 +36,13 @@ const VariantType = ({
     },
     [dispatch]
   );
-  console.log('VariantType', { variantValue });
+
   return (
     <Grid container direction={isMobile ? 'column' : 'row '} spacing={7}>
       <Grid item alignItems="flex-start">
-        <Typography variant="h4">{variantType.toUpperCase()}</Typography>
+        <Typography className="pdp-product-type">
+          {variantType.toUpperCase()}
+        </Typography>
       </Grid>
 
       <FormControl variant="outlined" className={classes.formControl}>
