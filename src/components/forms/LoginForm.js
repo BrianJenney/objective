@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography } from '@material-ui/core';
+import {
+  Grid,
+  Typography,
+  FormControlLabel,
+  Checkbox
+} from '@material-ui/core';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Button } from '../common';
@@ -40,6 +45,10 @@ const LoginForm = ({ title, onSubmit }) => {
             autoComplete="current-password"
           />
         </Grid>
+        <FormControlLabel
+          control={<Checkbox value="remember" color="primary" />}
+          label="Remember me"
+        />
         <Grid item xs={12}>
           <Button fullWidth type="submit" children="Login" />
         </Grid>

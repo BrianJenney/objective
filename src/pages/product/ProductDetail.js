@@ -11,7 +11,7 @@ import {
   CardActions,
   Grid
 } from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import { Button } from '../../components/common';
@@ -24,24 +24,17 @@ import {
 } from '../../utils/product';
 import './PDP-style.css';
 import MailOutline from '@material-ui/icons/MailOutline';
-// import ProductType from './ProductType';
-import ProductVariantType from './ProductVariantType';
+import ProductPopUp from './ProductPopUp';
 import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
-import { AlertPanel } from '../../components/common';
+// import { setCartDrawerOpened } from '../../modules/cart/actions';
+
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
-    width: '100%',
     maxWidth: '464px'
-    // padding: '0 !important'
-  },
-  wrapperMaxWidth: {
-    maxWidth: '86% !important',
-    padding: theme.spacing(10, 10)
   },
   cardRootOverrides: {
-    padding: 0,
     display: 'flex',
     flexDirection: 'column'
   },
@@ -52,18 +45,21 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
-  button: {
+  btnATC: {
     height: '80px',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold'
   },
-  inform: {
+  btnOOS: {
     border: '1.5px solid',
     backgroundColor: theme.palette.common.white,
     height: '80px',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
-    color: theme.palette.common.black
+    color: theme.palette.common.black,
+    '&:hover': {
+      backgroundColor: theme.palette.common.white
+    }
   },
   icon: {
     marginRight: '10px'
@@ -92,9 +88,11 @@ const ProductDetail = ({ variantSlug, history }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices } = useContext(ProductContext);
-  const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  // const windowSize = useWindowSize();
   // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
   const defaultSku = getVariantSkuBySlug(variants, variantSlug);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
@@ -144,6 +142,10 @@ const ProductDetail = ({ variantSlug, history }) => {
     dispatch
   ]);
 
+  const handleEmailPopup = () => {
+    setOpen(true);
+  };
+
   const updateTerminalVariant = useCallback(
     terminalVariant => {
       /*
@@ -168,18 +170,12 @@ const ProductDetail = ({ variantSlug, history }) => {
 
   if (product === null || variants.length === 0) return null;
 
-  const isMobile = windowSize.width < 944;
+  // const isMobile = windowSize.width < 944;
 
   return (
     <>
       <Grid container className={classes.gridModifications} xs={12} sm={12}>
-        <Grid
-          container
-          justify="space-between"
-          xs={10}
-          sm={11}
-          className={classes.wrapperMaxWidth}
-        >
+        <Grid container justify="space-between" xs={10} sm={11}>
           <Grid item xs={12} sm={6}>
             <Carousel prodId={product._id} />
           </Grid>
@@ -210,18 +206,18 @@ const ProductDetail = ({ variantSlug, history }) => {
                   Take one soft gel daily with meal
                 </Typography>
 
-                <ProductVariantType
+                {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
-                />
+                /> */}
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && (
                 <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
-                      className={classes.button}
+                      className={classes.btnATC}
                       fullWidth
                       onClick={handleAddToCart}
                       disabled={selectedVariantSku === null}
@@ -231,21 +227,21 @@ const ProductDetail = ({ variantSlug, history }) => {
                   </CardActions>
                 </Grid>
               )}
+
               {/* Render this button when Product is out of stock */}
-              {AlertPanel && (
-                <Grid>
-                  <CardActions className={classes.maxWidth}>
-                    <Button
-                      className={classes.inform}
-                      fullWidth
-                      onClick={handleAddToCart}
-                    >
-                      <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
-                      AVAILABLE
-                    </Button>
-                  </CardActions>
-                </Grid>
-              )}
+              <Grid>
+                <CardActions className={classes.maxWidth}>
+                  <Button
+                    className={classes.btnOOS}
+                    fullWidth
+                    onClick={handleEmailPopup}
+                  >
+                    <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
+                    AVAILABLE
+                  </Button>
+                </CardActions>
+                {open && <ProductPopUp />}
+              </Grid>
             </Card>
           </Grid>
         </Grid>
