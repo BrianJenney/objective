@@ -35,6 +35,8 @@ pipelines:
             # push to repo
             - docker push ${AWS_REGISTRY_URL}:latest
             - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
+            # deploy to stagging site
+            - curl -X POST ${UPDATE_WEBHOOK}
         services:
           - docker
         caches:
