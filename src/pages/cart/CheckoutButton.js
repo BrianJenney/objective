@@ -15,7 +15,7 @@ class CheckoutButton extends Component {
     console.log('from CheckoutButton ====>', this.props, '<====');
     return (
       <Grid container xs={12}>
-        <Grid item xs={12} style={{ display: 'flex' }}>
+        <Grid item xs={12} style={{ display: 'flex', paddingBottom: '30px' }}>
           <StyledCheckoutButton
             style={{ margin: '0 auto' }}
             onClick={onClick}
