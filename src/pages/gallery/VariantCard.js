@@ -10,16 +10,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuantity, useWindowSize } from '../../hooks';
 import { useSnackbar } from 'notistack';
 import { addToCart } from '../../utils/cart';
-import ATCSnackbarAction from "../../components/common/ATCSnackbarAction";
+import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+import '../../assets/styles/_variables.scss';
 
 const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
   return variant ? (
-    <Typography variant="body1">
+    <div>
       <strong>${variant.effectivePrice}</strong> / {variant.variantInfo.size}{' '}
       {variant.variantInfo.prodType}
-    </Typography>
+    </div>
   ) : null;
 };
 
@@ -29,45 +30,72 @@ const VariantCard = ({ variant, product }) => {
   const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  const message = <ATCSnackbarAction variant={variant} />
+  const message = <ATCSnackbarAction variant={variant} />;
 
-  const updateQuantityToCart = useCallback(qty => {
+  const updateQuantityToCart = useCallback(
+    qty => {
       addToCart(localStorageClient.get('cartId'), cart, variant, qty, dispatch);
       enqueueSnackbar(message, { variant: 'success' });
     },
     [cart, variant, message, dispatch, enqueueSnackbar]
   );
-  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+  const [quantity, setQuantity, Quantity] = useQuantity(
+    updateQuantityToCart,
+    'QTY'
+  );
 
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, variant, quantity, dispatch);
-    enqueueSnackbar(message, {variant: 'success'});
+    addToCart(
+      localStorageClient.get('cartId'),
+      cart,
+      variant,
+      quantity,
+      dispatch
+    );
+    enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
   }, [cart, variant, message, quantity, enqueueSnackbar, dispatch]);
 
   return (
-    <Card>
+    <Card className="gallery-prod-card">
       <CardMedia
-        style={{ height: 355, width: 200, margin: '10px 90px' }}
+        style={{ height: 500, width: 324 }}
         image={variant.assets.imgs}
         title={variant.name}
+        className="gallery-prod-img"
       />
-      <CardContent>
-        <Typography variant="body1">
-          <Link to={`/products/${product.slug}/${variant.slug}`}>
-            {variant.name}
-          </Link>
-        </Typography>
-        <PriceVariantInfo variant={variant} />
-        {!ATCEnabled && <Quantity />}
+      <CardContent className="pding">
+        <div className="prod-name-holder">
+          <Typography variant="body1">
+            <Link
+              to={`/products/${product.slug}/${variant.slug}`}
+              className="title"
+            >
+              {variant.name}
+            </Link>
+          </Typography>
+        </div>
+        <div className="variant-info">
+          <PriceVariantInfo variant={variant} />
+        </div>
       </CardContent>
-      {ATCEnabled && (
-        <CardActions>
-          <Button variant="contained" color="primary" onClick={handleAddToCart}>
-            ADD TO CART
-          </Button>
-        </CardActions>
-      )}
+      <div className="cta-area">
+        {ATCEnabled ? (
+          <CardActions className="pding">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddToCart}
+              fullWidth={true}
+              className="atc-button"
+            >
+              ADD TO CART
+            </Button>
+          </CardActions>
+        ) : (
+          <Quantity className="pding" />
+        )}
+      </div>
     </Card>
   );
 };

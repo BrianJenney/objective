@@ -5,10 +5,6 @@ import Typography from '@material-ui/core/Typography';
 
 export default class Home extends Component {
   render() {
-    return (
-      <Container>
-        <Gallery />
-      </Container>
-    );
+    return <Gallery />;
   }
 }
