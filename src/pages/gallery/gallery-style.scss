@@ -1,0 +1,62 @@
+.opt1,
+.opt2 {
+  border: 1px solid #8b3a26;
+}
+.gallery-hero {
+  width: 100%;
+}
+
+.opt2 {
+  padding: 0 !important;
+  .gallery-prod-card {
+    text-align: center;
+    .prod-name-holder {
+      min-height: 52px;
+      margin-bottom: 10px;
+      .title {
+        line-height: 1.18;
+        text-align: center;
+        color: #88341f;
+        font-size: 21px;
+        text-decoration: none;
+      }
+    }
+    .variant-info {
+      color: #525252;
+      font-size: 14px;
+      letter-spacing: 0.7px;
+      line-height: 1.8;
+      font-family: p22-underground, sans-serif;
+      margin-bottom: 20px;
+      strong {
+        font-size: 18px;
+        color: #000000;
+      }
+    }
+    .atc-button {
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 2.14;
+      letter-spacing: 1.2px;
+      padding: 15px 10px;
+      font-family: p22-underground, sans-serif;
+    }
+    .qty-button {
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 2.14;
+      letter-spacing: 1.2px;
+      padding: 0px 10px;
+      font-family: p22-underground, sans-serif;
+      margin: 8px 0;
+    }
+    .cta-area {
+      margin-bottom: 10px;
+    }
+  }
+  .gallery-prod-img {
+    width: 100% !important;
+    height: 350px !important;
+    margin-bottom: 15px;
+  }
+}
