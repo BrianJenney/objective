@@ -83,12 +83,20 @@ class Cart extends React.Component {
                 ({this.props.cart.items.length} Items)
               </StyledCartCount>
             </Grid>
-            <Grid container direction="row" alignItems="flex-end">
-              <StyledSmallCaps component="span">
-                proceed to checkout
+            <Link
+              to="/checkout"
+              style={{
+                color: 'black',
+                'text-decoration': 'none',
+              }}
+            >
+              <Grid container direction="row" alignItems="flex-end">
+                <StyledSmallCaps component="span">
+                  proceed to checkout
               </StyledSmallCaps>
-              <RightArrow />
-            </Grid>
+                <RightArrow />
+              </Grid>
+            </Link>
           </StyledHeaderWrapper>
         </div>
         <Grid container xs={12}>
