@@ -41,7 +41,7 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
       return { ...state, orders: action.payload };
     case REQUEST_LOGOUT:
-      return INITIAL_STATE;
+      return {};
     case REQUEST_FORGOT_PASSWORD:
       return state;
     default:

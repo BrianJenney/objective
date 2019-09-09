@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
-import { omit } from 'lodash';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -10,65 +9,64 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
-import { InputField } from '../form-fields';
+import { InputField } from '../../components/form-fields';
 
 const pStyle = {
   padding: 20,
   textAlign: 'center'
 };
 const schema = object().shape({
-  firstName: string(),
-  lastName: string(),
-  email: string().email('Please enter a valid email.')
+  newPassword1: string()
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Both fields are required!'),
+  newPassword2: string()
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Both fields are required!')
 });
 
-class ProfileDetails extends React.Component {
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.getAll('tk').toString();
+
+class ResetPassword extends React.Component {
   renderForm = () => {
     return (
-      <Form>
-        <Grid container>
-          <Grid item xs={6}>
-            <Field label="First Name" name="firstName" component={InputField} />
-          </Grid>
-          <Grid item xs={6}>
-            <Field label="Last Name" name="lastName" component={InputField} />
+      <Container>
+        <Form>
+          <Grid item xs={12}>
+            <Field
+              label="New Password"
+              name="newPassword1"
+              helperText="Must be at least 6 characters"
+              component={InputField}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Field label="Email" name="email" component={InputField} />
+            <Field
+              label="Confirm New Password"
+              name="newPassword2"
+              component={InputField}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Field label="Phone Number" name="phone" component={InputField} />
+            <Button type="submit">Change Password</Button>
           </Grid>
-          <Grid item xs={12}>
-            <Button type="submit">Save Changes</Button>
-          </Grid>
-        </Grid>
-      </Form>
+        </Form>
+      </Container>
     );
   };
 
-  handleSubmit = (values) => {
-    store.dispatch(requestPatchAccount(this.props.account.account_jwt, values));
+  handleSubmit = values => {
+    store.dispatch(requestPatchAccount(token, values));
+    window.location = '/password/success';
   };
 
   render() {
-    const { account } = this.props;
-
-    const INITIAL_VALUES = {
-      firstName: account.firstName,
-      lastName: account.lastName,
-      email: account.email,
-      phone:account.phone
-    };
-
-    if (!account.account_jwt) {
-      return <div>No Account</div>;
-    }
+    const INITIAL_VALUES = {};
 
     return (
       <Container>
         <Typography variant="h3" gutterBottom>
-          Your Profile
+          Change Password
         </Typography>
 
         <Grid container spacing={3}>
@@ -100,4 +98,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileDetails);
+)(ResetPassword);

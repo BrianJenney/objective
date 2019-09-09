@@ -24,9 +24,9 @@ import {
   getVariantMap
 } from '../../utils/product';
 
-import ProductType from './ProductType';
 import ProductVariantType from './ProductVariantType';
 
+import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
@@ -38,9 +38,6 @@ const useStyles = makeStyles(theme => ({
   wrapperMaxWidth: {
     maxWidth: '86% !important'
   },
-  resetButtonPadding: {
-    padding: 0
-  },
   cardRootOverrides: {
     padding: 0,
     backgroundColor: 'transparent',
@@ -51,35 +48,15 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'transparent'
   },
   title: {
-    margin: 0,
-    lineHeight: '1em',
     paddingBottom: theme.spacing(2),
     color: '#004d40'
-  },
-  subtitle: {
-    margin: 0,
-    marginTop: theme.spacing(1)
   },
   gridModifications: {
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
-  padding: {
-    padding: '60px 81px'
-  },
   divider: {
     border: '.5px solid'
-  },
-  directionsHeader: {
-    padding: 0,
-    lineHeight: '.7rem',
-    marginBottom: theme.spacing(1)
-  },
-  flexEnd: {
-    alignSelf: 'flex-end'
-  },
-  flexStart: {
-    alignSelf: 'flex-start'
   }
 }));
 
@@ -116,23 +93,30 @@ const ProductDetail = ({ variantSlug, history }) => {
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
-  const updateQuantityToCart = qty => {
-    if (selectedVariantSku === null) return;
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variantMap.get(selectedVariantSku),
-      qty,
-      dispatch
-    );
-    enqueueSnackbar(`${qty} ${selectedVariantSku} added to cart`, {
-      variant: 'success'
-    });
-  };
+
+  const message = (
+    <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+  );
+
+  const updateQuantityToCart = useCallback(
+    qty => {
+      if (selectedVariantSku === null) return;
+      addToCart(
+        localStorageClient.get('cartId'),
+        cart,
+        variantMap.get(selectedVariantSku),
+        qty,
+        dispatch
+      );
+      enqueueSnackbar(message, { variant: 'success' });
+    },
+    [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]
+  );
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
     'QTY'
   );
+
   const handleAddToCart = useCallback(() => {
     addToCart(
       localStorageClient.get('cartId'),
@@ -141,14 +125,13 @@ const ProductDetail = ({ variantSlug, history }) => {
       quantity,
       dispatch
     );
-    enqueueSnackbar(`${quantity} ${selectedVariantSku} added to cart`, {
-      variant: 'success'
-    });
+    enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
   }, [
     cart,
     selectedVariantSku,
     variantMap,
+    message,
     quantity,
     enqueueSnackbar,
     dispatch
@@ -196,7 +179,7 @@ const ProductDetail = ({ variantSlug, history }) => {
           </Grid>
           <Grid item xs={12} sm={5}>
             <Card className={classes.box}>
-              <CardContent className={classes.cardRootOverrides}>
+              <CardContent>
                 <Box>
                   <Typography className={classes.title} variant="h1">
                     {product.name}
@@ -207,9 +190,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                 </Box>
                 <Divider variant="fullWidth" className={classes.divider} />
                 <Box>
-                  <Typography className={classes.subtitle} variant="h6">
-                    {product.subtitle}
-                  </Typography>
+                  <Typography variant="h6">{product.subtitle}</Typography>
                 </Box>
                 <Divider variant="fullWidth" className={classes.divider} />
                 <br />
@@ -217,9 +198,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                   {product.description}
                 </Typography>
                 <br />
-                <Typography className={classes.directionsHeader} variant="h4">
-                  DIRECTIONS
-                </Typography>
+                <Typography variant="h4">DIRECTIONS</Typography>
                 <Typography variant="body1">
                   Take one soft gel daily with meal
                 </Typography>
@@ -230,6 +209,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 />
+
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && (

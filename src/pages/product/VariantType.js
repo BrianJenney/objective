@@ -36,6 +36,7 @@ const VariantType = ({
     },
     [dispatch]
   );
+  console.log('VariantType', { variantValue });
   return (
     <Grid container direction={isMobile ? 'column' : 'row '} spacing={7}>
       <Grid item alignItems="flex-start">

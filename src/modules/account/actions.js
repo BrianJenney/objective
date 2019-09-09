@@ -161,6 +161,7 @@ export const receivedLoginFailure = loginError => dispatch => {
 };
 
 export const requestLogout = () => dispatch => {
+  localStorageClient.remove('token');
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}

@@ -20,33 +20,36 @@ export class ProductStore extends Component {
 
   componentDidMount() {
     EventEmitter.addListener('product.request.find', data => {
-      this.setState({ ...this.state, 'product': data.data.data[0] });
+      this.setState({ ...this.state, product: data.data.data[0] });
     });
     EventEmitter.addListener('variant.request.find', data => {
-      this.setState({ ...this.state, 'variants': data.data.data });
+      this.setState({ ...this.state, variants: data.data.data });
     });
     EventEmitter.addListener('price.request.find', data => {
-      this.setState({ ...this.state, 'prices': data.data.data });
+      this.setState({ ...this.state, prices: data.data.data });
     });
     EventEmitter.addListener('content.request.find', data => {
       this.setState({
         ...this.state,
-        'hiwTab': data.data.data[0].content,
-        'infoTab': data.data.data[1].content,
-        'whhmBoxes': data.data.data[2].content,
-        'stepBoxes': data.data.data[3].content,
+        hiwTab: data.data.data[0].content,
+        infoTab: data.data.data[1].content,
+        whhmBoxes: data.data.data[2].content,
+        stepBoxes: data.data.data[3].content
       });
     });
     this.getProductData();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.productSlug !== this.props.productSlug)
-      this.getProductData();
+    if (prevProps.productSlug !== this.props.productSlug) this.getProductData();
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    const updated = !(nextState.product === null || nextState.variants.length === 0 || nextState.prices.length === 0)
+    const updated = !(
+      nextState.product === null ||
+      nextState.variants.length === 0 ||
+      nextState.prices.length === 0
+    );
     return updated;
   }
 
@@ -56,63 +59,80 @@ export class ProductStore extends Component {
     const replyTo = stomp.replyTo;
 
     let params = {
-      'params': {
-        'query': {
-          'slug': this.props.productSlug
+      params: {
+        query: {
+          slug: this.props.productSlug
         }
       }
     };
 
     let obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/product/product.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/product/product.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
 
     params = {
-      'params': {
-        'query': {
-          'prodSlug': this.props.productSlug
+      params: {
+        query: {
+          prodSlug: this.props.productSlug
         }
       }
     };
 
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/variant/variant.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/variant/variant.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
 
     let re = new RegExp(this.props.productSlug + '$');
     params = {
-      'params': {
-        'query': {
-          'comp': re
+      params: {
+        query: {
+          comp: re
         }
       }
     };
 
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/content/content.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/content/content.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
 
     params = {
-      'params': {
-        'query': {
-          'prodSlug': this.props.productSlug
+      params: {
+        query: {
+          prodSlug: this.props.productSlug
         }
       }
     };
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/price/price.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/price/price.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
   }
 
   render() {
+    console.log('PRODUCT', this.props.children);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}
