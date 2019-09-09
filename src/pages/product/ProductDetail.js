@@ -3,27 +3,16 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Grid,
-  Divider
-} from '@material-ui/core';
+import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Container } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 
 import Carousel from '../../components/ProductSlider/PDPSlider';
+
 import './overrides.css';
 import { addToCart } from '../../utils/cart';
-import {
-  getPrices,
-  getVariantSkuBySlug,
-  getVariantMap
-} from '../../utils/product';
+import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
+import './PDP-style.css';
 
 // import ProductType from './ProductType';
 // import ProductVariantType from './ProductVariantType';
@@ -40,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '86% !important'
   },
   resetButtonPadding: {
-    padding: 0
+    padding: 0,
   },
   cardRootOverrides: {
     padding: 0,
@@ -51,16 +40,6 @@ const useStyles = makeStyles(theme => ({
   box: {
     backgroundColor: 'transparent'
   },
-  title: {
-    margin: 0,
-    lineHeight: '1em',
-    paddingBottom: theme.spacing(2),
-    color: '#004d40'
-  },
-  subtitle: {
-    margin: 0,
-    marginTop: theme.spacing(1)
-  },
   gridModifications: {
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
@@ -70,12 +49,6 @@ const useStyles = makeStyles(theme => ({
   },
   divider: {
     border: '.5px solid'
-  },
-  directionsHeader: {
-    fontSize: '.9rem',
-    padding: 0,
-    lineHeight: '.7rem',
-    marginBottom: theme.spacing(1)
   },
   flexEnd: {
     alignSelf: 'flex-end'
@@ -105,20 +78,19 @@ const StyledButton = withStyles(theme => ({
 }))(Button);
 
 const ProductVariant = ({ productVariant }) => {
+  const classes = useStyles();
   return productVariant ? (
-    <Grid container alignItems="center" spacing={2}>
-      <Grid item>
-        <Typography gutterBottom variant="h5">
-          <strong>${productVariant.effectivePrice}</strong>
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Typography gutterBottom variant="h6">
-          / {productVariant.variantInfo.size}{' '}
-          {productVariant.variantInfo.prodType}
-        </Typography>
-      </Grid>
-    </Grid>
+    <Box display="flex" flexDirection="row" alignItems="flex-start" className="pdp-product-variant">
+      <div className="pdp-price">
+        ${productVariant.effectivePrice}
+      </div>
+      <div className="pdp-price-slash">
+        /
+      </div>
+      <div className="pdp-price-description">
+        {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
+      </div>
+    </Box>
   ) : null;
 };
 
@@ -142,13 +114,13 @@ const ProductDetail = ({ variantSlug, history }) => {
     if (selectedVariantSku === null)
       return;
     addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
-    enqueueSnackbar(message, {variant: 'success'});
+    enqueueSnackbar(message, { variant: 'success' });
   }, [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]);
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
     addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
-    enqueueSnackbar(message, {variant: 'success'});
+    enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
   }, [cart, selectedVariantSku, variantMap, message, quantity, enqueueSnackbar, dispatch]);
 
@@ -162,12 +134,11 @@ const ProductDetail = ({ variantSlug, history }) => {
       setSelectedProductVariant(getVariantByTerminalVariant(variants, pricesMap, terminalVariant));
     }
      */
-      setSelectedVariantSku(terminalVariant['Product Type']);
-      setQuantity(1);
-      setATCEnabled(true);
-    },
-    [setSelectedVariantSku, setQuantity]
-  );
+    setSelectedVariantSku(terminalVariant['Product Type']);
+    setQuantity(1);
+    setATCEnabled(true);
+
+  }, [setSelectedVariantSku, setQuantity]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -194,63 +165,28 @@ const ProductDetail = ({ variantSlug, history }) => {
           </Grid>
           <Grid item xs={12} sm={5}>
             <Card className={classes.box}>
-              <CardContent className={classes.cardRootOverrides}>
+              <CardContent className={classes.cardRootOverrides} className="pdp-content">
                 <Box>
-                  <Typography className={classes.title} variant="h1">
-                    {product.name}
-                  </Typography>
-                  <ProductVariant
-                    productVariant={variantMap.get(selectedVariantSku)}
-                  />
+                  <Typography className="pdp-header" variant="h1">{product.name}</Typography>
                 </Box>
-                <Divider variant="fullWidth" className={classes.divider} />
-                <Box>
-                  <Typography className={classes.subtitle} variant="h6">
-                    {product.subtitle}
-                  </Typography>
-                </Box>
-                <Divider variant="fullWidth" className={classes.divider} />
+                <Typography className="pdp-subtitle">{product.subtitle}</Typography>
                 <br />
-                <Typography component="p" color="textSecondary" variant="body1">
-                  {product.description}
-                </Typography>
+                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
+                <Typography className="pdp-description">{product.description}</Typography>
                 <br />
-                <Typography className={classes.directionsHeader} variant="h6">
-                  DIRECTIONS
-                </Typography>
-                <Typography variant="body1">
-                  Take one soft gel daily with meal
-                </Typography>
+                <Typography className="pdp-direction">DIRECTIONS</Typography>
+                <Typography className="pdp-direction-description">Take one soft gel daily with meal</Typography>
                 <br />
-
-                {/* <ProductVariantType
-                  isMobile={isMobile}
-                  variantSlug={variantSlug}
-                  updateTerminalVariant={updateTerminalVariant}
-                /> */}
+                {/*<ProductVariantType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>*/}
                 {!ATCEnabled && <Quantity />}
               </CardContent>
-              {ATCEnabled && (
-                <Grid
-                  container
-                  xs={12}
-                  justify="left-start"
-                  alignItems="center"
-                >
-                  <CardActions className={classes.maxWidth}>
-                    <StyledButton
-                      className={classes.resetButtonPadding}
-                      fullWidth={isMobile}
-                      variant="contained"
-                      color="primary"
-                      onClick={handleAddToCart}
-                      disabled={selectedVariantSku === null}
-                    >
-                      ADD TO CART
-                    </StyledButton>
-                  </CardActions>
-                </Grid>
-              )}
+              {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center" className="pdp-atc">
+                <CardActions className={classes.maxWidth}>
+                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedVariantSku === null}>
+                    ADD TO CART
+                  </StyledButton>
+                </CardActions>
+              </Grid>}
             </Card>
           </Grid>
         </Grid>

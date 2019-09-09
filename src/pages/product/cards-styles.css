@@ -3,10 +3,20 @@ html,
   box-sizing: border-box;
 }
 
+h2 {
+  font-size: 22px !important;
+}
+
 .label-info-wrapper {
   width: 100%;
   margin: 0 auto;
   color: #000000;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper {
+    margin-bottom: 50px;
+  }
 }
 
 .label-info-wrapper h2 {
@@ -31,6 +41,9 @@ html,
     flex-direction: row;
     flex-wrap: nowrap;
   }
+  h2 {
+  font-size: 40px !important;
+  }
 }
 
 .label-info-wrapper .top-block,
@@ -42,7 +55,7 @@ html,
 
 .label-info-wrapper .top-block .card,
 .label-info-wrapper .bottom-block .card {
-  min-width: 320px;
+  /* min-width: 320px; */
   width: 100%;
   display: flex;
   width: 100%;
@@ -64,7 +77,7 @@ html,
 .label-info-wrapper .top-block .card ul li,
 .label-info-wrapper .bottom-block .card ul li {
   font-family: FreightTextProBook, sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -74,13 +87,12 @@ html,
 .label-info-wrapper .top-block .card ul.fineprint,
 .label-info-wrapper .bottom-block .card ul.fineprint {
   margin-top: 30px;
-  margin-left: 40px;
 }
 
 .label-info-wrapper .top-block .card ul.fineprint li,
 .label-info-wrapper .bottom-block .card ul.fineprint li {
   font-family: P22-underground, Helvetica, sans-serif;
-  font-size: 18px;
+  font-size: 11px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -88,11 +100,26 @@ html,
   letter-spacing: normal;
 }
 
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper .top-block .card ul.fineprint li,
+  .label-info-wrapper .bottom-block .card ul.fineprint li {
+    font-size: 18px;
+    margin-left: 50px;
+  }
+}
+
 .label-info-wrapper .top-block {
   border-top: 1px solid;
   margin-top: 30px;
   padding-bottom: 45px;
-  padding-top: 60px;
+  padding-top: 20px;
+  text-align: left;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper .top-block {
+  padding-top: 60px !important;
+  }
 }
 
 .label-info-wrapper .top-block ul {
@@ -149,8 +176,8 @@ html,
 
 .label-info-wrapper .top-block .facts-table table td,
 .label-info-wrapper .top-block .facts-table table th {
-  border: solid 1px #003833;
-  padding: 30px 20px;
+  border: solid 1px #ccd7d6;
+  /* padding: 30px 20px; */
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -161,6 +188,10 @@ html,
   .label-info-wrapper .top-block .facts-table table th:nth-child(2) {
     width: 19.380531%;
   }
+  .label-info-wrapper .top-block .facts-table table td,
+.label-info-wrapper .top-block .facts-table table th {
+  padding: 30px 20px;
+}
 }
 
 .label-info-wrapper .bottom-block {
@@ -169,7 +200,7 @@ html,
 
 .label-info-wrapper .bottom-block .card {
   max-width: 680px;
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .label-info-wrapper .bottom-block ul {
@@ -187,13 +218,17 @@ html,
 }
 
 .label-info-wrapper .bottom-block .other-ingredients {
-  border-right: solid 1px #003833;
-  border-left: solid 1px #003833;
-  border-bottom: solid 1px #003833;
+  text-align: left;
 }
 
 .label-info-wrapper .bottom-block .other-ingredients h6 {
   margin-left: 20px;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .label-info-wrapper .bottom-block .other-ingredients h6 {
+    margin: 0;
+  }
 }
 
 .label-info-wrapper .bottom-block .other-ingredients ul {
@@ -206,8 +241,7 @@ html,
 
 @media only screen and (min-width: 735.99px) {
   .label-info-wrapper .bottom-block .other-ingredients {
-    border-left: 0;
-    border-bottom: 0;
+    border-right: solid 1px;
   }
 
   .label-info-wrapper .bottom-block .other-ingredients h6 {
@@ -220,9 +254,11 @@ html,
 }
 
 .label-info-wrapper .bottom-block .important {
-  border-right: solid 2px #003833;
+  /* border-right: solid 2px #003833;
   border-left: solid 2px #003833;
-  border-bottom: solid 2px #003833;
+  border-bottom: solid 2px #003833; */
+  border-top: solid 1px #003833;
+  text-align: left;
 }
 
 .label-info-wrapper .bottom-block .important h6 {
@@ -253,21 +289,20 @@ html,
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding-top: 95px;
+  padding-top: 30px;
   padding-bottom: 50px;
   color: #000000;
 }
 
 .how-it-works-wrapper h2 {
   max-width: 700px;
-  margin: 0 auto 90px auto;
+  margin: 0 auto 50px auto;
   font-size: 43px;
-  line-height: 50px;
   text-align: center;
 }
 
 .how-it-works-wrapper .coreBenefits {
-  margin: 60px auto 0 auto;
+  margin: 30px auto 0 auto;
 }
 
 .how-it-works-wrapper .topBlock,
@@ -319,11 +354,9 @@ html,
   font-family: FreightTextProBook;
   font-size: 20px;
   font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.6;
-  letter-spacing: normal;
-  padding: 0;
+  padding-bottom: 40px;
+  text-align: left;
+  margin: 0 auto 40px 11px;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -336,6 +369,12 @@ html,
   .how-it-works-wrapper .topBlock .leftCol,
   .how-it-works-wrapper .topBlock .rightCol {
     width: 49%;
+    text-align: left;
+  }
+
+  .colTextBody {
+    text-align: left;
+    margin: 0 !important;
   }
 }
 
@@ -400,6 +439,7 @@ html,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
   width: 100%;
   min-width: 200px;
+  text-align: left;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -414,12 +454,21 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol {
   border-top: solid 1px #003833;
-  border-right: solid 1px #003833;
+  padding-bottom: 50px;
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
   border-top: solid 1px #003833;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
+  border-top: solid 1px #003833;
+  border-left: solid 1px #003833;
+  margin-right: 2.2px;
+}
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle,
@@ -441,7 +490,11 @@ html,
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle img,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle img {
-    margin: 0 40px 0 20px;
+    margin: 0 0 0 20px;
+    border-bottom: none !important;
+  }
+  .blockTitle {
+    margin: 0 !important;
   }
 }
 
@@ -461,7 +514,7 @@ html,
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle h6,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle h6 {
-    margin: 70px 0;
+    margin: 70px 0 70px 20px;
   }
 }
 
@@ -469,13 +522,14 @@ html,
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle {
     flex-direction: row;
+    border-bottom: none !important;
   }
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTextBody,
 .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTextBody {
   width: 90%;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 40px 25px;
   font-family: FreightTextProBook;
   font-size: 20px;
   font-weight: normal;
@@ -483,6 +537,7 @@ html,
   font-stretch: normal;
   line-height: 1.6;
   letter-spacing: normal;
+  text-align: left;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -569,8 +624,9 @@ html,
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTextBody,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTextBody {
-    margin-left: 40px;
+    margin-left: 15px;
     margin-right: 70px;
+    margin-top: 60px;
   }
 }
 
@@ -585,7 +641,7 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .cardBottom ul li,
 .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom ul li {
   font-family: Canela;
-  font-size: 40px;
+  font-size: 25px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
