@@ -10,17 +10,25 @@ import { getGallery } from '../../hooks';
 
 const Products = () => {
   const { products, variants, prices } = useContext(GalleryContext);
-  if (!products)
-    return null;
-  const [ productSlugs, productMap, variantSlugs, variantMap ] = getGallery(products, variants, prices);
+  if (!products) return null;
+  const [productSlugs, productMap, variantSlugs, variantMap] = getGallery(
+    products,
+    variants,
+    prices
+  );
   return (
     <Container>
       <Grid container spacing={4}>
-        {productSlugs.map(productSlug => <ProductSummary key={productSlug} product={productMap.get(productSlug)} variantMap={variantMap}/>)}
+        {productSlugs.map(productSlug => (
+          <ProductSummary
+            key={productSlug}
+            product={productMap.get(productSlug)}
+            variantMap={variantMap}
+          />
+        ))}
       </Grid>
     </Container>
   );
-
-}
+};
 
 export default Products;
