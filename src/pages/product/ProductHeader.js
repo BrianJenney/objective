@@ -8,12 +8,14 @@ class ProductHeader extends Component {
 
   render() {
     if (!this.context.product) {
-      return (<div></div>);
+      return <div></div>;
     }
 
     return (
       <Container>
-        <Typography component="h1" variant="h3" align="center">{this.context.product.name}</Typography>
+        <Typography component="h1" variant="h3" align="center">
+          {this.context.product.name}
+        </Typography>
         <div>{this.context.product.description}</div>
       </Container>
     );

@@ -11,7 +11,11 @@ import {
   AccountAddressesPage,
   AccountPaymentDetailsPage,
   AccountProfilePage,
-  CheckoutPage
+  CheckoutPage,
+  ForgotPassword,
+  ConfirmPassword,
+  ResetPassword,
+  ResetSuccess
 } from './pages';
 
 export default [
@@ -19,7 +23,12 @@ export default [
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/cart', exact: true, component: CartPage },
-  { path: '/checkout', exact: true, component: CheckoutPage },
+  {
+    path: '/checkout',
+    exact: true,
+    injectCurrentUser: true,
+    component: CheckoutPage
+  },
   {
     path: '/account',
     auth: true,
@@ -62,5 +71,9 @@ export default [
     exact: true,
     component: ProductPage
   },
+  { path: '/password/forgot', exact: true, component: ForgotPassword },
+  { path: '/password/confirm', exact: true, component: ConfirmPassword },
+  { path: '/password/reset', exact: true, component: ResetPassword },
+  { path: '/password/success', exact: true, component: ResetSuccess },
   { path: '/:page', exact: true, component: StaticPage }
 ];

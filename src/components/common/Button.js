@@ -9,10 +9,17 @@ const ButtonComponent = ({
   children,
   ml,
   mr,
+  fullWidth,
   ...rest
 }) => (
-  <Box display="inline-block" position="relative" ml={ml} mr={mr}>
-    <Button disabled={loading || disabled} {...rest}>
+  <Box
+    display="inline-block"
+    position="relative"
+    width={fullWidth ? 1 : 'auto'}
+    ml={ml}
+    mr={mr}
+  >
+    <Button disabled={loading || disabled} fullWidth={fullWidth} {...rest}>
       {icon && <Box component={Icon} children={icon} mr={1} />}
       {children}
     </Button>
@@ -33,10 +40,13 @@ const ButtonComponent = ({
 ButtonComponent.propTypes = {
   ml: PropTypes.any,
   mr: PropTypes.any,
+  fullWidth: PropTypes.bool,
   children: PropTypes.node,
   icon: PropTypes.string,
   disabled: PropTypes.bool,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  variant: PropTypes.string,
+  color: PropTypes.string
 };
 
 ButtonComponent.defaultProps = {

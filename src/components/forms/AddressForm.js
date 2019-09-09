@@ -53,74 +53,72 @@ const AddressForm = ({
     }
   };
   const renderForm = () => (
-    <Box>
-      <Typography variant="h6" gutterBottom children={title} />
-      <Form>
-        <Grid container spacing={3}>
-          {seedEnabled && (
-            <Grid item xs={12}>
-              <Box display="flex" alignItems="center">
-                <Checkbox
-                  id="useAddressSeedToggle"
-                  onChange={handleUseAddressSeedToggle}
-                />
-                <Typography children={useSeedLabel} />
-              </Box>
-            </Grid>
-          )}
-          <Grid item xs={12} sm={6}>
-            <Field name="firstName" label="First name" component={InputField} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Field name="lastName" label="Last name" component={InputField} />
-          </Grid>
-          <Grid item xs={12}>
-            <Field name="line1" label="Address line 1" component={InputField} />
-          </Grid>
-          <Grid item xs={12}>
-            <Field name="line2" label="Address line 2" component={InputField} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Field name="city" label="City" component={InputField} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Field
-              name="state"
-              label="State/Province/Region"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Field
-              name="postalCode"
-              label="Zip/Postal code"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Field
-              name="countryCode"
-              label="Country"
-              component={SelectField}
-              options={COUNTRY_OPTIONS}
-            />
-          </Grid>
+    <Form>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={3}>
+        {seedEnabled && (
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
-              {onBack && (
-                <Button
-                  type="button"
-                  onClick={onBack}
-                  children={backLabel}
-                  mr={2}
-                />
-              )}
-              <Button type="submit" children={submitLabel} />
+              <Checkbox
+                id="useAddressSeedToggle"
+                onChange={handleUseAddressSeedToggle}
+              />
+              <Typography children={useSeedLabel} />
             </Box>
           </Grid>
+        )}
+        <Grid item xs={12} sm={6}>
+          <Field name="firstName" label="First name" component={InputField} />
         </Grid>
-      </Form>
-    </Box>
+        <Grid item xs={12} sm={6}>
+          <Field name="lastName" label="Last name" component={InputField} />
+        </Grid>
+        <Grid item xs={12}>
+          <Field name="line1" label="Address line 1" component={InputField} />
+        </Grid>
+        <Grid item xs={12}>
+          <Field name="line2" label="Address line 2" component={InputField} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Field name="city" label="City" component={InputField} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Field
+            name="state"
+            label="State/Province/Region"
+            component={InputField}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Field
+            name="postalCode"
+            label="Zip/Postal code"
+            component={InputField}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Field
+            name="countryCode"
+            label="Country"
+            component={SelectField}
+            options={COUNTRY_OPTIONS}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Box display="flex" alignItems="center">
+            {onBack && (
+              <Button
+                type="button"
+                onClick={onBack}
+                children={backLabel}
+                mr={2}
+              />
+            )}
+            <Button type="submit" children={submitLabel} />
+          </Box>
+        </Grid>
+      </Grid>
+    </Form>
   );
 
   return (

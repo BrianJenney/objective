@@ -27,7 +27,7 @@ export default function InputField(props) {
       id={field.name}
       error={!!(touched && error)}
       helperText={(touched && error) || helperText}
-      disabled={form.isSubmitting || disabled}
+      // disabled={form.isSubmitting} //allow users to correct login account after login fails
       {...field}
       {...rest}
     />

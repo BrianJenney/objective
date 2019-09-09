@@ -53,83 +53,81 @@ const PaymentForm = ({
 }) => {
   /* eslint-disable */
   const renderForm = ({ values }) => (
-    <Box>
-      <Typography variant="h6" gutterBottom children={title} />
-      <Form>
-        <Grid container spacing={3}>
-          {!onlyCard && (
-            <Grid item xs={12}>
+    <Form>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
+        {!onlyCard && (
+          <Grid item xs={12}>
+            <Field
+              name="paymentMethod"
+              label="Payment Method"
+              component={SelectField}
+              options={PAYMENT_METHOD_OPTIONS}
+              validate={validateTextField}
+            />
+          </Grid>
+        )}
+        {values.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
+          <>
+            <Grid item xs={12} md={6}>
               <Field
-                name="paymentMethod"
-                label="Payment Method"
-                component={SelectField}
-                options={PAYMENT_METHOD_OPTIONS}
+                name="cardholderName"
+                label="Name on Card"
+                component={InputField}
                 validate={validateTextField}
               />
             </Grid>
-          )}
-          {values.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
-            <>
-              <Grid item xs={12} md={6}>
-                <Field
-                  name="cardholderName"
-                  label="Name on Card"
-                  component={InputField}
-                  validate={validateTextField}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Field
-                  name="number"
-                  label="Card Number"
-                  component={InputField}
-                  validate={validateNumberField}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Field
-                  name="expirationDate"
-                  component={DatePickerField}
-                  variant="inline"
-                  label="Expiry Date"
-                  autoOk
-                  disableToolbar
-                  disablePast
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Field
-                  name="cvv"
-                  label="CVV"
-                  component={InputField}
-                  validate={validateNumberField}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Field
-                  name="saveCard"
-                  label="Remember credit card details for next time"
-                  component={CheckboxField}
-                />
-              </Grid>
-            </>
-          )}
-          <Grid item xs={12}>
-            <Box display="flex" alignItems="center">
-              {onBack && (
-                <Button
-                  type="button"
-                  onClick={onBack}
-                  children={backLabel}
-                  mr={2}
-                />
-              )}
-              <Button type="submit" children={submitLabel} />
-            </Box>
-          </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                name="number"
+                label="Card Number"
+                component={InputField}
+                validate={validateNumberField}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                name="expirationDate"
+                component={DatePickerField}
+                variant="inline"
+                label="Expiry Date"
+                autoOk
+                disableToolbar
+                disablePast
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                name="cvv"
+                label="CVV"
+                component={InputField}
+                validate={validateNumberField}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="saveCard"
+                label="Remember credit card details for next time"
+                component={CheckboxField}
+              />
+            </Grid>
+          </>
+        )}
+        <Grid item xs={12}>
+          <Box display="flex" alignItems="center">
+            {onBack && (
+              <Button
+                type="button"
+                onClick={onBack}
+                children={backLabel}
+                mr={2}
+              />
+            )}
+            <Button type="submit" children={submitLabel} />
+          </Box>
         </Grid>
-      </Form>
-    </Box>
+      </Grid>
+    </Form>
   );
   /* eslint-enable */
 

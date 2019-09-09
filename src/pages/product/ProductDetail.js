@@ -8,14 +8,14 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 
 import Carousel from '../../components/ProductSlider/PDPSlider';
-import './overrides.css'
+import './overrides.css';
 import { addToCart } from '../../utils/cart';
 import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
 import './PDP-style.css';
 
 // import ProductType from './ProductType';
 // import ProductVariantType from './ProductVariantType';
-
+import ATCSnackbarAction from '../../components/common/ATCSnackbarAction'
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
@@ -34,30 +34,27 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     backgroundColor: 'transparent',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   box: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   gridModifications: {
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
   padding: {
-    padding: '60px 81px',
-  },
-  variant: {
-    paddingBottom: theme.spacing(5)
+    padding: '60px 81px'
   },
   divider: {
     border: '.5px solid'
   },
   flexEnd: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   flexStart: {
-    alignSelf: 'flex-start',
-  },
+    alignSelf: 'flex-start'
+  }
 }));
 
 const StyledButton = withStyles(theme => ({
@@ -69,14 +66,14 @@ const StyledButton = withStyles(theme => ({
     width: '100%',
     maxWidth: '464px',
     height: '80px',
-    padding: '0',
+    padding: '0'
   },
   label: {
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
     color: '#ffffff',
-    textTransform: 'capitalize',
-  },
+    textTransform: 'capitalize'
+  }
 }))(Button);
 
 const ProductVariant = ({ productVariant }) => {
@@ -97,7 +94,6 @@ const ProductVariant = ({ productVariant }) => {
 };
 
 const ProductDetail = ({ variantSlug, history }) => {
-
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
@@ -110,22 +106,22 @@ const ProductDetail = ({ variantSlug, history }) => {
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
-  const updateQuantityToCart = (qty => {
+
+  const message = <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+
+  const updateQuantityToCart = useCallback(qty => {
     if (selectedVariantSku === null)
       return;
     addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
-    enqueueSnackbar(`${qty} ${selectedVariantSku} added to cart`, {
-      variant: 'success',
-    });
-  });
+    enqueueSnackbar(message, { variant: 'success' });
+  }, [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]);
   const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+
   const handleAddToCart = useCallback(() => {
     addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
-    enqueueSnackbar(`${quantity} ${selectedVariantSku} added to cart`, {
-      variant: 'success',
-    });
+    enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
-  }, [cart, selectedVariantSku, variantMap, quantity, enqueueSnackbar, dispatch]);
+  }, [cart, selectedVariantSku, variantMap, message, quantity, enqueueSnackbar, dispatch]);
 
   const updateTerminalVariant = useCallback((terminalVariant) => {
     /*
@@ -156,7 +152,13 @@ const ProductDetail = ({ variantSlug, history }) => {
   return (
     <>
       <Grid container className={classes.gridModifications} xs={12} sm={12}>
-        <Grid container justify="space-between" xs={10} sm={11} className={classes.wrapperMaxWidth}>
+        <Grid
+          container
+          justify="space-between"
+          xs={10}
+          sm={11}
+          className={classes.wrapperMaxWidth}
+        >
           <Grid item xs={12} sm={6}>
             <Carousel prodId={product._id} />
           </Grid>
