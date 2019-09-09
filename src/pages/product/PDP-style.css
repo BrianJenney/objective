@@ -90,34 +90,34 @@ html,
   color: #000000;
   padding-top: 4px;
 }
-  
+
 @media only screen and (min-width: 735.99px) {
   .pdp-content {
     display: flex, relative;
     flex-direction: column;
-    min-height: 600px;
+    /* min-height: 600px; */
   }
   .pdp-subtitle {
-  font-size: 22px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 1.5px;
-  color: #000000;
-  border-top: 0.01rem solid;
-  border-bottom: 0.01rem solid;
-  border-width: 50%;
-  padding: 5px;
-  text-align: left;
-  order: 2;
-  position: relative;
-  top: 30px;
+    font-size: 22px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 1.5px;
+    color: #000000;
+    border-top: 0.01rem solid;
+    border-bottom: 0.01rem solid;
+    border-width: 50%;
+    padding: 5px;
+    text-align: left;
+    order: 2;
+    position: relative;
+    top: 30px;
   }
   .pdp-header {
-  text-align: left;
-  position: relative;
-  bottom: 25px;
+    text-align: left;
+    position: relative;
+    bottom: 25px;
   }
   .pdp-product-variant {
     order: 1;
@@ -129,12 +129,12 @@ html,
     bottom: 40px;
   }
   .pdp-direction {
-   position: relative;
+    position: relative;
     bottom: 50px;
-    font-size:16px;
+    font-size: 16px;
   }
   .pdp-direction-description {
-  position: relative;
+    position: relative;
     bottom: 50px;
   }
   .pdp-price-description {
@@ -142,5 +142,9 @@ html,
   }
   .pdp-price-slash {
     width: 17px;
+  }
+  .pdp-product-type {
+    position: relative;
+    font-size: 16px;
   }
 }

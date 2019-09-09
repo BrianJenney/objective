@@ -3,20 +3,30 @@ import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductContext from '../../contexts/ProductContext';
-import { Box, Typography, Card, CardContent, CardActions, Button, Grid, Divider, Container } from '@material-ui/core';
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardActions,
+  Grid
+} from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
-
 import Carousel from '../../components/ProductSlider/PDPSlider';
-
+import { Button } from '../../components/common';
 import './overrides.css';
 import { addToCart } from '../../utils/cart';
-import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
+import {
+  getPrices,
+  getVariantSkuBySlug,
+  getVariantMap
+} from '../../utils/product';
 import './PDP-style.css';
 
 // import ProductType from './ProductType';
-// import ProductVariantType from './ProductVariantType';
-import ATCSnackbarAction from '../../components/common/ATCSnackbarAction'
+import ProductVariantType from './ProductVariantType';
+import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
@@ -28,12 +38,8 @@ const useStyles = makeStyles(theme => ({
   wrapperMaxWidth: {
     maxWidth: '86% !important'
   },
-  resetButtonPadding: {
-    padding: 0,
-  },
   cardRootOverrides: {
     padding: 0,
-    backgroundColor: 'transparent',
     display: 'flex',
     flexDirection: 'column'
   },
@@ -44,49 +50,24 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
-  padding: {
-    padding: '60px 81px'
-  },
-  divider: {
-    border: '.5px solid'
-  },
-  flexEnd: {
-    alignSelf: 'flex-end'
-  },
-  flexStart: {
-    alignSelf: 'flex-start'
+  button: {
+    maxWidth: '464px',
+    height: '80px',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold'
   }
 }));
 
-const StyledButton = withStyles(theme => ({
-  root: {
-    backgroundColor: '#000000',
-    borderRadius: 0,
-    border: 0,
-    color: 'white',
-    width: '100%',
-    maxWidth: '464px',
-    height: '80px',
-    padding: '0'
-  },
-  label: {
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textTransform: 'capitalize'
-  }
-}))(Button);
-
 const ProductVariant = ({ productVariant }) => {
-  const classes = useStyles();
   return productVariant ? (
-    <Box display="flex" flexDirection="row" alignItems="flex-start" className="pdp-product-variant">
-      <div className="pdp-price">
-        ${productVariant.effectivePrice}
-      </div>
-      <div className="pdp-price-slash">
-        /
-      </div>
+    <Box
+      display="flex"
+      flexDirection="row"
+      alignItems="flex-start"
+      className="pdp-product-variant"
+    >
+      <div className="pdp-price">${productVariant.effectivePrice}</div>
+      <div className="pdp-price-slash">/</div>
       <div className="pdp-price-description">
         {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
       </div>
@@ -108,24 +89,52 @@ const ProductDetail = ({ variantSlug, history }) => {
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
 
-  const message = <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+  const message = (
+    <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+  );
 
-  const updateQuantityToCart = useCallback(qty => {
-    if (selectedVariantSku === null)
-      return;
-    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
-    enqueueSnackbar(message, { variant: 'success' });
-  }, [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]);
-  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+  const updateQuantityToCart = useCallback(
+    qty => {
+      if (selectedVariantSku === null) return;
+      addToCart(
+        localStorageClient.get('cartId'),
+        cart,
+        variantMap.get(selectedVariantSku),
+        qty,
+        dispatch
+      );
+      enqueueSnackbar(message, { variant: 'success' });
+    },
+    [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]
+  );
+  const [quantity, setQuantity, Quantity] = useQuantity(
+    updateQuantityToCart,
+    'QTY'
+  );
 
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
+    addToCart(
+      localStorageClient.get('cartId'),
+      cart,
+      variantMap.get(selectedVariantSku),
+      quantity,
+      dispatch
+    );
     enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
-  }, [cart, selectedVariantSku, variantMap, message, quantity, enqueueSnackbar, dispatch]);
+  }, [
+    cart,
+    selectedVariantSku,
+    variantMap,
+    message,
+    quantity,
+    enqueueSnackbar,
+    dispatch
+  ]);
 
-  const updateTerminalVariant = useCallback((terminalVariant) => {
-    /*
+  const updateTerminalVariant = useCallback(
+    terminalVariant => {
+      /*
     if (terminalVariant['Diet Type'] === null) {
       setATCEnabled(true);
       setQuantity(1);
@@ -134,21 +143,20 @@ const ProductDetail = ({ variantSlug, history }) => {
       setSelectedProductVariant(getVariantByTerminalVariant(variants, pricesMap, terminalVariant));
     }
      */
-    setSelectedVariantSku(terminalVariant['Product Type']);
-    setQuantity(1);
-    setATCEnabled(true);
-
-  }, [setSelectedVariantSku, setQuantity]);
+      setSelectedVariantSku(terminalVariant['Product Type']);
+      setQuantity(1);
+      setATCEnabled(true);
+    },
+    [setSelectedVariantSku, setQuantity]
+  );
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
   }, [defaultSku]);
 
-  if (product === null || variants.length === 0)
-    return null;
+  if (product === null || variants.length === 0) return null;
 
   const isMobile = windowSize.width < 944;
-  // console.log('ProductDetail', {selectedVariantSku, variantMap})
 
   return (
     <>
@@ -165,28 +173,52 @@ const ProductDetail = ({ variantSlug, history }) => {
           </Grid>
           <Grid item xs={12} sm={5}>
             <Card className={classes.box}>
-              <CardContent className={classes.cardRootOverrides} className="pdp-content">
+              <CardContent
+                className={classes.cardRootOverrides}
+                className="pdp-content"
+              >
                 <Box>
-                  <Typography className="pdp-header" variant="h1">{product.name}</Typography>
+                  <Typography className="pdp-header" variant="h1">
+                    {product.name}
+                  </Typography>
                 </Box>
-                <Typography className="pdp-subtitle">{product.subtitle}</Typography>
+                <Typography className="pdp-subtitle">
+                  {product.subtitle}
+                </Typography>
                 <br />
-                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
-                <Typography className="pdp-description">{product.description}</Typography>
+                <ProductVariant
+                  productVariant={variantMap.get(selectedVariantSku)}
+                />
+                <Typography className="pdp-description">
+                  {product.description}
+                </Typography>
                 <br />
                 <Typography className="pdp-direction">DIRECTIONS</Typography>
-                <Typography className="pdp-direction-description">Take one soft gel daily with meal</Typography>
-                <br />
-                {/*<ProductVariantType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>*/}
+                <Typography className="pdp-direction-description">
+                  Take one soft gel daily with meal
+                </Typography>
+
+                <ProductVariantType
+                  isMobile={isMobile}
+                  variantSlug={variantSlug}
+                  updateTerminalVariant={updateTerminalVariant}
+                />
                 {!ATCEnabled && <Quantity />}
               </CardContent>
-              {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center" className="pdp-atc">
-                <CardActions className={classes.maxWidth}>
-                  <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedVariantSku === null}>
-                    ADD TO CART
-                  </StyledButton>
-                </CardActions>
-              </Grid>}
+              {ATCEnabled && (
+                <Grid>
+                  <CardActions className={classes.maxWidth}>
+                    <Button
+                      className={classes.button}
+                      fullWidth
+                      onClick={handleAddToCart}
+                      disabled={selectedVariantSku === null}
+                    >
+                      ADD TO CART
+                    </Button>
+                  </CardActions>
+                </Grid>
+              )}
             </Card>
           </Grid>
         </Grid>
