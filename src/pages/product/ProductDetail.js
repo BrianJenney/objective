@@ -8,6 +8,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 
 import Carousel from '../../components/ProductSlider/PDPSlider';
+
 import './overrides.css';
 import { addToCart } from '../../utils/cart';
 import { getPrices, getVariantSkuBySlug, getVariantMap } from '../../utils/product';
