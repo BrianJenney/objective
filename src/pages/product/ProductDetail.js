@@ -23,20 +23,22 @@ import {
   getVariantMap
 } from '../../utils/product';
 import './PDP-style.css';
-
+import MailOutline from '@material-ui/icons/MailOutline';
 // import ProductType from './ProductType';
 import ProductVariantType from './ProductVariantType';
 import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+import { AlertPanel } from '../../components/common';
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
     width: '100%',
-    maxWidth: '464px',
-    padding: '0 !important'
+    maxWidth: '464px'
+    // padding: '0 !important'
   },
   wrapperMaxWidth: {
-    maxWidth: '86% !important'
+    maxWidth: '86% !important',
+    padding: theme.spacing(10, 10)
   },
   cardRootOverrides: {
     padding: 0,
@@ -51,10 +53,20 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fdf8f2'
   },
   button: {
-    maxWidth: '464px',
     height: '80px',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold'
+  },
+  inform: {
+    border: '1.5px solid',
+    backgroundColor: theme.palette.common.white,
+    height: '80px',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold',
+    color: theme.palette.common.black
+  },
+  icon: {
+    marginRight: '10px'
   }
 }));
 
@@ -215,6 +227,21 @@ const ProductDetail = ({ variantSlug, history }) => {
                       disabled={selectedVariantSku === null}
                     >
                       ADD TO CART
+                    </Button>
+                  </CardActions>
+                </Grid>
+              )}
+              {/* Render this button when Product is out of stock */}
+              {AlertPanel && (
+                <Grid>
+                  <CardActions className={classes.maxWidth}>
+                    <Button
+                      className={classes.inform}
+                      fullWidth
+                      onClick={handleAddToCart}
+                    >
+                      <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
+                      AVAILABLE
                     </Button>
                   </CardActions>
                 </Grid>
