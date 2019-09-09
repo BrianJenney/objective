@@ -182,7 +182,7 @@ class Cart extends React.Component {
                 </>
               ))
             )}
-          <Grid item xs={12} container>
+          <Grid item xs={12} style={{ 'text-align': 'left' }} >
             <StyledTotalWrapper
               container
               direction="row"

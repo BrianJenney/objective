@@ -55,7 +55,7 @@ export const StyledDrawerGrid = withStyles(theme => ({
     padding: '26px 0',
     borderTop: $thin1pxRuler_gray,
     flexWrap: 'nowrap'
-},
+  },
 }))(Grid)
 
 export const StyledGridEmptyCart = withStyles(theme => ({
@@ -63,7 +63,7 @@ export const StyledGridEmptyCart = withStyles(theme => ({
     margin: '0 0 30px 0',
     borderTop: $thin1pxRuler_gray,
     paddingTop: '29px'
-},
+  },
 }))(Grid)
 
 export const StyledHeaderWrapper = withStyles(theme => ({
