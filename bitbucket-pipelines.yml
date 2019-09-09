@@ -18,7 +18,7 @@ pipelines:
           #python image with aws-cli installed
           image: atlassian/pipelines-awscli
           script:
-            - apt-get update && apt-get install -qy  curl
+            - apk add curl
             # aws login for docker so we can push image later
             - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
             # add bits react needs to build_env file
