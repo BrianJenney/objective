@@ -11,9 +11,14 @@ import {
 import { LoginForm } from './forms';
 import { MenuLink, NavLink } from './common';
 
-import withDialog from '../hoc/withDialog'
+import withDialog from '../hoc/withDialog';
 
-const Login = ({ requestLoginAttempt, account, switchToSignup, closeDialog }) => {
+const Login = ({
+  requestLoginAttempt,
+  account,
+  switchToSignup,
+  closeDialog
+}) => {
   let displayMessage;
   if (!account.msg) {
     displayMessage = null;
@@ -47,8 +52,8 @@ const Login = ({ requestLoginAttempt, account, switchToSignup, closeDialog }) =>
             {switchToSignup ? (
               <MenuLink onClick={switchToSignup} children="Signup!" />
             ) : (
-                <NavLink to="/signup" children="Signup!" underline="always" />
-              )}
+              <NavLink to="/signup" children="Signup!" underline="always" />
+            )}
           </Typography>
         </Box>
       </Box>
@@ -60,7 +65,7 @@ Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
   account: PropTypes.object,
   switchToSignup: PropTypes.func,
-  closeDialog: PropTypes.func.isRequired,
+  closeDialog: PropTypes.func.isRequired
 };
 
 export default withDialog(Login);
