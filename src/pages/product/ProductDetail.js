@@ -168,7 +168,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                 </Box>
                 <Typography className="pdp-subtitle">{product.subtitle}</Typography>
                 <br />
-                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} className="emily" />
+                <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
                 <Typography className="pdp-description">{product.description}</Typography>
                 <br />
                 <Typography className="pdp-direction">DIRECTIONS</Typography>
@@ -177,7 +177,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                 {/*<ProductVariantType isMobile={isMobile} variantSlug={variantSlug} updateTerminalVariant={updateTerminalVariant}/>*/}
                 {!ATCEnabled && <Quantity />}
               </CardContent>
-              {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center">
+              {ATCEnabled && <Grid container xs={12} justify="left-start" alignItems="center" className="pdp-atc">
                 <CardActions className={classes.maxWidth}>
                   <StyledButton className={classes.resetButtonPadding} fullWidth={isMobile} variant="contained" color="primary" onClick={handleAddToCart} disabled={selectedVariantSku === null}>
                     ADD TO CART

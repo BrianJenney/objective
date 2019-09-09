@@ -95,6 +95,7 @@ html,
   .pdp-content {
     display: flex, relative;
     flex-direction: column;
+    min-height: 600px;
   }
   .pdp-subtitle {
   font-size: 22px;
