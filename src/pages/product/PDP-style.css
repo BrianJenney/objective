@@ -81,10 +81,9 @@ html,
 }
 
 .pdp-price-description {
-  width: 140px;
   height: 11px;
   font-family: P22Underground, Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -122,7 +121,7 @@ html,
   .pdp-product-variant {
     order: 1;
     position: relative;
-    bottom: 120px;
+    bottom: 115px;
   }
   .pdp-description {
     position: relative;
@@ -138,10 +137,12 @@ html,
     bottom: 50px;
   }
   .pdp-price-description {
-    font-size: 14px;
-   padding-right: 20px;
+    font-size: 18px;
   }
   .pdp-price-slash {
     width: 17px;
+  }
+  .WithStyles\(ForwardRef\(Button\)\)-root-296 {
+    border: solid 1px red
   }
 }

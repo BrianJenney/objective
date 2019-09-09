@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '86% !important'
   },
   resetButtonPadding: {
-    padding: 0
+    padding: 0,
   },
   cardRootOverrides: {
     padding: 0,
@@ -88,7 +88,7 @@ const ProductVariant = ({ productVariant }) => {
       </div>
       <div className="pdp-price-slash">
         /
-        </div>
+      </div>
       <div className="pdp-price-description">
         {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
       </div>
