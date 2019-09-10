@@ -19,13 +19,11 @@ const Login = ({ requestLoginAttempt, account, switchToSignup }) => (
       </Box>
       {account.error && (
         <AlertPanel
-          m={2}
-          align="center"
-          border={(1, '#ffcdd2')}
+          mb={2}
+          type="error"
           bgcolor="#ffcdd2"
-        >
-          <Typography variant="body1">{account.error}</Typography>
-        </AlertPanel>
+          text={account.error}
+        />
       )}
       <LoginForm onSubmit={requestLoginAttempt} />
       <Box mt={2} align="center">
