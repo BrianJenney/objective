@@ -123,10 +123,16 @@ export const StyledTotalWrapper = withStyles(theme => ({
 
 export const StyledCheckoutButton = withStyles(theme => ({
   root: {
-    width: '100%',
+    width: '85%',
     maxWidth: 351,
     height: '80px',
     marginTop: '15px',
+    [theme.breakpoints.up('sm')]: {
+      width: '100%',
+      maxWidth: 351,
+      height: '80px',
+      marginTop: '15px',
+    },
   }
 }))(Button)
 

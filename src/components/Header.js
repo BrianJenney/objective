@@ -43,7 +43,7 @@ const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-    }`
+      }`
   }
 }))(Badge);
 
@@ -83,7 +83,7 @@ const Header = () => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="logo text-center">
-                Logo.
+                LogoMOBILE.
               </Grid>
               <Grid item xs={1}>
                 {!burger && (
@@ -108,44 +108,44 @@ const Header = () => {
             </Grid>
           </>
         ) : (
-          <>
-            <Grid container xs={12} className="headerBar">
-              <Grid item xs={6} className="option text-right">
-                <StyledBox fontSize={12}>
-                  Free Shipping On Orders Over $75
+            <>
+              <Grid container xs={12} className="headerBar">
+                <Grid item xs={6} className="option text-right">
+                  <StyledBox fontSize={12}>
+                    Free Shipping On Orders Over $75
                 </StyledBox>
+                </Grid>
+                <Grid item xs={6} className="option text-left">
+                  <StyledBox fontSize={12}>Free Returns</StyledBox>
+                </Grid>
               </Grid>
-              <Grid item xs={6} className="option text-left">
-                <StyledBox fontSize={12}>Free Returns</StyledBox>
-              </Grid>
-            </Grid>
-            <Grid container className="holder" xs={12}>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/gallery">
-                  Shop
+              <Grid container className="holder" xs={12}>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} to="/gallery">
+                    Shop
                 </StyledLink>
-              </Grid>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/">
-                  Science
+                </Grid>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} to="/">
+                    Science
                 </StyledLink>
+                </Grid>
+                <Grid item xs={8} className="logo text-center">
+                  Logo.
               </Grid>
-              <Grid item xs={8} className="logo text-center">
-                Logo.
-              </Grid>
-              <Grid item xs={1}>
-                {!burger && (
-                  <StyledLink component={RouterLink} to="/account">
-                    Account
+                <Grid item xs={1}>
+                  {!burger && (
+                    <StyledLink component={RouterLink} to="/account">
+                      Account
                   </StyledLink>
-                )}
+                  )}
+                </Grid>
+                <Grid item xs={1}>
+                  <ShoppingCart />
+                </Grid>
               </Grid>
-              <Grid item xs={1}>
-                <ShoppingCart />
-              </Grid>
-            </Grid>
-          </>
-        )}
+            </>
+          )}
       </Grid>
     </Grid>
   );
