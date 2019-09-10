@@ -48,7 +48,6 @@ const StyledBadge = withStyles(theme => ({
 }))(Badge);
 
 const Header = () => {
-
   const renderBurgerIcon = () => (
     <>
       <DropdownMenu
@@ -83,7 +82,7 @@ const Header = () => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="logo text-center">
-                Logo.
+                OBJ
               </Grid>
               <Grid item xs={1}>
                 {!burger && (
@@ -131,7 +130,7 @@ const Header = () => {
                 </StyledLink>
               </Grid>
               <Grid item xs={8} className="logo text-center">
-                Logo.
+                OBJECTIVE WELLNESS
               </Grid>
               <Grid item xs={1}>
                 {!burger && (

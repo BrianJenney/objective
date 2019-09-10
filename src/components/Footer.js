@@ -8,6 +8,11 @@ import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
 
+const arrowImage = require('../../src/assets/images/arrow.png');
+const igIcon = require('../../src/assets/images/instagram.png');
+const fbIcon = require('../../src/assets/images/facebook.png');
+const ptIcon = require('../../src/assets/images/pinterest.png');
+
 const schema = object().shape({
   email: string()
     .required('Email is required')
@@ -16,7 +21,7 @@ const schema = object().shape({
 
 const StyledBox = withStyles(() => ({
   root: {
-    fontFamily: 'p22-underground, Helvetica, sans',
+    fontFamily: 'p22-underground, sans-serif',
     fontWeight: 'normal',
     color: '#ffffff',
     textTransform: 'uppercase',
@@ -28,7 +33,7 @@ const StyledBox = withStyles(() => ({
 
 const StyledList = withStyles(() => ({
   root: {
-    fontFamily: 'p22-underground, Helvetica, sans',
+    fontFamily: 'p22-underground, sans-serif',
     fontWeight: 'normal',
     color: '#ffffff',
     textTransform: 'uppercase',
@@ -47,23 +52,22 @@ const Footer = () => {
       {xs ? (
         <StyledBox className="footer-container">
           <Grid container spacing={0}>
-            <Grid container className="promise" xs={12}>
+            <Grid container xs={12} className="promise">
               <Grid item xs={12}>
                 Diamond Logo
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h3" gutterBottom className="uppercase">
-                  The True<br></br>Health Promise
+                <Typography variant="h4" gutterBottom className="uppercase">
+                  Dek Line Goes Here
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="subtitle1" gutterBottom>
-                  TH Promse text goes here. Brunch church-key reclette
-                  chartreuse poke, XOXO next level shaman hot chicken
-                  sustainable vegan yr jianbing affogato. Hot chicken Schlitz
-                  squad, migas single-origin single-origin coffee chambray umami
-                  raclette.
-                </Typography>
+                <p>
+                  Brunch church-key reclette chartreuse poke, XOXO next level
+                  shaman hot chicken sustainable vegan yr jianbing affogato. Hot
+                  chicken Schlitz squad, migas single-origin single-origin
+                  coffee chambray umami raclette.
+                </p>
               </Grid>
             </Grid>
             <div className="footer-main-holder">
@@ -120,29 +124,32 @@ const Footer = () => {
                     validationSchema={schema}
                     render={() => (
                       <Form>
-                        <Field name="email" label="" component={InputField} />
-                        <Button type="submit" children="Sign Up" />
+                        <Field
+                          name="email"
+                          label=""
+                          placeholder="Your Email"
+                          component={InputField}
+                        />
+                        <Button type="submit">
+                          <img src={arrowImage} className="arrow" alt="arrow" />
+                        </Button>
                       </Form>
                     )}
                   />
                 </Grid>
-                <Grid item xs={4} className="border-bottom p-20 text-center">
-                  <NavLink href="http://www.instagram.com">IG Icon</NavLink>
+                <Grid item xs={4} className="border-bottom icon">
+                  <NavLink href="http://www.instagram.com">
+                    <img src={igIcon} alt="instagram" />
+                  </NavLink>
                 </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  className="border-bottom p-20 text-center border-left"
-                >
-                  <NavLink href="http://www.twitter.com">TW Icon</NavLink>
+                <Grid item xs={4} className="border-bottom border-left icon">
+                  <NavLink href="http://www.pinterest.com">
+                    <img src={ptIcon} alt="pinterest" />
+                  </NavLink>
                 </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  className="border-bottom p-20 text-center border-left"
-                >
-                  <NavLink href="https://www.facebook.com/truehealthsupplements">
-                    FB Icon
+                <Grid item xs={4} className="border-bottom border-left icon">
+                  <NavLink href="https://www.facebook.com">
+                    <img src={fbIcon} alt="facebook" />
                   </NavLink>
                 </Grid>
                 <Grid container xs={12} className="legal">
@@ -171,11 +178,6 @@ const Footer = () => {
           <Grid container spacing={0}>
             <Grid container xs={12} className="promise">
               <Grid item xs={12}>
-                <Typography variant="h3" gutterBottom className="uppercase">
-                  The True Health Promise
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
                 Diamond Logo
               </Grid>
               <Grid item xs={12}>
@@ -184,13 +186,12 @@ const Footer = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="h5" gutterBottom>
-                  TH Promse text goes here. Brunch church-key reclette
-                  chartreuse poke, XOXO next level shaman hot chicken
-                  sustainable vegan yr jianbing affogato. Hot chicken Schlitz
-                  squad, migas single-origin single-origin coffee chambray umami
-                  raclette.
-                </Typography>
+                <p>
+                  Brunch church-key reclette chartreuse poke, XOXO next level
+                  shaman hot chicken sustainable vegan yr jianbing affogato. Hot
+                  chicken Schlitz squad, migas single-origin single-origin
+                  coffee chambray umami raclette.
+                </p>
               </Grid>
             </Grid>
             <div className="footer-main-holder">
@@ -243,7 +244,7 @@ const Footer = () => {
                     <div className="rotate">Copyright 2019</div>
                   </StyledBox>
                 </Grid>
-                <Grid item xs={8} className="border-bottom signup-box p-40">
+                <Grid item xs={8} className="border-bottom signup-box">
                   Sign up for tips and new prouct launches.<br></br>
                   <Formik
                     initialValues={{ email: '' }}
@@ -251,21 +252,36 @@ const Footer = () => {
                     validationSchema={schema}
                     render={() => (
                       <Form>
-                        <Field name="email" label="" component={InputField} />
-                        <Button type="submit" children="Sign Up" />
+                        <Field
+                          name="email"
+                          label=""
+                          placeholder="Your Email"
+                          component={InputField}
+                        />
+                        <Button type="submit">
+                          <img
+                            src={arrowImage}
+                            className="signup-arrow"
+                            alt="arrow"
+                          />
+                        </Button>
                       </Form>
                     )}
                   />
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom p-40">
-                  <NavLink href="">IG Icon</NavLink>
+                <Grid item xs={1} className="border-left border-bottom icon">
+                  <NavLink href="">
+                    <img src={igIcon} alt="instagram" />
+                  </NavLink>
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom p-40">
-                  <NavLink href="">TW Icon</NavLink>
+                <Grid item xs={1} className="border-left border-bottom icon ">
+                  <NavLink href="">
+                    <img src={ptIcon} alt="pinterest" />
+                  </NavLink>
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom p-40">
-                  <NavLink href="https://www.facebook.com/truehealthsupplements">
-                    FB Icon
+                <Grid item xs={1} className="border-left border-bottom icon">
+                  <NavLink href="https://www.facebook.com/">
+                    <img src={fbIcon} alt="facebook" />
                   </NavLink>
                 </Grid>
                 <Grid item xs={1} className="border-left border-bottom">
@@ -273,7 +289,9 @@ const Footer = () => {
                 </Grid>
                 <Grid container xs={12} className="legal">
                   <StyledList>
-                    <ListItem>TrueHealth &bull; All rights reserved</ListItem>
+                    <ListItem>
+                      Objective Wellness &bull; All rights reserved
+                    </ListItem>
                     <ListItem>
                       <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
                     </ListItem>
