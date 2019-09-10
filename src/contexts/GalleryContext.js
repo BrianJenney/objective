@@ -86,7 +86,6 @@ export class GalleryStore extends Component {
   }
 
   render() {
-    console.log('this state', this.state.products);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}
