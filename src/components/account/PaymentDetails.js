@@ -16,19 +16,21 @@ const AccountPaymentDetails = ({
 }) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const creditCards = get(currentUser, 'paymentMethods', []);
+  const creditCards = get(currentUser, 'data.paymentMethods', []);
+  const account_jwt = get(currentUser, 'data.account_jwt', '');
   const deleteCreditCard = deletedCreditCardToken => {
     const payload = { deletedCreditCardToken };
 
-    requestPatchAccount(currentUser.account_jwt, payload);
+    requestPatchAccount(account_jwt, payload);
   };
   const setDefaultCreditCard = defaultCreditCardToken => {
     const payload = { defaultCreditCardToken };
 
-    requestPatchAccount(currentUser.account_jwt, payload);
+    requestPatchAccount(account_jwt, payload);
   };
   const addCreditCard = async (paymentDetails, actions) => {
-    const addressBook = currentUser.addressBook || [];
+    const { addressBook: currentAddressBook } = currentUser.data;
+    const addressBook = currentAddressBook || [];
     const billingAddress = addressBook.find(address => !!address.isDefault);
     if (!billingAddress) {
       return enqueueSnackbar(
@@ -53,7 +55,7 @@ const AccountPaymentDetails = ({
         nonce
       };
 
-      requestPatchAccount(currentUser.account_jwt, payload);
+      requestPatchAccount(account_jwt, payload);
     } catch (err) {
       enqueueSnackbar(err.message, { variant: 'error' });
     }

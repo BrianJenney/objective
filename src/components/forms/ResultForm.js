@@ -32,7 +32,7 @@ const ResultForm = ({ onSubmit }) => {
         </Typography>
         <Typography component="h1" variant="h4" align="center">
           Your order has been placed and a confirmation email email has been
-          sent to: {account.email}.
+          sent to: {account.data.email}.
         </Typography>
         <Typography component="h1" variant="h4" align="center">
           Your order number: {order._id}.
@@ -55,7 +55,7 @@ const ResultForm = ({ onSubmit }) => {
             <br />
             {!isEmptyOrSpaces(cart.billingAddress.line2) &&
               cart.billingAddress.line2(<br />)}
-            {account.email}
+            {account.data.email}
           </Typography>
         </Grid>
         <Grid item xs={addressesWidth}>
@@ -69,7 +69,7 @@ const ResultForm = ({ onSubmit }) => {
             <br />
             {!isEmptyOrSpaces(cart.shippingAddress.line2) &&
               cart.shippingAddress.line2(<br />)}
-            {account.email}
+            {account.data.email}
           </Typography>
         </Grid>
       </Grid>

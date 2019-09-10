@@ -61,7 +61,7 @@ class ChangePassword extends React.Component {
     // if (values.newPassword1 !== values.newPassword2) {
     //   return false;
     // }
-    store.dispatch(requestPatchAccount(this.props.account.account_jwt, values));
+    store.dispatch(requestPatchAccount(this.props.account.data.account_jwt, values));
   };
 
   render() {
@@ -69,7 +69,7 @@ class ChangePassword extends React.Component {
 
     const INITIAL_VALUES = {};
 
-    if (!account.account_jwt) {
+    if (!account.data.account_jwt) {
       return <div>No Account</div>;
     }
     

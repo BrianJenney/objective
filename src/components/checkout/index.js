@@ -19,6 +19,7 @@ const Checkout = ({
 }) => {
   const [payload, setPayload] = useState({});
   const [activeStep, setActiveStep] = useState(0);
+  const { account_jwt } = currentUser.data;
 
   const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
 
@@ -28,7 +29,8 @@ const Checkout = ({
     } else if (activeStep <= 4) {
       const key = STEP_KEYS[activeStep];
       const dataKey = DATA_KEYS[activeStep];
-      const selectedEntity = getDefaultEntity(currentUser[dataKey]);
+      const currentUserData = currentUser.data;
+      const selectedEntity = getDefaultEntity(currentUserData[dataKey]);
 
       if (!selectedEntity) {
         return false;
@@ -43,7 +45,7 @@ const Checkout = ({
       }
 
       requestCreateOrder(
-        { ...cart, ...payload, account_jwt: currentUser.account_jwt },
+        { ...cart, ...payload, account_jwt },
         { creditCardToken }
       );
     }

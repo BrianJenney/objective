@@ -69,13 +69,13 @@ class ResetPassword extends React.Component {
     const payload = {
       password: values.password
     };
-    store.dispatch(requestPatchAccount(user._id, payload));
+    store.dispatch(requestPatchAccount(user.data._id, payload));
   };
 
   render() {
     const { account: user } = this.props;
 
-    if (!user.contactPreferences) {
+    if (!user.data.contactPreferences) {
       return <AlertPanel type="info" text="No Account" />;
     }
 

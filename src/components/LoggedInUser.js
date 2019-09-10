@@ -4,7 +4,7 @@ import store from '../store';
 
 const LoggedInUser = () => (
   <Container>
-    <div>Hi, {store.getState().account.firstName}</div>
+    <div>Hi, {store.getState().account.data.firstName}</div>
   </Container>
 );
 
