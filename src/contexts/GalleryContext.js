@@ -45,7 +45,8 @@ export class GalleryStore extends Component {
     let params = {
       'params': {
         'query': {
-          '_id': { $in: this.props.productIds }
+          '_id': { $in: this.props.productIds },
+          $sort: { category: -1 }
         }
       }
     };
@@ -85,6 +86,7 @@ export class GalleryStore extends Component {
   }
 
   render() {
+    console.log('this state', this.state.products);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}
