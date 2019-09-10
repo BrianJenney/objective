@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { Box, CssBaseline } from '@material-ui/core';
+import { Container, Box, CssBaseline } from '@material-ui/core';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { ShippingMethodForm, ReviewForm, ResultForm } from '../forms';
@@ -54,58 +54,60 @@ const Checkout = ({
   };
 
   return (
-    <Box>
-      <CssBaseline />
-      <Panel title={STEPS[0]} collapsible expanded={activeStep === 0}>
-        <CheckoutAuth
-          currentUser={currentUser}
-          requestCreateAccount={requestCreateAccount}
-          requestLoginAttempt={requestLoginAttempt}
-          handleNext={() => {
-            if (activeStep === 0) {
-              setActiveStep(1);
-            }
-          }}
-        />
-      </Panel>
-      <Panel title={STEPS[1]} collapsible expanded={activeStep === 1}>
-        <ShippingMethodForm title="Shipping Method" onSubmit={handleNext} />
-      </Panel>
-      <Panel title={STEPS[2]} collapsible expanded={activeStep === 2}>
-        <AccountAddresses
-          currentUser={currentUser}
-          requestPatchAccount={requestPatchAccount}
-          onBack={handleBack}
-          onSubmit={handleNext}
-        />
-      </Panel>
-      <Panel title={STEPS[3]} collapsible expanded={activeStep === 3}>
-        <AccountAddresses
-          currentUser={currentUser}
-          requestPatchAccount={requestPatchAccount}
-          onBack={handleBack}
-          onSubmit={handleNext}
-        />
-      </Panel>
-      <Panel title={STEPS[4]} collapsible expanded={activeStep === 4}>
-        <AccountPaymentDetails
-          currentUser={currentUser}
-          requestPatchAccount={requestPatchAccount}
-          onBack={handleBack}
-          onSubmit={handleNext}
-        />
-      </Panel>
-      <Panel title={STEPS[5]} collapsible expanded={activeStep === 5}>
-        <ReviewForm
-          cart={{ ...cart, ...payload }}
-          onBack={handleBack}
-          onSubmit={handleNext}
-        />
-      </Panel>
-      <Panel title={STEPS[6]} collapsible expanded={activeStep === 6}>
-        <ResultForm onSubmit={() => null} />
-      </Panel>
-    </Box>
+    <Container>
+      <Box>
+        <CssBaseline />
+        <Panel title={STEPS[0]} collapsible expanded={activeStep === 0}>
+          <CheckoutAuth
+            currentUser={currentUser}
+            requestCreateAccount={requestCreateAccount}
+            requestLoginAttempt={requestLoginAttempt}
+            handleNext={() => {
+              if (activeStep === 0) {
+                setActiveStep(1);
+              }
+            }}
+          />
+        </Panel>
+        <Panel title={STEPS[1]} collapsible expanded={activeStep === 1}>
+          <ShippingMethodForm title="Shipping Method" onSubmit={handleNext} />
+        </Panel>
+        <Panel title={STEPS[2]} collapsible expanded={activeStep === 2}>
+          <AccountAddresses
+            currentUser={currentUser}
+            requestPatchAccount={requestPatchAccount}
+            onBack={handleBack}
+            onSubmit={handleNext}
+          />
+        </Panel>
+        <Panel title={STEPS[3]} collapsible expanded={activeStep === 3}>
+          <AccountAddresses
+            currentUser={currentUser}
+            requestPatchAccount={requestPatchAccount}
+            onBack={handleBack}
+            onSubmit={handleNext}
+          />
+        </Panel>
+        <Panel title={STEPS[4]} collapsible expanded={activeStep === 4}>
+          <AccountPaymentDetails
+            currentUser={currentUser}
+            requestPatchAccount={requestPatchAccount}
+            onBack={handleBack}
+            onSubmit={handleNext}
+          />
+        </Panel>
+        <Panel title={STEPS[5]} collapsible expanded={activeStep === 5}>
+          <ReviewForm
+            cart={{ ...cart, ...payload }}
+            onBack={handleBack}
+            onSubmit={handleNext}
+          />
+        </Panel>
+        <Panel title={STEPS[6]} collapsible expanded={activeStep === 6}>
+          <ResultForm onSubmit={() => null} />
+        </Panel>
+      </Box>
+    </Container>
   );
 };
 
