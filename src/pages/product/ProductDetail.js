@@ -9,14 +9,12 @@ import {
   Card,
   CardContent,
   CardActions,
-  Button,
-  Grid,
-  Divider
+  Grid
 } from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
-
 import Carousel from '../../components/ProductSlider/PDPSlider';
+import { Button } from '../../components/common';
 import './overrides.css';
 import { addToCart } from '../../utils/cart';
 import {
@@ -24,101 +22,64 @@ import {
   getVariantSkuBySlug,
   getVariantMap
 } from '../../utils/product';
+import './PDP-style.css';
+import MailOutline from '@material-ui/icons/MailOutline';
+import ProductPopUp from './ProductPopUp';
+import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+// import { setCartDrawerOpened } from '../../modules/cart/actions';
 
-// import ProductType from './ProductType';
-// import ProductVariantType from './ProductVariantType';
-import ATCSnackbarAction from '../../components/common/ATCSnackbarAction'
 const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
-    width: '100%',
-    maxWidth: '464px',
-    padding: '0 !important'
-  },
-  wrapperMaxWidth: {
-    maxWidth: '86% !important'
-  },
-  resetButtonPadding: {
-    padding: 0
+    maxWidth: '464px'
   },
   cardRootOverrides: {
-    padding: 0,
-    backgroundColor: 'transparent',
     display: 'flex',
     flexDirection: 'column'
   },
   box: {
     backgroundColor: 'transparent'
   },
-  title: {
-    margin: 0,
-    lineHeight: '1em',
-    paddingBottom: theme.spacing(2),
-    color: '#004d40'
-  },
-  subtitle: {
-    margin: 0,
-    marginTop: theme.spacing(1)
-  },
   gridModifications: {
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
-  padding: {
-    padding: '60px 81px'
+  btnATC: {
+    height: '80px',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold'
   },
-  divider: {
-    border: '.5px solid'
+  btnOOS: {
+    border: '1.5px solid',
+    backgroundColor: theme.palette.common.white,
+    height: '80px',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold',
+    color: theme.palette.common.black,
+    '&:hover': {
+      backgroundColor: theme.palette.common.white
+    }
   },
-  directionsHeader: {
-    fontSize: '.9rem',
-    padding: 0,
-    lineHeight: '.7rem',
-    marginBottom: theme.spacing(1)
-  },
-  flexEnd: {
-    alignSelf: 'flex-end'
-  },
-  flexStart: {
-    alignSelf: 'flex-start'
+  icon: {
+    marginRight: '10px'
   }
 }));
 
-const StyledButton = withStyles(theme => ({
-  root: {
-    backgroundColor: '#000000',
-    borderRadius: 0,
-    border: 0,
-    color: 'white',
-    width: '100%',
-    maxWidth: '464px',
-    height: '80px',
-    padding: '0'
-  },
-  label: {
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textTransform: 'capitalize'
-  }
-}))(Button);
-
 const ProductVariant = ({ productVariant }) => {
   return productVariant ? (
-    <Grid container alignItems="center" spacing={2}>
-      <Grid item>
-        <Typography gutterBottom variant="h5">
-          <strong>${productVariant.effectivePrice}</strong>
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Typography gutterBottom variant="h6">
-          / {productVariant.variantInfo.size}{' '}
-          {productVariant.variantInfo.prodType}
-        </Typography>
-      </Grid>
-    </Grid>
+    <Box
+      display="flex"
+      flexDirection="row"
+      alignItems="flex-start"
+      className="pdp-product-variant"
+    >
+      <div className="pdp-price">${productVariant.effectivePrice}</div>
+      <div className="pdp-price-slash">/</div>
+      <div className="pdp-price-description">
+        {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
+      </div>
+    </Box>
   ) : null;
 };
 
@@ -127,33 +88,67 @@ const ProductDetail = ({ variantSlug, history }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices } = useContext(ProductContext);
-  const windowSize = useWindowSize();
   const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  // const windowSize = useWindowSize();
   // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
   const defaultSku = getVariantSkuBySlug(variants, variantSlug);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
 
-  const message = <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+  const message = (
+    <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
+  );
 
-  const updateQuantityToCart = useCallback(qty => {
-    if (selectedVariantSku === null)
-      return;
-    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), qty, dispatch);
-    enqueueSnackbar(message, {variant: 'success'});
-  }, [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]);
-  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+  const updateQuantityToCart = useCallback(
+    qty => {
+      if (selectedVariantSku === null) return;
+      addToCart(
+        localStorageClient.get('cartId'),
+        cart,
+        variantMap.get(selectedVariantSku),
+        qty,
+        dispatch
+      );
+      enqueueSnackbar(message, { variant: 'success' });
+    },
+    [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]
+  );
+  const [quantity, setQuantity, Quantity] = useQuantity(
+    updateQuantityToCart,
+    'QTY'
+  );
 
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, variantMap.get(selectedVariantSku), quantity, dispatch);
-    enqueueSnackbar(message, {variant: 'success'});
+    addToCart(
+      localStorageClient.get('cartId'),
+      cart,
+      variantMap.get(selectedVariantSku),
+      quantity,
+      dispatch
+    );
+    enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
-  }, [cart, selectedVariantSku, variantMap, message, quantity, enqueueSnackbar, dispatch]);
+  }, [
+    cart,
+    selectedVariantSku,
+    variantMap,
+    message,
+    quantity,
+    enqueueSnackbar,
+    dispatch
+  ]);
 
-  const updateTerminalVariant = useCallback((terminalVariant) => {
-    /*
+  const handleEmailPopup = () => {
+    setOpen(true);
+  };
+
+  const updateTerminalVariant = useCallback(
+    terminalVariant => {
+      /*
     if (terminalVariant['Diet Type'] === null) {
       setATCEnabled(true);
       setQuantity(1);
@@ -173,55 +168,43 @@ const ProductDetail = ({ variantSlug, history }) => {
     setSelectedVariantSku(defaultSku);
   }, [defaultSku]);
 
-  if (product === null || variants.length === 0)
-    return null;
+  if (product === null || variants.length === 0) return null;
 
-  const isMobile = windowSize.width < 944;
-  // console.log('ProductDetail', {selectedVariantSku, variantMap})
+  // const isMobile = windowSize.width < 944;
 
   return (
     <>
       <Grid container className={classes.gridModifications} xs={12} sm={12}>
-        <Grid
-          container
-          justify="space-between"
-          xs={10}
-          sm={11}
-          className={classes.wrapperMaxWidth}
-        >
+        <Grid container justify="space-between" xs={10} sm={11}>
           <Grid item xs={12} sm={6}>
             <Carousel prodId={product._id} />
           </Grid>
           <Grid item xs={12} sm={5}>
             <Card className={classes.box}>
-              <CardContent className={classes.cardRootOverrides}>
+              <CardContent
+                className={classes.cardRootOverrides}
+                className="pdp-content"
+              >
                 <Box>
-                  <Typography className={classes.title} variant="h1">
+                  <Typography className="pdp-header" variant="h1">
                     {product.name}
                   </Typography>
-                  <ProductVariant
-                    productVariant={variantMap.get(selectedVariantSku)}
-                  />
                 </Box>
-                <Divider variant="fullWidth" className={classes.divider} />
-                <Box>
-                  <Typography className={classes.subtitle} variant="h6">
-                    {product.subtitle}
-                  </Typography>
-                </Box>
-                <Divider variant="fullWidth" className={classes.divider} />
+                <Typography className="pdp-subtitle">
+                  {product.subtitle}
+                </Typography>
                 <br />
-                <Typography component="p" color="textSecondary" variant="body1">
+                <ProductVariant
+                  productVariant={variantMap.get(selectedVariantSku)}
+                />
+                <Typography className="pdp-description">
                   {product.description}
                 </Typography>
                 <br />
-                <Typography className={classes.directionsHeader} variant="h6">
-                  DIRECTIONS
-                </Typography>
-                <Typography variant="body1">
+                <Typography className="pdp-direction">DIRECTIONS</Typography>
+                <Typography className="pdp-direction-description">
                   Take one soft gel daily with meal
                 </Typography>
-                <br />
 
                 {/* <ProductVariantType
                   isMobile={isMobile}
@@ -231,26 +214,34 @@ const ProductDetail = ({ variantSlug, history }) => {
                 {!ATCEnabled && <Quantity />}
               </CardContent>
               {ATCEnabled && (
-                <Grid
-                  container
-                  xs={12}
-                  justify="left-start"
-                  alignItems="center"
-                >
+                <Grid>
                   <CardActions className={classes.maxWidth}>
-                    <StyledButton
-                      className={classes.resetButtonPadding}
-                      fullWidth={isMobile}
-                      variant="contained"
-                      color="primary"
+                    <Button
+                      className={classes.btnATC}
+                      fullWidth
                       onClick={handleAddToCart}
                       disabled={selectedVariantSku === null}
                     >
                       ADD TO CART
-                    </StyledButton>
+                    </Button>
                   </CardActions>
                 </Grid>
               )}
+
+              {/* Render this button when Product is out of stock */}
+              <Grid>
+                <CardActions className={classes.maxWidth}>
+                  <Button
+                    className={classes.btnOOS}
+                    fullWidth
+                    onClick={handleEmailPopup}
+                  >
+                    <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
+                    AVAILABLE
+                  </Button>
+                </CardActions>
+                {open && <ProductPopUp />}
+              </Grid>
             </Card>
           </Grid>
         </Grid>

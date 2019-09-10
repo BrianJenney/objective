@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Switch } from 'react-router-dom';
-import { Box, CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import { requestFetchAccount as requestFetchAccountAction } from './modules/account/actions';
 import {
   requestFetchCart as requestFetchCartAction,
@@ -81,13 +81,11 @@ class App extends Component {
         <CssBaseline />
         <BrowserRouter>
           <Header />
-          <Box bgcolor="rgba(252, 248, 244, 0.5)" px={15} py={10}>
-            <Switch>
-              {routes.map(route => (
-                <RouteWithSubRoutes key={route.path} {...route} />
-              ))}
-            </Switch>
-          </Box>
+          <Switch>
+            {routes.map(route => (
+              <RouteWithSubRoutes key={route.path} {...route} />
+            ))}
+          </Switch>
           <Footer />
         </BrowserRouter>
       </>

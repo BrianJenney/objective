@@ -48,20 +48,20 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fdf8f2',
   },
   tabs: {
-    borderLeft: '1px solid #003833',
-    borderBottom: '1px solid #003833',
+    borderLeft: '2px solid #003833',
+    borderBottom: '2px solid #003833',
     backgroundColor: '#fdf8f2',
     padding: '30px 0',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
-    "&:hover" : {
+    "&:hover": {
       backgroundColor: '#ffffff',
       color: '#000000',
     },
   },
   wrapper: {
     marginTop: '50px',
-    border: '1px solid #003833'
+    border: '2px solid #003833'
   },
 }));
 
@@ -91,7 +91,7 @@ export default function PdpTabs(props) {
                 textColor="primary"
                 classes={{ indicator: classes.indicator }}
               >
-                <Tab variant="smallHeader" label="How it works" {...a11yProps(0)} className={classes.tabs} style={{borderLeft: 'none'}} />
+                <Tab variant="smallHeader" label="How it works" {...a11yProps(0)} className={classes.tabs} style={{ borderLeft: 'none' }} />
                 <Tab variant="smallHeader" label="Information" {...a11yProps(1)} className={classes.tabs} />
               </Tabs>
             </AppBar>
