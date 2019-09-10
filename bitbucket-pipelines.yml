@@ -22,7 +22,7 @@ pipelines:
             # aws login for docker so we can push image later
             - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
             # add bits react needs to build_env file
-            - echo REACT_APP_STORE_ID=$REACT_APP_STORE_ID > build_env
+            - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
             - echo REACT_APP_CLOUDAMQP_HOSTNAME=$REACT_APP_CLOUDAMQP_HOSTNAME >> build_env
             - echo REACT_APP_CLOUDAMQP_USERNAME=$REACT_APP_CLOUDAMQP_USERNAME >> build_env
             - echo REACT_APP_CLOUDAMQP_PASSWORD=$REACT_APP_CLOUDAMQP_PASSWORD >> build_env
