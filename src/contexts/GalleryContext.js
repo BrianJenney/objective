@@ -45,7 +45,8 @@ export class GalleryStore extends Component {
     let params = {
       'params': {
         'query': {
-          '_id': { $in: this.props.productIds }
+          '_id': { $in: this.props.productIds },
+          $sort: { category: -1 }
         }
       }
     };
