@@ -67,12 +67,14 @@ const AccountPaymentDetails = ({
 
   return (
     <Box>
-      <Typography variant="h5" children="Payment Details" gutterBottom />
-      <Typography variant="h6" children="Credit Cards" gutterBottom />
+      <Box mx={1}>
+        <Typography variant="h5" children="Payment Details" gutterBottom />
+        <Typography variant="h6" children="Credit Cards" gutterBottom />
+      </Box>
       <Grid container>
         {creditCards.map((creditCardEntity, index) => (
           <Grid key={`credit_card_entity_${index}`} item xs={12} sm={4}>
-            <Box border="1px solid #979797" m={1} p={4}>
+            <Box border="1px solid #979797" m={1} p={2}>
               <EditablePanel
                 title=""
                 defaultValues={creditCardEntity}
@@ -92,7 +94,7 @@ const AccountPaymentDetails = ({
           </Grid>
         ))}
       </Grid>
-      <Box my={2}>
+      <Box mx={1} my={2}>
         {isEmpty(creditCards) && (
           <AlertPanel type="info" text="No Credit Cards. Please add." />
         )}
@@ -104,10 +106,17 @@ const AccountPaymentDetails = ({
             onBack={() => setAddModeEnabled(false)}
           />
         ) : (
-          <MenuLink
-            onClick={() => setAddModeEnabled(true)}
-            children="Add New Credit Card"
-          />
+          <Box
+            fontSize={16}
+            fontWeight="bold"
+            style={{ textTransform: 'uppercase' }}
+          >
+            <MenuLink
+              onClick={() => setAddModeEnabled(true)}
+              children="Add New Credit Card"
+              underline="always"
+            />
+          </Box>
         )}
       </Box>
       <Box display="flex" alignItems="center">

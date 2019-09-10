@@ -68,11 +68,17 @@ const AccountAddresses = ({
 
   return (
     <Box>
-      <Typography variant="h5" children="Saved Addresses" gutterBottom />
+      <Box
+        component={Typography}
+        mx={1}
+        variant="h5"
+        children="Saved Addresses"
+        gutterBottom
+      />
       <Grid container>
         {addressBook.map((addressEntity, index) => (
           <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-            <Box border="1px solid #979797" m={1} p={4}>
+            <Box border="1px solid #979797" m={1} p={2}>
               <EditablePanel
                 title=""
                 defaultValues={addressEntity}
@@ -94,7 +100,7 @@ const AccountAddresses = ({
           </Grid>
         ))}
       </Grid>
-      <Box my={2}>
+      <Box mx={1} my={2}>
         {isEmpty(addressBook) && (
           <AlertPanel type="info" text="No Addresses. Please add." />
         )}
@@ -105,10 +111,17 @@ const AccountAddresses = ({
             onBack={() => setAddModeEnabled(false)}
           />
         ) : (
-          <MenuLink
-            onClick={() => setAddModeEnabled(true)}
-            children="Add New Address"
-          />
+          <Box
+            fontSize={16}
+            fontWeight="bold"
+            style={{ textTransform: 'uppercase' }}
+          >
+            <MenuLink
+              onClick={() => setAddModeEnabled(true)}
+              children="Add New Address"
+              underline="always"
+            />
+          </Box>
         )}
       </Box>
       <Box display="flex" alignItems="center">
