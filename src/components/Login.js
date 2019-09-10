@@ -50,7 +50,8 @@ const Login = ({ requestLoginAttempt, account, switchToSignup }) => (
 Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
-  switchToSignup: PropTypes.func
+  switchToSignup: PropTypes.func,
+  closeDialog: PropTypes.func
 };
 
 export default Login;
