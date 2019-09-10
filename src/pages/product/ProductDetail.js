@@ -11,6 +11,8 @@ import {
   CardActions,
   Grid
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
@@ -92,7 +94,7 @@ const ProductDetail = ({ variantSlug, history }) => {
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [open, setOpen] = useState(false);
 
-  // const windowSize = useWindowSize();
+  const windowSize = useWindowSize();
   // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
   const defaultSku = getVariantSkuBySlug(variants, variantSlug);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
@@ -171,81 +173,158 @@ const ProductDetail = ({ variantSlug, history }) => {
   if (product === null || variants.length === 0) return null;
 
   // const isMobile = windowSize.width < 944;
-
+  const isMobile = windowSize.width < 768;
   return (
     <>
-      <Grid container className={classes.gridModifications} xs={12} sm={12}>
-        <Grid container justify="space-between" xs={10} sm={11}>
-          <Grid item xs={12} sm={6}>
-            <Carousel prodId={product._id} />
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <Card className={classes.box}>
-              <CardContent
-                className={classes.cardRootOverrides}
-                className="pdp-content"
-              >
-                <Box>
-                  <Typography className="pdp-header" variant="h1">
-                    {product.name}
-                  </Typography>
-                </Box>
-                <Typography className="pdp-subtitle">
-                  {product.subtitle}
-                </Typography>
-                <br />
-                <ProductVariant
-                  productVariant={variantMap.get(selectedVariantSku)}
-                />
-                <Typography className="pdp-description">
-                  {product.description}
-                </Typography>
-                <br />
-                <Typography className="pdp-direction">DIRECTIONS</Typography>
-                <Typography className="pdp-direction-description">
-                  Take one soft gel daily with meal
-                </Typography>
+      {isMobile ? (
+        <>
+          <Carousel prodId={product._id} />
+          <Grid container className={classes.gridModifications} xs={12} sm={12}>
+            <Grid container justify="space-between" xs={10} sm={11}>
+              <Grid item xs={12} sm={5}>
+                <Card className={classes.box}>
+                  <CardContent
+                    className={classes.cardRootOverrides}
+                    className="pdp-content"
+                  >
+                    <Box>
+                      <Typography className="pdp-header" variant="h1">
+                        {product.name}
+                      </Typography>
+                    </Box>
+                    <Typography className="pdp-subtitle">
+                      {product.subtitle}
+                    </Typography>
+                    <br />
+                    <ProductVariant
+                      productVariant={variantMap.get(selectedVariantSku)}
+                    />
+                    <Typography className="pdp-description">
+                      {product.description}
+                    </Typography>
+                    <br />
+                    <Typography className="pdp-direction">
+                      DIRECTIONS
+                    </Typography>
+                    <Typography className="pdp-direction-description">
+                      Take one soft gel daily with meal
+                    </Typography>
 
-                {/* <ProductVariantType
+                    {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                {!ATCEnabled && <Quantity />}
-              </CardContent>
-              {ATCEnabled && (
+                    {!ATCEnabled && <Quantity />}
+                  </CardContent>
+                  {ATCEnabled && (
+                    <Grid>
+                      <CardActions className={classes.maxWidth}>
+                        <Button
+                          className={classes.btnATC}
+                          fullWidth
+                          onClick={handleAddToCart}
+                          disabled={selectedVariantSku === null}
+                        >
+                          ADD TO CART
+                        </Button>
+                      </CardActions>
+                    </Grid>
+                  )}
+
+                  {/* Render this button when Product is out of stock */}
+                  <Grid>
+                    <CardActions className={classes.maxWidth}>
+                      <Button
+                        className={classes.btnOOS}
+                        fullWidth
+                        onClick={handleEmailPopup}
+                      >
+                        <MailOutline className={classes.icon} /> TELL ME WHEN
+                        IT'S AVAILABLE
+                      </Button>
+                    </CardActions>
+                    {open && <ProductPopUp />}
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        <Grid container className={classes.gridModifications} xs={12} sm={12}>
+          <Grid container justify="space-between" xs={10} sm={11}>
+            <Grid item xs={12} sm={6}>
+              <Carousel prodId={product._id} />
+            </Grid>
+            <Grid item xs={12} sm={5}>
+              <Card className={classes.box}>
+                <CardContent
+                  className={classes.cardRootOverrides}
+                  className="pdp-content"
+                >
+                  <Box>
+                    <Typography className="pdp-header" variant="h1">
+                      {product.name}
+                    </Typography>
+                  </Box>
+                  <Typography className="pdp-subtitle">
+                    {product.subtitle}
+                  </Typography>
+                  <br />
+                  <ProductVariant
+                    productVariant={variantMap.get(selectedVariantSku)}
+                  />
+                  <Typography className="pdp-description">
+                    {product.description}
+                  </Typography>
+                  <br />
+                  <Typography className="pdp-direction">DIRECTIONS</Typography>
+                  <Typography className="pdp-direction-description">
+                    Take one soft gel daily with meal
+                  </Typography>
+
+                  {/* <ProductVariantType
+                  isMobile={isMobile}
+                  variantSlug={variantSlug}
+                  updateTerminalVariant={updateTerminalVariant}
+                /> */}
+                  {!ATCEnabled && <Quantity />}
+                </CardContent>
+                {ATCEnabled && (
+                  <Grid>
+                    <CardActions className={classes.maxWidth}>
+                      <Button
+                        className={classes.btnATC}
+                        fullWidth
+                        onClick={handleAddToCart}
+                        disabled={selectedVariantSku === null}
+                      >
+                        ADD TO CART
+                      </Button>
+                    </CardActions>
+                  </Grid>
+                )}
+
+                {/* Render this button when Product is out of stock */}
                 <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
-                      className={classes.btnATC}
+                      className={classes.btnOOS}
                       fullWidth
-                      onClick={handleAddToCart}
-                      disabled={selectedVariantSku === null}
+                      onClick={handleEmailPopup}
                     >
-                      ADD TO CART
+                      <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
+                      AVAILABLE
                     </Button>
                   </CardActions>
+                  {open && <ProductPopUp />}
                 </Grid>
-              )}
-
-              {/* Render this button when Product is out of stock */}
-              <Grid>
-                <CardActions className={classes.maxWidth}>
-                  <Button
-                    className={classes.btnOOS}
-                    fullWidth
-                    onClick={handleEmailPopup}
-                  >
-                    <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
-                    AVAILABLE
-                  </Button>
-                </CardActions>
-                {open && <ProductPopUp />}
-              </Grid>
-            </Card>
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 };
