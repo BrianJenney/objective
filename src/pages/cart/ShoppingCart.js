@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Box,  withStyles} from '@material-ui/core';
+import { Box, withStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import CartDrawer from './CartDrawer';
 import Badge from '@material-ui/core/Badge/Badge';
@@ -16,7 +16,7 @@ const StyledBadge = withStyles(theme => ({
     // The border color match the background color.
     border: `2px solid ${
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
+      }`,
   },
 }))(Badge);
 

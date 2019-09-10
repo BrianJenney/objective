@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { AlertPanel } from '../../components/common';
@@ -23,8 +24,11 @@ import {
   StyledDrawerGrid,
   StyledGridEmptyCart,
   StyledTotalWrapper,
-  StyledPromoCode
+  StyledPromoCode,
+  StyledLogo,
+  StyledLogoContainer
 } from './StyledComponents';
+import ShoppingCart from './ShoppingCart';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 
@@ -59,6 +63,7 @@ class Cart extends React.Component {
     store.dispatch(requestPatchCart(this.props.cart._id, patches));
   }
 
+
   render() {
     if (!this.props.cart) {
       return <AlertPanel type="info" text="No Cart" />;
@@ -74,6 +79,11 @@ class Cart extends React.Component {
         xs={12}
         style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
       >
+        <StyledLogoContainer>
+          <Box>
+            <StyledLogo>LOGO</StyledLogo>
+          </Box>
+        </StyledLogoContainer>
         <div>
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">

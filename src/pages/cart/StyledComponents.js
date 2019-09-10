@@ -1,5 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,7 +20,32 @@ const $thin2pxRuler_gray = `solid 2px ${MEDIUM_GRAY}`
 export const StyledCartHeader = withStyles(theme => ({
   root: {
     fontSize: '2rem',
-    fontFamily: $brandSerif
+    fontFamily: $brandSerif,
+    paddingTop: '15px'
+  },
+}))(Typography)
+
+export const StyledLogoContainer = withStyles(theme => ({
+  root: {
+    borderBottom: '1px solid #000000',
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      borderBottom: 'none',
+      width: 0,
+    },
+  },
+}))(Box)
+
+export const StyledLogo = withStyles(theme => ({
+  root: {
+    fontSize: '1.5rem',
+    fontFamily: $brandSerif,
+    paddingBottom: '15px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 0,
+      fontFamily: 'none',
+      paddingBottom: 0,
+    },
   },
 }))(Typography)
 
