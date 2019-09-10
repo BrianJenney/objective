@@ -20,13 +20,11 @@ const Checkout = ({
   const [payload, setPayload] = useState({});
   const [activeStep, setActiveStep] = useState(0);
   const { account_jwt } = currentUser.data;
-
   const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
-
   const handleNext = values => {
     if (activeStep === 1) {
       setPayload({ shippingMethod: shippingMethods[values.shippingMethod] });
-    } else if (activeStep <= 4) {
+    } else if (activeStep > 1 && activeStep <= 4) {
       const key = STEP_KEYS[activeStep];
       const dataKey = DATA_KEYS[activeStep];
       const currentUserData = currentUser.data;
@@ -63,7 +61,11 @@ const Checkout = ({
           currentUser={currentUser}
           requestCreateAccount={requestCreateAccount}
           requestLoginAttempt={requestLoginAttempt}
-          handleNext={() => setActiveStep(1)}
+          handleNext={() => {
+            if (activeStep === 0) {
+              setActiveStep(1);
+            }
+          }}
         />
       </Panel>
       <Panel title={STEPS[1]} collapsible expanded={activeStep === 1}>
