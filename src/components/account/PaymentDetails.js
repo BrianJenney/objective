@@ -72,27 +72,32 @@ const AccountPaymentDetails = ({
         <Typography variant="h6" children="Credit Cards" gutterBottom />
       </Box>
       <Grid container>
-        {creditCards.map((creditCardEntity, index) => (
-          <Grid key={`credit_card_entity_${index}`} item xs={12} sm={4}>
-            <Box border="1px solid #979797" m={1} p={2}>
-              <EditablePanel
-                title=""
-                defaultValues={creditCardEntity}
-                Summary={PaymentSummary}
-                onRemove={
-                  creditCardEntity.isDefault
-                    ? undefined
-                    : () => deleteCreditCard(creditCardEntity.token)
-                }
-                onSetDefault={
-                  creditCardEntity.isDefault
-                    ? undefined
-                    : () => setDefaultCreditCard(creditCardEntity.token)
-                }
-              />
-            </Box>
-          </Grid>
-        ))}
+        {creditCards.map((creditCardEntity, index) => {
+          const borderStyle = creditCardEntity.isDefault
+            ? '2px solid #000'
+            : '1px solid #979797';
+          return (
+            <Grid key={`credit_card_entity_${index}`} item xs={12} sm={4}>
+              <Box border={borderStyle} m={1} p={2}>
+                <EditablePanel
+                  title=""
+                  defaultValues={creditCardEntity}
+                  Summary={PaymentSummary}
+                  onRemove={
+                    creditCardEntity.isDefault
+                      ? undefined
+                      : () => deleteCreditCard(creditCardEntity.token)
+                  }
+                  onSetDefault={
+                    creditCardEntity.isDefault
+                      ? undefined
+                      : () => setDefaultCreditCard(creditCardEntity.token)
+                  }
+                />
+              </Box>
+            </Grid>
+          );
+        })}
       </Grid>
       <Box mx={1} my={2}>
         {isEmpty(creditCards) && (

@@ -76,29 +76,34 @@ const AccountAddresses = ({
         gutterBottom
       />
       <Grid container>
-        {addressBook.map((addressEntity, index) => (
-          <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-            <Box border="1px solid #979797" m={1} p={2}>
-              <EditablePanel
-                title=""
-                defaultValues={addressEntity}
-                onSubmit={(...args) => saveAddress(...args, index)}
-                Form={AddressForm}
-                Summary={AddressSummary}
-                onRemove={
-                  addressEntity.isDefault
-                    ? undefined
-                    : () => deleteAddress(index)
-                }
-                onSetDefault={
-                  addressEntity.isDefault
-                    ? undefined
-                    : () => setDefaultAddress(index)
-                }
-              />
-            </Box>
-          </Grid>
-        ))}
+        {addressBook.map((addressEntity, index) => {
+          const borderStyle = addressEntity.isDefault
+            ? '2px solid #000'
+            : '1px solid #979797';
+          return (
+            <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+              <Box border={borderStyle} m={1} p={2}>
+                <EditablePanel
+                  title=""
+                  defaultValues={addressEntity}
+                  onSubmit={(...args) => saveAddress(...args, index)}
+                  Form={AddressForm}
+                  Summary={AddressSummary}
+                  onRemove={
+                    addressEntity.isDefault
+                      ? undefined
+                      : () => deleteAddress(index)
+                  }
+                  onSetDefault={
+                    addressEntity.isDefault
+                      ? undefined
+                      : () => setDefaultAddress(index)
+                  }
+                />
+              </Box>
+            </Grid>
+          );
+        })}
       </Grid>
       <Box mx={1} my={2}>
         {isEmpty(addressBook) && (
