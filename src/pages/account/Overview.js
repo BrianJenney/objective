@@ -17,10 +17,10 @@ const AccountOverview = props => {
       <Grid item xs={12}>
         <Paper style={pStyle}>
           <Typography variant="h3" gutterBottom>
-            Name {currentUser.firstName} {currentUser.lastName}
+            Name {currentUser.data.firstName} {currentUser.data.lastName}
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
-            Email: {currentUser.email}
+            Email: {currentUser.data.email}
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
             Password: XXXXXXXX

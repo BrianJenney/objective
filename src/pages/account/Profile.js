@@ -35,19 +35,21 @@ class AccountProfile extends React.Component {
   };
 
   handleSubmit = values => {
-    store.dispatch(requestPatchAccount(this.props.account.account_jwt, values));
+    store.dispatch(
+      requestPatchAccount(this.props.account.data.account_jwt, values)
+    );
   };
 
   render() {
     const { account } = this.props;
 
     const INITIAL_VALUES = {
-      firstName: account.firstName,
-      lastName: account.lastName,
-      email: account.email
+      firstName: account.data.firstName,
+      lastName: account.data.lastName,
+      email: account.data.email
     };
 
-    if (!account.account_jwt) {
+    if (!account.data.account_jwt) {
       return <div>No Account</div>;
     }
 

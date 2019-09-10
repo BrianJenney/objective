@@ -19,7 +19,7 @@ const AlertPanel = ({ type, text, ...rest }) => {
 
   return (
     <Box
-      p={5}
+      p={2}
       color={color}
       display="flex"
       alignItems="center"

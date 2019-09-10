@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Box,
   Grid,
   Typography,
   FormControlLabel,
@@ -20,7 +21,7 @@ const schema = object().shape({
 
 const INITIAL_VALUES = {
   email: 'kevinch@nutranext.net',
-  password: '44444'
+  password: '444444'
 };
 
 const LoginForm = ({ title, onSubmit }) => {
@@ -45,10 +46,12 @@ const LoginForm = ({ title, onSubmit }) => {
             autoComplete="current-password"
           />
         </Grid>
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
+        <Box px={2}>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+        </Box>
         <Grid item xs={12}>
           <Button fullWidth type="submit" children="Login" />
         </Grid>

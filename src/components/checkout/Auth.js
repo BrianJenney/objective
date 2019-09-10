@@ -17,7 +17,8 @@ const CheckoutAuth = ({
 }) => {
   const [authMode, setAuthMode] = useState(AUTH_MODES.SIGNUP);
   useEffect(() => {
-    if (currentUser.account_jwt) {
+    const { account_jwt } = currentUser.data;
+    if (account_jwt) {
       handleNext();
     }
   }, [currentUser]);

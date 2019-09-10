@@ -13,14 +13,15 @@ const AccountAddresses = ({
   onSubmit
 }) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
-  const addressBook = get(currentUser, 'addressBook', []);
+  const addressBook = get(currentUser, 'data.addressBook', []);
+  const account_jwt = get(currentUser, 'data.account_jwt', '');
   const deleteAddress = deletedIndex => {
     const newAddressBook = addressBook.filter(
       (address, index) => index !== deletedIndex
     );
     const payload = { addressBook: newAddressBook };
 
-    requestPatchAccount(currentUser.account_jwt, payload);
+    requestPatchAccount(account_jwt, payload);
   };
 
   const setDefaultAddress = targetIndex => {
@@ -42,7 +43,7 @@ const AccountAddresses = ({
     ];
     const payload = { addressBook: newAddressBook };
 
-    requestPatchAccount(currentUser.account_jwt, payload);
+    requestPatchAccount(account_jwt, payload);
   };
 
   const saveAddress = (values, actions, targetIndex) => {
@@ -60,7 +61,7 @@ const AccountAddresses = ({
 
     const payload = { addressBook: newAddressBook };
 
-    requestPatchAccount(currentUser.account_jwt, payload);
+    requestPatchAccount(account_jwt, payload);
     actions.setSubmitting(false);
     setAddModeEnabled(false);
   };

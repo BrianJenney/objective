@@ -39,9 +39,10 @@ class App extends Component {
       requestFetchStorefront,
       requestFetchCatalog
     } = this.props;
+    const { data: accountData } = account;
 
-    if (account.account_jwt && !account.account_id) {
-      const accountId = jwt.decode(account.account_jwt).account_id;
+    if (accountData.account_jwt && !accountData.account_id) {
+      const accountId = jwt.decode(accountData.account_jwt).account_id;
       requestFetchAccount(accountId);
     }
 
