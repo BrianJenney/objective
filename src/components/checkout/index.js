@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { Container, Box, CssBaseline } from '@material-ui/core';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
-import { ShippingMethodForm, ReviewForm, ResultForm } from '../forms';
+import { ShippingMethodForm, CheckoutReviewForm } from '../forms';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, shippingMethods } from './constants';
 import { getDefaultEntity } from './helpers';
@@ -80,14 +79,20 @@ const Checkout = ({
     }
 
     if (paymentMethodNonce) {
-      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
+      requestCreateOrder(
+        { ...cart, ...payload, account_jwt },
+        { paymentMethodNonce }
+      );
     } else {
-      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
+      requestCreateOrder(
+        { ...cart, ...payload, account_jwt },
+        { paymentMethodToken }
+      );
     }
 
     setPayload({});
     history.push('/order');
-    return false;
+    return true;
   };
 
   const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
@@ -99,12 +104,14 @@ const Checkout = ({
     } else if (activeStep > 1 && activeStep <= 4) {
       result = await handleAddressesAndCardSteps(values);
     } else if (activeStep === 5) {
-      result = handleReviewStep();
+      handleReviewStep();
+      return true;
     }
 
     if (result) {
       setActiveStep(activeStep + 1);
     }
+    return true;
   };
 
   return (
@@ -157,8 +164,8 @@ const Checkout = ({
           />
         </Panel>
         <Panel title={STEPS[5]} collapsible expanded={activeStep === 5}>
-          <ReviewForm
-            cart={{ ...cart, ...payload }}
+          <CheckoutReviewForm
+            summary={{ ...cart, ...payload }}
             onBack={handleBack}
             onSubmit={handleNext}
           />
