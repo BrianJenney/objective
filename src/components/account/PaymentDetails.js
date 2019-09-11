@@ -12,9 +12,11 @@ const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
   onBack,
-  onSubmit
+  onSubmit,
+  allowFlyMode
 }) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
+  const [flyModeEnabled, setFlyModeEnabled] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
@@ -61,6 +63,7 @@ const AccountPaymentDetails = ({
     }
     actions.setSubmitting(false);
     setAddModeEnabled(false);
+    setFlyModeEnabled(false);
 
     return true;
   };
@@ -101,37 +104,63 @@ const AccountPaymentDetails = ({
       </Grid>
       <Box mx={1} my={2}>
         {isEmpty(creditCards) && (
-          <AlertPanel type="info" text="No Credit Cards. Please add." />
+          <AlertPanel type="info" text="No Saved Credit Cards." />
         )}
-        {addModeEnabled ? (
+        {addModeEnabled || flyModeEnabled ? (
           <PaymentForm
             title=""
             onlyCard
-            onSubmit={addCreditCard}
-            onBack={() => setAddModeEnabled(false)}
+            onSubmit={addModeEnabled ? addCreditCard : onSubmit}
+            onBack={() => {
+              setAddModeEnabled(false);
+              setFlyModeEnabled(false);
+            }}
+            submitLabel={addModeEnabled ? 'Save' : 'Next'}
+            backLabel={addModeEnabled ? 'Cancel' : 'Back'}
           />
         ) : (
           <Box
+            display="flex"
+            alignItems="center"
             fontSize={16}
             fontWeight="bold"
             style={{ textTransform: 'uppercase' }}
           >
-            <MenuLink
-              onClick={() => setAddModeEnabled(true)}
-              children="Add New Credit Card"
-              underline="always"
-            />
+            <Box>
+              <MenuLink
+                onClick={() => {
+                  setAddModeEnabled(true);
+                  setFlyModeEnabled(false);
+                }}
+                children="Add New Credit Card"
+                underline="always"
+              />
+            </Box>
+            {allowFlyMode && (
+              <Box ml={2}>
+                <MenuLink
+                  onClick={() => {
+                    setAddModeEnabled(false);
+                    setFlyModeEnabled(true);
+                  }}
+                  children="Use One-time Credit Card"
+                  underline="always"
+                />
+              </Box>
+            )}
           </Box>
         )}
       </Box>
-      <Box display="flex" alignItems="center">
-        {onBack && (
-          <Button type="button" onClick={onBack} children="Back" mr={2} />
-        )}
-        {onSubmit && (
-          <Button type="button" onClick={onSubmit} children="Next" />
-        )}
-      </Box>
+      {!addModeEnabled && !flyModeEnabled && (
+        <Box display="flex" alignItems="center">
+          {onBack && (
+            <Button type="button" onClick={onBack} children="Back" mr={2} />
+          )}
+          {onSubmit && (
+            <Button type="button" onClick={() => onSubmit()} children="Next" />
+          )}
+        </Box>
+      )}
     </Box>
   );
 };
@@ -140,7 +169,12 @@ AccountPaymentDetails.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   onBack: PropTypes.func,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  allowFlyMode: PropTypes.bool
+};
+
+AccountPaymentDetails.defaultProps = {
+  allowFlyMode: false
 };
 
 export default AccountPaymentDetails;
