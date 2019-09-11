@@ -5,9 +5,11 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
 import { colorPalette } from '../../components/Theme/color-palette';
 import { fonts, sizes, lineHeight } from '../../components/Theme/fonts'
+import { ImportantDevices } from '@material-ui/icons';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette
 const { $brandSans, $brandSerif } = fonts
@@ -57,6 +59,15 @@ export const StyledSmallCaps = withStyles(theme => ({
     fontFamily: $brandSans,
   },
 }))(Typography)
+
+export const StyledArrowIcon = withStyles(theme => ({
+  root: {
+    top: 7,
+    right: 5,
+    color: '#000000',
+    position: 'relative',
+  },
+}))(SvgIcon)
 
 export const StyledFinePrint = withStyles(theme => ({
   root: {

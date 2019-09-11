@@ -28,6 +28,7 @@ import {
   StyledPromoCode,
   StyledLogo,
   StyledLogoContainer,
+  StyledArrowIcon
 } from './StyledComponents';
 import ShoppingCart from './ShoppingCart.js';
 
@@ -92,7 +93,7 @@ const Cart = ({ history }) => {
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
     >
       <StyledLogoContainer>
-        <StyledLogo onClick={handleLogo}>LOGO-MOBILE</StyledLogo>
+        <StyledLogo onClick={handleLogo}>LOGO</StyledLogo>
       </StyledLogoContainer>
 
       <div>
@@ -106,7 +107,7 @@ const Cart = ({ history }) => {
           </Grid>
           <Grid container direction="row" alignItems="flex-end">
             <StyledSmallCaps component="span" onClick={handleCheckout}>
-              proceed to checkout <RightArrow />
+              proceed to checkout <StyledArrowIcon><RightArrow /></StyledArrowIcon>
             </StyledSmallCaps>
           </Grid>
         </StyledHeaderWrapper>
