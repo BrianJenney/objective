@@ -15,14 +15,15 @@ import {
   ForgotPassword,
   ConfirmPassword,
   ResetPassword,
-  ResetSuccess
+  ResetSuccess,
+  OrderConfirmationPage,
 } from './pages';
 
 export default [
   { path: '/', exact: true, component: HomePage },
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/gallery', exact: true, component: GalleryPage },
-  { path: '/cart', exact: true, component: CartPage },
+  { path: '/order', auth: true, exact: true, component: OrderConfirmationPage },
   {
     path: '/checkout',
     exact: true,
