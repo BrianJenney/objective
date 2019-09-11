@@ -6,9 +6,12 @@ html,
   font-stretch: normal;
   line-height: 1.1;
   letter-spacing: normal;
-  text-align: center;
   color: #003732;
   padding-bottom: 30px;
+}
+
+.pdp-header {
+  text-align: center;
 }
 
 .pdp-subtitle {
