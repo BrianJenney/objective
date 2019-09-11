@@ -14,19 +14,19 @@ const COLOR_MAP = {
   [ALERT_TYPES.ERROR]: 'error.main'
 };
 
-const AlertPanel = ({ type, text, ...rest }) => {
+const AlertPanel = ({ type, text, variant, ...rest }) => {
   const color = COLOR_MAP[type];
 
   return (
     <Box
-      p={2}
+      // p={2}
+      // display="flex"
       color={color}
-      display="flex"
       alignItems="center"
       width={1}
       {...rest}
     >
-      <Typography variant="body1" children={text} />
+      <Typography variant={variant} children={text} />
     </Box>
   );
 };
