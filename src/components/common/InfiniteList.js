@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { omit, debounce } from 'lodash';
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 const SCROLL_THROTTLE_DELAY = 200; // throttling event in milliseconds
 const SCROLL_THRESHOLD = 50; // threshold in pixels from bottom

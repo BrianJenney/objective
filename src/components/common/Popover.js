@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Popover } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Popover from '@material-ui/core/Popover';
 
 const PopoverView = ({ panelId, toggleContent, popoverContent, ...rest }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
