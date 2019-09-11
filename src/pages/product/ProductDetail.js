@@ -11,8 +11,6 @@ import {
   CardActions,
   Grid
 } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
@@ -28,6 +26,8 @@ import './PDP-style.css';
 import MailOutline from '@material-ui/icons/MailOutline';
 import ProductPopUp from './ProductPopUp';
 import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+// import { useTheme } from '@material-ui/core/styles';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
 // import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 const localStorageClient = require('store');
@@ -174,6 +174,7 @@ const ProductDetail = ({ variantSlug, history }) => {
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
+
   return (
     <>
       {isMobile ? (
@@ -244,7 +245,12 @@ const ProductDetail = ({ variantSlug, history }) => {
                         IT'S AVAILABLE
                       </Button>
                     </CardActions>
-                    {open && <ProductPopUp />}
+                    {open && (
+                      <ProductPopUp
+                        product_img={product.assets.img_front}
+                        product_name={product.name}
+                      />
+                    )}
                   </Grid>
                 </Card>
               </Grid>
@@ -318,7 +324,12 @@ const ProductDetail = ({ variantSlug, history }) => {
                       AVAILABLE
                     </Button>
                   </CardActions>
-                  {open && <ProductPopUp />}
+                  {open && (
+                    <ProductPopUp
+                      product_img={product.assets.img_front}
+                      product_name={product.name}
+                    />
+                  )}
                 </Grid>
               </Card>
             </Grid>
