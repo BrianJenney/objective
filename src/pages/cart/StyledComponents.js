@@ -32,6 +32,8 @@ export const StyledLogoContainer = withStyles(theme => ({
   root: {
     borderBottom: '1px solid #000000',
     width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     [theme.breakpoints.up('sm')]: {
       borderBottom: 'none',
       width: 0,
@@ -194,13 +196,15 @@ export const StyledCardContent = withStyles(theme => ({
 
 export const StyledCartCloseIcon = withStyles(theme => ({
   root: {
-    position: 'absolute',
-    left: 30,
-    top: 41,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       position: 'absolute',
-      right: -320,
-      top: 30,
+      left: 365,
+      top: 35
+    },
+    [theme.breakpoints.down('sm')]: {
+      position: 'absolute',
+      left: 30,
+      top: 41,
     },
   }
 }))(Box)

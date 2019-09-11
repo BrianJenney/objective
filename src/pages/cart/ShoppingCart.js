@@ -34,7 +34,9 @@ const ShoppingCart = () => {
         </StyledBadge>
       }
       closer={
-        <StyledCartCloseIcon children={<CloseIcon />} />
+        <StyledCartCloseIcon position="absolute"
+          left={1}
+          top={30} children={<CloseIcon />} />
       }
       listContent={<CartDrawer />}
       side="right"
