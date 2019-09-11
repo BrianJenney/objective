@@ -68,20 +68,21 @@ const Checkout = ({
   };
 
   const handleReviewStep = () => {
-    const nonce = get(payload, 'paymentDetails.nonce');
-    const token = get(payload, 'paymentDetails.token');
+    const paymentMethodNonce = get(payload, 'paymentDetails.nonce');
+    const paymentMethodToken = get(payload, 'paymentDetails.token');
     delete payload.paymentDetails.nonce;
 
-    if (!nonce && !token) {
+    if (!paymentMethodNonce && !paymentMethodToken) {
       return false;
     }
 
-    if (nonce) {
-      requestCreateOrder({ ...cart, ...payload, account_jwt }, { nonce });
+    if (paymentMethodNonce) {
+      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
     } else {
-      requestCreateOrder({ ...cart, ...payload, account_jwt }, { token });
+      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
     }
 
+    setPayload({});
     return true;
   };
 
