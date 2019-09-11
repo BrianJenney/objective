@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, CssBaseline, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  CssBaseline,
+  Paper,
+  Typography,
+  Container
+} from '@material-ui/core';
 import { SignupForm } from './forms';
 import { MenuLink, NavLink } from './common';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,32 +16,34 @@ const useStyles = makeStyles(theme => ({
     fontSize: '40px',
     fontWeight: 'bold'
   },
-  paper: {
-    padding: theme.spacing(0, 5, 5)
+  subTitle: {
+    paddingBottom: theme.spacing(3)
   }
 }));
 
 const Signup = ({ requestCreateAccount, switchToLogin }) => {
   const classes = useStyles();
   return (
-    <Paper className={classes.paper}>
-      <CssBaseline />
-      <Box align="center">
-        <Typography gutterBottom className={classes.title}>
-          Create an account
-        </Typography>
-        <SignupForm onSubmit={requestCreateAccount} />
+    <Container component="main" maxWidth="sm">
+      <Box component={Paper} pb={3}>
+        <CssBaseline />
+        <Box textAlign="center">
+          <Typography gutterBottom className={classes.title}>
+            Create an account
+          </Typography>
+          <Typography variant="body1" className={classes.subTitle}>
+            Already registered?&nbsp;
+            {switchToLogin ? (
+              <MenuLink onClick={switchToLogin} children="Login!" />
+            ) : (
+              <NavLink to="/login" children="Login!" underline="always" />
+            )}
+          </Typography>
 
-        <Typography variant="body1">
-          Already registered?&nbsp;
-          {switchToLogin ? (
-            <MenuLink onClick={switchToLogin} children="Login!" />
-          ) : (
-            <NavLink to="/login" children="Login!" underline="always" />
-          )}
-        </Typography>
+          <SignupForm onSubmit={requestCreateAccount} />
+        </Box>
       </Box>
-    </Paper>
+    </Container>
   );
 };
 
