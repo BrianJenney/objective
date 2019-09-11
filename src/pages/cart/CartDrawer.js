@@ -29,6 +29,7 @@ import {
   StyledLogo,
   StyledLogoContainer,
 } from './StyledComponents';
+import ShoppingCart from './ShoppingCart.js';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 
@@ -66,6 +67,11 @@ const Cart = ({ history }) => {
     dispatch(requestPatchCart(cart._id, patches));
   }
 
+  const handleLogo = useCallback(() => {
+    dispatch(setCartDrawerOpened(false));
+    history.push('/gallery');
+  }, [dispatch, history]);
+
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     history.push('/checkout');
@@ -85,6 +91,10 @@ const Cart = ({ history }) => {
       xs={12}
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
     >
+      <StyledLogoContainer>
+        <StyledLogo onClick={handleLogo}>LOGO-MOBILE</StyledLogo>
+      </StyledLogoContainer>
+
       <div>
         <StyledHeaderWrapper container direction="column">
           <Grid container direction="row" alignItems="baseline">
@@ -289,7 +299,7 @@ const Cart = ({ history }) => {
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 

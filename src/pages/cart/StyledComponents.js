@@ -47,14 +47,14 @@ export const StyledLogo = withStyles(theme => ({
       paddingBottom: 0,
     },
   },
-}))(Typography)
+}))(Grid)
 
 export const StyledSmallCaps = withStyles(theme => ({
   root: {
     fontSize: smallText2,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontFamily: $brandSans
+    fontFamily: $brandSans,
   },
 }))(Typography)
 
@@ -179,3 +179,16 @@ export const StyledCardContent = withStyles(theme => ({
     marginBottom: 0
   }
 }))(CardContent)
+
+export const StyledCartIcon = withStyles(theme => ({
+  root: {
+    position: 'absolute',
+    left: 30,
+    top: 41,
+    [theme.breakpoints.up('sm')]: {
+      position: 'absolute',
+      right: -320,
+      top: 30,
+    },
+  }
+}))(Box)

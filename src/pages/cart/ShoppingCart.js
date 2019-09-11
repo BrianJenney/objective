@@ -8,6 +8,9 @@ import Badge from '@material-ui/core/Badge/Badge';
 
 import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
+import {
+  StyledCartIcon
+} from './StyledComponents';
 
 const StyledBadge = withStyles(theme => ({
   badge: {
@@ -31,7 +34,7 @@ const ShoppingCart = () => {
         </StyledBadge>
       }
       closer={
-        <Box position="absolute" right={10} top={10} children={<CloseIcon />} />
+        <StyledCartIcon children={<CloseIcon />} />
       }
       listContent={<CartDrawer />}
       side="right"
