@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
   Box,
   Container,
@@ -9,45 +8,46 @@ import {
   Typography
 } from '@material-ui/core';
 import { LoginForm } from './forms';
-import { MenuLink, NavLink } from './common';
+import { MenuLink, NavLink, AlertPanel } from './common';
+import { makeStyles } from '@material-ui/core/styles';
 
-import withDialog from '../hoc/withDialog';
-
-const Login = ({
-  requestLoginAttempt,
-  account,
-  switchToSignup,
-  closeDialog
-}) => {
-  let displayMessage;
-  if (!account.msg) {
-    displayMessage = null;
-  } else {
-    displayMessage = (
-      <Box m={2} align="center" border={(1, '#ffcdd2')} bgcolor="#ffcdd2">
-        <Typography variant="body1">{account.msg}</Typography>
-      </Box>
-    );
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: '40px',
+    fontWeight: 'bold',
+    paddingBottom: theme.spacing(2)
   }
+}));
+
+const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
+  const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
-      <Box component={Paper} p={4}>
-        <Box component={Typography} variant="h5" my={3} align="center">
-          Log in to your account
-        </Box>
-        {displayMessage}
-        <LoginForm onSubmit={requestLoginAttempt} />
+      <Box component={Paper} pb={2}>
+        <Box textAlign="center">
+          <Typography className={classes.title}>
+            Log in to your account
+          </Typography>
 
-        <Box mt={2} align="center">
-          <Typography variant="body1">
+          {account.error && (
+            <AlertPanel
+              mb={3}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={account.error}
+              variant="subtitle2"
+            />
+          )}
+          <LoginForm onSubmit={requestLoginAttempt} />
+
+          <Typography gutterBottom>
             <NavLink to="/password/forgot" underline="always">
               Forgot your email/&nbsp;password?
             </NavLink>
           </Typography>
-        </Box>
-        <Box align="center">
-          <Typography variant="body1">
+
+          <Typography gutterBottom>
             Don&#39;t have an account?&nbsp;
             {switchToSignup ? (
               <MenuLink onClick={switchToSignup} children="Signup!" />
@@ -63,9 +63,9 @@ const Login = ({
 
 Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
-  account: PropTypes.object,
+  account: PropTypes.object.isRequired,
   switchToSignup: PropTypes.func,
-  closeDialog: PropTypes.func.isRequired
+  closeDialog: PropTypes.func
 };
 
-export default withDialog(Login);
+export default Login;

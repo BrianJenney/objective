@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 const FormSummarySection = ({ title, pairs, children, ...rest }) => (
   <Box {...rest}>
@@ -24,12 +25,19 @@ const FormSummarySection = ({ title, pairs, children, ...rest }) => (
                   mr={2}
                   variant="subtitle2"
                   children={`${label}:`}
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                  overflow="hidden"
+                  lineHeight={2.3}
                 />
                 <Box
                   flex={1}
                   component={Typography}
                   variant="body2"
                   children={value}
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                  overflow="hidden"
                 />
               </>
             ) : (

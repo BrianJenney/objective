@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { Container, Box, Grid, Typography } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import {
   requestFetchAccount,
   requestPatchAccount
@@ -69,13 +72,13 @@ class ResetPassword extends React.Component {
     const payload = {
       password: values.password
     };
-    store.dispatch(requestPatchAccount(user._id, payload));
+    store.dispatch(requestPatchAccount(user.data._id, payload));
   };
 
   render() {
     const { account: user } = this.props;
 
-    if (!user.contactPreferences) {
+    if (!user.data.contactPreferences) {
       return <AlertPanel type="info" text="No Account" />;
     }
 

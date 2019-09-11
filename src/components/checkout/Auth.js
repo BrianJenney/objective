@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import { Loader } from '../common';
 import Login from '../Login';
 import Signup from '../Signup';
 
@@ -16,11 +17,22 @@ const CheckoutAuth = ({
   handleNext
 }) => {
   const [authMode, setAuthMode] = useState(AUTH_MODES.SIGNUP);
-  useEffect(() => {
-    if (currentUser.account_jwt) {
+  const { account_jwt } = currentUser.data;
+  const moveToNextStep = () => {
+    if (account_jwt) {
       handleNext();
     }
-  }, [currentUser]);
+  };
+  useEffect(() => {
+    moveToNextStep();
+  }, []);
+  useEffect(() => {
+    moveToNextStep();
+  }, [currentUser.data.account_jwt]);
+
+  if (account_jwt) {
+    return <Loader />;
+  }
 
   return (
     <Box>

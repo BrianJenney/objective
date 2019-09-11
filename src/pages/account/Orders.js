@@ -5,12 +5,12 @@ import { requestFindOrdersByAccount } from '../../modules/order/actions';
 const AccountOrders = props => {
   const { currentUser } = props;
 
-  if (!currentUser.orders) {
-    store.dispatch(requestFindOrdersByAccount(currentUser.account_jwt));
+  if (!currentUser.data.orders) {
+    store.dispatch(requestFindOrdersByAccount(currentUser.data.account_jwt));
     return <div></div>;
   }
 
-  const orderList = currentUser.orders.map(order => (
+  const orderList = currentUser.data.orders.map(order => (
     <tr>
       <td>{order._id}</td>
       <td>

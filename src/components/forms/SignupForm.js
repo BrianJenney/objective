@@ -27,10 +27,10 @@ const SignupForm = ({ title, onSubmit }) => {
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Field name="firstName" label="First Name" component={InputField} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <Field name="lastName" label="Last Name" component={InputField} />
         </Grid>
         <Grid item xs={12}>
@@ -58,16 +58,22 @@ const SignupForm = ({ title, onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth type="submit" children="Create an Account" />
+          <Button fullWidth type="submit" children="Create account" />
         </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom>
+          <Typography>
             By creating an account you agree to the True Health
-            <NavLink to="/termsandconsitions">Terms &amp; Conditions</NavLink>
-            &amp;
-            <NavLink to="/privacypolicy">Privacy Policy</NavLink>
+          </Typography>
+          <Typography>
+            <NavLink to="/termsandconditions" underline="always">
+              Terms &amp; Conditions&nbsp;
+            </NavLink>
+            &amp;&nbsp;
+            <NavLink to="/privacypolicy" underline="always">
+              Privacy Policy
+            </NavLink>
           </Typography>
         </Grid>
       </Grid>

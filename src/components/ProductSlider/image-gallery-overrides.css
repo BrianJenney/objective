@@ -53,6 +53,12 @@
   margin-bottom: 40px;
 }
 
+@media (max-width: 768px) {
+  .image-gallery {
+    margin-bottom: 0;
+  }
+}
+
 .image-gallery.fullscreen-modal {
   background: #000;
   bottom: 0;

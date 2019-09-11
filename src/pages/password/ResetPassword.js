@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
+import { Box, CssBaseline } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -10,11 +11,8 @@ import Button from '@material-ui/core/Button';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../../components/form-fields';
+import './password-styles.scss';
 
-const pStyle = {
-  padding: 20,
-  textAlign: 'center'
-};
 const schema = object().shape({
   newPassword1: string()
     .min(6, 'Password has to be longer than 6 characters!')
@@ -30,28 +28,26 @@ const token = urlParams.getAll('tk').toString();
 class ResetPassword extends React.Component {
   renderForm = () => {
     return (
-      <Container>
-        <Form>
-          <Grid item xs={12}>
-            <Field
-              label="New Password"
-              name="newPassword1"
-              helperText="Must be at least 6 characters"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              label="Confirm New Password"
-              name="newPassword2"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit">Change Password</Button>
-          </Grid>
-        </Form>
-      </Container>
+      <Form>
+        <Grid item xs={12}>
+          <Field
+            label="New Password"
+            name="newPassword1"
+            helperText="Must be at least 6 characters"
+            component={InputField}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            label="Confirm New Password"
+            name="newPassword2"
+            component={InputField}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button type="submit">Reset Password</Button>
+        </Grid>
+      </Form>
     );
   };
 
@@ -64,24 +60,24 @@ class ResetPassword extends React.Component {
     const INITIAL_VALUES = {};
 
     return (
-      <Container>
-        <Typography variant="h3" gutterBottom>
-          Change Password
-        </Typography>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper style={pStyle}>
-              <Formik
-                initialValues={INITIAL_VALUES}
-                onSubmit={this.handleSubmit}
-                validationSchema={schema}
-                render={this.renderForm}
-              />
-            </Paper>
+      <Box className="password-styles">
+        <Container>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper className="paper">
+                <h1>Reset your password</h1>
+                <p>Enter your new password below.</p>
+                <Formik
+                  initialValues={INITIAL_VALUES}
+                  onSubmit={this.handleSubmit}
+                  validationSchema={schema}
+                  render={this.renderForm}
+                />
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </Box>
     );
   }
 }

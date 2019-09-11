@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 export const ALERT_TYPES = {
   INFO: 'info',
@@ -14,19 +15,19 @@ const COLOR_MAP = {
   [ALERT_TYPES.ERROR]: 'error.main'
 };
 
-const AlertPanel = ({ type, text, ...rest }) => {
+const AlertPanel = ({ type, text, variant, ...rest }) => {
   const color = COLOR_MAP[type];
 
   return (
     <Box
-      p={5}
+      // p={2}
+      // display="flex"
       color={color}
-      display="flex"
       alignItems="center"
       width={1}
       {...rest}
     >
-      <Typography variant="body1" children={text} />
+      <Typography variant={variant} children={text} />
     </Box>
   );
 };

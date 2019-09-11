@@ -67,7 +67,6 @@ export const requestFindAllOrderIDs = accountJwt => (dispatch, getState) => {
   });
 };
 
-
 export const requestFindOrdersByAccount = accountJwt => (
   dispatch,
   getState
@@ -75,6 +74,7 @@ export const requestFindOrdersByAccount = accountJwt => (
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
+      account_jwt: accountJwt,
       query: {
         account_id: accountJwt
       }
