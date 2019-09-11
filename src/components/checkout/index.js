@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { Container, Box, CssBaseline } from '@material-ui/core';
@@ -12,6 +14,7 @@ import { STEPS, STEP_KEYS, DATA_KEYS, shippingMethods } from './constants';
 import { getDefaultEntity } from './helpers';
 
 const Checkout = ({
+  history,
   currentUser,
   cart,
   requestCreateAccount,
@@ -83,7 +86,8 @@ const Checkout = ({
     }
 
     setPayload({});
-    return true;
+    history.push('/order');
+    return false;
   };
 
   const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
@@ -159,9 +163,6 @@ const Checkout = ({
             onSubmit={handleNext}
           />
         </Panel>
-        <Panel title={STEPS[6]} collapsible expanded={activeStep === 6}>
-          <ResultForm onSubmit={() => null} />
-        </Panel>
       </Box>
     </Container>
   );
@@ -176,4 +177,4 @@ Checkout.propTypes = {
   requestCreateOrder: PropTypes.func.isRequired
 };
 
-export default Checkout;
+export default withRouter(Checkout);

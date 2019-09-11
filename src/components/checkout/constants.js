@@ -5,7 +5,6 @@ export const STEPS = [
   'Step 4 Billing Address',
   'Step 5 Payment Details',
   'Step 6 Review & Order',
-  'Step 7 Result'
 ];
 export const STEP_KEYS = [
   'account',
@@ -14,7 +13,6 @@ export const STEP_KEYS = [
   'billingAddress',
   'paymentDetails',
   'reviewAndOrder',
-  'result'
 ];
 export const DATA_KEYS = [
   'account',
@@ -23,7 +21,6 @@ export const DATA_KEYS = [
   'addressBook',
   'paymentMethods',
   'reviewAndOrder',
-  'result'
 ];
 export const shippingMethods = {
   ground: {
