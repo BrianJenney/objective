@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Grid,
-  Divider
-} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_LABELS_MAP

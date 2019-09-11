@@ -4,14 +4,12 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import {
-  CssBaseline,
-  Typography,
-  Grid,
-  Container,
-  Box,
-  Paper
-} from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '../../components/common';
 import { InputField } from '../../components/form-fields';

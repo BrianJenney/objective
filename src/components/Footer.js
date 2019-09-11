@@ -1,7 +1,11 @@
 import React from 'react';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Box, Grid, List, ListItem, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button, NavLink } from './common';

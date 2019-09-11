@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
-import { withStyles, useTheme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { GalleryStore } from '../contexts/GalleryContext';
 import Products from './gallery/Products';
@@ -16,9 +16,9 @@ const Gallery = () => {
   return (
     <>
       {mobile ? (
-        <img src={imageHeroMobile} className="gallery-hero" />
+        <img src={imageHeroMobile} alt="" className="gallery-hero" />
       ) : (
-        <img src={imageHeroDesktop} className="gallery-hero" />
+        <img src={imageHeroDesktop} alt="" className="gallery-hero" />
       )}
 
       <Box py={10}>

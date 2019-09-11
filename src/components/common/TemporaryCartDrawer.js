@@ -1,13 +1,13 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { Drawer, Box, Fab } from '@material-ui/core';
-import { useWindowSize } from '../../hooks';
+import Drawer from '@material-ui/core/Drawer';
+import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
+import { useWindowSize } from '../../hooks';
 import CheckoutButton from '../../pages/cart/CheckoutButton';
-
-import { setCartDrawerOpened} from '../../modules/cart/actions';
+import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 export const SIDES = {
   TOP: 'top',
@@ -59,8 +59,8 @@ const TemporaryCartDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-      ? '100%'
-      : 415;
+    ? '100%'
+    : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
   const listPanel = (
@@ -69,13 +69,13 @@ const TemporaryCartDrawer = ({
 
   return (
     <Box {...rest}>
-      {toggleContent &&
-      <StyledFab
-        size="small"
-        onClick={toggleDrawer(true)}
-        children={toggleContent}
-      />
-      }
+      {toggleContent && (
+        <StyledFab
+          size="small"
+          onClick={toggleDrawer(true)}
+          children={toggleContent}
+        />
+      )}
       <Drawer anchor={side} open={drawerOpened} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
@@ -89,7 +89,7 @@ TemporaryCartDrawer.propTypes = {
   side: PropTypes.oneOf(Object.values(SIDES)).isRequired,
   toggleContent: PropTypes.node.isRequired,
   closer: PropTypes.node,
-  listContent: PropTypes.node.isRequired,
+  listContent: PropTypes.node.isRequired
 };
 
 export default TemporaryCartDrawer;
