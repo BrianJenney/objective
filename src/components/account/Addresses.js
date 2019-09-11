@@ -71,7 +71,7 @@ const AccountAddresses = ({
       <Grid container>
         {addressBook.map((addressEntity, index) => (
           <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-            <Box border="1px solid #979797" m={1} p={4}>
+            <Box border="1px solid #979797" m={2} p={4}>
               <EditablePanel
                 title=""
                 defaultValues={addressEntity}
