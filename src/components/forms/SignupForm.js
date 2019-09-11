@@ -63,7 +63,7 @@ const SignupForm = ({ title, onSubmit }) => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography component="p">
+          <Typography>
             By creating an account you agree to the True Health
           </Typography>
           <Typography>

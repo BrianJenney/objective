@@ -9,43 +9,57 @@ import {
 } from '@material-ui/core';
 import { LoginForm } from './forms';
 import { MenuLink, NavLink, AlertPanel } from './common';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Login = ({ requestLoginAttempt, account, switchToSignup }) => (
-  <Container component="main" maxWidth="sm">
-    <CssBaseline />
-    <Box component={Paper} p={4}>
-      <Box component={Typography} variant="h5" my={3} align="center">
-        Log in to your account
-      </Box>
-      {account.error && (
-        <AlertPanel
-          mb={2}
-          type="error"
-          bgcolor="#ffcdd2"
-          text={account.error}
-        />
-      )}
-      <LoginForm onSubmit={requestLoginAttempt} />
-      <Box mt={2} align="center">
-        <Typography variant="body1">
-          <NavLink to="/password/forgot" underline="always">
-            Forgot your email/&nbsp;password?
-          </NavLink>
-        </Typography>
-      </Box>
-      <Box align="center">
-        <Typography variant="body1">
-          Don&#39;t have an account?&nbsp;
-          {switchToSignup ? (
-            <MenuLink onClick={switchToSignup} children="Signup!" />
-          ) : (
-            <NavLink to="/signup" children="Signup!" underline="always" />
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: '40px',
+    fontWeight: 'bold',
+    paddingBottom: theme.spacing(2)
+  }
+}));
+
+const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
+  const classes = useStyles();
+  return (
+    <Container component="main" maxWidth="sm">
+      <CssBaseline />
+      <Box component={Paper} pb={2}>
+        <Box textAlign="center">
+          <Typography className={classes.title}>
+            Log in to your account
+          </Typography>
+
+          {account.error && (
+            <AlertPanel
+              mb={3}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={account.error}
+              variant="subtitle2"
+            />
           )}
-        </Typography>
+          <LoginForm onSubmit={requestLoginAttempt} />
+
+          <Typography gutterBottom>
+            <NavLink to="/password/forgot" underline="always">
+              Forgot your email/&nbsp;password?
+            </NavLink>
+          </Typography>
+
+          <Typography gutterBottom>
+            Don&#39;t have an account?&nbsp;
+            {switchToSignup ? (
+              <MenuLink onClick={switchToSignup} children="Signup!" />
+            ) : (
+              <NavLink to="/signup" children="Signup!" underline="always" />
+            )}
+          </Typography>
+        </Box>
       </Box>
-    </Box>
-  </Container>
-);
+    </Container>
+  );
+};
 
 Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
