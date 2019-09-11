@@ -24,7 +24,6 @@ const CartSummary = ({ cart }) => {
         <Typography component="h1" variant="h5" align="center">
           Order Summary ({cart.items.length} items)
         </Typography>
-        <Divider variant="fullWidth" />
       </Grid>
       { cart.items.map((item, index) => (
         <>
@@ -72,9 +71,9 @@ const CartSummary = ({ cart }) => {
           container
           direction="row"
           xs={12}
-          justify="space-between"
+          justify="left-start"
         >
-          <Grid item xs={6}>
+          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
             <StyledSmallCaps style={{ 'font-size': '14px' }}>
               Subtotal Total:
             </StyledSmallCaps>
@@ -89,10 +88,10 @@ const CartSummary = ({ cart }) => {
           container
           direction="row"
           xs={12}
-          justify="space-between"
+          justify="left-start"
           style={{ margin: '20px 0' }}
         >
-          <Grid item xs={6}>
+          <Grid item xs={9} style={{ 'text-align': 'left' }}>
             <StyledSmallCaps style={{ 'font-size': '14px' }}>
               Shipping
             </StyledSmallCaps>
@@ -110,10 +109,10 @@ const CartSummary = ({ cart }) => {
           container
           direction="row"
           xs={12}
-          justify="space-between"
+          justify="left-start"
           style={{ margin: '20px 0' }}
         >
-          <Grid item xs={6}>
+          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
             <StyledSmallCaps style={{ 'font-size': '14px' }}>
               Savings
             </StyledSmallCaps>
@@ -128,10 +127,10 @@ const CartSummary = ({ cart }) => {
           container
           direction="row"
           xs={12}
-          justify="space-between"
+          justify="left-start"
           style={{ margin: '20px 0' }}
         >
-          <Grid item xs={6}>
+          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
             <StyledSmallCaps style={{ 'font-size': '14px' }}>
               Tax
             </StyledSmallCaps>
@@ -146,10 +145,10 @@ const CartSummary = ({ cart }) => {
           container
           direction="row"
           xs={12}
-          justify="space-between"
+          justify="left-start"
           style={{ margin: '20px 0' }}
         >
-          <Grid item xs={6}>
+          <Grid item xs={9} style={{ 'text-align': 'left' }}>
             <StyledSmallCaps style={{ 'font-size': '14px' }}>
               Enter Promo Code
             </StyledSmallCaps>
@@ -159,7 +158,7 @@ const CartSummary = ({ cart }) => {
           container
           direction="row"
           xs={12}
-          justify="space-between"
+          justify="left-start"
           style={{
             'margin-bottom': '0',
             'border-top': `solid 2px ${MEDIUM_GRAY}`,
@@ -167,7 +166,7 @@ const CartSummary = ({ cart }) => {
             'margin-top': '50px'
           }}
         >
-          <Grid item xs={6}>
+          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
             <StyledSmallCaps>Total</StyledSmallCaps>
           </Grid>
           <Grid item xs={3} style={{ 'text-align': 'right' }}>
