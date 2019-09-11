@@ -8,7 +8,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
-
+import LoggedInUser from './LoggedInUser';
 import './Header-style.scss';
 
 const StyledLink = withStyles(() => ({
@@ -37,7 +37,7 @@ const StyledBox = withStyles(() => ({
 const Header = ({ currentUser }) => {
   const { account_jwt } = currentUser.data;
   const accountMenuItemConf = account_jwt
-    ? { key: 'third', to: '/account', children: 'My Account' }
+    ? { key: 'third', to: '/account', children: <LoggedInUser /> }
     : { key: 'third', to: '/login', children: 'Login' };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', children: 'Shop' },
