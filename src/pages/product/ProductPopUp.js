@@ -37,11 +37,7 @@ const useStyles = makeStyles(theme => ({
     width: 100,
     height: 100
   },
-  button: {
-    height: '50px',
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold'
-  },
+
   paper: {
     padding: theme.spacing(5)
   }
@@ -82,12 +78,7 @@ const ProductPopUp = props => {
           />
         </Box>
 
-        <Button
-          className={classes.button}
-          fullWidth
-          type="submit"
-          children="Submit"
-        />
+        <Button fullWidth type="submit" children="Submit" />
       </Box>
     </Paper>
   );

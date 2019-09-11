@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Button, Box, CircularProgress } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+const CustomizedBtn = withStyles({
+  root: {
+    height: '50px',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold'
+  }
+})(Button);
 
 const ButtonComponent = ({
   loading,
@@ -19,10 +28,14 @@ const ButtonComponent = ({
     ml={ml}
     mr={mr}
   >
-    <Button disabled={loading || disabled} fullWidth={fullWidth} {...rest}>
+    <CustomizedBtn
+      disabled={loading || disabled}
+      fullWidth={fullWidth}
+      {...rest}
+    >
       {icon && <Box component={Icon} children={icon} mr={1} />}
       {children}
-    </Button>
+    </CustomizedBtn>
     {loading && (
       <Box
         component={CircularProgress}

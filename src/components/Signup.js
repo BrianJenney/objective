@@ -2,40 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
-  Container,
   CssBaseline,
   Paper,
   Typography,
-  Avatar
+  Container
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { SignupForm } from './forms';
 import { MenuLink, NavLink } from './common';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Signup = ({ requestCreateAccount, switchToLogin }) => (
-  <Container component="main" maxWidth="xs">
-    <CssBaseline />
-    <Box component={Paper} p={4}>
-      <Avatar>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Box component={Typography} variant="h5" my={4} align="center">
-        Create an Account
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: '40px',
+    fontWeight: 'bold'
+  },
+  subTitle: {
+    paddingBottom: theme.spacing(3)
+  }
+}));
+
+const Signup = ({ requestCreateAccount, switchToLogin }) => {
+  const classes = useStyles();
+  return (
+    <Container component="main" maxWidth="sm">
+      <Box component={Paper} pb={3}>
+        <CssBaseline />
+        <Box textAlign="center">
+          <Typography gutterBottom className={classes.title}>
+            Create an account
+          </Typography>
+          <Typography variant="body1" className={classes.subTitle}>
+            Already registered?&nbsp;
+            {switchToLogin ? (
+              <MenuLink onClick={switchToLogin} children="Login!" />
+            ) : (
+              <NavLink to="/login" children="Login!" underline="always" />
+            )}
+          </Typography>
+
+          <SignupForm onSubmit={requestCreateAccount} />
+        </Box>
       </Box>
-      <SignupForm onSubmit={requestCreateAccount} />
-      <Box mt={2}>
-        <Typography variant="body1">
-          Already registered?&nbsp;
-          {switchToLogin ? (
-            <MenuLink onClick={switchToLogin} children="Login!" />
-          ) : (
-            <NavLink to="/login" children="Login!" />
-          )}
-        </Typography>
-      </Box>
-    </Box>
-  </Container>
-);
+    </Container>
+  );
+};
 
 Signup.propTypes = {
   requestCreateAccount: PropTypes.func.isRequired,

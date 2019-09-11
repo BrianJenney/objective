@@ -47,17 +47,10 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(8),
     backgroundColor: '#fdf8f2'
   },
-  btnATC: {
-    height: '80px',
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold'
-  },
   btnOOS: {
     border: '1.5px solid',
+    height: 'auto',
     backgroundColor: theme.palette.common.white,
-    height: '80px',
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold',
     color: theme.palette.common.black,
     '&:hover': {
       backgroundColor: theme.palette.common.white
@@ -222,7 +215,6 @@ const ProductDetail = ({ variantSlug, history }) => {
                     <Grid>
                       <CardActions className={classes.maxWidth}>
                         <Button
-                          className={classes.btnATC}
                           fullWidth
                           onClick={handleAddToCart}
                           disabled={selectedVariantSku === null}
@@ -301,7 +293,6 @@ const ProductDetail = ({ variantSlug, history }) => {
                   <Grid>
                     <CardActions className={classes.maxWidth}>
                       <Button
-                        className={classes.btnATC}
                         fullWidth
                         onClick={handleAddToCart}
                         disabled={selectedVariantSku === null}
