@@ -52,7 +52,7 @@ const ProductPopUp = props => {
   const renderFormDialog = () => (
     <Paper className={classes.paper}>
       <CssBaseline />
-      <Box>
+      <Box align="center">
         <Typography gutterBottom className={classes.title}>
           It'll be back soon, we promise!
         </Typography>
