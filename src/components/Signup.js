@@ -1,41 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Container,
-  CssBaseline,
-  Paper,
-  Typography,
-  Avatar
-} from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Box, CssBaseline, Paper, Typography } from '@material-ui/core';
 import { SignupForm } from './forms';
 import { MenuLink, NavLink } from './common';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Signup = ({ requestCreateAccount, switchToLogin }) => (
-  <Container component="main" maxWidth="xs">
-    <CssBaseline />
-    <Box component={Paper} p={4}>
-      <Avatar>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Box component={Typography} variant="h5" my={4} align="center">
-        Create an Account
-      </Box>
-      <SignupForm onSubmit={requestCreateAccount} />
-      <Box mt={2}>
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: '40px',
+    fontWeight: 'bold'
+  },
+  paper: {
+    padding: theme.spacing(0, 5, 5)
+  }
+}));
+
+const Signup = ({ requestCreateAccount, switchToLogin }) => {
+  const classes = useStyles();
+  return (
+    <Paper className={classes.paper}>
+      <CssBaseline />
+      <Box align="center">
+        <Typography gutterBottom className={classes.title}>
+          Create an account
+        </Typography>
+        <SignupForm onSubmit={requestCreateAccount} />
+
         <Typography variant="body1">
           Already registered?&nbsp;
           {switchToLogin ? (
             <MenuLink onClick={switchToLogin} children="Login!" />
           ) : (
-            <NavLink to="/login" children="Login!" />
+            <NavLink to="/login" children="Login!" underline="always" />
           )}
         </Typography>
       </Box>
-    </Box>
-  </Container>
-);
+    </Paper>
+  );
+};
 
 Signup.propTypes = {
   requestCreateAccount: PropTypes.func.isRequired,

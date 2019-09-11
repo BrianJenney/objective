@@ -22,7 +22,7 @@ const styles = theme => ({
 const StyledDialogTitle = withStyles(styles)(props => {
   const { children, classes, onClose } = props;
   return (
-    <MuiDialogTitle disableTypography className={classes.root}>
+    <MuiDialogTitle disableTypography>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton
