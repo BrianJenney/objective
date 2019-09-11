@@ -1,8 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Drawer, Box, Fab } from '@material-ui/core';
-import { useWindowSize } from '../../hooks';
+import Drawer from '@material-ui/core/Drawer';
+import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
+import { useWindowSize } from '../../hooks';
 import CheckoutButton from '../../pages/cart/CheckoutButton';
 
 export const SIDES = {

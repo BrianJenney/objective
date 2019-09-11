@@ -5,7 +5,7 @@ import { fonts, sizes, backupFontStack } from './fonts';
 const { ...color } = colorPalette;
 
 const nxtTheme = createMuiTheme({
-  shadows: ["none"],
+  shadows: ['none'],
   breakpoints: {
     values: {
       xs: 0,
@@ -18,10 +18,10 @@ const nxtTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: color.BLACK,
+      main: color.BLACK
     },
     secondary: {
-      main: color.VANILLA,
+      main: color.VANILLA
     },
     brand: {
       forestGreen: color.FOREST_GREEN,
@@ -99,7 +99,7 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
       fontSize: sizes.productDetailSubTitle,
       fontWeight: 400,
-      lineHeight: '2.75rem',
+      lineHeight: '2.75rem'
     },
     subtitle1: {
       // subhead S1
@@ -145,7 +145,7 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
       textTransform: 'uppercase',
       textDecoration: 'none',
-      color: color.WHITE,
+      color: color.WHITE
     },
     bodyMd: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
@@ -163,7 +163,7 @@ const nxtTheme = createMuiTheme({
       fontFamily: `${fonts.captionBook.header}, ${backupFontStack.sans}`,
       fontSize: sizes.fineprint,
       lineHeight: '.5rem',
-      fontWeight: `${fonts.captionBook.weight}`,
+      fontWeight: `${fonts.captionBook.weight}`
     }
   },
   overrides: {
@@ -175,15 +175,15 @@ const nxtTheme = createMuiTheme({
     MuiGrid: {
       container: {
         maxWidth: 1600,
-        margin: '0 auto',
+        margin: '0 auto'
       }
     },
     MuiTab: {
       root: {
         '&$selected': {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#ffffff'
         }
-      },
+      }
     },
     MuiContainer: {
       maxWidth: 1504
@@ -195,8 +195,8 @@ const nxtTheme = createMuiTheme({
   props: {
     MuiButtonBase: {
       disableRipple: true
-    },
+    }
   }
 });
 
-export default nxtTheme
+export default nxtTheme;

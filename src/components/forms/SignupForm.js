@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import { Formik, Field, Form } from 'formik';
 import { object, string, boolean } from 'yup';
 import { CheckboxField, InputField } from '../form-fields';

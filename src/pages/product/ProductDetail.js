@@ -2,16 +2,15 @@ import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
-import ProductContext from '../../contexts/ProductContext';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardActions,
-  Grid
-} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import MailOutline from '@material-ui/icons/MailOutline';
+import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import { Button } from '../../components/common';
@@ -23,12 +22,8 @@ import {
   getVariantMap
 } from '../../utils/product';
 import './PDP-style.css';
-import MailOutline from '@material-ui/icons/MailOutline';
 import ProductPopUp from './ProductPopUp';
 import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
-// import { useTheme } from '@material-ui/core/styles';
-// import useMediaQuery from '@material-ui/core/useMediaQuery';
-// import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 const localStorageClient = require('store');
 
