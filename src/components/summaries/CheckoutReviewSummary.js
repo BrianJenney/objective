@@ -6,7 +6,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Grid
+  Grid,
+  Divider
 } from '@material-ui/core';
 import {
   PAYMENT_METHODS,
@@ -48,9 +49,9 @@ const CheckoutReviewSummary = ({ summary }) => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <List>
-            {items.map(({ product_id, product_name, desc, unit_price }) => (
-              <ListItem key={product_id}>
-                <ListItemText primary={product_name} secondary={desc} />
+            {items.map(({ variant_name, unit_price }, index) => (
+              <ListItem key={`item_${index}`}>
+                <ListItemText primary={variant_name} />
                 <Typography variant="body2" children={unit_price} />
               </ListItem>
             ))}
@@ -60,6 +61,8 @@ const CheckoutReviewSummary = ({ summary }) => {
             </ListItem>
           </List>
         </Grid>
+        <Grid item xs={12} sm={6} />
+        <Divider />
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom>
             Shipping Method
@@ -84,6 +87,7 @@ const CheckoutReviewSummary = ({ summary }) => {
             {`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}, ${shippingAddress.countryCode}`}
           </Typography>
         </Grid>
+        <Divider />
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom>
             Billing Address
