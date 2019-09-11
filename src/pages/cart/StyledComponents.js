@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import Badge from '@material-ui/core/Badge/Badge';
 import Typography from '@material-ui/core/Typography';
 import { colorPalette } from '../../components/Theme/color-palette';
 import { fonts, sizes, lineHeight } from '../../components/Theme/fonts'
@@ -191,7 +192,7 @@ export const StyledCardContent = withStyles(theme => ({
   }
 }))(CardContent)
 
-export const StyledCartIcon = withStyles(theme => ({
+export const StyledCartCloseIcon = withStyles(theme => ({
   root: {
     position: 'absolute',
     left: 30,
@@ -203,3 +204,12 @@ export const StyledCartIcon = withStyles(theme => ({
     },
   }
 }))(Box)
+
+export const StyledShoppingBag = withStyles(theme => ({
+  root: {
+    position: 'absolute',
+    top: 36,
+    right: 35,
+  }
+}))(Box)
+

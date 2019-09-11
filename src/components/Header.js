@@ -83,7 +83,7 @@ const Header = () => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="logo text-center">
-                Logo-Mobile.
+                Logo.
               </Grid>
               <Grid item xs={1}>
                 {!burger && (

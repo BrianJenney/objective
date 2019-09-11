@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Badge from '@material-ui/core/Badge/Badge';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { AlertPanel } from '../../components/common';
@@ -28,15 +29,17 @@ import {
   StyledPromoCode,
   StyledLogo,
   StyledLogoContainer,
-  StyledArrowIcon
+  StyledArrowIcon,
+  StyledShoppingBag
 } from './StyledComponents';
-import ShoppingCart from './ShoppingCart.js';
+import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 
 const Cart = ({ history }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const cartCount = cart.items.length;
 
   const applyCoupon = useCallback((e) => {
     console.log('Logic to apply coupon goes here');
@@ -94,6 +97,11 @@ const Cart = ({ history }) => {
     >
       <StyledLogoContainer>
         <StyledLogo onClick={handleLogo}>LOGO</StyledLogo>
+        <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
+          <Badge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
+            <ShoppingBag />
+          </Badge>
+        </StyledShoppingBag>
       </StyledLogoContainer>
 
       <div>
