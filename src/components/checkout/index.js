@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { get } from 'lodash';
 import { useSnackbar } from 'notistack';
-import { Container, Box, CssBaseline } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
@@ -176,6 +178,7 @@ const Checkout = ({
 };
 
 Checkout.propTypes = {
+  history: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   cart: PropTypes.object.isRequired,
   requestCreateAccount: PropTypes.func.isRequired,
