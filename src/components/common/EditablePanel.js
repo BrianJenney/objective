@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@material-ui/core';
 import Panel from './Panel';
-import Button from './Button';
+import MenuLink from './MenuLink';
 
 const EditablePanel = ({
   title,
@@ -32,32 +32,33 @@ const EditablePanel = ({
         <Form defaultValues={defaultValues} onSubmit={handleSave} {...rest} />
       ) : (
         <Summary values={defaultValues} {...rest}>
-          <Box mt={2}>
+          <Box fontSize={16} display="flex" alignItems="center">
             {onSetDefault && (
-              <Button
-                type="button"
-                onClick={onSetDefault}
-                children="Set Default"
-                mr={1}
-                variant="text"
-              />
+              <Box mr={1}>
+                <MenuLink
+                  onClick={onSetDefault}
+                  children="Set Default"
+                  underline="always"
+                />
+              </Box>
             )}
             {onRemove && (
-              <Button
-                type="button"
-                onClick={onRemove}
-                children="Remove"
-                mr={1}
-                variant="text"
-              />
+              <Box mr={1}>
+                <MenuLink
+                  onClick={onRemove}
+                  children="Remove"
+                  underline="always"
+                />
+              </Box>
             )}
             {onSubmit && (
-              <Button
-                type="button"
-                onClick={() => setEditing(true)}
-                children="Edit"
-                variant="text"
-              />
+              <Box>
+                <MenuLink
+                  onClick={() => setEditing(true)}
+                  children="Edit"
+                  underline="always"
+                />
+              </Box>
             )}
           </Box>
         </Summary>

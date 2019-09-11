@@ -38,7 +38,7 @@ const AddressSummary = ({ values, children }) => {
     <Box height={30} />
   );
   const neededValues = pick(values, ADDRESS_FIELDS);
-  const pairs = Object.keys(neededValues).map(key => ({
+  const pairs = ADDRESS_FIELDS.map(key => ({
     label: labelsMap[key],
     value: key === 'isDefault' ? defaultIndicator : neededValues[key]
   }));

@@ -5,7 +5,6 @@ import { Formik, Field, Form } from 'formik';
 import { Box, Grid, Typography } from '@material-ui/core';
 import {
   InputField,
-  CheckboxField,
   DatePickerField,
   SelectField
 } from '../form-fields';
@@ -38,8 +37,7 @@ const INITIAL_VALUES = {
   cardholderName: 'Kevin C',
   number: '4111111111111111',
   expirationDate: '02/20/2023',
-  cvv: '837',
-  saveCard: true
+  cvv: '837'
 };
 
 const PaymentForm = ({
@@ -102,13 +100,6 @@ const PaymentForm = ({
                 label="CVV"
                 component={InputField}
                 validate={validateNumberField}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="saveCard"
-                label="Remember credit card details for next time"
-                component={CheckboxField}
               />
             </Grid>
           </>
