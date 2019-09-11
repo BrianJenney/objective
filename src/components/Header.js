@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Grid, Box, Link } from '@material-ui/core';
+import Badge from '@material-ui/core/Badge/Badge';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { Link as RouterLink } from 'react-router-dom';
-import { withCurrentUser } from '../hoc';
-import { DropdownMenu, NavLink } from './common';
+import DropdownMenu from './common/DropdownMenu';
 import ShoppingCart from '../pages/cart/ShoppingCart';
-import LoggedInUser from './LoggedInUser';
+
 import './Header-style.scss';
 
 const StyledLink = withStyles(() => ({
@@ -34,28 +34,39 @@ const StyledBox = withStyles(() => ({
   }
 }))(Box);
 
-const Header = ({ currentUser }) => {
-  const { account_jwt } = currentUser.data;
-  const accountMenuItemConf = account_jwt
-    ? { key: 'third', to: '/account', children: <LoggedInUser /> }
-    : { key: 'third', to: '/login', children: 'Login' };
-  const burgerMenuItems = [
-    { key: 'first', to: '/gallery', children: 'Shop' },
-    { key: 'second', to: '/', children: 'Journal' },
-    accountMenuItemConf,
-    { key: 'fourth', to: '/help', children: 'Help' }
-  ];
+const StyledBadge = withStyles(theme => ({
+  badge: {
+    top: '30%',
+    right: -3,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light'
+        ? theme.palette.grey[200]
+        : theme.palette.grey[900]
+      }`
+  }
+}))(Badge);
+
+const Header = () => {
+
   const renderBurgerIcon = () => (
-    <DropdownMenu
-      toggleLabel={
-        <SvgIcon>
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-        </SvgIcon>
-      }
-      panelId="my-account"
-      menuItems={burgerMenuItems}
-    />
+    <>
+      <DropdownMenu
+        toggleLabel={
+          <SvgIcon>
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </SvgIcon>
+        }
+        panelId="my-account"
+        menuItems={[
+          { key: 'first', to: '/gallery', children: 'Shop' },
+          { key: 'second', to: '/', children: 'Journal' },
+          { key: 'third', to: '/account', children: 'Account' },
+          { key: 'third', to: '/account', children: 'Help' }
+        ]}
+      />
+    </>
   );
 
   const theme = useTheme();
@@ -72,7 +83,14 @@ const Header = ({ currentUser }) => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJ</NavLink>
+                Logo.
+              </Grid>
+              <Grid item xs={1}>
+                {!burger && (
+                  <StyledLink component={RouterLink} to="/account">
+                    Account
+                  </StyledLink>
+                )}
               </Grid>
               <Grid item xs={1}>
                 <ShoppingCart />
@@ -115,11 +133,15 @@ const Header = ({ currentUser }) => {
                 <Grid item xs={8} className="logo text-center">
                   Logo.
               </Grid>
-                <Grid item xs={8} className="logo text-center">
-                  <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
+                <Grid item xs={1}>
+                  {!burger && (
+                    <StyledLink component={RouterLink} to="/account">
+                      Account
+                  </StyledLink>
+                  )}
                 </Grid>
                 <Grid item xs={1}>
-                  <StyledLink component={RouterLink} {...accountMenuItemConf} />
+                  <ShoppingCart />
                 </Grid>
               </Grid>
             </>
@@ -129,8 +151,4 @@ const Header = ({ currentUser }) => {
   );
 };
 
-Header.propTypes = {
-  currentUser: PropTypes.object.isRequired
-};
-
-export default withCurrentUser(Header);
+export default Header;
