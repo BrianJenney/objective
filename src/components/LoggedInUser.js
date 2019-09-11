@@ -1,11 +1,11 @@
 import React from 'react';
-import Container from '@material-ui/core/Container';
+import { Box } from '@material-ui/core';
 import store from '../store';
 
 const LoggedInUser = () => (
-  <Container>
+  <Box>
     <div>Hi, {store.getState().account.data.firstName}</div>
-  </Container>
+  </Box>
 );
 
 export default LoggedInUser;
