@@ -90,40 +90,40 @@ const Header = ({ currentUser }) => {
             </Grid>
           </>
         ) : (
-          <>
-            <Grid container xs={12} className="headerBar">
-              <Grid item xs={6} className="option text-right">
-                <StyledBox fontSize={12}>
-                  Free Shipping On Orders Over $75
+            <>
+              <Grid container xs={12} className="headerBar">
+                <Grid item xs={6} className="option text-right">
+                  <StyledBox fontSize={12}>
+                    Free Shipping On Orders Over $75
                 </StyledBox>
+                </Grid>
+                <Grid item xs={6} className="option text-left">
+                  <StyledBox fontSize={12}>Free Returns</StyledBox>
+                </Grid>
               </Grid>
-              <Grid item xs={6} className="option text-left">
-                <StyledBox fontSize={12}>Free Returns</StyledBox>
-              </Grid>
-            </Grid>
-            <Grid container className="holder" xs={12}>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/gallery">
-                  Shop
+              <Grid container className="holder" xs={12}>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} to="/gallery">
+                    Shop
                 </StyledLink>
-              </Grid>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/">
-                  Science
+                </Grid>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} to="/">
+                    Science
                 </StyledLink>
+                </Grid>
+                <Grid item xs={8} className="logo text-center">
+                  Logo.
               </Grid>
-              <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
+                <Grid item xs={8} className="logo text-center">
+                  <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
+                </Grid>
+                <Grid item xs={1}>
+                  <StyledLink component={RouterLink} {...accountMenuItemConf} />
+                </Grid>
               </Grid>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} {...accountMenuItemConf} />
-              </Grid>
-              <Grid item xs={1}>
-                <ShoppingCart />
-              </Grid>
-            </Grid>
-          </>
-        )}
+            </>
+          )}
       </Grid>
     </Grid>
   );

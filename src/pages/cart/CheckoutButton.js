@@ -14,6 +14,15 @@ class CheckoutButton extends Component {
     const { onClick, children } = this.props;
     console.log('from CheckoutButton ====>', this.props, '<====');
     return (
+      <Link
+        to="/checkout"
+        style={{
+          color: 'white',
+          'text-decoration': 'none',
+          'font-family': $brandSans,
+          'font-weight': 'bold'
+        }}
+      >
       <Grid container xs={12}>
         <Grid item xs={12} style={{ display: 'flex', paddingBottom: '30px' }}>
           <StyledCheckoutButton
@@ -25,20 +34,11 @@ class CheckoutButton extends Component {
             variant="contained"
             disabled={this.props.cart.items.length === 0}
           >
-            <Link
-              to="/checkout"
-              style={{
-                color: 'white',
-                'text-decoration': 'none',
-                'font-family': $brandSans,
-                'font-weight': 'bold'
-              }}
-            >
               Checkout
-            </Link>
           </StyledCheckoutButton>
         </Grid>
-      </Grid>
+        </Grid>
+      </Link>
     );
   }
 }

@@ -1,12 +1,16 @@
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Badge from '@material-ui/core/Badge/Badge';
 import Typography from '@material-ui/core/Typography';
 import { colorPalette } from '../../components/Theme/color-palette';
 import { fonts, sizes, lineHeight } from '../../components/Theme/fonts'
+import { ImportantDevices } from '@material-ui/icons';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette
 const { $brandSans, $brandSerif } = fonts
@@ -19,18 +23,52 @@ const $thin2pxRuler_gray = `solid 2px ${MEDIUM_GRAY}`
 export const StyledCartHeader = withStyles(theme => ({
   root: {
     fontSize: '2rem',
-    fontFamily: $brandSerif
+    fontFamily: $brandSerif,
+    paddingTop: '15px'
   },
 }))(Typography)
+
+export const StyledLogoContainer = withStyles(theme => ({
+  root: {
+    borderBottom: '1px solid #000000',
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      borderBottom: 'none',
+      width: 0,
+    },
+  },
+}))(Box)
+
+export const StyledLogo = withStyles(theme => ({
+  root: {
+    fontSize: '1.5rem',
+    fontFamily: $brandSerif,
+    paddingBottom: '15px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 0,
+      fontFamily: 'none',
+      paddingBottom: 0,
+    },
+  },
+}))(Grid)
 
 export const StyledSmallCaps = withStyles(theme => ({
   root: {
     fontSize: smallText2,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontFamily: $brandSans
+    fontFamily: $brandSans,
   },
 }))(Typography)
+
+export const StyledArrowIcon = withStyles(theme => ({
+  root: {
+    top: 7,
+    right: 5,
+    color: '#000000',
+    position: 'relative',
+  },
+}))(SvgIcon)
 
 export const StyledFinePrint = withStyles(theme => ({
   root: {
@@ -55,7 +93,7 @@ export const StyledDrawerGrid = withStyles(theme => ({
     padding: '26px 0',
     borderTop: $thin1pxRuler_gray,
     flexWrap: 'nowrap'
-},
+  },
 }))(Grid)
 
 export const StyledGridEmptyCart = withStyles(theme => ({
@@ -63,7 +101,7 @@ export const StyledGridEmptyCart = withStyles(theme => ({
     margin: '0 0 30px 0',
     borderTop: $thin1pxRuler_gray,
     paddingTop: '29px'
-},
+  },
 }))(Grid)
 
 export const StyledHeaderWrapper = withStyles(theme => ({
@@ -97,10 +135,16 @@ export const StyledTotalWrapper = withStyles(theme => ({
 
 export const StyledCheckoutButton = withStyles(theme => ({
   root: {
-    width: '100%',
+    width: '85%',
     maxWidth: 351,
     height: '80px',
     marginTop: '15px',
+    [theme.breakpoints.up('sm')]: {
+      width: '100%',
+      maxWidth: 351,
+      height: '80px',
+      marginTop: '15px',
+    },
   }
 }))(Button)
 
@@ -147,3 +191,25 @@ export const StyledCardContent = withStyles(theme => ({
     marginBottom: 0
   }
 }))(CardContent)
+
+export const StyledCartCloseIcon = withStyles(theme => ({
+  root: {
+    position: 'absolute',
+    left: 30,
+    top: 41,
+    [theme.breakpoints.up('sm')]: {
+      position: 'absolute',
+      right: -320,
+      top: 30,
+    },
+  }
+}))(Box)
+
+export const StyledShoppingBag = withStyles(theme => ({
+  root: {
+    position: 'absolute',
+    top: 36,
+    right: 35,
+  }
+}))(Box)
+
