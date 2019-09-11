@@ -86,7 +86,8 @@ const Checkout = ({
     }
 
     setPayload({});
-    return true;
+    history.push('/order');
+    return false;
   };
 
   const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
@@ -101,16 +102,6 @@ const Checkout = ({
       result = handleReviewStep();
     }
 
-      requestCreateOrder(
-        { ...cart, ...payload, account_jwt },
-        { creditCardToken }
-      );
-      history.push('/order');
-    }
-
-    setActiveStep(activeStep + 1);
-
-    return true;
     if (result) {
       setActiveStep(activeStep + 1);
     }
