@@ -80,9 +80,15 @@ const Checkout = ({
     }
 
     if (paymentMethodNonce) {
-      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
+      requestCreateOrder(
+        { ...cart, ...payload, account_jwt },
+        { paymentMethodNonce }
+      );
     } else {
-      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
+      requestCreateOrder(
+        { ...cart, ...payload, account_jwt },
+        { paymentMethodToken }
+      );
     }
 
     setPayload({});
