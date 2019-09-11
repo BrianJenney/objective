@@ -25,8 +25,8 @@ const Signup = ({ requestCreateAccount, switchToLogin }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
+      <CssBaseline />
       <Box component={Paper} pb={3}>
-        <CssBaseline />
         <Box textAlign="center">
           <Typography gutterBottom className={classes.title}>
             Create an account
