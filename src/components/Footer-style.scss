@@ -71,9 +71,12 @@
     font-family: freight-text-pro, sans-serif;
     font-size: 13px;
     text-transform: none;
-    padding: 10px 30px;
+    padding: 10px 30px 0px;
     @media (min-width: 1200px) {
       font-size: 16px;
+    }
+    .opac {
+      opacity: 0.5;
     }
     form {
       display: flex;
@@ -84,12 +87,20 @@
       }
     }
     .signup-arrow {
-      margin-top: -35px;
+      margin-top: -50px;
       margin-left: 130px;
+    }
+    .mobile-arrow {
+      margin-top: -20px;
+      margin-right: -55px;
     }
   }
   .icon {
-    padding: 28px;
+    padding: 20px;
+    text-align: center;
+    @media (min-width: 1200px) {
+      padding: 30px;
+    }
     img {
       vertical-align: bottom;
     }
