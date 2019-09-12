@@ -187,7 +187,7 @@ const Checkout = ({
               <CheckoutReviewForm onSubmit={handleNext} />
             </Panel>
           </Box>
-          <Box width={415}>
+          <Box ml={3} width={415}>
             <CartDrawer />
           </Box>
         </Box>
