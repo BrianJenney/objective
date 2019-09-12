@@ -9,9 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
-import { ShippingMethodForm, CheckoutReviewForm } from '../forms';
+import { CheckoutReviewForm } from '../forms';
 import CheckoutAuth from './Auth';
-import { STEPS, STEP_KEYS, DATA_KEYS, shippingMethods } from './constants';
+import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from './helpers';
 
 const Checkout = ({
@@ -23,16 +23,10 @@ const Checkout = ({
   requestPatchAccount,
   requestCreateOrder
 }) => {
-  const [payload, setPayload] = useState({});
+  const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
   const { account_jwt } = currentUser.data;
-
-  const handleShippingMethodStep = values => {
-    setPayload({ shippingMethod: shippingMethods[values.shippingMethod] });
-
-    return true;
-  };
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -44,7 +38,7 @@ const Checkout = ({
       return false;
     }
 
-    if (!values || activeStep < 4) {
+    if (!values || activeStep < 3) {
       setPayload({ ...payload, [key]: selectedEntity });
     } else {
       // card fly mode
@@ -94,6 +88,7 @@ const Checkout = ({
 
     setPayload({});
     history.push('/order');
+
     return true;
   };
 
@@ -101,11 +96,9 @@ const Checkout = ({
   const handleNext = async values => {
     let result = null;
 
-    if (activeStep === 1) {
-      result = handleShippingMethodStep(values);
-    } else if (activeStep > 1 && activeStep <= 4) {
+    if (activeStep <= 3) {
       result = await handleAddressesAndCardSteps(values);
-    } else if (activeStep === 5) {
+    } else if (activeStep === 4) {
       handleReviewStep();
       return true;
     }
@@ -133,9 +126,6 @@ const Checkout = ({
           />
         </Panel>
         <Panel title={STEPS[1]} collapsible expanded={activeStep === 1}>
-          <ShippingMethodForm title="Shipping Method" onSubmit={handleNext} />
-        </Panel>
-        <Panel title={STEPS[2]} collapsible expanded={activeStep === 2}>
           <AccountAddresses
             currentUser={currentUser}
             requestPatchAccount={requestPatchAccount}
@@ -144,7 +134,7 @@ const Checkout = ({
             allowFlyMode
           />
         </Panel>
-        <Panel title={STEPS[3]} collapsible expanded={activeStep === 3}>
+        <Panel title={STEPS[2]} collapsible expanded={activeStep === 2}>
           <AccountAddresses
             currentUser={currentUser}
             requestPatchAccount={requestPatchAccount}
@@ -156,7 +146,7 @@ const Checkout = ({
             useSeedLabel="Use Shipping Address"
           />
         </Panel>
-        <Panel title={STEPS[4]} collapsible expanded={activeStep === 4}>
+        <Panel title={STEPS[3]} collapsible expanded={activeStep === 3}>
           <AccountPaymentDetails
             currentUser={currentUser}
             requestPatchAccount={requestPatchAccount}
@@ -165,7 +155,7 @@ const Checkout = ({
             allowFlyMode
           />
         </Panel>
-        <Panel title={STEPS[5]} collapsible expanded={activeStep === 5}>
+        <Panel title={STEPS[4]} collapsible expanded={activeStep === 4}>
           <CheckoutReviewForm onSubmit={handleNext} />
         </Panel>
       </Box>
