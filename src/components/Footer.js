@@ -248,7 +248,7 @@ const Footer = () => {
                     <div className="rotate">Copyright 2019</div>
                   </StyledBox>
                 </Grid>
-                <Grid item xs={8} className="border-bottom signup-box">
+                <Grid item xs={9} className="border-bottom signup-box">
                   <span className="opac">
                     Sign up for tips and new product launches.
                   </span>
@@ -290,9 +290,6 @@ const Footer = () => {
                   xs={1}
                   className="border-left border-bottom icon "
                 ></Grid>
-                <Grid item xs={1} className="border-left border-bottom">
-                  &nbsp;
-                </Grid>
                 <Grid container xs={12} className="legal">
                   <StyledList>
                     <ListItem>
