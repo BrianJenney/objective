@@ -80,9 +80,9 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
   const onClickProduct = useCallback(() => {
     const newItems = [...cart.items];
     dispatch(setCartDrawerOpened(false));
-    newItems.map(item => (
+    newItems.map(item =>
       history.push(`/products/${item.prodSlug}/${item.varSlug}`)
-    ))
+    );
   }, [dispatch, history]);
 
   const handleCheckout = useCallback(() => {
@@ -174,39 +174,17 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                     <Link
                       to={`product/${item.product_id}`}
                       style={{ 'text-decoration': 'none' }}
-                    >
-                      <StyledProductLink align="left" onClick={onClickProduct}>
-                        {item.variant_name}
-                      </StyledProductLink>
+                    />
+                    <StyledProductLink align="left" onClick={onClickProduct}>
+                      {item.variant_name}
+                    </StyledProductLink>
 
-                      <Grid item style={{ padding: '0' }}>
-                        <StyledCardActions>
-                          <StyledCounterButton
-                            color="primary"
-                            onClick={e => adjustQty(e, -1)}
-                            style={{ 'font-size': '18pt' }}
-                            value={index}
-                            disabled={item.quantity < 2}
-                          >
-                            -
-                          </StyledCounterButton>
-                          <StyledSmallCaps style={{ marginTop: '2px' }}>
-                            {item.quantity}
-                          </StyledSmallCaps>
-                          <StyledCounterButton
-                            color="primary"
-                            onClick={e => adjustQty(e, 1)}
-                            style={{ 'font-size': '18pt' }}
-                            value={index}
-                          >
-                            +
-                          </StyledCounterButton>
-                        </StyledCardActions>
-                      </Grid>
-                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
-                        <StyledFinePrint
-                          component="div"
-                          onClick={e => removeFromCart(e)}
+                    <Grid item style={{ padding: '0' }}>
+                      <StyledCardActions>
+                        <StyledCounterButton
+                          color="primary"
+                          onClick={e => adjustQty(e, -1)}
+                          style={{ 'font-size': '18pt' }}
                           value={index}
                           disabled={item.quantity < 2}
                         >
@@ -224,6 +202,29 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                           +
                         </StyledCounterButton>
                       </StyledCardActions>
+                    </Grid>
+                    <Grid>
+                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                        <StyledFinePrint
+                          component="div"
+                          onClick={e => removeFromCart(e)}
+                          value={index}
+                          disabled={item.quantity < 2}
+                        >
+                          -
+                        </StyledFinePrint>
+                        <StyledSmallCaps style={{ marginTop: '2px' }}>
+                          {item.quantity}
+                        </StyledSmallCaps>
+                        <StyledCounterButton
+                          color="primary"
+                          onClick={e => adjustQty(e, 1)}
+                          style={{ 'font-size': '18pt' }}
+                          value={index}
+                        >
+                          +
+                        </StyledCounterButton>
+                      </StyledCardContent>
                     </Grid>
                     <StyledCardContent style={{ 'padding-bottom': '0' }}>
                       <StyledFinePrint
