@@ -8,20 +8,29 @@ import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MenuLink from './MenuLink';
 
 const styles = {
   root: {
     alignItems: 'stretch',
-    padding: 0
+    padding: 0,
+    position: 'relative'
   },
   content: {
     margin: 0,
     flexDirection: 'column'
   },
+  expanded: {
+    '&.MuiExpansionPanelSummary-content': {
+      margin: 0
+    },
+    '&.MuiExpansionPanelSummary-expandIcon': {
+      display: 'none'
+    }
+  },
   expandIcon: {
     position: 'absolute',
-    top: 0,
+    top: 24,
     right: 100,
     padding: 0
   }
@@ -43,8 +52,16 @@ const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
         }}
         {...rest}
       >
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          {title}
+        <ExpansionPanelSummary
+          expandIcon={
+            <MenuLink
+              children="CHANGE"
+              underline="always"
+              style={{ fontSize: 16, color: '#6f6f6f' }}
+            />
+          }
+        >
+          <Box width={1} children={title} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Box width={1} children={children} />

@@ -14,7 +14,6 @@ const FormSummarySection = ({ title, pairs, children, ...rest }) => (
             key={`summary_${index}`}
             display="flex"
             alignItems="center"
-            mb={1}
             {...childProps}
           >
             {label ? (

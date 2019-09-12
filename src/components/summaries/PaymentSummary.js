@@ -13,19 +13,30 @@ const labelsMap = {
   expirationDate: 'Exp. Date',
   isDefault: ''
 };
+const getValuesWithoutLabels = payload => Object.values(payload);
 
-const PaymentSummary = ({ values, children }) => {
-  const defaultIndicator = values.isDefault ? (
-    <Box height={36} display="flex" alignItems="center">
-      <CheckIcon />
-      <Typography variant="body1" children="Saved as Default" />
-    </Box>
-  ) : null;
+const PaymentSummary = ({ withLabels, noDefault, values, children }) => {
+  let defaultIndicator = null;
+  if (!noDefault) {
+    defaultIndicator = values.isDefault ? (
+      <Box height={36} display="flex" alignItems="center">
+        <CheckIcon />
+        <Typography variant="body1" children="Saved as Default" />
+      </Box>
+    ) : null;
+  }
+
   const neededValues = pick(values, PAYMENT_FIELDS);
-  const pairs = PAYMENT_FIELDS.map(key => ({
-    label: labelsMap[key],
-    value: key === 'isDefault' ? defaultIndicator : neededValues[key]
-  }));
+  let pairs = null;
+
+  if (withLabels) {
+    pairs = PAYMENT_FIELDS.map(key => ({
+      label: labelsMap[key],
+      value: key === 'isDefault' ? defaultIndicator : neededValues[key]
+    }));
+  } else {
+    pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
+  }
 
   return (
     <>
@@ -36,8 +47,15 @@ const PaymentSummary = ({ values, children }) => {
 };
 
 PaymentSummary.propTypes = {
+  withLabels: PropTypes.bool,
+  noDefault: PropTypes.bool,
   values: PropTypes.object.isRequired,
   children: PropTypes.node
+};
+
+PaymentSummary.defaultProps = {
+  withLabels: false,
+  noDefault: false
 };
 
 export default PaymentSummary;
