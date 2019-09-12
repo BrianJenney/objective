@@ -1,9 +1,9 @@
 export const STEPS = [
-  'Step 1 Account',
-  'Step 2 Shipping Address',
-  'Step 3 Billing Address',
-  'Step 4 Payment Details',
-  'Step 5 Review & Order'
+  'Account',
+  'Shipping Address',
+  'Billing Address',
+  'Payment Details',
+  'Review & Order'
 ];
 export const STEP_KEYS = [
   'account',
