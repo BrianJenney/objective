@@ -71,9 +71,17 @@ const Cart = ({ history }) => {
     dispatch(requestPatchCart(cart._id, patches));
   }
 
-  const handleLogo = useCallback(() => {
+  const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     history.push('/gallery');
+  }, [dispatch, history]);
+
+  const onClickProduct = useCallback(() => {
+    const newItems = [...cart.items];
+    dispatch(setCartDrawerOpened(false));
+    newItems.map(item => (
+      history.push(`/products/${item.prodSlug}/${item.varSlug}`)
+    ))
   }, [dispatch, history]);
 
   const handleCheckout = useCallback(() => {
@@ -96,7 +104,7 @@ const Cart = ({ history }) => {
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
     >
       <StyledLogoContainer>
-        <StyledLogo onClick={handleLogo}>LOGO</StyledLogo>
+        <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
         <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
           <Badge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
             <ShoppingBag />
@@ -153,14 +161,11 @@ const Cart = ({ history }) => {
                         'justify-content': 'space-between'
                       }}
                     >
-                      <Link
-                        to={`/products/${item.prodSlug}/${item.varSlug}`}
-                        style={{ 'text-decoration': 'none' }}
-                      >
-                        <StyledProductLink align="left">
-                          {item.variant_name}
-                        </StyledProductLink>
-                      </Link>
+
+                      <StyledProductLink align="left" onClick={onClickProduct}>
+                        {item.variant_name}
+                      </StyledProductLink>
+
                       <Grid item style={{ padding: '0' }}>
                         <StyledCardActions>
                           <StyledCounterButton
