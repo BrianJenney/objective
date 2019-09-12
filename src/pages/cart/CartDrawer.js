@@ -72,9 +72,17 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
     dispatch(requestPatchCart(cart._id, patches));
   };
 
-  const handleLogo = useCallback(() => {
+  const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     history.push('/gallery');
+  }, [dispatch, history]);
+
+  const onClickProduct = useCallback(() => {
+    const newItems = [...cart.items];
+    dispatch(setCartDrawerOpened(false));
+    newItems.map(item => (
+      history.push(`/products/${item.prodSlug}/${item.varSlug}`)
+    ))
   }, [dispatch, history]);
 
   const handleCheckout = useCallback(() => {
@@ -97,7 +105,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
     >
       <StyledLogoContainer>
-        <StyledLogo onClick={handleLogo}>LOGO</StyledLogo>
+        <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
         <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
           <Badge
             invisible={cartCount < 1}
@@ -167,16 +175,38 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                       to={`product/${item.product_id}`}
                       style={{ 'text-decoration': 'none' }}
                     >
-                      <StyledProductLink align="left">
+                      <StyledProductLink align="left" onClick={onClickProduct}>
                         {item.variant_name}
                       </StyledProductLink>
-                    </Link>
-                    <Grid item style={{ padding: '0' }}>
-                      <StyledCardActions>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e => adjustQty(e, -1)}
-                          style={{ 'font-size': '18pt' }}
+
+                      <Grid item style={{ padding: '0' }}>
+                        <StyledCardActions>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e => adjustQty(e, -1)}
+                            style={{ 'font-size': '18pt' }}
+                            value={index}
+                            disabled={item.quantity < 2}
+                          >
+                            -
+                          </StyledCounterButton>
+                          <StyledSmallCaps style={{ marginTop: '2px' }}>
+                            {item.quantity}
+                          </StyledSmallCaps>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e => adjustQty(e, 1)}
+                            style={{ 'font-size': '18pt' }}
+                            value={index}
+                          >
+                            +
+                          </StyledCounterButton>
+                        </StyledCardActions>
+                      </Grid>
+                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                        <StyledFinePrint
+                          component="div"
+                          onClick={e => removeFromCart(e)}
                           value={index}
                           disabled={item.quantity < 2}
                         >
