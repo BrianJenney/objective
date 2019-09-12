@@ -43,7 +43,7 @@ const ShoppingCart = () => {
           children={<CloseIcon />}
         />
       }
-      listContent={<CartDrawer />}
+      listContent={<CartDrawer showCheckoutProceedLink />}
       side="right"
     />
   );
