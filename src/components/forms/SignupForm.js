@@ -14,6 +14,7 @@ import { object, string, boolean } from 'yup';
 import { CheckboxField, InputField } from '../form-fields';
 import { Button, NavLink } from '../common';
 import { withCurrentUser } from '../../hoc';
+import { AlertPanel } from '../common';
 
 const INITIAL_VALUES = {
   firstName: '',
