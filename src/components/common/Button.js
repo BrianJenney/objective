@@ -21,6 +21,8 @@ const ButtonComponent = ({
   children,
   ml,
   mr,
+  mt,
+  mb,
   fullWidth,
   ...rest
 }) => (
@@ -30,6 +32,8 @@ const ButtonComponent = ({
     width={fullWidth ? 1 : 'auto'}
     ml={ml}
     mr={mr}
+    mt={mt}
+    mb={mb}
   >
     <CustomizedBtn
       disabled={loading || disabled}
@@ -56,6 +60,8 @@ const ButtonComponent = ({
 ButtonComponent.propTypes = {
   ml: PropTypes.any,
   mr: PropTypes.any,
+  mt: PropTypes.any,
+  mb: PropTypes.any,
   fullWidth: PropTypes.bool,
   children: PropTypes.node,
   icon: PropTypes.string,

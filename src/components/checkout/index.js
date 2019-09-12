@@ -166,11 +166,7 @@ const Checkout = ({
           />
         </Panel>
         <Panel title={STEPS[5]} collapsible expanded={activeStep === 5}>
-          <CheckoutReviewForm
-            summary={{ ...cart, ...payload }}
-            onBack={handleBack}
-            onSubmit={handleNext}
-          />
+          <CheckoutReviewForm onSubmit={handleNext} />
         </Panel>
       </Box>
     </Container>
