@@ -159,6 +159,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                         style={{ height: 126, width: 126 }}
                         image={item.variant_img}
                         title={item.variant_name}
+                        onClick={onClickProduct}
                       />
                     </Card>
                   </Grid>
@@ -171,11 +172,9 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                         'justify-content': 'space-between'
                       }}
                     >
-
                       <StyledProductLink align="left" onClick={onClickProduct}>
                         {item.variant_name}
                       </StyledProductLink>
-
                       <Grid item style={{ padding: '0' }}>
                         <StyledCardActions>
                           <StyledCounterButton
