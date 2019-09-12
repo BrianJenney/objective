@@ -2,7 +2,7 @@ import { requestPatchCart } from "../../modules/cart/actions";
 
 export const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
 
-export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isFromGallery=false) => {
+export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isFromGallery = false) => {
   const newItems = cart.items;
   // console.log('add to cart', newItems, selectedVariant)
   let alreadyInCart = false;
@@ -20,7 +20,9 @@ export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isF
       variantInfo: selectedVariant.variantInfo,
       attributes: selectedVariant.attributes,
       quantity: quantity,
-      unit_price: parseFloat(selectedVariant.effectivePrice)
+      unit_price: parseFloat(selectedVariant.effectivePrice),
+      varSlug: selectedVariant.slug,
+      prodSlug: selectedVariant.productSlug,
     };
     newItems.push(newItem);
   }

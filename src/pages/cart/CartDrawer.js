@@ -154,7 +154,7 @@ const Cart = ({ history }) => {
                       }}
                     >
                       <Link
-                        to={`product/${item.product_id}`}
+                        to={`/products/${item.prodSlug}/${item.varSlug}`}
                         style={{ 'text-decoration': 'none' }}
                       >
                         <StyledProductLink align="left">
