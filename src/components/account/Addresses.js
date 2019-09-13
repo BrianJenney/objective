@@ -76,13 +76,15 @@ const AccountAddresses = ({
 
   return (
     <Box>
-      <Box
+      {/* <Box
         component={Typography}
         mx={1}
         variant="h5"
-        children="Saved Addrses"
+        children="Saved Addresses"
+        style={{fontFamily: 'Canela Text, serif', fontSize: 48}}
         gutterBottom
-      />
+      /> */}
+      <p style={{fontFamily: 'Canela Text, serif', fontSize: 48}}>Saved Addresses</p>
       <Grid container>
         {addressBook.map((addressEntity, index) => {
           const borderStyle = addressEntity.isDefault

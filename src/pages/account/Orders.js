@@ -5,21 +5,20 @@ import {fonts} from '../../components/Theme/fonts';
 
 const subTitles = {
   fontFamily: fonts.smallHeader,
-  fontSize: 18,
-  display: 'flex',
-  justifyContent: 'center'
+  fontSize: 18
 }
 
 const orderStyle = {
   fontFamily: fonts.smallHeader,
   fontSize: 18,
   background: '#fbf7f3',
-  margin: 7
+  textAlign: 'center'
 }
 
 const title = {
   fontFamily: fonts.header,
-  fontSize: 48
+  fontSize: 48,
+  paddingLeft: 15
 }
 
 
@@ -45,12 +44,12 @@ const AccountOrders = props => {
   return (
     <>
       <h2 style={title}>Your Orders</h2>
-      <table>
+      <table cellspacing='15'>
         <tr style={subTitles}>
-          <th style={{textAlign: 'left', paddingRight: 50}}>Order ID</th>
-          <th style={{textAlign: 'left', paddingRight: 50}}>Date</th>
-          <th style={{textAlign: 'left', paddingRight: 50}}>Amount</th>
-          <th style={{textAlign: 'left', paddingRight: 50}}>Tracking Information</th>
+          <th>Order ID</th>
+          <th>Order Date</th>
+          <th>Amount</th>
+          <th>Tracking Information</th>
         </tr>
         {orderList}
       </table>
