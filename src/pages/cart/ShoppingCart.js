@@ -17,13 +17,14 @@ const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-    }`
+      }`
   }
 }))(Badge);
 
 const ShoppingCart = () => {
   const cart = useSelector(state => state.cart);
-  const cartCount = cart.items.length;
+  // const cartCount = cart.items.length;
+  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   return (
     <TemporaryCartDrawer
       toggleContent={
