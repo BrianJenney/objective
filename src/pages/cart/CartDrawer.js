@@ -126,16 +126,29 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               ({cart.items.length} Items)
             </StyledCartCount>
           </Grid>
-          {showCheckoutProceedLink && (
-            <Grid container direction="row" alignItems="flex-end">
-              <StyledSmallCaps component="span" onClick={handleCheckout}>
-                proceed to checkout{' '}
-                <StyledArrowIcon>
-                  <RightArrow />
-                </StyledArrowIcon>
-              </StyledSmallCaps>
-            </Grid>
-          )}
+          {cart.items.length !== 0 ?
+            (showCheckoutProceedLink && (
+              <Grid container direction="row" alignItems="flex-end">
+                <StyledSmallCaps component="span" onClick={handleCheckout}>
+                  proceed to checkout{' '}
+                  <StyledArrowIcon>
+                    <RightArrow />
+                  </StyledArrowIcon>
+                </StyledSmallCaps>
+              </Grid>
+            )
+            ) : (
+              showCheckoutProceedLink && (
+                <Grid container direction="row" alignItems="flex-end">
+                  <StyledSmallCaps component="span" onClick={e => e.preventDefault()}>
+                    proceed to checkout{' '}
+                    <StyledArrowIcon>
+                      <RightArrow />
+                    </StyledArrowIcon>
+                  </StyledSmallCaps>
+                </Grid>
+              ))
+          }
         </StyledHeaderWrapper>
       </div>
       <Grid container xs={12}>
@@ -146,7 +159,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
             </StyledSmallCaps>
           </StyledGridEmptyCart>
         ) : (
-          Object.values(cart.items).map((item, index) => (
+            Object.values(cart.items).map((item, index) => (
               <>
                 <StyledDrawerGrid container xs={12} direction="row">
                   <Grid
@@ -224,7 +237,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 </StyledDrawerGrid>
               </>
             ))
-        )}
+          )}
         <Grid item xs={12} style={{ 'text-align': 'left' }}>
           <StyledTotalWrapper
             container
