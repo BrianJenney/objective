@@ -16,32 +16,29 @@ const FormSummarySection = ({ title, pairs, children, ...rest }) => (
             alignItems="center"
             {...childProps}
           >
-            {label ? (
-              <>
-                <Box
-                  component={Typography}
-                  width={1 / 3}
-                  mr={2}
-                  variant="subtitle2"
-                  children={`${label}:`}
-                  whiteSpace="nowrap"
-                  textOverflow="ellipsis"
-                  overflow="hidden"
-                  lineHeight={2.3}
-                />
-                <Box
-                  flex={1}
-                  component={Typography}
-                  variant="body2"
-                  children={value}
-                  whiteSpace="nowrap"
-                  textOverflow="ellipsis"
-                  overflow="hidden"
-                />
-              </>
-            ) : (
-              value
+            {label && (
+              <Box
+                component={Typography}
+                width={1 / 3}
+                mr={2}
+                variant="subtitle2"
+                children={`${label}:`}
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+                overflow="hidden"
+                lineHeight={2.3}
+              />
             )}
+            <Box
+              component={Typography}
+              flex={1}
+              fontSize={20}
+              variant="body2"
+              children={value}
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            />
           </Box>
         ))}
       </Box>

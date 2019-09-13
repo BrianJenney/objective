@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { get } from 'lodash';
-import { useSnackbar } from 'notistack';
+import { get, isNil } from 'lodash';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
-import { AddressSummary, PaymentSummary } from '../summaries';
+import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
 import { CheckoutReviewForm } from '../forms';
 import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
-import { getDefaultEntity } from './helpers';
+import { getDefaultEntity } from '../../utils/misc';
 
-const getPanelTitleContent = (step, activeStep, payload = {}) => {
+const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -42,10 +40,14 @@ const getPanelTitleContent = (step, activeStep, payload = {}) => {
   );
   let payloadSummary = null;
 
-  if (step === 1 || step === 2) {
-    payloadSummary = <AddressSummary noDefault values={payload} />;
-  } else if (step === 3) {
-    payloadSummary = <PaymentSummary noDefault values={payload} />;
+  if (!isNil(payload)) {
+    if (step === 0) {
+      payloadSummary = <AccountSummary values={payload} />;
+    } else if (step === 1) {
+      payloadSummary = <AddressSummary noDefault values={payload} />;
+    } else if (step === 2) {
+      payloadSummary = <PaymentSummary noDefault values={payload} />;
+    }
   }
 
   const payloadView =
@@ -81,8 +83,7 @@ const Checkout = ({
 }) => {
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
-  const { enqueueSnackbar } = useSnackbar();
-  const { account_jwt } = currentUser.data;
+  const { account_jwt, email: currentUserEmail } = currentUser.data;
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -94,28 +95,18 @@ const Checkout = ({
       return false;
     }
 
-    if (!values || activeStep < 3) {
+    if (!values || activeStep < 2) {
       setPayload({ ...payload, [key]: selectedEntity });
     } else {
       // card fly mode
-      try {
-        const nonce = await fetchCreditCardBrainTreeNonce({
-          paymentDetails: selectedEntity,
-          billingAddress: payload.billingAddress
-        });
-        const cardDetails = {
-          name: selectedEntity.cardholderName,
-          last4: selectedEntity.number.substring(
-            selectedEntity.number.length - 4
-          ),
-          expirationDate: selectedEntity.expirationDate,
-          nonce
-        };
-        setPayload({ ...payload, [key]: cardDetails });
-      } catch (err) {
-        enqueueSnackbar(err.message, { variant: 'error' });
-        return false;
-      }
+      setPayload({
+        ...payload,
+        [key]: {
+          ...values.newCreditCard,
+          billingAddress: values.billingAddress,
+          nonce: values.nonce
+        }
+      });
     }
 
     return true;
@@ -152,9 +143,9 @@ const Checkout = ({
   const handleNext = async values => {
     let result = null;
 
-    if (activeStep <= 3) {
+    if (activeStep <= 2) {
       result = await handleAddressesAndCardSteps(values);
-    } else if (activeStep === 4) {
+    } else if (activeStep === 3) {
       handleReviewStep();
       return true;
     }
@@ -165,6 +156,18 @@ const Checkout = ({
     return true;
   };
 
+  const onPanelChange = (expanded, panelIndex) => {
+    const key = STEP_KEYS[activeStep];
+    if (
+      !expanded ||
+      ((activeStep === 1 || activeStep === 2) && isNil(payload[key]))
+    ) {
+      return false;
+    }
+
+    setActiveStep(panelIndex);
+  };
+
   return (
     <Container>
       <Box>
@@ -172,9 +175,13 @@ const Checkout = ({
         <Box display="flex">
           <Box flex={1}>
             <Panel
-              title={getPanelTitleContent(0, activeStep, {})}
+              title={getPanelTitleContent(0, activeStep, {
+                email: currentUserEmail
+              })}
               collapsible
+              hideExpandIcon
               expanded={activeStep === 0}
+              onChange={() => null}
             >
               <CheckoutAuth
                 currentUser={currentUser}
@@ -195,56 +202,48 @@ const Checkout = ({
               )}
               collapsible
               expanded={activeStep === 1}
+              onChange={e => onPanelChange(e, 1)}
             >
               <AccountAddresses
                 currentUser={currentUser}
                 requestPatchAccount={requestPatchAccount}
-                onBack={handleBack}
                 onSubmit={handleNext}
                 allowFlyMode
+                mt={4}
+                mx={10}
+                mb={5}
               />
             </Panel>
             <Panel
               title={getPanelTitleContent(
                 2,
                 activeStep,
-                payload.billingAddress
-              )}
-              collapsible
-              expanded={activeStep === 2}
-            >
-              <AccountAddresses
-                currentUser={currentUser}
-                requestPatchAccount={requestPatchAccount}
-                onBack={handleBack}
-                onSubmit={handleNext}
-                allowFlyMode
-                seedEnabled
-                addressSeed={payload.shippingAddress}
-                useSeedLabel="Use Shipping Address"
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(
-                3,
-                activeStep,
                 payload.paymentDetails
               )}
               collapsible
-              expanded={activeStep === 3}
+              expanded={activeStep === 2}
+              onChange={e => onPanelChange(e, 2)}
             >
               <AccountPaymentDetails
                 currentUser={currentUser}
                 requestPatchAccount={requestPatchAccount}
                 onBack={handleBack}
                 onSubmit={handleNext}
+                seedEnabled
+                addressSeed={payload.shippingAddress}
+                useSeedLabel="Use shipping address"
                 allowFlyMode
+                mt={4}
+                mx={10}
+                mb={5}
               />
             </Panel>
             <Panel
-              title={getPanelTitleContent(4, activeStep, {})}
+              title={getPanelTitleContent(3, activeStep, {})}
               collapsible
-              expanded={activeStep === 4}
+              hideExpandIcon
+              expanded={activeStep === 3}
+              onChange={e => onPanelChange(e, 3)}
             >
               <CheckoutReviewForm onSubmit={handleNext} />
             </Panel>

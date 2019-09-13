@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { get, isEmpty, isNil } from 'lodash';
+import { get, isEmpty, isNil, omit } from 'lodash';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,15 +13,16 @@ const AccountAddresses = ({
   requestPatchAccount,
   onBack,
   onSubmit,
-  allowFlyMode,
   seedEnabled,
   addressSeed,
-  useSeedLabel
+  useSeedLabel,
+  allowFlyMode,
+  ...rest
 }) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
-  const [flyModeEnabled, setFlyModeEnabled] = useState(false);
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
+
   const deleteAddress = deletedIndex => {
     const newAddressBook = addressBook.filter(
       (address, index) => index !== deletedIndex
@@ -44,23 +45,28 @@ const AccountAddresses = ({
         isDefault: false
       };
     });
-    [newAddressBook[0], newAddressBook[targetIndex]] = [
-      newAddressBook[targetIndex],
-      newAddressBook[0]
-    ];
     const payload = { addressBook: newAddressBook };
 
     requestPatchAccount(account_jwt, payload);
   };
 
-  const saveAddress = (values, actions, targetIndex) => {
+  const handleSave = (values, actions, targetIndex) => {
+    const pureValues = omit(values, ['shouldSaveData']);
+    const { shouldSaveData } = values;
+
+    if (allowFlyMode && !shouldSaveData) {
+      actions.setSubmitting(false);
+      setAddModeEnabled(false);
+      return onSubmit(pureValues);
+    }
+
     let newAddressBook = null;
     if (isNil(targetIndex)) {
-      newAddressBook = [...addressBook, values];
+      newAddressBook = [...addressBook, pureValues];
     } else {
       newAddressBook = addressBook.map((addressEntity, index) => {
         if (index === targetIndex) {
-          return values;
+          return pureValues;
         }
         return addressEntity;
       });
@@ -71,14 +77,16 @@ const AccountAddresses = ({
     requestPatchAccount(account_jwt, payload);
     actions.setSubmitting(false);
     setAddModeEnabled(false);
-    setFlyModeEnabled(false);
+
+    return true;
   };
 
   return (
-    <Box>
+    <Box {...rest}>
       <Box
         component={Typography}
         mx={1}
+        color="#231f20"
         variant="h5"
         children="Saved Addresses"
         gutterBottom
@@ -90,11 +98,11 @@ const AccountAddresses = ({
             : '1px solid #979797';
           return (
             <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-              <Box border={borderStyle} m={1} p={2}>
+              <Box border={borderStyle} m={1} px={4} py={3}>
                 <EditablePanel
                   title=""
                   defaultValues={addressEntity}
-                  onSubmit={(...args) => saveAddress(...args, index)}
+                  onSubmit={(...args) => handleSave(...args, index)}
                   Form={AddressForm}
                   Summary={AddressSummary}
                   onRemove={
@@ -117,54 +125,31 @@ const AccountAddresses = ({
         {isEmpty(addressBook) && (
           <AlertPanel type="info" text="No Saved Addresses." />
         )}
-        {addModeEnabled || flyModeEnabled ? (
+        {addModeEnabled ? (
           <AddressForm
             title=""
-            onSubmit={addModeEnabled ? saveAddress : onSubmit}
-            onBack={() => {
-              setAddModeEnabled(false);
-              setFlyModeEnabled(false);
-            }}
-            seedEnabled={flyModeEnabled ? seedEnabled : undefined}
-            addressSeed={flyModeEnabled ? addressSeed : undefined}
-            useSeedLabel={flyModeEnabled ? useSeedLabel : undefined}
-            submitLabel={addModeEnabled ? 'Save' : 'Next'}
-            backLabel={addModeEnabled ? 'Cancel' : 'Back'}
+            seedEnabled={seedEnabled}
+            addressSeed={addressSeed}
+            useSeedLabel={useSeedLabel}
+            onSubmit={handleSave}
+            onBack={() => setAddModeEnabled(false)}
+            allowFlyMode={allowFlyMode}
           />
         ) : (
           <Box
-            display="flex"
-            alignItems="center"
             fontSize={16}
             fontWeight="bold"
             style={{ textTransform: 'uppercase' }}
           >
-            <Box>
-              <MenuLink
-                onClick={() => {
-                  setAddModeEnabled(true);
-                  setFlyModeEnabled(false);
-                }}
-                children="Add New Address"
-                underline="always"
-              />
-            </Box>
-            {allowFlyMode && (
-              <Box ml={2}>
-                <MenuLink
-                  onClick={() => {
-                    setAddModeEnabled(false);
-                    setFlyModeEnabled(true);
-                  }}
-                  children="Use One-time Address"
-                  underline="always"
-                />
-              </Box>
-            )}
+            <MenuLink
+              onClick={() => setAddModeEnabled(true)}
+              children="New Address"
+              underline="always"
+            />
           </Box>
         )}
       </Box>
-      {!addModeEnabled && !flyModeEnabled && (
+      {!addModeEnabled && (
         <Box display="flex" alignItems="center">
           {onBack && (
             <Button type="button" onClick={onBack} children="Back" mr={2} />
@@ -183,10 +168,10 @@ AccountAddresses.propTypes = {
   requestPatchAccount: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
-  allowFlyMode: PropTypes.bool,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
-  useSeedLabel: PropTypes.string
+  useSeedLabel: PropTypes.string,
+  allowFlyMode: PropTypes.bool
 };
 
 AccountAddresses.defaultProps = {

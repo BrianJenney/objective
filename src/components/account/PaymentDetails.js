@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
+import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
 
@@ -15,13 +16,18 @@ const AccountPaymentDetails = ({
   requestPatchAccount,
   onBack,
   onSubmit,
-  allowFlyMode
+  seedEnabled,
+  addressSeed,
+  useSeedLabel,
+  allowFlyMode,
+  ...rest
 }) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
-  const [flyModeEnabled, setFlyModeEnabled] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
+  const addressBook = get(currentUser, 'data.addressBook', []);
+
   const deleteCreditCard = deletedCreditCardToken => {
     const payload = { deletedCreditCardToken };
 
@@ -32,16 +38,10 @@ const AccountPaymentDetails = ({
 
     requestPatchAccount(account_jwt, payload);
   };
-  const addCreditCard = async (paymentDetails, actions) => {
-    const { addressBook: currentAddressBook } = currentUser.data;
-    const addressBook = currentAddressBook || [];
-    const billingAddress = addressBook.find(address => !!address.isDefault);
-    if (!billingAddress) {
-      return enqueueSnackbar(
-        'Please fill in billing address first in addresses section.',
-        { variant: 'error' }
-      );
-    }
+  const handleSave = async (values, actions) => {
+    const pureValues = omit(values, ['shouldSaveData']);
+    const { shouldSaveData } = values;
+    const { paymentDetails, billingAddress } = pureValues;
 
     try {
       const nonce = await fetchCreditCardBrainTreeNonce({
@@ -56,8 +56,15 @@ const AccountPaymentDetails = ({
           ),
           expirationDate: paymentDetails.expirationDate
         },
-        nonce
+        nonce,
+        billingAddress
       };
+
+      if (allowFlyMode && !shouldSaveData) {
+        actions.setSubmitting(false);
+        setAddModeEnabled(false);
+        return onSubmit(payload);
+      }
 
       requestPatchAccount(account_jwt, payload);
     } catch (err) {
@@ -65,14 +72,18 @@ const AccountPaymentDetails = ({
     }
     actions.setSubmitting(false);
     setAddModeEnabled(false);
-    setFlyModeEnabled(false);
 
     return true;
   };
 
+  let addressSeedData = addressSeed;
+  if (seedEnabled && isEmpty(addressSeed)) {
+    addressSeedData = getDefaultEntity(addressBook);
+  }
+
   return (
-    <Box>
-      <Box mx={1}>
+    <Box {...rest}>
+      <Box mx={1} color="#231f20">
         <Typography variant="h5" children="Payment Details" gutterBottom />
         <Typography variant="h6" children="Credit Cards" gutterBottom />
       </Box>
@@ -82,8 +93,8 @@ const AccountPaymentDetails = ({
             ? '2px solid #000'
             : '1px solid #979797';
           return (
-            <Grid key={`credit_card_entity_${index}`} item xs={12} sm={4}>
-              <Box border={borderStyle} m={1} p={2}>
+            <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
+              <Box border={borderStyle} m={1} px={4} py={3}>
                 <EditablePanel
                   title=""
                   defaultValues={creditCardEntity}
@@ -108,52 +119,32 @@ const AccountPaymentDetails = ({
         {isEmpty(creditCards) && (
           <AlertPanel type="info" text="No Saved Credit Cards." />
         )}
-        {addModeEnabled || flyModeEnabled ? (
+        {addModeEnabled ? (
           <PaymentForm
             title=""
+            seedEnabled={seedEnabled}
+            addressSeed={addressSeedData}
+            useSeedLabel={useSeedLabel}
             onlyCard
-            onSubmit={addModeEnabled ? addCreditCard : onSubmit}
-            onBack={() => {
-              setAddModeEnabled(false);
-              setFlyModeEnabled(false);
-            }}
-            submitLabel={addModeEnabled ? 'Save' : 'Next'}
-            backLabel={addModeEnabled ? 'Cancel' : 'Back'}
+            onSubmit={handleSave}
+            onBack={() => setAddModeEnabled(false)}
+            allowFlyMode={allowFlyMode}
           />
         ) : (
           <Box
-            display="flex"
-            alignItems="center"
             fontSize={16}
             fontWeight="bold"
             style={{ textTransform: 'uppercase' }}
           >
-            <Box>
-              <MenuLink
-                onClick={() => {
-                  setAddModeEnabled(true);
-                  setFlyModeEnabled(false);
-                }}
-                children="Add New Credit Card"
-                underline="always"
-              />
-            </Box>
-            {allowFlyMode && (
-              <Box ml={2}>
-                <MenuLink
-                  onClick={() => {
-                    setAddModeEnabled(false);
-                    setFlyModeEnabled(true);
-                  }}
-                  children="Use One-time Credit Card"
-                  underline="always"
-                />
-              </Box>
-            )}
+            <MenuLink
+              onClick={() => setAddModeEnabled(true)}
+              children="New Credit Card"
+              underline="always"
+            />
           </Box>
         )}
       </Box>
-      {!addModeEnabled && !flyModeEnabled && (
+      {!addModeEnabled && (
         <Box display="flex" alignItems="center">
           {onBack && (
             <Button type="button" onClick={onBack} children="Back" mr={2} />
@@ -172,6 +163,9 @@ AccountPaymentDetails.propTypes = {
   requestPatchAccount: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
+  seedEnabled: PropTypes.bool,
+  addressSeed: PropTypes.object,
+  useSeedLabel: PropTypes.string,
   allowFlyMode: PropTypes.bool
 };
 

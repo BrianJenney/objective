@@ -37,16 +37,27 @@ const styles = {
 };
 const ExpansionPanelSummary = withStyles(styles)(MuiExpansionPanelSummary);
 
-const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
+const Panel = ({
+  title,
+  expanded,
+  collapsible,
+  hideExpandIcon,
+  onChange,
+  children,
+  ...rest
+}) => {
   const [expandedInternal, setExpandedInternal] = useState(false);
+  const isPanelExpanded = isNil(expanded) ? expandedInternal : expanded;
 
   if (collapsible) {
     return (
       <ExpansionPanel
-        expanded={expanded || expandedInternal}
+        expanded={isPanelExpanded}
         elevation={0}
         onChange={(event, isExpanded) => {
-          if (isNil(expanded)) {
+          if (onChange) {
+            onChange(isExpanded);
+          } else {
             setExpandedInternal(isExpanded);
           }
         }}
@@ -54,11 +65,13 @@ const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
       >
         <ExpansionPanelSummary
           expandIcon={
-            <MenuLink
-              children="CHANGE"
-              underline="always"
-              style={{ fontSize: 16, color: '#6f6f6f' }}
-            />
+            hideExpandIcon ? null : (
+              <MenuLink
+                children="CHANGE"
+                underline="always"
+                style={{ fontSize: 16, color: '#6f6f6f' }}
+              />
+            )
           }
         >
           <Box width={1} children={title} />
@@ -82,6 +95,8 @@ Panel.propTypes = {
   title: PropTypes.string,
   expanded: PropTypes.bool,
   collapsible: PropTypes.bool,
+  hideExpandIcon: PropTypes.bool,
+  onChange: PropTypes.func,
   children: PropTypes.node
 };
 

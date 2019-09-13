@@ -35,7 +35,8 @@ const PaymentSummary = ({ withLabels, noDefault, values, children }) => {
       value: key === 'isDefault' ? defaultIndicator : neededValues[key]
     }));
   } else {
-    pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
+    const pre = getValuesWithoutLabels(neededValues).map(value => ({ value }));
+    pairs = [...pre, { value: defaultIndicator }];
   }
 
   return (
