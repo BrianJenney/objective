@@ -8,43 +8,73 @@ import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MenuLink from './MenuLink';
 
 const styles = {
   root: {
     alignItems: 'stretch',
-    padding: 0
+    padding: 0,
+    position: 'relative'
   },
   content: {
     margin: 0,
     flexDirection: 'column'
   },
+  expanded: {
+    '&.MuiExpansionPanelSummary-content': {
+      margin: 0
+    },
+    '&.MuiExpansionPanelSummary-expandIcon': {
+      display: 'none'
+    }
+  },
   expandIcon: {
     position: 'absolute',
-    top: 0,
+    top: 24,
     right: 100,
     padding: 0
   }
 };
 const ExpansionPanelSummary = withStyles(styles)(MuiExpansionPanelSummary);
 
-const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
+const Panel = ({
+  title,
+  expanded,
+  collapsible,
+  hideExpandIcon,
+  onChange,
+  children,
+  ...rest
+}) => {
   const [expandedInternal, setExpandedInternal] = useState(false);
+  const isPanelExpanded = isNil(expanded) ? expandedInternal : expanded;
 
   if (collapsible) {
     return (
       <ExpansionPanel
-        expanded={expanded || expandedInternal}
+        expanded={isPanelExpanded}
         elevation={0}
         onChange={(event, isExpanded) => {
-          if (isNil(expanded)) {
+          if (onChange) {
+            onChange(isExpanded);
+          } else {
             setExpandedInternal(isExpanded);
           }
         }}
         {...rest}
       >
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          {title}
+        <ExpansionPanelSummary
+          expandIcon={
+            hideExpandIcon ? null : (
+              <MenuLink
+                children="CHANGE"
+                underline="always"
+                style={{ fontSize: 16, color: '#6f6f6f' }}
+              />
+            )
+          }
+        >
+          <Box width={1} children={title} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Box width={1} children={children} />
@@ -65,6 +95,8 @@ Panel.propTypes = {
   title: PropTypes.string,
   expanded: PropTypes.bool,
   collapsible: PropTypes.bool,
+  hideExpandIcon: PropTypes.bool,
+  onChange: PropTypes.func,
   children: PropTypes.node
 };
 
