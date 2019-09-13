@@ -31,7 +31,8 @@ import {
   StyledLogo,
   StyledLogoContainer,
   StyledArrowIcon,
-  StyledShoppingBag
+  StyledShoppingBag,
+  StyledBadge
 } from './StyledComponents';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 
@@ -40,7 +41,8 @@ const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 const Cart = ({ history, showCheckoutProceedLink }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const cartCount = cart.items.length;
+  //const cartCount = cart.items.length;
+  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const applyCoupon = useCallback(e => {
     console.log('Logic to apply coupon goes here');
@@ -107,13 +109,13 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       <StyledLogoContainer>
         <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
         <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
-          <Badge
+          <StyledBadge
             invisible={cartCount < 1}
             badgeContent={cartCount}
             color="secondary"
           >
-            <ShoppingBag />
-          </Badge>
+              <ShoppingBag />
+          </StyledBadge>
         </StyledShoppingBag>
       </StyledLogoContainer>
 
