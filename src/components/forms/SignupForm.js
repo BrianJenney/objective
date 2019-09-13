@@ -33,7 +33,7 @@ const schema = object().shape({
 });
 
 const SignupForm = ({ title, onSubmit, currentUser }) => {
-  const [passwordVisible, setPasswordVisible ]= useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(() => setPasswordVisible(!passwordVisible),
     [passwordVisible, setPasswordVisible]);
 
@@ -68,7 +68,8 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
                     {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                   </IconButton>
                 </InputAdornment>
-              ) }}
+              )
+            }}
             autoComplete="current-password"
           />
         </Grid>
@@ -80,10 +81,10 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth type="submit" children="Create account" disabled={!isValid}/>
+          <Button fullWidth type="submit" children="Create account" disabled={!isValid} />
         </Grid>
         <AlertPanel type="error" text={currentUser.error} />
-
+        <AlertPanel type="error" text={currentUser.data.errorMessage} />
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
