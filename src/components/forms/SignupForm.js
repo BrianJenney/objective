@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography } from '@material-ui/core';
+
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
 import { Formik, Field, Form } from 'formik';
 import { object, string, boolean } from 'yup';
+
 import { CheckboxField, InputField } from '../form-fields';
 import { Button, NavLink } from '../common';
+import { withCurrentUser } from '../../hoc';
+import { AlertPanel } from '../common';
 
 const INITIAL_VALUES = {
   firstName: '',
@@ -17,13 +27,17 @@ const INITIAL_VALUES = {
 const schema = object().shape({
   firstName: string().required('First name is required'),
   lastName: string().required('Last name is required'),
-  email: string().required('Email is required'),
-  password: string().required('Password is required'),
+  email: string().email('Invalid email').required('Email is required'),
+  password: string().min(8).required('Password is required'),
   newsletter: boolean()
 });
 
-const SignupForm = ({ title, onSubmit }) => {
-  const renderForm = () => (
+const SignupForm = ({ title, onSubmit, currentUser }) => {
+  const [passwordVisible, setPasswordVisible ]= useState(false);
+  const togglePasswordVisibility = useCallback(() => setPasswordVisible(!passwordVisible),
+    [passwordVisible, setPasswordVisible]);
+
+  const renderForm = ({ isValid }) => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
@@ -46,7 +60,15 @@ const SignupForm = ({ title, onSubmit }) => {
             name="password"
             label="Password"
             component={InputField}
-            type="password"
+            type={passwordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility}>
+                    {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ) }}
             autoComplete="current-password"
           />
         </Grid>
@@ -58,8 +80,10 @@ const SignupForm = ({ title, onSubmit }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth type="submit" children="Create account" />
+          <Button fullWidth type="submit" children="Create account" disabled={!isValid}/>
         </Grid>
+        <AlertPanel type="error" text={currentUser.error} />
+
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -92,7 +116,8 @@ const SignupForm = ({ title, onSubmit }) => {
 
 SignupForm.propTypes = {
   title: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
-export default SignupForm;
+export default withCurrentUser(SignupForm);

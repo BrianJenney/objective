@@ -1,16 +1,17 @@
 import React, { useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Badge from '@material-ui/core/Badge/Badge';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { AlertPanel } from '../../components/common';
-import { Link } from 'react-router-dom';
 import { calculateCartTotal } from './CartFunctions';
-import { requestFetchCart, requestPatchCart, setCartDrawerOpened } from '../../modules/cart/actions';
-import store from '../../store';
+import {
+  requestPatchCart,
+  setCartDrawerOpened
+} from '../../modules/cart/actions';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -36,16 +37,16 @@ import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag'
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 
-const Cart = ({ history }) => {
+const Cart = ({ history, showCheckoutProceedLink }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const cartCount = cart.items.length;
 
-  const applyCoupon = useCallback((e) => {
+  const applyCoupon = useCallback(e => {
     console.log('Logic to apply coupon goes here');
   }, []);
 
-  const removeFromCart = (e) => {
+  const removeFromCart = e => {
     const newItems = [...cart.items];
     newItems.splice(e.currentTarget.value, 1);
 
@@ -56,7 +57,7 @@ const Cart = ({ history }) => {
     };
 
     dispatch(requestPatchCart(cart._id, patches));
-  }
+  };
 
   const adjustQty = (e, amt) => {
     const newItems = [...cart.items];
@@ -69,11 +70,19 @@ const Cart = ({ history }) => {
     };
 
     dispatch(requestPatchCart(cart._id, patches));
-  }
+  };
 
-  const handleLogo = useCallback(() => {
+  const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     history.push('/gallery');
+  }, [dispatch, history]);
+
+  const onClickProduct = useCallback(() => {
+    const newItems = [...cart.items];
+    dispatch(setCartDrawerOpened(false));
+    newItems.map(item => (
+      history.push(`/products/${item.prodSlug}/${item.varSlug}`)
+    ))
   }, [dispatch, history]);
 
   const handleCheckout = useCallback(() => {
@@ -96,9 +105,13 @@ const Cart = ({ history }) => {
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
     >
       <StyledLogoContainer>
-        <StyledLogo onClick={handleLogo}>LOGO</StyledLogo>
+        <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
         <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
-          <Badge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
+          <Badge
+            invisible={cartCount < 1}
+            badgeContent={cartCount}
+            color="secondary"
+          >
             <ShoppingBag />
           </Badge>
         </StyledShoppingBag>
@@ -111,13 +124,18 @@ const Cart = ({ history }) => {
             <StyledCartCount component="span">
               {' '}
               ({cart.items.length} Items)
-              </StyledCartCount>
+            </StyledCartCount>
           </Grid>
-          <Grid container direction="row" alignItems="flex-end">
-            <StyledSmallCaps component="span" onClick={handleCheckout}>
-              proceed to checkout <StyledArrowIcon><RightArrow /></StyledArrowIcon>
-            </StyledSmallCaps>
-          </Grid>
+          {showCheckoutProceedLink && (
+            <Grid container direction="row" alignItems="flex-end">
+              <StyledSmallCaps component="span" onClick={handleCheckout}>
+                proceed to checkout{' '}
+                <StyledArrowIcon>
+                  <RightArrow />
+                </StyledArrowIcon>
+              </StyledSmallCaps>
+            </Grid>
+          )}
         </StyledHeaderWrapper>
       </div>
       <Grid container xs={12}>
@@ -125,10 +143,10 @@ const Cart = ({ history }) => {
           <StyledGridEmptyCart item xs={12}>
             <StyledSmallCaps component="span">
               Your cart is empty
-              </StyledSmallCaps>
+            </StyledSmallCaps>
           </StyledGridEmptyCart>
         ) : (
-            Object.values(cart.items).map((item, index) => (
+          Object.values(cart.items).map((item, index) => (
               <>
                 <StyledDrawerGrid container xs={12} direction="row">
                   <Grid
@@ -141,6 +159,7 @@ const Cart = ({ history }) => {
                         style={{ height: 126, width: 126 }}
                         image={item.variant_img}
                         title={item.variant_name}
+                        onClick={onClickProduct}
                       />
                     </Card>
                   </Grid>
@@ -153,14 +172,9 @@ const Cart = ({ history }) => {
                         'justify-content': 'space-between'
                       }}
                     >
-                      <Link
-                        to={`product/${item.product_id}`}
-                        style={{ 'text-decoration': 'none' }}
-                      >
-                        <StyledProductLink align="left">
-                          {item.variant_name}
-                        </StyledProductLink>
-                      </Link>
+                      <StyledProductLink align="left" onClick={onClickProduct}>
+                        {item.variant_name}
+                      </StyledProductLink>
                       <Grid item style={{ padding: '0' }}>
                         <StyledCardActions>
                           <StyledCounterButton
@@ -210,8 +224,8 @@ const Cart = ({ history }) => {
                 </StyledDrawerGrid>
               </>
             ))
-          )}
-        <Grid item xs={12} style={{ 'text-align': 'left' }} >
+        )}
+        <Grid item xs={12} style={{ 'text-align': 'left' }}>
           <StyledTotalWrapper
             container
             direction="row"
@@ -221,7 +235,7 @@ const Cart = ({ history }) => {
             <Grid item xs={6}>
               <StyledSmallCaps style={{ 'font-size': '14px' }}>
                 Subtotal Total:
-                </StyledSmallCaps>
+              </StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledSmallCaps style={{ 'font-size': '18px' }}>
@@ -239,23 +253,23 @@ const Cart = ({ history }) => {
             <Grid item xs={6}>
               <StyledSmallCaps style={{ 'font-size': '14px' }}>
                 Shipping
-                </StyledSmallCaps>
+              </StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledSmallCaps style={{ 'font-size': '18px' }}>
                 $XXX.xx
-                </StyledSmallCaps>
+              </StyledSmallCaps>
             </Grid>
             <StyledFinePrint component="p">
               Ground 3-5 Business Days
-              </StyledFinePrint>
+            </StyledFinePrint>
           </Grid>
 
           <Grid container direction="row" xs={12} justify="space-between">
             <Grid item xs={12}>
               <StyledSmallCaps style={{ 'font-size': '14px' }}>
                 Promo Code
-                </StyledSmallCaps>
+              </StyledSmallCaps>
             </Grid>
             <Grid container xs={12} style={{ 'align-items': 'flex-end' }}>
               <Grid item xs={8}>
@@ -272,7 +286,7 @@ const Cart = ({ history }) => {
                 >
                   <Link to="" style={{ color: BLACK }}>
                     Apply
-                    </Link>
+                  </Link>
                 </StyledSmallCaps>
               </Grid>
             </Grid>
@@ -303,22 +317,22 @@ const Cart = ({ history }) => {
             <Grid item xs={12}>
               <StyledFinePrint component="div">
                 Tax is calculated at checkout
-                </StyledFinePrint>
+              </StyledFinePrint>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid >
+    </Grid>
   );
-}
+};
 
-const mapStateToProps = state => ({
-  cart: state.cart
-});
+Cart.propTypes = {
+  history: PropTypes.object.isRequired,
+  showCheckoutProceedLink: PropTypes.bool
+};
 
-const mapDispatchToProps = {
-  requestFetchCart,
-  setCartDrawerOpened,
+Cart.defaultProps = {
+  showCheckoutProceedLink: false
 };
 
 export default withRouter(Cart);

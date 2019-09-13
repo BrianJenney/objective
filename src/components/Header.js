@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Grid, Box, Link } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, withRouter, matchPath } from 'react-router-dom';
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
@@ -34,7 +37,7 @@ const StyledBox = withStyles(() => ({
   }
 }))(Box);
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, location }) => {
   const { account_jwt } = currentUser.data;
   const accountMenuItemConf = account_jwt
     ? { key: 'third', to: '/account', children: <LoggedInUser /> }
@@ -60,6 +63,7 @@ const Header = ({ currentUser }) => {
 
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
 
   return (
     <Grid container xs={12} className="headerContainer">
@@ -75,7 +79,7 @@ const Header = ({ currentUser }) => {
                 <NavLink to="/">OBJ</NavLink>
               </Grid>
               <Grid item xs={1}>
-                <ShoppingCart />
+                {!isCheckoutPage && <ShoppingCart />}
               </Grid>
             </Grid>
             <Grid container xs={12} className="headerBar">
@@ -119,7 +123,7 @@ const Header = ({ currentUser }) => {
                 <StyledLink component={RouterLink} {...accountMenuItemConf} />
               </Grid>
               <Grid item xs={1}>
-                <ShoppingCart />
+                {!isCheckoutPage && <ShoppingCart />}
               </Grid>
             </Grid>
           </>
@@ -130,7 +134,13 @@ const Header = ({ currentUser }) => {
 };
 
 Header.propTypes = {
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
-export default withCurrentUser(Header);
+const enhance = compose(
+  withCurrentUser,
+  withRouter
+);
+
+export default enhance(Header);

@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import ProductContext from '../../contexts/ProductContext';
-import './cards-styles.css'
+import './cards-styles.css';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -31,7 +31,7 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 };
 
 function a11yProps(index) {
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   indicator: {
     display: 'block',
     borderBottom: '1px solid #ffffff',
-    backgroundColor: '#fdf8f2',
+    backgroundColor: '#fdf8f2'
   },
   tabs: {
     borderLeft: '2px solid #003833',
@@ -54,15 +54,15 @@ const useStyles = makeStyles(theme => ({
     padding: '30px 0',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
-    "&:hover": {
+    '&:hover': {
       backgroundColor: '#ffffff',
-      color: '#000000',
-    },
+      color: '#000000'
+    }
   },
   wrapper: {
     marginTop: '50px',
     border: '2px solid #003833'
-  },
+  }
 }));
 
 export default function PdpTabs(props) {
@@ -91,8 +91,19 @@ export default function PdpTabs(props) {
                 textColor="primary"
                 classes={{ indicator: classes.indicator }}
               >
-                <Tab variant="smallHeader" label="How it works" {...a11yProps(0)} className={classes.tabs} style={{ borderLeft: 'none' }} />
-                <Tab variant="smallHeader" label="Information" {...a11yProps(1)} className={classes.tabs} />
+                <Tab
+                  variant="smallHeader"
+                  label="How it works"
+                  {...a11yProps(0)}
+                  className={classes.tabs}
+                  style={{ borderLeft: 'none' }}
+                />
+                <Tab
+                  variant="smallHeader"
+                  label="Information"
+                  {...a11yProps(1)}
+                  className={classes.tabs}
+                />
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0} dir={theme.direction}>

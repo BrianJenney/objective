@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'lodash';
+import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+const styles = {
+  root: {
+    alignItems: 'stretch',
+    padding: 0
+  },
+  content: {
+    margin: 0,
+    flexDirection: 'column'
+  },
+  expandIcon: {
+    position: 'absolute',
+    top: 0,
+    right: 100,
+    padding: 0
+  }
+};
+const ExpansionPanelSummary = withStyles(styles)(MuiExpansionPanelSummary);
 
 const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
   const [expandedInternal, setExpandedInternal] = useState(false);
@@ -25,7 +44,7 @@ const Panel = ({ title, expanded, collapsible, children, ...rest }) => {
         {...rest}
       >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h2" children={title} />
+          {title}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Box width={1} children={children} />

@@ -1,16 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-
-import { CardActions, Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import CardActions from '@material-ui/core/CardActions';
 import { useQuantity, useWindowSize } from '../../hooks';
-import { useSnackbar } from 'notistack';
 import { addToCart } from '../../utils/cart';
-import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+import { Button, ATCSnackbarAction } from '../../components/common';
 import '../../assets/styles/_variables.scss';
 
 const localStorageClient = require('store');

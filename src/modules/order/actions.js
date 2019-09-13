@@ -15,10 +15,12 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   getState
 ) => {
   // The account JWT needs to be passed in as its own argument
-  const account_jwt = { account_jwt: cart.account_jwt}
+  const account_jwt = cart.account_jwt;
+  delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
   const params = {
-    data: { ...account_jwt, cart, nonceOrToken }
+    data: { cart },
+    params: { account_jwt, nonceOrToken }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
@@ -26,7 +28,8 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     '/exchange/order/order.request.create',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      jwt: account_jwt
     },
     payload
   );

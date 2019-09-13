@@ -6,13 +6,39 @@ import { useSnackbar } from 'notistack';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
-import { ShippingMethodForm, CheckoutReviewForm } from '../forms';
+import { CheckoutReviewForm } from '../forms';
+import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
-import { STEPS, STEP_KEYS, DATA_KEYS, shippingMethods } from './constants';
+import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from './helpers';
+
+const getPanelTitleContent = (step, activeStep, payload = {}) => {
+  const isActiveStep = step === activeStep;
+  const stepTitle = STEPS[step];
+  const payloadValues = Object.values(payload);
+  const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
+  const titleView = (
+    <Box width={1} color="#4a4a4a" bgcolor={titleViewBgcolor} display="flex" alignItems="center" style={{ fontSize: 18, textTransform: 'uppercase' }}>
+      <Box mr={1} component={Typography} children={`STEP ${step + 1}`} />
+      <Box component={Typography} children={stepTitle} style={{ fontWeight: 600 }} />
+    </Box>
+  );
+  const payloadView = isActiveStep ? null : (<Box width={1} color="#231f20" style={{ fontSize: 20 }}>{
+      payloadValues.map((value, index) => (
+        <Typography key={`value_${index}`} children={value} />
+      ))
+    }</Box>);
+  return (
+    <>
+      {titleView}
+      {payloadView}
+    </>
+  );
+};
 
 const Checkout = ({
   history,
@@ -23,16 +49,10 @@ const Checkout = ({
   requestPatchAccount,
   requestCreateOrder
 }) => {
-  const [payload, setPayload] = useState({});
+  const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
   const { enqueueSnackbar } = useSnackbar();
   const { account_jwt } = currentUser.data;
-
-  const handleShippingMethodStep = values => {
-    setPayload({ shippingMethod: shippingMethods[values.shippingMethod] });
-
-    return true;
-  };
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -44,7 +64,7 @@ const Checkout = ({
       return false;
     }
 
-    if (!values || activeStep < 4) {
+    if (!values || activeStep < 3) {
       setPayload({ ...payload, [key]: selectedEntity });
     } else {
       // card fly mode
@@ -94,6 +114,7 @@ const Checkout = ({
 
     setPayload({});
     history.push('/order');
+
     return true;
   };
 
@@ -101,11 +122,9 @@ const Checkout = ({
   const handleNext = async values => {
     let result = null;
 
-    if (activeStep === 1) {
-      result = handleShippingMethodStep(values);
-    } else if (activeStep > 1 && activeStep <= 4) {
+    if (activeStep <= 3) {
       result = await handleAddressesAndCardSteps(values);
-    } else if (activeStep === 5) {
+    } else if (activeStep === 4) {
       handleReviewStep();
       return true;
     }
@@ -120,58 +139,58 @@ const Checkout = ({
     <Container>
       <Box>
         <CssBaseline />
-        <Panel title={STEPS[0]} collapsible expanded={activeStep === 0}>
-          <CheckoutAuth
-            currentUser={currentUser}
-            requestCreateAccount={requestCreateAccount}
-            requestLoginAttempt={requestLoginAttempt}
-            handleNext={() => {
-              if (activeStep === 0) {
-                setActiveStep(1);
-              }
-            }}
-          />
-        </Panel>
-        <Panel title={STEPS[1]} collapsible expanded={activeStep === 1}>
-          <ShippingMethodForm title="Shipping Method" onSubmit={handleNext} />
-        </Panel>
-        <Panel title={STEPS[2]} collapsible expanded={activeStep === 2}>
-          <AccountAddresses
-            currentUser={currentUser}
-            requestPatchAccount={requestPatchAccount}
-            onBack={handleBack}
-            onSubmit={handleNext}
-            allowFlyMode
-          />
-        </Panel>
-        <Panel title={STEPS[3]} collapsible expanded={activeStep === 3}>
-          <AccountAddresses
-            currentUser={currentUser}
-            requestPatchAccount={requestPatchAccount}
-            onBack={handleBack}
-            onSubmit={handleNext}
-            allowFlyMode
-            seedEnabled
-            addressSeed={payload.shippingAddress}
-            useSeedLabel="Use Shipping Address"
-          />
-        </Panel>
-        <Panel title={STEPS[4]} collapsible expanded={activeStep === 4}>
-          <AccountPaymentDetails
-            currentUser={currentUser}
-            requestPatchAccount={requestPatchAccount}
-            onBack={handleBack}
-            onSubmit={handleNext}
-            allowFlyMode
-          />
-        </Panel>
-        <Panel title={STEPS[5]} collapsible expanded={activeStep === 5}>
-          <CheckoutReviewForm
-            summary={{ ...cart, ...payload }}
-            onBack={handleBack}
-            onSubmit={handleNext}
-          />
-        </Panel>
+        <Box display="flex">
+          <Box flex={1}>
+            <Panel title={getPanelTitleContent(0, activeStep, {})} collapsible expanded={activeStep === 0}>
+              <CheckoutAuth
+                currentUser={currentUser}
+                requestCreateAccount={requestCreateAccount}
+                requestLoginAttempt={requestLoginAttempt}
+                handleNext={() => {
+                  if (activeStep === 0) {
+                    setActiveStep(1);
+                  }
+                }}
+              />
+            </Panel>
+            <Panel title={getPanelTitleContent(1, activeStep, payload.shippingAddress)} collapsible expanded={activeStep === 1}>
+              <AccountAddresses
+                currentUser={currentUser}
+                requestPatchAccount={requestPatchAccount}
+                onBack={handleBack}
+                onSubmit={handleNext}
+                allowFlyMode
+              />
+            </Panel>
+            <Panel title={getPanelTitleContent(2, activeStep, payload.billingAddress)} collapsible expanded={activeStep === 2}>
+              <AccountAddresses
+                currentUser={currentUser}
+                requestPatchAccount={requestPatchAccount}
+                onBack={handleBack}
+                onSubmit={handleNext}
+                allowFlyMode
+                seedEnabled
+                addressSeed={payload.shippingAddress}
+                useSeedLabel="Use Shipping Address"
+              />
+            </Panel>
+            <Panel title={getPanelTitleContent(3, activeStep, payload.paymentDetails)} collapsible expanded={activeStep === 3}>
+              <AccountPaymentDetails
+                currentUser={currentUser}
+                requestPatchAccount={requestPatchAccount}
+                onBack={handleBack}
+                onSubmit={handleNext}
+                allowFlyMode
+              />
+            </Panel>
+            <Panel title={getPanelTitleContent(4, activeStep, {})} collapsible expanded={activeStep === 4}>
+              <CheckoutReviewForm onSubmit={handleNext} />
+            </Panel>
+          </Box>
+          <Box ml={3} width={415}>
+            <CartDrawer />
+          </Box>
+        </Box>
       </Box>
     </Container>
   );

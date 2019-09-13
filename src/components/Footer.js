@@ -1,7 +1,11 @@
 import React from 'react';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Box, Grid, List, ListItem, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button, NavLink } from './common';
@@ -11,7 +15,6 @@ import './Footer-style.scss';
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
-const ptIcon = require('../../src/assets/images/pinterest.png');
 
 const schema = object().shape({
   email: string()
@@ -73,7 +76,7 @@ const Footer = () => {
             <div className="footer-main-holder">
               <Grid container className="footer-main" xs={12}>
                 <Grid item xs={6} className="border-bottom row1">
-                  <StyledBox>TH Logo</StyledBox>
+                  <StyledBox>OBJ Logo</StyledBox>
                 </Grid>
                 <Grid item xs={6} className="border-bottom border-left row1">
                   <StyledBox>
@@ -117,7 +120,9 @@ const Footer = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="border-bottom signup-box p-20">
-                  Sign up for tips and new prouct launches.<br></br>
+                  <span className="opac">
+                    Sign up for tips and new product launches.
+                  </span>
                   <Formik
                     initialValues={{ email: '' }}
                     onSubmit={() => null}
@@ -131,23 +136,22 @@ const Footer = () => {
                           component={InputField}
                         />
                         <Button type="submit">
-                          <img src={arrowImage} className="arrow" alt="arrow" />
+                          <img
+                            src={arrowImage}
+                            className="mobile-arrow"
+                            alt="arrow"
+                          />
                         </Button>
                       </Form>
                     )}
                   />
                 </Grid>
-                <Grid item xs={4} className="border-bottom icon">
+                <Grid item xs={6} className="border-bottom icon">
                   <NavLink href="http://www.instagram.com">
                     <img src={igIcon} alt="instagram" />
                   </NavLink>
                 </Grid>
-                <Grid item xs={4} className="border-bottom border-left icon">
-                  <NavLink href="http://www.pinterest.com">
-                    <img src={ptIcon} alt="pinterest" />
-                  </NavLink>
-                </Grid>
-                <Grid item xs={4} className="border-bottom border-left icon">
+                <Grid item xs={6} className="border-bottom border-left icon">
                   <NavLink href="https://www.facebook.com">
                     <img src={fbIcon} alt="facebook" />
                   </NavLink>
@@ -155,7 +159,7 @@ const Footer = () => {
                 <Grid container xs={12} className="legal">
                   <StyledList>
                     <ListItem className="text-center">
-                      TrueHealth &bull; All rights reserved
+                      Objective Wellness &bull; All rights reserved
                     </ListItem>
                   </StyledList>
                 </Grid>
@@ -244,8 +248,10 @@ const Footer = () => {
                     <div className="rotate">Copyright 2019</div>
                   </StyledBox>
                 </Grid>
-                <Grid item xs={8} className="border-bottom signup-box">
-                  Sign up for tips and new prouct launches.<br></br>
+                <Grid item xs={9} className="border-bottom signup-box">
+                  <span className="opac">
+                    Sign up for tips and new product launches.
+                  </span>
                   <Formik
                     initialValues={{ email: '' }}
                     onSubmit={() => null}
@@ -274,19 +280,16 @@ const Footer = () => {
                     <img src={igIcon} alt="instagram" />
                   </NavLink>
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom icon ">
-                  <NavLink href="">
-                    <img src={ptIcon} alt="pinterest" />
-                  </NavLink>
-                </Grid>
                 <Grid item xs={1} className="border-left border-bottom icon">
                   <NavLink href="https://www.facebook.com/">
                     <img src={fbIcon} alt="facebook" />
                   </NavLink>
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom">
-                  &nbsp;
-                </Grid>
+                <Grid
+                  item
+                  xs={1}
+                  className="border-left border-bottom icon "
+                ></Grid>
                 <Grid container xs={12} className="legal">
                   <StyledList>
                     <ListItem>

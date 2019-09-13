@@ -1,16 +1,12 @@
-import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { Box, withStyles } from '@material-ui/core';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
-import CartDrawer from './CartDrawer';
 import Badge from '@material-ui/core/Badge/Badge';
-
+import CartDrawer from './CartDrawer';
 import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
-import {
-  StyledCartCloseIcon
-} from './StyledComponents';
+import { StyledCartCloseIcon } from './StyledComponents';
 
 const StyledBadge = withStyles(theme => ({
   badge: {
@@ -18,9 +14,11 @@ const StyledBadge = withStyles(theme => ({
     right: -3,
     // The border color match the background color.
     border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-      }`,
-  },
+      theme.palette.type === 'light'
+        ? theme.palette.grey[200]
+        : theme.palette.grey[900]
+    }`
+  }
 }))(Badge);
 
 const ShoppingCart = () => {
@@ -29,22 +27,26 @@ const ShoppingCart = () => {
   return (
     <TemporaryCartDrawer
       toggleContent={
-        <StyledBadge invisible={cartCount < 1} badgeContent={cartCount} color="secondary">
+        <StyledBadge
+          invisible={cartCount < 1}
+          badgeContent={cartCount}
+          color="secondary"
+        >
           <ShoppingBag />
         </StyledBadge>
       }
       closer={
-        <StyledCartCloseIcon position="absolute"
+        <StyledCartCloseIcon
+          position="absolute"
           left={1}
-          top={30} children={<CloseIcon />} />
+          top={30}
+          children={<CloseIcon />}
+        />
       }
-      listContent={<CartDrawer />}
+      listContent={<CartDrawer showCheckoutProceedLink />}
       side="right"
     />
   );
 };
 
 export default ShoppingCart;
-
-
-

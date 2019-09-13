@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Redirect } from 'react-router-dom';
-import { Grid, Box, Paper } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
 import {fonts} from '../../components/Theme/fonts';
