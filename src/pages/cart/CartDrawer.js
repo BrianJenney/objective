@@ -159,6 +159,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                         style={{ height: 126, width: 126 }}
                         image={item.variant_img}
                         title={item.variant_name}
+                        onClick={onClickProduct}
                       />
                     </Card>
                   </Grid> */}
