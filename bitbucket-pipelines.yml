@@ -31,7 +31,7 @@ pipelines:
             # build the image
             - export AWS_REGISTRY_URL=${AWS_REGISTRY_URL}/${BITBUCKET_REPO_SLUG}
             - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-            - docker image build -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
+            - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
             - rm -rf build_env
             # push to repo
             - docker push ${AWS_REGISTRY_URL}:latest
