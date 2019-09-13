@@ -35,34 +35,9 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     padding: theme.spacing(3, 0, 2)
   },
-<<<<<<< HEAD
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  },
-  title: {
-    width: theme.spacing(55),
-    textAlign: 'center',
-    fontSize: '32px'
-  },
-  subTitle: {
-    width: theme.spacing(70),
-    textAlign: 'center',
-    paddingTop: '10px'
-=======
   subTitle: {
     fontSize: '17px',
     paddingBottom: theme.spacing(3)
->>>>>>> master
   }
 }));
 
@@ -96,13 +71,6 @@ const ForgotPassword = () => {
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
-<<<<<<< HEAD
-      <div className={classes.paper}>
-        <Typography className={classes.title} component="h1" variant="h5">
-          Forgot your email / password?
-        </Typography>
-        <Typography component='subtitle1' className={classes.subTitle}>It's easy to forget. Enter your email address and we'll send you a reset link.</Typography>
-=======
       <Box component={Paper} pb={5} textAlign="center">
         <Typography className={classes.title}>
           Forgot your email / password?
@@ -112,7 +80,6 @@ const ForgotPassword = () => {
           reset link.
         </Typography>
 
->>>>>>> master
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}

@@ -4,6 +4,7 @@ import { Switch, Redirect } from 'react-router-dom';
 import { Grid, Box, Paper } from '@material-ui/core';
 import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
+import {fonts} from '../../components/Theme/fonts';
 
 export { default as AccountOverviewPage } from './Overview';
 export { default as AccountOrdersPage } from './Orders';
@@ -17,7 +18,7 @@ const Account = ({ routes }) => (
   >
     <Grid container spacing={3}>
       <Grid item xs={12} sm={3}>
-        <Box borderColor="#979797" borderRight={1} height={1}>
+        <Box borderColor="#979797" borderRight={1} height={1} fontFamily={fonts.smallHeader}>
           <AccountMenu />
         </Box>
       </Grid>

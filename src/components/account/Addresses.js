@@ -80,35 +80,10 @@ const AccountAddresses = ({
         component={Typography}
         mx={1}
         variant="h5"
-        children="Saved Addresses"
+        children="Saved Addrses"
         gutterBottom
       />
       <Grid container>
-<<<<<<< HEAD
-        {addressBook.map((addressEntity, index) => (
-          <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-            <Box border="1px solid #979797" m={2} p={4}>
-              <EditablePanel
-                title=""
-                defaultValues={addressEntity}
-                onSubmit={(...args) => saveAddress(...args, index)}
-                Form={AddressForm}
-                Summary={AddressSummary}
-                onRemove={
-                  addressEntity.isDefault
-                    ? undefined
-                    : () => deleteAddress(index)
-                }
-                onSetDefault={
-                  addressEntity.isDefault
-                    ? undefined
-                    : () => setDefaultAddress(index)
-                }
-              />
-            </Box>
-          </Grid>
-        ))}
-=======
         {addressBook.map((addressEntity, index) => {
           const borderStyle = addressEntity.isDefault
             ? '2px solid #000'
@@ -137,7 +112,6 @@ const AccountAddresses = ({
             </Grid>
           );
         })}
->>>>>>> master
       </Grid>
       <Box mx={1} my={2}>
         {isEmpty(addressBook) && (

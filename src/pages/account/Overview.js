@@ -45,10 +45,9 @@ const AccountOverview = props => {
   return (
     <Container style={pStyle}>
       <Grid item xs={12}>
-<<<<<<< HEAD
         <Paper align="left">
           <Typography className={classes.title} variant="h1" gutterBottom>
-            Welcome, {currentUser.firstName} {currentUser.lastName}!
+            Welcome, {currentUser.data.firstName} {currentUser.data.lastName}!
           </Typography>
 
           <div className={classes.inline}>
@@ -56,27 +55,19 @@ const AccountOverview = props => {
               NAME
             </Typography>
             <span className={classes.subTexts}>
-              {currentUser.firstName} {currentUser.lastName}
+              {currentUser.data.firstName} {currentUser.data.lastName}
             </span>
           </div>
           <div className={classes.inline}>
             <Typography className={classes.info} variant="h3" gutterBottom>
               EMAIL
             </Typography>
-            <span className={classes.subTexts}>{currentUser.email}</span>
+            <span className={classes.subTexts}>{currentUser.data.email}</span>
           </div>
           <div className={classes.inline}>
           <Typography className={classes.info} variant="h3" gutterBottom>
             PASSWORD
-=======
-        <Paper style={pStyle}>
-          <Typography variant="h3" gutterBottom>
-            Name {currentUser.data.firstName} {currentUser.data.lastName}
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Email: {currentUser.data.email}
->>>>>>> master
-          </Typography>
+            </Typography>
           <span className={classes.subTexts}>******</span>
           <a href='' style={change}>CHANGE</a>
 
