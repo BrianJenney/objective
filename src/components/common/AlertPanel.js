@@ -19,14 +19,7 @@ const AlertPanel = ({ type, text, variant, ...rest }) => {
   const color = COLOR_MAP[type];
 
   return (
-    <Box
-      // p={2}
-      // display="flex"
-      color={color}
-      alignItems="center"
-      width={1}
-      {...rest}
-    >
+    <Box color={color} alignItems="center" width={1} {...rest}>
       <Typography variant={variant} children={text} />
     </Box>
   );
@@ -34,7 +27,8 @@ const AlertPanel = ({ type, text, variant, ...rest }) => {
 
 AlertPanel.propTypes = {
   type: PropTypes.oneOf(Object.values(ALERT_TYPES)),
-  text: PropTypes.string
+  text: PropTypes.string,
+  variant: PropTypes.string
 };
 
 AlertPanel.defaultProps = {
