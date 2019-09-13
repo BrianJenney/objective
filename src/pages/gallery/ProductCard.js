@@ -1,25 +1,23 @@
 import React from 'react';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+
+const skinImg = require('../../../src/assets/images/skin-cat.png');
+const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
 
 const ProductCard = ({ product }) => {
   return (
-    <Card className="category-info-blurb">
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          {product.name}
-        </Typography>
+    <Grid container className="gallery-content-blurb">
+      <Grid item item xs={12} md={5} className="leftside">
+        <h3>Skin & Beauty</h3>
+        <img src={skinIcon} alt="" className="blurb-icon" />
         <Divider variant="fullWidth" />
-        <Typography variant="body2" gutterBottom>
-          {product.description}
-        </Typography>
-      </CardContent>
-      <CardMedia image={product.assets.img_front} title={product.name} />
-    </Card>
+        <p>{product.description}</p>
+      </Grid>
+      <Grid item item xs={12} md={7}>
+        <img src={skinImg} alt="" className="blurb-img" />
+      </Grid>
+    </Grid>
   );
 };
 

@@ -10,10 +10,12 @@ RUN npm run build
 
 # Stage 2, based on Nginx, to have only the compiled app,
 FROM nginx:1.16.0-alpine
+ARG GIT_COMMIT=n/a
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
 
 # Copy the default nginx.conf provided by tiangolo/node-frontend
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 

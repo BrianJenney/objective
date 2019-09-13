@@ -1,6 +1,10 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -25,21 +29,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const ResetSuccess = () => {
   const classes = useStyles();
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography variant="h5">
-          Your password is reset
-        </Typography>
-      </div>
-      <Typography variant="body1">
-        Your password is succesfully reset.
-        </Typography>
-    </Container>
+    <Box className="password-styles">
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className="paper">
+              <h1>Your password has been reset</h1>
+              <p>Click below to return to the account login page</p>
+              <Link to="/login">
+                <Button>Log in to your account</Button>
+              </Link>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

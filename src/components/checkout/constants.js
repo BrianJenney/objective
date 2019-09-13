@@ -1,20 +1,17 @@
 export const STEPS = [
   'Account',
   'Shipping Address',
-  'Billing Address',
-  'Payment Details',
+  'Payment & Billing Address',
   'Review & Order'
 ];
 export const STEP_KEYS = [
   'account',
   'shippingAddress',
-  'billingAddress',
   'paymentDetails',
   'reviewAndOrder'
 ];
 export const DATA_KEYS = [
   'account',
-  'addressBook',
   'addressBook',
   'paymentMethods',
   'reviewAndOrder'
