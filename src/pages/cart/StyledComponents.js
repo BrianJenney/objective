@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
+import Badge from '@material-ui/core/Badge/Badge';
 import { colorPalette } from '../../components/Theme/color-palette';
 import { fonts, sizes, lineHeight } from '../../components/Theme/fonts';
 
@@ -214,3 +215,16 @@ export const StyledShoppingBag = withStyles(theme => ({
     right: 35
   }
 }))(Box);
+
+export const StyledBadge = withStyles(theme => ({
+  badge: {
+    top: '30%',
+    right: -3,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light'
+        ? theme.palette.grey[200]
+        : theme.palette.grey[900]
+      }`
+  }
+}))(Badge);
