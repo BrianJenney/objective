@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
+import {fonts} from '../../components/Theme/fonts';
 
 export { default as AccountOverviewPage } from './Overview';
 export { default as AccountOrdersPage } from './Orders';
@@ -14,10 +15,12 @@ export { default as AccountPaymentDetailsPage } from './PaymentDetails';
 export { default as AccountProfilePage } from './Profile';
 
 const Account = ({ routes }) => (
-  <Box component={Paper} py={7}>
+  <Box component={Paper} py={7}
+  // bgcolor="rgba(252, 248, 244, 0.5)"
+  >
     <Grid container spacing={3}>
       <Grid item xs={12} sm={3}>
-        <Box borderColor="#979797" borderRight={1} height={1}>
+        <Box borderColor="#979797" borderRight={1} height={1} fontFamily={fonts.smallHeader}>
           <AccountMenu />
         </Box>
       </Grid>

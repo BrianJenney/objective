@@ -13,8 +13,7 @@ import store from '../../store';
 import { InputField } from '../form-fields';
 
 const pStyle = {
-  padding: 20,
-  textAlign: 'center'
+  padding: 20
 };
 const schema = object().shape({
   firstName: string(),
@@ -28,7 +27,7 @@ class ProfileDetails extends React.Component {
       <Form>
         <Grid container>
           <Grid item xs={6}>
-            <Field label="First Name" name="firstName" component={InputField} />
+            <Field margin='20px' label="First Name" name="firstName" component={InputField} />
           </Grid>
           <Grid item xs={6}>
             <Field label="Last Name" name="lastName" component={InputField} />
@@ -66,9 +65,12 @@ class ProfileDetails extends React.Component {
     }
 
     return (
-      <Container>
-        <Typography variant="h3" gutterBottom>
+      <Container align='left'>
+        <Typography variant="h1" gutterBottom>
           Your Profile
+        </Typography>
+        <Typography variant="h3" gutterBottom>
+          NAME {'&'} EMAIL
         </Typography>
 
         <Grid container spacing={3}>

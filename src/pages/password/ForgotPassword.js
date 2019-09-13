@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ForgotPassword = () => {
+  console.log('here forgot password');
   const classes = useStyles();
 
   const handleSubmit = ({ email }) => {

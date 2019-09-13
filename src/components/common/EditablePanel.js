@@ -25,11 +25,17 @@ const EditablePanel = ({
       throw err;
     }
   };
+  const handleCancel = () => setEditing(false);
 
   return (
     <Panel title={title}>
       {editing && Form ? (
-        <Form defaultValues={defaultValues} onSubmit={handleSave} {...rest} />
+        <Form
+          defaultValues={defaultValues}
+          onSubmit={handleSave}
+          onBack={handleCancel}
+          {...rest}
+        />
       ) : (
         <Summary values={defaultValues} {...rest}>
           <Box fontSize={16} display="flex" alignItems="center">

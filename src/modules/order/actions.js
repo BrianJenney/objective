@@ -1,8 +1,6 @@
 import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER,
-  REQUEST_FIND_ALL_ORDERS,
-  RECEIVED_FIND_ALL_ORDERS,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT
 } from './types';
@@ -46,29 +44,6 @@ export const receivedCreateOrder = order => {
   };
 };
 
-export const requestFindAllOrderIDs = accountJwt => (dispatch, getState) => {
-  const { client, replyTo } = getState().stomp;
-  const params = {
-    params: {
-      query: {
-        'cart.account_id': accountJwt
-      }
-    }
-  };
-  const payload = JSON.stringify(msgpack.encode(params));
-  client.send(
-    '/exchange/order/order.request.find',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    },
-    payload
-  );
-  dispatch({
-    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
-    payload: {}
-  });
-};
 
 export const requestFindOrdersByAccount = accountJwt => (
   dispatch,
@@ -78,9 +53,7 @@ export const requestFindOrdersByAccount = accountJwt => (
   const params = {
     params: {
       account_jwt: accountJwt,
-      query: {
-        account_id: accountJwt
-      }
+      query: {}
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));

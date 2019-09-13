@@ -31,7 +31,8 @@ import {
   StyledLogo,
   StyledLogoContainer,
   StyledArrowIcon,
-  StyledShoppingBag
+  StyledShoppingBag,
+  StyledBadge
 } from './StyledComponents';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 
@@ -40,7 +41,8 @@ const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 const Cart = ({ history, showCheckoutProceedLink }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const cartCount = cart.items.length;
+  //const cartCount = cart.items.length;
+  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const applyCoupon = useCallback(e => {
     console.log('Logic to apply coupon goes here');
@@ -107,13 +109,13 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       <StyledLogoContainer>
         <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
         <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
-          <Badge
+          <StyledBadge
             invisible={cartCount < 1}
             badgeContent={cartCount}
             color="secondary"
           >
             <ShoppingBag />
-          </Badge>
+          </StyledBadge>
         </StyledShoppingBag>
       </StyledLogoContainer>
 
@@ -126,16 +128,30 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               ({cart.items.length} Items)
             </StyledCartCount>
           </Grid>
-          {showCheckoutProceedLink && (
-            <Grid container direction="row" alignItems="flex-end">
-              <StyledSmallCaps component="span" onClick={handleCheckout}>
-                proceed to checkout{' '}
-                <StyledArrowIcon>
-                  <RightArrow />
-                </StyledArrowIcon>
-              </StyledSmallCaps>
-            </Grid>
-          )}
+          {cart.items.length !== 0
+            ? showCheckoutProceedLink && (
+                <Grid container direction="row" alignItems="flex-end">
+                  <StyledSmallCaps component="span" onClick={handleCheckout}>
+                    proceed to checkout{' '}
+                    <StyledArrowIcon>
+                      <RightArrow />
+                    </StyledArrowIcon>
+                  </StyledSmallCaps>
+                </Grid>
+              )
+            : showCheckoutProceedLink && (
+                <Grid container direction="row" alignItems="flex-end">
+                  <StyledSmallCaps
+                    component="span"
+                    onClick={e => e.preventDefault()}
+                  >
+                    proceed to checkout{' '}
+                    <StyledArrowIcon>
+                      <RightArrow />
+                    </StyledArrowIcon>
+                  </StyledSmallCaps>
+                </Grid>
+              )}
         </StyledHeaderWrapper>
       </div>
       <Grid container xs={12}>
@@ -149,20 +165,20 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
           Object.values(cart.items).map((item, index) => (
             <>
               <StyledDrawerGrid container xs={12} direction="row">
-                {/* <Grid
-                    item
-                    xs={4}
-                    style={{ 'min-width': '126px', 'margin-right': '18px' }}
-                  >
-                    <Card>
-                      <CardMedia
-                        style={{ height: 126, width: 126 }}
-                        image={item.variant_img}
-                        title={item.variant_name}
-                        onClick={onClickProduct}
-                      />
-                    </Card>
-                  </Grid> */}
+                <Grid
+                  item
+                  xs={4}
+                  style={{ 'min-width': '126px', 'margin-right': '18px' }}
+                >
+                  <Card>
+                    <CardMedia
+                      style={{ height: 126, width: 126 }}
+                      image={item.variant_img}
+                      title={item.variant_name}
+                      onClick={onClickProduct}
+                    />
+                  </Card>
+                </Grid>
                 <Grid item xs={7}>
                   <Card
                     style={{
@@ -175,7 +191,6 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                     <StyledProductLink align="left" onClick={onClickProduct}>
                       {item.variant_name}
                     </StyledProductLink>
-
                     <Grid item style={{ padding: '0' }}>
                       <StyledCardActions>
                         <StyledCounterButton
@@ -200,28 +215,26 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                         </StyledCounterButton>
                       </StyledCardActions>
                     </Grid>
-                    <Grid>
-                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
-                        <StyledFinePrint
-                          component="div"
-                          onClick={e => removeFromCart(e)}
-                          value={index}
+                    <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                      <StyledFinePrint
+                        component="div"
+                        onClick={e => removeFromCart(e)}
+                        value={index}
+                      >
+                        <Link
+                          style={{
+                            'text-transform': 'uppercase',
+                            color: LIGHT_GRAY
+                          }}
                         >
-                          <Link
-                            style={{
-                              'text-transform': 'uppercase',
-                              color: LIGHT_GRAY
-                            }}
-                          >
-                            Remove
-                          </Link>
-                        </StyledFinePrint>
-                        {/* <StyledSmallCaps>{item.unit_price.toFixed(2)}</StyledSmallCaps> */}
-                        <StyledSmallCaps>
-                          {(item.quantity * item.unit_price).toFixed(2)}
-                        </StyledSmallCaps>
-                      </StyledCardContent>
-                    </Grid>
+                          Remove
+                        </Link>
+                      </StyledFinePrint>
+                      {/* <StyledSmallCaps>{item.unit_price.toFixed(2)}</StyledSmallCaps> */}
+                      <StyledSmallCaps>
+                        {(item.quantity * item.unit_price).toFixed(2)}
+                      </StyledSmallCaps>
+                    </StyledCardContent>
                   </Card>
                 </Grid>
               </StyledDrawerGrid>
