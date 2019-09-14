@@ -10,6 +10,7 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
+import {fonts} from '../Theme/fonts';
 
 const AccountPaymentDetails = ({
   currentUser,
@@ -84,8 +85,8 @@ const AccountPaymentDetails = ({
   return (
     <Box {...rest}>
       <Box mx={1} color="#231f20">
-        <Typography variant="h5" children="Payment Details" gutterBottom />
-        <Typography variant="h6" children="Credit Cards" gutterBottom />
+        <Typography style={{fontFamily: fonts.header, fontSize: 48}} children="Payment Details" gutterBottom />
+        <Typography style={{fontFamily: fonts.smallHeader, fontSize: 18}} children="Credit Cards" gutterBottom />
       </Box>
       <Grid container>
         {creditCards.map((creditCardEntity, index) => {
@@ -117,7 +118,7 @@ const AccountPaymentDetails = ({
       </Grid>
       <Box mx={1} my={2}>
         {isEmpty(creditCards) && (
-          <AlertPanel type="info" text="No Saved Credit Cards." />
+          <AlertPanel type="info" text="No Saved Credit Cards."/>
         )}
         {addModeEnabled ? (
           <PaymentForm
@@ -134,7 +135,8 @@ const AccountPaymentDetails = ({
           <Box
             fontSize={16}
             fontWeight="bold"
-            style={{ textTransform: 'uppercase' }}
+            fontFamily={fonts.smallHeader}
+            style={{ textTransform: 'uppercase'}}
           >
             <MenuLink
               onClick={() => setAddModeEnabled(true)}

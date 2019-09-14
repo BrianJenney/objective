@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
+import {fonts} from '../Theme/fonts';
 
 const pStyle = {
   padding: 20
@@ -24,10 +25,10 @@ const schema = object().shape({
 class ProfileDetails extends React.Component {
   renderForm = () => {
     return (
-      <Form>
-        <Grid container>
+      <Form style={{fontFamily: fonts.smallHeader, fontSize: 26}}>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Field margin='20px' label="First Name" name="firstName" component={InputField} />
+            <Field label="First Name" name="firstName" component={InputField} />
           </Grid>
           <Grid item xs={6}>
             <Field label="Last Name" name="lastName" component={InputField} />
@@ -35,11 +36,11 @@ class ProfileDetails extends React.Component {
           <Grid item xs={12}>
             <Field label="Email" name="email" component={InputField} />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Field label="Phone Number" name="phone" component={InputField} />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
-            <Button type="submit">Save Changes</Button>
+            <Button style={{fontFamily: fonts.smallHeader, fontSize: 16, color: 'white', background: 'black', marginTop: 10}} type="submit">Save Changes</Button>
           </Grid>
         </Grid>
       </Form>
@@ -56,8 +57,8 @@ class ProfileDetails extends React.Component {
     const INITIAL_VALUES = {
       firstName: account.data.firstName,
       lastName: account.data.lastName,
-      email: account.data.email,
-      phone:account.data.phone
+      email: account.data.email
+      // phone:account.data.phone
     };
 
     if (!account.data.account_jwt) {
@@ -66,16 +67,16 @@ class ProfileDetails extends React.Component {
 
     return (
       <Container align='left'>
-        <Typography variant="h1" gutterBottom>
+        <Typography style={{fontSize: 48, fontFamily: fonts.header}} variant="h1" gutterBottom>
           Your Profile
         </Typography>
-        <Typography variant="h3" gutterBottom>
+        <Typography style={{fontSize: 18, fontFamily: fonts.smallHeader}} variant="h3" gutterBottom>
           NAME {'&'} EMAIL
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper style={pStyle}>
+            <Paper>
               <Formik
                 initialValues={INITIAL_VALUES}
                 onSubmit={this.handleSubmit}

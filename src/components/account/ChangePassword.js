@@ -11,11 +11,8 @@ import Button from '@material-ui/core/Button';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
+import {fonts} from '../Theme/fonts';
 
-const pStyle = {
-  padding: 20,
-  textAlign: 'center'
-};
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
   newPassword1: string().required('Both password fields are required.'),
@@ -26,7 +23,9 @@ class ChangePassword extends React.Component {
   renderForm = () => {
     return (
       <Container>
-        <Form>
+        <Form style={{fontFamily: fonts.smallHeader, fontSize: 26}}>
+          <Grid container spacing={2}>
+
           <Grid item xs={12}>
             <Field
               label="Current Password"
@@ -50,7 +49,8 @@ class ChangePassword extends React.Component {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit">Change Password</Button>
+            <Button style={{fontFamily: fonts.smallHeader, fontSize: 16, color: 'white', background: 'black', marginTop: 10}} type="submit">Change Password</Button>
+          </Grid>
           </Grid>
         </Form>
       </Container>
@@ -74,14 +74,14 @@ class ChangePassword extends React.Component {
     }
     
     return (
-      <Container>
-        <Typography variant="h3" gutterBottom>
+      <Container align='left' style={{paddingLeft: 0}}>
+        <Typography style={{fontSize: 18, fontFamily: fonts.smallHeader, marginTop: 25, marginLeft: 27}} variant="h3" gutterBottom>
           CHANGE PASSWORD
         </Typography>
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper style={pStyle}>
+            <Paper>
               <Formik
                 initialValues={INITIAL_VALUES}
                 onSubmit={this.handleSubmit}
