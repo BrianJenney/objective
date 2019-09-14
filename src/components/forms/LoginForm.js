@@ -7,7 +7,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Button } from '../common';
+import { Button, AlertPanel } from '../common';
+import { withCurrentUser } from '../../hoc';
 import { InputField } from '../form-fields';
 
 const schema = object().shape({
@@ -22,7 +23,7 @@ const INITIAL_VALUES = {
   password: '444444'
 };
 
-const LoginForm = ({ title, onSubmit }) => {
+const LoginForm = ({ title, onSubmit, currentUser }) => {
   const renderForm = () => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
@@ -53,6 +54,16 @@ const LoginForm = ({ title, onSubmit }) => {
         <Grid item xs={12}>
           <Button fullWidth type="submit" children="Login" />
         </Grid>
+        {currentUser.error && (
+          <AlertPanel
+            my={2}
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={currentUser.error}
+            variant="subtitle2"
+          />
+        )}
       </Grid>
     </Form>
   );
@@ -69,7 +80,8 @@ const LoginForm = ({ title, onSubmit }) => {
 
 LoginForm.propTypes = {
   title: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired
 };
 
-export default LoginForm;
+export default withCurrentUser(LoginForm);

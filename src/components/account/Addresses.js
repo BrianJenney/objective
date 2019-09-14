@@ -63,6 +63,9 @@ const AccountAddresses = ({
 
     let newAddressBook = null;
     if (isNil(targetIndex)) {
+      if (isEmpty(addressBook)) {
+        pureValues.isDefault = true;
+      }
       newAddressBook = [...addressBook, pureValues];
     } else {
       newAddressBook = addressBook.map((addressEntity, index) => {
