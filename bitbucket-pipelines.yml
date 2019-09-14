@@ -27,10 +27,9 @@ pipelines:
             - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
             - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
             # build the image
-            - export NXT_REGISTRY_URL=${NXT_REGISTRY_URL}/${BITBUCKET_REPO_SLUG}
+            - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
             - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-            - echo docker login --username "${NXT_REG_USER}" --password ... ${NXT_REGISTRY_URL}
-            - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REGISTRY_URL}
+            - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
             - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:latest .
             - rm -rf build_env
             # push to repo
