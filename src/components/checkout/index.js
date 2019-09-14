@@ -109,6 +109,10 @@ const Checkout = ({
       });
     }
 
+    if (activeStep === 2 && isNil(payload[STEP_KEYS[1]])) {
+      return false;
+    }
+
     return true;
   };
 
@@ -157,15 +161,18 @@ const Checkout = ({
   };
 
   const onPanelChange = (expanded, panelIndex) => {
-    const key = STEP_KEYS[activeStep];
+    const shippingKey = STEP_KEYS[1];
+    const paymentKey = STEP_KEYS[2];
     if (
       !expanded ||
-      ((activeStep === 1 || activeStep === 2) && isNil(payload[key]))
+      activeStep === 0 ||
+      (panelIndex === 3 &&
+        (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
       return false;
     }
 
-    setActiveStep(panelIndex);
+    return setActiveStep(panelIndex);
   };
 
   return (

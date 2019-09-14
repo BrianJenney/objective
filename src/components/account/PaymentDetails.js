@@ -66,6 +66,10 @@ const AccountPaymentDetails = ({
         return onSubmit(payload);
       }
 
+      if (isEmpty(creditCards)) {
+        payload.newCreditCard.isDefault = true;
+      }
+
       requestPatchAccount(account_jwt, payload);
     } catch (err) {
       enqueueSnackbar(err.message, { variant: 'error' });
