@@ -25,7 +25,12 @@ export default [
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
-  { path: '/order', auth: true, exact: true, component: OrderConfirmationPage },
+  {
+    path: '/order',
+    auth: true,
+    exact: true,
+    component: OrderConfirmationPage
+  },
   {
     path: '/checkout',
     exact: true,
