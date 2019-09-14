@@ -5,40 +5,23 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import { LoginForm } from './forms';
-import { MenuLink, NavLink, AlertPanel } from './common';
+import { MenuLink, NavLink } from './common';
 
-const useStyles = makeStyles(theme => ({
-  title: {
-    fontSize: '40px',
-    fontWeight: 'bold',
-    paddingBottom: theme.spacing(2)
-  }
-}));
-
-const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
-  const classes = useStyles();
-  return (
-    <Container component="main" maxWidth="sm">
-      <CssBaseline />
-      <Box component={Paper} pb={2}>
-        <Box textAlign="center">
-          <Typography className={classes.title}>
-            Log in to your account
-          </Typography>
-
-          {account.error && (
-            <AlertPanel
-              mb={3}
-              type="error"
-              bgcolor="#ffcdd2"
-              text={account.error}
-              variant="subtitle2"
-            />
-          )}
-          <LoginForm onSubmit={requestLoginAttempt} />
-
+const Login = ({ requestLoginAttempt, switchToSignup }) => (
+  <Container component="main" maxWidth="sm">
+    <CssBaseline />
+    <Box component={Paper} pb={2}>
+      <Box textAlign="center">
+        <Box
+          component={Typography}
+          fontSize={40}
+          fontWeight="bold"
+          pb={2}
+          children="Log in to your account"
+        />
+        <LoginForm onSubmit={requestLoginAttempt} />
+        <Box mt={2}>
           <Typography gutterBottom>
             <NavLink to="/password/forgot" underline="always">
               Forgot your email/&nbsp;password?
@@ -55,13 +38,12 @@ const Login = ({ requestLoginAttempt, account, switchToSignup }) => {
           </Typography>
         </Box>
       </Box>
-    </Container>
-  );
-};
+    </Box>
+  </Container>
+);
 
 Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
-  account: PropTypes.object.isRequired,
   switchToSignup: PropTypes.func,
   closeDialog: PropTypes.func
 };
