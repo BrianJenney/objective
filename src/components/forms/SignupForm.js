@@ -1,16 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
 import { Formik, Field, Form } from 'formik';
 import { object, string, boolean } from 'yup';
-
 import { CheckboxField, InputField } from '../form-fields';
 import { Button, NavLink, AlertPanel } from '../common';
 import { withCurrentUser } from '../../hoc';
@@ -60,7 +54,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
             autoComplete="email"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs>
           <Field
             name="password"
             label="Password"
@@ -68,15 +62,16 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
             type={passwordVisible ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility}>
-                    {passwordVisible ? (
-                      <VisibilityIcon />
-                    ) : (
-                      <VisibilityOffIcon />
-                    )}
-                  </IconButton>
-                </InputAdornment>
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    component="button"
+                    underline="always"
+                    onClick={togglePasswordVisibility}
+                    children={
+                      passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
+                    }
+                  ></NavLink>
+                </Box>
               )
             }}
             autoComplete="current-password"
