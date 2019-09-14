@@ -14,10 +14,6 @@ import { InputField } from '../../components/form-fields';
 import ProfileDetails from '../../components/account/ProfileDetails';
 import ChangePassword from '../../components/account/ChangePassword';
 
-const pStyle = {
-  padding: 20,
-  textAlign: 'center'
-};
 const schema = object().shape({
   firstName: string(),
   lastName: string(),

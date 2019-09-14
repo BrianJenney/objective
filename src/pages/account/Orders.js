@@ -1,59 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import store from '../../store';
+import { useDispatch } from 'react-redux';
+
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+
+import { DataTable }  from '../../components/common';
+
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
-import {fonts} from '../../components/Theme/fonts';
+import { formatCurrency, formatDateTime } from '../../utils/misc';
 
-const subTitles = {
-  fontFamily: fonts.smallHeader,
-  fontSize: 18
-}
+const columns = [
+  {
+    name: "_id",
+    label: "Order ID",
+    options: {
+      filter: false,
+      sort: false,
+    },
+  },
+  {
+    name: "createdAt",
+    label: "Ordered On",
+    options: {
+      filter: false,
+      sort: false,
+      sortDirection: 'desc',
+      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
+    },
+  },
+  {
+    name: "cart.total",
+    label: "Amount",
+    options: {
+      filter: false,
+      sort: true,
+      customBodyRender: (value, tableMeta, updateValue) => (
+        <Typography component="p" align="right" style={{fontSize: "0.875rem"}}>{formatCurrency(value)}</Typography>
+      )
+    }
+  },
+  {
+    name: "source",
+    label: "Source",
+    options: {
+      filter: true,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => (
+        <Typography component="p" align="center" style={{fontSize: "0.875rem"}}>{value}</Typography>
+      )
+    }
+  },
+  {
+    name: "status",
+    label: "Status",
+    options: {
+      filter: true,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => (
+        <Typography component="p" align="center" style={{fontSize: "0.875rem"}}>{value}</Typography>
+      )
 
-const orderStyle = {
-  fontFamily: fonts.smallHeader,
-  fontSize: 18,
-  background: '#fbf7f3',
-  textAlign: 'center'
-}
+    }
+  },
+  {
+    name: "updatedAt",
+    label: "Updated On",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
+    },
+  },
+];
 
-const title = {
-  fontFamily: fonts.header,
-  fontSize: 48,
-  paddingLeft: 15
-}
+const AccountOrders = ({ currentUser: { data}}) => {
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
-
-const AccountOrders = props => {
-  const { currentUser } = props;
-
-  if (!currentUser.data.orders) {
-    store.dispatch(requestFindOrdersByAccount(currentUser.data.account_jwt));
-    return <div></div>;
-  }
-
-  const orderList = currentUser.data.orders.map(order => (
-    <tr style={orderStyle}>
-      <td>{order._id}</td>
-      <td>
-        {order.createdAt.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1')}
-      </td>
-      <td>{order.cart.total}</td>
-      <td>-</td>
-    </tr>
-  ));
+  useEffect(() => {
+    if (!data.orders) {
+      dispatch(requestFindOrdersByAccount(data.account_jwt));
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  },[ dispatch, data.orders]);
 
   return (
-    <>
-      <h2 style={title}>Your Orders</h2>
-      <table cellspacing='15'>
-        <tr style={subTitles}>
-          <th>Order ID</th>
-          <th>Order Date</th>
-          <th>Amount</th>
-          <th>Tracking Information</th>
-        </tr>
-        {orderList}
-      </table>
-    </>
+    <Grid container direction="column" spacing={3}>
+      <Grid item sm={12} md={12} lg={12}>
+        <DataTable
+          title={"Your Orders"}
+          data={data.orders}
+          columns={columns}
+          isLoading={isLoading}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

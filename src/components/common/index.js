@@ -16,3 +16,4 @@ export { default as Slider } from './Slider';
 export { default as TemporaryDrawer } from './TemporaryDrawer';
 export { default as RouteWithSubRoutes } from './RouteWithSubRoutes';
 export { default as ATCSnackbarAction } from './ATCSnackbarAction';
+export { default as DataTable } from './DataTable';
