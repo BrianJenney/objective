@@ -9,6 +9,8 @@ import { Button } from '../components/common';
 import { CartSummary } from '../components/summaries';
 
 const Address = ({ address, email }) => {
+  if (!address) return null;
+
   return (
     <>
       <Typography component="h1" variant="h4" align="left">
