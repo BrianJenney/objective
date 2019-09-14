@@ -91,7 +91,7 @@ const AccountAddresses = ({
         mx={1}
         color="#231f20"
         variant="h5"
-        children="Saved Addrses"
+        children="Saved Addresses"
         gutterBottom
       />
       <Grid container>
