@@ -10,33 +10,32 @@ import { CartSummary } from '../components/summaries';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
+import { StyledSmallCaps } from '../pages/cart/StyledComponents';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.grey[400]
+    backgroundColor: '#fffde7'
   },
   main: {
-    padding: theme.spacing(10, 5, 10, 15),
+    padding: theme.spacing(10, 5),
     [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(2, 0)
     }
   },
   paper: {
     backgroundColor: theme.palette.common.white,
-    padding: theme.spacing(3, 4)
+    padding: theme.spacing(3, 4),
+    [theme.breakpoints.down('xs')]: {
+      backgroundColor: '#fffde7'
+    }
   },
   title: {
-    fontSize: '40px',
-    fontWeight: 'bold'
-  },
-  subTitle: {
-    fontSize: '17px',
-    textTransform: 'uppercase',
+    fontSize: '45px',
     fontWeight: 'bold',
-    padding: theme.spacing(3, 0, 2)
+    paddingBottom: theme.spacing(4)
   },
   text: {
-    fontSize: '17px'
+    fontSize: '20px'
   },
   button: {
     margin: theme.spacing(3, 0, 4)
@@ -88,43 +87,51 @@ const OrderConfirmation = ({ onSubmit }) => {
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
-
         <Typography className={classes.text} gutterBottom>
           Your order has been placed and a confirmation email email has been
           sent to: {email}.
         </Typography>
-
         <Typography className={classes.text}>
           Your order number: <strong>{order._id}</strong>
         </Typography>
-
         <Button
           type="button"
           onClick={onSubmit}
           children="Check Order Status"
           className={classes.button}
         />
-
-        <Box display="flex" flexDirection="row" borderTop={1} borderBottom={1}>
+        <Box
+          display="flex"
+          flexDirection={xs ? 'column' : 'row'}
+          borderTop={1}
+          borderBottom={1}
+        >
           <Grid item xs={addressesWidth}>
-            <Box borderRight={1} paddingBottom={3}>
-              <Typography className={classes.subTitle}>
+            <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
+              <StyledSmallCaps style={{ padding: '24px 0 16px' }}>
                 Billing Information
-              </Typography>
-              <Address address={billingAddress} email={email} />
+              </StyledSmallCaps>
+              {/* No billingAddress in returned data. Use shippingAddress here for design purpose */}
+              <Address address={shippingAddress} email={email} />
             </Box>
           </Grid>
           <Grid item xs={addressesWidth}>
-            <Box paddingLeft={3}>
-              <Typography className={classes.subTitle}>
+            <Box
+              paddingLeft={xs ? 0 : 3}
+              borderTop={xs ? 1 : 0}
+              paddingBottom={3}
+            >
+              <StyledSmallCaps style={{ padding: '24px 0 16px' }}>
                 Shipping Information
-              </Typography>
+              </StyledSmallCaps>
               <Address address={shippingAddress} email={email} />
             </Box>
           </Grid>
         </Box>
         <Grid item xs={addressesWidth}>
-          <Typography className={classes.subTitle}>Payment</Typography>
+          <StyledSmallCaps style={{ padding: '24px 0 16px' }}>
+            Payment
+          </StyledSmallCaps>
           <Typography className={classes.text}>
             {cardType} - ***{last4}
           </Typography>
@@ -137,7 +144,7 @@ const OrderConfirmation = ({ onSubmit }) => {
     <div className={classes.root}>
       <CssBaseline />
       <Box className={classes.main}>
-        <Grid container spacing={2}>
+        <Grid container spacing={xs ? 0 : 4}>
           <Grid item xs={mainWidth}>
             <OrderDetail />
           </Grid>
