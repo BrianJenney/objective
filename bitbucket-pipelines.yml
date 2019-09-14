@@ -19,8 +19,6 @@ pipelines:
           image: atlassian/pipelines-awscli
           script:
             - apk add curl
-            # aws login for docker so we can push image later
-            - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
             # add bits react needs to build_env file
             - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
             - echo REACT_APP_CLOUDAMQP_HOSTNAME=$REACT_APP_CLOUDAMQP_HOSTNAME >> build_env
@@ -29,13 +27,14 @@ pipelines:
             - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
             - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
             # build the image
-            - export AWS_REGISTRY_URL=${AWS_REGISTRY_URL}/${BITBUCKET_REPO_SLUG}
+            - export NXT_REGISTRY_URL=${NXT_REGISTRY_URL}/${BITBUCKET_REPO_SLUG}
             - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-            - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${AWS_REGISTRY_URL}:$BUILD_ID -t ${AWS_REGISTRY_URL}:latest .
+            - docker login --username ${NXT_REG_USER} --password ${NXT_REG_PASSWD} ${NXT_REGISTRY_URL}
+            - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:latest .
             - rm -rf build_env
             # push to repo
-            - docker push ${AWS_REGISTRY_URL}:latest
-            - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
+            - docker push ${NXT_REGISTRY_URL}:latest
+            - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
             # deploy to stagging site
             - curl -X POST ${UPDATE_WEBHOOK}
         services:
