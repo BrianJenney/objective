@@ -6,12 +6,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
-import {
-  InputField,
-  DatePickerField,
-  SelectField,
-  CheckboxField
-} from '../form-fields';
+import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
 import {
@@ -127,12 +122,10 @@ const PaymentForm = ({
             <Grid item xs={12} md={6}>
               <Field
                 name="paymentDetails.expirationDate"
-                component={DatePickerField}
-                variant="inline"
                 label="Expiry Date"
-                autoOk
-                disableToolbar
-                disablePast
+                component={InputField}
+                validate={validateTextField}
+                placeholder="MM/DD/YYYY"
               />
             </Grid>
             <Grid item xs={12} md={6}>
