@@ -183,7 +183,6 @@ const PaymentForm = ({
                 name="billingAddress.line2"
                 label="Address Line 2"
                 component={InputField}
-                validate={validateTextField}
               />
             </Grid>
             <Grid item xs={12} sm={6}>

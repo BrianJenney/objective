@@ -7,6 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import { IntlProvider } from 'react-intl';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { makeStyles } from '@material-ui/core/styles';
 import App from './App';
@@ -32,24 +33,26 @@ const Main = () => {
   const classes = useStyles();
   return (
     <Provider store={store}>
-      <ThemeProvider theme={nxtTheme}>
-        <SnackbarProvider
-          maxSnack={5}
-          anchorOrigin={{
-            horizontal: 'right',
-            vertical: 'top'
-          }}
-          classes={{
-            variantSuccess: classes.success,
-            variantError: classes.error,
-            variantWarning: classes.warning,
-            variantInfo: classes.info
-          }}
-          autoHideDuration={1500}
-        >
-          <App />
-        </SnackbarProvider>
-      </ThemeProvider>
+      <IntlProvider locale="en">
+        <ThemeProvider theme={nxtTheme}>
+          <SnackbarProvider
+            maxSnack={5}
+            anchorOrigin={{
+              horizontal: 'right',
+              vertical: 'top'
+            }}
+            classes={{
+              variantSuccess: classes.success,
+              variantError: classes.error,
+              variantWarning: classes.warning,
+              variantInfo: classes.info
+            }}
+            autoHideDuration={2000}
+          >
+            <App />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </IntlProvider>
     </Provider>
   );
 };

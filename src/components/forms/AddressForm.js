@@ -15,7 +15,7 @@ const schema = object().shape({
   firstName: string().required('First name is required'),
   lastName: string().required('Last name is required'),
   line1: string().required('Address1 is required'),
-  line2: string(),
+  line2: string().nullable(),
   city: string().required('City is required'),
   state: string().required('State is required'),
   postalCode: string().required('Postal code is required'),
