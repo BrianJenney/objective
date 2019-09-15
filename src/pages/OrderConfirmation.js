@@ -43,12 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Address = ({ address, email }) => {
-<<<<<<< HEAD
-  if (!address) return null;
-
-=======
   const classes = useStyles();
->>>>>>> 15fcbb4d9dd83cdc55b2e805d75972c2d56352a4
   return (
     <>
       <Typography className={classes.text}>
