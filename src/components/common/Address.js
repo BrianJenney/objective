@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
 
 const Address = ({ address, email }) => {
   const classes = useStyles();
+  if (!address) return null;
   return (
     <>
       <Typography className={classes.text}>
