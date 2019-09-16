@@ -1,8 +1,16 @@
 import { requestPatchCart } from "../../modules/cart/actions";
 
-export const calculateCartTotal = cartItems => cartItems.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
+import store from '../../store';
 
-export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isFromGallery = false) => {
+export function calculateCartTotal(c) {
+  const total = c.reduce(function (prev, curr) {
+    return prev + curr.unit_price * curr.quantity;
+  }, 0);
+
+  return total;
+}
+
+export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   const newItems = cart.items;
   // console.log('add to cart', newItems, selectedVariant)
   let alreadyInCart = false;
@@ -31,5 +39,31 @@ export const addToCart = (cartId, cart, selectedVariant, quantity, dispatch, isF
     subtotal: calculateCartTotal(newItems),
     total: calculateCartTotal(newItems)
   };
-  dispatch(requestPatchCart(cartId, patches));
+  store.dispatch(requestPatchCart(cartId, patches));
+};
+
+export const adjustQty = (cart, product, amount) => {
+  let newitems = cart.items;
+  newitems[product].quantity += amount;
+
+  let patches = {
+    items: newitems,
+    subtotal: calculateCartTotal(newitems),
+    total: calculateCartTotal(newitems)
+  };
+
+  store.dispatch(requestPatchCart(cart._id, patches));
+};
+
+export const removeFromCart = (cart, product) => {
+  const newItems = [...cart.items];
+  newItems.splice(product, 1);
+
+  const patches = {
+    items: newItems,
+    subtotal: calculateCartTotal(newItems),
+    total: calculateCartTotal(newItems)
+  };
+
+  store.dispatch(requestPatchCart(cart._id, patches));
 };

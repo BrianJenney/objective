@@ -15,7 +15,7 @@ import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import { Button } from '../../components/common';
 import './overrides.css';
-import { addToCart } from '../../utils/cart';
+import { addToCart } from '../../modules/cart/functions';
 import {
   getPrices,
   getVariantSkuBySlug,
@@ -100,8 +100,7 @@ const ProductDetail = ({ variantSlug, history }) => {
         localStorageClient.get('cartId'),
         cart,
         variantMap.get(selectedVariantSku),
-        qty,
-        dispatch
+        qty
       );
       enqueueSnackbar(message, { variant: 'success' });
     },
@@ -117,8 +116,7 @@ const ProductDetail = ({ variantSlug, history }) => {
       localStorageClient.get('cartId'),
       cart,
       variantMap.get(selectedVariantSku),
-      quantity,
-      dispatch
+      quantity
     );
     enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);

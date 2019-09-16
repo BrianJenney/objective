@@ -31,7 +31,6 @@ const DatePickerField = ({
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <KeyboardDatePicker
-        id={name}
         error={!!(touched && error)}
         helperText={(touched && error) || helperText}
         disabled={form.isSubmitting || disabled}

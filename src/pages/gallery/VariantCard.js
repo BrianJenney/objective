@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import { useQuantity, useWindowSize } from '../../hooks';
-import { addToCart } from '../../utils/cart';
+import { addToCart } from '../../modules/cart/functions';
 import { Button, ATCSnackbarAction } from '../../components/common';
 import '../../assets/styles/_variables.scss';
 
@@ -33,7 +33,7 @@ const VariantCard = ({ variant, product }) => {
 
   const updateQuantityToCart = useCallback(
     qty => {
-      addToCart(localStorageClient.get('cartId'), cart, variant, qty, dispatch);
+      addToCart(localStorageClient.get('cartId'), cart, variant, qty);
       enqueueSnackbar(message, { variant: 'success' });
     },
     [cart, variant, message, dispatch, enqueueSnackbar]
@@ -48,8 +48,7 @@ const VariantCard = ({ variant, product }) => {
       localStorageClient.get('cartId'),
       cart,
       variant,
-      quantity,
-      dispatch
+      quantity
     );
     enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);

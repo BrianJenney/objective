@@ -111,20 +111,6 @@ export const StyledHeaderWrapper = withStyles(theme => ({
   }
 }))(Grid);
 
-export const StyledPromoCode = withStyles(theme => ({
-  root: {
-    margin: '-6px 0 0 -14px',
-    fontFamily: $brandSans,
-    textTransform: 'uppercase',
-    color: BLACK,
-    transform: 'translate(14px, 16px) scale(1) !important'
-  },
-  label: {
-    fontFamily: `${$brandSans} !important`,
-    textTransform: 'uppercase'
-  }
-}))(TextField);
-
 export const StyledTotalWrapper = withStyles(theme => ({
   root: {
     marginBottom: 0,
