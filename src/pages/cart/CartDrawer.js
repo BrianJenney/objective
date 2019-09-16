@@ -105,6 +105,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       container
       xs={12}
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
+      className="cart-drawer"
     >
       <StyledLogoContainer>
         <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>

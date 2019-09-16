@@ -1,0 +1,49 @@
+.checkout-wrapper {
+  .cart-drawer {
+    background-color: #fff;
+    padding: 0 20px 20px 20px;
+  }
+  label {
+    font-family: p22-underground, sans-serif;
+  }
+  input,
+  input.MuiInputBase-input {
+    font-family: p22-underground, sans-serif;
+    font-size: 18px;
+  }
+  input::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-family: p22-underground, sans-serif;
+    font-size: 18px;
+  }
+
+  input:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-family: p22-underground, sans-serif;
+    font-size: 18px;
+  }
+
+  input::-ms-input-placeholder {
+    /* Microsoft Edge */
+    font-family: p22-underground, sans-serif;
+    font-size: 18px;
+  }
+  .MuiCheckbox-colorSecondary.Mui-checked {
+    color: #000;
+  }
+  .signup-form {
+    .MuiTypography-body1 {
+      font-family: p22-underground, sans-serif;
+    }
+    .legal {
+      .MuiTypography-body1 {
+        font-size: 0.875rem;
+        text-align: center;
+      }
+    }
+    .create-account-btn {
+      padding: 20px 16px;
+      height: auto;
+    }
+  }
+}

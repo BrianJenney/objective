@@ -225,6 +225,6 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-      }`
+    }`
   }
 }))(Badge);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { get, isNil } from 'lodash';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +15,8 @@ import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from '../../utils/misc';
+import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
+import '../../pages/checkout/checkout-styles.scss';
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -22,20 +25,24 @@ const getPanelTitleContent = (step, activeStep, payload) => {
   const titleViewColor = isActiveStep ? '#ffffff' : '#4a4a4a';
   const titleView = (
     <Box
-      p={3}
+      px={3}
+      py={2}
       width={1}
       color={titleViewColor}
       bgcolor={titleViewBgcolor}
       display="flex"
       alignItems="center"
-      style={{ fontSize: 18, textTransform: 'uppercase' }}
+      style={{
+        fontSize: 18,
+        textTransform: 'uppercase'
+      }}
     >
-      <Box mr={1} component={Typography} children={`STEP ${step + 1}`} />
-      <Box
-        component={Typography}
-        children={stepTitle}
-        style={{ fontWeight: 600 }}
-      />
+      <StyledCheckoutSteps>
+        <Box mr={1} children={`STEP ${step + 1}`} />
+      </StyledCheckoutSteps>
+      <StyledCheckoutSteps>
+        <Box children={stepTitle} style={{ fontWeight: 600 }} />
+      </StyledCheckoutSteps>
     </Box>
   );
   let payloadSummary = null;
@@ -177,10 +184,10 @@ const Checkout = ({
 
   return (
     <Container>
-      <Box>
+      <Box py={10} className="checkout-wrapper">
         <CssBaseline />
-        <Box display="flex">
-          <Box flex={1}>
+        <Grid container spacing={4}>
+          <Grid item flex={1} xs={12} md={9}>
             <Panel
               title={getPanelTitleContent(0, activeStep, {
                 email: currentUserEmail
@@ -254,11 +261,11 @@ const Checkout = ({
             >
               <CheckoutReviewForm onSubmit={handleNext} />
             </Panel>
-          </Box>
-          <Box ml={3} width={415}>
+          </Grid>
+          <Grid item xs={12} md={3}>
             <CartDrawer />
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
