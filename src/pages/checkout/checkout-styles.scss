@@ -87,7 +87,19 @@
       width: 100%;
     }
   }
-  .step-2-wrapper {
+  .step-4-wrapper {
+    .MuiBox-root.MuiBox-root-275 {
+      width: 100%;
+      text-align: center;
+    }
+    p,
+    a {
+      font-family: p22-underground, sans-serif;
+      font-size: 14px;
+    }
+  }
+  .step-2-wrapper,
+  .step-4-wrapper {
     button {
       width: 445px;
       padding: 20px 16px;

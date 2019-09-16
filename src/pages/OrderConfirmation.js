@@ -5,16 +5,17 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { Button } from '../components/common';
-import { CartSummary } from '../components/summaries';
+import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
+import { CartSummary } from '../components/summaries';
+import { Button } from '../components/common';
 import { StyledSmallCaps } from '../pages/cart/StyledComponents';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#fffde7'
+    backgroundColor: 'rgba(252, 248, 244, 0.5)'
   },
   main: {
     padding: theme.spacing(10, 5),
@@ -141,19 +142,21 @@ const OrderConfirmation = ({ onSubmit }) => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Box className={classes.main}>
-        <Grid container spacing={xs ? 0 : 4}>
-          <Grid item xs={mainWidth}>
-            <OrderDetail />
+    <Box bgcolor="rgba(252, 248, 244, 0.5)">
+      <Container>
+        <CssBaseline />
+        <Box py={10}>
+          <Grid container spacing={xs ? 0 : 4}>
+            <Grid item xs={mainWidth}>
+              <OrderDetail />
+            </Grid>
+            <Grid item xs={cartWidth}>
+              <OrderCartSummary />
+            </Grid>
           </Grid>
-          <Grid item xs={cartWidth}>
-            <OrderCartSummary />
-          </Grid>
-        </Grid>
-      </Box>
-    </div>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
