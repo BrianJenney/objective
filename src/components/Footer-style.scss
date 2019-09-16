@@ -75,9 +75,6 @@
     @media (min-width: 1200px) {
       font-size: 16px;
     }
-    .opac {
-      opacity: 0.5;
-    }
     form {
       display: flex;
       color: #fff;
@@ -87,12 +84,11 @@
       }
     }
     .signup-arrow {
-      margin-top: -50px;
-      margin-left: 173px;
+      margin-top: -6px;
+      margin-left: -3px;
     }
     .mobile-arrow {
-      margin-top: -20px;
-      margin-right: -55px;
+      margin-top: -5px;
     }
   }
   .icon {
@@ -219,7 +215,12 @@
     input {
       margin: 0;
       color: #ffffff;
-      padding: 10px 1px;
+      padding: 10px;
+      border: 1px solid #fff;
+      background-color: #000000;
+      &:hover {
+        border: 1px solid #fff;
+      }
     }
 
     input::placeholder {

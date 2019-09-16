@@ -122,7 +122,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
       <Grid container spacing={2}>
         <Grid item xs={12} className="legal">
           <Typography>
-            By creating an account you agree to the Objective Wellness
+            By creating an account you agree to the Objective Wellness&nbsp;
             <NavLink to="/termsandconditions" underline="always">
               Terms &amp; Conditions&nbsp;
             </NavLink>

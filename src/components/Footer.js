@@ -120,9 +120,7 @@ const Footer = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="border-bottom signup-box p-20">
-                  <span className="opac">
-                    Sign up for tips and new product launches.
-                  </span>
+                  <span>Sign up for tips and new product launches.</span>
                   <Formik
                     initialValues={{ email: '' }}
                     onSubmit={() => null}
@@ -249,9 +247,7 @@ const Footer = () => {
                   </StyledBox>
                 </Grid>
                 <Grid item xs={10} className="border-bottom signup-box">
-                  <span className="opac">
-                    Sign up for tips and new product launches.
-                  </span>
+                  <span>Sign up for tips and new product launches.</span>
                   <Formik
                     initialValues={{ email: '' }}
                     onSubmit={() => null}
