@@ -5,11 +5,17 @@ import Typography from '@material-ui/core/Typography';
 import { Button, NavLink } from '../common';
 
 const CheckoutReviewForm = ({ onSubmit }) => (
-  <Box display="flex" flexDirection="column" alignItems="center">
+  <Box
+    display="flex"
+    flexDirection="column"
+    alignItems="center"
+    className="step-4-wrapper"
+  >
     <Box
       component={Typography}
       my={3}
       variant="h5"
+      fontFamily="Canela Text, serif"
       children="Please take a moment to review your order."
     />
     <Box width={532} mb={2}>
