@@ -10,6 +10,8 @@ import {fonts} from '../../components/Theme/fonts';
 
 export { default as AccountOverviewPage } from './Overview';
 export { default as AccountOrdersPage } from './Orders';
+export { default as AccountOrderPage } from './Order';
+
 export { default as AccountAddressesPage } from './Addresses';
 export { default as AccountPaymentDetailsPage } from './PaymentDetails';
 export { default as AccountProfilePage } from './Profile';
