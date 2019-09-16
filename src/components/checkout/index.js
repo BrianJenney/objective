@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { get, isNil } from 'lodash';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +15,8 @@ import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from '../../utils/misc';
+import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
+import '../../pages/checkout/checkout-styles.scss';
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -22,20 +25,24 @@ const getPanelTitleContent = (step, activeStep, payload) => {
   const titleViewColor = isActiveStep ? '#ffffff' : '#4a4a4a';
   const titleView = (
     <Box
-      p={3}
+      px={3}
+      py={2}
       width={1}
       color={titleViewColor}
       bgcolor={titleViewBgcolor}
       display="flex"
       alignItems="center"
-      style={{ fontSize: 18, textTransform: 'uppercase' }}
+      style={{
+        fontSize: 18,
+        textTransform: 'uppercase'
+      }}
     >
-      <Box mr={1} component={Typography} children={`STEP ${step + 1}`} />
-      <Box
-        component={Typography}
-        children={stepTitle}
-        style={{ fontWeight: 600 }}
-      />
+      <StyledCheckoutSteps>
+        <Box mr={1} children={`STEP ${step + 1}`} />
+      </StyledCheckoutSteps>
+      <StyledCheckoutSteps>
+        <Box children={stepTitle} style={{ fontWeight: 600 }} />
+      </StyledCheckoutSteps>
     </Box>
   );
   let payloadSummary = null;
@@ -176,91 +183,93 @@ const Checkout = ({
   };
 
   return (
-    <Container>
-      <Box>
-        <CssBaseline />
-        <Box display="flex">
-          <Box flex={1}>
-            <Panel
-              title={getPanelTitleContent(0, activeStep, {
-                email: currentUserEmail
-              })}
-              collapsible
-              hideExpandIcon
-              expanded={activeStep === 0}
-              onChange={() => null}
-            >
-              <CheckoutAuth
-                currentUser={currentUser}
-                requestCreateAccount={requestCreateAccount}
-                requestLoginAttempt={requestLoginAttempt}
-                handleNext={() => {
-                  if (activeStep === 0) {
-                    setActiveStep(1);
-                  }
-                }}
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(
-                1,
-                activeStep,
-                payload.shippingAddress
-              )}
-              collapsible
-              expanded={activeStep === 1}
-              onChange={e => onPanelChange(e, 1)}
-            >
-              <AccountAddresses
-                currentUser={currentUser}
-                requestPatchAccount={requestPatchAccount}
-                onSubmit={handleNext}
-                allowFlyMode
-                mt={4}
-                mx={10}
-                mb={5}
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(
-                2,
-                activeStep,
-                payload.paymentDetails
-              )}
-              collapsible
-              expanded={activeStep === 2}
-              onChange={e => onPanelChange(e, 2)}
-            >
-              <AccountPaymentDetails
-                currentUser={currentUser}
-                requestPatchAccount={requestPatchAccount}
-                onBack={handleBack}
-                onSubmit={handleNext}
-                seedEnabled
-                addressSeed={payload.shippingAddress}
-                useSeedLabel="Use shipping address"
-                allowFlyMode
-                mt={4}
-                mx={10}
-                mb={5}
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(3, activeStep, {})}
-              collapsible
-              hideExpandIcon
-              expanded={activeStep === 3}
-              onChange={e => onPanelChange(e, 3)}
-            >
-              <CheckoutReviewForm onSubmit={handleNext} />
-            </Panel>
-          </Box>
-          <Box ml={3} width={415}>
-            <CartDrawer />
-          </Box>
+    <Box bgcolor="rgba(252, 248, 244, 0.5)">
+      <Container>
+        <Box py={10} className="checkout-wrapper">
+          <CssBaseline />
+          <Grid container spacing={4}>
+            <Grid item flex={1} xs={12} md={8}>
+              <Panel
+                title={getPanelTitleContent(0, activeStep, {
+                  email: currentUserEmail
+                })}
+                collapsible
+                hideExpandIcon
+                expanded={activeStep === 0}
+                onChange={() => null}
+              >
+                <CheckoutAuth
+                  currentUser={currentUser}
+                  requestCreateAccount={requestCreateAccount}
+                  requestLoginAttempt={requestLoginAttempt}
+                  handleNext={() => {
+                    if (activeStep === 0) {
+                      setActiveStep(1);
+                    }
+                  }}
+                />
+              </Panel>
+              <Panel
+                title={getPanelTitleContent(
+                  1,
+                  activeStep,
+                  payload.shippingAddress
+                )}
+                collapsible
+                expanded={activeStep === 1}
+                onChange={e => onPanelChange(e, 1)}
+              >
+                <AccountAddresses
+                  currentUser={currentUser}
+                  requestPatchAccount={requestPatchAccount}
+                  onSubmit={handleNext}
+                  allowFlyMode
+                  mt={4}
+                  mx={10}
+                  mb={5}
+                />
+              </Panel>
+              <Panel
+                title={getPanelTitleContent(
+                  2,
+                  activeStep,
+                  payload.paymentDetails
+                )}
+                collapsible
+                expanded={activeStep === 2}
+                onChange={e => onPanelChange(e, 2)}
+              >
+                <AccountPaymentDetails
+                  currentUser={currentUser}
+                  requestPatchAccount={requestPatchAccount}
+                  onBack={handleBack}
+                  onSubmit={handleNext}
+                  seedEnabled
+                  addressSeed={payload.shippingAddress}
+                  useSeedLabel="Use shipping address"
+                  allowFlyMode
+                  mt={4}
+                  mx={10}
+                  mb={5}
+                />
+              </Panel>
+              <Panel
+                title={getPanelTitleContent(3, activeStep, {})}
+                collapsible
+                hideExpandIcon
+                expanded={activeStep === 3}
+                onChange={e => onPanelChange(e, 3)}
+              >
+                <CheckoutReviewForm onSubmit={handleNext} />
+              </Panel>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <CartDrawer />
+            </Grid>
+          </Grid>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 };
 

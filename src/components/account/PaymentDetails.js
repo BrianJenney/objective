@@ -4,6 +4,7 @@ import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
@@ -54,10 +55,10 @@ const AccountPaymentDetails = ({
           last4: paymentDetails.number.substring(
             paymentDetails.number.length - 4
           ),
-          expirationDate: paymentDetails.expirationDate
+          expirationDate: paymentDetails.expirationDate,
+          billingAddress
         },
-        nonce,
-        billingAddress
+        nonce
       };
 
       if (allowFlyMode && !shouldSaveData) {
@@ -84,13 +85,29 @@ const AccountPaymentDetails = ({
   if (seedEnabled && isEmpty(addressSeed)) {
     addressSeedData = getDefaultEntity(addressBook);
   }
+  let isCheckout = false;
+  if (window.location.pathname.includes('checkout')) {
+    isCheckout = true;
+  }
 
   return (
-    <Box {...rest}>
-      <Box mx={1} color="#231f20">
-        <Typography variant="h5" children="Payment Details" gutterBottom />
-        <Typography variant="h6" children="Credit Cards" gutterBottom />
-      </Box>
+    <Box {...rest} className="step-3-wrapper">
+      {isCheckout ? (
+        <Box
+          component={Typography}
+          mx={1}
+          color="#231f20"
+          variant="h5"
+          children="Credit Card"
+          fontFamily="Canela Text, serif"
+          gutterBottom
+        />
+      ) : (
+        <Box mx={1} color="#231f20">
+          <Typography variant="h5" children="Payment Details" gutterBottom />
+          <Typography variant="h6" children="Credit Cards" gutterBottom />
+        </Box>
+      )}
       <Grid container>
         {creditCards.map((creditCardEntity, index) => {
           const borderStyle = creditCardEntity.isDefault
@@ -98,7 +115,13 @@ const AccountPaymentDetails = ({
             : '1px solid #979797';
           return (
             <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
-              <Box border={borderStyle} m={1} px={4} py={3}>
+              <Box
+                border={borderStyle}
+                m={1}
+                px={4}
+                py={3}
+                className="checkout-box"
+              >
                 <EditablePanel
                   title=""
                   defaultValues={creditCardEntity}
@@ -142,21 +165,21 @@ const AccountPaymentDetails = ({
           >
             <MenuLink
               onClick={() => setAddModeEnabled(true)}
-              children="New Credit Card"
+              children="Add New Card"
               underline="always"
             />
           </Box>
         )}
       </Box>
       {!addModeEnabled && (
-        <Box display="flex" alignItems="center">
+        <ButtonGroup fullWidth aria-label="full width button group">
           {onBack && (
             <Button type="button" onClick={onBack} children="Back" mr={2} />
           )}
           {onSubmit && (
             <Button type="button" onClick={() => onSubmit()} children="Next" />
           )}
-        </Box>
+        </ButtonGroup>
       )}
     </Box>
   );

@@ -5,13 +5,9 @@ import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
-import {
-  InputField,
-  DatePickerField,
-  SelectField,
-  CheckboxField
-} from '../form-fields';
+import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
 import { COUNTRY_OPTIONS } from '../../constants/location';
 import {
@@ -127,12 +123,10 @@ const PaymentForm = ({
             <Grid item xs={12} md={6}>
               <Field
                 name="paymentDetails.expirationDate"
-                component={DatePickerField}
-                variant="inline"
                 label="Expiry Date"
-                autoOk
-                disableToolbar
-                disablePast
+                component={InputField}
+                validate={validateTextField}
+                placeholder="MM/DD/YYYY"
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -183,7 +177,6 @@ const PaymentForm = ({
                 name="billingAddress.line2"
                 label="Address Line 2"
                 component={InputField}
-                validate={validateTextField}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -231,7 +224,7 @@ const PaymentForm = ({
           </>
         )}
         <Grid item xs={12}>
-          <Box display="flex" alignItems="center">
+          <ButtonGroup fullWidth aria-label="full width button group">
             {onBack && (
               <Button
                 type="button"
@@ -241,7 +234,7 @@ const PaymentForm = ({
               />
             )}
             <Button type="submit" children={submitLabel} />
-          </Box>
+          </ButtonGroup>
         </Grid>
       </Grid>
     </Form>
