@@ -93,10 +93,7 @@ const AccountAddresses = ({
         color="#231f20"
         variant="h5"
         children="Saved Addresses"
-<<<<<<< HEAD
         style={{fontFamily: 'Canela Text, serif', fontSize: 48}}
-=======
->>>>>>> master
         gutterBottom
       />
       <Grid container>

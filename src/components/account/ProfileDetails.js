@@ -40,7 +40,7 @@ class ProfileDetails extends React.Component {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={12}>
-            <Button style={{fontFamily: fonts.smallHeader, fontSize: 16, color: 'white', background: 'black', marginTop: 10}} type="submit">Save Changes</Button>
+            <Button style={{fontFamily: fonts.smallHeader, fontSize: 16, color: 'white', background: 'rgba(0, 0, 0, 0.5)', marginTop: 10}} type="submit">Save Changes</Button>
           </Grid>
         </Grid>
       </Form>
