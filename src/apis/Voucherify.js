@@ -21,8 +21,8 @@ export const validatePromoCode = async promoCode => {
   try {
     let response = await voucherify.validate(promoCode, {
       // Need to add data to the metadata object for validation purposes
-      'metadata': {
-        'storeCode': process.env.REACT_APP_STORE_CODE
+      metadata: {
+        storeCode: process.env.REACT_APP_STORE_CODE
       }
     });
     return response;
@@ -34,8 +34,8 @@ export const validatePromoCode = async promoCode => {
 export const redeemPromoCode = async promoCode => {
   try {
     let response = await voucherify.redeem(promoCode, {
-      'metadata': {
-        'storeCode': process.env.REACT_APP_STORE_CODE
+      metadata: {
+        storeCode: process.env.REACT_APP_STORE_CODE
       }
     });
     // response.result = SUCCESS
