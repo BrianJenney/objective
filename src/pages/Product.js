@@ -9,7 +9,7 @@ const Product = ({ match }) => {
   const { product_slug, variant_slug } = match.params;
 
   return (
-    <ProductStore productSlug={product_slug} >
+    <ProductStore productSlug={product_slug} className="product-details">
       <ProductDetail variantSlug={variant_slug} />
       <TabSection />
       <Instruction />

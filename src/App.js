@@ -83,7 +83,7 @@ class App extends Component {
         <CssBaseline />
         <BrowserRouter>
           <Header />
-          <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Box>
             <Switch>
               {routes.map(route => (
                 <RouteWithSubRoutes key={route.path} {...route} />
