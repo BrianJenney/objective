@@ -3,35 +3,8 @@
     background-color: #fff;
     padding: 0 20px 20px 20px;
   }
-  label {
-    font-family: p22-underground, sans-serif;
-  }
-  input,
-  input.MuiInputBase-input {
-    font-family: p22-underground, sans-serif;
-    font-size: 18px;
-  }
-  input::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    font-family: p22-underground, sans-serif;
-    font-size: 18px;
-  }
-
-  input:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    font-family: p22-underground, sans-serif;
-    font-size: 18px;
-  }
-
-  input::-ms-input-placeholder {
-    /* Microsoft Edge */
-    font-family: p22-underground, sans-serif;
-    font-size: 18px;
-  }
-  .MuiCheckbox-colorSecondary.Mui-checked {
-    color: #000;
-  }
-  .signup-form {
+  .signup-form,
+  .step-3-wrapper {
     .MuiTypography-body1 {
       font-family: p22-underground, sans-serif;
     }
@@ -44,6 +17,89 @@
     .create-account-btn {
       padding: 20px 16px;
       height: auto;
+    }
+    label {
+      font-family: p22-underground, sans-serif;
+    }
+    input,
+    input.MuiInputBase-input {
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+    }
+    input::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+    }
+
+    input:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+    }
+
+    input::-ms-input-placeholder {
+      /* Microsoft Edge */
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+    }
+    .MuiCheckbox-colorSecondary.Mui-checked {
+      color: #000;
+    }
+  }
+  .MuiExpansionPanelSummary-content {
+    p {
+      font-family: p22-underground, sans-serif;
+      line-height: 1.2;
+    }
+  }
+  .MuiIconButton-label a {
+    font-family: p22-underground, sans-serif;
+    font-size: 12px !important;
+    text-decoration: underline;
+  }
+  .address-box,
+  .checkout-box {
+    border: 2px solid #979797;
+    p {
+      font-family: p22-underground, sans-serif;
+      line-height: 1.2;
+    }
+    .saved-default {
+      margin: 10px 0;
+      svg {
+        width: 0.75em;
+        height: 0.75em;
+      }
+      p {
+        font-size: 15px;
+      }
+    }
+  }
+  .step-2-wrapper,
+  .step-3-wrapper {
+    a {
+      font-weight: bold;
+      font-family: p22-underground, sans-serif;
+    }
+    .MuiBox-root.MuiBox-root-226 {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  .step-2-wrapper {
+    button {
+      width: 445px;
+      padding: 20px 16px;
+      height: auto;
+      letter-spacing: 1.33px;
+    }
+  }
+  .step-3-wrapper {
+    button {
+      padding: 20px 16px;
+      height: auto;
+      letter-spacing: 1.33px;
     }
   }
 }

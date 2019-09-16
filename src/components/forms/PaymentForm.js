@@ -5,6 +5,7 @@ import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
@@ -223,7 +224,7 @@ const PaymentForm = ({
           </>
         )}
         <Grid item xs={12}>
-          <Box display="flex" alignItems="center">
+          <ButtonGroup fullWidth aria-label="full width button group">
             {onBack && (
               <Button
                 type="button"
@@ -233,7 +234,7 @@ const PaymentForm = ({
               />
             )}
             <Button type="submit" children={submitLabel} />
-          </Box>
+          </ButtonGroup>
         </Grid>
       </Grid>
     </Form>
