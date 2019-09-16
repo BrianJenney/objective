@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import { Loader } from '../common';
 import Login from '../Login';
-import Signup from '../Signup';
+import SignupCheckout from '../SignUpCheckout';
 
 const AUTH_MODES = {
   SIGNUP: 'signup',
@@ -37,7 +37,7 @@ const CheckoutAuth = ({
   return (
     <Box>
       {authMode === AUTH_MODES.SIGNUP ? (
-        <Signup
+        <SignupCheckout
           requestCreateAccount={requestCreateAccount}
           switchToLogin={() => setAuthMode(AUTH_MODES.LOGIN)}
         />

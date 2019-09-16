@@ -2,17 +2,20 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Grid from '@material-ui/core/Grid';
-import Badge from '@material-ui/core/Badge/Badge';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+
 import { AlertPanel } from '../../components/common';
-import { calculateCartTotal } from './CartFunctions';
-import {
-  requestPatchCart,
-  setCartDrawerOpened
-} from '../../modules/cart/actions';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
+import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
+
+import { PromoCodeForm } from '../../components/forms';
+
+import { removeFromCart, adjustQty } from '../../modules/cart/functions';
+import { setCartDrawerOpened } from '../../modules/cart/actions';
+
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
   StyledCartHeader,
@@ -27,52 +30,20 @@ import {
   StyledDrawerGrid,
   StyledGridEmptyCart,
   StyledTotalWrapper,
-  StyledPromoCode,
   StyledLogo,
   StyledLogoContainer,
   StyledArrowIcon,
   StyledShoppingBag,
   StyledBadge
 } from './StyledComponents';
-import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 
-const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
+const { LIGHT_GRAY, MEDIUM_GRAY } = colorPalette;
 
 const Cart = ({ history, showCheckoutProceedLink }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   //const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-
-  const applyCoupon = useCallback(e => {
-    console.log('Logic to apply coupon goes here');
-  }, []);
-
-  const removeFromCart = e => {
-    const newItems = [...cart.items];
-    newItems.splice(e.currentTarget.value, 1);
-
-    const patches = {
-      items: newItems,
-      subtotal: calculateCartTotal(newItems),
-      total: calculateCartTotal(newItems)
-    };
-
-    dispatch(requestPatchCart(cart._id, patches));
-  };
-
-  const adjustQty = (e, amt) => {
-    const newItems = [...cart.items];
-    newItems[e.currentTarget.value].quantity += amt;
-
-    const patches = {
-      items: newItems,
-      subtotal: calculateCartTotal(newItems),
-      total: calculateCartTotal(newItems)
-    };
-
-    dispatch(requestPatchCart(cart._id, patches));
-  };
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
@@ -105,6 +76,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       container
       xs={12}
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
+      className="cart-drawer"
     >
       <StyledLogoContainer>
         <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
@@ -195,7 +167,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                       <StyledCardActions>
                         <StyledCounterButton
                           color="primary"
-                          onClick={e => adjustQty(e, -1)}
+                          onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
                           style={{ 'font-size': '18pt' }}
                           value={index}
                           disabled={item.quantity < 2}
@@ -207,7 +179,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                         </StyledSmallCaps>
                         <StyledCounterButton
                           color="primary"
-                          onClick={e => adjustQty(e, 1)}
+                          onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
                           style={{ 'font-size': '18pt' }}
                           value={index}
                         >
@@ -218,7 +190,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                     <StyledCardContent style={{ 'padding-bottom': '0' }}>
                       <StyledFinePrint
                         component="div"
-                        onClick={e => removeFromCart(e)}
+                        onClick={e => removeFromCart(cart, index)}
                         value={index}
                       >
                         <Link
@@ -282,29 +254,8 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
           </StyledFinePrint>
         </Grid>
 
-        <Grid container direction="row" xs={12} justify="space-between">
-          <Grid item xs={12}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Promo Code
-            </StyledSmallCaps>
-          </Grid>
-          <Grid container xs={12} style={{ 'align-items': 'flex-end' }}>
-            <Grid item xs={8}>
-              <StyledPromoCode
-                // label="Enter Promo Code"
-                margin="dense"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={4} style={{ 'text-align': 'right' }}>
-              <StyledSmallCaps component="span" style={{ 'font-size': '18px' }}>
-                <Link to="" style={{ color: BLACK }}>
-                  Apply
-                </Link>
-              </StyledSmallCaps>
-            </Grid>
-          </Grid>
-        </Grid>
+        <PromoCodeForm />
+
         <Grid
           container
           direction="row"

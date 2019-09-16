@@ -43,7 +43,7 @@ const DataTable = ({ title, data, columns, isLoading}) => {
     responsive: "scrollFullHeight",
     selectableRows: "none",
     rowsPerPage: 10,
-    page: 1,
+    page: 0,
     rowsPerPageOptions: [10, 20, 50],
   };
 

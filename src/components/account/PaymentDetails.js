@@ -55,10 +55,10 @@ const AccountPaymentDetails = ({
           last4: paymentDetails.number.substring(
             paymentDetails.number.length - 4
           ),
-          expirationDate: paymentDetails.expirationDate
+          expirationDate: paymentDetails.expirationDate,
+          billingAddress
         },
-        nonce,
-        billingAddress
+        nonce
       };
 
       if (allowFlyMode && !shouldSaveData) {

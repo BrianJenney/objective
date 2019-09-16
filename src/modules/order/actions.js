@@ -2,7 +2,9 @@ import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
-  RECEIVED_FIND_ORDERS_BY_ACCOUNT
+  RECEIVED_FIND_ORDERS_BY_ACCOUNT,
+  REQUEST_GET_ORDER,
+  RECEIVED_GET_ORDER
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -69,4 +71,36 @@ export const requestFindOrdersByAccount = accountJwt => (
     type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
     payload: {}
   });
+};
+
+export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
+  const { client, replyTo } = getState().stomp;
+  const getParams = { 
+    id: orderId,
+    params: {
+      account_jwt: accountJwt
+    }
+  };
+  const payload = JSON.stringify(msgpack.encode(getParams));
+
+  client.send(
+    '/exchange/order/order.request.get',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_GET_ORDER,
+    payload: {}
+  });
+};
+
+export const receivedGetOrder = order => {
+  return {
+    type: RECEIVED_GET_ORDER,
+    payload: order
+  };
 };

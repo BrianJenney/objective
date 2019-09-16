@@ -43,9 +43,7 @@ function a11yProps(index) {
 
 const useStyles = makeStyles(theme => ({
   indicator: {
-    display: 'block',
-    borderBottom: '1px solid #ffffff',
-    backgroundColor: '#fdf8f2'
+    backgroundColor: '#fff'
   },
   tabs: {
     borderLeft: '2px solid #003833',
@@ -61,7 +59,8 @@ const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     marginTop: '50px',
-    border: '2px solid #003833'
+    border: '2px solid #003833',
+    backgroundColor: '#FFF'
   }
 }));
 
