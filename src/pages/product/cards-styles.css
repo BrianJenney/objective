@@ -412,7 +412,7 @@ h2 {
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop {
-    min-height: 700px;
+    min-height: 530px;
   }
 }
 
@@ -933,7 +933,7 @@ h2 {
   .two-label,
   .three-label {
     position: absolute;
-    top: 420px;
+    top: 360px;
     right: 0;
     left: 0;
   }

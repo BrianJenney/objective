@@ -27,12 +27,11 @@
     color: #ffffff;
   }
 
-  .p-20 {
-    padding: 20px;
+  .h-100 {
+    height: 100%;
   }
-
-  .p-40 {
-    padding: 40px;
+  .copy {
+    margin-left: -1px;
   }
 
   .promise {
@@ -75,9 +74,10 @@
     font-family: freight-text-pro, sans-serif;
     font-size: 13px;
     text-transform: none;
-    padding: 10px 30px 0px;
+    padding: 10px 30px 10px;
     @media (min-width: 1200px) {
       font-size: 16px;
+      padding: 30px 50px;
     }
     form {
       display: flex;
@@ -88,8 +88,9 @@
       }
     }
     .signup-arrow {
-      margin-top: -6px;
-      margin-left: -3px;
+      margin-top: -5px;
+      margin-left: -65px;
+      position: absolute;
     }
     .mobile-arrow {
       margin-top: -5px;
@@ -99,7 +100,10 @@
     padding: 25px;
     text-align: center;
     @media (min-width: 1200px) {
-      padding: 30px;
+      padding: 50px 35px;
+    }
+    @media (min-width: 1600px) {
+      padding: 50px;
     }
     img {
       vertical-align: bottom;
@@ -111,6 +115,10 @@
 
   .border-bottom {
     border-bottom: 1px solid $gray;
+  }
+
+  .border-right {
+    border-right: 1px solid $gray;
   }
 
   .uppercase {
@@ -143,24 +151,17 @@
       text-align: left;
 
       @media (min-width: 1200px) {
-        padding: 30px;
+        padding: 45px 50px;
       }
     }
 
     .links {
-      font-family: 'freight-text-pro';
-      font-size: 14px;
-      letter-spacing: 1px;
-      line-height: 1.9;
       text-transform: capitalize;
-      padding: 0 0 0 20px;
-      margin-bottom: 30px;
       li {
-        padding-top: 0;
-        padding-left: 0;
+        padding: 0;
       }
       @media (min-width: 1200px) {
-        padding: 30px;
+        padding: 30px 50px;
         font-size: 18px;
         line-height: 2.22;
       }
@@ -175,7 +176,9 @@
         display: flex;
         justify-content: center;
       }
-
+      @media (min-width: 1200px) {
+        border-top: 1px solid #414141;
+      }
       @media (min-width: 1600px) {
         display: flex;
         justify-content: center;
@@ -200,7 +203,7 @@
 
     .rotate {
       text-transform: uppercase;
-      font-size: 10px;
+      font-size: 14px;
       letter-spacing: 1.5px;
       @media (min-width: 1200px) {
         /* Safari */
@@ -212,7 +215,12 @@
         /* Opera */
         -o-transform: rotate(-90deg);
         float: left;
-        margin-top: 92px;
+        margin-top: 122px;
+        margin-left: -20px;
+        position: absolute;
+      }
+      @media (min-width: 1600px) {
+        margin-left: -5px;
       }
     }
 
@@ -232,19 +240,22 @@
       color: #ffffff !important;
       opacity: 1;
       /* Firefox */
-      font-size: 28px;
+      font-size: 24px;
+      font-family: $brandSans;
     }
 
     input:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
       color: #ffffff !important;
-      font-size: 28px;
+      font-size: 24px;
+      font-family: $brandSans;
     }
 
     input::-ms-input-placeholder {
       /* Microsoft Edge */
       color: #ffffff !important;
-      font-size: 28px;
+      font-size: 24px;
+      font-family: $brandSans;
     }
   }
 }

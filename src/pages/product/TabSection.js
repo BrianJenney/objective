@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   tabs: {
     borderLeft: '2px solid #003833',
     borderBottom: '2px solid #003833',
-    backgroundColor: '#fdf8f2',
+    backgroundColor: '#fdfbf9',
     padding: '30px 0',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontSize: '24px',

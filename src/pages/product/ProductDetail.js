@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridModifications: {
     paddingTop: theme.spacing(8),
-    backgroundColor: '#fdf8f2'
+    backgroundColor: '#fdfbf9'
   },
   btnOOS: {
     border: '1.5px solid',
@@ -121,7 +121,7 @@ const ProductDetail = ({ variantSlug }) => {
     // enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
     dispatch(setCartDrawerOpened(true));
-  }, [ cart, selectedVariantSku, variantMap, quantity, dispatch]);
+  }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
   const handleEmailPopup = () => {
     setOpen(true);
