@@ -89,8 +89,12 @@ export const requestPatchAccount = (authToken, patches) => (
   const { client, replyTo } = getState().stomp;
   const params = {
     id: authToken,
-    data: patches
+    data: patches,
+    params: {
+      account_jwt: authToken
+    }
   };
+  console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
 
   client.send(

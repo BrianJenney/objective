@@ -412,6 +412,30 @@
   margin-right: 5px;
 }
 
+@media(min-width: 768px){
+  .image-gallery-left-nav{
+    transform: rotate(90deg);
+    top: -25px;
+    left: -70px;
+    font-size:1em;
+    padding:0;
+  }
+
+
+  .image-gallery-right-nav{
+    transform: rotate(90deg);
+    top: 100%;
+    left: -70px;
+    font-size:1em;
+    padding:0;
+  }
+
+  .image-gallery-right-nav:before, .image-gallery-left-nav:before{
+    color : #231f20;
+    text-shadow: none;
+  }
+}
+
 @media (max-width: 768px) {
   .image-gallery-thumbnails-wrapper.left {
     margin-right: 3px;
