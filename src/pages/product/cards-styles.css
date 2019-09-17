@@ -924,8 +924,8 @@ h2 {
   .two-box,
   .three-box {
     margin: 50px;
-    width: 341px;
-    height: 341px;
+    width: 298px;
+    height: 298px;
     position: relative;
   }
 
@@ -933,7 +933,7 @@ h2 {
   .two-label,
   .three-label {
     position: absolute;
-    top: 360px;
+    top: 300px;
     right: 0;
     left: 0;
   }
@@ -942,7 +942,7 @@ h2 {
     position: absolute;
     right: 0;
     left: 0;
-    top: 75px;
+    top: 50px;
   }
 
   .one-bottom-color,
@@ -950,5 +950,24 @@ h2 {
   .three-bottom-color {
     position: absolute;
     bottom: 0;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .one-box,
+  .two-box,
+  .three-box {
+    margin: 50px;
+    width: 298px;
+    height: 298px;
+    position: relative;
+  }
+  .img-container {
+    top: 75px;
+  }
+  .one-label,
+  .two-label,
+  .three-label {
+    top: 360px;
   }
 }

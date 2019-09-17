@@ -37,7 +37,8 @@ import {
   StyledShoppingBag,
   StyledBadge,
   StyledHeaderWrapperEmptyCart,
-  StyledSmallCapsEmptyCart
+  StyledSmallCapsEmptyCart,
+  StyledPromoLink
 } from './StyledComponents';
 
 const { LIGHT_GRAY, MEDIUM_GRAY } = colorPalette;
@@ -61,6 +62,10 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
     );
   }, [dispatch, history]);
 
+  const onClickPromo = useCallback(() => {
+    //emily, plz show promo form here on click
+  }, [dispatch, history]);
+
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     history.push('/checkout');
@@ -81,7 +86,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
       className="cart-drawer"
     >
-      {cart.items.length !== 0 ?
+      {cart.items.length !== 0 ? (
         <StyledLogoContainer>
           <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
           <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
@@ -94,8 +99,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
             </StyledBadge>
           </StyledShoppingBag>
         </StyledLogoContainer>
-        : null
-      }
+      ) : null}
 
       <div>
         {cart.items.length !== 0 ? (
@@ -105,7 +109,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               <StyledCartCount component="span">
                 {' '}
                 ({cartCount} Items)
-            </StyledCartCount>
+              </StyledCartCount>
             </Grid>
             <Grid container direction="row" alignItems="flex-end">
               <StyledSmallCaps component="span" onClick={handleCheckout}>
@@ -117,17 +121,16 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
             </Grid>
           </StyledHeaderWrapper>
         ) : (
-            <StyledHeaderWrapperEmptyCart container direction="column">
-              <Grid container direction="row" alignItems="baseline">
-                <StyledCartHeader align="center">Your Cart </StyledCartHeader>
-                <StyledCartCount component="span">
-                  {' '}
-                  ({cartCount} Items)
-                  </StyledCartCount>
-              </Grid>
-            </StyledHeaderWrapperEmptyCart>
-          )
-        }
+          <StyledHeaderWrapperEmptyCart container direction="column">
+            <Grid container direction="row" alignItems="baseline">
+              <StyledCartHeader align="center">Your Cart </StyledCartHeader>
+              <StyledCartCount component="span">
+                {' '}
+                ({cartCount} Items)
+              </StyledCartCount>
+            </Grid>
+          </StyledHeaderWrapperEmptyCart>
+        )}
       </div>
       <Grid container xs={12}>
         {cart.items.length === 0 ? (
@@ -137,9 +140,8 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
             </StyledSmallCapsEmptyCart>
           </StyledGridEmptyCart>
         ) : null}
-        {cart.items.length !== 0 ?
-          (
-            Object.values(cart.items).map((item, index) => (
+        {cart.items.length !== 0
+          ? Object.values(cart.items).map((item, index) => (
               <>
                 <StyledDrawerGrid container xs={12} direction="row">
                   <Grid
@@ -172,24 +174,28 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                         <StyledCardActions>
                           <StyledCounterButton
                             color="primary"
-                            onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
+                            onClick={e =>
+                              adjustQty(cart, e.currentTarget.value, -1)
+                            }
                             style={{ 'font-size': '18pt' }}
                             value={index}
                             disabled={item.quantity < 2}
                           >
                             -
-                        </StyledCounterButton>
+                          </StyledCounterButton>
                           <StyledSmallCaps style={{ marginTop: '2px' }}>
                             {item.quantity}
                           </StyledSmallCaps>
                           <StyledCounterButton
                             color="primary"
-                            onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
+                            onClick={e =>
+                              adjustQty(cart, e.currentTarget.value, 1)
+                            }
                             style={{ 'font-size': '18pt' }}
                             value={index}
                           >
                             +
-                        </StyledCounterButton>
+                          </StyledCounterButton>
                         </StyledCardActions>
                       </Grid>
                       <StyledCardContent style={{ 'padding-bottom': '0' }}>
@@ -205,7 +211,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                             }}
                           >
                             Remove
-                        </Link>
+                          </Link>
                         </StyledFinePrint>
                         {/* <StyledSmallCaps>{item.unit_price.toFixed(2)}</StyledSmallCaps> */}
                         <StyledSmallCaps>
@@ -217,8 +223,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 </StyledDrawerGrid>
               </>
             ))
-          ) : null
-        }
+          : null}
         {cart.items.length !== 0 ? (
           <Grid item xs={12} style={{ 'text-align': 'left' }}>
             <StyledTotalWrapper
@@ -230,7 +235,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               <Grid item xs={6}>
                 <StyledSmallCaps style={{ 'font-size': '14px' }}>
                   Subtotal:
-              </StyledSmallCaps>
+                </StyledSmallCaps>
               </Grid>
               <Grid item xs={3} style={{ 'text-align': 'right' }}>
                 <StyledSmallCaps style={{ 'font-size': '18px' }}>
@@ -239,8 +244,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               </Grid>
             </StyledTotalWrapper>
           </Grid>
-        ) : null
-        }
+        ) : null}
         {cart.items.length !== 0 ? (
           <Grid
             container
@@ -252,28 +256,28 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
             <Grid item xs={6}>
               <StyledSmallCaps style={{ 'font-size': '14px' }}>
                 Shipping
-            </StyledSmallCaps>
+              </StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledSmallCaps style={{ 'font-size': '18px' }}>
                 $XXX.xx
-            </StyledSmallCaps>
+              </StyledSmallCaps>
             </Grid>
             <StyledFinePrint component="p">
               Ground 3-5 Business Days
-          </StyledFinePrint>
+            </StyledFinePrint>
           </Grid>
-        ) : null
-        }
+        ) : null}
 
-        {cart.items.length !== 0 ?
+        {cart.items.length !== 0 ? (
           cart.promo ? (
             <PromoCodeView />
           ) : (
-              <PromoCodeForm />
-            )
-          : null
-        }
+            <StyledPromoLink align="left" onClick={onClickPromo}>
+              Enter Promo Code
+            </StyledPromoLink>
+          )
+        ) : null}
 
         {cart.items.length !== 0 ? (
           <Grid
@@ -296,17 +300,17 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 {`$${cart.total.toFixed(2)}`}
               </StyledSmallCaps>
             </Grid>
-          </Grid>) : null
-        }
+          </Grid>
+        ) : null}
         {cart.items.length !== 0 ? (
           <Grid container xs={12}>
             <Grid item xs={12}>
               <StyledFinePrint component="div">
                 Tax is calculated at checkout
-            </StyledFinePrint>
+              </StyledFinePrint>
             </Grid>
-          </Grid>) : null
-        }
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
   );

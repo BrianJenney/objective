@@ -58,14 +58,14 @@ export const StyledSmallCaps = withStyles(theme => ({
     fontSize: 'smallText2',
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontFamily: $brandSans,
+    fontFamily: $brandSans
   }
 }))(Typography);
 
 export const StyledSmallCapsEmptyCart = withStyles(theme => ({
   root: {
     fontSize: '32px',
-    fontFamily: 'Canela Text, serif',
+    fontFamily: 'Canela Text, serif'
   }
 }))(Typography);
 
@@ -144,7 +144,8 @@ export const StyledCheckoutButton = withStyles(theme => ({
     marginTop: '15px',
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
-    letterSpacing: '1.17px',
+    letterSpacing: 1.33,
+    lineHeight: 1.88,
     [theme.breakpoints.up('sm')]: {
       width: '100%',
       maxWidth: 351,
@@ -184,6 +185,17 @@ export const StyledProductLink = withStyles(theme => ({
     fontWeight: 'normal',
     color: BLACK,
     lineHeight: semiTight
+  }
+}))(Typography);
+
+export const StyledPromoLink = withStyles(theme => ({
+  root: {
+    fontSize: 14,
+    fontFamily: $brandSans,
+    fontWeight: 'normal',
+    color: BLACK,
+    textTransform: 'uppercase',
+    textDecoration: 'underline'
   }
 }))(Typography);
 
@@ -245,6 +257,6 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-      }`
+    }`
   }
 }))(Badge);
