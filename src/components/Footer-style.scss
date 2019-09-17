@@ -9,7 +9,11 @@
   padding: 0 15px;
 
   @media (min-width: 1200px) {
-    padding: 0 84px;
+    padding: 0 115px;
+  }
+
+  @media (min-width: 1600px) {
+    padding: 0 275px;
   }
 
   a {
@@ -118,11 +122,11 @@
     padding: 25px 0 60px;
 
     @media (min-width: 1200px) {
-      padding: 55px 40px 195px;
+      padding: 55px 0px 100px;
     }
 
     @media (min-width: 1600px) {
-      padding: 55px 200px 195px;
+      padding: 55px 0px 100px;
     }
   }
 

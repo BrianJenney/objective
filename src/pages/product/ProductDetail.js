@@ -65,7 +65,7 @@ const ProductVariant = ({ productVariant }) => {
       className="pdp-product-variant"
     >
       <div className="pdp-price">${productVariant.effectivePrice}</div>
-      <div className="pdp-price-slash">/</div>
+      <div className="pdp-price-dash">&mdash;</div>
       <div className="pdp-price-description">
         {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
       </div>
@@ -182,14 +182,12 @@ const ProductDetail = ({ variantSlug, history }) => {
                     <Typography className="pdp-subtitle">
                       {product.subtitle}
                     </Typography>
-                    <br />
                     <ProductVariant
                       productVariant={variantMap.get(selectedVariantSku)}
                     />
                     <Typography className="pdp-description">
                       {product.description}
                     </Typography>
-                    <br />
                     <Typography className="pdp-direction">
                       DIRECTIONS
                     </Typography>
@@ -218,8 +216,8 @@ const ProductDetail = ({ variantSlug, history }) => {
                     </Grid>
                   )}
 
-                  {/* Render this button when Product is out of stock */}
-                  <Grid>
+                  {/* Render this button when Product is out of stock hiding for now */}
+                  {/* <Grid>
                     <CardActions className={classes.maxWidth}>
                       <Button
                         className={classes.btnOOS}
@@ -236,7 +234,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                         product_name={product.name}
                       />
                     )}
-                  </Grid>
+                  </Grid> */}
                 </Card>
               </Grid>
             </Grid>
@@ -254,22 +252,14 @@ const ProductDetail = ({ variantSlug, history }) => {
                   className={classes.cardRootOverrides}
                   className="pdp-content"
                 >
-                  <Box>
-                    <Typography className="pdp-header" variant="h1">
-                      {product.name}
-                    </Typography>
-                  </Box>
-                  <Typography className="pdp-subtitle">
-                    {product.subtitle}
-                  </Typography>
-                  <br />
+                  <h1 className="pdp-header">{product.name}</h1>
                   <ProductVariant
                     productVariant={variantMap.get(selectedVariantSku)}
                   />
+                  <div className="pdp-subtitle">{product.subtitle}</div>
                   <Typography className="pdp-description">
                     {product.description}
                   </Typography>
-                  <br />
                   <Typography className="pdp-direction">DIRECTIONS</Typography>
                   <Typography className="pdp-direction-description">
                     Take one soft gel daily with meal
@@ -296,8 +286,8 @@ const ProductDetail = ({ variantSlug, history }) => {
                   </Grid>
                 )}
 
-                {/* Render this button when Product is out of stock */}
-                <Grid>
+                {/* Render this button when Product is out of stock hiding for now */}
+                {/* <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
                       className={classes.btnOOS}
@@ -314,7 +304,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                       product_name={product.name}
                     />
                   )}
-                </Grid>
+                </Grid> */}
               </Card>
             </Grid>
           </Grid>

@@ -125,7 +125,7 @@ const Header = ({ currentUser, location }) => {
                 </StyledLink>
               </Grid>
               <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
+                <NavLink to="/">OBJECTIVE</NavLink>
               </Grid>
               <Grid item>
                 <StyledLink component={RouterLink} {...accountMenuItemConf} />
