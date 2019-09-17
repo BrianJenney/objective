@@ -12,6 +12,7 @@ import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
+import LoginDropdown from './LoginDropdown';
 import './Header-style.scss';
 
 const StyledLink = withStyles(() => ({
@@ -38,10 +39,16 @@ const StyledBox = withStyles(() => ({
 }))(Box);
 
 const Header = ({ currentUser, location }) => {
-  const { account_jwt } = currentUser.data;
+  const { account_jwt, firstName } = currentUser.data;
   const accountMenuItemConf = account_jwt
-    ? { key: 'third', to: '/account', children: <LoggedInUser /> }
-    : { key: 'third', to: '/login', children: 'Account' };
+    ? {
+        key: 'third',
+        children: <LoggedInUser name={firstName} />
+      }
+    : {
+        key: 'third',
+        children: <LoginDropdown />
+      };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', children: 'Shop' },
     { key: 'second', to: '/', children: 'Journal' },

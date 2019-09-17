@@ -43,7 +43,7 @@ const StyledMenuItem = withStyles(theme => ({
   }
 }))(MenuItem);
 
-const LoggedInUser = ({ switchToSignup, logout }) => {
+const LoggedInUser = ({ name, logout }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const menuItems = [
@@ -61,14 +61,16 @@ const LoggedInUser = ({ switchToSignup, logout }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const accountName = store.getState().account.data.firstName;
+
   return (
     <div style={{ margin: '0 -5px' }}>
-      <Button aria-haspopup="true" onClick={handleClick}>
-        <Typography style={{ fontFamily: $brandSans }}>
-          Hi, {accountName}
-        </Typography>{' '}
-        &nbsp; {xs ? null : <ExpandMore />}
+      <Button
+        aria-haspopup="true"
+        onClick={handleClick}
+        style={{ backgroundColor: 'transparent' }}
+      >
+        <Typography style={{ fontFamily: $brandSans }}>Hi, {name}</Typography>{' '}
+        &nbsp; {xs ? '' : <ExpandMore />}
       </Button>
 
       <StyledMenu
