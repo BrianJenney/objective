@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   info: {
     fontFamily: fonts.smallHeader,
-    padding: 20,
+    padding: 15,
     fontSize: '18px'
   },
   subTexts: {

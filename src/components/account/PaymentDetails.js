@@ -92,13 +92,6 @@ const AccountPaymentDetails = ({
   }
 
   return (
-<<<<<<< HEAD
-    <Box {...rest}>
-      <Box mx={1} color="#231f20">
-        <Typography style={{fontFamily: fonts.header, fontSize: 48}} children="Payment Details" gutterBottom />
-        <Typography style={{fontFamily: fonts.smallHeader, fontSize: 18}} children="Credit Cards" gutterBottom />
-      </Box>
-=======
     <Box {...rest} className="step-3-wrapper">
       {isCheckout ? (
         <Box
@@ -116,7 +109,6 @@ const AccountPaymentDetails = ({
           <Typography variant="h6" children="Credit Cards" gutterBottom />
         </Box>
       )}
->>>>>>> master
       <Grid container>
         {creditCards.map((creditCardEntity, index) => {
           const borderStyle = creditCardEntity.isDefault

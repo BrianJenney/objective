@@ -90,18 +90,6 @@ const AccountAddresses = ({
   }
 
   return (
-<<<<<<< HEAD
-    <Box {...rest}>
-      <Box
-        component={Typography}
-        mx={1}
-        color="#231f20"
-        variant="h5"
-        children="Saved Addresses"
-        style={{fontFamily: 'Canela Text, serif', fontSize: 48}}
-        gutterBottom
-      />
-=======
     <Box {...rest} className="step-2-wrapper">
       {isCheckout ? (
         <Box
@@ -123,7 +111,6 @@ const AccountAddresses = ({
           gutterBottom
         />
       )}
->>>>>>> master
       <Grid container>
         {addressBook.map((addressEntity, index) => {
           const borderStyle = addressEntity.isDefault
