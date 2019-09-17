@@ -11,10 +11,10 @@ const calculateCartTotals = cart => {
   let total = subtotal;
 
   if (cart.promo) {
-    if (cart.promo.discount.type == 'AMOUNT') {
+    if (cart.promo.discount.type === 'AMOUNT') {
       discount = cart.promo.discount.amount_off / 100;
       total = subtotal - discount;
-    } else if (cart.promo.discount.type == 'PERCENT') {
+    } else if (cart.promo.discount.type === 'PERCENT') {
       total = cart.items.reduce(function (prev, curr) {
         return prev + curr.discount_price * curr.quantity;
       }, 0.00);
@@ -37,7 +37,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   newItems.filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
       alreadyInCart = true;
-      item.quantity += quantity;
+      item.quantity = quantity;
     });
 
   if (!alreadyInCart) {
@@ -112,7 +112,7 @@ export const addCoupon = (cart, promo) => {
   let localCart = cart;
   let items = cart.items;
 
-  if (promoCode.discount.type == 'PERCENT') {
+  if (promoCode.discount.type === 'PERCENT') {
     const discount = promoCode.discount.percent_off / 100;
 
     items.forEach(item => {
@@ -129,7 +129,7 @@ export const addCoupon = (cart, promo) => {
   const patches = {
     promo: promoCode,
     ...totals
-  }
+  };
 
   store.dispatch(requestPatchCart(cart._id, patches));
 };
@@ -149,7 +149,7 @@ export const removeCoupon = cart => {
   const patches = {
     promo: null,
     ...totals
-  }
+  };
 
   store.dispatch(requestPatchCart(cart._id, patches));
 };
