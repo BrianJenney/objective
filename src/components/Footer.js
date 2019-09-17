@@ -161,7 +161,7 @@ const Footer = () => {
                 <Grid container item={true} xs={12} className="legal">
                   <StyledList>
                     <ListItem className="text-center">
-                      Objective Wellness &bull; All rights reserved
+                      Objective &bull; All rights reserved
                     </ListItem>
                   </StyledList>
                 </Grid>
@@ -287,9 +287,7 @@ const Footer = () => {
                 </Grid>
                 <Grid container item={true} xs={12} className="legal">
                   <StyledList>
-                    <ListItem>
-                      Objective Wellness &bull; All rights reserved
-                    </ListItem>
+                    <ListItem>Objective &bull; All rights reserved</ListItem>
                     <ListItem>
                       <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
                     </ListItem>
