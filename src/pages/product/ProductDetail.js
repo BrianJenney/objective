@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -23,7 +23,8 @@ import {
 } from '../../utils/product';
 import './PDP-style.css';
 import ProductPopUp from './ProductPopUp';
-import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+// import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 const localStorageClient = require('store');
 
@@ -73,12 +74,12 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
-const ProductDetail = ({ variantSlug, history }) => {
+const ProductDetail = ({ variantSlug }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices } = useContext(ProductContext);
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [open, setOpen] = useState(false);
 
@@ -89,9 +90,7 @@ const ProductDetail = ({ variantSlug, history }) => {
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
 
-  const message = (
-    <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
-  );
+  // const message = (<ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />);
 
   const updateQuantityToCart = useCallback(
     qty => {
@@ -102,9 +101,10 @@ const ProductDetail = ({ variantSlug, history }) => {
         variantMap.get(selectedVariantSku),
         qty
       );
-      enqueueSnackbar(message, { variant: 'success' });
+      dispatch(setCartDrawerOpened(true));
+      // enqueueSnackbar(message, { variant: 'success' });
     },
-    [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]
+    [cart, selectedVariantSku, variantMap, dispatch]
   );
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
@@ -118,17 +118,10 @@ const ProductDetail = ({ variantSlug, history }) => {
       variantMap.get(selectedVariantSku),
       quantity
     );
-    enqueueSnackbar(message, { variant: 'success' });
+    // enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
-  }, [
-    cart,
-    selectedVariantSku,
-    variantMap,
-    message,
-    quantity,
-    enqueueSnackbar,
-    dispatch
-  ]);
+    dispatch(setCartDrawerOpened(true));
+  }, [ cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
   const handleEmailPopup = () => {
     setOpen(true);
