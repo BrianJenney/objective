@@ -23,10 +23,8 @@ const Products = () => {
       })
       .map(product => {
         product = productMap.get(product.slug);
-        console.log("product_new",product);
+        
         if(productCategoriesToProducts[productCategory]){
-          let productCategoryProducts = productCategoriesToProducts[productCategory];
-         
 
           productCategoriesToProducts[productCategory].push(product);
 
