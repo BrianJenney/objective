@@ -35,7 +35,9 @@ import {
   StyledLogoContainer,
   StyledArrowIcon,
   StyledShoppingBag,
-  StyledBadge
+  StyledBadge,
+  StyledHeaderWrapperEmptyCart,
+  StyledSmallCapsEmptyCart
 } from './StyledComponents';
 
 const { LIGHT_GRAY, MEDIUM_GRAY } = colorPalette;
@@ -96,35 +98,43 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       }
 
       <div>
-        <StyledHeaderWrapper container direction="column">
-          <Grid container direction="row" alignItems="baseline">
-            <StyledCartHeader align="center">Your Cart </StyledCartHeader>
-            <StyledCartCount component="span">
-              {' '}
-              ({cartCount} Items)
+        {cart.items.length !== 0 ? (
+          <StyledHeaderWrapper container direction="column">
+            <Grid container direction="row" alignItems="baseline">
+              <StyledCartHeader align="center">Your Cart </StyledCartHeader>
+              <StyledCartCount component="span">
+                {' '}
+                ({cartCount} Items)
             </StyledCartCount>
-          </Grid>
-          {cart.items.length !== 0
-            ? showCheckoutProceedLink && (
-              <Grid container direction="row" alignItems="flex-end">
-                <StyledSmallCaps component="span" onClick={handleCheckout}>
-                  proceed to checkout{' '}
-                  <StyledArrowIcon>
-                    <RightArrow />
-                  </StyledArrowIcon>
-                </StyledSmallCaps>
+            </Grid>
+            <Grid container direction="row" alignItems="flex-end">
+              <StyledSmallCaps component="span" onClick={handleCheckout}>
+                proceed to checkout{' '}
+                <StyledArrowIcon>
+                  <RightArrow />
+                </StyledArrowIcon>
+              </StyledSmallCaps>
+            </Grid>
+          </StyledHeaderWrapper>
+        ) : (
+            <StyledHeaderWrapperEmptyCart container direction="column">
+              <Grid container direction="row" alignItems="baseline">
+                <StyledCartHeader align="center">Your Cart </StyledCartHeader>
+                <StyledCartCount component="span">
+                  {' '}
+                  ({cartCount} Items)
+                  </StyledCartCount>
               </Grid>
-            )
-            : null
-          }
-        </StyledHeaderWrapper>
+            </StyledHeaderWrapperEmptyCart>
+          )
+        }
       </div>
       <Grid container xs={12}>
         {cart.items.length === 0 ? (
           <StyledGridEmptyCart item xs={12}>
-            <StyledSmallCaps component="span">
+            <StyledSmallCapsEmptyCart component="span">
               Your cart is currently empty
-            </StyledSmallCaps>
+            </StyledSmallCapsEmptyCart>
           </StyledGridEmptyCart>
         ) : null}
         {cart.items.length !== 0 ?

@@ -55,10 +55,17 @@ export const StyledLogo = withStyles(theme => ({
 
 export const StyledSmallCaps = withStyles(theme => ({
   root: {
-    fontSize: smallText2,
+    fontSize: 'smallText2',
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontFamily: $brandSans
+    fontFamily: $brandSans,
+  }
+}))(Typography);
+
+export const StyledSmallCapsEmptyCart = withStyles(theme => ({
+  root: {
+    fontSize: '32px',
+    fontFamily: 'Canela Text, serif',
   }
 }))(Typography);
 
@@ -101,13 +108,22 @@ export const StyledGridEmptyCart = withStyles(theme => ({
   root: {
     margin: '0 0 30px 0',
     borderTop: $thin1pxRuler_gray,
-    paddingTop: '29px'
+    paddingTop: '40px',
+    textAlign: 'center',
+    paddingRight: '40px',
+    paddingLeft: '40px'
   }
 }))(Grid);
 
 export const StyledHeaderWrapper = withStyles(theme => ({
   root: {
     paddingBottom: '34px'
+  }
+}))(Grid);
+
+export const StyledHeaderWrapperEmptyCart = withStyles(theme => ({
+  root: {
+    paddingBottom: '10px'
   }
 }))(Grid);
 
@@ -126,6 +142,9 @@ export const StyledCheckoutButton = withStyles(theme => ({
     maxWidth: 351,
     height: '80px',
     marginTop: '15px',
+    fontFamily: 'p22-underground, Helvetica, sans',
+    fontWeight: 'bold',
+    letterSpacing: '1.17px',
     [theme.breakpoints.up('sm')]: {
       width: '100%',
       maxWidth: 351,
@@ -194,6 +213,21 @@ export const StyledCartCloseIcon = withStyles(theme => ({
   }
 }))(Box);
 
+export const StyledEmptyCartCloseIcon = withStyles(theme => ({
+  root: {
+    [theme.breakpoints.up('md')]: {
+      position: 'absolute',
+      left: 365,
+      top: 35
+    },
+    [theme.breakpoints.down('sm')]: {
+      position: 'absolute',
+      left: 320,
+      top: 30
+    }
+  }
+}))(Box);
+
 export const StyledShoppingBag = withStyles(theme => ({
   root: {
     position: 'absolute',
@@ -211,6 +245,6 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-    }`
+      }`
   }
 }))(Badge);

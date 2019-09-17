@@ -4,7 +4,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import CartDrawer from './CartDrawer';
 import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
-import { StyledCartCloseIcon } from './StyledComponents';
+import { StyledCartCloseIcon, StyledEmptyCartCloseIcon } from './StyledComponents';
+
 
 const ShoppingCart = () => {
   const cart = useSelector(state => state.cart);
@@ -26,7 +27,19 @@ const ShoppingCart = () => {
         </>
       }
       closer={
-        <StyledCartCloseIcon position="absolute" children={<CloseIcon />} />
+        cart.items.length !== 0 ?
+          <StyledCartCloseIcon
+            position="absolute"
+            left={1}
+            top={30}
+            children={<CloseIcon />}
+          /> :
+          <StyledEmptyCartCloseIcon
+            position="absolute"
+            left={1}
+            top={30}
+            children={<CloseIcon />}
+          />
       }
       listContent={<CartDrawer showCheckoutProceedLink />}
       side="right"
