@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import store from '../store';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -34,14 +33,14 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles(theme => ({
+const StyledMenuItem = withStyles({
   root: {
     '&:hover': {
       textDecoration: 'underline',
       backgroundColor: 'transparent'
     }
   }
-}))(MenuItem);
+})(MenuItem);
 
 const LoggedInUser = ({ name, logout }) => {
   const theme = useTheme();
@@ -62,7 +61,9 @@ const LoggedInUser = ({ name, logout }) => {
     setAnchorEl(null);
   };
 
-  return (
+  return xs ? (
+    <NavLink to="/account/overview">Hi, {name}</NavLink>
+  ) : (
     <div style={{ margin: '0 -5px' }}>
       <Button
         aria-haspopup="true"

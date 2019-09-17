@@ -39,12 +39,17 @@ const StyledBox = withStyles(() => ({
 }))(Box);
 
 const Header = ({ currentUser, location }) => {
+  const theme = useTheme();
+  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const { account_jwt, firstName } = currentUser.data;
   const accountMenuItemConf = account_jwt
     ? {
         key: 'third',
         children: <LoggedInUser name={firstName} />
       }
+    : burger
+    ? { key: 'third', to: '/login', children: ' Account' }
     : {
         key: 'third',
         children: <LoginDropdown />
@@ -67,10 +72,6 @@ const Header = ({ currentUser, location }) => {
       menuItems={burgerMenuItems}
     />
   );
-
-  const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
 
   return (
     <Grid container item={true} xs={12} className="headerContainer">
