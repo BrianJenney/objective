@@ -8,6 +8,7 @@ import {
   CartPage,
   AccountPage,
   AccountOverviewPage,
+  AccountOrderPage,
   AccountOrdersPage,
   AccountAddressesPage,
   AccountPaymentDetailsPage,
@@ -54,6 +55,13 @@ export default [
         injectCurrentUser: true,
         component: AccountOrdersPage
       },
+      {
+        path: '/account/orders/:id',
+        exact: true,
+        injectCurrentUser: true,
+        component: AccountOrderPage
+      },
+
       {
         path: '/account/addresses',
         exact: true,
