@@ -2,23 +2,44 @@ import { requestPatchCart } from "../../modules/cart/actions";
 
 import store from '../../store';
 
-export function calculateCartTotal(c) {
-  const total = c.reduce(function (prev, curr) {
+const calculateCartTotals = cart => {
+  let subtotal = cart.items.reduce(function (prev, curr) {
     return prev + curr.unit_price * curr.quantity;
-  }, 0);
+  }, 0.00);
 
-  return total;
-}
+  let discount = 0.00;
+  let total = subtotal;
+
+  if (cart.promo) {
+    if (cart.promo.discount.type === 'AMOUNT') {
+      discount = cart.promo.discount.amount_off / 100;
+      total = subtotal - discount;
+    } else if (cart.promo.discount.type === 'PERCENT') {
+      total = cart.items.reduce(function (prev, curr) {
+        return prev + curr.discount_price * curr.quantity;
+      }, 0.00);
+      discount = subtotal - total;
+    }
+  }
+
+  return {
+    discount,
+    subtotal,
+    total
+  };
+};
 
 export const addToCart = (cartId, cart, selectedVariant, quantity) => {
-  const newItems = cart.items;
-  // console.log('add to cart', newItems, selectedVariant)
+  let localCart = cart;
+  let newItems = cart.items;
   let alreadyInCart = false;
+
   newItems.filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
       alreadyInCart = true;
-      item.quantity += quantity;
+      item.quantity = quantity;
     });
+
   if (!alreadyInCart) {
     const newItem = {
       variant_name: selectedVariant.name,
@@ -29,40 +50,105 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
       attributes: selectedVariant.attributes,
       quantity: quantity,
       unit_price: parseFloat(selectedVariant.effectivePrice),
+      discount_price: parseFloat(selectedVariant.effectivePrice),
       varSlug: selectedVariant.slug,
       prodSlug: selectedVariant.productSlug,
     };
     newItems.push(newItem);
   }
+
+  localCart.items = newItems;
+
+  let totals = calculateCartTotals(localCart);
+
   const patches = {
     items: newItems,
-    subtotal: calculateCartTotal(newItems),
-    total: calculateCartTotal(newItems)
+    ...totals
   };
+
   store.dispatch(requestPatchCart(cartId, patches));
 };
 
 export const adjustQty = (cart, product, amount) => {
-  let newitems = cart.items;
-  newitems[product].quantity += amount;
+  let localCart = cart;
+  let newItems = cart.items;
 
-  let patches = {
-    items: newitems,
-    subtotal: calculateCartTotal(newitems),
-    total: calculateCartTotal(newitems)
+  newItems[product].quantity += amount;
+
+  localCart.items = newItems;
+
+  let totals = calculateCartTotals(localCart);
+
+  const patches = {
+    items: newItems,
+    ...totals
   };
 
   store.dispatch(requestPatchCart(cart._id, patches));
 };
 
 export const removeFromCart = (cart, product) => {
-  const newItems = [...cart.items];
+  let localCart = cart;
+  let newItems = [...cart.items];
+
   newItems.splice(product, 1);
+
+  localCart.items = newItems;
+
+  let totals = calculateCartTotals(localCart);
 
   const patches = {
     items: newItems,
-    subtotal: calculateCartTotal(newItems),
-    total: calculateCartTotal(newItems)
+    ...totals
+  };
+
+  store.dispatch(requestPatchCart(cart._id, patches));
+};
+
+export const addCoupon = (cart, promo) => {
+  const { campaign, category, code, discount, expiration_date, gift, is_referral_code, loyalty_card, metadata, object, start_date, type } = promo;
+  const promoCode = { campaign, category, code, discount, expiration_date, gift, is_referral_code, loyalty_card, metadata, object, start_date, type };
+
+  let localCart = cart;
+  let items = cart.items;
+
+  if (promoCode.discount.type === 'PERCENT') {
+    const discount = promoCode.discount.percent_off / 100;
+
+    items.forEach(item => {
+      item.discount_price = item.unit_price - (item.unit_price * discount);
+    });
+
+    localCart.items = items;
+  }
+
+  localCart.promo = promoCode;
+
+  let totals = calculateCartTotals(localCart);
+
+  const patches = {
+    promo: promoCode,
+    ...totals
+  };
+
+  store.dispatch(requestPatchCart(cart._id, patches));
+};
+
+export const removeCoupon = cart => {
+  let localCart = cart;
+  let items = cart.items;
+
+  items.forEach(item => {
+    item.discount_price = item.unit_price;
+  });
+
+  delete localCart.promo;
+
+  let totals = calculateCartTotals(localCart);
+
+  const patches = {
+    promo: null,
+    ...totals
   };
 
   store.dispatch(requestPatchCart(cart._id, patches));

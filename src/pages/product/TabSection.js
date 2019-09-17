@@ -43,9 +43,7 @@ function a11yProps(index) {
 
 const useStyles = makeStyles(theme => ({
   indicator: {
-    display: 'block',
-    borderBottom: '1px solid #ffffff',
-    backgroundColor: '#fdf8f2'
+    backgroundColor: '#fff'
   },
   tabs: {
     borderLeft: '2px solid #003833',
@@ -53,6 +51,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fdf8f2',
     padding: '30px 0',
     fontFamily: 'p22-underground, Helvetica, sans',
+    fontSize: '24px',
     fontWeight: 'bold',
     '&:hover': {
       backgroundColor: '#ffffff',
@@ -61,7 +60,8 @@ const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     marginTop: '50px',
-    border: '2px solid #003833'
+    border: '2px solid #003833',
+    backgroundColor: '#FFF'
   }
 }));
 
@@ -100,7 +100,7 @@ export default function PdpTabs(props) {
                 />
                 <Tab
                   variant="smallHeader"
-                  label="Information"
+                  label="Supplement Facts"
                   {...a11yProps(1)}
                   className={classes.tabs}
                 />

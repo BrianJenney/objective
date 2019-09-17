@@ -31,6 +31,7 @@ class ChangePassword extends React.Component {
             <Field
               label="Current Password"
               name="currentPassword"
+              type="password"
               component={InputField}
             />
           </Grid>
@@ -38,6 +39,7 @@ class ChangePassword extends React.Component {
             <Field
               label="New Password"
               name="newPassword1"
+              type="password"
               helperText="Must be at least 6 characters"
               component={InputField}
             />
@@ -61,7 +63,9 @@ class ChangePassword extends React.Component {
     // if (values.newPassword1 !== values.newPassword2) {
     //   return false;
     // }
-    store.dispatch(requestPatchAccount(this.props.account.data.account_jwt, values));
+    store.dispatch(
+      requestPatchAccount(this.props.account.data.account_jwt, values)
+    );
   };
 
   render() {
@@ -72,7 +76,7 @@ class ChangePassword extends React.Component {
     if (!account.data.account_jwt) {
       return <div>No Account</div>;
     }
-    
+
     return (
       <Container>
         <Typography variant="h3" gutterBottom>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -7,7 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import { Button, AlertPanel } from '../common';
+import { Button, NavLink, AlertPanel } from '../common';
 import { withCurrentUser } from '../../hoc';
 import { InputField } from '../form-fields';
 
@@ -24,6 +24,12 @@ const INITIAL_VALUES = {
 };
 
 const LoginForm = ({ title, onSubmit, currentUser }) => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = useCallback(
+    () => setPasswordVisible(!passwordVisible),
+    [passwordVisible, setPasswordVisible]
+  );
+
   const renderForm = () => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
@@ -41,7 +47,21 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
             name="password"
             label="Password"
             component={InputField}
-            type="password"
+            type={passwordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    component="button"
+                    underline="always"
+                    onClick={togglePasswordVisibility}
+                    children={
+                      passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
+                    }
+                  ></NavLink>
+                </Box>
+              )
+            }}
             autoComplete="current-password"
           />
         </Grid>

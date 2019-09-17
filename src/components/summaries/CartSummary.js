@@ -51,7 +51,7 @@ const CartSummary = ({ cart }) => {
               <Grid
                 item
                 xs={4}
-                style={{ 'min-width': '126px', 'margin-right': '18px' }}
+                style={{ minWidth: '126px', marginRight: '18px' }}
               >
                 <Card>
                   <CardMedia
@@ -65,9 +65,9 @@ const CartSummary = ({ cart }) => {
                 <Card
                   style={{
                     display: 'flex',
-                    'flex-direction': 'column',
+                    flexDirection: 'column',
                     height: '126px',
-                    'justify-content': 'space-between'
+                    justifyContent: 'space-between'
                   }}
                 >
                   <StyledProductLink>{item.variant_name}</StyledProductLink>
@@ -84,12 +84,12 @@ const CartSummary = ({ cart }) => {
         <Grid xs={12} container>
           <StyledTotalWrapper container xs={12}>
             <Grid item xs>
-              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Subtotal <span>({cart.items.length} items):</span>
               </StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ 'font-size': '18px' }}>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
                 {`$${cart.subtotal.toFixed(2)}`}
               </StyledSmallCaps>
             </Grid>
@@ -97,7 +97,7 @@ const CartSummary = ({ cart }) => {
 
           <Grid container xs={12} style={{ margin: '15px 0' }}>
             <Grid item xs>
-              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Shipping
               </StyledSmallCaps>
               <StyledFinePrint component="p">
@@ -105,38 +105,38 @@ const CartSummary = ({ cart }) => {
               </StyledFinePrint>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ 'font-size': '18px' }}>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
                 $XXX.xx
               </StyledSmallCaps>
             </Grid>
           </Grid>
           <Grid container xs={12}>
             <Grid item xs>
-              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Savings
               </StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ 'font-size': '18px' }}>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
                 $XXX.xx
               </StyledSmallCaps>
             </Grid>
           </Grid>
           <Grid container style={{ margin: '15px 0' }}>
             <Grid item xs>
-              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Tax
               </StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ 'font-size': '18px' }}>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
                 $XXX.xx
               </StyledSmallCaps>
             </Grid>
           </Grid>
           <Grid item xs={12}>
             <Link component="button" underline="always">
-              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Enter Promo Code
               </StyledSmallCaps>
             </Link>
@@ -145,16 +145,16 @@ const CartSummary = ({ cart }) => {
             container
             xs={12}
             style={{
-              'border-top': `solid 2px ${MEDIUM_GRAY}`,
-              'padding-top': '30px',
-              'margin-top': '20px'
+              borderTop: `solid 2px ${MEDIUM_GRAY}`,
+              paddingTop: '30px',
+              marginTop: '20px'
             }}
           >
             <Grid item xs>
               <StyledSmallCaps>Total</StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ 'font-size': '22px' }}>
+              <StyledSmallCaps style={{ fontSize: '22px' }}>
                 {`$${cart.total.toFixed(2)}`}
               </StyledSmallCaps>
             </Grid>

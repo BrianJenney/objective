@@ -32,6 +32,7 @@ class ResetPassword extends React.Component {
           <Field
             label="New Password"
             name="newPassword1"
+            type="password"
             helperText="Must be at least 6 characters"
             component={InputField}
           />
@@ -40,6 +41,7 @@ class ResetPassword extends React.Component {
           <Field
             label="Confirm New Password"
             name="newPassword2"
+            type="password"
             component={InputField}
           />
         </Grid>

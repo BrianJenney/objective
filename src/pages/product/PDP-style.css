@@ -6,19 +6,22 @@ html,
   font-stretch: normal;
   line-height: 1.1;
   letter-spacing: normal;
-  color: #003732;
-  padding-bottom: 30px;
 }
 
 .pdp-header {
-  text-align: center;
+  font-size: 60px;
+  color: #1f396d;
+  margin: 35px 0 20px;
 }
 
 .pdp-subtitle {
-  border-top: 0.01rem solid;
-  border-bottom: 0.01rem solid;
-  border-width: 100%;
-  padding: 10px 0 10px 0;
+  border-top: 0.01rem solid !important;
+  border-bottom: 0.01rem solid !important;
+  border-width: 100% !important;
+  padding: 20px 0;
+  font-family: p22-underground, sans-serif;
+  font-size: 22px;
+  padding: 20px 0;
 }
 
 .pdp-description {
@@ -27,22 +30,21 @@ html,
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.6;
+  line-height: 1.5;
   letter-spacing: normal;
   color: #000000;
   text-align: left;
+  margin-bottom: 15px !important;
 }
 
 .pdp-direction {
-  width: 334px;
-  height: 32px;
-  font-family: P22Underground;
-  font-size: 16px;
+  font-family: p22-underground, sans-serif !important;
+  font-size: 16px !important;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  line-height: 2;
-  letter-spacing: 1.13px;
+  line-height: 2 !important;
+  letter-spacing: normal;
   color: #000000;
   text-align: left;
 }
@@ -66,26 +68,21 @@ html,
 }
 
 .pdp-price {
-  font-family: P22Underground, Arial, Helvetica, sans-serif;
-  font-size: 30px;
-  font-weight: 600;
-  color: #231f20;
-  font-style: normal;
-  font-stretch: normal;
-  letter-spacing: 2px;
-  color: #231f20;
-  padding-top: 2px;
+  font-family: p22-underground, sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: #000;
+  letter-spacing: normal;
 }
 
-.pdp-price-slash {
-  width: 10px;
+.pdp-price-dash {
   font-size: 30px;
   color: #979797;
+  margin: 0 10px;
 }
 
 .pdp-price-description {
-  height: 11px;
-  font-family: P22Underground, Arial, Helvetica, sans-serif;
+  font-family: p22-underground, sans-serif;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -108,46 +105,42 @@ html,
     line-height: normal;
     letter-spacing: 1.5px;
     color: #000000;
-    border-top: 0.01rem solid;
-    border-bottom: 0.01rem solid;
-    border-width: 50%;
-    padding: 5px;
+    border-top: 0.01rem solid !important;
+    border-bottom: 0.01rem solid !important;
+    border-width: 50% !important;
+    padding: 20px 0;
     text-align: left;
-    order: 2;
-    position: relative;
-    top: 30px;
-  }
-  .pdp-header {
-    text-align: left;
-    position: relative;
-    bottom: 25px;
-  }
-  .pdp-product-variant {
-    order: 1;
-    position: relative;
-    bottom: 115px;
-  }
-  .pdp-description {
-    position: relative;
-    bottom: 40px;
+    margin-bottom: 25px;
   }
   .pdp-direction {
-    position: relative;
-    bottom: 50px;
     font-size: 16px;
-  }
-  .pdp-direction-description {
-    position: relative;
-    bottom: 50px;
   }
   .pdp-price-description {
-    font-size: 18px;
-  }
-  .pdp-price-slash {
-    width: 17px;
+    font-size: 20px;
   }
   .pdp-product-type {
-    position: relative;
     font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .mobile-grid-modifications {
+    background-color: #fdf8f2;
+  }
+  .pdp-content {
+    padding: 25px 0 0 !important;
+  }
+  .mobile-padding {
+    padding: 0 16px;
+  }
+  .mobile-padding-small {
+    padding: 0 8px;
+  }
+  .pdp-header {
+    font-size: 35px;
+    margin: 0px 0 20px;
+  }
+  .pdp-subtitle {
+    padding: 20px 16px;
+    margin-bottom: 25px;
   }
 }

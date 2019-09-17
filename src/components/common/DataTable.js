@@ -2,8 +2,8 @@ import React from 'react';
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
+import LoaderInProgress from './LoaderInProgress';
 
 /* https://www.material-ui-datatables.com */
 import MUIDataTable from "mui-datatables";
@@ -53,7 +53,7 @@ const DataTable = ({ title, data, columns, isLoading}) => {
         title={
           <Typography variant="h5">
             <strong>{title}</strong>
-            {isLoading && <CircularProgress size={24} style={{marginLeft: 15, position: 'relative', top: 4}} />}
+            {isLoading && <LoaderInProgress />}
           </Typography>
         }
         data={data}

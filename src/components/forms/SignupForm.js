@@ -37,7 +37,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
   );
 
   const renderForm = ({ isValid }) => (
-    <Form>
+    <Form className="signup-form">
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
         <Grid item xs={6}>
@@ -90,6 +90,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
             type="submit"
             children="Create account"
             disabled={!isValid}
+            className="create-account-btn"
           />
         </Grid>
         {currentUser.error && (
@@ -114,11 +115,9 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
         )}
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={12} className="legal">
           <Typography>
-            By creating an account you agree to the True Health
-          </Typography>
-          <Typography>
+            By creating an account you agree to the Objective Wellness&nbsp;
             <NavLink to="/termsandconditions" underline="always">
               Terms &amp; Conditions&nbsp;
             </NavLink>

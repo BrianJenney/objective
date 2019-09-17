@@ -10,7 +10,7 @@ const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
 
 const ProductSummary = ({ product, variantMap }) => {
   return (
-    <React.Fragment className="section">
+    <React.Fragment>
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <div className="opt1">
           {/* <ProductCard product={product} /> */}
@@ -29,9 +29,9 @@ const ProductSummary = ({ product, variantMap }) => {
       </Grid>
       {product.variantSlugs.map(variantSlug => {
         const variant = variantMap.get(variantSlug);
-        console.log(product);
+
         return (
-          <Grid item xs={12} sm={3} md={3} lg={3}>
+          <Grid item xs={12} sm={3} md={3} lg={3} key={variant.sku}>
             <div className="opt2">
               <VariantCard variant={variant} product={product} />
             </div>

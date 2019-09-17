@@ -42,7 +42,7 @@ h2 {
     flex-wrap: nowrap;
   }
   h2 {
-  font-size: 40px !important;
+    font-size: 40px !important;
   }
 }
 
@@ -65,7 +65,7 @@ h2 {
 .label-info-wrapper .top-block .card h6,
 .label-info-wrapper .bottom-block .card h6 {
   font-family: P22-underground, Helvetica, serif;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -118,7 +118,7 @@ h2 {
 
 @media only screen and (min-width: 735.99px) {
   .label-info-wrapper .top-block {
-  padding-top: 60px !important;
+    padding-top: 60px !important;
   }
 }
 
@@ -189,9 +189,9 @@ h2 {
     width: 19.380531%;
   }
   .label-info-wrapper .top-block .facts-table table td,
-.label-info-wrapper .top-block .facts-table table th {
-  padding: 30px 20px;
-}
+  .label-info-wrapper .top-block .facts-table table th {
+    padding: 30px 20px;
+  }
 }
 
 .label-info-wrapper .bottom-block {
@@ -297,8 +297,15 @@ h2 {
 .how-it-works-wrapper h2 {
   max-width: 700px;
   margin: 0 auto 50px auto;
-  font-size: 43px;
+  font-family: CanelaText;
+  font-size: 44px !important;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.18;
+  letter-spacing: -1.1px;
   text-align: center;
+  color: #000000;
 }
 
 .how-it-works-wrapper .coreBenefits {
@@ -337,12 +344,13 @@ h2 {
   text-transform: uppercase;
   width: 100%;
   font-family: P22-underground, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   font-style: normal;
+
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: 1.28px;
+  letter-spacing: 1.44x;
   margin-top: 32px;
   margin-bottom: 15px;
   padding: 0;
@@ -357,6 +365,7 @@ h2 {
   padding-bottom: 40px;
   text-align: left;
   margin: 0 auto 40px 11px;
+  line-height: 1.6;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -387,7 +396,7 @@ h2 {
   width: 100%;
   margin: 28px auto 28px auto;
   font-family: P22-underground, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -464,11 +473,11 @@ h2 {
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
-.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
-  border-top: solid 1px #003833;
-  border-left: solid 1px #003833;
-  margin-right: 2.2px;
-}
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
+    border-top: solid 1px #003833;
+    border-left: solid 1px #003833;
+    margin-right: 2.2px;
+  }
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle,
@@ -598,7 +607,7 @@ h2 {
   margin-bottom: 60px;
   border-bottom: 1px solid #003833;
   font-family: P22-underground, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -916,6 +925,7 @@ h2 {
   .three-box {
     margin: 50px;
     width: 341px;
+    height: 341px;
     position: relative;
   }
 
@@ -932,7 +942,7 @@ h2 {
     position: absolute;
     right: 0;
     left: 0;
-    top: 100px;
+    top: 75px;
   }
 
   .one-bottom-color,

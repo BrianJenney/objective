@@ -9,7 +9,11 @@
   padding: 0 15px;
 
   @media (min-width: 1200px) {
-    padding: 0 84px;
+    padding: 0 115px;
+  }
+
+  @media (min-width: 1600px) {
+    padding: 0 275px;
   }
 
   a {
@@ -75,9 +79,6 @@
     @media (min-width: 1200px) {
       font-size: 16px;
     }
-    .opac {
-      opacity: 0.5;
-    }
     form {
       display: flex;
       color: #fff;
@@ -87,12 +88,11 @@
       }
     }
     .signup-arrow {
-      margin-top: -50px;
-      margin-left: 173px;
+      margin-top: -6px;
+      margin-left: -3px;
     }
     .mobile-arrow {
-      margin-top: -20px;
-      margin-right: -55px;
+      margin-top: -5px;
     }
   }
   .icon {
@@ -122,11 +122,11 @@
     padding: 25px 0 60px;
 
     @media (min-width: 1200px) {
-      padding: 55px 40px 195px;
+      padding: 55px 0px 100px;
     }
 
     @media (min-width: 1600px) {
-      padding: 55px 200px 195px;
+      padding: 55px 0px 100px;
     }
   }
 
@@ -219,7 +219,12 @@
     input {
       margin: 0;
       color: #ffffff;
-      padding: 10px 1px;
+      padding: 10px;
+      border: 1px solid #fff;
+      background-color: #000000;
+      &:hover {
+        border: 1px solid #fff;
+      }
     }
 
     input::placeholder {

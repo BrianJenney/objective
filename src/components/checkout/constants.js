@@ -1,6 +1,6 @@
 export const STEPS = [
   'Account',
-  'Shipping Address',
+  'Shipping',
   'Payment & Billing Address',
   'Review & Order'
 ];

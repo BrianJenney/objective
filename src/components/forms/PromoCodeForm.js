@@ -8,10 +8,9 @@ import { Formik, Field, Form } from 'formik';
 import { Button } from '../common';
 
 import { redeemPromoCode } from '../../apis/Voucherify';
-import { StyledSmallCaps, StyledFinePrint } from '../../pages/cart/StyledComponents';
+import { addCoupon } from '../../modules/cart/functions';
+import { StyledSmallCaps } from '../../pages/cart/StyledComponents';
 import { InputField } from '../form-fields';
-
-import { requestPatchCart } from "../../modules/cart/actions";
 
 const schema = object().shape({
   promoCode: string().required('Promo Code is required')
@@ -26,8 +25,12 @@ const PromoCodeForm = () => {
 
   const onSubmit = async e => {
     let response = await redeemPromoCode(e.promoCode);
-    console.log(cart);
-    console.log(response);
+
+    if (response.result == 'SUCCESS') {
+      addCoupon(cart, response.voucher);
+    } else {
+      // @todo handle error case
+    }
   };
 
   const renderForm = () => (
@@ -53,44 +56,14 @@ const PromoCodeForm = () => {
     </Form>
   );
 
-  const renderDiscount = () => {
-    return (
-      <Grid
-        container
-        direction="row"
-        xs={12}
-        justify="space-between"
-        style={{ margin: '0 0 20px 0' }}
-      >
-        <Grid item xs={6}>
-          <StyledSmallCaps style={{ 'font-size': '14px' }}>
-            Discount
-          </StyledSmallCaps>
-        </Grid>
-        <Grid item xs={6} style={{ 'text-align': 'right' }}>
-          <StyledSmallCaps style={{ 'font-size': '18px' }}>
-            $XXX.xx
-          </StyledSmallCaps>
-        </Grid>
-        <StyledFinePrint component="p">
-          Promo Code
-        </StyledFinePrint>
-      </Grid>
-    );
-  };
-
-  if (cart.voucher) {
-    return renderDiscount();
-  } else {
-    return (
-      <Formik
-        initialValues={INITIAL_VALUES}
-        onSubmit={onSubmit}
-        validationSchema={schema}
-        render={renderForm}
-      />
-    );
-  }
+  return (
+    <Formik
+      initialValues={INITIAL_VALUES}
+      onSubmit={onSubmit}
+      validationSchema={schema}
+      render={renderForm}
+    />
+  );
 };
 
 export default PromoCodeForm;

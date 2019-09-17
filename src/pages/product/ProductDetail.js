@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -23,7 +23,8 @@ import {
 } from '../../utils/product';
 import './PDP-style.css';
 import ProductPopUp from './ProductPopUp';
-import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+// import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 const localStorageClient = require('store');
 
@@ -65,7 +66,7 @@ const ProductVariant = ({ productVariant }) => {
       className="pdp-product-variant"
     >
       <div className="pdp-price">${productVariant.effectivePrice}</div>
-      <div className="pdp-price-slash">/</div>
+      <div className="pdp-price-dash">&mdash;</div>
       <div className="pdp-price-description">
         {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
       </div>
@@ -73,12 +74,12 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
-const ProductDetail = ({ variantSlug, history }) => {
+const ProductDetail = ({ variantSlug }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices } = useContext(ProductContext);
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [open, setOpen] = useState(false);
 
@@ -89,9 +90,7 @@ const ProductDetail = ({ variantSlug, history }) => {
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
 
-  const message = (
-    <ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />
-  );
+  // const message = (<ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />);
 
   const updateQuantityToCart = useCallback(
     qty => {
@@ -102,9 +101,10 @@ const ProductDetail = ({ variantSlug, history }) => {
         variantMap.get(selectedVariantSku),
         qty
       );
-      enqueueSnackbar(message, { variant: 'success' });
+      dispatch(setCartDrawerOpened(true));
+      // enqueueSnackbar(message, { variant: 'success' });
     },
-    [cart, selectedVariantSku, variantMap, message, enqueueSnackbar, dispatch]
+    [cart, selectedVariantSku, variantMap, dispatch]
   );
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
@@ -118,17 +118,10 @@ const ProductDetail = ({ variantSlug, history }) => {
       variantMap.get(selectedVariantSku),
       quantity
     );
-    enqueueSnackbar(message, { variant: 'success' });
+    // enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
-  }, [
-    cart,
-    selectedVariantSku,
-    variantMap,
-    message,
-    quantity,
-    enqueueSnackbar,
-    dispatch
-  ]);
+    dispatch(setCartDrawerOpened(true));
+  }, [ cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
   const handleEmailPopup = () => {
     setOpen(true);
@@ -166,37 +159,32 @@ const ProductDetail = ({ variantSlug, history }) => {
       {isMobile ? (
         <>
           <Carousel prodId={product._id} />
-          <Grid container className={classes.gridModifications} xs={12} sm={12}>
-            <Grid container justify="space-between" xs={10} sm={11}>
+          <Grid container className="mobile-grid-modifications" xs={12} sm={12}>
+            <Grid container justify="space-between">
               <Grid item xs={12} sm={5}>
                 <Card className={classes.box}>
                   <CardContent
                     className={classes.cardRootOverrides}
                     className="pdp-content"
                   >
-                    <Box>
-                      <Typography className="pdp-header" variant="h1">
-                        {product.name}
+                    <div className="mobile-padding">
+                      <h1 className="pdp-header">{product.name}</h1>
+                      <ProductVariant
+                        productVariant={variantMap.get(selectedVariantSku)}
+                      />
+                    </div>
+                    <div className="pdp-subtitle">{product.subtitle}</div>
+                    <div className="mobile-padding">
+                      <Typography className="pdp-description">
+                        {product.description}
                       </Typography>
-                    </Box>
-                    <Typography className="pdp-subtitle">
-                      {product.subtitle}
-                    </Typography>
-                    <br />
-                    <ProductVariant
-                      productVariant={variantMap.get(selectedVariantSku)}
-                    />
-                    <Typography className="pdp-description">
-                      {product.description}
-                    </Typography>
-                    <br />
-                    <Typography className="pdp-direction">
-                      DIRECTIONS
-                    </Typography>
-                    <Typography className="pdp-direction-description">
-                      Take one soft gel daily with meal
-                    </Typography>
-
+                      <Typography className="pdp-direction">
+                        DIRECTIONS
+                      </Typography>
+                      <Typography className="pdp-direction-description">
+                        Take one soft gel daily with meal
+                      </Typography>
+                    </div>
                     {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
@@ -205,7 +193,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                     {!ATCEnabled && <Quantity />}
                   </CardContent>
                   {ATCEnabled && (
-                    <Grid>
+                    <Grid className="mobile-padding-small">
                       <CardActions className={classes.maxWidth}>
                         <Button
                           fullWidth
@@ -218,8 +206,8 @@ const ProductDetail = ({ variantSlug, history }) => {
                     </Grid>
                   )}
 
-                  {/* Render this button when Product is out of stock */}
-                  <Grid>
+                  {/* Render this button when Product is out of stock hiding for now */}
+                  {/* <Grid>
                     <CardActions className={classes.maxWidth}>
                       <Button
                         className={classes.btnOOS}
@@ -236,7 +224,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                         product_name={product.name}
                       />
                     )}
-                  </Grid>
+                  </Grid> */}
                 </Card>
               </Grid>
             </Grid>
@@ -254,22 +242,14 @@ const ProductDetail = ({ variantSlug, history }) => {
                   className={classes.cardRootOverrides}
                   className="pdp-content"
                 >
-                  <Box>
-                    <Typography className="pdp-header" variant="h1">
-                      {product.name}
-                    </Typography>
-                  </Box>
-                  <Typography className="pdp-subtitle">
-                    {product.subtitle}
-                  </Typography>
-                  <br />
+                  <h1 className="pdp-header">{product.name}</h1>
                   <ProductVariant
                     productVariant={variantMap.get(selectedVariantSku)}
                   />
+                  <div className="pdp-subtitle">{product.subtitle}</div>
                   <Typography className="pdp-description">
                     {product.description}
                   </Typography>
-                  <br />
                   <Typography className="pdp-direction">DIRECTIONS</Typography>
                   <Typography className="pdp-direction-description">
                     Take one soft gel daily with meal
@@ -296,8 +276,8 @@ const ProductDetail = ({ variantSlug, history }) => {
                   </Grid>
                 )}
 
-                {/* Render this button when Product is out of stock */}
-                <Grid>
+                {/* Render this button when Product is out of stock hiding for now */}
+                {/* <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
                       className={classes.btnOOS}
@@ -314,7 +294,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                       product_name={product.name}
                     />
                   )}
-                </Grid>
+                </Grid> */}
               </Card>
             </Grid>
           </Grid>
