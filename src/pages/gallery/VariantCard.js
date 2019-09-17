@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,9 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import { useQuantity, useWindowSize } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
-import { Button, ATCSnackbarAction } from '../../components/common';
+import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-
+import { setCartDrawerOpened } from '../../modules/cart/actions'
 const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
@@ -26,17 +26,22 @@ const PriceVariantInfo = ({ variant }) => {
 const VariantCard = ({ variant, product }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const windowSize = useWindowSize();
-  const { enqueueSnackbar } = useSnackbar();
+  // const windowSize = useWindowSize();
+  // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  const message = <ATCSnackbarAction variant={variant} />;
+  // const message = <ATCSnackbarAction variant={variant} />;
 
   const updateQuantityToCart = useCallback(
     qty => {
-      addToCart(localStorageClient.get('cartId'), cart, variant, qty);
-      enqueueSnackbar(message, { variant: 'success' });
+      addToCart(
+        localStorageClient.get('cartId'),
+        cart,
+        variant,
+        qty);
+      dispatch(setCartDrawerOpened(true));
+      // enqueueSnackbar(message, { variant: 'success' });
     },
-    [cart, variant, message, dispatch, enqueueSnackbar]
+    [ cart, variant, dispatch ]
   );
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
@@ -50,9 +55,10 @@ const VariantCard = ({ variant, product }) => {
       variant,
       quantity
     );
-    enqueueSnackbar(message, { variant: 'success' });
+    // enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
-  }, [cart, variant, message, quantity, enqueueSnackbar, dispatch]);
+    dispatch(setCartDrawerOpened(true));
+  }, [cart, variant, quantity, dispatch]);
 
   return (
     <Card className="gallery-prod-card">
