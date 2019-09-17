@@ -5,12 +5,12 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Button, Address } from '../components/common';
+import { CartSummary } from '../components/summaries';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-import { CartSummary } from '../components/summaries';
-import { Button } from '../components/common';
 import { StyledSmallCaps } from '../pages/cart/StyledComponents';
 
 const useStyles = makeStyles(theme => ({
@@ -43,21 +43,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Address = ({ address, email }) => {
-  const classes = useStyles();
-  return (
-    <>
-      <Typography className={classes.text}>
-        {address.firstName} {address.lastName}
-      </Typography>
-      <Typography className={classes.text}>{address.line1}</Typography>
-      <Typography className={classes.text}>
-        {address.city}, {address.state} {address.postalCode}
-      </Typography>
-      <Typography className={classes.text}>{email}</Typography>
-    </>
-  );
-};
 const OrderConfirmation = ({ onSubmit }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order);
@@ -68,14 +53,7 @@ const OrderConfirmation = ({ onSubmit }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
-  console.log('OrderConfirmation', { order, account });
-  const isEmptyOrSpaces = str => {
-    return str === null || str.match(/^ *$/) !== null;
-  };
-
-  // This is how you test for an empty object literal:
-  if (Object.keys(order).length === 0 && order.constructor === Object)
-    return <div></div>;
+  // console.log('OrderConfirmation', { order, account });
 
   const OrderCartSummary = () => {
     return <CartSummary cart={cart} />;
@@ -89,7 +67,7 @@ const OrderConfirmation = ({ onSubmit }) => {
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
         <Typography className={classes.text} gutterBottom>
-          Your order has been placed and a confirmation email email has been
+          Your order has been placed and a confirmation email has been
           sent to: {email}.
         </Typography>
         <Typography className={classes.text}>
@@ -113,7 +91,7 @@ const OrderConfirmation = ({ onSubmit }) => {
                 Billing Information
               </StyledSmallCaps>
               {/* No billingAddress in returned data. Use shippingAddress here for design purpose */}
-              <Address address={shippingAddress} email={email} />
+              <Address address={billingAddress} email={email} />
             </Box>
           </Grid>
           <Grid item xs={addressesWidth}>

@@ -75,7 +75,11 @@ export const requestFindOrdersByAccount = accountJwt => (
 
 export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
-  const getParams = { 
+  dispatch({
+    type: REQUEST_GET_ORDER,
+    payload: { isLoading: true }
+  });
+  const getParams = {
     id: orderId,
     params: {
       account_jwt: accountJwt
@@ -91,11 +95,6 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
     },
     payload
   );
-
-  dispatch({
-    type: REQUEST_GET_ORDER,
-    payload: {}
-  });
 };
 
 export const receivedGetOrder = order => {
