@@ -66,8 +66,8 @@ const Header = ({ currentUser, location }) => {
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
 
   return (
-    <Grid container xs={12} className="headerContainer">
-      <Grid container xs={12} spacing={0}>
+    <Grid container item={true} xs={12} className="headerContainer">
+      <Grid container item={true} xs={12} spacing={0}>
         {burger ? (
           <>
             <Grid container xs={10} className="top">
@@ -95,7 +95,7 @@ const Header = ({ currentUser, location }) => {
           </>
         ) : (
           <>
-            <Grid container xs={12} className="headerBar">
+            <Grid container item={true} xs={12} className="headerBar">
               <Grid item xs={6} className="option text-right">
                 <StyledBox fontSize={12}>
                   Free Shipping On Orders Over $75
@@ -105,7 +105,7 @@ const Header = ({ currentUser, location }) => {
                 <StyledBox fontSize={12}>Free Returns</StyledBox>
               </Grid>
             </Grid>
-            <Grid container className="holder" xs={12}>
+            <Grid container item={true} className="holder" xs={12}>
               <Grid item xs={1}>
                 <StyledLink component={RouterLink} to="/gallery">
                   Shop
