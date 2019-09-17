@@ -182,14 +182,12 @@ const ProductDetail = ({ variantSlug, history }) => {
                     <Typography className="pdp-subtitle">
                       {product.subtitle}
                     </Typography>
-                    <br />
                     <ProductVariant
                       productVariant={variantMap.get(selectedVariantSku)}
                     />
                     <Typography className="pdp-description">
                       {product.description}
                     </Typography>
-                    <br />
                     <Typography className="pdp-direction">
                       DIRECTIONS
                     </Typography>
@@ -218,8 +216,8 @@ const ProductDetail = ({ variantSlug, history }) => {
                     </Grid>
                   )}
 
-                  {/* Render this button when Product is out of stock */}
-                  <Grid>
+                  {/* Render this button when Product is out of stock hiding for now */}
+                  {/* <Grid>
                     <CardActions className={classes.maxWidth}>
                       <Button
                         className={classes.btnOOS}
@@ -236,7 +234,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                         product_name={product.name}
                       />
                     )}
-                  </Grid>
+                  </Grid> */}
                 </Card>
               </Grid>
             </Grid>
@@ -288,8 +286,8 @@ const ProductDetail = ({ variantSlug, history }) => {
                   </Grid>
                 )}
 
-                {/* Render this button when Product is out of stock */}
-                <Grid>
+                {/* Render this button when Product is out of stock hiding for now */}
+                {/* <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
                       className={classes.btnOOS}
@@ -306,7 +304,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                       product_name={product.name}
                     />
                   )}
-                </Grid>
+                </Grid> */}
               </Card>
             </Grid>
           </Grid>
