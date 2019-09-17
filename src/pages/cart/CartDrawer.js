@@ -12,6 +12,7 @@ import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/Shopp
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 
 import { PromoCodeForm } from '../../components/forms';
+import PromoCodeView from './PromoCodeView';
 
 import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
@@ -222,12 +223,12 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
           >
             <Grid item xs={6}>
               <StyledSmallCaps style={{ 'font-size': '14px' }}>
-                Subtotal Total:
+                Subtotal:
               </StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledSmallCaps style={{ 'font-size': '18px' }}>
-                {`$${cart.total.toFixed(2)}`}
+                {`$${cart.subtotal.toFixed(2)}`}
               </StyledSmallCaps>
             </Grid>
           </StyledTotalWrapper>
@@ -254,7 +255,11 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
           </StyledFinePrint>
         </Grid>
 
-        <PromoCodeForm />
+        {cart.promo ? (
+          <PromoCodeView />
+        ) : (
+          <PromoCodeForm />
+        )}
 
         <Grid
           container
