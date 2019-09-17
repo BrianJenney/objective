@@ -79,18 +79,21 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
       style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
       className="cart-drawer"
     >
-      <StyledLogoContainer>
-        <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
-        <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
-          <StyledBadge
-            invisible={cartCount < 1}
-            badgeContent={cartCount}
-            color="secondary"
-          >
-            <ShoppingBag />
-          </StyledBadge>
-        </StyledShoppingBag>
-      </StyledLogoContainer>
+      {cart.items.length !== 0 ?
+        <StyledLogoContainer>
+          <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
+          <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
+            <StyledBadge
+              invisible={cartCount < 1}
+              badgeContent={cartCount}
+              color="secondary"
+            >
+              <ShoppingBag />
+            </StyledBadge>
+          </StyledShoppingBag>
+        </StyledLogoContainer>
+        : null
+      }
 
       <div>
         <StyledHeaderWrapper container direction="column">
@@ -112,29 +115,20 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 </StyledSmallCaps>
               </Grid>
             )
-            : showCheckoutProceedLink && (
-              <Grid container direction="row" alignItems="flex-end">
-                <StyledSmallCaps
-                  component="span"
-                  onClick={e => e.preventDefault()}
-                >
-                  proceed to checkout{' '}
-                  <StyledArrowIcon>
-                    <RightArrow />
-                  </StyledArrowIcon>
-                </StyledSmallCaps>
-              </Grid>
-            )}
+            : null
+          }
         </StyledHeaderWrapper>
       </div>
       <Grid container xs={12}>
         {cart.items.length === 0 ? (
           <StyledGridEmptyCart item xs={12}>
             <StyledSmallCaps component="span">
-              Your cart is empty
+              Your cart is currently empty
             </StyledSmallCaps>
           </StyledGridEmptyCart>
-        ) : (
+        ) : null}
+        {cart.items.length !== 0 ?
+          (
             Object.values(cart.items).map((item, index) => (
               <>
                 <StyledDrawerGrid container xs={12} direction="row">
@@ -213,86 +207,98 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 </StyledDrawerGrid>
               </>
             ))
-          )}
-        <Grid item xs={12} style={{ 'text-align': 'left' }}>
-          <StyledTotalWrapper
+          ) : null
+        }
+        {cart.items.length !== 0 ? (
+          <Grid item xs={12} style={{ 'text-align': 'left' }}>
+            <StyledTotalWrapper
+              container
+              direction="row"
+              xs={12}
+              justify="space-between"
+            >
+              <Grid item xs={6}>
+                <StyledSmallCaps style={{ 'font-size': '14px' }}>
+                  Subtotal:
+              </StyledSmallCaps>
+              </Grid>
+              <Grid item xs={3} style={{ 'text-align': 'right' }}>
+                <StyledSmallCaps style={{ 'font-size': '18px' }}>
+                  {`$${cart.subtotal.toFixed(2)}`}
+                </StyledSmallCaps>
+              </Grid>
+            </StyledTotalWrapper>
+          </Grid>
+        ) : null
+        }
+        {cart.items.length !== 0 ? (
+          <Grid
             container
             direction="row"
             xs={12}
             justify="space-between"
+            style={{ margin: '20px 0' }}
           >
             <Grid item xs={6}>
               <StyledSmallCaps style={{ 'font-size': '14px' }}>
-                Subtotal:
-              </StyledSmallCaps>
+                Shipping
+            </StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledSmallCaps style={{ 'font-size': '18px' }}>
-                {`$${cart.subtotal.toFixed(2)}`}
+                $XXX.xx
+            </StyledSmallCaps>
+            </Grid>
+            <StyledFinePrint component="p">
+              Ground 3-5 Business Days
+          </StyledFinePrint>
+          </Grid>
+        ) : null
+        }
+
+        {cart.items.length !== 0 ?
+          cart.promo ? (
+            <PromoCodeView />
+          ) : (
+              <PromoCodeForm />
+            )
+          : null
+        }
+
+        {cart.items.length !== 0 ? (
+          <Grid
+            container
+            direction="row"
+            xs={12}
+            justify="space-between"
+            style={{
+              'margin-bottom': '0',
+              'border-top': `solid 2px ${MEDIUM_GRAY}`,
+              'padding-top': '29px',
+              'margin-top': '50px'
+            }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps>Estimated Total:</StyledSmallCaps>
+            </Grid>
+            <Grid item xs={3} style={{ 'text-align': 'right' }}>
+              <StyledSmallCaps style={{ 'font-size': '22px' }}>
+                {`$${cart.total.toFixed(2)}`}
               </StyledSmallCaps>
             </Grid>
-          </StyledTotalWrapper>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="space-between"
-          style={{ margin: '20px 0' }}
-        >
-          <Grid item xs={6}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Shipping
-            </StyledSmallCaps>
-          </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '18px' }}>
-              $XXX.xx
-            </StyledSmallCaps>
-          </Grid>
-          <StyledFinePrint component="p">
-            Ground 3-5 Business Days
-          </StyledFinePrint>
-        </Grid>
-
-        {cart.promo ? (
-          <PromoCodeView />
-        ) : (
-            <PromoCodeForm />
-          )}
-
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="space-between"
-          style={{
-            'margin-bottom': '0',
-            'border-top': `solid 2px ${MEDIUM_GRAY}`,
-            'padding-top': '29px',
-            'margin-top': '50px'
-          }}
-        >
-          <Grid item xs={6}>
-            <StyledSmallCaps>Estimated Total:</StyledSmallCaps>
-          </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '22px' }}>
-              {`$${cart.total.toFixed(2)}`}
-            </StyledSmallCaps>
-          </Grid>
-        </Grid>
-
-        <Grid container xs={12}>
-          <Grid item xs={12}>
-            <StyledFinePrint component="div">
-              Tax is calculated at checkout
+          </Grid>) : null
+        }
+        {cart.items.length !== 0 ? (
+          <Grid container xs={12}>
+            <Grid item xs={12}>
+              <StyledFinePrint component="div">
+                Tax is calculated at checkout
             </StyledFinePrint>
-          </Grid>
-        </Grid>
+            </Grid>
+          </Grid>) : null
+        }
       </Grid>
     </Grid>
-    // </Grid>
   );
 };
 
