@@ -166,35 +166,32 @@ const ProductDetail = ({ variantSlug, history }) => {
       {isMobile ? (
         <>
           <Carousel prodId={product._id} />
-          <Grid container className={classes.gridModifications} xs={12} sm={12}>
-            <Grid container justify="space-between" xs={10} sm={11}>
+          <Grid container className="mobile-grid-modifications" xs={12} sm={12}>
+            <Grid container justify="space-between">
               <Grid item xs={12} sm={5}>
                 <Card className={classes.box}>
                   <CardContent
                     className={classes.cardRootOverrides}
                     className="pdp-content"
                   >
-                    <Box>
-                      <Typography className="pdp-header" variant="h1">
-                        {product.name}
+                    <div className="mobile-padding">
+                      <h1 className="pdp-header">{product.name}</h1>
+                      <ProductVariant
+                        productVariant={variantMap.get(selectedVariantSku)}
+                      />
+                    </div>
+                    <div className="pdp-subtitle">{product.subtitle}</div>
+                    <div className="mobile-padding">
+                      <Typography className="pdp-description">
+                        {product.description}
                       </Typography>
-                    </Box>
-                    <Typography className="pdp-subtitle">
-                      {product.subtitle}
-                    </Typography>
-                    <ProductVariant
-                      productVariant={variantMap.get(selectedVariantSku)}
-                    />
-                    <Typography className="pdp-description">
-                      {product.description}
-                    </Typography>
-                    <Typography className="pdp-direction">
-                      DIRECTIONS
-                    </Typography>
-                    <Typography className="pdp-direction-description">
-                      Take one soft gel daily with meal
-                    </Typography>
-
+                      <Typography className="pdp-direction">
+                        DIRECTIONS
+                      </Typography>
+                      <Typography className="pdp-direction-description">
+                        Take one soft gel daily with meal
+                      </Typography>
+                    </div>
                     {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
@@ -203,7 +200,7 @@ const ProductDetail = ({ variantSlug, history }) => {
                     {!ATCEnabled && <Quantity />}
                   </CardContent>
                   {ATCEnabled && (
-                    <Grid>
+                    <Grid className="mobile-padding-small">
                       <CardActions className={classes.maxWidth}>
                         <Button
                           fullWidth
