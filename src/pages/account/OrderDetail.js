@@ -5,8 +5,8 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+// import IconButton from '@material-ui/core/IconButton';
+// import CloseIcon from '@material-ui/icons/Close';
 import { Address } from '../../components/common';
 import { CartSummary } from '../../components/summaries';
 import Box from '@material-ui/core/Box';
@@ -14,7 +14,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import { StyledSmallCaps } from '../../pages/cart/StyledComponents';
 import {formatDateTime} from '../../utils/misc';
-import { useSnackbar } from 'notistack';
+// import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -140,7 +140,7 @@ const OrderDetail = () => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
   const theme = useTheme();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const mainWidth = xs ? 12 : 8;
@@ -150,21 +150,23 @@ const OrderDetail = () => {
   if (!order ) return null;
   const { cart, transactions } = order;
 
-  const action = (key) => (
-    <>
-      <IconButton onClick={() => { closeSnackbar(key) }}>
-        <CloseIcon />
-      </IconButton>
-    </>
-  );
-
   if (cart.items.length < 1) {
+    /*
+    const action = (key) => (
+      <>
+        <IconButton onClick={() => { closeSnackbar() }}>
+          <CloseIcon />
+        </IconButton>
+      </>
+    );
     enqueueSnackbar(`Order #${order._id} is not a valid order with empty cart`,
       {
         variant: 'warning',
         persist: true,
+        preventDuplicate: true,
         action,
       });
+     */
     return null;
   }
   return (
