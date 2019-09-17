@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
@@ -183,91 +182,93 @@ const Checkout = ({
   };
 
   return (
-    <Container>
-      <Box py={10} className="checkout-wrapper">
-        <CssBaseline />
-        <Grid container spacing={4}>
-          <Grid item flex={1} xs={12} md={9}>
-            <Panel
-              title={getPanelTitleContent(0, activeStep, {
-                email: currentUserEmail
-              })}
-              collapsible
-              hideExpandIcon
-              expanded={activeStep === 0}
-              onChange={() => null}
-            >
-              <CheckoutAuth
-                currentUser={currentUser}
-                requestCreateAccount={requestCreateAccount}
-                requestLoginAttempt={requestLoginAttempt}
-                handleNext={() => {
-                  if (activeStep === 0) {
-                    setActiveStep(1);
-                  }
-                }}
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(
-                1,
-                activeStep,
-                payload.shippingAddress
-              )}
-              collapsible
-              expanded={activeStep === 1}
-              onChange={e => onPanelChange(e, 1)}
-            >
-              <AccountAddresses
-                currentUser={currentUser}
-                requestPatchAccount={requestPatchAccount}
-                onSubmit={handleNext}
-                allowFlyMode
-                mt={4}
-                mx={10}
-                mb={5}
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(
-                2,
-                activeStep,
-                payload.paymentDetails
-              )}
-              collapsible
-              expanded={activeStep === 2}
-              onChange={e => onPanelChange(e, 2)}
-            >
-              <AccountPaymentDetails
-                currentUser={currentUser}
-                requestPatchAccount={requestPatchAccount}
-                onBack={handleBack}
-                onSubmit={handleNext}
-                seedEnabled
-                addressSeed={payload.shippingAddress}
-                useSeedLabel="Use shipping address"
-                allowFlyMode
-                mt={4}
-                mx={10}
-                mb={5}
-              />
-            </Panel>
-            <Panel
-              title={getPanelTitleContent(3, activeStep, {})}
-              collapsible
-              hideExpandIcon
-              expanded={activeStep === 3}
-              onChange={e => onPanelChange(e, 3)}
-            >
-              <CheckoutReviewForm onSubmit={handleNext} />
-            </Panel>
+    <Box bgcolor="rgba(252, 248, 244, 0.5)">
+      <Container>
+        <Box py={10} className="checkout-wrapper">
+          <CssBaseline />
+          <Grid container spacing={4}>
+            <Grid item flex={1} xs={12} md={8}>
+              <Panel
+                title={getPanelTitleContent(0, activeStep, {
+                  email: currentUserEmail
+                })}
+                collapsible
+                hideExpandIcon
+                expanded={activeStep === 0}
+                onChange={() => null}
+              >
+                <CheckoutAuth
+                  currentUser={currentUser}
+                  requestCreateAccount={requestCreateAccount}
+                  requestLoginAttempt={requestLoginAttempt}
+                  handleNext={() => {
+                    if (activeStep === 0) {
+                      setActiveStep(1);
+                    }
+                  }}
+                />
+              </Panel>
+              <Panel
+                title={getPanelTitleContent(
+                  1,
+                  activeStep,
+                  payload.shippingAddress
+                )}
+                collapsible
+                expanded={activeStep === 1}
+                onChange={e => onPanelChange(e, 1)}
+              >
+                <AccountAddresses
+                  currentUser={currentUser}
+                  requestPatchAccount={requestPatchAccount}
+                  onSubmit={handleNext}
+                  allowFlyMode
+                  mt={4}
+                  mx={10}
+                  mb={5}
+                />
+              </Panel>
+              <Panel
+                title={getPanelTitleContent(
+                  2,
+                  activeStep,
+                  payload.paymentDetails
+                )}
+                collapsible
+                expanded={activeStep === 2}
+                onChange={e => onPanelChange(e, 2)}
+              >
+                <AccountPaymentDetails
+                  currentUser={currentUser}
+                  requestPatchAccount={requestPatchAccount}
+                  onBack={handleBack}
+                  onSubmit={handleNext}
+                  seedEnabled
+                  addressSeed={payload.shippingAddress}
+                  useSeedLabel="Use shipping address"
+                  allowFlyMode
+                  mt={4}
+                  mx={10}
+                  mb={5}
+                />
+              </Panel>
+              <Panel
+                title={getPanelTitleContent(3, activeStep, {})}
+                collapsible
+                hideExpandIcon
+                expanded={activeStep === 3}
+                onChange={e => onPanelChange(e, 3)}
+              >
+                <CheckoutReviewForm onSubmit={handleNext} />
+              </Panel>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <CartDrawer />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <CartDrawer />
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 

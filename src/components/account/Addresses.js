@@ -84,8 +84,13 @@ const AccountAddresses = ({
 
     return true;
   };
+  let isCheckout = false;
+  if (window.location.pathname.includes('checkout')) {
+    isCheckout = true;
+  }
 
   return (
+<<<<<<< HEAD
     <Box {...rest}>
       <Box
         component={Typography}
@@ -96,6 +101,29 @@ const AccountAddresses = ({
         style={{fontFamily: 'Canela Text, serif', fontSize: 48}}
         gutterBottom
       />
+=======
+    <Box {...rest} className="step-2-wrapper">
+      {isCheckout ? (
+        <Box
+          component={Typography}
+          mx={1}
+          color="#231f20"
+          variant="h5"
+          children="Shipping Address"
+          fontFamily="Canela Text, serif"
+          gutterBottom
+        />
+      ) : (
+        <Box
+          component={Typography}
+          mx={1}
+          color="#231f20"
+          variant="h5"
+          children="Saved Addresses"
+          gutterBottom
+        />
+      )}
+>>>>>>> master
       <Grid container>
         {addressBook.map((addressEntity, index) => {
           const borderStyle = addressEntity.isDefault
@@ -103,7 +131,13 @@ const AccountAddresses = ({
             : '1px solid #979797';
           return (
             <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-              <Box border={borderStyle} m={1} px={4} py={3}>
+              <Box
+                border={borderStyle}
+                m={1}
+                px={4}
+                py={3}
+                className="address-box"
+              >
                 <EditablePanel
                   title=""
                   defaultValues={addressEntity}
@@ -149,7 +183,7 @@ const AccountAddresses = ({
           >
             <MenuLink
               onClick={() => setAddModeEnabled(true)}
-              children="New Address"
+              children="Add New Address"
               underline="always"
             />
           </Box>
@@ -161,7 +195,11 @@ const AccountAddresses = ({
             <Button type="button" onClick={onBack} children="Back" mr={2} />
           )}
           {onSubmit && (
-            <Button type="button" onClick={() => onSubmit()} children="Next" />
+            <Button
+              type="button"
+              onClick={() => onSubmit()}
+              children="Continue"
+            />
           )}
         </Box>
       )}

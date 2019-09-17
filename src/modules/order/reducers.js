@@ -8,7 +8,10 @@ import {
   REQUEST_FIND_ORDERS_BY_ACCOUNT
 } from './types';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  isLoading: false,
+  order: null,
+};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -21,9 +24,9 @@ export default (state = INITIAL_STATE, action) => {
     case RECEIVED_FIND_ALL_ORDERS:
       return { ...state, ...action.payload };
     case REQUEST_GET_ORDER:
-      return { ...state };
+      return { ...state, isLoading: true, order: null };
     case RECEIVED_GET_ORDER:
-      return { ...state, ...action.payload };
+      return { ...state, order: action.payload, isLoading: false };
     case REQUEST_FIND_ORDERS_BY_ACCOUNT:
       return { ...state };
     default:

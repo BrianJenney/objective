@@ -24,8 +24,8 @@ const replyTo = ObjectId();
 
 const useStyles = makeStyles(theme => ({
   success: { backgroundColor: 'green' },
-  error: { backgroundColor: 'blue' },
-  warning: { backgroundColor: 'green' },
+  error: { backgroundColor: 'red' },
+  warning: { backgroundColor: 'orange' },
   info: { backgroundColor: 'yellow' }
 }));
 
