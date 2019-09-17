@@ -1,6 +1,5 @@
 import React from 'react';
-import { object, string } from 'yup';
-import { Formik, Field, Form } from 'formik';
+
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -8,6 +7,11 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Link from '@material-ui/core/Link';
+
+import { object, string } from 'yup';
+import { Formik, Field, Form } from 'formik';
+
 import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
@@ -272,14 +276,14 @@ const Footer = () => {
                   />
                 </Grid>
                 <Grid item xs={1} className="border-left border-bottom icon">
-                  <NavLink href="">
+                  <Link href="https://www.instagram.com/">
                     <img src={igIcon} alt="instagram" />
-                  </NavLink>
+                  </Link>
                 </Grid>
                 <Grid item xs={1} className="border-left border-bottom icon">
-                  <NavLink href="https://www.facebook.com/">
+                  <Link href="https://www.facebook.com/">
                     <img src={fbIcon} alt="facebook" />
-                  </NavLink>
+                  </Link>
                 </Grid>
                 <Grid container item={true} xs={12} className="legal">
                   <StyledList>
