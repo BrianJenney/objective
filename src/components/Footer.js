@@ -55,7 +55,7 @@ const Footer = () => {
       {xs ? (
         <StyledBox className="footer-container">
           <Grid container spacing={0}>
-            <Grid container xs={12} className="promise">
+            <Grid container item={true} xs={12} className="promise">
               <Grid item xs={12}>
                 Diamond Logo
               </Grid>
@@ -154,7 +154,7 @@ const Footer = () => {
                     <img src={fbIcon} alt="facebook" />
                   </NavLink>
                 </Grid>
-                <Grid container xs={12} className="legal">
+                <Grid container item={true} xs={12} className="legal">
                   <StyledList>
                     <ListItem className="text-center">
                       Objective Wellness &bull; All rights reserved

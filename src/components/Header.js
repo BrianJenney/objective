@@ -70,7 +70,7 @@ const Header = ({ currentUser, location }) => {
       <Grid container item={true} xs={12} spacing={0}>
         {burger ? (
           <>
-            <Grid container xs={10} className="top">
+            <Grid container className="top">
               <Grid item xs={1}>
                 {renderBurgerIcon()}
               </Grid>
@@ -82,7 +82,7 @@ const Header = ({ currentUser, location }) => {
                 {!isCheckoutPage && <ShoppingCart />}
               </Grid>
             </Grid>
-            <Grid container xs={12} className="headerBar">
+            <Grid container item={true} xs={12} className="headerBar">
               <Grid item xs={8} className="option text-right">
                 <StyledBox fontSize={9}>
                   Free Shipping On Orders Over $75
@@ -105,7 +105,7 @@ const Header = ({ currentUser, location }) => {
                 <StyledBox fontSize={12}>Free Returns</StyledBox>
               </Grid>
             </Grid>
-            <Grid container item={true} className="holder" xs={12}>
+            <Grid container className="holder">
               <Grid item xs={1}>
                 <StyledLink component={RouterLink} to="/gallery">
                   Shop
