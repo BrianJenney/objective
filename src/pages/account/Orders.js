@@ -1,5 +1,7 @@
 import React, { useState, useEffect} from 'react';
-import store from '../../store';
+import { Link } from 'react-router-dom';
+//import Link from '@material-ui/core/Link';
+
 import { useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +19,14 @@ const columns = [
     options: {
       filter: false,
       sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return (
+          <Link to={`/account/orders/${value}`} style={{cursor: 'pointer'}}>
+            {value}
+          </Link>
+        );
+      },
+
     },
   },
   {

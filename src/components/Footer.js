@@ -1,6 +1,5 @@
 import React from 'react';
-import { object, string } from 'yup';
-import { Formik, Field, Form } from 'formik';
+
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -8,6 +7,11 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Link from '@material-ui/core/Link';
+
+import { object, string } from 'yup';
+import { Formik, Field, Form } from 'formik';
+
 import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
@@ -55,7 +59,7 @@ const Footer = () => {
       {xs ? (
         <StyledBox className="footer-container">
           <Grid container spacing={0}>
-            <Grid container xs={12} className="promise">
+            <Grid container item={true} xs={12} className="promise">
               <Grid item xs={12}>
                 Diamond Logo
               </Grid>
@@ -154,7 +158,7 @@ const Footer = () => {
                     <img src={fbIcon} alt="facebook" />
                   </NavLink>
                 </Grid>
-                <Grid container xs={12} className="legal">
+                <Grid container item={true} xs={12} className="legal">
                   <StyledList>
                     <ListItem className="text-center">
                       Objective Wellness &bull; All rights reserved
@@ -178,7 +182,7 @@ const Footer = () => {
       ) : (
         <StyledBox className="footer-container">
           <Grid container spacing={0}>
-            <Grid container xs={12} className="promise">
+            <Grid container item={true} xs={12} className="promise">
               <Grid item xs={12}>
                 Diamond Logo
               </Grid>
@@ -197,7 +201,7 @@ const Footer = () => {
               </Grid>
             </Grid>
             <div className="footer-main-holder">
-              <Grid container xs={12} className="footer-main">
+              <Grid container item={true} xs={12} className="footer-main">
                 <Grid item xs={5} className="title border-bottom">
                   <StyledBox>
                     <NavLink to="/gallery">About</NavLink>
@@ -272,16 +276,16 @@ const Footer = () => {
                   />
                 </Grid>
                 <Grid item xs={1} className="border-left border-bottom icon">
-                  <NavLink href="">
+                  <Link href="https://www.instagram.com/">
                     <img src={igIcon} alt="instagram" />
-                  </NavLink>
+                  </Link>
                 </Grid>
                 <Grid item xs={1} className="border-left border-bottom icon">
-                  <NavLink href="https://www.facebook.com/">
+                  <Link href="https://www.facebook.com/">
                     <img src={fbIcon} alt="facebook" />
-                  </NavLink>
+                  </Link>
                 </Grid>
-                <Grid container xs={12} className="legal">
+                <Grid container item={true} xs={12} className="legal">
                   <StyledList>
                     <ListItem>
                       Objective Wellness &bull; All rights reserved

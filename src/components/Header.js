@@ -41,7 +41,7 @@ const Header = ({ currentUser, location }) => {
   const { account_jwt } = currentUser.data;
   const accountMenuItemConf = account_jwt
     ? { key: 'third', to: '/account', children: <LoggedInUser /> }
-    : { key: 'third', to: '/login', children: 'Login' };
+    : { key: 'third', to: '/login', children: 'Account' };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', children: 'Shop' },
     { key: 'second', to: '/', children: 'Journal' },
@@ -66,11 +66,11 @@ const Header = ({ currentUser, location }) => {
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
 
   return (
-    <Grid container xs={12} className="headerContainer">
-      <Grid container xs={12} spacing={0}>
+    <Grid container item={true} xs={12} className="headerContainer">
+      <Grid container item={true} xs={12} spacing={0}>
         {burger ? (
           <>
-            <Grid container xs={10} className="top">
+            <Grid container className="top">
               <Grid item xs={1}>
                 {renderBurgerIcon()}
               </Grid>
@@ -82,7 +82,7 @@ const Header = ({ currentUser, location }) => {
                 {!isCheckoutPage && <ShoppingCart />}
               </Grid>
             </Grid>
-            <Grid container xs={12} className="headerBar">
+            <Grid container item={true} xs={12} className="headerBar">
               <Grid item xs={8} className="option text-right">
                 <StyledBox fontSize={9}>
                   Free Shipping On Orders Over $75
@@ -95,7 +95,7 @@ const Header = ({ currentUser, location }) => {
           </>
         ) : (
           <>
-            <Grid container xs={12} className="headerBar">
+            <Grid container item={true} xs={12} className="headerBar">
               <Grid item xs={6} className="option text-right">
                 <StyledBox fontSize={12}>
                   Free Shipping On Orders Over $75
@@ -105,7 +105,7 @@ const Header = ({ currentUser, location }) => {
                 <StyledBox fontSize={12}>Free Returns</StyledBox>
               </Grid>
             </Grid>
-            <Grid container className="holder" xs={12}>
+            <Grid container className="holder">
               <Grid item xs={1}>
                 <StyledLink component={RouterLink} to="/gallery">
                   Shop
@@ -119,12 +119,10 @@ const Header = ({ currentUser, location }) => {
               <Grid item xs={8} className="logo text-center">
                 <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item>
                 <StyledLink component={RouterLink} {...accountMenuItemConf} />
               </Grid>
-              <Grid item xs={1}>
-                {!isCheckoutPage && <ShoppingCart />}
-              </Grid>
+              <Grid item>{!isCheckoutPage && <ShoppingCart />}</Grid>
             </Grid>
           </>
         )}
