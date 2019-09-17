@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#fdf8f2',
     padding: '30px 0',
     fontFamily: 'p22-underground, Helvetica, sans',
+    fontSize: '24px',
     fontWeight: 'bold',
     '&:hover': {
       backgroundColor: '#ffffff',
@@ -99,7 +100,7 @@ export default function PdpTabs(props) {
                 />
                 <Tab
                   variant="smallHeader"
-                  label="Information"
+                  label="Supplement Facts"
                   {...a11yProps(1)}
                   className={classes.tabs}
                 />
