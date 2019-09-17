@@ -41,7 +41,7 @@ const Header = ({ currentUser, location }) => {
   const { account_jwt } = currentUser.data;
   const accountMenuItemConf = account_jwt
     ? { key: 'third', to: '/account', children: <LoggedInUser /> }
-    : { key: 'third', to: '/login', children: 'Login' };
+    : { key: 'third', to: '/login', children: 'Account' };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', children: 'Shop' },
     { key: 'second', to: '/', children: 'Journal' },
@@ -119,12 +119,10 @@ const Header = ({ currentUser, location }) => {
               <Grid item xs={8} className="logo text-center">
                 <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item>
                 <StyledLink component={RouterLink} {...accountMenuItemConf} />
               </Grid>
-              <Grid item xs={1}>
-                {!isCheckoutPage && <ShoppingCart />}
-              </Grid>
+              <Grid item>{!isCheckoutPage && <ShoppingCart />}</Grid>
             </Grid>
           </>
         )}
