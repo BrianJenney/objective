@@ -1,6 +1,20 @@
 .white-bg {
   background-color: #ffffff;
 }
+@media (max-width: 768px) {
+  .gallery-page {
+    padding: 0 !important;
+    .hero-holder {
+      margin-bottom: 20px;
+    }
+    .blurb-img {
+      display: none;
+    }
+    .opt1 {
+      min-height: fit-content;
+    }
+  }
+}
 .opt1,
 .opt2 {
   border: 1px solid #8b3a26;
@@ -10,6 +24,11 @@
   width: 100%;
 }
 
+.gallery-atc {
+  button {
+    min-width: auto;
+  }
+}
 .opt1 {
   min-height: 474px;
   .blurb-img {
@@ -44,8 +63,9 @@
   .gallery-prod-card {
     text-align: center;
     .prod-name-holder {
-      min-height: 52px;
+      height: 52px;
       margin-bottom: 10px;
+      overflow: hidden;
       .title {
         line-height: 1.18;
         text-align: center;
@@ -89,7 +109,7 @@
   }
   .gallery-prod-img {
     width: 100% !important;
-    height: 301px !important;
+    height: 292px !important;
     margin-bottom: 15px;
   }
   .pding {

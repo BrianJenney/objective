@@ -90,13 +90,15 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
         <StyledLogoContainer>
           <StyledLogo onClick={onClickLogo}>LOGO</StyledLogo>
           <StyledShoppingBag display={{ xs: 'block', sm: 'none' }}>
-            <StyledBadge
-              invisible={cartCount < 1}
-              badgeContent={cartCount}
-              color="secondary"
+            <ShoppingBag />
+            <span
+              style={{
+                'font-family': 'p22-underground, sans-serif',
+                'font-size': '14px'
+              }}
             >
-              <ShoppingBag />
-            </StyledBadge>
+              {cartCount}
+            </span>
           </StyledShoppingBag>
         </StyledLogoContainer>
       ) : null}

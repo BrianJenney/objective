@@ -187,7 +187,7 @@ const Checkout = ({
         <Box py={10} className="checkout-wrapper">
           <CssBaseline />
           <Grid container spacing={4}>
-            <Grid item flex={1} xs={12} md={8}>
+            <Grid item flex={1} xs={12} md={8} className="right-side">
               <Panel
                 title={getPanelTitleContent(0, activeStep, {
                   email: currentUserEmail
@@ -262,7 +262,7 @@ const Checkout = ({
                 <CheckoutReviewForm onSubmit={handleNext} />
               </Panel>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} className="left-side">
               <CartDrawer />
             </Grid>
           </Grid>

@@ -11,7 +11,7 @@ import { useQuantity, useWindowSize } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
 import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-import { setCartDrawerOpened } from '../../modules/cart/actions'
+import { setCartDrawerOpened } from '../../modules/cart/actions';
 const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
@@ -33,15 +33,11 @@ const VariantCard = ({ variant, product }) => {
 
   const updateQuantityToCart = useCallback(
     qty => {
-      addToCart(
-        localStorageClient.get('cartId'),
-        cart,
-        variant,
-        qty);
+      addToCart(localStorageClient.get('cartId'), cart, variant, qty);
       dispatch(setCartDrawerOpened(true));
       // enqueueSnackbar(message, { variant: 'success' });
     },
-    [ cart, variant, dispatch ]
+    [cart, variant, dispatch]
   );
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
@@ -49,12 +45,7 @@ const VariantCard = ({ variant, product }) => {
   );
 
   const handleAddToCart = useCallback(() => {
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variant,
-      quantity
-    );
+    addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
     // enqueueSnackbar(message, { variant: 'success' });
     setATCEnabled(false);
     dispatch(setCartDrawerOpened(true));
@@ -85,7 +76,7 @@ const VariantCard = ({ variant, product }) => {
       </CardContent>
       <div className="cta-area">
         {ATCEnabled ? (
-          <CardActions className="pding">
+          <CardActions className="gallery-atc">
             <Button
               variant="contained"
               color="primary"
@@ -97,7 +88,7 @@ const VariantCard = ({ variant, product }) => {
             </Button>
           </CardActions>
         ) : (
-          <Quantity className="pding" />
+          <Quantity className="gallery-atc" />
         )}
       </div>
     </Card>

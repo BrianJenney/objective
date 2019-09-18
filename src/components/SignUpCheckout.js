@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '18px',
     fontWeight: 'normal',
     fontFamily: 'p22-underground, Helvetica, sans-serif',
-    marginLeft: '470px',
     fontWeight: '600',
     paddingTop: '13px'
   }
@@ -33,7 +32,7 @@ const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
       <CssBaseline />
       <Box component={Paper} py={3} px={5}>
         <Box>
-          <Box display="flex" pb={2}>
+          <Box display="flex" pb={2} className="justify-content">
             <Typography gutterBottom className={classes.title}>
               Create your Account
             </Typography>
