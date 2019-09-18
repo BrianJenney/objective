@@ -46,6 +46,8 @@
   p {
     font-size: 18px;
     line-height: 1.56;
+    max-height: 222px;
+    overflow: hidden;
   }
   .icon {
     margin-bottom: 10px;
@@ -81,6 +83,8 @@
       line-height: 1.8;
       font-family: p22-underground, sans-serif;
       margin-bottom: 10px;
+      height: 32px;
+      overflow: hidden;
       strong {
         font-size: 18px;
         color: #000000;
@@ -109,8 +113,13 @@
   }
   .gallery-prod-img {
     width: 100% !important;
-    height: 292px !important;
+    height: 258px !important;
     margin-bottom: 15px;
+  }
+  @media (min-width: 1600px) {
+    .gallery-prod-img {
+      height: 278px !important;
+    }
   }
   .pding {
     padding: 0 20px;
