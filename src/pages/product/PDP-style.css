@@ -11,7 +11,9 @@ html,
 .pdp-header {
   font-size: 60px;
   color: #1f396d;
-  margin: 35px 0 20px;
+  margin: 0 0 20px;
+  max-height: 66px;
+  overflow: hidden;
 }
 
 .pdp-subtitle {
