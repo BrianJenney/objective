@@ -40,13 +40,13 @@ const Products = () => {
   return (
     <Container>
       <Grid container spacing={4}>
-
-       {productSlugs.map(productSlug => (
+{productSlugs.map(productSlug => (
           <ProductSummary
             key={productSlug}
-           product={productMap.get(productSlug)}
-           
-)}
+            product={productMap.get(productSlug)}
+            variantMap={variantMap}
+          />
+        ))}
       </Grid>
     </Container>
   );
