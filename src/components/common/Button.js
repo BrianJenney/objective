@@ -10,7 +10,8 @@ const CustomizedBtn = withStyles({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
-    padding: '25px 0'
+    padding: '24px 0 26px',
+    minWidth: '282px'
   }
 })(Button);
 
