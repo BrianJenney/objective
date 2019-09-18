@@ -37,7 +37,7 @@ const PromoCodeForm = () => {
     <Form>
       <Grid container direction="row" xs={12} justify="space-between">
         <Grid item xs={12}>
-          <StyledSmallCaps style={{ 'font-size': '14px' }}>
+          <StyledSmallCaps style={{ 'font-size': '14px', 'paddingBottom': '10px' }}>
             Promo Code
           </StyledSmallCaps>
         </Grid>
@@ -49,7 +49,18 @@ const PromoCodeForm = () => {
             />
           </Grid>
           <Grid item xs={4} style={{ 'text-align': 'right' }}>
-            <Button type="submit" children="Apply" />
+            <Button
+              type="submit"
+              children="Apply"
+              style={{
+                color: '#000000',
+                'backgroundColor': 'transparent',
+                'textDecoration': 'underline',
+                'padding': '0 0 0 50px',
+                'paddingTop': '18px',
+                'minWidth': '100px',
+              }}
+            />
           </Grid>
         </Grid>
       </Grid>

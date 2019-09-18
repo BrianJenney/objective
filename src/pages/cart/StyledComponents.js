@@ -199,12 +199,6 @@ export const StyledPromoLink = withStyles(theme => ({
   }
 }))(Typography);
 
-export const StyledPromoForm = withStyles(theme => ({
-  root: {
-    padding: '10px'
-  }
-}))(Typography);
-
 export const StyledCardContent = withStyles(theme => ({
   root: {
     display: 'flex',
@@ -263,6 +257,6 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-    }`
+      }`
   }
 }))(Badge);

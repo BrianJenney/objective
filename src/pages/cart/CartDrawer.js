@@ -39,7 +39,6 @@ import {
   StyledHeaderWrapperEmptyCart,
   StyledSmallCapsEmptyCart,
   StyledPromoLink,
-  StyledPromoForm
 } from './StyledComponents';
 
 const { LIGHT_GRAY, MEDIUM_GRAY } = colorPalette;
@@ -286,11 +285,9 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                   align="left"
                   onClick={togglePromo}
                 >
-                  Enter Promo Code
+                  {!promoVisible ? 'Enter Promo Code' : null}
                 </StyledPromoLink>
-                <StyledPromoForm>
                   {promoVisible && <PromoCodeForm />}
-                </StyledPromoForm>
               </>
             )
         ) : null}
