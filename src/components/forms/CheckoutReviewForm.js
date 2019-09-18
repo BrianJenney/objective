@@ -18,7 +18,7 @@ const CheckoutReviewForm = ({ onSubmit }) => (
       fontFamily="Canela Text, serif"
       children="Please take a moment to review your order."
     />
-    <Box width={532} mb={2}>
+    <Box width={532} mb={2} className="button-holder-mobile">
       <Button
         type="button"
         onClick={onSubmit}

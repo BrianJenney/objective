@@ -1,4 +1,7 @@
 .checkout-wrapper {
+  .justify-content {
+    justify-content: space-between !important;
+  }
   .cart-drawer {
     background-color: #fff;
     padding: 0 20px 20px 20px;
@@ -58,6 +61,15 @@
     font-size: 12px !important;
     text-decoration: underline;
   }
+  @media (min-width: 1200px) {
+    .address-box {
+      min-height: 250px;
+    }
+    .checkout-box {
+      min-height: 177px;
+    }
+  }
+
   .address-box,
   .checkout-box {
     border: 2px solid #979797;
@@ -112,6 +124,34 @@
       padding: 20px 16px;
       height: auto;
       letter-spacing: 1.33px;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    padding: 0 !important;
+    .right-side {
+      padding: 16px 0;
+      .step-2-wrapper {
+        margin: 0;
+        button {
+          min-width: 280px;
+          width: 280px;
+        }
+      }
+      .step-3-wrapper {
+        margin: 0;
+      }
+      .step-4-wrapper {
+        button {
+          min-width: 280px;
+          width: 280px;
+        }
+      }
+    }
+    .button-holder-mobile > div {
+      width: 100%;
+      text-align: center;
     }
   }
 }

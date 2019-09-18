@@ -258,4 +258,16 @@
       font-family: $brandSans;
     }
   }
+  @media (max-width: 768px) {
+    .footer-main {
+      .links {
+        padding: 0 25px 10px;
+        font-size: 15px;
+      }
+      .legal ul li {
+        font-size: 10px;
+        font-family: p22-underground, sans-serif;
+      }
+    }
+  }
 }

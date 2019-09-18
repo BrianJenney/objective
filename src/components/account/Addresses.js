@@ -175,7 +175,11 @@ const AccountAddresses = ({
         )}
       </Box>
       {!addModeEnabled && (
-        <Box display="flex" alignItems="center">
+        <Box
+          display="flex"
+          alignItems="center"
+          className="button-holder-mobile"
+        >
           {onBack && (
             <Button type="button" onClick={onBack} children="Back" mr={2} />
           )}

@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import GalleryContext from '../../contexts/GalleryContext';
-import CategorySummary from './CategorySummary';
+//import CategorySummary from './CategorySummary';
+import ProductSummary from './ProductSummary';
 import { getGallery } from '../../hooks';
 
 const Products = () => {
@@ -39,22 +40,13 @@ const Products = () => {
   return (
     <Container>
       <Grid container spacing={4}>
-
-
-        {Object.keys(productCategoriesToProducts).map((key) =>  
-          (<CategorySummary
-            key={key}
-            products={productCategoriesToProducts[key]}
+{productSlugs.map(productSlug => (
+          <ProductSummary
+            key={productSlug}
+            product={productMap.get(productSlug)}
             variantMap={variantMap}
-            category={{title:"Skin & Beauty",description:"Some description",slug:key}}
           />
-          )
-         
-          
-        
-           
-
-          )}
+        ))}
       </Grid>
     </Container>
   );
