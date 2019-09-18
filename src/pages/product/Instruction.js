@@ -10,9 +10,10 @@ export default function Instruction() {
     height: 80,
     display: 'flex',
     justifyContent: 'center',
-    fontWeight: 500,
-    fontSize: 30,
-    fontFamily: 'P22-underground, Helvetica, sans',
+    fontWeight: 600,
+    fontSize: 24,
+    letterSpacing: 2.25,
+    fontFamily: 'p22-underground, sans-serif',
     textAlign: 'center',
     alignItems: 'center',
     pt: 10,
@@ -27,7 +28,7 @@ export default function Instruction() {
     <Container>
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={5}>
-          <Box {...box}>LOREM IPSUM COMPLIANCE</Box>
+          <Box {...box}>HOW TO TAKE</Box>
         </Grid>
       </Grid>
       <div dangerouslySetInnerHTML={{ __html: whhmBoxes }} />

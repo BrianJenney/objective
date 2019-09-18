@@ -1,73 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
-import { object, string } from 'yup';
-import { omit } from 'lodash';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
-import { InputField } from '../../components/form-fields';
-import ProfileDetails from '../../components/account/ProfileDetails';
-import ChangePassword from '../../components/account/ChangePassword';
+import { requestPatchAccount as requestPatchAccountAction } from '../../modules/account/actions';
+import {
+  AccountProfileDetails,
+  AccountChangePassword
+} from '../../components/account';
 
-const schema = object().shape({
-  firstName: string(),
-  lastName: string(),
-  email: string()
-});
+const AccountProfile = ({ currentUser, requestPatchAccount }) => (
+  <>
+    <AccountProfileDetails
+      currentUser={currentUser}
+      requestPatchAccount={requestPatchAccount}
+      mb={2}
+    />
+    <AccountChangePassword
+      currentUser={currentUser}
+      requestPatchAccount={requestPatchAccount}
+    />
+  </>
+);
 
-class AccountProfile extends React.Component {
-  renderForm = () => {
-    return (
-      <>
-        <ProfileDetails />
-        <ChangePassword />
-      </>
-    );
-  };
-
-  handleSubmit = values => {
-    store.dispatch(
-      requestPatchAccount(this.props.account.data.account_jwt, values)
-    );
-  };
-
-  render() {
-    const { account } = this.props;
-
-    const INITIAL_VALUES = {
-      firstName: account.data.firstName,
-      lastName: account.data.lastName,
-      email: account.data.email
-    };
-
-    if (!account.data.account_jwt) {
-      return <div>No Account</div>;
-    }
-
-    return (
-      <Container>
-        <ProfileDetails />
-        <ChangePassword />
-      </Container>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
+AccountProfile.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  requestPatchAccount: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { requestPatchAccount: requestPatchAccountAction };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AccountProfile);
