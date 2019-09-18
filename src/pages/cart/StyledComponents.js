@@ -199,6 +199,12 @@ export const StyledPromoLink = withStyles(theme => ({
   }
 }))(Typography);
 
+export const StyledPromoForm = withStyles(theme => ({
+  root: {
+    padding: '10px'
+  }
+}))(Typography);
+
 export const StyledCardContent = withStyles(theme => ({
   root: {
     display: 'flex',
