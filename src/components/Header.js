@@ -130,7 +130,9 @@ const Header = ({ currentUser, location }) => {
               <Grid item>
                 <StyledLink component={RouterLink} {...accountMenuItemConf} />
               </Grid>
-              <Grid item>{!isCheckoutPage && <ShoppingCart />}</Grid>
+              <Grid item className="header-shop-holder">
+                {!isCheckoutPage && <ShoppingCart />}
+              </Grid>
             </Grid>
           </>
         )}

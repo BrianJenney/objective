@@ -15,6 +15,7 @@ import { Formik, Field, Form } from 'formik';
 import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
+import { Container } from '@material-ui/core';
 
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
@@ -70,40 +71,171 @@ const Footer = () => {
     <>
       {xs ? (
         <StyledBox className="footer-container">
-          <Grid container spacing={0}>
-            <Grid container item={true} xs={12} className="promise">
-              <Grid item xs={12}>
-                Diamond Logo
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h4" gutterBottom className="uppercase">
-                  Dek Line Goes Here
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  Brunch church-key reclette chartreuse poke, XOXO next level
-                  shaman hot chicken sustainable vegan yr jianbing affogato. Hot
-                  chicken Schlitz squad, migas single-origin single-origin
-                  coffee chambray umami raclette.
-                </p>
-              </Grid>
-            </Grid>
-            <div className="footer-main-holder">
-              <Grid container className="footer-main" xs={12}>
-                <Grid item xs={6} className="border-bottom row1">
-                  <StyledBox>OBJ Logo</StyledBox>
+          <Container>
+            <Grid container spacing={0}>
+              <Grid container item={true} xs={12} className="promise">
+                <Grid item xs={12}>
+                  Diamond Logo
                 </Grid>
-                <Grid item xs={6} className="border-bottom border-left row1">
-                  <StyledBox>
-                    <div className="rotate">Copyright 2019</div>
-                  </StyledBox>
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom className="uppercase">
+                    Dek Line Goes Here
+                  </Typography>
                 </Grid>
-                <Grid item xs={6} className="row2 border-bottom">
-                  <Grid container spacing={0}>
-                    <Grid item xs={12} className="title">
-                      <NavLink to="/gallery">About</NavLink>
+                <Grid item xs={12}>
+                  <p>
+                    Brunch church-key reclette chartreuse poke, XOXO next level
+                    shaman hot chicken sustainable vegan yr jianbing affogato.
+                    Hot chicken Schlitz squad, migas single-origin single-origin
+                    coffee chambray umami raclette.
+                  </p>
+                </Grid>
+              </Grid>
+              <div className="footer-main-holder">
+                <Grid container className="footer-main" xs={12}>
+                  <Grid item xs={6} className="border-bottom row1">
+                    <StyledBox>OBJ Logo</StyledBox>
+                  </Grid>
+                  <Grid item xs={6} className="border-bottom border-left row1">
+                    <StyledBox>
+                      <div className="rotate">Copyright 2019</div>
+                    </StyledBox>
+                  </Grid>
+                  <Grid item xs={6} className="row2 border-bottom">
+                    <Grid container spacing={0}>
+                      <Grid item xs={12} className="title">
+                        <NavLink to="/gallery">About</NavLink>
+                      </Grid>
+                      <StyledList className="links">
+                        <ListItem>
+                          <NavLink to="/ourstory">Our Story</NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to="/ingredients">Ingredients</NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to="/contact">Contact Us</NavLink>
+                        </ListItem>
+                      </StyledList>
                     </Grid>
+                  </Grid>
+                  <Grid item xs={6} className="row2 border-bottom border-left">
+                    <Grid container spacing={0}>
+                      <Grid item xs={12} className="title">
+                        <NavLink to="/gallery">Help</NavLink>
+                      </Grid>
+                      <StyledList className="links">
+                        <ListItem>
+                          <NavLink to="/ourstory">FAQs</NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to="/ingredients">Contact Us</NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to="/contact">Accounts &amp; Orders</NavLink>
+                        </ListItem>
+                      </StyledList>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} className="border-bottom signup-box p-20">
+                    <span>Sign up for tips and new product launches.</span>
+                    <Formik
+                      initialValues={{ email: '' }}
+                      onSubmit={() => null}
+                      validationSchema={schema}
+                      render={() => (
+                        <Form>
+                          <Field
+                            name="email"
+                            label=""
+                            placeholder="Your Email"
+                            component={InputField}
+                          />
+                          <Button type="submit">
+                            <img
+                              src={arrowImage}
+                              className="mobile-arrow"
+                              alt="arrow"
+                            />
+                          </Button>
+                        </Form>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={6} className="border-bottom icon">
+                    <NavLink href="http://www.instagram.com">
+                      <img src={igIcon} alt="instagram" />
+                    </NavLink>
+                  </Grid>
+                  <Grid item xs={6} className="border-bottom border-left icon">
+                    <NavLink href="https://www.facebook.com">
+                      <img src={fbIcon} alt="facebook" />
+                    </NavLink>
+                  </Grid>
+                  <Grid container item={true} xs={12} className="legal">
+                    <StyledList>
+                      <ListItem className="text-center">
+                        Objective &bull; All rights reserved
+                      </ListItem>
+                    </StyledList>
+                  </Grid>
+                  <Grid container xs={12} className="legal">
+                    <StyledList>
+                      <ListItem className="text-center">
+                        <NavLink to="/privacy-policy">Privacy Policy</NavLink>
+                      </ListItem>
+                      <ListItem className="text-center">
+                        <NavLink to="/terms">Terms of use</NavLink>
+                      </ListItem>
+                    </StyledList>
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+          </Container>
+        </StyledBox>
+      ) : (
+        <StyledBox className="footer-container">
+          <Container>
+            <Grid container spacing={0}>
+              <Grid container item={true} xs={12} className="promise">
+                <Grid item xs={12}>
+                  Diamond Logo
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom className="uppercase">
+                    Dek Line Goes Here
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <p>
+                    Brunch church-key reclette chartreuse poke, XOXO next level
+                    shaman hot chicken sustainable vegan yr jianbing affogato.
+                    Hot chicken Schlitz squad, migas single-origin single-origin
+                    coffee chambray umami raclette.
+                  </p>
+                </Grid>
+              </Grid>
+              <div className="footer-main-holder">
+                <Grid container item={true} xs={12} className="footer-main">
+                  <Grid item xs={5} className="title border-bottom">
+                    <StyledBox>
+                      <NavLink to="/gallery">About</NavLink>
+                    </StyledBox>
+                  </Grid>
+                  <Grid item xs={6} className="title border-bottom border-left">
+                    <StyledBox>
+                      <NavLink to="/help">Help</NavLink>
+                    </StyledBox>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={1}
+                    className="border-bottom logo border-left copy"
+                  >
+                    <StyledBox>Logo</StyledBox>
+                  </Grid>
+                  <Grid item xs={5} className="border-bottom">
                     <StyledList className="links">
                       <ListItem>
                         <NavLink to="/ourstory">Our Story</NavLink>
@@ -116,205 +248,82 @@ const Footer = () => {
                       </ListItem>
                     </StyledList>
                   </Grid>
-                </Grid>
-                <Grid item xs={6} className="row2 border-bottom border-left">
-                  <Grid container spacing={0}>
-                    <Grid item xs={12} className="title">
-                      <NavLink to="/gallery">Help</NavLink>
-                    </Grid>
+                  <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to="/ourstory">FAQs</NavLink>
+                        <NavLink to="/shipping">Shipping &amp; Returns</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/ingredients">Contact Us</NavLink>
+                        <NavLink to="/account">My Account</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/contact">Accounts &amp; Orders</NavLink>
+                        <NavLink to="/ordertracking">Track an Order</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
-                </Grid>
-                <Grid item xs={12} className="border-bottom signup-box p-20">
-                  <span>Sign up for tips and new product launches.</span>
-                  <Formik
-                    initialValues={{ email: '' }}
-                    onSubmit={() => null}
-                    validationSchema={schema}
-                    render={() => (
-                      <Form>
-                        <Field
-                          name="email"
-                          label=""
-                          placeholder="Your Email"
-                          component={InputField}
-                        />
-                        <Button type="submit">
-                          <img
-                            src={arrowImage}
-                            className="mobile-arrow"
-                            alt="arrow"
+                  <Grid item xs={1} className="border-left copy">
+                    <StyledBox>
+                      <div className="rotate">Copyright 2019</div>
+                    </StyledBox>
+                  </Grid>
+                  <Grid item xs={8} className="signup-box">
+                    <span>Sign up for tips and new product launches.</span>
+                    <Formik
+                      initialValues={{ email: '' }}
+                      onSubmit={() => null}
+                      validationSchema={schema}
+                      render={() => (
+                        <Form>
+                          <Field
+                            name="email"
+                            label=""
+                            placeholder="Your Email"
+                            component={InputField}
                           />
-                        </Button>
-                      </Form>
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={6} className="border-bottom icon">
-                  <NavLink href="http://www.instagram.com">
-                    <img src={igIcon} alt="instagram" />
-                  </NavLink>
-                </Grid>
-                <Grid item xs={6} className="border-bottom border-left icon">
-                  <NavLink href="https://www.facebook.com">
-                    <img src={fbIcon} alt="facebook" />
-                  </NavLink>
-                </Grid>
-                <Grid container item={true} xs={12} className="legal">
-                  <StyledList>
-                    <ListItem className="text-center">
-                      Objective &bull; All rights reserved
-                    </ListItem>
-                  </StyledList>
-                </Grid>
-                <Grid container xs={12} className="legal">
-                  <StyledList>
-                    <ListItem className="text-center">
-                      <NavLink to="/privacy-policy">Privacy Policy</NavLink>
-                    </ListItem>
-                    <ListItem className="text-center">
-                      <NavLink to="/terms">Terms of use</NavLink>
-                    </ListItem>
-                  </StyledList>
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-        </StyledBox>
-      ) : (
-        <StyledBox className="footer-container">
-          <Grid container spacing={0}>
-            <Grid container item={true} xs={12} className="promise">
-              <Grid item xs={12}>
-                Diamond Logo
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h4" gutterBottom className="uppercase">
-                  Dek Line Goes Here
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <p>
-                  Brunch church-key reclette chartreuse poke, XOXO next level
-                  shaman hot chicken sustainable vegan yr jianbing affogato. Hot
-                  chicken Schlitz squad, migas single-origin single-origin
-                  coffee chambray umami raclette.
-                </p>
-              </Grid>
-            </Grid>
-            <div className="footer-main-holder">
-              <Grid container item={true} xs={12} className="footer-main">
-                <Grid item xs={5} className="title border-bottom">
-                  <StyledBox>
-                    <NavLink to="/gallery">About</NavLink>
-                  </StyledBox>
-                </Grid>
-                <Grid item xs={6} className="title border-bottom border-left">
-                  <StyledBox>
-                    <NavLink to="/help">Help</NavLink>
-                  </StyledBox>
-                </Grid>
-                <Grid
-                  item
-                  xs={1}
-                  className="border-bottom logo border-left copy"
-                >
-                  <StyledBox>Logo</StyledBox>
-                </Grid>
-                <Grid item xs={5} className="border-bottom">
-                  <StyledList className="links">
-                    <ListItem>
-                      <NavLink to="/ourstory">Our Story</NavLink>
-                    </ListItem>
-                    <ListItem>
-                      <NavLink to="/ingredients">Ingredients</NavLink>
-                    </ListItem>
-                    <ListItem>
-                      <NavLink to="/contact">Contact Us</NavLink>
-                    </ListItem>
-                  </StyledList>
-                </Grid>
-                <Grid item xs={6} className="border-left border-bottom">
-                  <StyledList className="links">
-                    <ListItem>
-                      <NavLink to="/shipping">Shipping &amp; Returns</NavLink>
-                    </ListItem>
-                    <ListItem>
-                      <NavLink to="/account">My Account</NavLink>
-                    </ListItem>
-                    <ListItem>
-                      <NavLink to="/ordertracking">Track an Order</NavLink>
-                    </ListItem>
-                  </StyledList>
-                </Grid>
-                <Grid item xs={1} className="border-left copy">
-                  <StyledBox>
-                    <div className="rotate">Copyright 2019</div>
-                  </StyledBox>
-                </Grid>
-                <Grid item xs={8} className="signup-box">
-                  <span>Sign up for tips and new product launches.</span>
-                  <Formik
-                    initialValues={{ email: '' }}
-                    onSubmit={() => null}
-                    validationSchema={schema}
-                    render={() => (
-                      <Form>
-                        <Field
-                          name="email"
-                          label=""
-                          placeholder="Your Email"
-                          component={InputField}
-                        />
-                        <Button type="submit">
-                          <img
-                            src={arrowImage}
-                            className="signup-arrow"
-                            alt="arrow"
-                          />
-                        </Button>
-                      </Form>
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={3}>
-                  <Grid container className="h-100">
-                    <Grid item xs={6} className="border-left icon">
-                      <Link href="https://www.instagram.com/">
-                        <img src={igIcon} alt="instagram" />
-                      </Link>
-                    </Grid>
-                    <Grid item xs={6} className="border-left icon border-right">
-                      <Link href="https://www.facebook.com/">
-                        <img src={fbIcon} alt="facebook" />
-                      </Link>
+                          <Button type="submit">
+                            <img
+                              src={arrowImage}
+                              className="signup-arrow"
+                              alt="arrow"
+                            />
+                          </Button>
+                        </Form>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Grid container className="h-100">
+                      <Grid item xs={6} className="border-left icon">
+                        <Link href="https://www.instagram.com/">
+                          <img src={igIcon} alt="instagram" />
+                        </Link>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={6}
+                        className="border-left icon border-right"
+                      >
+                        <Link href="https://www.facebook.com/">
+                          <img src={fbIcon} alt="facebook" />
+                        </Link>
+                      </Grid>
                     </Grid>
                   </Grid>
+                  <Grid container item={true} xs={12} className="legal">
+                    <StyledLegalList>
+                      <ListItem>Objective &bull; All rights reserved</ListItem>
+                      <ListItem>
+                        <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink to="/terms">Terms of use</NavLink>
+                      </ListItem>
+                    </StyledLegalList>
+                  </Grid>
                 </Grid>
-                <Grid container item={true} xs={12} className="legal">
-                  <StyledLegalList>
-                    <ListItem>Objective &bull; All rights reserved</ListItem>
-                    <ListItem>
-                      <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
-                    </ListItem>
-                    <ListItem>
-                      <NavLink to="/terms">Terms of use</NavLink>
-                    </ListItem>
-                  </StyledLegalList>
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
+              </div>
+            </Grid>
+          </Container>
         </StyledBox>
       )}
     </>

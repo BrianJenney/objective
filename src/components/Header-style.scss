@@ -9,7 +9,9 @@
   font-size: 16px;
   display: flex;
   height: 100px;
-
+  .header-shop-holder {
+    margin-left: 25px;
+  }
   @media (min-width: 1200px) {
     height: 161px;
     border-bottom: 1px solid #000000;

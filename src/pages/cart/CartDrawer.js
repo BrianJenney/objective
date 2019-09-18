@@ -56,16 +56,8 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
-    const newItems = [...cart.items];
     dispatch(setCartDrawerOpened(false));
-    newItems.map(item =>
-      history.push(`/products/${item.prodSlug}/${item.varSlug}`)
-    );
-  }, [dispatch, history]);
-
-  // const onClickPromo = useCallback(() => {
-  //   //emily, plz show promo form here on click
-  // });
+  }, [dispatch]);
 
   const togglePromo = useCallback(() => {
     setPromoVisible(!promoVisible)
@@ -157,12 +149,14 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                   style={{ 'min-width': '126px', 'margin-right': '18px' }}
                 >
                   <Card>
-                    <CardMedia
-                      style={{ height: 126, width: 126 }}
-                      image={item.variant_img}
-                      title={item.variant_name}
-                      onClick={onClickProduct}
-                    />
+                    <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                      <CardMedia
+                        style={{ height: 126, width: 126 }}
+                        image={item.variant_img}
+                        title={item.variant_name}
+                        onClick={onClickProduct}
+                      />
+                    </Link>
                   </Card>
                 </Grid>
                 <Grid item xs={7}>
@@ -174,9 +168,11 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                       'justify-content': 'space-between'
                     }}
                   >
-                    <StyledProductLink align="left" onClick={onClickProduct}>
-                      {item.variant_name}
-                    </StyledProductLink>
+                    <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                      <StyledProductLink align="left" onClick={onClickProduct}>
+                        {item.variant_name}
+                      </StyledProductLink>
+                    </Link>
                     <Grid item style={{ padding: '0' }}>
                       <StyledCardActions>
                         <StyledCounterButton
@@ -287,7 +283,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 >
                   {!promoVisible ? 'Enter Promo Code' : null}
                 </StyledPromoLink>
-                  {promoVisible && <PromoCodeForm />}
+                {promoVisible && <PromoCodeForm />}
               </>
             )
         ) : null}

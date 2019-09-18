@@ -70,7 +70,16 @@ const LoggedInUser = ({ name, logout }) => {
         onClick={handleClick}
         style={{ backgroundColor: 'transparent' }}
       >
-        <Typography style={{ fontFamily: $brandSans }}>Hi, {name}</Typography>{' '}
+        <Typography
+          style={{
+            fontFamily: $brandSans,
+            fontSize: 16,
+            fontWeight: 400,
+            letterSpacing: '1px'
+          }}
+        >
+          Hi, {name}
+        </Typography>{' '}
         &nbsp; {xs ? '' : <ExpandMore />}
       </Button>
 
