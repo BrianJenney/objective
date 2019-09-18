@@ -32,21 +32,33 @@ const StyledBox = withStyles(() => ({
     fontWeight: 'normal',
     color: '#ffffff',
     textTransform: 'uppercase',
-    letterSpacing: '1px'
-    // fontSize: '12px',
+    letterSpacing: '1.5px',
+    fontSize: 16
     // lineHeight: '44px'
   }
 }))(Box);
 
 const StyledList = withStyles(() => ({
   root: {
+    fontFamily: 'FreightTextProBook',
+    fontWeight: 'normal',
+    color: '#ffffff',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: 18,
+    lineHeight: '2.22'
+  }
+}))(List);
+
+const StyledLegalList = withStyles(() => ({
+  root: {
     fontFamily: 'p22-underground, sans-serif',
     fontWeight: 'normal',
     color: '#ffffff',
     textTransform: 'uppercase',
-    letterSpacing: '1px'
-    // fontSize: '12px',
-    // lineHeight: '44px'
+    letterSpacing: '0.83px',
+    fontSize: 10,
+    lineHeight: 'normal'
   }
 }))(List);
 
@@ -161,7 +173,7 @@ const Footer = () => {
                 <Grid container item={true} xs={12} className="legal">
                   <StyledList>
                     <ListItem className="text-center">
-                      Objective Wellness &bull; All rights reserved
+                      Objective &bull; All rights reserved
                     </ListItem>
                   </StyledList>
                 </Grid>
@@ -215,7 +227,7 @@ const Footer = () => {
                 <Grid
                   item
                   xs={1}
-                  className="title border-bottom logo border-left"
+                  className="border-bottom logo border-left copy"
                 >
                   <StyledBox>Logo</StyledBox>
                 </Grid>
@@ -245,12 +257,12 @@ const Footer = () => {
                     </ListItem>
                   </StyledList>
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom">
+                <Grid item xs={1} className="border-left copy">
                   <StyledBox>
                     <div className="rotate">Copyright 2019</div>
                   </StyledBox>
                 </Grid>
-                <Grid item xs={10} className="border-bottom signup-box">
+                <Grid item xs={8} className="signup-box">
                   <span>Sign up for tips and new product launches.</span>
                   <Formik
                     initialValues={{ email: '' }}
@@ -275,28 +287,30 @@ const Footer = () => {
                     )}
                   />
                 </Grid>
-                <Grid item xs={1} className="border-left border-bottom icon">
-                  <Link href="https://www.instagram.com/">
-                    <img src={igIcon} alt="instagram" />
-                  </Link>
-                </Grid>
-                <Grid item xs={1} className="border-left border-bottom icon">
-                  <Link href="https://www.facebook.com/">
-                    <img src={fbIcon} alt="facebook" />
-                  </Link>
+                <Grid item xs={3}>
+                  <Grid container className="h-100">
+                    <Grid item xs={6} className="border-left icon">
+                      <Link href="https://www.instagram.com/">
+                        <img src={igIcon} alt="instagram" />
+                      </Link>
+                    </Grid>
+                    <Grid item xs={6} className="border-left icon border-right">
+                      <Link href="https://www.facebook.com/">
+                        <img src={fbIcon} alt="facebook" />
+                      </Link>
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid container item={true} xs={12} className="legal">
-                  <StyledList>
-                    <ListItem>
-                      Objective Wellness &bull; All rights reserved
-                    </ListItem>
+                  <StyledLegalList>
+                    <ListItem>Objective &bull; All rights reserved</ListItem>
                     <ListItem>
                       <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
                     </ListItem>
                     <ListItem>
                       <NavLink to="/terms">Terms of use</NavLink>
                     </ListItem>
-                  </StyledList>
+                  </StyledLegalList>
                 </Grid>
               </Grid>
             </div>

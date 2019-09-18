@@ -45,8 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 const OrderConfirmation = ({ onSubmit }) => {
   const account = useSelector(state => state.account);
-  const order = useSelector(state => state.order);
-  const { cart, transactions } = order;
+  const order = useSelector(state => state.order.order);
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -55,13 +54,18 @@ const OrderConfirmation = ({ onSubmit }) => {
   const addressesWidth = xs ? 12 : 6;
   // console.log('OrderConfirmation', { order, account });
 
+  if (!order) {
+    return null;
+  }
+
+  const { cart, transactions } = order;
   const OrderCartSummary = () => {
     return <CartSummary cart={cart} />;
   };
 
   const OrderDetail = () => {
     const { cardType, last4 } = transactions[0].paymentMethod;
-    const { shippingAddress, billingAddress } = cart;
+    const { shippingAddress, paymentDetails: { billingAddress } } = cart;
     const { email } = account.data;
     return (
       <Box className={classes.paper}>

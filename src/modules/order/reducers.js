@@ -16,9 +16,9 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CREATE_ORDER:
-      return { ...state };
+      return { ...state, isLoading: true, order: null };
     case RECEIVED_CREATE_ORDER:
-      return { ...state, ...action.payload };
+      return { ...state, order: action.payload, isLoading: false };
     case REQUEST_FIND_ALL_ORDERS:
       return { ...state };
     case RECEIVED_FIND_ALL_ORDERS:

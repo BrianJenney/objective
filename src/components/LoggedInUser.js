@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import store from '../store';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -34,16 +33,16 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles(theme => ({
+const StyledMenuItem = withStyles({
   root: {
     '&:hover': {
       textDecoration: 'underline',
       backgroundColor: 'transparent'
     }
   }
-}))(MenuItem);
+})(MenuItem);
 
-const LoggedInUser = ({ switchToSignup, logout }) => {
+const LoggedInUser = ({ name, logout }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const menuItems = [
@@ -61,14 +60,18 @@ const LoggedInUser = ({ switchToSignup, logout }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const accountName = store.getState().account.data.firstName;
-  return (
+
+  return xs ? (
+    <NavLink to="/account/overview">Hi, {name}</NavLink>
+  ) : (
     <div style={{ margin: '0 -5px' }}>
-      <Button aria-haspopup="true" onClick={handleClick}>
-        <Typography style={{ fontFamily: $brandSans }}>
-          Hi, {accountName}
-        </Typography>{' '}
-        &nbsp; {xs ? null : <ExpandMore />}
+      <Button
+        aria-haspopup="true"
+        onClick={handleClick}
+        style={{ backgroundColor: 'transparent' }}
+      >
+        <Typography style={{ fontFamily: $brandSans }}>Hi, {name}</Typography>{' '}
+        &nbsp; {xs ? '' : <ExpandMore />}
       </Button>
 
       <StyledMenu

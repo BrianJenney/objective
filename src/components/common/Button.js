@@ -8,9 +8,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 const CustomizedBtn = withStyles({
   root: {
-    height: '50px',
     fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    padding: '24px 0 26px',
+    minWidth: '282px'
   }
 })(Button);
 

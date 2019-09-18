@@ -12,6 +12,7 @@ import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
+import LoginDropdown from './LoginDropdown';
 import './Header-style.scss';
 
 const StyledLink = withStyles(() => ({
@@ -38,10 +39,21 @@ const StyledBox = withStyles(() => ({
 }))(Box);
 
 const Header = ({ currentUser, location }) => {
-  const { account_jwt } = currentUser.data;
+  const theme = useTheme();
+  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const { account_jwt, firstName } = currentUser.data;
   const accountMenuItemConf = account_jwt
-    ? { key: 'third', to: '/account', children: <LoggedInUser /> }
-    : { key: 'third', to: '/login', children: 'Account' };
+    ? {
+        key: 'third',
+        children: <LoggedInUser name={firstName} />
+      }
+    : burger
+    ? { key: 'third', to: '/login', children: ' Account' }
+    : {
+        key: 'third',
+        children: <LoginDropdown />
+      };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', children: 'Shop' },
     { key: 'second', to: '/', children: 'Journal' },
@@ -60,10 +72,6 @@ const Header = ({ currentUser, location }) => {
       menuItems={burgerMenuItems}
     />
   );
-
-  const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
 
   return (
     <Grid container item={true} xs={12} className="headerContainer">
@@ -117,7 +125,7 @@ const Header = ({ currentUser, location }) => {
                 </StyledLink>
               </Grid>
               <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJECTIVE WELLNESS</NavLink>
+                <NavLink to="/">OBJECTIVE</NavLink>
               </Grid>
               <Grid item>
                 <StyledLink component={RouterLink} {...accountMenuItemConf} />
