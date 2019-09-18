@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import store from '../store';
-import EventEmitter from '../events';
 import Container from '@material-ui/core/Container';
 
 const msgpack = require('msgpack-lite');
