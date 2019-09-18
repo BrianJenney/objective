@@ -10,7 +10,7 @@ const localStorageClient = require('store');
 const productIds = localStorageClient.get('products');
 const imageHeroDesktop = require('../../src/assets/images/galleryhero.png');
 const imageHeroMobile = require('../../src/assets/images/galleryhero-mobile.png');
-console.log("productIds",productIds)
+
 const Gallery = () => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
