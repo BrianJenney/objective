@@ -46,7 +46,7 @@ const Products = () => {
             key={productSlug}
            product={productMap.get(productSlug)}
            
-
+)}
       </Grid>
     </Container>
   );
