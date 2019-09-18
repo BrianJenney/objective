@@ -14,6 +14,10 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
+  dispatch({
+    type: REQUEST_CREATE_ORDER,
+    payload: { isLoading: true }
+  });
   // The account JWT needs to be passed in as its own argument
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
@@ -33,10 +37,6 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     },
     payload
   );
-  await dispatch({
-    type: REQUEST_CREATE_ORDER,
-    payload: {}
-  });
 };
 
 export const receivedCreateOrder = order => {
