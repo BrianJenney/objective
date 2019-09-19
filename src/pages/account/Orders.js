@@ -16,7 +16,7 @@ const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...pr
 const columns = [
   {
     name: "_id",
-    label: "Order ID",
+    label: "ORDER ID",
     options: {
       filter: false,
       sort: false,
@@ -31,14 +31,15 @@ const columns = [
   },
   {
     name: "createdAt",
-    label: "Ordered On",
+    label: "ORDER DATE",
     options: {
       filter: false,
       sort: false,
       sortDirection: 'desc',
-      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
+      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, false),
     },
   },
+  /*
   {
     name: "cart.total",
     label: "Amount",
@@ -61,18 +62,35 @@ const columns = [
       )
     }
   },
+  */
   {
     name: "status",
-    label: "Status",
+    label: "STATUS",
     options: {
       filter: true,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => (
-        <Typography component="p" align="center" style={{fontSize: "0.875rem"}}>{value}</Typography>
+        <Typography component="p" align="left" style={{fontSize: "0.875rem"}}>{value}</Typography>
       )
-
     }
   },
+  {
+    name: "_id",
+    label: "TRACKING INFORMATION",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return (
+          <Button color="primary" component={AdapterLink} to={`/transactions/${value}`}>
+            {' '}
+          </Button>
+        );
+      },
+    }
+  },
+
+  /*
   {
     name: "updatedAt",
     label: "Updated On",
@@ -82,6 +100,7 @@ const columns = [
       customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
     },
   },
+  */
 ];
 
 const AccountOrders = ({ currentUser: { data}}) => {
