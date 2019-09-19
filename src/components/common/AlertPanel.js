@@ -15,12 +15,12 @@ const COLOR_MAP = {
   [ALERT_TYPES.ERROR]: 'error.main'
 };
 
-const AlertPanel = ({ type, text, variant, ...rest }) => {
+const AlertPanel = ({ type, text, style, ...rest }) => {
   const color = COLOR_MAP[type];
 
   return (
     <Box color={color} alignItems="center" width={1} {...rest}>
-      <Typography variant={variant} children={text} />
+      <Typography style={style} children={text} />
     </Box>
   );
 };

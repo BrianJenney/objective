@@ -29,12 +29,18 @@ const INITIAL_VALUES = {
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '40px',
-    fontWeight: 'bold',
-    padding: theme.spacing(3, 0, 2)
+    fontSize: '44px',
+    color: '#231f20',
+    fontFamily: 'Canela Text',
+    lineHeight: 'normal',
+    padding: theme.spacing(3, 0, 2),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px'
+    }
   },
   subTitle: {
     fontSize: '17px',
+    fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
   }
 }));
@@ -71,7 +77,7 @@ const ForgotPassword = () => {
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
         <Typography className={classes.title}>
-          Forgot your email / password?
+          Forgot your email/password?
         </Typography>
         <Typography className={classes.subTitle}>
           It's easy to forget. Enter your email address and we'll send you a
