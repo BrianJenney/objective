@@ -113,16 +113,13 @@
   }
 }
 @media (max-width: 768px) {
-  .gallery-page {
-    padding: 0 !important;
-    .hero-holder {
-      margin-bottom: 20px;
-    }
-    .blurb-img {
-      display: none;
-    }
-    .opt1 {
-      min-height: fit-content;
-    }
+  .hero-holder {
+    margin-bottom: 20px !important;
+  }
+  .blurb-img {
+    display: none;
+  }
+  .opt1 {
+    min-height: fit-content;
   }
 }
