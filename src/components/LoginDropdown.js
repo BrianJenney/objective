@@ -12,7 +12,9 @@ const { $brandSans } = fonts;
 const StyledMenu = withStyles(theme => ({
   paper: {
     border: '1px solid',
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    width: '286px',
+    boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.5)'
   }
 }))(props => (
   <Menu
@@ -48,7 +50,15 @@ const LoginDropdown = () => {
         onClick={handleClick}
         style={{ backgroundColor: 'transparent' }}
       >
-        <Typography style={{ fontFamily: $brandSans }}>Account</Typography>{' '}
+        <Typography
+          style={{
+            fontFamily: $brandSans,
+            fontSize: '16px',
+            letterSpacing: '1px'
+          }}
+        >
+          Account
+        </Typography>{' '}
       </Button>
       <StyledMenu
         anchorEl={anchorEl}
@@ -74,7 +84,12 @@ const LoginDropdown = () => {
           }}
         ></Button>
         <Box pt={1}>
-          <Typography style={{ fontFamily: $brandSans, fontSize: 16 }}>
+          <Typography
+            style={{
+              fontFamily: $brandSans,
+              fontSize: '16px'
+            }}
+          >
             Don&#39;t have an account?&nbsp;
             <NavLink to="/signup" children="Sign up" underline="always" />
           </Typography>

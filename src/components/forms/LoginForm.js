@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import { Button, NavLink, AlertPanel } from '../common';
 import { withCurrentUser } from '../../hoc';
-import { InputField } from '../form-fields';
+import { CheckboxField, InputField } from '../form-fields';
+import { fonts } from '../Theme/fonts';
+const { smallHeader } = fonts;
 
 const schema = object().shape({
   email: string()
@@ -31,61 +31,68 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
   );
 
   const renderForm = () => (
-    <Form>
-      {title && <Typography variant="h6" gutterBottom children={title} />}
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Field
-            name="email"
-            label="Email Address"
-            component={InputField}
-            autoComplete="email"
-          />
+    <>
+      {currentUser.error && (
+        <AlertPanel
+          mb={3}
+          p={1}
+          bgcolor="#ffcdd2"
+          text={currentUser.error}
+          style={{ fontFamily: smallHeader, fontSize: '14px' }}
+        />
+      )}
+      <Form>
+        {title && <Typography variant="h6" gutterBottom children={title} />}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Field
+              name="email"
+              label="Email Address"
+              component={InputField}
+              autoComplete="email"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Field
+              name="password"
+              label="Password"
+              component={InputField}
+              type={passwordVisible ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <Box width={1} textAlign="right">
+                    <NavLink
+                      style={{
+                        fontFamily: smallHeader,
+                        fontSize: '12px'
+                      }}
+                      component="button"
+                      underline="always"
+                      onClick={togglePasswordVisibility}
+                      children={
+                        passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
+                      }
+                    ></NavLink>
+                  </Box>
+                )
+              }}
+              autoComplete="current-password"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Field
+              name="remember me"
+              color="primary"
+              label="Remember me"
+              component={CheckboxField}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button fullWidth type="submit" children="Login" />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Field
-            name="password"
-            label="Password"
-            component={InputField}
-            type={passwordVisible ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <Box width={1} textAlign="right">
-                  <NavLink
-                    component="button"
-                    underline="always"
-                    onClick={togglePasswordVisibility}
-                    children={
-                      passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
-                    }
-                  ></NavLink>
-                </Box>
-              )
-            }}
-            autoComplete="current-password"
-          />
-        </Grid>
-        <Box px={2}>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-        </Box>
-        <Grid item xs={12}>
-          <Button fullWidth type="submit" children="Login" />
-        </Grid>
-        {currentUser.error && (
-          <AlertPanel
-            my={2}
-            p={2}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={currentUser.error}
-            variant="subtitle2"
-          />
-        )}
-      </Grid>
-    </Form>
+      </Form>
+    </>
   );
 
   return (
