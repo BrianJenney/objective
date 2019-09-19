@@ -15,7 +15,9 @@ const { $brandSans } = fonts;
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid'
+    border: '1px solid',
+    width: '286px',
+    boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.5)'
   }
 })(props => (
   <Menu
@@ -33,14 +35,17 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles({
+const StyledMenuItem = withStyles(theme => ({
   root: {
+    padding: theme.spacing(0, 3),
+    fontFamily: $brandSans,
+    fontSize: '16px',
     '&:hover': {
       textDecoration: 'underline',
       backgroundColor: 'transparent'
     }
   }
-})(MenuItem);
+}))(MenuItem);
 
 const LoggedInUser = ({ name, logout }) => {
   const theme = useTheme();
@@ -64,8 +69,9 @@ const LoggedInUser = ({ name, logout }) => {
   return xs ? (
     <NavLink to="/account/overview">Hi, {name}</NavLink>
   ) : (
-    <div style={{ margin: '0 -5px' }}>
+    <div>
       <Button
+        margin="0 10px"
         aria-haspopup="true"
         onClick={handleClick}
         style={{ backgroundColor: 'transparent' }}
@@ -73,8 +79,7 @@ const LoggedInUser = ({ name, logout }) => {
         <Typography
           style={{
             fontFamily: $brandSans,
-            fontSize: 16,
-            fontWeight: 400,
+            fontSize: '16px',
             letterSpacing: '1px'
           }}
         >
@@ -90,22 +95,13 @@ const LoggedInUser = ({ name, logout }) => {
         onClose={handleClose}
       >
         {menuItems.map(menuItem => (
-          <>
-            <StyledMenuItem
-              key={menuItem.key}
-              justify="center"
-              button
-              onClick={handleClose}
-            >
-              <Typography style={{ fontFamily: $brandSans }}>
-                {menuItem.key === 'logout' ? (
-                  <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
-                ) : (
-                  <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
-                )}
-              </Typography>
-            </StyledMenuItem>
-          </>
+          <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
+            {menuItem.key === 'logout' ? (
+              <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
+            ) : (
+              <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
+            )}
+          </StyledMenuItem>
         ))}
       </StyledMenu>
     </div>
