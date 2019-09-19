@@ -56,6 +56,9 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: '#ffffff',
       color: '#000000'
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '16px'
     }
   },
   wrapper: {
