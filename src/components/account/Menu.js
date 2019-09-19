@@ -12,6 +12,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
+    fontFamily: 'p22-underground',
+    fontSize: 16,
     '&:hover': {
       textDecoration: 'underline'
     }
@@ -21,20 +23,19 @@ const StyledMenuItem = withStyles(theme => ({
 const AccountMenu = ({ logout }) => {
   return (
     <Box width={1}>
-      <List component="nav">
+      <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
-          <ListItem key={menuItem.key} button>
+          <ListItem key={menuItem.key}>
             <ListItemText
               primary={
-                <Box px={7}>
+                <div className="account-side-menu">
                   {menuItem.key === ACCOUNT_MENU_KEYS.LOGOUT ? (
                     <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
                   ) : (
                     <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
                   )}
-                </Box>
+                </div>
               }
-              primaryTypographyProps={{variant: 'h6'}}
             />
           </ListItem>
         ))}

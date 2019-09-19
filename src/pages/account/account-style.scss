@@ -1,0 +1,34 @@
+/* .account-left-side:after {
+  content: '';
+  width: 0;
+  height: 100%;
+  position: absolute;
+  border: 1px solid #211f20;
+  top: 0;
+  left: 100px;
+} */
+.account-side-menu {
+  font-family: p22-underground, sans-serif;
+  font-size: 16px;
+  a {
+    &:hover {
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+}
+
+.account-overview {
+  font-family: FreightTextProBook;
+  font-size: 21px;
+  strong {
+    font-family: p22-underground, sans-serif;
+    font-size: 18px;
+    margin-right: 25px;
+  }
+  a {
+    font-family: p22-undergrounf, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}

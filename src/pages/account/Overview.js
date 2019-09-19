@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
   },
   info: {
     fontFamily: fonts.smallHeader,
-    padding: 20,
     fontSize: '18px'
   },
   subTexts: {
@@ -69,41 +68,29 @@ const AccountOverview = props => {
     setOpen(!open);
   };
   const RenderOverview = () => (
-    <Grid item xs={12}>
-      <Paper align="left">
-        <Typography className={classes.title} variant="h1" gutterBottom>
-          Welcome, {currentUser.data.firstName} {currentUser.data.lastName}!
-        </Typography>
-        <div className={classes.inline}>
-          <Typography className={classes.info} variant="h3" gutterBottom>
-            NAME
-          </Typography>
-          <span className={classes.subTexts}>
-            {currentUser.data.firstName} {currentUser.data.lastName}
-          </span>
-        </div>
-        <div className={classes.inline}>
-          <Typography className={classes.info} variant="h3" gutterBottom>
-            EMAIL
-          </Typography>
-          <span className={classes.subTexts}>{currentUser.data.email}</span>
-        </div>
-        <div className={classes.inline}>
-          <Typography className={classes.info} variant="h3" gutterBottom>
-            PASSWORD
-          </Typography>
-          <span className={classes.subTexts}>******</span>
-          <a href="/account/profile" style={change}>
-            CHANGE
-          </a>
-        </div>
-        <div className={classes.inline}>
-          <Typography className={classes.info} variant="h3" gutterBottom>
-            SAVED PAYMENT METHOD
-          </Typography>
-        </div>
-      </Paper>
-    </Grid>
+    <div className="account-overview">
+      <Typography className={classes.title} variant="h1" gutterBottom>
+        Welcome, {currentUser.data.firstName} {currentUser.data.lastName}!
+      </Typography>
+      <p>
+        <strong>NAME</strong> {currentUser.data.firstName}{' '}
+        {currentUser.data.lastName}
+      </p>
+      <p>
+        <strong>EMAIL</strong>
+        {currentUser.data.email}
+      </p>
+      <p>
+        <strong>PASSWORD</strong>
+        xxxxxx
+        <a href="/account/profile" style={change}>
+          CHANGE
+        </a>
+      </p>
+      <p>
+        <strong>SAVED PAYMENT METHOD</strong>
+      </p>
+    </div>
   );
   return xs ? (
     <Container style={pStyle}>
@@ -128,9 +115,7 @@ const AccountOverview = props => {
       </Box>
     </Container>
   ) : (
-    <Container style={pStyle}>
-      <RenderOverview />
-    </Container>
+    <RenderOverview />
   );
 };
 export default AccountOverview;
