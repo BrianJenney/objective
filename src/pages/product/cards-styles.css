@@ -20,12 +20,13 @@ h2 {
 }
 
 .label-info-wrapper h2 {
-  font-size: 2rem;
-  font-family: Canela, serif;
+  font-family: CanelaText;
   margin: 0 auto;
   width: 100%;
   text-align: center;
   margin-top: 30px;
+  line-height: 1.25;
+  font-weight: normal;
 }
 
 .label-info-wrapper .top-block,
@@ -65,23 +66,25 @@ h2 {
 .label-info-wrapper .top-block .card h6,
 .label-info-wrapper .bottom-block .card h6 {
   font-family: P22-underground, Helvetica, serif;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: 1px;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
+  padding-bottom: 0;
 }
 
 .label-info-wrapper .top-block .card ul li,
 .label-info-wrapper .bottom-block .card ul li {
-  font-family: FreightTextProBook, sans-serif;
-  font-size: 15px;
+  font-family: FreightTextProBook;
+  font-size: 20px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
+  line-height: 1.6;
 }
 
 .label-info-wrapper .top-block .card ul.fineprint,
@@ -109,7 +112,7 @@ h2 {
 }
 
 .label-info-wrapper .top-block {
-  border-top: 1px solid;
+  border-top: 2px solid #003833;
   margin-top: 30px;
   padding-bottom: 45px;
   padding-top: 20px;
@@ -166,12 +169,14 @@ h2 {
 }
 
 .label-info-wrapper .top-block .facts-table table th {
-  font-family: P22-underground, Helvetica, sans;
-  text-transform: uppercase;
+  font-family: p22-underground;
+  font-size: 20px;
+  line-height: 2.6;
 }
 
 .label-info-wrapper .top-block .facts-table table td {
   font-family: P22-underground, Helvetica, sans;
+  font-size: 18px;
 }
 
 .label-info-wrapper .top-block .facts-table table td,
@@ -190,7 +195,7 @@ h2 {
   }
   .label-info-wrapper .top-block .facts-table table td,
   .label-info-wrapper .top-block .facts-table table th {
-    padding: 30px 20px;
+    padding: 25px 40px;
   }
 }
 
@@ -232,7 +237,7 @@ h2 {
 }
 
 .label-info-wrapper .bottom-block .other-ingredients ul {
-  margin: 20px 0 40px 40px;
+  margin: 22px 0 40px 40px;
 }
 
 .label-info-wrapper .bottom-block .other-ingredients ul li {
@@ -249,7 +254,7 @@ h2 {
   }
 
   .label-info-wrapper .bottom-block .other-ingredients ul {
-    margin: 20px 0 40px 20px;
+    margin: 22px 0 40px 20px;
   }
 }
 
@@ -257,7 +262,7 @@ h2 {
   /* border-right: solid 2px #003833;
   border-left: solid 2px #003833;
   border-bottom: solid 2px #003833; */
-  border-top: solid 1px #003833;
+  border-top: solid 2px #003833;
   text-align: left;
 }
 
@@ -280,7 +285,7 @@ h2 {
   }
 
   .label-info-wrapper .bottom-block .important ul {
-    margin: 20px 0 40px 100px;
+    margin: 22px 0 40px 100px;
   }
 }
 
@@ -350,7 +355,7 @@ h2 {
 
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: 1.44x;
+  letter-spacing: 1.44px;
   margin-top: 32px;
   margin-bottom: 15px;
   padding: 0;
@@ -389,7 +394,7 @@ h2 {
 
 .how-it-works-wrapper .coreBenefits {
   width: 100%;
-  border-top: solid 1px #003833;
+  border-top: solid 2px #003833;
 }
 
 .how-it-works-wrapper .coreBenefits .textTitle {
@@ -462,20 +467,20 @@ h2 {
 
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol {
-  border-top: solid 1px #003833;
+  border-top: solid 2px #003833;
   padding-bottom: 50px;
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
-  border-top: solid 1px #003833;
+  border-top: solid 2px #003833;
 }
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
   .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
-    border-top: solid 1px #003833;
-    border-left: solid 1px #003833;
+    border-top: solid 2px #003833;
+    border-left: solid 2px #003833;
     margin-right: 2.2px;
   }
 }
@@ -485,7 +490,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: solid 1px #003833;
+  border-bottom: solid 2px #003833;
   margin-bottom: 60px;
 }
 
@@ -683,7 +688,7 @@ h2 {
 @media only screen and (min-width: 735.99px) {
   .step-wrapper {
     height: 768px;
-    border: solid 1px #003833;
+    border: solid 2px #003833;
     justify-content: center;
     margin-bottom: 50px;
   }
@@ -968,6 +973,34 @@ h2 {
   .one-label,
   .two-label,
   .three-label {
-    top: 360px;
+    top: 315px;
+  }
+}
+
+/* Mobile Only */
+
+@media (max-width: 768px) {
+  .how-it-works-wrapper {
+    padding-top: 20px;
+  }
+  .how-it-works-wrapper h2 {
+    font-size: 24px !important;
+    line-height: 1.33;
+    letter-spacing: -1.09px;
+    margin: 0 auto 25px auto;
+  }
+  .how-it-works-wrapper .topBlock .leftCol .colTitle,
+  .how-it-works-wrapper .topBlock .rightCol .colTitle {
+    margin-top: 22px;
+    font-size: 16px;
+    letter-spacing: 1.28px;
+    margin-bottom: 8px;
+  }
+  .how-it-works-wrapper .topBlock .leftCol .colTextBody,
+  .how-it-works-wrapper .topBlock .rightCol .colTextBody {
+    font-size: 18px;
+    line-height: 1.56;
+    padding-bottom: 24px;
+    margin: 0;
   }
 }
