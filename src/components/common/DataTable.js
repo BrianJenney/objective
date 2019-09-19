@@ -31,7 +31,7 @@ const getMuiTheme = () => createMuiTheme({
       },
       sortAction: {
         display: 'block',
-        textAlign: "center",
+        textAlign: "left",
       }
     }
 
@@ -45,6 +45,11 @@ const DataTable = ({ title, data, columns, isLoading}) => {
     rowsPerPage: 10,
     page: 0,
     rowsPerPageOptions: [10, 20, 50],
+    print: false,
+    search: false,
+    download: false,
+    viewColumns: false,
+    filter: false,
   };
 
   return (
