@@ -41,6 +41,9 @@ const withDialog = WrappedComponent => {
   const WithDialog = props => {
     const [open, setOpen] = useState(true);
     const handleDialogClose = useCallback(() => {
+      if (typeof props.onExited === 'function') {
+        props.onExited();
+      }
       setOpen(false);
     }, []);
     return (
@@ -49,7 +52,7 @@ const withDialog = WrappedComponent => {
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        disableBackdropClick={false}
+        disableBackdropClick={true}
         disableEscapeKeyDown={true}
         onExited={props.onExited}
       >
