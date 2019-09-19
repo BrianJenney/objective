@@ -73,6 +73,7 @@ const LoginDropdown = () => {
           to="/login"
           underline="none"
           component={NavLink}
+          onClick={handleClose}
           children="Log in"
           style={{
             fontFamily: $brandSans,
@@ -82,7 +83,7 @@ const LoginDropdown = () => {
             fontSize: 16,
             lineHeight: 1.88
           }}
-        ></Button>
+        />
         <Box pt={1}>
           <Typography
             style={{
@@ -91,7 +92,7 @@ const LoginDropdown = () => {
             }}
           >
             Don&#39;t have an account?&nbsp;
-            <NavLink to="/signup" children="Sign up" underline="always" />
+            <NavLink to="/signup" onClick={handleClose} children="Sign up" underline="always" />
           </Typography>
         </Box>
       </StyledMenu>
