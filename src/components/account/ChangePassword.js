@@ -1,108 +1,101 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { object, string } from 'yup';
+import { Formik, Field, Form } from 'formik';
+import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Formik, Field, Form } from 'formik';
-import { object, string } from 'yup';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { Button } from '../common';
-import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
+import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
+import { Button } from '../common';
+import { getInitialValues } from '../../utils/misc';
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
-  newPassword1: string().required('Both password fields are required.'),
-  newPassword2: string().required('Both password fields are required.')
+  newPassword1: string().required('Both password fields are required'),
+  newPassword2: string().required('Both password fields are required')
 });
-const ChangePassword = props => {
-  const { account } = props;
+const INITIAL_VALUES = {
+  currentPassword: '',
+  newPassword1: '',
+  newPassword2: ''
+};
+const ChangePasswordForm = ({
+  title,
+  defaultValues,
+  onSubmit,
+  onBack,
+  submitLabel,
+  backLabel
+}) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const INITIAL_VALUES = {};
-  if (!account.data.account_jwt) {
-    return <div>No Account</div>;
-  }
-  const handleSubmit = values => {
-    // if (values.newPassword1 !== values.newPassword2) {
-    //   return false;
-    // }
-    store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
-  };
-  const renderForm = () => {
-    return (
-      <Form>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Field
-              label="Current Password"
-              name="currentPassword"
-              type="password"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              label="New Password"
-              name="newPassword1"
-              type="password"
-              component={InputField}
-            ></Field>
-            <Typography style={{ fontSize: '0.75rem' }}>
-              Must be at least 6 characters
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              label="Confirm New Password"
-              name="newPassword2"
-              type="password"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={xs ? 12 : 4}>
-            <Button mt={2} mp={3} type="submit">
-              Change Password
-            </Button>
-          </Grid>
-        </Grid>
-      </Form>
-    );
-  };
-  return (
-    <Container style={{ paddingTop: '30px' }}>
-      <Typography
-        variant="h3"
-        style={{ fontFamily: 'p22-underground' }}
-        gutterBottom
-      >
-        CHANGE PASSWORD
-      </Typography>
-      <Grid container spacing={3}>
+  const renderForm = () => (
+    <Form>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Formik
-            initialValues={INITIAL_VALUES}
-            onSubmit={handleSubmit}
-            validationSchema={schema}
-            render={renderForm}
+          <Field
+            name="currentPassword"
+            label="Current Password"
+            component={InputField}
+            type="password"
           />
         </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="newPassword1"
+            label="New Password"
+            component={InputField}
+            type="password"
+            helperText="Must be at least 6 characters"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="newPassword2"
+            label="Confirm New Password"
+            component={InputField}
+            type="password"
+          />
+        </Grid>
+        <Grid item xs={xs ? 12 : 4}>
+          <Box display="flex" alignItems="center">
+            {' '}
+            {onBack && (
+              <Button
+                type="button"
+                onClick={onBack}
+                children={backLabel}
+                mr={2}
+              />
+            )}
+            <Button fullWidth type="submit" children={submitLabel} />
+          </Box>
+        </Grid>
       </Grid>
-    </Container>
+    </Form>
+  );
+  return (
+    <Formik
+      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+      onSubmit={onSubmit}
+      validationSchema={schema}
+      render={renderForm}
+    />
   );
 };
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
+ChangePasswordForm.propTypes = {
+  title: PropTypes.string,
+  defaultValues: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
 };
-const mapDispatchToProps = {};
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(ChangePassword);
+ChangePasswordForm.defaultProps = {
+  defaultValues: {},
+  submitLabel: 'Change Password',
+  backLabel: 'Cancel'
+};
+export default ChangePasswordForm;

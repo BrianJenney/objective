@@ -56,7 +56,7 @@ const ProfileDetails = props => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid>
           <Grid item xs={xs ? 12 : 4}>
-            <Button mt={2} mp={3} fullWidth type="submit">
+            <Button mt={2} mp={3} fullWidth type="submit" >
               Save Changes
             </Button>
           </Grid>
