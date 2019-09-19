@@ -52,17 +52,16 @@ const AddressSummary = ({ withLabels, noDefault, values, children }) => {
   let defaultIndicator = null;
   if (!noDefault) {
     defaultIndicator = values.isDefault ? (
-      <Box
-        height={30}
-        display="flex"
-        alignItems="center"
-        className="saved-default"
-      >
-        <CheckIcon />
-        <Typography variant="body1" children="Saved as default" />
+      <Box my="10px" height={30} display="flex" alignItems="center">
+        <CheckIcon style={{ width: '0.75em', height: '0.75em' }} />
+        <Typography
+          variant="body1"
+          children="Saved as default"
+          style={{ fontSize: 15 }}
+        />
       </Box>
     ) : (
-      <Box height={30} />
+      <Box my="10px" height={30} />
     );
   }
 

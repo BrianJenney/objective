@@ -221,6 +221,8 @@ const Checkout = ({
                 <AccountAddresses
                   currentUser={currentUser}
                   requestPatchAccount={requestPatchAccount}
+                  title="Shipping Address"
+                  withSmallTitle
                   onSubmit={handleNext}
                   allowFlyMode
                   mt={4}
@@ -241,6 +243,9 @@ const Checkout = ({
                 <AccountPaymentDetails
                   currentUser={currentUser}
                   requestPatchAccount={requestPatchAccount}
+                  title="Credit Card"
+                  withSmallTitle
+                  subTitle=""
                   onBack={handleBack}
                   onSubmit={handleNext}
                   seedEnabled
@@ -263,7 +268,11 @@ const Checkout = ({
               </Panel>
             </Grid>
             <Grid item xs={12} md={4} className="left-side">
-              <CartDrawer />
+              <CartDrawer
+                disableItemEditing
+                hideCheckoutProceedLink
+                hideTaxLabel
+              />
             </Grid>
           </Grid>
         </Box>
