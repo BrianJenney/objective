@@ -93,7 +93,7 @@ const AccountOverview = props => {
             PASSWORD
           </Typography>
           <span className={classes.subTexts}>******</span>
-          <a href="" style={change}>
+          <a href="/account/profile" style={change}>
             CHANGE
           </a>
         </div>
