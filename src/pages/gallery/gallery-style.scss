@@ -1,20 +1,7 @@
 .white-bg {
   background-color: #ffffff;
 }
-@media (max-width: 768px) {
-  .gallery-page {
-    padding: 0 !important;
-    .hero-holder {
-      margin-bottom: 20px;
-    }
-    .blurb-img {
-      display: none;
-    }
-    .opt1 {
-      min-height: fit-content;
-    }
-  }
-}
+
 .opt1,
 .opt2 {
   border: 1px solid #8b3a26;
@@ -123,5 +110,19 @@
   }
   .pding {
     padding: 0 20px;
+  }
+}
+@media (max-width: 768px) {
+  .gallery-page {
+    padding: 0 !important;
+    .hero-holder {
+      margin-bottom: 20px;
+    }
+    .blurb-img {
+      display: none;
+    }
+    .opt1 {
+      min-height: fit-content;
+    }
   }
 }
