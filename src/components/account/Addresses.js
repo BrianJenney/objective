@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { get, isEmpty, isNil, omit } from 'lodash';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
@@ -11,6 +12,8 @@ import { AddressForm } from '../forms';
 const AccountAddresses = ({
   currentUser,
   requestPatchAccount,
+  title,
+  withSmallTitle,
   onBack,
   onSubmit,
   seedEnabled,
@@ -83,72 +86,59 @@ const AccountAddresses = ({
 
     return true;
   };
-  let isCheckout = false;
-  if (window.location.pathname.includes('checkout')) {
-    isCheckout = true;
-  }
 
   return (
     <Box {...rest} className="step-2-wrapper">
-      {isCheckout ? (
-        <Box
-          component={Typography}
-          mx={1}
-          color="#231f20"
-          variant="h5"
-          children="Shipping Address"
-          fontFamily="Canela Text, serif"
-          gutterBottom
-        />
-      ) : (
-        <Box
-          component={Typography}
-          mx={1}
-          color="#231f20"
-          variant="h5"
-          children="Saved Addresses"
-          gutterBottom
-        />
-      )}
-      <Grid container>
-        {addressBook.map((addressEntity, index) => {
-          const borderStyle = addressEntity.isDefault
-            ? '2px solid #000'
-            : '1px solid #979797';
-          return (
-            <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-              <Box
-                border={borderStyle}
-                m={1}
-                px={4}
-                py={3}
-                className="address-box"
-              >
-                <EditablePanel
-                  title=""
-                  defaultValues={addressEntity}
-                  onSubmit={(...args) => handleSave(...args, index)}
-                  Form={AddressForm}
-                  Summary={AddressSummary}
-                  onRemove={
-                    addressEntity.isDefault
-                      ? undefined
-                      : () => deleteAddress(index)
-                  }
-                  onSetDefault={
-                    addressEntity.isDefault
-                      ? undefined
-                      : () => setDefaultAddress(index)
-                  }
-                />
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
-      <Box mx={1} my={2}>
+      <Box
+        component={Typography}
+        color="#231f20"
+        variant="h5"
+        children={title}
+        fontSize={withSmallTitle ? 30 : 48}
+        fontFamily="Canela Text, serif"
+        mb={4}
+      />
+      <Box mx="-8px" my="-8px">
+        <Grid container>
+          {addressBook.map((addressEntity, index) => {
+            const borderStyle = addressEntity.isDefault
+              ? '2px solid #000'
+              : '1px solid #979797';
+            return (
+              <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+                <Box
+                  border={borderStyle}
+                  m={1}
+                  px={4}
+                  py={3}
+                  className="address-box"
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={addressEntity}
+                    onSubmit={(...args) => handleSave(...args, index)}
+                    Form={AddressForm}
+                    Summary={AddressSummary}
+                    onRemove={
+                      addressEntity.isDefault
+                        ? undefined
+                        : () => deleteAddress(index)
+                    }
+                    onSetDefault={
+                      addressEntity.isDefault
+                        ? undefined
+                        : () => setDefaultAddress(index)
+                    }
+                  />
+                </Box>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+      <Box my={2}>
         {isEmpty(addressBook) && (
-          <AlertPanel type="info" text="No Saved Addresses." />
+          <AlertPanel mb={2} type="info" text="No Saved Addresses." />
         )}
         {addModeEnabled ? (
           <AddressForm
@@ -163,7 +153,7 @@ const AccountAddresses = ({
         ) : (
           <Box
             fontSize={16}
-            fontWeight="bold"
+            fontWeight={600}
             style={{ textTransform: 'uppercase' }}
           >
             <MenuLink
@@ -175,11 +165,7 @@ const AccountAddresses = ({
         )}
       </Box>
       {!addModeEnabled && (
-        <Box
-          display="flex"
-          alignItems="center"
-          className="button-holder-mobile"
-        >
+        <ButtonGroup fullWidth className="button-holder-mobile">
           {onBack && (
             <Button type="button" onClick={onBack} children="Back" mr={2} />
           )}
@@ -190,7 +176,7 @@ const AccountAddresses = ({
               children="Continue"
             />
           )}
-        </Box>
+        </ButtonGroup>
       )}
     </Box>
   );
@@ -199,6 +185,8 @@ const AccountAddresses = ({
 AccountAddresses.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  withSmallTitle: PropTypes.bool,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
   seedEnabled: PropTypes.bool,
@@ -208,6 +196,8 @@ AccountAddresses.propTypes = {
 };
 
 AccountAddresses.defaultProps = {
+  title: 'Saved Addresses',
+  withSmallTitle: false,
   allowFlyMode: false
 };
 

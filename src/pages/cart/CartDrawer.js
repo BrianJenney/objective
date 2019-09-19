@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -38,12 +40,17 @@ import {
   StyledBadge,
   StyledHeaderWrapperEmptyCart,
   StyledSmallCapsEmptyCart,
-  StyledPromoLink,
+  StyledPromoLink
 } from './StyledComponents';
 
 const { LIGHT_GRAY, MEDIUM_GRAY } = colorPalette;
 
-const Cart = ({ history, showCheckoutProceedLink }) => {
+const Cart = ({
+  history,
+  hideCheckoutProceedLink,
+  disableItemEditing,
+  hideTaxLabel
+}) => {
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
@@ -56,20 +63,12 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
-    const newItems = [...cart.items];
     dispatch(setCartDrawerOpened(false));
-    newItems.map(item =>
-      history.push(`/products/${item.prodSlug}/${item.varSlug}`)
-    );
-  }, [dispatch, history]);
-
-  // const onClickPromo = useCallback(() => {
-  //   //emily, plz show promo form here on click
-  // });
+  }, [dispatch]);
 
   const togglePromo = useCallback(() => {
-    setPromoVisible(!promoVisible)
-  }, [promoVisible, setPromoVisible])
+    setPromoVisible(!promoVisible);
+  }, [promoVisible, setPromoVisible]);
 
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
@@ -118,26 +117,28 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
                 ({cartCount} Items)
               </StyledCartCount>
             </Grid>
-            <Grid container direction="row" alignItems="flex-end">
-              <StyledSmallCaps component="span" onClick={handleCheckout}>
-                proceed to checkout{' '}
-                <StyledArrowIcon>
-                  <RightArrow />
-                </StyledArrowIcon>
-              </StyledSmallCaps>
-            </Grid>
+            {!hideCheckoutProceedLink && (
+              <Grid container direction="row" alignItems="flex-end">
+                <StyledSmallCaps component="span" onClick={handleCheckout}>
+                  proceed to checkout{' '}
+                  <StyledArrowIcon>
+                    <RightArrow />
+                  </StyledArrowIcon>
+                </StyledSmallCaps>
+              </Grid>
+            )}
           </StyledHeaderWrapper>
         ) : (
-            <StyledHeaderWrapperEmptyCart container direction="column">
-              <Grid container direction="row" alignItems="baseline">
-                <StyledCartHeader align="center">Your Cart </StyledCartHeader>
-                <StyledCartCount component="span">
-                  {' '}
-                  ({cartCount} Items)
+          <StyledHeaderWrapperEmptyCart container direction="column">
+            <Grid container direction="row" alignItems="baseline">
+              <StyledCartHeader align="center">Your Cart </StyledCartHeader>
+              <StyledCartCount component="span">
+                {' '}
+                ({cartCount} Items)
               </StyledCartCount>
-              </Grid>
-            </StyledHeaderWrapperEmptyCart>
-          )}
+            </Grid>
+          </StyledHeaderWrapperEmptyCart>
+        )}
       </div>
       <Grid container xs={12}>
         {cart.items.length === 0 ? (
@@ -149,87 +150,99 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
         ) : null}
         {cart.items.length !== 0
           ? Object.values(cart.items).map((item, index) => (
-            <>
-              <StyledDrawerGrid container xs={12} direction="row">
-                <Grid
-                  item
-                  xs={4}
-                  style={{ 'min-width': '126px', 'margin-right': '18px' }}
-                >
-                  <Card>
-                    <CardMedia
-                      style={{ height: 126, width: 126 }}
-                      image={item.variant_img}
-                      title={item.variant_name}
-                      onClick={onClickProduct}
-                    />
-                  </Card>
-                </Grid>
-                <Grid item xs={7}>
-                  <Card
-                    style={{
-                      display: 'flex',
-                      'flex-direction': 'column',
-                      height: '126px',
-                      'justify-content': 'space-between'
-                    }}
+              <>
+                <StyledDrawerGrid container xs={12} direction="row">
+                  <Grid
+                    item
+                    xs={4}
+                    style={{ 'min-width': '126px', 'margin-right': '18px' }}
                   >
-                    <StyledProductLink align="left" onClick={onClickProduct}>
-                      {item.variant_name}
-                    </StyledProductLink>
-                    <Grid item style={{ padding: '0' }}>
-                      <StyledCardActions>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e =>
-                            adjustQty(cart, e.currentTarget.value, -1)
-                          }
-                          style={{ 'font-size': '18pt' }}
-                          value={index}
-                          disabled={item.quantity < 2}
+                    <Card>
+                      <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                        <CardMedia
+                          style={{ height: 126, width: 126 }}
+                          image={item.variant_img}
+                          title={item.variant_name}
+                          onClick={onClickProduct}
+                        />
+                      </Link>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={7}>
+                    <Card
+                      style={{
+                        display: 'flex',
+                        'flex-direction': 'column',
+                        height: '126px',
+                        'justify-content': 'space-between'
+                      }}
+                    >
+                      <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                        <StyledProductLink
+                          align="left"
+                          onClick={onClickProduct}
                         >
-                          -
-                          </StyledCounterButton>
-                        <StyledSmallCaps style={{ marginTop: '2px' }}>
-                          {item.quantity}
+                          {item.variant_name}
+                        </StyledProductLink>
+                      </Link>
+                      <Grid item style={{ padding: '0' }}>
+                        {disableItemEditing ? (
+                          <Box
+                            component={Typography}
+                            children={`QTY: ${item.quantity}`}
+                          />
+                        ) : (
+                          <StyledCardActions>
+                            <StyledCounterButton
+                              color="primary"
+                              onClick={e =>
+                                adjustQty(cart, e.currentTarget.value, -1)
+                              }
+                              style={{ 'font-size': '18pt' }}
+                              value={index}
+                              disabled={item.quantity < 2}
+                            >
+                              -
+                            </StyledCounterButton>
+                            <StyledSmallCaps style={{ marginTop: '2px' }}>
+                              {item.quantity}
+                            </StyledSmallCaps>
+                            <StyledCounterButton
+                              color="primary"
+                              onClick={e =>
+                                adjustQty(cart, e.currentTarget.value, 1)
+                              }
+                              style={{ 'font-size': '18pt' }}
+                              value={index}
+                            >
+                              +
+                            </StyledCounterButton>
+                          </StyledCardActions>
+                        )}
+                      </Grid>
+                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                        <StyledFinePrint component="div" value={index}>
+                          {!disableItemEditing && (
+                            <Link
+                              onClick={e => removeFromCart(cart, index)}
+                              style={{
+                                'text-transform': 'uppercase',
+                                color: LIGHT_GRAY
+                              }}
+                            >
+                              Remove
+                            </Link>
+                          )}
+                        </StyledFinePrint>
+                        <StyledSmallCaps>
+                          {`$${(item.quantity * item.unit_price).toFixed(2)}`}
                         </StyledSmallCaps>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e =>
-                            adjustQty(cart, e.currentTarget.value, 1)
-                          }
-                          style={{ 'font-size': '18pt' }}
-                          value={index}
-                        >
-                          +
-                          </StyledCounterButton>
-                      </StyledCardActions>
-                    </Grid>
-                    <StyledCardContent style={{ 'padding-bottom': '0' }}>
-                      <StyledFinePrint
-                        component="div"
-                        onClick={e => removeFromCart(cart, index)}
-                        value={index}
-                      >
-                        <Link
-                          style={{
-                            'text-transform': 'uppercase',
-                            color: LIGHT_GRAY
-                          }}
-                        >
-                          Remove
-                          </Link>
-                      </StyledFinePrint>
-                      {/* <StyledSmallCaps>{item.unit_price.toFixed(2)}</StyledSmallCaps> */}
-                      <StyledSmallCaps>
-                        {(item.quantity * item.unit_price).toFixed(2)}
-                      </StyledSmallCaps>
-                    </StyledCardContent>
-                  </Card>
-                </Grid>
-              </StyledDrawerGrid>
-            </>
-          ))
+                      </StyledCardContent>
+                    </Card>
+                  </Grid>
+                </StyledDrawerGrid>
+              </>
+            ))
           : null}
         {cart.items.length !== 0 ? (
           <Grid item xs={12} style={{ 'text-align': 'left' }}>
@@ -280,16 +293,13 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
           cart.promo ? (
             <PromoCodeView />
           ) : (
-              <>
-                <StyledPromoLink
-                  align="left"
-                  onClick={togglePromo}
-                >
-                  {!promoVisible ? 'Enter Promo Code' : null}
-                </StyledPromoLink>
-                  {promoVisible && <PromoCodeForm />}
-              </>
-            )
+            <>
+              <StyledPromoLink align="left" onClick={togglePromo}>
+                {!promoVisible ? 'Enter Promo Code' : null}
+              </StyledPromoLink>
+              {promoVisible && <PromoCodeForm />}
+            </>
+          )
         ) : null}
 
         {cart.items.length !== 0 ? (
@@ -302,11 +312,11 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               'margin-bottom': '0',
               'border-top': `solid 2px ${MEDIUM_GRAY}`,
               'padding-top': '29px',
-              'margin-top': '50px'
+              'margin-top': '23.5px'
             }}
           >
             <Grid item xs={6}>
-              <StyledSmallCaps>Estimated Total:</StyledSmallCaps>
+              <StyledSmallCaps>Total:</StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledSmallCaps style={{ 'font-size': '22px' }}>
@@ -315,7 +325,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length !== 0 && !hideTaxLabel && (
           <Grid container xs={12}>
             <Grid item xs={12}>
               <StyledFinePrint component="div">
@@ -323,7 +333,7 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
               </StyledFinePrint>
             </Grid>
           </Grid>
-        ) : null}
+        )}
       </Grid>
     </Grid>
   );
@@ -331,11 +341,15 @@ const Cart = ({ history, showCheckoutProceedLink }) => {
 
 Cart.propTypes = {
   history: PropTypes.object.isRequired,
-  showCheckoutProceedLink: PropTypes.bool
+  hideCheckoutProceedLink: PropTypes.bool,
+  disableItemEditing: PropTypes.bool,
+  hideTaxLabel: PropTypes.bool
 };
 
 Cart.defaultProps = {
-  showCheckoutProceedLink: false
+  hideCheckoutProceedLink: false,
+  disableItemEditing: false,
+  hideTaxLabel: false
 };
 
 export default withRouter(Cart);

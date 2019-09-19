@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import { StyledSmallCaps } from '../../pages/cart/StyledComponents';
-import {formatDateTime} from '../../utils/misc';
+import { formatDateTime } from '../../utils/misc';
 // import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const OrderCartSummary = ({cart}) => {
+const OrderCartSummary = ({ cart }) => {
   return cart ? <CartSummary cart={cart} /> : null;
 };
 
@@ -59,10 +59,14 @@ const OrderSummary = ({
   status,
   updatedAt,
   addressesWidth,
-  xs,
+  xs
 }) => {
   const { cardType, last4 } = transactions[0].paymentMethod;
-  const { shippingAddress, paymentDetails: { billingAddress }, shippingMethod } = cart;
+  const {
+    shippingAddress,
+    paymentDetails: { billingAddress },
+    shippingMethod
+  } = cart;
   const { email } = account.data;
   return (
     <Box className={classes.paper}>
@@ -72,7 +76,7 @@ const OrderSummary = ({
       <Typography className={classes.text}>
         Status: <strong>{status}</strong> on {updatedAt}
       </Typography>
-      <br/>
+      <br />
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
@@ -147,7 +151,7 @@ const OrderDetail = () => {
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
 
-  if (!order ) return null;
+  if (!order) return null;
   const { cart, transactions } = order;
 
   if (cart.items.length < 1) {
@@ -175,7 +179,7 @@ const OrderDetail = () => {
 
       <Box className={classes.main}>
         <Grid container spacing={xs ? 0 : 4}>
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             <Box>
               <Typography className={classes.title}>Order Detail</Typography>
             </Box>
@@ -194,9 +198,7 @@ const OrderDetail = () => {
             />
           </Grid>
           <Grid item xs={cartWidth}>
-            <OrderCartSummary
-              cart={cart}
-            />
+            <OrderCartSummary cart={cart} />
           </Grid>
         </Grid>
       </Box>

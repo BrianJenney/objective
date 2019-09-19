@@ -7,6 +7,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { ACCOUNT_MENU_KEYS, ACCOUNT_MENU_ITEMS } from '../../constants/menu';
 import { NavLink, MenuLink } from '../common';
 import { withLogout } from '../../hoc';
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/core/styles';
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  }
+}))(MenuItem);
 
 const AccountMenu = ({ logout }) => {
   return (
@@ -24,7 +34,7 @@ const AccountMenu = ({ logout }) => {
                   )}
                 </Box>
               }
-              primaryTypographyProps={{ variant: 'h6' }}
+              primaryTypographyProps={{variant: 'h6'}}
             />
           </ListItem>
         ))}

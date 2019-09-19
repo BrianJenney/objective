@@ -11,11 +11,25 @@ import { MenuLink, NavLink } from './common';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '40px',
-    fontWeight: 'bold'
+    height: '48px',
+    fontSize: '48px',
+    color: '#231f20',
+    fontFamily: 'Canela Text',
+    lineHeight: 'normal',
+    margin: theme.spacing(2),
+
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px',
+      margin: theme.spacing(1)
+    }
   },
   subTitle: {
-    paddingBottom: theme.spacing(3)
+    fontFamily: 'p22-underground',
+    fontSize: '16px',
+    paddingBottom: theme.spacing(3),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px'
+    }
   }
 }));
 
@@ -26,10 +40,8 @@ const Signup = ({ requestCreateAccount, switchToLogin }) => {
       <CssBaseline />
       <Box component={Paper} pb={3}>
         <Box textAlign="center">
-          <Typography gutterBottom className={classes.title}>
-            Create an account
-          </Typography>
-          <Typography variant="body1" className={classes.subTitle}>
+          <Typography className={classes.title}>Create an account</Typography>
+          <Typography className={classes.subTitle}>
             Already registered?&nbsp;
             {switchToLogin ? (
               <MenuLink onClick={switchToLogin} children="Login!" />

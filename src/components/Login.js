@@ -5,42 +5,67 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import { LoginForm } from './forms';
 import { MenuLink, NavLink } from './common';
 
-const Login = ({ requestLoginAttempt, switchToSignup }) => (
-  <Container component="main" maxWidth="sm">
-    <CssBaseline />
-    <Box component={Paper} pb={2}>
-      <Box textAlign="center">
-        <Box
-          component={Typography}
-          fontSize={40}
-          fontWeight="bold"
-          pb={2}
-          children="Log in to your account"
-        />
-        <LoginForm onSubmit={requestLoginAttempt} />
-        <Box mt={2}>
-          <Typography gutterBottom>
-            <NavLink to="/password/forgot" underline="always">
-              Forgot your email/&nbsp;password?
-            </NavLink>
-          </Typography>
+const useStyles = makeStyles(theme => ({
+  title: {
+    height: '48px',
+    fontSize: '48px',
+    color: '#231f20',
+    fontFamily: 'Canela Text',
+    lineHeight: 'normal',
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px',
+      marginBottom: theme.spacing(3)
+    }
+  },
+  subTitle: {
+    fontFamily: 'p22-underground',
+    fontSize: '16px',
+    paddingBottom: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px'
+    }
+  }
+}));
 
-          <Typography gutterBottom>
-            Don&#39;t have an account?&nbsp;
-            {switchToSignup ? (
-              <MenuLink onClick={switchToSignup} children="Signup!" />
-            ) : (
-              <NavLink to="/signup" children="Signup!" underline="always" />
-            )}
+const Login = ({ requestLoginAttempt, switchToSignup }) => {
+  const classes = useStyles();
+  return (
+    <Container component="main" maxWidth="sm">
+      <CssBaseline />
+      <Box component={Paper}>
+        <Box textAlign="center">
+          <Typography gutterBottom className={classes.title}>
+            Log in to your account
           </Typography>
+          <Box pt={4}>
+            <LoginForm onSubmit={requestLoginAttempt} />
+          </Box>
+          <Box mt={2} mb={2}>
+            <Typography className={classes.subTitle}>
+              <NavLink to="/password/forgot" underline="always">
+                Forgot your email/&nbsp;password?
+              </NavLink>
+            </Typography>
+
+            <Typography className={classes.subTitle}>
+              Don&#39;t have an account?&nbsp;
+              {switchToSignup ? (
+                <MenuLink onClick={switchToSignup} children="Signup!" />
+              ) : (
+                <NavLink to="/signup" children="Signup!" underline="always" />
+              )}
+            </Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
-  </Container>
-);
+    </Container>
+  );
+};
 
 Login.propTypes = {
   requestLoginAttempt: PropTypes.func.isRequired,
