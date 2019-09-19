@@ -33,7 +33,8 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      jwt: account_jwt
+      jwt: account_jwt,
+      originalRequest: 'order.request.create'
     },
     payload
   );
@@ -55,7 +56,8 @@ export const requestFindOrdersByAccount = accountJwt => (
   const params = {
     params: {
       account_jwt: accountJwt,
-      query: {}
+      idField: 'account_id', // use this to tell the MS where to substitute the decoded id
+      query: { account_id: null }
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));
