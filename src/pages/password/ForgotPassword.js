@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -103,10 +104,14 @@ const mapStateToProps = state => ({
   email: state.email
 });
 
-export default compose(
+const ForgotPasswordDialog = compose(
   connect(
     mapStateToProps,
     null
   ),
   withDialog
 )(ForgotPassword);
+
+const ForgotPasswordPage = (props) => <ForgotPasswordDialog onExited={props.history.goBack} {...props} />;
+
+export default withRouter(ForgotPasswordPage);
