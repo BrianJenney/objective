@@ -366,6 +366,7 @@ h2 {
   text-align: left;
   margin: 0 auto 40px 11px;
   line-height: 1.6;
+  font-size: 20px;
 }
 
 @media only screen and (min-width: 735.99px) {
