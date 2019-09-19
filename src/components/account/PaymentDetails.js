@@ -11,11 +11,13 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
-import {fonts} from '../Theme/fonts';
 
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
+  title,
+  withSmallTitle,
+  subTitle,
   onBack,
   onSubmit,
   seedEnabled,
@@ -86,66 +88,70 @@ const AccountPaymentDetails = ({
   if (seedEnabled && isEmpty(addressSeed)) {
     addressSeedData = getDefaultEntity(addressBook);
   }
-  let isCheckout = false;
-  if (window.location.pathname.includes('checkout')) {
-    isCheckout = true;
-  }
 
   return (
     <Box {...rest} className="step-3-wrapper">
-      {isCheckout ? (
+      <Box color="#231f20">
         <Box
           component={Typography}
-          mx={1}
-          color="#231f20"
           variant="h5"
-          children="Credit Card"
+          children={title}
+          fontSize={withSmallTitle ? 30 : 48}
           fontFamily="Canela Text, serif"
-          gutterBottom
+          mb={4}
         />
-      ) : (
-        <Box mx={1} color="#231f20">
-          <Typography variant="h5" children="Payment Details" gutterBottom />
-          <Typography variant="h6" children="Credit Cards" gutterBottom />
-        </Box>
-      )}
-      <Grid container>
-        {creditCards.map((creditCardEntity, index) => {
-          const borderStyle = creditCardEntity.isDefault
-            ? '2px solid #000'
-            : '1px solid #979797';
-          return (
-            <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
-              <Box
-                border={borderStyle}
-                m={1}
-                px={4}
-                py={3}
-                className="checkout-box"
-              >
-                <EditablePanel
-                  title=""
-                  defaultValues={creditCardEntity}
-                  Summary={PaymentSummary}
-                  onRemove={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => deleteCreditCard(creditCardEntity.token)
-                  }
-                  onSetDefault={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => setDefaultCreditCard(creditCardEntity.token)
-                  }
-                />
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
-      <Box mx={1} my={2}>
+        {subTitle && (
+          <Box
+            component={Typography}
+            variant="h5"
+            children={subTitle}
+            fontSize={18}
+            fontWeight={600}
+            fontFamily="P22Underground"
+            style={{ textTransform: 'uppercase' }}
+            mb={4}
+          />
+        )}
+      </Box>
+      <Box mx="-8px" my="-8px">
+        <Grid container>
+          {creditCards.map((creditCardEntity, index) => {
+            const borderStyle = creditCardEntity.isDefault
+              ? '2px solid #000'
+              : '1px solid #979797';
+            return (
+              <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
+                <Box
+                  border={borderStyle}
+                  m={1}
+                  px={4}
+                  py={3}
+                  className="checkout-box"
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={creditCardEntity}
+                    Summary={PaymentSummary}
+                    onRemove={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => deleteCreditCard(creditCardEntity.token)
+                    }
+                    onSetDefault={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => setDefaultCreditCard(creditCardEntity.token)
+                    }
+                  />
+                </Box>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+      <Box my={2}>
         {isEmpty(creditCards) && (
-          <AlertPanel type="info" text="No Saved Credit Cards."/>
+          <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
         )}
         {addModeEnabled ? (
           <PaymentForm
@@ -161,9 +167,8 @@ const AccountPaymentDetails = ({
         ) : (
           <Box
             fontSize={16}
-            fontWeight="bold"
-            fontFamily={fonts.smallHeader}
-            style={{ textTransform: 'uppercase'}}
+            fontWeight={600}
+            style={{ textTransform: 'uppercase' }}
           >
             <MenuLink
               onClick={() => setAddModeEnabled(true)}
@@ -190,6 +195,9 @@ const AccountPaymentDetails = ({
 AccountPaymentDetails.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  withSmallTitle: PropTypes.bool,
+  subTitle: PropTypes.string,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
   seedEnabled: PropTypes.bool,
@@ -199,6 +207,9 @@ AccountPaymentDetails.propTypes = {
 };
 
 AccountPaymentDetails.defaultProps = {
+  title: 'Payment Details',
+  withSmallTitle: false,
+  subTitle: 'Credit Card',
   allowFlyMode: false
 };
 

@@ -28,6 +28,7 @@ const AlertPanel = ({ type, text, style, ...rest }) => {
 AlertPanel.propTypes = {
   type: PropTypes.oneOf(Object.values(ALERT_TYPES)),
   text: PropTypes.string,
+  style: PropTypes.any,
   variant: PropTypes.string
 };
 
