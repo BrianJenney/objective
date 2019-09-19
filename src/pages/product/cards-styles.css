@@ -262,7 +262,7 @@ h2 {
   /* border-right: solid 2px #003833;
   border-left: solid 2px #003833;
   border-bottom: solid 2px #003833; */
-  border-top: solid 2px #003833;
+  border-top: solid 1px #003833;
   text-align: left;
 }
 
@@ -394,7 +394,7 @@ h2 {
 
 .how-it-works-wrapper .coreBenefits {
   width: 100%;
-  border-top: solid 2px #003833;
+  border-top: solid 1px #003833;
 }
 
 .how-it-works-wrapper .coreBenefits .textTitle {
@@ -467,20 +467,20 @@ h2 {
 
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol {
-  border-top: solid 2px #003833;
+  border-top: solid 1px #003833;
   padding-bottom: 50px;
 }
 
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
-  border-top: solid 2px #003833;
+  border-top: solid 1px #003833;
 }
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .rightCol,
   .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
-    border-top: solid 2px #003833;
-    border-left: solid 2px #003833;
+    border-top: solid 1px #003833;
+    border-left: solid 1px #003833;
     margin-right: 2.2px;
   }
 }
@@ -490,7 +490,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: solid 2px #003833;
+  border-bottom: solid 1px #003833;
   margin-bottom: 60px;
 }
 
@@ -688,7 +688,7 @@ h2 {
 @media only screen and (min-width: 735.99px) {
   .step-wrapper {
     height: 768px;
-    border: solid 2px #003833;
+    border: solid 1px #003833;
     justify-content: center;
     margin-bottom: 50px;
   }
@@ -835,7 +835,7 @@ h2 {
 .three-box {
   width: 100%;
   height: 400px;
-  border: solid 2px #003833;
+  border: solid 1px #003833;
   margin: 16px 0;
   display: flex;
   flex-direction: column;
@@ -1002,5 +1002,39 @@ h2 {
     line-height: 1.56;
     padding-bottom: 24px;
     margin: 0;
+  }
+  .how-it-works-wrapper .coreBenefits .textTitle,
+  .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTitle,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTitle,
+  .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTextBody,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTextBody {
+    font-size: 18px;
+    letter-spacing: 1.13px;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle h6,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle h6 {
+    font-size: 36px;
+    margin: 16px 0;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTitle,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTitle {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop .blockTextBody,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop .blockTextBody {
+    font-size: 18px;
+    line-height: 1.56;
+    margin: 0 auto 8px 25px;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol {
+    padding-bottom: 25px;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop ul,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop ul,
+  .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTitle,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTitle {
+    margin-bottom: 25px;
   }
 }
