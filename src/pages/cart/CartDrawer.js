@@ -189,6 +189,9 @@ const Cart = ({
                         {disableItemEditing ? (
                           <Box
                             component={Typography}
+                            fontFamily="P22Underground-BkS"
+                            fontSize={16}
+                            color="#333333"
                             children={`QTY: ${item.quantity}`}
                           />
                         ) : (
@@ -290,16 +293,39 @@ const Cart = ({
         ) : null}
 
         {cart.items.length !== 0 ? (
-          cart.promo ? (
-            <PromoCodeView />
-          ) : (
-            <>
-              <StyledPromoLink align="left" onClick={togglePromo}>
-                {!promoVisible ? 'Enter Promo Code' : null}
-              </StyledPromoLink>
-              {promoVisible && <PromoCodeForm />}
-            </>
-          )
+          <>
+            {cart.promo ? (
+              <PromoCodeView />
+            ) : (
+              <>
+                <StyledPromoLink align="left" onClick={togglePromo}>
+                  {!promoVisible ? 'Enter Promo Code' : null}
+                </StyledPromoLink>
+                {promoVisible && <PromoCodeForm />}
+              </>
+            )}
+          </>
+        ) : null}
+
+        {cart.items.length !== 0 && cart.discount ? (
+          <Grid
+            container
+            direction="row"
+            xs={12}
+            justify="space-between"
+            style={{ margin: '20px 0' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+                Savings
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={3} style={{ 'text-align': 'right' }}>
+              <StyledSmallCaps style={{ 'font-size': '18px' }}>
+                {`$${cart.discount}`}
+              </StyledSmallCaps>
+            </Grid>
+          </Grid>
         ) : null}
 
         {cart.items.length !== 0 ? (
