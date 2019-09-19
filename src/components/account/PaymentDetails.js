@@ -11,6 +11,7 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
+import {fonts} from '../Theme/fonts';
 
 const AccountPaymentDetails = ({
   currentUser,
@@ -144,7 +145,7 @@ const AccountPaymentDetails = ({
       </Grid>
       <Box mx={1} my={2}>
         {isEmpty(creditCards) && (
-          <AlertPanel type="info" text="No Saved Credit Cards." />
+          <AlertPanel type="info" text="No Saved Credit Cards."/>
         )}
         {addModeEnabled ? (
           <PaymentForm
@@ -161,7 +162,8 @@ const AccountPaymentDetails = ({
           <Box
             fontSize={16}
             fontWeight="bold"
-            style={{ textTransform: 'uppercase' }}
+            fontFamily={fonts.smallHeader}
+            style={{ textTransform: 'uppercase'}}
           >
             <MenuLink
               onClick={() => setAddModeEnabled(true)}

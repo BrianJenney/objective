@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
+import {fonts} from '../Theme/fonts';
 
 const AccountAddresses = ({
   currentUser,
@@ -164,6 +165,7 @@ const AccountAddresses = ({
           <Box
             fontSize={16}
             fontWeight="bold"
+            fontFamily={fonts.smallHeader}
             style={{ textTransform: 'uppercase' }}
           >
             <MenuLink
