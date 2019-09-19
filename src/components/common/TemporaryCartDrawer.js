@@ -28,7 +28,12 @@ const StyledFab = withStyles(theme => ({
 
 const StyledDrawerWrapper = withStyles(theme => ({
   root: {
-    padding: '36px 34px'
+    [theme.breakpoints.up('sm')]: {
+      padding: '36px 35px'
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: '20px 16px'
+    }
   }
 }))(Box);
 
@@ -60,7 +65,7 @@ const TemporaryCartDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-      ? '100%'
+      ? 335
       : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
