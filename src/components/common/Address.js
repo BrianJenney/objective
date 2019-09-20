@@ -12,12 +12,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Address = ({ address, email=null, phone=null }) => {
+const Address = ({ address, email = null, phone = null }) => {
   const classes = useStyles();
-  const Phone = ({phone}) => {
-    return phone ? <Typography className={classes.text}>
-      ({phone.substr(0,3)}){' '}{phone.substr(3,3)}-{phone.substr(6)}
-    </Typography> : <br/>;
+  const Phone = ({ phone }) => {
+    return phone ? (
+      <Typography className={classes.text}>
+        ({phone.substr(0, 3)}) {phone.substr(3, 3)}-{phone.substr(6)}
+      </Typography>
+    ) : null;
   };
   if (!address) return null;
   return (
@@ -30,7 +32,7 @@ const Address = ({ address, email=null, phone=null }) => {
         {address.city}, {address.state} {address.postalCode}
       </Typography>
       <Phone phone={phone} />
-      { email && <Typography className={classes.text}>{email}</Typography>}
+      {email && <Typography className={classes.text}>{email}</Typography>}
     </>
   );
 };
