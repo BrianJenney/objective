@@ -1,11 +1,15 @@
-import React from "react";
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   text: {
-    fontSize: '20px'
-  },
+    fontSize: '20px',
+    fontFamily: 'p22-underground',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '16px'
+    }
+  }
 }));
 
 const Address = ({ address, email=null, phone=null }) => {
