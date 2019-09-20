@@ -5,10 +5,9 @@ import {
   StaticPage,
   GalleryPage,
   ProductPage,
-  CartPage,
   AccountPage,
   AccountOverviewPage,
-  AccountOrderPage,
+  OrderPage,
   AccountOrdersPage,
   AccountAddressesPage,
   AccountPaymentDetailsPage,
@@ -33,6 +32,13 @@ export default [
     component: OrderConfirmationPage
   },
   {
+    path: '/orders/:id',
+    auth: true,
+    exact: true,
+    injectCurrentUser: true,
+    component: OrderPage
+  },
+  {
     path: '/checkout',
     exact: true,
     injectCurrentUser: true,
@@ -55,13 +61,6 @@ export default [
         injectCurrentUser: true,
         component: AccountOrdersPage
       },
-      {
-        path: '/account/orders/:id',
-        exact: true,
-        injectCurrentUser: true,
-        component: AccountOrderPage
-      },
-
       {
         path: '/account/addresses',
         exact: true,
