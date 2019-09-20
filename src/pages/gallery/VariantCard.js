@@ -61,7 +61,7 @@ const VariantCard = ({ variant, product }) => {
       />
       <CardContent className="pding">
         <div className="prod-name-holder">
-          <Typography variant="body1">
+          <Typography>
             <Link
               to={`/products/${product.slug}/${variant.slug}`}
               className="title"

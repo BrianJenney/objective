@@ -13,11 +13,11 @@ import { fonts, sizes, lineHeight } from '../../components/Theme/fonts';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 const { $brandSans, $brandSerif } = fonts;
-const { microText, miniText, smallText2 } = sizes;
+const { microText, miniText, smallText2, smallText1 } = sizes;
 const { semiTight } = lineHeight;
 
 const $thin1pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
-const $thin2pxRuler_gray = `solid 2px ${MEDIUM_GRAY}`;
+const $thin2pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
 
 export const StyledCartHeader = withStyles(theme => ({
   root: {
@@ -58,7 +58,10 @@ export const StyledSmallCaps = withStyles(theme => ({
     fontSize: 'smallText2',
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontFamily: $brandSans
+    fontFamily: $brandSans,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 'smallText1'
+    }
   }
 }))(Typography);
 
@@ -257,6 +260,6 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-      }`
+    }`
   }
 }))(Badge);

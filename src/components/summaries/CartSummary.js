@@ -20,13 +20,38 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   paper: {
     backgroundColor: theme.palette.common.white,
-    padding: theme.spacing(5, 4)
+    padding: theme.spacing(5, 4),
+    [theme.breakpoints.down('xs')]: {
+      padding: '30px 15px'
+    }
   },
   title: {
     fontSize: '30px',
-    fontWeight: 'bold',
+    fontFamily: 'Canela Text',
     marginTop: '-13px',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '24px',
+      fontFamily: 'freight-text-pro'
+    }
+  },
+  text: {
+    fontSize: '16px',
+    fontFamily: 'p22-underground'
+  },
+  code: {
+    fontSize: '14px',
+    fontFamily: 'p22-underground',
+    textTransform: 'uppercase'
+  },
+  total: {
+    fontSize: '18px',
+    fontFamily: 'p22-underground',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '20px'
+    }
   }
 }));
 const { MEDIUM_GRAY } = colorPalette;
@@ -42,20 +67,18 @@ const CartSummary = ({ cart }) => {
           </Grid>
 
           <Grid item>
-            <StyledSmallCaps>({cart.items.length} items) </StyledSmallCaps>
+            <StyledSmallCaps style={{ fontSize: '12px' }}>
+              ({cart.items.length} items){' '}
+            </StyledSmallCaps>
           </Grid>
         </Grid>
         {cart.items.map((item, index) => (
           <>
             <StyledDrawerGrid container xs={12}>
-              <Grid
-                item
-                xs={4}
-                style={{ minWidth: '126px', marginRight: '18px' }}
-              >
+              <Grid item xs={4} style={{ minWidth: '126px' }}>
                 <Card>
                   <CardMedia
-                    style={{ height: 126, width: 126 }}
+                    style={{ height: 100, width: 95 }}
                     image={item.variant_img}
                     title={item.variant_name}
                   />
@@ -71,7 +94,9 @@ const CartSummary = ({ cart }) => {
                   }}
                 >
                   <StyledProductLink>{item.variant_name}</StyledProductLink>
-                  <StyledProductLink>QTY: {item.quantity}</StyledProductLink>
+                  <Typography className={classes.text}>
+                    QTY: {item.quantity}
+                  </Typography>
 
                   <StyledSmallCaps align="right">
                     ${(item.quantity * item.unit_price).toFixed(2)}
@@ -136,9 +161,7 @@ const CartSummary = ({ cart }) => {
           </Grid>
           <Grid item xs={12}>
             <Link component="button" underline="always">
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Enter Promo Code
-              </StyledSmallCaps>
+              <Typography className={classes.code}>Enter Promo Code</Typography>
             </Link>
           </Grid>
           <Grid
@@ -154,9 +177,9 @@ const CartSummary = ({ cart }) => {
               <StyledSmallCaps>Total</StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ fontSize: '22px' }}>
+              <Typography className={classes.total}>
                 {`$${cart.total.toFixed(2)}`}
-              </StyledSmallCaps>
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
