@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   iconButtonPlus: {
     borderLeft: 'solid 1px #100f0f',
     borderRadius: 0,
-    backgroundColor: '#B5C5C3 !important',
+    backgroundColor: '#fcf8f4 !important',
     padding: 0,
     alignSelf: 'flex-start',
     height: '56px',
@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   iconButtonMinus: {
     borderRight: 'solid 1px #100f0f',
     borderRadius: 0,
-    backgroundColor: '#B5C5C3 !important',
+    backgroundColor: '#fcf8f4 !important',
     padding: 0,
     alignSelf: 'flex-start',
     height: '56px',
@@ -77,7 +77,7 @@ export const useQuantity = (
 ) => {
   const classes = useStyles();
   const [quantity, setQuantity] = useState(initialQty);
-  const lastQuantity  = useRef(quantity);
+  const lastQuantity = useRef(quantity);
   const adjustQuantity = useCallback(
     adjustment => {
       setQuantity(qty => qty + adjustment);
@@ -86,7 +86,8 @@ export const useQuantity = (
   );
 
   useEffect(() => {
-    const okToUpdate = (lastQuantity.current === 2 && quantity === 1) || (quantity > 1);
+    const okToUpdate =
+      (lastQuantity.current === 2 && quantity === 1) || quantity > 1;
     lastQuantity.current = quantity;
     if (okToUpdate) updateQuantityToCart(quantity);
   }, [quantity]);
