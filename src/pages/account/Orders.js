@@ -1,17 +1,14 @@
 import React, { useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-import { DataTable }  from '../../components/common';
+import { DataTable, AdapterLink }  from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime } from '../../utils/misc';
-
-const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const columns = [
   {
@@ -22,7 +19,7 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         return (
-          <Button color="primary" component={AdapterLink} to={`/account/orders/${value}`}>
+          <Button color="primary" component={AdapterLink} to={`/orders/${value}`}>
             {value}
           </Button>
         );
