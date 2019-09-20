@@ -7,7 +7,7 @@ import {
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
   REQUEST_FETCH_CART_BY_EMAIL,
-  REQUEST_REMOVE_CART_BY_EMAIL
+  REQUEST_REMOVE_CART_BY_ID
 } from './types';
 
 const localStorageClient = require('store');
@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, cartDrawerOpened: action.payload };
     case REQUEST_FETCH_CART_BY_EMAIL:
       return { ...state };
-    case REQUEST_REMOVE_CART_BY_EMAIL:
+    case REQUEST_REMOVE_CART_BY_ID:
       return { ...state };
     default:
       return state;

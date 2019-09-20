@@ -9,7 +9,7 @@ import {
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
   REQUEST_FETCH_CART_BY_EMAIL,
-  REQUEST_REMOVE_CART_BY_EMAIL
+  REQUEST_REMOVE_CART_BY_ID
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -177,15 +177,12 @@ export const requestFetchCartByEmail = email => async (dispatch, getState) => {
   });
 };
 
-export const requestRemoveCartByEmail = email => async (dispatch, getState) => {
+export const requestRemoveCartById = id => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    params: {
-      query: {
-        email
-      }
-    }
+    id,
+    params: {}
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -197,7 +194,7 @@ export const requestRemoveCartByEmail = email => async (dispatch, getState) => {
     obj
   );
   dispatch({
-    type: REQUEST_REMOVE_CART_BY_EMAIL,
+    type: REQUEST_REMOVE_CART_BY_ID,
     payload: {}
   });
 };

@@ -13,10 +13,10 @@ export const handleCartResponse = (status, data, fields, properties) => {
       break;
     case 'cart.request.find':
       console.log('****************** Cart Fetch Response ******************');
-      console.log('cart fetch status: ', status);
-      console.log('cart fetch data:', data);
-      console.log('cart fetch fields:', fields);
-      console.log('cart fetch properties:', properties);
+      console.log(status);
+      console.log(data);
+      console.log(fields);
+      console.log(properties);
       store.dispatch(receivedFetchCart(data.data[0]));
       break;
     case 'cart.request.patch':
