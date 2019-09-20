@@ -8,8 +8,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Address = ({ address, email }) => {
+const Address = ({ address, email=null, phone=null }) => {
   const classes = useStyles();
+  const Phone = ({phone}) => {
+    return phone ? <Typography className={classes.text}>
+      ({phone.substr(0,3)}){' '}{phone.substr(3,3)}-{phone.substr(6)}
+    </Typography> : <br/>;
+  };
   if (!address) return null;
   return (
     <>
@@ -20,7 +25,8 @@ const Address = ({ address, email }) => {
       <Typography className={classes.text}>
         {address.city}, {address.state} {address.postalCode}
       </Typography>
-      <Typography className={classes.text}>{email}</Typography>
+      <Phone phone={phone} />
+      { email && <Typography className={classes.text}>{email}</Typography>}
     </>
   );
 };
