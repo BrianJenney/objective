@@ -13,11 +13,11 @@ import { fonts, sizes, lineHeight } from '../../components/Theme/fonts';
 
 const { LIGHT_GRAY, MEDIUM_GRAY, BLACK } = colorPalette;
 const { $brandSans, $brandSerif } = fonts;
-const { microText, miniText, smallText2 } = sizes;
+const { microText, miniText, smallText2, smallText1 } = sizes;
 const { semiTight } = lineHeight;
 
 const $thin1pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
-const $thin2pxRuler_gray = `solid 2px ${MEDIUM_GRAY}`;
+const $thin2pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
 
 export const StyledCartHeader = withStyles(theme => ({
   root: {
@@ -72,7 +72,10 @@ export const StyledSmallCaps = withStyles(theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: '#000000',
-    paddingTop: '7px'
+    paddingTop: '7px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 'smallText1'
+    }
   }
 }))(Typography);
 

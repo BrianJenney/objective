@@ -34,6 +34,13 @@ const ChangePasswordForm = ({
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
+      <Typography
+        style={{ padding: '15px 0', fontFamily: 'p22-underground' }}
+        variant="h3"
+        gutterBottom
+      >
+        CHANGE PASSWORD
+      </Typography>
         <Grid item xs={12}>
           <Field
             name="currentPassword"

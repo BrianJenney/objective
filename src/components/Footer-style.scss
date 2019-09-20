@@ -78,13 +78,25 @@
         width: 70%;
       }
     }
+    @media (max-width: 768px) {
+      form {
+        .MuiFormControl-fullWidth {
+          width: 100%;
+        }
+      }
+      button {
+        min-width: auto;
+        padding: 0;
+      }
+    }
     .signup-arrow {
-      margin-top: -5px;
-      margin-left: -65px;
+      margin-top: -4px;
+      margin-left: -175px;
       position: absolute;
     }
     .mobile-arrow {
-      margin-top: -5px;
+      margin-top: 4px;
+      margin-left: -70px;
     }
   }
   .icon {
