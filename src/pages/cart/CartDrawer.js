@@ -159,7 +159,7 @@ const Cart = ({
                     style={{
                       display: 'flex',
                       'flex-direction': 'column',
-                      height: '150px',
+                      height: '135px',
                       'justify-content': 'space-between'
                     }}
                   >
@@ -167,6 +167,8 @@ const Cart = ({
                       to={`/products/${item.prodSlug}/${item.varSlug}`}
                       style={{
                         'text-decoration': 'none',
+                        'max-height': '40px',
+                        'overflow': 'hidden'
                       }}
                     >
                       <StyledProductLink
@@ -189,13 +191,13 @@ const Cart = ({
                               onClick={e =>
                                 adjustQty(cart, e.currentTarget.value, -1)
                               }
-                              style={{ 'font-size': '20pt', 'padding-bottom': '8px' }}
+                              style={{ 'font-size': '20pt', 'padding-bottom': '4px' }}
                               value={index}
                               disabled={item.quantity < 2}
                             >
                               -
                             </StyledCounterButton>
-                            <StyledSmallCaps style={{ marginTop: '2px', fontSize: '18px' }}>
+                            <StyledSmallCaps style={{ fontSize: '18px' }}>
                               {item.quantity}
                             </StyledSmallCaps>
                             <StyledCounterButton
@@ -203,7 +205,7 @@ const Cart = ({
                               onClick={e =>
                                 adjustQty(cart, e.currentTarget.value, 1)
                               }
-                              style={{ 'font-size': '13pt', 'padding-bottom': '6.5px' }}
+                              style={{ 'font-size': '13pt', 'padding-bottom': '2.5px' }}
                               value={index}
                             >
                               +
@@ -328,7 +330,7 @@ const Cart = ({
             <Grid item xs={6}>
               <StyledEstimatedTotal>Estimated Total</StyledEstimatedTotal>
             </Grid>
-            <Grid item xs={3} style={{ 'text-align': 'right' }}>
+            <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductPrice style={{ 'font-size': '22px' }}>
                 {`$${cart.total.toFixed(2)}`}
               </StyledProductPrice>

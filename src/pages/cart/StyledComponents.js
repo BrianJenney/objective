@@ -100,7 +100,7 @@ export const StyledFinePrint = withStyles(theme => ({
     fontSize: '11px',
     fontStyle: 'normal',
     fontStretch: 'normal',
-    lineHeight: 'normal',
+    lineHeight: 0,
     letterSpacing: 'normal',
   }
 }))(Typography);
@@ -303,7 +303,7 @@ export const StyledBadge = withStyles(theme => ({
 
 export const StyledProductPrice = withStyles(theme => ({
   root: {
-    fontSize: '20px',
+    fontSize: '22px',
     fontFamily: $brandSans,
     fontWeight: 600,
     fontStyle: 'normal',
@@ -338,7 +338,8 @@ export const StyledRemoveLink = withStyles(theme => ({
     letterSpacing: '0.92px',
     paddingRight: '45px',
     paddingBottom: '15px',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    maxWidth: '55px'
   }
 }))(Typography);
 
@@ -357,5 +358,17 @@ export const StyledEstimatedTotal = withStyles(theme => ({
     letterSpacing: 'normal',
     color: '#231f20',
     paddingTop: '9px'
+  }
+}))(Typography);
+
+export const StyledPromoCode = withStyles(theme => ({
+  root: {
+    fontSize: '14px',
+    fontFamily: $brandSans,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#000000',
   }
 }))(Typography);

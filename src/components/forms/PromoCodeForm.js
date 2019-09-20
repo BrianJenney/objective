@@ -9,8 +9,10 @@ import { Button } from '../common';
 
 import { redeemPromoCode } from '../../apis/Voucherify';
 import { addCoupon } from '../../modules/cart/functions';
-import { StyledSmallCaps } from '../../pages/cart/StyledComponents';
+import { StyledPromoCode, StyledPromoCodeInput } from '../../pages/cart/StyledComponents';
 import { InputField } from '../form-fields';
+import './forms-styles.scss';
+
 
 const schema = object().shape({
   promoCode: string().required('Promo Code is required')
@@ -34,21 +36,22 @@ const PromoCodeForm = () => {
   };
 
   const renderForm = () => (
-    <Form>
+    <Form className="promo-code-form">
       <Grid container direction="row" xs={12} justify="space-between">
         <Grid item xs={12}>
-          <StyledSmallCaps style={{ 'font-size': '14px', 'paddingBottom': '10px' }}>
+          <StyledPromoCode style={{ 'font-size': '14px', 'paddingBottom': '10px' }}>
             Promo Code
-          </StyledSmallCaps>
+          </StyledPromoCode>
         </Grid>
-        <Grid container xs={12} style={{ 'align-items': 'flex-start' }}>
-          <Grid item xs={8}>
+        <Grid container xs={12} style={{ 'align-items': 'flex-start', height: '42px' }}>
+          <Grid item xs={10}>
             <Field
               name="promoCode"
               component={InputField}
+              className="promo-code-input"
             />
           </Grid>
-          <Grid item xs={4} style={{ 'text-align': 'right' }}>
+          <Grid item xs={2} style={{ 'text-align': 'right' }}>
             <Button
               type="submit"
               children="Apply"
@@ -56,9 +59,9 @@ const PromoCodeForm = () => {
                 color: '#000000',
                 'backgroundColor': 'transparent',
                 'textDecoration': 'underline',
-                'padding': '0 0 0 50px',
-                'paddingTop': '18px',
-                'minWidth': '100px',
+                'padding': '0 ',
+                'minWidth': '0',
+                'fontWeight': 'normal'
               }}
             />
           </Grid>
