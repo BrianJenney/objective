@@ -1,7 +1,7 @@
 import store from '../../store';
 import { receivedCreateOrder, receivedGetOrder } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
-import { requestCreateCart } from '../cart/actions';
+import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 
 export const handleOrderResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
@@ -19,6 +19,7 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       switch (status) {
         case 'success':
           // clear cart on success
+          store.dispatch(requestRemoveCartById(data.cart.cart_id));
           store.dispatch(requestCreateCart());
           break;
         default:
