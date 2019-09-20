@@ -100,40 +100,29 @@ const AccountAddresses = ({
       />
       <Box mx="-8px" my="-8px">
         <Grid container>
-          {addressBook.map((addressEntity, index) => {
-            const borderStyle = addressEntity.isDefault
-              ? '2px solid #000'
-              : '1px solid #979797';
-            return (
-              <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                <Box
-                  border={borderStyle}
-                  m={1}
-                  px={4}
-                  py={3}
-                  className="address-box"
-                >
-                  <EditablePanel
-                    title=""
-                    defaultValues={addressEntity}
-                    onSubmit={(...args) => handleSave(...args, index)}
-                    Form={AddressForm}
-                    Summary={AddressSummary}
-                    onRemove={
-                      addressEntity.isDefault
-                        ? undefined
-                        : () => deleteAddress(index)
-                    }
-                    onSetDefault={
-                      addressEntity.isDefault
-                        ? undefined
-                        : () => setDefaultAddress(index)
-                    }
-                  />
-                </Box>
-              </Grid>
-            );
-          })}
+          {addressBook.map((addressEntity, index) => (
+            <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+              <Box m={1} px={4} py={3} className="address-box">
+                <EditablePanel
+                  title=""
+                  defaultValues={addressEntity}
+                  onFormSubmit={(...args) => handleSave(...args, index)}
+                  Form={AddressForm}
+                  Summary={AddressSummary}
+                  onRemove={
+                    addressEntity.isDefault
+                      ? undefined
+                      : () => deleteAddress(index)
+                  }
+                  onSetDefault={
+                    addressEntity.isDefault
+                      ? undefined
+                      : () => setDefaultAddress(index)
+                  }
+                />
+              </Box>
+            </Grid>
+          ))}
         </Grid>
       </Box>
       <Box my={2}>

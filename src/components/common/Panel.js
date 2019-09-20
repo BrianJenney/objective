@@ -85,7 +85,7 @@ const Panel = ({
 
   return (
     <Paper>
-      <Typography variant="h2" children={title} gutterBottom />
+      {title && <Typography variant="h2" children={title} gutterBottom />}
       <Box width={1} children={children} {...rest} />
     </Paper>
   );
