@@ -24,7 +24,7 @@ const StyledDialogTitle = withStyles(styles)(props => {
   return (
     <MuiDialogTitle disableTypography>
       <Typography variant="h6">{children}</Typography>
-      {onClose ? (
+      {typeof(onClose) === 'function' ? (
         <IconButton
           arial-label="Close"
           className={classes.closeButton}
@@ -39,6 +39,7 @@ const StyledDialogTitle = withStyles(styles)(props => {
 
 const withDialog = WrappedComponent => {
   const WithDialog = props => {
+    const allowedToClose = !props.noClosingDialog;
     const [open, setOpen] = useState(true);
     const handleDialogClose = useCallback(() => {
       if (typeof props.onExited === 'function') {
@@ -56,7 +57,7 @@ const withDialog = WrappedComponent => {
         disableEscapeKeyDown={true}
         onExited={props.onExited}
       >
-        <StyledDialogTitle onClose={handleDialogClose} />
+        <StyledDialogTitle onClose={allowedToClose ? handleDialogClose : null} />
         <WrappedComponent closeDialog={handleDialogClose} {...props} />
       </Dialog>
     );
