@@ -117,11 +117,11 @@ const Cart = ({
         ) : (
             <StyledHeaderWrapperEmptyCart container direction="column">
               <Grid container direction="row" alignItems="baseline">
-                <StyledCartHeader align="center">Your Cart </StyledCartHeader>
-                <StyledCartCount component="span">
+                <StyledCartHeader align="center" style={{ paddingBottom: '25px' }}>Your Cart </StyledCartHeader>
+                <StyledCartCountHeader component="span">
                   {' '}
                   ({cartCount} Items)
-              </StyledCartCount>
+              </StyledCartCountHeader>
               </Grid>
             </StyledHeaderWrapperEmptyCart>
           )}
