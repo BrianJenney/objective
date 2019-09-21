@@ -46,7 +46,7 @@ const Signup = ({ requestCreateAccount, switchToLogin }) => {
             {switchToLogin ? (
               <MenuLink onClick={switchToLogin} children="Login!" />
             ) : (
-              <NavLink to="/login" children="Login!" underline="always" />
+              <NavLink to="/login" children="Login!" replace underline="always" />
             )}
           </Typography>
 
