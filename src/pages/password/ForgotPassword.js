@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter} from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '../../components/common';
 import { InputField } from '../../components/form-fields';
-import store from '../../store';
+
 import { requestForgotPassword } from '../../modules/account/actions';
 import withDialog from '../../hoc/withDialog';
 
@@ -46,13 +46,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ForgotPassword = () => {
-  console.log('here forgot password');
+const ForgotPassword = ({ history }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const handleSubmit = ({ email }) => {
-    store.dispatch(requestForgotPassword(email));
-    window.location = '/password/confirm';
+    dispatch(requestForgotPassword(email));
+    history.replace('/password/confirm');
   };
 
   const renderForm = () => (
@@ -96,20 +96,9 @@ const ForgotPassword = () => {
   );
 };
 
-ForgotPassword.propTypes = {
-  email: PropTypes.string
-};
-
-const mapStateToProps = state => ({
-  email: state.email
-});
-
 const ForgotPasswordDialog = compose(
-  connect(
-    mapStateToProps,
-    null
-  ),
-  withDialog
+  withRouter,
+  withDialog,
 )(ForgotPassword);
 
 const ForgotPasswordPage = (props) => <ForgotPasswordDialog onExited={props.history.goBack} {...props} />;

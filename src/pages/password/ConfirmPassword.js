@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -36,4 +37,8 @@ const ConfirmPassword = () => {
   );
 };
 
-export default withDialog(ConfirmPassword);
+const ConfirmPasswordDialog = withDialog(ConfirmPassword);
+
+const ConfirmPasswordPage = (props) => <ConfirmPasswordDialog onExited={props.history.goBack} {...props} />;
+
+export default withRouter(ConfirmPasswordPage);
