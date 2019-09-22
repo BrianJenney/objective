@@ -21,7 +21,7 @@ class ContShoppingButton extends Component {
           }}
         >
           <Grid container xs={12}>
-            <Grid item xs={12} style={{ display: 'flex', paddingBottom: '30px' }}>
+            <Grid item xs={12} style={{ display: 'flex', padding: '0 16px 30px' }}>
               <StyledCheckoutButton
                 style={{ margin: '0 auto' }}
                 onClick={onClick}
