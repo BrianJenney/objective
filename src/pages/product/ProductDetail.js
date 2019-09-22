@@ -190,21 +190,18 @@ const ProductDetail = ({ variantSlug }) => {
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                    {!ATCEnabled && <Quantity />}
                   </CardContent>
-                  {ATCEnabled && (
-                    <Grid className="mobile-padding-small">
-                      <CardActions className={classes.maxWidth}>
-                        <Button
-                          fullWidth
-                          onClick={handleAddToCart}
-                          disabled={selectedVariantSku === null}
-                        >
-                          ADD TO CART
-                        </Button>
-                      </CardActions>
-                    </Grid>
-                  )}
+                  <Grid className="mobile-padding-small">
+                    <CardActions className={classes.maxWidth}>
+                      <Button
+                        fullWidth
+                        onClick={handleAddToCart}
+                        disabled={selectedVariantSku === null}
+                      >
+                        ADD TO CART
+                      </Button>
+                    </CardActions>
+                  </Grid>
 
                   {/* Render this button when Product is out of stock hiding for now */}
                   {/* <Grid>
@@ -260,21 +257,18 @@ const ProductDetail = ({ variantSlug }) => {
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                  {!ATCEnabled && <Quantity />}
                 </CardContent>
-                {ATCEnabled && (
-                  <Grid>
-                    <CardActions className={classes.maxWidth}>
-                      <Button
-                        fullWidth
-                        onClick={handleAddToCart}
-                        disabled={selectedVariantSku === null}
-                      >
-                        ADD TO CART
-                      </Button>
-                    </CardActions>
-                  </Grid>
-                )}
+                <Grid>
+                  <CardActions className={classes.maxWidth}>
+                    <Button
+                      fullWidth
+                      onClick={handleAddToCart}
+                      disabled={selectedVariantSku === null}
+                    >
+                      ADD TO CART
+                    </Button>
+                  </CardActions>
+                </Grid>
 
                 {/* Render this button when Product is out of stock hiding for now */}
                 {/* <Grid>

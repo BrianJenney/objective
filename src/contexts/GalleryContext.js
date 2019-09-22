@@ -21,13 +21,13 @@ export class GalleryStore extends Component {
 
   componentDidMount() {
     EventEmitter.addListener('product.request.find', data => {
-      this.setState({ 'products': data.data.data });
+      this.setState({ products: data.data.data });
     });
     EventEmitter.addListener('variant.request.find', data => {
-      this.setState({ ...this.state, 'variants': data.data.data });
+      this.setState({ ...this.state, variants: data.data.data });
     });
     EventEmitter.addListener('price.request.find', data => {
-      this.setState({ ...this.state, 'prices': data.data.data });
+      this.setState({ ...this.state, prices: data.data.data });
     });
     this.getGalleryData();
   }
@@ -43,48 +43,59 @@ export class GalleryStore extends Component {
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
     let params = {
-      'params': {
-        'query': {
-          '_id': { $in: this.props.productIds },
+      params: {
+        query: {
+          _id: { $in: this.props.productIds },
           $sort: { category: -1 }
         }
       }
     };
 
     var obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/product/product.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/product/product.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
 
     params = {
-      'params': {
-        'query': {
-          'product_id': { $in: this.props.productIds }
+      params: {
+        query: {
+          product_id: { $in: this.props.productIds }
         }
       }
     };
 
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/variant/variant.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/variant/variant.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
 
     params = {
-      'params': {
-        'query': {
-          'product_id': { $in: this.props.productIds }
+      params: {
+        query: {
+          product_id: { $in: this.props.productIds }
         }
       }
     };
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/price/price.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/price/price.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
   }
-
   render() {
     return (
       <Context.Provider value={{ ...this.state }}>

@@ -9,12 +9,13 @@ import { getGallery } from '../../hooks';
 const Products = () => {
   const { products, variants, prices } = useContext(GalleryContext);
   if (!products) return null;
-  const [productSlugs, productMap, variantSlugs, variantMap, productCategories] = getGallery(
-    products,
-    variants,
-    prices
-  );
-
+  const [
+    productSlugs,
+    productMap,
+    variantSlugs,
+    variantMap,
+    productCategories
+  ] = getGallery(products, variants, prices);
 
   const productCategoriesToProducts = {};
   productCategories.map(productCategory => {
@@ -24,23 +25,19 @@ const Products = () => {
       })
       .map(product => {
         product = productMap.get(product.slug);
-        
-        if(productCategoriesToProducts[productCategory]){
 
+        if (productCategoriesToProducts[productCategory]) {
           productCategoriesToProducts[productCategory].push(product);
-
-        }else{
+        } else {
           productCategoriesToProducts[productCategory] = [product];
-          
         }
       });
   });
-
- 
+  // console.log('PROD', variantMap);
   return (
     <Container>
       <Grid container spacing={4}>
-{productSlugs.map(productSlug => (
+        {productSlugs.map(productSlug => (
           <ProductSummary
             key={productSlug}
             product={productMap.get(productSlug)}

@@ -39,6 +39,7 @@ const VariantCard = ({ variant, product }) => {
     },
     [cart, variant, dispatch]
   );
+
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
     'QTY'
@@ -75,7 +76,19 @@ const VariantCard = ({ variant, product }) => {
         </div>
       </CardContent>
       <div className="cta-area">
-        {ATCEnabled ? (
+        <CardActions className="gallery-atc">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddToCart}
+            fullWidth={true}
+            className="atc-button"
+          >
+            ADD TO CART
+          </Button>
+        </CardActions>
+        {/* Display Quantity Selector after clicking on Add To Cart button - disable for now */}
+        {/* {ATCEnabled ? (
           <CardActions className="gallery-atc">
             <Button
               variant="contained"
@@ -87,9 +100,9 @@ const VariantCard = ({ variant, product }) => {
               ADD TO CART
             </Button>
           </CardActions>
-        ) : (
-          <Quantity className="gallery-atc" />
-        )}
+        ) : null
+        // <Quantity className="gallery-atc" />
+        } */}
       </div>
     </Card>
   );
