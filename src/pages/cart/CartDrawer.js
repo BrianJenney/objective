@@ -86,6 +86,9 @@ const Cart = ({
     return null;
   }
 
+  let shipping_option = cart.shipping.code;
+  let shipping_data = cart.shipping.options[shipping_option];
+
   return (
     <Grid
       container
@@ -270,13 +273,13 @@ const Cart = ({
                 Shipping
               </StyledSmallCaps>
             </Grid>
-            <Grid item xs={3} style={{ 'text-align': 'right' }}>
+            <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                $XX.xx
+              {`$${shipping_data.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint component="p">
-              Ground 3-5 Business Days
+              { shipping_data.name }
             </StyledFinePrint>
           </Grid>
         ) : null}
