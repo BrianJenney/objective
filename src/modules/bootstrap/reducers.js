@@ -1,12 +1,12 @@
-import { RECEIVED_FETCH_CATALOG } from './types';
+import { REQUEST_FETCH_BOOTSTRAP } from './types';
 
 const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case RECEIVED_FETCH_CATALOG:
-      return { ...state, ...action.payload };
+    case REQUEST_FETCH_BOOTSTRAP:
+      return state;
     default:
       return state;
   }

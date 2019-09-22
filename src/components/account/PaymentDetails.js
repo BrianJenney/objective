@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
@@ -27,11 +28,22 @@ const AccountPaymentDetails = ({
   ...rest
 }) => {
   const [addModeEnabled, setAddModeEnabled] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const { enqueueSnackbar } = useSnackbar();
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
 
+  useEffect(() => {
+    const paymentMethods = currentUser.data.paymentMethods || [];
+    const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+    setSelectedIndex(defaultIndex);
+  }, [currentUser.data.paymentMethods]);
+
+  const handleSelect = evt => {
+    const index = parseInt(evt.target.value, 10);
+    setSelectedIndex(index);
+  };
   const deleteCreditCard = deletedCreditCardToken => {
     const payload = { deletedCreditCardToken };
 
@@ -67,7 +79,10 @@ const AccountPaymentDetails = ({
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
         setAddModeEnabled(false);
-        return onSubmit(payload);
+        return onSubmit({
+          ...payload.newCreditCard,
+          nonce: payload.nonce
+        });
       }
 
       if (isEmpty(creditCards)) {
@@ -80,6 +95,16 @@ const AccountPaymentDetails = ({
     }
     actions.setSubmitting(false);
     setAddModeEnabled(false);
+
+    return true;
+  };
+  const handleSubmit = () => {
+    if (selectedIndex < 0) {
+      return false;
+    }
+
+    const selectedCreditCard = creditCards[selectedIndex];
+    onSubmit(selectedCreditCard);
 
     return true;
   };
@@ -115,38 +140,43 @@ const AccountPaymentDetails = ({
       </Box>
       <Box mx="-8px" my="-8px">
         <Grid container>
-          {creditCards.map((creditCardEntity, index) => {
-            const borderStyle = creditCardEntity.isDefault
-              ? '2px solid #000'
-              : '1px solid #979797';
-            return (
-              <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
-                <Box
-                  border={borderStyle}
-                  m={1}
-                  px={4}
-                  py={3}
-                  className="checkout-box"
-                >
-                  <EditablePanel
-                    title=""
-                    defaultValues={creditCardEntity}
-                    Summary={PaymentSummary}
-                    onRemove={
-                      creditCardEntity.isDefault
-                        ? undefined
-                        : () => deleteCreditCard(creditCardEntity.token)
-                    }
-                    onSetDefault={
-                      creditCardEntity.isDefault
-                        ? undefined
-                        : () => setDefaultCreditCard(creditCardEntity.token)
-                    }
+          {creditCards.map((creditCardEntity, index) => (
+            <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
+              <Box
+                display="flex"
+                alignItems="flex-start"
+                m={1}
+                px={4}
+                py={3}
+                className="checkout-box"
+              >
+                <Box ml="-17px" mt="-9px">
+                  <Radio
+                    name="payment-method-selector"
+                    style={{ color: '#231f20' }}
+                    value={index.toString()}
+                    onChange={handleSelect}
+                    checked={selectedIndex === index}
                   />
                 </Box>
-              </Grid>
-            );
-          })}
+                <EditablePanel
+                  title=""
+                  defaultValues={creditCardEntity}
+                  Summary={PaymentSummary}
+                  onRemove={
+                    creditCardEntity.isDefault
+                      ? undefined
+                      : () => deleteCreditCard(creditCardEntity.token)
+                  }
+                  onSetDefault={
+                    creditCardEntity.isDefault
+                      ? undefined
+                      : () => setDefaultCreditCard(creditCardEntity.token)
+                  }
+                />
+              </Box>
+            </Grid>
+          ))}
         </Grid>
       </Box>
       <Box my={2}>
@@ -184,7 +214,7 @@ const AccountPaymentDetails = ({
             <Button type="button" onClick={onBack} children="Back" mr={2} />
           )}
           {onSubmit && (
-            <Button type="button" onClick={() => onSubmit()} children="Next" />
+            <Button type="button" onClick={handleSubmit} children="Next" />
           )}
         </ButtonGroup>
       )}

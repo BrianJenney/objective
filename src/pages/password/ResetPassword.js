@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { useDispatch } from 'react-redux';
+
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import Box from '@material-ui/core/Box';
@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button } from '../../components/common';
 import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { InputField } from '../../components/form-fields';
 import withDialog from '../../hoc/withDialog';
@@ -44,14 +44,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.getAll('tk').toString();
+const validatePassword = values => {
+  const { newPassword1, newPassword2 } = values;
+  let errors = {};
+  if (newPassword1.trim() !== newPassword2.trim()) {
+    errors.newPassword2 = 'Confirm password is not the same as new password';
+  }
+  return errors;
+};
 
-const ResetPassword = () => {
-  const INITIAL_VALUES = {};
+const ResetPassword = ({ history, location }) => {
+  const INITIAL_VALUES = {
+    newPassword1: '',
+    newPassword2: '',
+  };
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const renderForm = () => {
+  const renderForm = ({ isValid }) => {
     return (
       <Form>
         <Grid container spacing={2}>
@@ -82,7 +92,7 @@ const ResetPassword = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" fullWidth>
+            <Button type="submit" fullWidth disabled={!isValid}>
               Reset Password
             </Button>
           </Grid>
@@ -92,8 +102,10 @@ const ResetPassword = () => {
   };
 
   const handleSubmit = values => {
-    store.dispatch(requestPatchAccount(token, values));
-    window.location = '/password/success';
+    const urlParams = new URLSearchParams(location.search);
+    const token = urlParams.getAll('tk').toString();
+    dispatch(requestPatchAccount(token, values));
+    history.replace('/password/success');
   };
 
   return (
@@ -108,6 +120,7 @@ const ResetPassword = () => {
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
           validationSchema={schema}
+          validate={validatePassword}
           render={renderForm}
         />
       </Box>
@@ -115,19 +128,6 @@ const ResetPassword = () => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
-};
+export default withDialog(ResetPassword);
 
-const mapDispatchToProps = {};
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  withDialog
-)(ResetPassword);

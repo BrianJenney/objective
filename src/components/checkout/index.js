@@ -101,19 +101,7 @@ const Checkout = ({
       return false;
     }
 
-    if (!values || activeStep < 2) {
-      setPayload({ ...payload, [key]: selectedEntity });
-    } else {
-      // card fly mode
-      setPayload({
-        ...payload,
-        [key]: {
-          ...values.newCreditCard,
-          billingAddress: values.billingAddress,
-          nonce: values.nonce
-        }
-      });
-    }
+    setPayload({ ...payload, [key]: selectedEntity });
 
     if (activeStep === 2 && isNil(payload[STEP_KEYS[1]])) {
       return false;

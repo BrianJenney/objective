@@ -21,7 +21,7 @@ const RouteWithSubRoutes = ({
 
   if (auth && !account_jwt) {
     if (!redirectPath) {
-      redirectPath = '/login';
+      redirectPath = '/';
     }
     Component = () => <Redirect to={redirectPath} />;
   } else if (nonAuth && account_jwt) {

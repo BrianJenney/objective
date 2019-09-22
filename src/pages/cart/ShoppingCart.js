@@ -27,19 +27,15 @@ const ShoppingCart = () => {
         </>
       }
       closer={
-        cart.items.length !== 0 ?
-          <StyledCartCloseIcon
-            position="absolute"
-            left={1}
-            top={30}
-            children={<CloseIcon />}
-          /> :
-          <StyledEmptyCartCloseIcon
-            position="absolute"
-            left={1}
-            top={30}
-            children={<CloseIcon />}
-          />
+        <StyledCartCloseIcon
+          children={<CloseIcon
+            style={{
+              'width': '40px',
+              'height': '40px',
+              'color': '#979797',
+            }}
+          />}
+        />
       }
       listContent={<CartDrawer showCheckoutProceedLink />}
       side="right"
