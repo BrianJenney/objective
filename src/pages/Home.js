@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
-import { HOMEPAGE_SPACE } from '../constants/contentfulSpaces';
+import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
 import Container from '@material-ui/core/Container';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
-  space: HOMEPAGE_SPACE,
+  space: OBJECTIVE_SPACE,
   accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
 });
 
@@ -17,9 +18,9 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    contentfulClient.getEntries()
+    contentfulClient.getEntry(OBJECTIVE_HOMEPAGE)
     .then(entry => {
-      let content = entry.items[0].fields;
+      let content = entry.fields;
       this.setState({
         content: {
           ...content
