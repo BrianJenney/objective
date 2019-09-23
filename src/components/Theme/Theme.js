@@ -176,7 +176,7 @@ const nxtTheme = createMuiTheme({
     MuiButton: {
       containedSecondary: {
         backgroundColor: '#fff',
-        '&$hover': {
+        '&:hover': {
           backgroundColor: '#fff'
         }
       }
