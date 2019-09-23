@@ -10,7 +10,11 @@ const labelsMap = {
   last4: 'Last 4 digits',
   expirationDate: 'Expires'
 };
-const getValuesWithoutLabels = payload => Object.values(payload);
+const getValuesWithoutLabels = ({ name, last4, expirationDate }) => [
+  last4,
+  expirationDate,
+  name
+];
 
 const PaymentSummary = ({ withLabels, values, children, ...rest }) => {
   const neededValues = pick(values, PAYMENT_FIELDS);

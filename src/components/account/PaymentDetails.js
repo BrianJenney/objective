@@ -9,7 +9,7 @@ import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import { fonts } from '../Theme/fonts';
-import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
+import { sendCreditCardRequest } from '../../utils/braintree';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
@@ -112,17 +112,16 @@ const AccountPaymentDetails = ({
     const { paymentDetails, billingAddress } = pureValues;
 
     try {
-      const nonce = await fetchCreditCardBrainTreeNonce({
-        paymentDetails,
-        billingAddress
+      const cardResult = await sendCreditCardRequest({
+        ...paymentDetails,
+        postalCode: billingAddress.postalCode
       });
+      const { nonce, details } = cardResult.creditCards[0];
       const payload = {
         newCreditCard: {
           name: paymentDetails.cardholderName,
-          last4: paymentDetails.number.substring(
-            paymentDetails.number.length - 4
-          ),
-          expirationDate: paymentDetails.expirationDate,
+          last4: `${details.cardType} ${details.lastFour}`,
+          expirationDate: `Expires ${paymentDetails.expirationDate}`,
           billingAddress
         },
         nonce
