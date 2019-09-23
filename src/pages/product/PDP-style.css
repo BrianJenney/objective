@@ -23,6 +23,7 @@ html,
   font-family: p22-underground, sans-serif;
   font-size: 22px;
   padding: 20px 0;
+  text-transform: uppercase;
 }
 
 .pdp-description {

@@ -18,7 +18,11 @@ export { default as AccountProfilePage } from './Profile';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(252, 248, 244, 0.5)'
+    backgroundColor: 'rgba(252, 248, 244, 0.5)',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0,
+      backgroundColor: '#FFF'
+    }
   },
   paper: {
     padding: '58px',
