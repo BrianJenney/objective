@@ -14,8 +14,13 @@ export default function HowItWorksTab() {
 
   const contentfulOptions = {
     renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        return <img src={node.data.target.fields.file.url} alt={node.data.target.fields.title} />
+      [BLOCKS.EMBEDDED_ASSET]: node => {
+        return (
+          <img
+            src={node.data.target.fields.file.url}
+            alt={node.data.target.fields.title}
+          />
+        );
       }
     }
   };
@@ -25,7 +30,10 @@ export default function HowItWorksTab() {
       <h2>{content.howItWorksHeader}</h2>
       <div className="topBlock">
         <div className="leftCol">
-          {documentToReactComponents(content.howItWorksBlock1, contentfulOptions)}
+          {documentToReactComponents(
+            content.howItWorksBlock1,
+            contentfulOptions
+          )}
           {/*
           <img src="https://res.cloudinary.com/dhp51sf7h/image/upload/v1566999165/pdptabs/whitepowder_ubat1z_pcde7c.png" alt="" />
           <div className="colTitle">Lorem ipsum dolor sit amet</div>
@@ -33,14 +41,20 @@ export default function HowItWorksTab() {
           */}
         </div>
         <div className="rightCol">
-          {documentToReactComponents(content.howItWorksBlock2, contentfulOptions)}
+          {documentToReactComponents(
+            content.howItWorksBlock2,
+            contentfulOptions
+          )}
         </div>
       </div>
       <div className="coreBenefits">
         <div className="textTitle">Core Benefits</div>
         <div className="topBlock">
           <div className="cardTop leftCol">
-            {documentToReactComponents(content.howItWorksCoreBenefit1, contentfulOptions)}
+            {documentToReactComponents(
+              content.howItWorksCoreBenefit1,
+              contentfulOptions
+            )}
             {/*
             <div className="blockTitle">
               <img src="https://res.cloudinary.com/dhp51sf7h/image/upload/v1566999165/pdptabs/icon-leaf_ddlnrr_hiauaw.png" alt="" />
@@ -56,18 +70,33 @@ export default function HowItWorksTab() {
             */}
           </div>
           <div className="cardTop rightCol">
-            {documentToReactComponents(content.howItWorksCoreBenefit2, contentfulOptions)}
+            {documentToReactComponents(
+              content.howItWorksCoreBenefit2,
+              contentfulOptions
+            )}
           </div>
         </div>
         <div className="bottomBlock">
           <div className="cardBottom leftCol">
-            {documentToReactComponents(content.howItWorksWhoThisIsFor, contentfulOptions)}
+            <div className="textTitle textTitleBotom">Who This is For</div>
+            <div className="content">
+              {documentToReactComponents(
+                content.howItWorksWhoThisIsFor,
+                contentfulOptions
+              )}
+            </div>
           </div>
           <div className="cardBottom rightCol">
-            {documentToReactComponents(content.howItWorksClinicalResults, contentfulOptions)}
+            <div className="textTitle textTitleBotom">Clinical Results</div>
+            <div className="content">
+              {documentToReactComponents(
+                content.howItWorksClinicalResults,
+                contentfulOptions
+              )}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
