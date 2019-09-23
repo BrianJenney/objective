@@ -12,7 +12,7 @@ export const ACCOUNT_MENU_ITEMS = [
   { key: 'yourOrders', label: 'YOUR ORDERS', to: '/account/orders' },
   {
     key: 'savedAddresses',
-    label: 'SAVED ADDRESSED',
+    label: 'SAVED ADDRESSES',
     to: '/account/addresses'
   },
   {

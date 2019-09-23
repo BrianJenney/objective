@@ -35,12 +35,12 @@ const Account = ({ routes }) => {
       <Container>
         <Box className={classes.paper}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
               <Box>
                 <AccountMenu />
               </Box>
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={9} className="right-side-account">
               <Switch>
                 <Redirect exact from="/account" to="/account/overview" />
                 {routes.map(route => (
