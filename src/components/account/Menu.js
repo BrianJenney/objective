@@ -22,7 +22,7 @@ const StyledMenuItem = withStyles(theme => ({
 
 const AccountMenu = ({ logout }) => {
   return (
-    <Box width={1}>
+    <Box width={1} className="account-menu-box">
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
           <ListItem key={menuItem.key}>

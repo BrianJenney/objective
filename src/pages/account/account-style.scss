@@ -1,8 +1,8 @@
-.right-side-account {
+/* .right-side-account {
   border-left: 2px solid;
   margin-left: 20px !important;
   padding-left: 55px !important;
-}
+} */
 .account-side-menu {
   font-family: p22-underground, sans-serif;
   font-size: 16px;
@@ -142,5 +142,27 @@
   a:active {
     text-decoration: underline;
     color: #231f20;
+  }
+}
+@media (max-width: 768px) {
+  .account-menu-box {
+    display: none;
+  }
+  .overview-mobile {
+    padding: 0 !important;
+    div {
+      max-width: 100%;
+      width: 100%;
+    }
+    .stepper-item {
+      span {
+        color: #fff;
+        font-size: 16px;
+        font-family: p22-underground, sans-serif;
+        padding: 17px 10px;
+        font-weight: 600;
+        line-height: 1.88;
+      }
+    }
   }
 }
