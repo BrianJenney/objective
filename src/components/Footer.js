@@ -355,7 +355,7 @@ const Footer = (location) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : (
+      ) : (isCheckoutPage !== null ? (
           <StyledBox className="footer-container">
             <Container>
               <Grid container spacing={0}>
@@ -486,7 +486,11 @@ const Footer = (location) => {
               </Grid>
             </Container>
           </StyledBox>
-        )}
+        ): (
+        <div style={{padding: 50, background: 'rgba(252, 248, 244, 0.5)', borderTop: 'solid', fontFamily: 'p22-underground, sans-serif', fontSize: 18}}>
+        <Typography>Need Help?</Typography>
+        <a href='' style={{color: 'black'}}>CONTACT US</a>
+        </div>))}
     </>
   );
 };
