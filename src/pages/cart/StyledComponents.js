@@ -21,44 +21,58 @@ const $thin2pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
 
 export const StyledCartHeader = withStyles(theme => ({
   root: {
-    fontSize: '2rem',
-    fontFamily: $brandSerif,
-    paddingTop: '15px'
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '32px',
+      fontFamily: $brandSerif,
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 'normal',
+      letterSpacing: 'normal',
+      paddingTop: '11px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '32px',
+      fontFamily: $brandSerif,
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 'normal',
+      letterSpacing: 'normal',
+      paddingTop: '6px'
+    }
   }
 }))(Typography);
 
-export const StyledLogoContainer = withStyles(theme => ({
+export const StyledProceedCheckout = withStyles(theme => ({
   root: {
-    borderBottom: '1px solid #000000',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
+    fontSize: '18px',
+    textTransform: 'uppercase',
+    fontWeight: 600,
+    fontFamily: $brandSans,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#231f20',
     [theme.breakpoints.up('sm')]: {
-      borderBottom: 'none',
-      width: 0
+      cursor: 'pointer'
     }
   }
-}))(Box);
-
-export const StyledLogo = withStyles(theme => ({
-  root: {
-    fontSize: '1.5rem',
-    fontFamily: $brandSerif,
-    paddingBottom: '15px',
-    [theme.breakpoints.up('sm')]: {
-      fontSize: 0,
-      fontFamily: 'none',
-      paddingBottom: 0
-    }
-  }
-}))(Grid);
+}))(Typography);
 
 export const StyledSmallCaps = withStyles(theme => ({
   root: {
-    fontSize: 'smallText2',
+    fontSize: '14px',
     textTransform: 'uppercase',
-    fontWeight: 'bold',
+    fontWeight: 600,
     fontFamily: $brandSans,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#000000',
+    paddingTop: '7px',
     [theme.breakpoints.up('sm')]: {
       fontSize: 'smallText1'
     }
@@ -68,7 +82,13 @@ export const StyledSmallCaps = withStyles(theme => ({
 export const StyledSmallCapsEmptyCart = withStyles(theme => ({
   root: {
     fontSize: '32px',
-    fontFamily: 'Canela Text, serif'
+    fontFamily: 'Canela Text, serif',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#231f20'
   }
 }))(Typography);
 
@@ -84,18 +104,42 @@ export const StyledArrowIcon = withStyles(theme => ({
 export const StyledFinePrint = withStyles(theme => ({
   root: {
     fontSize: microText,
-    color: LIGHT_GRAY,
-    fontFamily: $brandSans
+    color: '#646464',
+    fontFamily: $brandSans,
+    fontSize: '11px',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 0,
+    letterSpacing: 'normal',
+  }
+}))(Typography);
+
+export const StyledCartCountHeader = withStyles(theme => ({
+  root: {
+    fontSize: '14px',
+    fontFamily: $brandSans,
+    textTransform: 'uppercase',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#000000',
+    marginLeft: '8px',
   }
 }))(Typography);
 
 export const StyledCartCount = withStyles(theme => ({
   root: {
-    fontSize: miniText,
+    fontSize: '14px',
     fontFamily: $brandSans,
     textTransform: 'uppercase',
-    fontWeight: 'bold',
-    marginLeft: '8px'
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#000000',
   }
 }))(Typography);
 
@@ -133,27 +177,33 @@ export const StyledHeaderWrapperEmptyCart = withStyles(theme => ({
 export const StyledTotalWrapper = withStyles(theme => ({
   root: {
     marginBottom: 0,
-    marginTop: '20px',
-    borderTop: $thin2pxRuler_gray,
+    borderTop: $thin1pxRuler_gray,
     paddingTop: '29px'
   }
 }))(Grid);
 
 export const StyledCheckoutButton = withStyles(theme => ({
   root: {
-    width: '85%',
+    width: '100%',
     maxWidth: 351,
-    height: '80px',
+    height: '59.7px',
     marginTop: '15px',
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold',
-    letterSpacing: 1.33,
-    lineHeight: 1.88,
+    fontFamily: $brandSans,
+    fontWeight: 900,
+    letterSpacing: 1.17,
+    lineHeight: 2.14,
+    fontSize: '14px',
     [theme.breakpoints.up('sm')]: {
       width: '100%',
       maxWidth: 351,
       height: '80px',
-      marginTop: '15px'
+      marginTop: '15px',
+      fontSize: '16px',
+      fontWeight: 900,
+      fontfontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 1.88,
+      letterSpacing: 1.33
     }
   }
 }))(Button);
@@ -163,7 +213,7 @@ export const StyledCardActions = withStyles(theme => ({
     border: '1px solid #9e9e9e',
     width: '86px',
     height: '30px',
-    padding: '0 !important',
+    padding: '7px',
     marginTop: '-10px',
     display: 'flex',
     flexDirection: 'row',
@@ -177,17 +227,36 @@ export const StyledCounterButton = withStyles(theme => ({
     width: '18px',
     minWidth: '18px',
     padding: '4px',
-    lineHeight: '1px'
+    lineHeight: '1px',
+    color: '#979797'
   }
 }))(Button);
 
 export const StyledProductLink = withStyles(theme => ({
   root: {
-    fontSize: smallText2,
+    fontSize: '18px',
     fontFamily: $brandSerif,
     fontWeight: 'normal',
-    color: BLACK,
-    lineHeight: semiTight
+    color: '#333333',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.17,
+    letterSpacing: 'normal',
+    paddingRight: '45px',
+    paddingBottom: '15px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '18px',
+      fontFamily: $brandSerif,
+      fontWeight: 'normal',
+      color: '#333333',
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 1.17,
+      letterSpacing: 'normal',
+      paddingRight: '50px',
+    }
   }
 }))(Typography);
 
@@ -217,37 +286,14 @@ export const StyledCartCloseIcon = withStyles(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
       position: 'absolute',
-      left: 365,
-      top: 35
+      right: 26,
+      top: 27
     },
     [theme.breakpoints.down('sm')]: {
       position: 'absolute',
-      left: 30,
-      top: 41
+      right: 8,
+      top: 15
     }
-  }
-}))(Box);
-
-export const StyledEmptyCartCloseIcon = withStyles(theme => ({
-  root: {
-    [theme.breakpoints.up('md')]: {
-      position: 'absolute',
-      left: 365,
-      top: 35
-    },
-    [theme.breakpoints.down('sm')]: {
-      position: 'absolute',
-      left: 320,
-      top: 30
-    }
-  }
-}))(Box);
-
-export const StyledShoppingBag = withStyles(theme => ({
-  root: {
-    position: 'absolute',
-    top: 36,
-    right: 35
   }
 }))(Box);
 
@@ -260,6 +306,78 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-    }`
+      }`
   }
 }))(Badge);
+
+export const StyledProductPrice = withStyles(theme => ({
+  root: {
+    fontSize: '22px',
+    fontFamily: $brandSans,
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.82,
+    letterSpacing: 'normal',
+  }
+}))(Typography);
+
+export const StyledProductTotal = withStyles(theme => ({
+  root: {
+    fontSize: '18px',
+    fontFamily: $brandSans,
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.82,
+    letterSpacing: 'normal',
+    color: '#000000',
+    textTransform: 'uppercase'
+  }
+}))(Typography);
+
+export const StyledRemoveLink = withStyles(theme => ({
+  root: {
+    fontSize: '11px',
+    fontFamily: $brandSans,
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.17,
+    letterSpacing: '0.92px',
+    paddingRight: '45px',
+    paddingBottom: '15px',
+    textTransform: 'uppercase',
+    maxWidth: '55px'
+  }
+}))(Typography);
+
+export const StyledEstimatedTotal = withStyles(theme => ({
+  root: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '17px'
+    },
+    fontSize: '18px',
+    textTransform: 'uppercase',
+    fontWeight: 600,
+    fontFamily: $brandSans,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#231f20',
+    paddingTop: '9px'
+  }
+}))(Typography);
+
+export const StyledPromoCode = withStyles(theme => ({
+  root: {
+    fontSize: '14px',
+    fontFamily: $brandSans,
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#000000',
+  }
+}))(Typography);

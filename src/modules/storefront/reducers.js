@@ -1,6 +1,4 @@
-import { REQUEST_FETCH_STOREFRONT, RECEIVED_FETCH_STOREFRONT } from './types';
-
-const localStorageClient = require('store');
+import { RECEIVED_FETCH_STOREFRONT } from './types';
 
 const INITIAL_STATE = {
   name: '',
@@ -10,13 +8,9 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REQUEST_FETCH_STOREFRONT:
-      return { ...state };
     case RECEIVED_FETCH_STOREFRONT:
       if (typeof action.payload == 'undefined') {
         console.log('need to handle this gracefully');
-      } else {
-        localStorageClient.set('catalogId', action.payload.catalogId);
       }
       return { ...state, ...action.payload };
     default:

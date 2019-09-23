@@ -7,7 +7,7 @@ import MenuLink from './MenuLink';
 const EditablePanel = ({
   title,
   defaultValues,
-  onSubmit,
+  onFormSubmit,
   onRemove,
   onSetDefault,
   Form,
@@ -17,8 +17,8 @@ const EditablePanel = ({
   const [editing, setEditing] = useState(false);
   const handleSave = async (...args) => {
     try {
-      if (onSubmit) {
-        await onSubmit(...args);
+      if (onFormSubmit) {
+        await onFormSubmit(...args);
       }
       setEditing(false);
     } catch (err) {
@@ -40,25 +40,31 @@ const EditablePanel = ({
         <Summary values={defaultValues} {...rest}>
           <Box fontSize={16} display="grid" alignItems="center">
             {onSetDefault && (
-              <MenuLink
-                onClick={onSetDefault}
-                children="Make Default"
-                underline="always"
-              />
+              <Box mr={1} fontSize={16}>
+                <MenuLink
+                  onClick={onSetDefault}
+                  children="Make default"
+                  underline="always"
+                />
+              </Box>
             )}
             {onRemove && (
-              <MenuLink
-                onClick={onRemove}
-                children="Remove"
-                underline="always"
-              />
+              <Box mr={1} fontSize={16}>
+                <MenuLink
+                  onClick={onRemove}
+                  children="Remove"
+                  underline="always"
+                />
+              </Box>
             )}
-            {onSubmit && (
-              <MenuLink
-                onClick={() => setEditing(true)}
-                children="Edit"
-                underline="always"
-              />
+            {onFormSubmit && (
+              <Box>
+                <MenuLink
+                  onClick={() => setEditing(true)}
+                  children="Edit"
+                  underline="always"
+                />
+              </Box>
             )}
           </Box>
         </Summary>
@@ -70,7 +76,7 @@ const EditablePanel = ({
 EditablePanel.propTypes = {
   title: PropTypes.string,
   defaultValues: PropTypes.object,
-  onSubmit: PropTypes.func,
+  onFormSubmit: PropTypes.func,
   onRemove: PropTypes.func,
   onSetDefault: PropTypes.func,
   Form: PropTypes.any,

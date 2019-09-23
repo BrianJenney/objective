@@ -10,7 +10,7 @@ const PAYMENT_FIELDS = ['name', 'last4', 'expirationDate', 'isDefault'];
 const labelsMap = {
   name: 'Name',
   last4: 'Last 4 digits',
-  expirationDate: 'Exp. Date',
+  expirationDate: 'Expires',
   isDefault: ''
 };
 const getValuesWithoutLabels = payload => Object.values(payload);
@@ -19,9 +19,13 @@ const PaymentSummary = ({ withLabels, noDefault, values, children }) => {
   let defaultIndicator = null;
   if (!noDefault) {
     defaultIndicator = values.isDefault ? (
-      <Box height={36} display="flex" alignItems="center">
-        <CheckIcon />
-        <Typography variant="body1" children="Saved as Default" />
+      <Box my="10px" height={37} display="flex" alignItems="center">
+        <CheckIcon style={{ width: '20px', height: '20px' }} />
+        <Typography
+          variant="body1"
+          children="Saved as default"
+          style={{ fontSize: 16, marginLeft: 7 }}
+        />
       </Box>
     ) : null;
   }

@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
-import { requestFetchAccount as requestFetchAccountAction } from './modules/account/actions';
-import {
-  requestFetchCart as requestFetchCartAction,
-  requestCreateCart as requestCreateCartAction
-} from './modules/cart/actions';
-import { requestFetchStorefront as requestFetchStorefrontAction } from './modules/storefront/actions';
-import { requestFetchCatalog as requestFetchCatalogAction } from './modules/catalog/actions';
+
+import { requestFetchBootstrap } from './modules/bootstrap/actions';
 import { RouteWithSubRoutes } from './components/common';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -24,48 +20,28 @@ class App extends Component {
     account: PropTypes.object.isRequired,
     storefront: PropTypes.object.isRequired,
     products: PropTypes.object.isRequired,
-    requestFetchAccount: PropTypes.func.isRequired,
-    requestFetchCart: PropTypes.func.isRequired,
-    requestCreateCart: PropTypes.func.isRequired,
-    requestFetchStorefront: PropTypes.func.isRequired,
-    requestFetchCatalog: PropTypes.func.isRequired
+    requestFetchBootstrap: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     const {
       account,
-      requestFetchAccount,
-      requestFetchCart,
-      requestCreateCart,
-      requestFetchStorefront,
-      requestFetchCatalog
+      requestFetchBootstrap
     } = this.props;
     const { data: accountData } = account;
 
+    let accountId = null;
+
     if (accountData.account_jwt && !accountData.account_id) {
-      const accountId = jwt.decode(accountData.account_jwt).account_id;
-      requestFetchAccount(accountId);
+      accountId = jwt.decode(accountData.account_jwt).account_id;
     }
 
-    requestFetchStorefront(process.env.REACT_APP_STORE_CODE);
-
-    /**
-     * We check to see if the user already has a cart, if they do
-     * we fetch it, otherwise we create a new empty one
-     *
-     * @todo Is this the best place for this logic? Should it actually exist in the cart action instead?
-     */
+    let cartId = null;
     if (localStorageClient.get('cartId')) {
-      requestFetchCart(localStorageClient.get('cartId'));
-    } else {
-      requestCreateCart();
+      cartId = localStorageClient.get('cartId');
     }
 
-    if (localStorageClient.get('catalogId')) {
-      requestFetchCatalog(localStorageClient.get('catalogId'));
-    } else {
-      console.log('no catalog id, cannot fetch catalog');
-    }
+    requestFetchBootstrap(process.env.REACT_APP_STORE_CODE, accountId, cartId);
   }
 
   /**
@@ -106,11 +82,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestFetchAccount: requestFetchAccountAction,
-  requestFetchStorefront: requestFetchStorefrontAction,
-  requestFetchCart: requestFetchCartAction,
-  requestCreateCart: requestCreateCartAction,
-  requestFetchCatalog: requestFetchCatalogAction
+  requestFetchBootstrap: requestFetchBootstrap
 };
 
 export default connect(

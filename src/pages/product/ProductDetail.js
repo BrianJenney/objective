@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-// import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MailOutline from '@material-ui/icons/MailOutline';
+
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
@@ -22,8 +22,6 @@ import {
   getVariantMap
 } from '../../utils/product';
 import './PDP-style.css';
-import ProductPopUp from './ProductPopUp';
-// import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 const localStorageClient = require('store');
@@ -78,7 +76,7 @@ const ProductDetail = ({ variantSlug }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const { product, variants, prices } = useContext(ProductContext);
+  const { product, variants, prices, content } = useContext(ProductContext);
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [open, setOpen] = useState(false);
@@ -149,7 +147,7 @@ const ProductDetail = ({ variantSlug }) => {
     setSelectedVariantSku(defaultSku);
   }, [defaultSku]);
 
-  if (product === null || variants.length === 0) return null;
+  if (product === null || variants.length === 0 || typeof content === 'undefined') return null;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
@@ -168,21 +166,21 @@ const ProductDetail = ({ variantSlug }) => {
                     className="pdp-content"
                   >
                     <div className="mobile-padding">
-                      <h1 className="pdp-header">{product.name}</h1>
+                      <h1 className="pdp-header">{content.productTitle}</h1>
                       <ProductVariant
                         productVariant={variantMap.get(selectedVariantSku)}
                       />
                     </div>
-                    <div className="pdp-subtitle">{product.subtitle}</div>
+                    <div className="pdp-subtitle">{content.shortPurposeHeadline}</div>
                     <div className="mobile-padding">
                       <Typography className="pdp-description">
-                        {product.description}
+                        {content.shortDescription}
                       </Typography>
                       <Typography className="pdp-direction">
                         DIRECTIONS
                       </Typography>
                       <Typography className="pdp-direction-description">
-                        Take one soft gel daily with meal
+                        {content.shortDirections}
                       </Typography>
                     </div>
                     {/* <ProductVariantType
@@ -242,17 +240,17 @@ const ProductDetail = ({ variantSlug }) => {
                   className={classes.cardRootOverrides}
                   className="pdp-content"
                 >
-                  <h1 className="pdp-header">{product.name}</h1>
+                  <h1 className="pdp-header">{content.productTitle}</h1>
                   <ProductVariant
                     productVariant={variantMap.get(selectedVariantSku)}
                   />
-                  <div className="pdp-subtitle">{product.subtitle}</div>
+                  <div className="pdp-subtitle">{content.shortPurposeHeadline}</div>
                   <Typography className="pdp-description">
-                    {product.description}
+                    {content.shortDescription}
                   </Typography>
                   <Typography className="pdp-direction">DIRECTIONS</Typography>
                   <Typography className="pdp-direction-description">
-                    Take one soft gel daily with meal
+                    {content.shortDirections}
                   </Typography>
 
                   {/* <ProductVariantType
