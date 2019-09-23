@@ -57,13 +57,16 @@ const EditablePanel = ({
                 />
               </Box>
             )}
-            <Box mt="13px" display="flex" alignItems="center">
+            <Box mt="13px" height={16} display="flex" alignItems="center">
               {onRemove && (
                 <MenuLink
                   onClick={onRemove}
                   children="Remove"
                   underline="always"
-                  style={{ paddingRight: 9, borderRight: '1px solid #231f20' }}
+                  style={{
+                    paddingRight: 9,
+                    borderRight: onFormSubmit ? '1px solid #231f20' : 0
+                  }}
                 />
               )}
               {onFormSubmit && (
