@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { get, isNil } from 'lodash';
@@ -16,7 +16,7 @@ import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from '../../utils/misc';
 import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
 import '../../pages/checkout/checkout-styles.scss';
-import ScrollToTop from '../common/ScrollToTop'
+import ScrollToTop from '../common/ScrollToTop';
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -91,6 +91,12 @@ const Checkout = ({
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+
+  useEffect(() => {
+    if (!account_jwt && activeStep > 0) {
+      history.push('/');
+    }
+  }, [currentUser.data.account_jwt]);
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
