@@ -79,6 +79,7 @@ const ProductDetail = ({ variantSlug }) => {
   const { product, variants, prices, content } = useContext(ProductContext);
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const [ATCAdded, setATCAdded ] = useState(false);
   const [open, setOpen] = useState(false);
 
   const windowSize = useWindowSize();
@@ -117,7 +118,8 @@ const ProductDetail = ({ variantSlug }) => {
       quantity
     );
     // enqueueSnackbar(message, { variant: 'success' });
-    setATCEnabled(false);
+    // setATCEnabled(false);
+    setATCAdded(true);
     dispatch(setCartDrawerOpened(true));
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
@@ -205,7 +207,7 @@ const ProductDetail = ({ variantSlug }) => {
                           onClick={handleAddToCart}
                           disabled={selectedVariantSku === null}
                         >
-                          ADD TO CART
+                          {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
                         </Button>
                       </CardActions>
                     </Grid>
@@ -281,7 +283,7 @@ const ProductDetail = ({ variantSlug }) => {
                             onClick={handleAddToCart}
                             disabled={selectedVariantSku === null}
                           >
-                            ADD TO CART
+                            {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
                           </Button>
                         </CardActions>
                       </Grid>
