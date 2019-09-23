@@ -38,33 +38,27 @@ const EditablePanel = ({
         />
       ) : (
         <Summary values={defaultValues} {...rest}>
-          <Box fontSize={16} display="flex" alignItems="center">
+          <Box fontSize={16} display="grid" alignItems="center">
             {onSetDefault && (
-              <Box mr={1}>
-                <MenuLink
-                  onClick={onSetDefault}
-                  children="Set Default"
-                  underline="always"
-                />
-              </Box>
+              <MenuLink
+                onClick={onSetDefault}
+                children="Make Default"
+                underline="always"
+              />
             )}
             {onRemove && (
-              <Box mr={1}>
-                <MenuLink
-                  onClick={onRemove}
-                  children="Remove"
-                  underline="always"
-                />
-              </Box>
+              <MenuLink
+                onClick={onRemove}
+                children="Remove"
+                underline="always"
+              />
             )}
             {onSubmit && (
-              <Box>
-                <MenuLink
-                  onClick={() => setEditing(true)}
-                  children="Edit"
-                  underline="always"
-                />
-              </Box>
+              <MenuLink
+                onClick={() => setEditing(true)}
+                children="Edit"
+                underline="always"
+              />
             )}
           </Box>
         </Summary>

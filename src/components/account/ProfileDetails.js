@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { fonts } from '../../components/Theme/fonts.js';
 import { Button } from '../common';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
@@ -18,7 +17,51 @@ const schema = object().shape({
   lastName: string(),
   email: string().email('Please enter a valid email.')
 });
+
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontFamily: fonts.header,
+    fontSize: 48,
+    marginBottom: 30,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px'
+    }
+  },
+  info: {
+    fontFamily: 'p22-underground, sans-serif',
+    fontSize: 18,
+    fontWeight: 600,
+    lineHeight: 'normal',
+    marginBottom: 20
+  },
+  subTexts: {
+    fontFamily: fonts.body,
+    fontSize: '21px',
+    padding: 10
+  },
+  inline: {
+    display: 'flex'
+  },
+  root: {
+    width: '100%',
+    maxWidth: 360
+  },
+  nested: {
+    paddingLeft: theme.spacing(4)
+  },
+  box: {
+    backgroundColor: '#003833',
+    '&:hover': {
+      backgroundColor: '#003833'
+    }
+  },
+  item: {
+    color: 'white'
+  }
+}));
+
 const ProfileDetails = props => {
+  const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account } = props;
@@ -39,12 +82,7 @@ const ProfileDetails = props => {
       <Form>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Field
-              margin="20px"
-              label="First Name"
-              name="firstName"
-              component={InputField}
-            />
+            <Field label="First Name" name="firstName" component={InputField} />
           </Grid>
           <Grid item xs={6}>
             <Field label="Last Name" name="lastName" component={InputField} />
@@ -52,11 +90,11 @@ const ProfileDetails = props => {
           <Grid item xs={12}>
             <Field label="Email" name="email" component={InputField} />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Field label="Phone Number" name="phone" component={InputField} />
-          </Grid>
+          </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
-            <Button mt={2} mp={3} fullWidth type="submit" >
+            <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
           </Grid>
@@ -65,30 +103,24 @@ const ProfileDetails = props => {
     );
   };
   return (
-    <Container style={{ paddingTop: '20px' }}>
-      <Typography variant="h1" gutterBottom>
+    <div className="account-profile">
+      <Typography className={classes.title} variant="h1" gutterBottom>
         Your Profile
       </Typography>
-      <Typography
-        style={{ padding: '10px 0', fontFamily: 'p22-underground' }}
-        variant="h3"
-        gutterBottom
-      >
+      <Typography className={classes.info} variant="h3" gutterBottom>
         NAME {'&'} EMAIL
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper>
-            <Formik
-              initialValues={INITIAL_VALUES}
-              onSubmit={handleSubmit}
-              validationSchema={schema}
-              render={renderForm}
-            />
-          </Paper>
+          <Formik
+            initialValues={INITIAL_VALUES}
+            onSubmit={handleSubmit}
+            validationSchema={schema}
+            render={renderForm}
+          />
         </Grid>
       </Grid>
-    </Container>
+    </div>
   );
 };
 const mapStateToProps = state => {

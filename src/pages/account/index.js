@@ -22,7 +22,10 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: '58px',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 const Account = ({ routes }) => {
@@ -32,12 +35,12 @@ const Account = ({ routes }) => {
       <Container>
         <Box className={classes.paper}>
           <Grid container spacing={3}>
-            <Grid item sm={3}>
+            <Grid item xs={12} md={3}>
               <Box>
                 <AccountMenu />
               </Box>
             </Grid>
-            <Grid item sm={9}>
+            <Grid item xs={12} md={8}>
               <Switch>
                 <Redirect exact from="/account" to="/account/overview" />
                 {routes.map(route => (

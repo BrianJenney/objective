@@ -32,3 +32,52 @@
     font-weight: 600;
   }
 }
+.overview-mobile {
+  .MuiListItem-button {
+    padding: 0;
+  }
+}
+.account-profile {
+  input {
+    font-family: p22-undergrounf, sans-serif;
+  }
+  button {
+    margin-bottom: 50px;
+  }
+  .MuiFormHelperText-contained {
+    font-family: p22-undergrounf, sans-serif;
+    font-size: 11px;
+    margin: 5px 0 0;
+  }
+}
+.account-change-password {
+  input {
+    font-family: p22-undergrounf, sans-serif;
+  }
+  button {
+    margin-top: 16px;
+  }
+  .MuiFormHelperText-contained {
+    font-family: p22-undergrounf, sans-serif;
+    font-size: 11px;
+    margin: 5px 0 0;
+  }
+}
+
+.account-payment-details {
+  .checkout-box {
+    border: 2px solid #979797;
+    p {
+      font-family: p22-underground, sans-serif;
+      line-height: 1.2;
+    }
+  }
+  a {
+    font-family: p22-underground, sans-serif;
+    line-height: 1.5;
+  }
+  .MuiBox-root.MuiBox-root-226 {
+    text-align: center;
+    width: 100%;
+  }
+}

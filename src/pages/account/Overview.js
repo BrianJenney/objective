@@ -26,7 +26,11 @@ const change = {
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: fonts.header,
-    fontSize: 48
+    fontSize: 48,
+    marginBottom: 30,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px'
+    }
   },
   info: {
     fontFamily: fonts.smallHeader,
@@ -70,7 +74,7 @@ const AccountOverview = props => {
   const RenderOverview = () => (
     <div className="account-overview">
       <Typography className={classes.title} variant="h1" gutterBottom>
-        Welcome, {currentUser.data.firstName} {currentUser.data.lastName}!
+        Welcome, {currentUser.data.firstName}!
       </Typography>
       <p>
         <strong>NAME</strong> {currentUser.data.firstName}{' '}
@@ -93,7 +97,7 @@ const AccountOverview = props => {
     </div>
   );
   return xs ? (
-    <Container style={pStyle}>
+    <Container style={pStyle} className="overview-mobile">
       <Box className={classes.root}>
         <List>
           <ListItem className={classes.box} button onClick={handleClick}>

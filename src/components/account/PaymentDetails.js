@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import { fonts } from '../../components/Theme/fonts.js';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
@@ -11,6 +14,48 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
+
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontFamily: fonts.header,
+    fontSize: 48,
+    marginBottom: 30,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px'
+    }
+  },
+  info: {
+    fontFamily: 'p22-underground, sans-serif',
+    fontSize: 18,
+    fontWeight: 600,
+    lineHeight: 'normal',
+    marginBottom: 20
+  },
+  subTexts: {
+    fontFamily: fonts.body,
+    fontSize: '21px',
+    padding: 10
+  },
+  inline: {
+    display: 'flex'
+  },
+  root: {
+    width: '100%',
+    maxWidth: 360
+  },
+  nested: {
+    paddingLeft: theme.spacing(4)
+  },
+  box: {
+    backgroundColor: '#003833',
+    '&:hover': {
+      backgroundColor: '#003833'
+    }
+  },
+  item: {
+    color: 'white'
+  }
+}));
 
 const AccountPaymentDetails = ({
   currentUser,
@@ -24,8 +69,11 @@ const AccountPaymentDetails = ({
   addressSeed,
   useSeedLabel,
   allowFlyMode,
+  location,
   ...rest
 }) => {
+  const classes = useStyles();
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const creditCards = get(currentUser, 'data.paymentMethods', []);
@@ -90,29 +138,40 @@ const AccountPaymentDetails = ({
   }
 
   return (
-    <Box {...rest} className="step-3-wrapper">
-      <Box color="#231f20">
-        <Box
-          component={Typography}
-          variant="h5"
-          children={title}
-          fontSize={withSmallTitle ? 30 : 48}
-          fontFamily="Canela Text, serif"
-          mb={4}
-        />
-        {subTitle && (
+    <Box {...rest} className="step-3-wrapper account-payment-details">
+      {isCheckoutPage ? (
+        <Box color="#231f20">
           <Box
             component={Typography}
             variant="h5"
-            children={subTitle}
-            fontSize={18}
-            fontWeight={600}
-            fontFamily="P22Underground"
-            style={{ textTransform: 'uppercase' }}
+            children={title}
+            fontSize={withSmallTitle ? 30 : 48}
+            fontFamily="Canela Text, serif"
             mb={4}
           />
-        )}
-      </Box>
+          {subTitle && (
+            <Box
+              component={Typography}
+              variant="h5"
+              children={subTitle}
+              fontSize={18}
+              fontWeight={600}
+              fontFamily="P22Underground"
+              style={{ textTransform: 'uppercase' }}
+              mb={4}
+            />
+          )}
+        </Box>
+      ) : (
+        <div>
+          <Typography className={classes.title} variant="h1" gutterBottom>
+            Payment Details
+          </Typography>
+          <Typography className={classes.info} variant="h3" gutterBottom>
+            CREDIT CARD
+          </Typography>
+        </div>
+      )}
       <Box mx="-8px" my="-8px">
         <Grid container>
           {creditCards.map((creditCardEntity, index) => {
