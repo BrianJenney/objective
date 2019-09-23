@@ -1,13 +1,58 @@
 import React, { useState } from 'react';
+import { matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { get, isEmpty, isNil, omit } from 'lodash';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { fonts } from '../../components/Theme/fonts.js';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
+
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontFamily: fonts.header,
+    fontSize: 48,
+    marginBottom: 30,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px'
+    }
+  },
+  info: {
+    fontFamily: 'p22-underground, sans-serif',
+    fontSize: 18,
+    fontWeight: 600,
+    lineHeight: 'normal',
+    marginBottom: 20
+  },
+  subTexts: {
+    fontFamily: fonts.body,
+    fontSize: '21px',
+    padding: 10
+  },
+  inline: {
+    display: 'flex'
+  },
+  root: {
+    width: '100%',
+    maxWidth: 360
+  },
+  nested: {
+    paddingLeft: theme.spacing(4)
+  },
+  box: {
+    backgroundColor: '#003833',
+    '&:hover': {
+      backgroundColor: '#003833'
+    }
+  },
+  item: {
+    color: 'white'
+  }
+}));
 
 const AccountAddresses = ({
   currentUser,
@@ -20,8 +65,16 @@ const AccountAddresses = ({
   addressSeed,
   useSeedLabel,
   allowFlyMode,
+  location,
   ...rest
 }) => {
+  const classes = useStyles();
+  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }); 
+  will fix later, it broke the code*/
+  let isCheckoutPage = false;
+  if (window.location.pathname.includes('checkout')) {
+    isCheckoutPage = true;
+  }
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
@@ -88,16 +141,22 @@ const AccountAddresses = ({
   };
 
   return (
-    <Box {...rest} className="step-2-wrapper">
-      <Box
-        component={Typography}
-        color="#231f20"
-        variant="h5"
-        children={title}
-        fontSize={withSmallTitle ? 30 : 48}
-        fontFamily="Canela Text, serif"
-        mb={4}
-      />
+    <Box {...rest} className="step-2-wrapper account-addresses">
+      {isCheckoutPage ? (
+        <Box
+          component={Typography}
+          color="#231f20"
+          variant="h5"
+          children={title}
+          fontSize={withSmallTitle ? 30 : 48}
+          fontFamily="Canela Text, serif"
+          mb={4}
+        />
+      ) : (
+        <Typography className={classes.title} variant="h1" gutterBottom>
+          Saved Addresses
+        </Typography>
+      )}
       <Box mx="-8px" my="-8px">
         <Grid container>
           {addressBook.map((addressEntity, index) => (

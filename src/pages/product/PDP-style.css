@@ -23,6 +23,7 @@ html,
   font-family: p22-underground, sans-serif;
   font-size: 22px;
   padding: 20px 0;
+  text-transform: uppercase;
 }
 
 .pdp-description {
@@ -91,8 +92,32 @@ html,
   color: #000000;
   padding-top: 4px;
 }
+.research-sources {
+  margin-bottom: 60px;
+}
+.research-sources h2 {
+  font-family: p22-underground, sans-serif;
+  font-size: 18px !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2.25px;
+  margin-bottom: 22px;
+}
+.research-sources ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-family: FreightTextProBook;
+  font-size: 12px;
+  margin: 0;
+}
 
 @media only screen and (min-width: 735.99px) {
+  .research-sources h2 {
+    font-size: 24px !important;
+  }
+  .research-sources ul {
+    font-size: 14px;
+  }
   .pdp-content {
     display: flex, relative;
     flex-direction: column;

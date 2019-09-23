@@ -38,7 +38,7 @@ const EditablePanel = ({
         />
       ) : (
         <Summary values={defaultValues} {...rest}>
-          <Box fontSize={16} display="flex" alignItems="center">
+          <Box fontSize={16} display="grid" alignItems="center">
             {onSetDefault && (
               <Box mr={1} fontSize={16}>
                 <MenuLink

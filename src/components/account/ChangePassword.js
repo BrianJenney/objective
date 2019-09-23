@@ -4,6 +4,8 @@ import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { fonts } from '../../components/Theme/fonts.js';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -20,6 +22,15 @@ const INITIAL_VALUES = {
   newPassword1: '',
   newPassword2: ''
 };
+const useStyles = makeStyles(theme => ({
+  info: {
+    fontFamily: 'p22-underground, sans-serif',
+    fontSize: 18,
+    fontWeight: 600,
+    lineHeight: 'normal',
+    marginBottom: 20
+  }
+}));
 const ChangePasswordForm = ({
   title,
   defaultValues,
@@ -28,20 +39,17 @@ const ChangePasswordForm = ({
   submitLabel,
   backLabel
 }) => {
+  const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const renderForm = () => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
-      <Typography
-        style={{ padding: '15px 0', fontFamily: 'p22-underground' }}
-        variant="h3"
-        gutterBottom
-      >
-        CHANGE PASSWORD
-      </Typography>
         <Grid item xs={12}>
+          <Typography className={classes.info} variant="h3" gutterBottom>
+            CHANGE PASSWORD
+          </Typography>
           <Field
             name="currentPassword"
             label="Current Password"
@@ -84,12 +92,16 @@ const ChangePasswordForm = ({
     </Form>
   );
   return (
-    <Formik
-      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-      onSubmit={onSubmit}
-      validationSchema={schema}
-      render={renderForm}
-    />
+    <Grid container className="account-change-password">
+      <Grid item xs={12} md={12}>
+        <Formik
+          initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+          onSubmit={onSubmit}
+          validationSchema={schema}
+          render={renderForm}
+        />
+      </Grid>
+    </Grid>
   );
 };
 ChangePasswordForm.propTypes = {

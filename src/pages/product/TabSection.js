@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,8 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import ProductContext from '../../contexts/ProductContext';
+
 import './cards-styles.css';
+
+import HowItWorksTab from './HowItWorksTab';
+import SupplementFactsTab from './SupplementFactsTab';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,19 +72,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PdpTabs(props) {
+export default function PdpTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const { hiwTab, infoTab } = useContext(ProductContext);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
 
-  if (!hiwTab || !infoTab) {
-    return null;
-  }
   return (
     <Container>
       <Grid spacing={0} xs={12}>
@@ -110,10 +110,10 @@ export default function PdpTabs(props) {
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <div dangerouslySetInnerHTML={{ __html: hiwTab }} />
+              <HowItWorksTab />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <div dangerouslySetInnerHTML={{ __html: infoTab }} />
+              <SupplementFactsTab />
             </TabPanel>
           </div>
         </Box>

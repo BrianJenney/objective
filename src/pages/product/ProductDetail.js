@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-// import { useSnackbar } from 'notistack';
 import { useSelector, useDispatch } from 'react-redux';
+import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MailOutline from '@material-ui/icons/MailOutline';
+
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
@@ -22,8 +22,6 @@ import {
   getVariantMap
 } from '../../utils/product';
 import './PDP-style.css';
-import ProductPopUp from './ProductPopUp';
-// import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 const localStorageClient = require('store');
@@ -78,9 +76,10 @@ const ProductDetail = ({ variantSlug }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const { product, variants, prices } = useContext(ProductContext);
+  const { product, variants, prices, content } = useContext(ProductContext);
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const [ATCAdded, setATCAdded ] = useState(false);
   const [open, setOpen] = useState(false);
 
   const windowSize = useWindowSize();
@@ -119,7 +118,8 @@ const ProductDetail = ({ variantSlug }) => {
       quantity
     );
     // enqueueSnackbar(message, { variant: 'success' });
-    setATCEnabled(false);
+    // setATCEnabled(false);
+    setATCAdded(true);
     dispatch(setCartDrawerOpened(true));
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
@@ -149,7 +149,12 @@ const ProductDetail = ({ variantSlug }) => {
     setSelectedVariantSku(defaultSku);
   }, [defaultSku]);
 
-  if (product === null || variants.length === 0) return null;
+  if (
+    product === null ||
+    variants.length === 0 ||
+    typeof content === 'undefined'
+  )
+    return null;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
@@ -168,21 +173,23 @@ const ProductDetail = ({ variantSlug }) => {
                     className="pdp-content"
                   >
                     <div className="mobile-padding">
-                      <h1 className="pdp-header">{product.name}</h1>
+                      <h1 className="pdp-header">{content.productTitle}</h1>
                       <ProductVariant
                         productVariant={variantMap.get(selectedVariantSku)}
                       />
                     </div>
-                    <div className="pdp-subtitle">{product.subtitle}</div>
+                    <div className="pdp-subtitle">
+                      {content.shortPurposeHeadline}
+                    </div>
                     <div className="mobile-padding">
                       <Typography className="pdp-description">
-                        {product.description}
+                        {content.shortDescription}
                       </Typography>
                       <Typography className="pdp-direction">
                         DIRECTIONS
                       </Typography>
                       <Typography className="pdp-direction-description">
-                        Take one soft gel daily with meal
+                        {content.shortDirections}
                       </Typography>
                     </div>
                     {/* <ProductVariantType
@@ -200,7 +207,7 @@ const ProductDetail = ({ variantSlug }) => {
                           onClick={handleAddToCart}
                           disabled={selectedVariantSku === null}
                         >
-                          ADD TO CART
+                          {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
                         </Button>
                       </CardActions>
                     </Grid>
@@ -231,53 +238,59 @@ const ProductDetail = ({ variantSlug }) => {
           </Grid>
         </>
       ) : (
-        <Grid container className={classes.gridModifications} xs={12} sm={12}>
-          <Grid container justify="space-between" xs={10} sm={11}>
-            <Grid item xs={12} sm={6}>
-              <Carousel prodId={product._id} />
-            </Grid>
-            <Grid item xs={12} sm={5}>
-              <Card className={classes.box}>
-                <CardContent
-                  className={classes.cardRootOverrides}
-                  className="pdp-content"
-                >
-                  <h1 className="pdp-header">{product.name}</h1>
-                  <ProductVariant
-                    productVariant={variantMap.get(selectedVariantSku)}
-                  />
-                  <div className="pdp-subtitle">{product.subtitle}</div>
-                  <Typography className="pdp-description">
-                    {product.description}
-                  </Typography>
-                  <Typography className="pdp-direction">DIRECTIONS</Typography>
-                  <Typography className="pdp-direction-description">
-                    Take one soft gel daily with meal
-                  </Typography>
+        <div className={classes.gridModifications}>
+          <Container>
+            <Grid container xs={12} sm={12}>
+              <Grid container spacing={5} xs={12} sm={12}>
+                <Grid item xs={12} sm={6}>
+                  <Carousel prodId={product._id} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Card className={classes.box}>
+                    <CardContent
+                      className={classes.cardRootOverrides}
+                      className="pdp-content"
+                    >
+                      <h1 className="pdp-header">{content.productTitle}</h1>
+                      <ProductVariant
+                        productVariant={variantMap.get(selectedVariantSku)}
+                      />
+                      <div className="pdp-subtitle">
+                        {content.shortPurposeHeadline}
+                      </div>
+                      <Typography className="pdp-description">
+                        {content.shortDescription}
+                      </Typography>
+                      <Typography className="pdp-direction">
+                        DIRECTIONS
+                      </Typography>
+                      <Typography className="pdp-direction-description">
+                        {content.shortDirections}
+                      </Typography>
 
-                  {/* <ProductVariantType
+                      {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                  {!ATCEnabled && <Quantity />}
-                </CardContent>
-                {ATCEnabled && (
-                  <Grid>
-                    <CardActions className={classes.maxWidth}>
-                      <Button
-                        fullWidth
-                        onClick={handleAddToCart}
-                        disabled={selectedVariantSku === null}
-                      >
-                        ADD TO CART
-                      </Button>
-                    </CardActions>
-                  </Grid>
-                )}
+                      {!ATCEnabled && <Quantity />}
+                    </CardContent>
+                    {ATCEnabled && (
+                      <Grid>
+                        <CardActions className={classes.maxWidth}>
+                          <Button
+                            fullWidth
+                            onClick={handleAddToCart}
+                            disabled={selectedVariantSku === null}
+                          >
+                            {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
+                          </Button>
+                        </CardActions>
+                      </Grid>
+                    )}
 
-                {/* Render this button when Product is out of stock hiding for now */}
-                {/* <Grid>
+                    {/* Render this button when Product is out of stock hiding for now */}
+                    {/* <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
                       className={classes.btnOOS}
@@ -295,10 +308,12 @@ const ProductDetail = ({ variantSlug }) => {
                     />
                   )}
                 </Grid> */}
-              </Card>
+                  </Card>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </Container>
+        </div>
       )}
     </>
   );
