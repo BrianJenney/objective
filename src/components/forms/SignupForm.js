@@ -50,7 +50,10 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
   const classes = useStyles();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
-    () => setPasswordVisible(!passwordVisible),
+    event => {
+      event.preventDefault();
+      setPasswordVisible(!passwordVisible);
+    },
     [passwordVisible, setPasswordVisible]
   );
 
@@ -85,7 +88,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
                     style={{ fontFamily: 'P22-underground', fontSize: '12px' }}
                     component="button"
                     underline="always"
-                    onClick={togglePasswordVisibility}
+                    onClick={event => togglePasswordVisibility(event)}
                     children={
                       passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                     }

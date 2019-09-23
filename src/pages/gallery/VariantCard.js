@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
-import { useQuantity, useWindowSize } from '../../hooks';
+import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
 import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
@@ -29,6 +29,8 @@ const VariantCard = ({ variant, product }) => {
   // const windowSize = useWindowSize();
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdding, setATCAdding] = useState(false);
   // const message = <ATCSnackbarAction variant={variant} />;
 
   const updateQuantityToCart = useCallback(
@@ -43,12 +45,20 @@ const VariantCard = ({ variant, product }) => {
     updateQuantityToCart,
     'QTY'
   );
-
+  
+ 
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
-    // enqueueSnackbar(message, { variant: 'success' });
-    setATCEnabled(false);
+    setATCAdded(true);
+    setATCAdding(true);
+    setTimeout(() => {
+//Give effect of item being added
+addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
+
+    setATCAdding(false);
     dispatch(setCartDrawerOpened(true));
+    },500)
+  
+    
   }, [cart, variant, quantity, dispatch]);
 
   return (
@@ -84,7 +94,7 @@ const VariantCard = ({ variant, product }) => {
               fullWidth={true}
               className="atc-button"
             >
-              ADD TO CART
+              {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
             </Button>
           </CardActions>
         ) : (
