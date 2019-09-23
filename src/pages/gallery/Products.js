@@ -36,6 +36,13 @@ const Products = () => {
       });
   });
 
+  /*
+  @TODO: fetch from database a list of styles for each product category
+  */
+  const styleMap = {
+    energy : {container:{borderColor:"green"},text:{color:"green"}},
+    __default : {container:{borderColor:"purple"},text:{color:"purple"}}
+  };
  
   return (
     <Container>
@@ -44,6 +51,7 @@ const Products = () => {
           <ProductSummary
             key={productSlug}
             product={productMap.get(productSlug)}
+            styleMap={styleMap[productMap.get(productSlug).category] ? styleMap[productMap.get(productSlug).category] : styleMap.__default}
             variantMap={variantMap}
           />
         ))}

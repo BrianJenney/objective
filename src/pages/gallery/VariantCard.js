@@ -23,7 +23,7 @@ const PriceVariantInfo = ({ variant }) => {
   ) : null;
 };
 
-const VariantCard = ({ variant, product }) => {
+const VariantCard = ({ variant, product, styleMap }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   // const windowSize = useWindowSize();
@@ -75,6 +75,7 @@ addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
             <Link
               to={`/products/${product.slug}/${variant.slug}`}
               className="title"
+              style={styleMap.text}
             >
               {variant.name}
             </Link>
