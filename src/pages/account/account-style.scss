@@ -62,24 +62,9 @@
 
 .account-payment-details,
 .account-addresses {
-  .address-box,
-  .checkout-box {
-    border: 2px solid #979797;
-    p {
-      font-family: p22-underground, sans-serif;
-      line-height: 1.2;
-    }
-  }
-  a {
-    font-family: p22-underground, sans-serif;
-    line-height: 1.5;
-  }
   .MuiBox-root.MuiBox-root-226 {
     text-align: center;
     width: 100%;
-  }
-  input {
-    font-family: p22-underground, sans-serif;
   }
 }
 .account-orders {

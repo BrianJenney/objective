@@ -8,9 +8,6 @@
   }
   .signup-form,
   .step-3-wrapper {
-    .MuiTypography-body1 {
-      font-family: p22-underground, sans-serif;
-    }
     .legal {
       .MuiTypography-body1 {
         font-size: 0.875rem;
@@ -21,29 +18,22 @@
       padding: 20px 16px;
       height: auto;
     }
-    label {
-      font-family: p22-underground, sans-serif;
-    }
     input,
     input.MuiInputBase-input {
-      font-family: p22-underground, sans-serif;
       font-size: 18px;
     }
     input::placeholder {
       /* Chrome, Firefox, Opera, Safari 10.1+ */
-      font-family: p22-underground, sans-serif;
       font-size: 18px;
     }
 
     input:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
-      font-family: p22-underground, sans-serif;
       font-size: 18px;
     }
 
     input::-ms-input-placeholder {
       /* Microsoft Edge */
-      font-family: p22-underground, sans-serif;
       font-size: 18px;
     }
     .MuiCheckbox-colorSecondary.Mui-checked {
@@ -61,28 +51,9 @@
     font-size: 12px !important;
     text-decoration: underline;
   }
-  @media (min-width: 1200px) {
-    .address-box {
-      min-height: 250px;
-    }
-    .checkout-box {
-      min-height: 177px;
-    }
-  }
 
-  .address-box,
-  .checkout-box {
-    border: 2px solid #979797;
-    p {
-      font-family: p22-underground, sans-serif;
-      line-height: 1.2;
-    }
-  }
   .step-2-wrapper,
   .step-3-wrapper {
-    a {
-      font-family: p22-underground, sans-serif;
-    }
     .MuiBox-root.MuiBox-root-226 {
       text-align: center;
       width: 100%;
@@ -95,14 +66,12 @@
     }
     p,
     a {
-      font-family: p22-underground, sans-serif;
       font-size: 14px;
     }
   }
   .step-2-wrapper,
   .step-4-wrapper {
     button {
-      width: 445px;
       padding: 20px 16px;
       height: auto;
       letter-spacing: 1.33px;

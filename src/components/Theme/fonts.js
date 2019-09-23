@@ -1,9 +1,10 @@
 export const fonts = {
   body: 'freight-text-pro',
+  body2: 'p22-underground, sans-serif',
   bodyWeight: '400',
   header: 'Canela Text, serif',
   $brandSerif: 'Canela Text, serif',
-  $brandSans:'p22-underground, Helvetica, sans-serif',
+  $brandSans: 'p22-underground, Helvetica, sans-serif',
   smallHeader: 'p22-underground',
   captionBook: {
     header: 'p22-underground, Helvetica, sans-serif',
@@ -16,13 +17,12 @@ export const fonts = {
   captionHeavy: {
     header: 'p22-underground, Helvetica, sans-serif',
     weight: 900
-  },
+  }
 };
 
 export const backupFontStack = {
   sans: 'Helvetica, Arial, sans-serif'
 };
-
 
 // ORDERED BY REM SIZE
 export const sizes = {
@@ -52,4 +52,4 @@ export const sizes = {
 
 export const lineHeight = {
   semiTight: 1.17
-}
+};

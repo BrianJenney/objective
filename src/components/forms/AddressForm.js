@@ -4,6 +4,7 @@ import { object, string, boolean } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
@@ -121,9 +122,10 @@ const AddressForm = ({
           </Grid>
         )}
         <Grid item xs={12}>
-          <Box display="flex" alignItems="center">
+          <ButtonGroup fullWidth>
             {onBack && (
               <Button
+                color="secondary"
                 type="button"
                 onClick={onBack}
                 children={backLabel}
@@ -131,7 +133,7 @@ const AddressForm = ({
               />
             )}
             <Button type="submit" children={submitLabel} />
-          </Box>
+          </ButtonGroup>
         </Grid>
       </Grid>
     </Form>
