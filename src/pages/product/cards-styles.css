@@ -312,6 +312,7 @@ html,
   text-align: center;
   color: #000000;
 }
+
 .how-it-works-wrapper .topBlock .leftCol h2,
 .how-it-works-wrapper .topBlock .rightCol h2,
 .how-it-works-wrapper .topBlock .leftCol h2 b,
@@ -442,6 +443,10 @@ html,
   text-align: center;
   text-transform: uppercase;
   background-color: #fcf8f4;
+}
+.how-it-works-wrapper .coreBenefits .topBlock .leftCol,
+.how-it-works-wrapper .coreBenefits .topBlock .rightCol {
+  max-height: 530px;
 }
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
@@ -673,14 +678,20 @@ html,
   line-height: 2.4;
   letter-spacing: normal;
 }
+.how-it-works-wrapper .coreBenefits .bottomBlock .textTitle {
+  border-bottom: solid 1px #003833;
+}
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop,
-  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol,
-  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol {
+  .how-it-works-wrapper .coreBenefits .bottomBlock .content,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .content {
     flex-direction: column;
     padding: 60px 30px 0px 60px;
+  }
+  .flex-desktop {
+    display: flex;
   }
 }
 
@@ -1133,5 +1144,86 @@ html,
   .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTitle,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTitle {
     margin-bottom: 25px;
+  }
+}
+@media only screen and (max-width: 734px) {
+  .how-it-works-wrapper .topBlock {
+    width: 100% !important;
+  }
+  .how-it-works-wrapper h2:first-of-type {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    font-family: CanelaText;
+    font-size: 24px !important;
+    line-height: 1.33;
+    letter-spacing: -1.09px;
+  }
+  .how-it-works-wrapper .topBlock .leftCol h2,
+  .how-it-works-wrapper .topBlock .rightCol h2,
+  .how-it-works-wrapper .topBlock .leftCol h2 b,
+  .how-it-works-wrapper .topBlock .rightCol h2 b {
+    font-size: 16px !important;
+    letter-spacing: 1.28px;
+    margin: 22px 0 0 !important;
+  }
+  .how-it-works-wrapper .topBlock .leftCol p,
+  .how-it-works-wrapper .topBlock .rightCol p,
+  .how-it-works-wrapper .bottomBlock .leftCol p,
+  .how-it-works-wrapper .bottomBlock .rightCol p {
+    font-size: 18px;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
+    position: relative;
+    margin: 20px auto;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol h2,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol h2,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
+    margin: 0 !important;
+    text-align: center;
+    font-size: 36px !important;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol ul p,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol ul p {
+    font-size: 20px;
+  }
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
+    height: auto;
+  }
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol .content,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol .content {
+    width: 100%;
+    text-align: center;
+  }
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol .content p,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol .content p {
+    text-align: left;
+  }
+  .how-it-works-wrapper
+    .coreBenefits
+    .bottomBlock
+    .rightCol
+    img:nth-of-type(2) {
+    height: 260px;
+  }
+  .one-box,
+  .two-box,
+  .three-box {
+    width: 240px;
+    height: 314px;
+  }
+  .one-bottom-color,
+  .two-bottom-color,
+  .three-bottom-color {
+    height: 90px;
+  }
+  .research-sources h2 {
+    font-size: 18px !important;
+    text-align: center;
   }
 }
