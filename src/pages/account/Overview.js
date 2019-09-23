@@ -29,12 +29,16 @@ const useStyles = makeStyles(theme => ({
     fontSize: 48,
     marginBottom: 30,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '36px'
+      fontSize: 36,
+      marginBottom: 15
     }
   },
   info: {
     fontFamily: fonts.smallHeader,
-    fontSize: '18px'
+    fontSize: '18px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 16
+    }
   },
   subTexts: {
     fontFamily: fonts.body,
@@ -58,7 +62,9 @@ const useStyles = makeStyles(theme => ({
     }
   },
   item: {
-    color: 'white'
+    color: 'white',
+    fontSize: '16px',
+    fontFamily: 'p22-underground, sans-serif'
   }
 }));
 const AccountOverview = props => {
@@ -101,7 +107,7 @@ const AccountOverview = props => {
       <Box className={classes.root}>
         <List>
           <ListItem className={classes.box} button onClick={handleClick}>
-            <ListItemText className={classes.item} primary="OVERVIEW" />
+            <ListItemText className="stepper-item" primary="OVERVIEW" />
             {open ? (
               <ExpandLess style={{ color: 'white' }} />
             ) : (
