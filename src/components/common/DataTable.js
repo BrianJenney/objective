@@ -6,42 +6,34 @@ import Typography from '@material-ui/core/Typography';
 import LoaderInProgress from './LoaderInProgress';
 
 /* https://www.material-ui-datatables.com */
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from 'mui-datatables';
 
-const getMuiTheme = () => createMuiTheme({
-  overrides: {
-    MUIDataTable: {
-      root: {
-        backgroundColor: "#FF000",
-        width: "100%",
+const getMuiTheme = () =>
+  createMuiTheme({
+    overrides: {
+      MUIDataTable: {
+        root: {
+          backgroundColor: '#FF000',
+          width: '100%'
+        },
+        paper: {
+          boxShadow: 'none'
+        }
       },
-      paper: {
-        boxShadow: "none",
-      }
-    },
-    MUIDataTableBodyCell: {
-      root: {
-        backgroundColor: "#FFF"
-      }
-    },
-    MUIDataTableHeadCell: {
-      root: {
-        fontSize: '1rem',
-        fontWeight: 800,
-      },
-      sortAction: {
-        display: 'block',
-        textAlign: "left",
+      MUIDataTableHeadCell: {
+        sortAction: {
+          display: 'block',
+          textAlign: 'left'
+        }
       }
     }
+  });
 
-  }});
-
-const DataTable = ({ title, data, columns, isLoading}) => {
+const DataTable = ({ title, data, columns, isLoading }) => {
   const options = {
-    filterType: "dropdown",
-    responsive: "scrollFullHeight",
-    selectableRows: "none",
+    filterType: 'dropdown',
+    responsive: 'scrollFullHeight',
+    selectableRows: 'none',
     rowsPerPage: 10,
     page: 0,
     rowsPerPageOptions: [10, 20, 50],
@@ -49,15 +41,15 @@ const DataTable = ({ title, data, columns, isLoading}) => {
     search: false,
     download: false,
     viewColumns: false,
-    filter: false,
+    filter: false
   };
 
   return (
     <MuiThemeProvider theme={getMuiTheme()}>
       <MUIDataTable
         title={
-          <Typography variant="h5">
-            <strong>{title}</strong>
+          <Typography variant="h3">
+            {title}
             {isLoading && <LoaderInProgress />}
           </Typography>
         }
@@ -67,7 +59,6 @@ const DataTable = ({ title, data, columns, isLoading}) => {
       />
     </MuiThemeProvider>
   );
-
 };
 
 export default DataTable;

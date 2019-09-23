@@ -1,10 +1,9 @@
 import EventEmitter from './events';
 
-import { handleStorefrontResponse } from './modules/storefront/responses';
+import { handleBootstrapResponse } from './modules/bootstrap/responses';
 import { handleAccountResponse } from './modules/account/responses';
 import { handleCartResponse } from './modules/cart/responses';
 import { handleOrderResponse } from './modules/order/responses';
-import { handleCatalogResponse } from './modules/catalog/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -14,29 +13,26 @@ export default body => {
   let data = json.data;
   let fields = json.fields;
   let properties = json.properties;
-  console.log(fields);
+
   switch (fields.exchange) {
-    case 'store':
-      handleStorefrontResponse(status, data, fields, properties);
-      break;
-    case 'cart':
-      handleCartResponse(status, data, fields, properties);
-      break;
-    case 'account':
-      handleAccountResponse(status, data, fields, properties);
-      break;
-    case 'order':
-      handleOrderResponse(status, data, fields, properties);
-      break;
-    case 'catalog':
-      handleCatalogResponse(status, data, fields, properties);
-      break;
-    default:
-      EventEmitter.emit(fields.routingKey, {
-        'status': status,
-        'data': data,
-        'fields': fields,
-        'properties': properties
-      });
+  case 'bootstrap-orchestration':
+    handleBootstrapResponse(status, data, fields, properties);
+    break;
+  case 'cart':
+    handleCartResponse(status, data, fields, properties);
+    break;
+  case 'account':
+    handleAccountResponse(status, data, fields, properties);
+    break;
+  case 'order':
+    handleOrderResponse(status, data, fields, properties);
+    break;
+  default:
+    EventEmitter.emit(fields.routingKey, {
+      'status': status,
+      'data': data,
+      'fields': fields,
+      'properties': properties
+    });
   }
 };

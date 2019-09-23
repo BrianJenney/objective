@@ -3,8 +3,16 @@ import React, { Component } from 'react';
 import store from '../store';
 import EventEmitter from '../events';
 
+import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+
+const contentful = require('contentful');
+const contentfulClient = contentful.createClient({
+  space: OBJECTIVE_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
+});
 
 const Context = React.createContext();
 
@@ -19,6 +27,16 @@ export class ProductStore extends Component {
   }
 
   componentDidMount() {
+    contentfulClient.getEntries({
+      'content_type': 'product',
+      'fields.sku': this.props.productSlug
+    })
+    .then(entry => {
+      this.setState({ ...this.state, content: entry.items[0].fields });
+    })
+    .catch(err => {
+      this.setState({ ...this.state, content: null });
+    });
     EventEmitter.addListener('product.request.find', data => {
       this.setState({ ...this.state, product: data.data.data[0] });
     });
@@ -27,15 +45,6 @@ export class ProductStore extends Component {
     });
     EventEmitter.addListener('price.request.find', data => {
       this.setState({ ...this.state, prices: data.data.data });
-    });
-    EventEmitter.addListener('content.request.find', data => {
-      this.setState({
-        ...this.state,
-        hiwTab: data.data.data[0].content,
-        infoTab: data.data.data[1].content,
-        whhmBoxes: data.data.data[2].content,
-        stepBoxes: data.data.data[3].content
-      });
     });
     this.getProductData();
   }
@@ -94,25 +103,6 @@ export class ProductStore extends Component {
       obj
     );
 
-    let re = new RegExp(this.props.productSlug + '$');
-    params = {
-      params: {
-        query: {
-          comp: re
-        }
-      }
-    };
-
-    obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send(
-      '/exchange/content/content.request.find',
-      {
-        'reply-to': replyTo,
-        'correlation-id': ObjectId()
-      },
-      obj
-    );
-
     params = {
       params: {
         query: {
@@ -132,7 +122,6 @@ export class ProductStore extends Component {
   }
 
   render() {
-    console.log('PRODUCT', this.props.children);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}

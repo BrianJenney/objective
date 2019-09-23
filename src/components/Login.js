@@ -47,7 +47,7 @@ const Login = ({ requestLoginAttempt, switchToSignup }) => {
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>
-              <NavLink to="/password/forgot" underline="always">
+              <NavLink to="/password/forgot" replace underline="always">
                 Forgot your email/&nbsp;password?
               </NavLink>
             </Typography>
@@ -57,7 +57,7 @@ const Login = ({ requestLoginAttempt, switchToSignup }) => {
               {switchToSignup ? (
                 <MenuLink onClick={switchToSignup} children="Signup!" />
               ) : (
-                <NavLink to="/signup" children="Signup!" underline="always" />
+                <NavLink to="/signup" children="Signup!" replace underline="always" />
               )}
             </Typography>
           </Box>

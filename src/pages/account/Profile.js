@@ -8,7 +8,7 @@ import {
 } from '../../components/account';
 
 const AccountProfile = ({ currentUser, requestPatchAccount }) => (
-  <>
+  <div>
     <AccountProfileDetails
       currentUser={currentUser}
       requestPatchAccount={requestPatchAccount}
@@ -18,7 +18,7 @@ const AccountProfile = ({ currentUser, requestPatchAccount }) => (
       currentUser={currentUser}
       requestPatchAccount={requestPatchAccount}
     />
-  </>
+  </div>
 );
 
 AccountProfile.propTypes = {

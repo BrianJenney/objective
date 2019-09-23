@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
@@ -103,37 +104,56 @@ const Header = ({ currentUser, location }) => {
           </>
         ) : (
           <>
-            <Grid container item={true} xs={12} className="headerBar">
-              <Grid item xs={6} className="option text-right">
-                <StyledBox fontSize={12}>
-                  Free Shipping On Orders Over $75
-                </StyledBox>
-              </Grid>
-              <Grid item xs={6} className="option text-left">
-                <StyledBox fontSize={12}>Free Returns</StyledBox>
-              </Grid>
-            </Grid>
-            <Grid container className="holder">
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/gallery">
-                  Shop
-                </StyledLink>
-              </Grid>
-              <Grid item xs={1}>
-                <StyledLink component={RouterLink} to="/">
-                  Science
-                </StyledLink>
-              </Grid>
-              <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJECTIVE</NavLink>
-              </Grid>
-              <Grid item>
-                <StyledLink component={RouterLink} {...accountMenuItemConf} />
-              </Grid>
-              <Grid item className="header-shop-holder">
-                {!isCheckoutPage && <ShoppingCart />}
-              </Grid>
-            </Grid>
+            <div className="headerBar">
+              <Container>
+                <Grid container item={true} xs={12}>
+                  <Grid item xs={6} className="option text-right">
+                    <StyledBox fontSize={12}>
+                      Free Shipping On Orders Over $75
+                    </StyledBox>
+                  </Grid>
+                  <Grid item xs={6} className="option text-left">
+                    <StyledBox fontSize={12}>Free Returns</StyledBox>
+                  </Grid>
+                </Grid>
+              </Container>
+            </div>
+            <div className="holder">
+              <Container>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Grid container>
+                      <Grid item xs={6}>
+                        <StyledLink component={RouterLink} to="/gallery">
+                          Shop
+                        </StyledLink>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <StyledLink component={RouterLink} to="/">
+                          Science
+                        </StyledLink>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={4} className="logo text-center">
+                    <NavLink to="/">OBJECTIVE</NavLink>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Grid container className="align-right">
+                      <Grid item xs={6}>
+                        <StyledLink
+                          component={RouterLink}
+                          {...accountMenuItemConf}
+                        />
+                      </Grid>
+                      <Grid item xs={6} className="header-shop-holder">
+                        {!isCheckoutPage && <ShoppingCart />}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Container>
+            </div>
           </>
         )}
       </Grid>

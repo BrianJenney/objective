@@ -91,6 +91,24 @@ html,
   color: #000000;
   padding-top: 4px;
 }
+.research-sources {
+  margin-bottom: 60px;
+}
+.research-sources h2 {
+  font-family: p22-underground, sans-serif;
+  font-size: 24px !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2.25px;
+  margin-bottom: 22px;
+}
+.research-sources ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-family: FreightTextProBook;
+  font-size: 14px;
+  margin: 0;
+}
 
 @media only screen and (min-width: 735.99px) {
   .pdp-content {

@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+
 import ProductContext from '../../contexts/ProductContext';
 
 export default function Instruction() {
-  const { whhmBoxes } = useContext(ProductContext);
+  const { content } = useContext(ProductContext);
   const box = {
     height: 80,
     display: 'flex',
@@ -20,9 +22,11 @@ export default function Instruction() {
     pb: 5
   };
 
-  if (!whhmBoxes) {
+  if (!content) {
     return null;
   }
+
+  const { when, how, how_much } = content.howToTake;
 
   return (
     <Container>
@@ -31,7 +35,35 @@ export default function Instruction() {
           <Box {...box}>HOW TO TAKE</Box>
         </Grid>
       </Grid>
-      <div dangerouslySetInnerHTML={{ __html: whhmBoxes }} />
+      <div className="whhm-wrapper">
+        <div className="one-box">
+          <div className="one-label">WHEN</div>
+          <div className="img-container">
+            <img className="clock-icon" src={when.icon} alt="" />
+          </div>
+          <div className="one-bottom-color">
+            <div className="one-title">{when.label}</div>
+          </div>
+        </div>
+        <div className="two-box">
+          <div className="two-label">HOW</div>
+          <div className="img-container">
+            <img className="glass-icon" src={how.icon} alt="" />
+          </div>
+          <div className="two-bottom-color">
+            <div className="two-title">{how.label}</div>
+          </div>
+        </div>
+        <div className="three-box">
+          <div className="three-label">HOW MUCH</div>
+          <div className="img-container">
+            <img className="spoons-icon" src={how_much.icon} alt="" />
+          </div>
+          <div className="three-bottom-color">
+            <div className="three-title">{how_much.label}</div>
+          </div>
+        </div>
+      </div>
     </Container>
   );
 }

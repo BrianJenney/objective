@@ -52,7 +52,7 @@
   .gallery-prod-card {
     text-align: left;
     .prod-name-holder {
-      height: auto;
+      height: 60px;
       margin-bottom: 10px;
       overflow: hidden;
       .title {
@@ -101,9 +101,14 @@
     height: 258px !important;
     margin-bottom: 15px;
   }
-  @media (min-width: 1600px) {
+  @media (min-width: 1200px) {
     .gallery-prod-img {
-      height: 278px !important;
+      height: 244px !important;
+    }
+  }
+  @media (min-width: 1400px) {
+    .gallery-prod-img {
+      height: 264px !important;
     }
   }
   .pding {
