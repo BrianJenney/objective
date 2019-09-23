@@ -26,7 +26,10 @@ const INITIAL_VALUES = {
 const LoginForm = ({ title, onSubmit, currentUser }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
-    () => setPasswordVisible(!passwordVisible),
+    event => {
+      event.preventDefault();
+      setPasswordVisible(!passwordVisible);
+    },
     [passwordVisible, setPasswordVisible]
   );
 
@@ -68,7 +71,7 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
                       }}
                       component="button"
                       underline="always"
-                      onClick={togglePasswordVisibility}
+                      onClick={event => togglePasswordVisibility(event)}
                       children={
                         passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                       }
