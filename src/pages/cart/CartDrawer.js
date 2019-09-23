@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -86,8 +87,8 @@ const Cart = ({
     return null;
   }
 
-  let shipping_option = cart.shipping.code;
-  let shipping_data = cart.shipping.options[shipping_option];
+  const { code = '', options = {} } = cart.shipping;
+  const shippingData = get(options, code, {});
 
   return (
     <Grid
@@ -108,7 +109,10 @@ const Cart = ({
             </Grid>
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
-                <StyledProceedCheckout component="span" onClick={handleCheckout}>
+                <StyledProceedCheckout
+                  component="span"
+                  onClick={handleCheckout}
+                >
                   proceed to checkout{' '}
                   <StyledArrowIcon>
                     <RightArrow />
@@ -118,16 +122,21 @@ const Cart = ({
             )}
           </StyledHeaderWrapper>
         ) : (
-            <StyledHeaderWrapperEmptyCart container direction="column">
-              <Grid container direction="row" alignItems="baseline">
-                <StyledCartHeader align="center" style={{ paddingBottom: '25px' }}>Your Cart </StyledCartHeader>
-                <StyledCartCountHeader component="span">
-                  {' '}
-                  ({cartCount} Items)
+          <StyledHeaderWrapperEmptyCart container direction="column">
+            <Grid container direction="row" alignItems="baseline">
+              <StyledCartHeader
+                align="center"
+                style={{ paddingBottom: '25px' }}
+              >
+                Your Cart{' '}
+              </StyledCartHeader>
+              <StyledCartCountHeader component="span">
+                {' '}
+                ({cartCount} Items)
               </StyledCartCountHeader>
-              </Grid>
-            </StyledHeaderWrapperEmptyCart>
-          )}
+            </Grid>
+          </StyledHeaderWrapperEmptyCart>
+        )}
       </div>
       <Grid container xs={12}>
         {cart.items.length === 0 ? (
@@ -139,62 +148,65 @@ const Cart = ({
         ) : null}
         {cart.items.length !== 0
           ? Object.values(cart.items).map((item, index) => (
-            <>
-              <StyledDrawerGrid container xs={12} direction="row">
-                <Grid
-                  item
-                  xs={4}
-                  style={{ 'min-width': '126px', 'margin-right': '18px' }}
-                >
-                  <Card>
-                    <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
-                      <CardMedia
-                        style={{ height: 126, width: 126 }}
-                        image={item.variant_img}
-                        title={item.variant_name}
-                        onClick={onClickProduct}
-                      />
-                    </Link>
-                  </Card>
-                </Grid>
-                <Grid item xs={7}>
-                  <Card
-                    style={{
-                      display: 'flex',
-                      'flex-direction': 'column',
-                      height: '135px',
-                      'justify-content': 'space-between'
-                    }}
+              <>
+                <StyledDrawerGrid container xs={12} direction="row">
+                  <Grid
+                    item
+                    xs={4}
+                    style={{ 'min-width': '126px', 'margin-right': '18px' }}
                   >
-                    <Link
-                      to={`/products/${item.prodSlug}/${item.varSlug}`}
+                    <Card>
+                      <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                        <CardMedia
+                          style={{ height: 126, width: 126 }}
+                          image={item.variant_img}
+                          title={item.variant_name}
+                          onClick={onClickProduct}
+                        />
+                      </Link>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={7}>
+                    <Card
                       style={{
-                        'text-decoration': 'none',
-                        'max-height': '40px',
-                        'overflow': 'hidden'
+                        display: 'flex',
+                        'flex-direction': 'column',
+                        height: '135px',
+                        'justify-content': 'space-between'
                       }}
                     >
-                      <StyledProductLink
-                        align="left"
-                        onClick={onClickProduct}
+                      <Link
+                        to={`/products/${item.prodSlug}/${item.varSlug}`}
+                        style={{
+                          'text-decoration': 'none',
+                          'max-height': '40px',
+                          overflow: 'hidden'
+                        }}
                       >
-                        {item.variant_name}
-                      </StyledProductLink>
-                    </Link>
-                    <Grid item style={{ padding: '0' }}>
-                      {disableItemEditing ? (
-                        <Box
-                          component={Typography}
-                          children={`QTY: ${item.quantity}`}
-                        />
-                      ) : (
+                        <StyledProductLink
+                          align="left"
+                          onClick={onClickProduct}
+                        >
+                          {item.variant_name}
+                        </StyledProductLink>
+                      </Link>
+                      <Grid item style={{ padding: '0' }}>
+                        {disableItemEditing ? (
+                          <Box
+                            component={Typography}
+                            children={`QTY: ${item.quantity}`}
+                          />
+                        ) : (
                           <StyledCardActions>
                             <StyledCounterButton
                               color="primary"
                               onClick={e =>
                                 adjustQty(cart, e.currentTarget.value, -1)
                               }
-                              style={{ 'font-size': '20pt', 'padding-bottom': '4px' }}
+                              style={{
+                                'font-size': '20pt',
+                                'padding-bottom': '4px'
+                              }}
                               value={index}
                               disabled={item.quantity < 2}
                             >
@@ -208,36 +220,37 @@ const Cart = ({
                               onClick={e =>
                                 adjustQty(cart, e.currentTarget.value, 1)
                               }
-                              style={{ 'font-size': '13pt', 'padding-bottom': '2.5px' }}
+                              style={{
+                                'font-size': '13pt',
+                                'padding-bottom': '2.5px'
+                              }}
                               value={index}
                             >
                               +
                             </StyledCounterButton>
                           </StyledCardActions>
                         )}
-                    </Grid>
-                    <StyledCardContent style={{ 'padding-bottom': '0' }}>
-                      <StyledFinePrint component="div" value={index}>
-                        {!disableItemEditing && (
-                          <Link
-                            onClick={e => removeFromCart(cart, index)}
-                            style={{ 'color': '#9b9b9b' }}
-                          >
-                            <StyledRemoveLink>
-                              Remove
-                            </StyledRemoveLink>
-                          </Link>
-                        )}
-                      </StyledFinePrint>
-                      <StyledProductPrice>
-                        {`$${(item.quantity * item.unit_price).toFixed(2)}`}
-                      </StyledProductPrice>
-                    </StyledCardContent>
-                  </Card>
-                </Grid>
-              </StyledDrawerGrid>
-            </>
-          ))
+                      </Grid>
+                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                        <StyledFinePrint component="div" value={index}>
+                          {!disableItemEditing && (
+                            <Link
+                              onClick={e => removeFromCart(cart, index)}
+                              style={{ color: '#9b9b9b' }}
+                            >
+                              <StyledRemoveLink>Remove</StyledRemoveLink>
+                            </Link>
+                          )}
+                        </StyledFinePrint>
+                        <StyledProductPrice>
+                          {`$${(item.quantity * item.unit_price).toFixed(2)}`}
+                        </StyledProductPrice>
+                      </StyledCardContent>
+                    </Card>
+                  </Grid>
+                </StyledDrawerGrid>
+              </>
+            ))
           : null}
         {cart.items.length !== 0 ? (
           <Grid item xs={12} style={{ 'text-align': 'left' }}>
@@ -275,12 +288,10 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-              {`$${shipping_data.price.toFixed(2)}`}
+                {`$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint component="p">
-              { shipping_data.name }
-            </StyledFinePrint>
+            <StyledFinePrint component="p">{shippingData.name}</StyledFinePrint>
           </Grid>
         ) : null}
         {cart.items.length !== 0 ? (
@@ -308,13 +319,13 @@ const Cart = ({
           cart.promo ? (
             <PromoCodeView />
           ) : (
-              <>
-                <StyledPromoLink align="left" onClick={togglePromo}>
-                  {!promoVisible ? 'Enter Promo Code' : null}
-                </StyledPromoLink>
-                {promoVisible && <PromoCodeForm />}
-              </>
-            )
+            <>
+              <StyledPromoLink align="left" onClick={togglePromo}>
+                {!promoVisible ? 'Enter Promo Code' : null}
+              </StyledPromoLink>
+              {promoVisible && <PromoCodeForm />}
+            </>
+          )
         ) : null}
 
         {cart.items.length !== 0 ? (
