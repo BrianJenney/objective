@@ -30,6 +30,7 @@ const VariantCard = ({ variant, product }) => {
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdding, setATCAdding] = useState(false);
   // const message = <ATCSnackbarAction variant={variant} />;
 
   const updateQuantityToCart = useCallback(
@@ -44,13 +45,20 @@ const VariantCard = ({ variant, product }) => {
     updateQuantityToCart,
     'QTY'
   );
-
+  
+ 
   const handleAddToCart = useCallback(() => {
-    addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
-    // enqueueSnackbar(message, { variant: 'success' });
-    // setATCEnabled(false);
     setATCAdded(true);
+    setATCAdding(true);
+    setTimeout(() => {
+//Give effect of item being added
+addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
+
+    setATCAdding(false);
     dispatch(setCartDrawerOpened(true));
+    },500)
+  
+    
   }, [cart, variant, quantity, dispatch]);
 
   return (
@@ -86,7 +94,7 @@ const VariantCard = ({ variant, product }) => {
               fullWidth={true}
               className="atc-button"
             >
-              {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
+              {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
             </Button>
           </CardActions>
         ) : (
