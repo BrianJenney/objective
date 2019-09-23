@@ -17,6 +17,7 @@ import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
 import { Container } from '@material-ui/core';
+import {matchPath} from 'react-router-dom';
 
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -221,10 +222,12 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = () => {
+const Footer = (location) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  
+  console.log('here', location, isCheckoutPage)
   return (
     <>
       {xs ? (
