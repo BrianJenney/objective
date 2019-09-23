@@ -244,6 +244,7 @@ const Checkout = ({
                     subTitle=""
                     onBack={handleBack}
                     onSubmit={handleNext}
+                    selectionEnabled
                     seedEnabled
                     addressSeed={payload.shippingAddress}
                     useSeedLabel="Use shipping address"

@@ -65,6 +65,7 @@ const AccountPaymentDetails = ({
   subTitle,
   onBack,
   onSubmit,
+  selectionEnabled,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -212,15 +213,17 @@ const AccountPaymentDetails = ({
                 py={3}
                 border="2px solid #979797"
               >
-                <Box ml="-17px" mt="-9px">
-                  <Radio
-                    name="payment-method-selector"
-                    style={{ color: '#231f20' }}
-                    value={index.toString()}
-                    onChange={handleSelect}
-                    checked={selectedIndex === index}
-                  />
-                </Box>
+                {selectionEnabled && (
+                  <Box ml="-17px" mt="-9px">
+                    <Radio
+                      name="payment-method-selector"
+                      style={{ color: '#231f20' }}
+                      value={index.toString()}
+                      onChange={handleSelect}
+                      checked={selectedIndex === index}
+                    />
+                  </Box>
+                )}
                 <EditablePanel
                   title=""
                   defaultValues={creditCardEntity}
@@ -298,6 +301,7 @@ AccountPaymentDetails.propTypes = {
   subTitle: PropTypes.string,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
+  selectionEnabled: PropTypes.bool,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
