@@ -284,10 +284,21 @@ export const StyledCardContent = withStyles(theme => ({
 
 export const StyledCartCloseIcon = withStyles(theme => ({
   root: {
-    [theme.breakpoints.up('md')]: {
+    width: '55px',
+    height: '55px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.up('sm')]: {
       position: 'absolute',
       right: 26,
-      top: 27
+      top: 27,
+      cursor: 'pointer',
+      borderRadius: '50%',
+      '&:hover': {
+        backgroundColor: 'rgba(0, 0, 0, 0.08)',
+      }
+
     },
     [theme.breakpoints.down('sm')]: {
       position: 'absolute',
