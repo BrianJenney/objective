@@ -74,7 +74,12 @@ const AccountPaymentDetails = ({
   ...rest
 }) => {
   const classes = useStyles();
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }); 
+  will fix later, it broke the code*/
+  let isCheckoutPage = false;
+  if (window.location.pathname.includes('checkout')) {
+    isCheckoutPage = true;
+  }
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { enqueueSnackbar } = useSnackbar();

@@ -69,7 +69,12 @@ const AccountAddresses = ({
   ...rest
 }) => {
   const classes = useStyles();
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }); 
+  will fix later, it broke the code*/
+  let isCheckoutPage = false;
+  if (window.location.pathname.includes('checkout')) {
+    isCheckoutPage = true;
+  }
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
