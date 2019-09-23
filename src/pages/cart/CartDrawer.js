@@ -87,7 +87,8 @@ const Cart = ({
     return null;
   }
 
-  const { code = '', options = {} } = cart.shipping;
+  const code = get(cart, 'shipping.code', '');
+  const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
 
   return (
