@@ -80,6 +80,7 @@ const ProductDetail = ({ variantSlug }) => {
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdding, setATCAdding] = useState(false);
   const [open, setOpen] = useState(false);
 
   const windowSize = useWindowSize();
@@ -111,16 +112,23 @@ const ProductDetail = ({ variantSlug }) => {
   );
 
   const handleAddToCart = useCallback(() => {
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variantMap.get(selectedVariantSku),
-      quantity
-    );
-    // enqueueSnackbar(message, { variant: 'success' });
-    // setATCEnabled(false);
     setATCAdded(true);
-    dispatch(setCartDrawerOpened(true));
+    setATCAdding(true);
+    setTimeout(()=>{
+
+      addToCart(
+        localStorageClient.get('cartId'),
+        cart,
+        variantMap.get(selectedVariantSku),
+        quantity
+      );
+      // enqueueSnackbar(message, { variant: 'success' });
+      // setATCEnabled(false);
+      setATCAdding(false);
+      dispatch(setCartDrawerOpened(true));
+
+    },500);
+   
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
   const handleEmailPopup = () => {
@@ -207,7 +215,7 @@ const ProductDetail = ({ variantSlug }) => {
                           onClick={handleAddToCart}
                           disabled={selectedVariantSku === null}
                         >
-                          {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
+                          {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
                         </Button>
                       </CardActions>
                     </Grid>
@@ -283,7 +291,7 @@ const ProductDetail = ({ variantSlug }) => {
                             onClick={handleAddToCart}
                             disabled={selectedVariantSku === null}
                           >
-                            {!ATCAdded ? 'ADD TO CART' : 'ADDED TO CART'}
+                            {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
                           </Button>
                         </CardActions>
                       </Grid>
