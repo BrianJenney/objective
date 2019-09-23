@@ -87,24 +87,24 @@ const AddressForm = ({
         <Grid item xs={12}>
           <Field name="line2" label="Address Line 2" component={InputField} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field name="city" label="City" component={InputField} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field
             name="state"
             label="State/Province/Region"
             component={InputField}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field
             name="postalCode"
             label="Zip/Postal Code"
             component={InputField}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field
             name="countryCode"
             label="Country"
