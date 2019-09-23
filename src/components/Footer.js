@@ -16,6 +16,7 @@ import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
 import { Container } from '@material-ui/core';
+import {matchPath} from 'react-router-dom';
 
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
@@ -63,10 +64,12 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = () => {
+const Footer = (location) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  
+  console.log('here', location, isCheckoutPage)
   return (
     <>
       {xs ? (
@@ -194,7 +197,7 @@ const Footer = () => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : (
+      ) : (!isCheckoutPage ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -325,7 +328,10 @@ const Footer = () => {
             </Grid>
           </Container>
         </StyledBox>
-      )}
+      ): (<StyledBox>
+        Need Help?
+      </StyledBox>))
+      }
     </>
   );
 };
