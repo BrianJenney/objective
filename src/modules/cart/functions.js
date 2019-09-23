@@ -52,7 +52,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
       unit_price: parseFloat(selectedVariant.effectivePrice),
       discount_price: parseFloat(selectedVariant.effectivePrice),
       varSlug: selectedVariant.slug,
-      prodSlug: selectedVariant.productSlug,
+      prodSlug: selectedVariant.productSlug || selectedVariant.prodSlug,
     };
     newItems.push(newItem);
   }
