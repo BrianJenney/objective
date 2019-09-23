@@ -12,6 +12,8 @@ import {
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD
 } from './types';
+import store from '../../store';
+import { requestCreateCart, requestFetchCartByEmail } from '../cart/actions';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -89,8 +91,12 @@ export const requestPatchAccount = (authToken, patches) => (
   const { client, replyTo } = getState().stomp;
   const params = {
     id: authToken,
-    data: patches
+    data: patches,
+    params: {
+      account_jwt: authToken
+    }
   };
+  console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
 
   client.send(
@@ -151,6 +157,7 @@ export const receivedLoginSuccess = loginReply => dispatch => {
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply
   });
+  store.dispatch(requestFetchCartByEmail(loginReply.email));
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
@@ -162,6 +169,7 @@ export const receivedLoginFailure = loginError => dispatch => {
 
 export const requestLogout = () => dispatch => {
   localStorageClient.remove('token');
+  store.dispatch(requestCreateCart());
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}

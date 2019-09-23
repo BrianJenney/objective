@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIn } from 'formik';
-import { TextField } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 
 InputField.propTypes = {
   field: PropTypes.object,
@@ -24,6 +24,7 @@ export default function InputField(props) {
 
   return (
     <TextField
+      style={{ fontFamily: 'P22-underground', fontSize: '18px' }}
       id={field.name}
       error={!!(touched && error)}
       helperText={(touched && error) || helperText}

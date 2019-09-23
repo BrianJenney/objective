@@ -1,18 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+// import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-
-import { CardActions, Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { useQuantity, useWindowSize } from '../../hooks';
-import { useSnackbar } from 'notistack';
-import { addToCart } from '../../utils/cart';
-import ATCSnackbarAction from '../../components/common/ATCSnackbarAction';
+import CardActions from '@material-ui/core/CardActions';
+import { useQuantity } from '../../hooks';
+import { addToCart } from '../../modules/cart/functions';
+import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-
+import { setCartDrawerOpened } from '../../modules/cart/actions';
 const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
@@ -27,34 +26,40 @@ const PriceVariantInfo = ({ variant }) => {
 const VariantCard = ({ variant, product }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const windowSize = useWindowSize();
-  const { enqueueSnackbar } = useSnackbar();
+  // const windowSize = useWindowSize();
+  // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  const message = <ATCSnackbarAction variant={variant} />;
+  const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdding, setATCAdding] = useState(false);
+  // const message = <ATCSnackbarAction variant={variant} />;
 
   const updateQuantityToCart = useCallback(
     qty => {
-      addToCart(localStorageClient.get('cartId'), cart, variant, qty, dispatch);
-      enqueueSnackbar(message, { variant: 'success' });
+      addToCart(localStorageClient.get('cartId'), cart, variant, qty);
+      dispatch(setCartDrawerOpened(true));
+      // enqueueSnackbar(message, { variant: 'success' });
     },
-    [cart, variant, message, dispatch, enqueueSnackbar]
+    [cart, variant, dispatch]
   );
   const [quantity, setQuantity, Quantity] = useQuantity(
     updateQuantityToCart,
     'QTY'
   );
-
+  
+ 
   const handleAddToCart = useCallback(() => {
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variant,
-      quantity,
-      dispatch
-    );
-    enqueueSnackbar(message, { variant: 'success' });
-    setATCEnabled(false);
-  }, [cart, variant, message, quantity, enqueueSnackbar, dispatch]);
+    setATCAdded(true);
+    setATCAdding(true);
+    setTimeout(() => {
+//Give effect of item being added
+addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
+
+    setATCAdding(false);
+    dispatch(setCartDrawerOpened(true));
+    },500)
+  
+    
+  }, [cart, variant, quantity, dispatch]);
 
   return (
     <Card className="gallery-prod-card">
@@ -66,7 +71,7 @@ const VariantCard = ({ variant, product }) => {
       />
       <CardContent className="pding">
         <div className="prod-name-holder">
-          <Typography variant="body1">
+          <Typography>
             <Link
               to={`/products/${product.slug}/${variant.slug}`}
               className="title"
@@ -81,7 +86,7 @@ const VariantCard = ({ variant, product }) => {
       </CardContent>
       <div className="cta-area">
         {ATCEnabled ? (
-          <CardActions className="pding">
+          <CardActions className="gallery-atc">
             <Button
               variant="contained"
               color="primary"
@@ -89,11 +94,11 @@ const VariantCard = ({ variant, product }) => {
               fullWidth={true}
               className="atc-button"
             >
-              ADD TO CART
+              {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
             </Button>
           </CardActions>
         ) : (
-          <Quantity className="pding" />
+          <Quantity className="gallery-atc" />
         )}
       </div>
     </Card>

@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isNil, isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
-import { Box, Grid, Typography } from '@material-ui/core';
-import {
-  InputField,
-  DatePickerField,
-  SelectField
-} from '../form-fields';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Checkbox from '@material-ui/core/Checkbox';
+import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
+import { COUNTRY_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
@@ -33,22 +34,57 @@ const validateNumberField = value => {
 };
 
 const INITIAL_VALUES = {
-  paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
-  cardholderName: 'Kevin C',
-  number: '4111111111111111',
-  expirationDate: '02/20/2023',
-  cvv: '837'
+  paymentDetails: {
+    paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
+    cardholderName: 'Kevin C',
+    number: '4111111111111111',
+    expirationDate: '02/20/2023',
+    cvv: '837'
+  },
+  billingAddress: {
+    firstName: 'Kevin',
+    lastName: 'Christian',
+    line1: '1111 Sprng Street',
+    line2: '',
+    city: 'Raleigh',
+    state: 'NC',
+    postalCode: '22222',
+    countryCode: 'US'
+  },
+  isDefault: false,
+  shouldSaveData: true
 };
 
 const PaymentForm = ({
   title,
+  seedEnabled,
+  addressSeed,
+  useSeedLabel,
   defaultValues,
   onSubmit,
   onBack,
   onlyCard,
   submitLabel,
-  backLabel
+  backLabel,
+  allowFlyMode
 }) => {
+  const [initialValues, setInitialValues] = useState(
+    getInitialValues(INITIAL_VALUES, defaultValues)
+  );
+  const handleUseAddressSeedToggle = event => {
+    if (event.target.checked) {
+      setInitialValues({
+        ...initialValues,
+        billingAddress: {
+          ...initialValues.billingAddress,
+          ...addressSeed
+        }
+      });
+    } else {
+      setInitialValues(getInitialValues(INITIAL_VALUES, defaultValues));
+    }
+  };
+
   /* eslint-disable */
   const renderForm = ({ values }) => (
     <Form>
@@ -57,7 +93,7 @@ const PaymentForm = ({
         {!onlyCard && (
           <Grid item xs={12}>
             <Field
-              name="paymentMethod"
+              name="paymentDetails.paymentMethod"
               label="Payment Method"
               component={SelectField}
               options={PAYMENT_METHOD_OPTIONS}
@@ -65,11 +101,12 @@ const PaymentForm = ({
             />
           </Grid>
         )}
-        {values.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
+        {values.paymentDetails.paymentMethod ===
+          PAYMENT_METHODS.CREDIT_CARD && (
           <>
             <Grid item xs={12} md={6}>
               <Field
-                name="cardholderName"
+                name="paymentDetails.cardholderName"
                 label="Name on Card"
                 component={InputField}
                 validate={validateTextField}
@@ -77,7 +114,7 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12} md={6}>
               <Field
-                name="number"
+                name="paymentDetails.number"
                 label="Card Number"
                 component={InputField}
                 validate={validateNumberField}
@@ -85,27 +122,109 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12} md={6}>
               <Field
-                name="expirationDate"
-                component={DatePickerField}
-                variant="inline"
+                name="paymentDetails.expirationDate"
                 label="Expiry Date"
-                autoOk
-                disableToolbar
-                disablePast
+                component={InputField}
+                validate={validateTextField}
+                placeholder="MM/DD/YYYY"
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <Field
-                name="cvv"
+                name="paymentDetails.cvv"
                 label="CVV"
                 component={InputField}
                 validate={validateNumberField}
               />
             </Grid>
+            {seedEnabled && (
+              <Grid item xs={12}>
+                <Box display="flex" alignItems="center">
+                  <Checkbox
+                    id="useAddressSeedToggle"
+                    onChange={handleUseAddressSeedToggle}
+                  />
+                  <Typography children={useSeedLabel} />
+                </Box>
+              </Grid>
+            )}
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="billingAddress.firstName"
+                label="First Name"
+                component={InputField}
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="billingAddress.lastName"
+                label="Last Name"
+                component={InputField}
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.line1"
+                label="Address Line 1"
+                component={InputField}
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.line2"
+                label="Address Line 2"
+                component={InputField}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="billingAddress.city"
+                label="City"
+                component={InputField}
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="billingAddress.state"
+                label="State/Province/Region"
+                component={InputField}
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="billingAddress.postalCode"
+                label="Zip/Postal Code"
+                component={InputField}
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Field
+                name="billingAddress.countryCode"
+                label="Country"
+                component={SelectField}
+                options={COUNTRY_OPTIONS}
+                validate={validateTextField}
+              />
+            </Grid>
+            {allowFlyMode && (
+              <Grid item xs={12}>
+                <Field
+                  name="shouldSaveData"
+                  label="Save details in account"
+                  component={CheckboxField}
+                />
+              </Grid>
+            )}
           </>
         )}
         <Grid item xs={12}>
-          <Box display="flex" alignItems="center">
+          <ButtonGroup fullWidth aria-label="full width button group">
             {onBack && (
               <Button
                 type="button"
@@ -115,7 +234,7 @@ const PaymentForm = ({
               />
             )}
             <Button type="submit" children={submitLabel} />
-          </Box>
+          </ButtonGroup>
         </Grid>
       </Grid>
     </Form>
@@ -124,27 +243,35 @@ const PaymentForm = ({
 
   return (
     <Formik
-      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+      initialValues={initialValues}
       onSubmit={onSubmit}
       render={renderForm}
+      enableReinitialize
     />
   );
 };
 
 PaymentForm.propTypes = {
   title: PropTypes.string,
+  seedEnabled: PropTypes.bool,
+  addressSeed: PropTypes.object,
+  useSeedLabel: PropTypes.string,
   defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onlyCard: PropTypes.bool,
   submitLabel: PropTypes.string,
-  backLabel: PropTypes.string
+  backLabel: PropTypes.string,
+  allowFlyMode: PropTypes.bool
 };
 
 PaymentForm.defaultProps = {
+  seedEnabled: false,
+  addressSeed: {},
   defaultValues: {},
   submitLabel: 'Save',
-  backLabel: 'Cancel'
+  backLabel: 'Cancel',
+  allowFlyMode: false
 };
 
 export default PaymentForm;

@@ -5,9 +5,9 @@ import {
   StaticPage,
   GalleryPage,
   ProductPage,
-  CartPage,
   AccountPage,
   AccountOverviewPage,
+  OrderPage,
   AccountOrdersPage,
   AccountAddressesPage,
   AccountPaymentDetailsPage,
@@ -25,7 +25,19 @@ export default [
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
-  { path: '/order', auth: true, exact: true, component: OrderConfirmationPage },
+  {
+    path: '/order',
+    auth: true,
+    exact: true,
+    component: OrderConfirmationPage
+  },
+  {
+    path: '/orders/:id',
+    auth: true,
+    exact: true,
+    injectCurrentUser: true,
+    component: OrderPage
+  },
   {
     path: '/checkout',
     exact: true,
@@ -59,6 +71,8 @@ export default [
         path: '/account/payment-details',
         exact: true,
         injectCurrentUser: true,
+        seedEnabled: true,
+        useSeedLabel: 'Use default address',
         component: AccountPaymentDetailsPage
       },
       {

@@ -1,35 +1,77 @@
+.white-bg {
+  background-color: #ffffff;
+}
+
 .opt1,
 .opt2 {
   border: 1px solid #8b3a26;
+  padding: 20px;
 }
 .gallery-hero {
   width: 100%;
 }
 
+.gallery-atc {
+  button {
+    min-width: auto;
+  }
+}
+.opt1 {
+  min-height: 474px;
+  .blurb-img {
+    width: 100%;
+    padding: 10px 10px 0px 20px;
+  }
+  h3 {
+    font-family: 'CanelaText';
+    color: #88341f;
+    line-height: 1.4;
+    margin: 0 0 10px;
+    font-weight: 500;
+    font-size: 36px;
+  }
+  p {
+    font-size: 18px;
+    line-height: 1.56;
+    max-height: 222px;
+    overflow: hidden;
+  }
+  .icon {
+    margin-bottom: 10px;
+  }
+  hr {
+    background-color: #88341f;
+  }
+  .leftside {
+    padding-right: 20px;
+  }
+}
+
 .opt2 {
   padding: 0 !important;
   .gallery-prod-card {
-    text-align: center;
+    text-align: left;
     .prod-name-holder {
-      min-height: 52px;
+      height: 60px;
       margin-bottom: 10px;
+      overflow: hidden;
       .title {
-        line-height: 1.18;
-        text-align: center;
-        color: #88341f;
-        font-size: 21px;
+        line-height: 1.17;
+        text-align: left;
+        color: #003833;
+        font-size: 24px;
         text-decoration: none;
+        font-family: CanelaText;
       }
     }
     .variant-info {
-      color: #525252;
-      font-size: 14px;
-      letter-spacing: 0.7px;
-      line-height: 1.8;
+      color: #2f2f2f;
+      font-size: 13.3px;
       font-family: p22-underground, sans-serif;
       margin-bottom: 10px;
+      overflow: hidden;
       strong {
-        font-size: 18px;
+        font-size: 22px;
         color: #000000;
       }
     }
@@ -51,15 +93,36 @@
       margin: 8px 0;
     }
     .cta-area {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
   }
   .gallery-prod-img {
     width: 100% !important;
-    height: 350px !important;
+    height: 258px !important;
     margin-bottom: 15px;
   }
+  @media (min-width: 1200px) {
+    .gallery-prod-img {
+      height: 244px !important;
+    }
+  }
+  @media (min-width: 1400px) {
+    .gallery-prod-img {
+      height: 264px !important;
+    }
+  }
   .pding {
-    padding: 0 8px;
+    padding: 0 20px;
+  }
+}
+@media (max-width: 768px) {
+  .hero-holder {
+    margin-bottom: 20px !important;
+  }
+  .blurb-img {
+    display: none;
+  }
+  .opt1 {
+    min-height: fit-content;
   }
 }

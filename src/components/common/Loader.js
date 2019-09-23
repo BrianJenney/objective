@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, CircularProgress } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Loader = props => (
   <Box

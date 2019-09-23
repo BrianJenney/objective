@@ -2,182 +2,189 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import CardMedia from '@material-ui/core/CardMedia';
 import {
-  StyledCardContent,
   StyledDrawerGrid,
-  StyledFinePrint, StyledProductLink,
+  StyledFinePrint,
+  StyledProductLink,
   StyledSmallCaps,
   StyledTotalWrapper
-} from "../../pages/cart/StyledComponents";
+} from '../../pages/cart/StyledComponents';
 
-import {colorPalette} from '../Theme/color-palette';
+import { colorPalette } from '../Theme/color-palette';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+  paper: {
+    backgroundColor: theme.palette.common.white,
+    padding: theme.spacing(5, 4),
+    [theme.breakpoints.down('xs')]: {
+      padding: '30px 15px'
+    }
+  },
+  title: {
+    fontSize: '30px',
+    fontFamily: 'Canela Text',
+    marginTop: '-13px',
+    marginBottom: '20px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '24px',
+      fontFamily: 'freight-text-pro'
+    }
+  },
+  text: {
+    fontSize: '16px',
+    fontFamily: 'p22-underground'
+  },
+  code: {
+    fontSize: '14px',
+    fontFamily: 'p22-underground',
+    textTransform: 'uppercase'
+  },
+  total: {
+    fontSize: '18px',
+    fontFamily: 'p22-underground',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '20px'
+    }
+  }
+}));
 const { MEDIUM_GRAY } = colorPalette;
 
 const CartSummary = ({ cart }) => {
+  const classes = useStyles();
   return (
-    <Grid container direction="column" spacing={3}>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h5" align="center">
-          Order Summary ({cart.items.length} items)
-        </Typography>
-      </Grid>
-      { cart.items.map((item, index) => (
-        <>
-          <StyledDrawerGrid container xs={12} direction="row">
-            <Grid
-              item
-              xs={4}
-              style={{ 'min-width': '126px', 'margin-right': '18px' }}
-            >
-              <Card>
-                <CardMedia
-                  style={{ height: 126, width: 126 }}
-                  image={item.variant_img}
-                  title={item.variant_name}
-                />
-              </Card>
-            </Grid>
-            <Grid item xs={7}>
-              <Card
-                style={{
-                  display: 'flex',
-                  'flex-direction': 'column',
-                  height: '126px',
-                  'justify-content': 'space-between'
-                }}
-              >
-                <StyledProductLink align="left">
-                  {item.variant_name}
-                </StyledProductLink>
-                <StyledProductLink align="left">
-                  QTY: {item.quantity}
-                </StyledProductLink>
-                <StyledCardContent style={{ 'padding-bottom': '0' }}>
-                  <StyledSmallCaps>
-                    {(item.quantity * item.unit_price).toFixed(2)}
-                  </StyledSmallCaps>
-                </StyledCardContent>
-              </Card>
-            </Grid>
-          </StyledDrawerGrid>
-        </>
-      ))}
-      <Grid item xs={12} container>
-        <StyledTotalWrapper
-          container
-          direction="row"
-          xs={12}
-          justify="left-start"
-        >
-          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Subtotal Total:
-            </StyledSmallCaps>
+    <Box className={classes.paper}>
+      <Grid container xs={12} direction="column">
+        <Grid container xs={12}>
+          <Grid item xs>
+            <Typography className={classes.title}>Order Summary </Typography>
           </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '18px' }}>
-              {`$${cart.subtotal.toFixed(2)}`}
-            </StyledSmallCaps>
-          </Grid>
-        </StyledTotalWrapper>
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="left-start"
-          style={{ margin: '20px 0' }}
-        >
-          <Grid item xs={9} style={{ 'text-align': 'left' }}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Shipping
-            </StyledSmallCaps>
-          </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '18px' }}>
-              $XXX.xx
-            </StyledSmallCaps>
-          </Grid>
-          <StyledFinePrint component="p">
-            Ground 3-5 Business Days
-          </StyledFinePrint>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="left-start"
-          style={{ margin: '20px 0' }}
-        >
-          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Savings
-            </StyledSmallCaps>
-          </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '18px' }}>
-              $XXX.xx
-            </StyledSmallCaps>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="left-start"
-          style={{ margin: '20px 0' }}
-        >
-          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Tax
-            </StyledSmallCaps>
-          </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '18px' }}>
-              $XXX.xx
-            </StyledSmallCaps>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="left-start"
-          style={{ margin: '20px 0' }}
-        >
-          <Grid item xs={9} style={{ 'text-align': 'left' }}>
-            <StyledSmallCaps style={{ 'font-size': '14px' }}>
-              Enter Promo Code
-            </StyledSmallCaps>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          xs={12}
-          justify="left-start"
-          style={{
-            'margin-bottom': '0',
-            'border-top': `solid 2px ${MEDIUM_GRAY}`,
-            'padding-top': '29px',
-            'margin-top': '50px'
-          }}
-        >
-          <Grid item xs={9}  style={{ 'text-align': 'left' }}>
-            <StyledSmallCaps>Total</StyledSmallCaps>
-          </Grid>
-          <Grid item xs={3} style={{ 'text-align': 'right' }}>
-            <StyledSmallCaps style={{ 'font-size': '22px' }}>
-              {`$${cart.total.toFixed(2)}`}
-            </StyledSmallCaps>
-          </Grid>
-        </Grid>
-      </Grid>
 
-    </Grid>
+          <Grid item>
+            <StyledSmallCaps style={{ fontSize: '12px' }}>
+              ({cart.items.length} items){' '}
+            </StyledSmallCaps>
+          </Grid>
+        </Grid>
+        {cart.items.map((item, index) => (
+          <>
+            <StyledDrawerGrid container xs={12}>
+              <Grid item xs={4} style={{ minWidth: '126px' }}>
+                <Card>
+                  <CardMedia
+                    style={{ height: 100, width: 95 }}
+                    image={item.variant_img}
+                    title={item.variant_name}
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={8}>
+                <Card
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '126px',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <StyledProductLink>{item.variant_name}</StyledProductLink>
+                  <Typography className={classes.text}>
+                    QTY: {item.quantity}
+                  </Typography>
+
+                  <StyledSmallCaps align="right">
+                    ${(item.quantity * item.unit_price).toFixed(2)}
+                  </StyledSmallCaps>
+                </Card>
+              </Grid>
+            </StyledDrawerGrid>
+          </>
+        ))}
+        <Grid xs={12} container>
+          <StyledTotalWrapper container xs={12}>
+            <Grid item xs>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Subtotal <span>({cart.items.length} items):</span>
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
+                {`$${cart.subtotal.toFixed(2)}`}
+              </StyledSmallCaps>
+            </Grid>
+          </StyledTotalWrapper>
+
+          <Grid container xs={12} style={{ margin: '15px 0' }}>
+            <Grid item xs>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Shipping
+              </StyledSmallCaps>
+              <StyledFinePrint component="p">
+                Ground 3-5 Business Days
+              </StyledFinePrint>
+            </Grid>
+            <Grid item>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
+                $XXX.xx
+              </StyledSmallCaps>
+            </Grid>
+          </Grid>
+          <Grid container xs={12}>
+            <Grid item xs>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Savings
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
+                $XXX.xx
+              </StyledSmallCaps>
+            </Grid>
+          </Grid>
+          <Grid container style={{ margin: '15px 0' }}>
+            <Grid item xs>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Tax
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item>
+              <StyledSmallCaps style={{ fontSize: '18px' }}>
+                $XXX.xx
+              </StyledSmallCaps>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Link component="button" underline="always">
+              <Typography className={classes.code}>Enter Promo Code</Typography>
+            </Link>
+          </Grid>
+          <Grid
+            container
+            xs={12}
+            style={{
+              borderTop: `solid 2px ${MEDIUM_GRAY}`,
+              paddingTop: '30px',
+              marginTop: '20px'
+            }}
+          >
+            <Grid item xs>
+              <StyledSmallCaps>Total</StyledSmallCaps>
+            </Grid>
+            <Grid item>
+              <Typography className={classes.total}>
+                {`$${cart.total.toFixed(2)}`}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
@@ -186,5 +193,3 @@ CartSummary.propTypes = {
 };
 
 export default CartSummary;
-
-

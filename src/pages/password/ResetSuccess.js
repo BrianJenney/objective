@@ -1,46 +1,53 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+
 import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { withDialog} from '../../hoc';
+import { AdapterLink, Button } from '../../components/common';
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white
-    }
-  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+  title: {
+    fontSize: '36px',
+    color: '#231f20',
+    fontFamily: 'Canela Text',
+    lineHeight: 'normal',
+    padding: theme.spacing(3, 0, 2),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px'
+    }
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
+  subTitle: {
+    fontSize: '18px',
+    fontFamily: 'FreightTextProBook',
+    paddingBottom: theme.spacing(3)
   }
 }));
-
 
 const ResetSuccess = () => {
   const classes = useStyles();
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography variant="h5">
-          Your password is reset
-        </Typography>
-      </div>
-      <Typography variant="body1">
-        Your password is succesfully reset.
-        </Typography>
+    <Container>
+      <Paper className={classes.paper}>
+        <Typography className={classes.title}>Your password has been reset</Typography>
+        <Typography className={classes.subTitle}>Click below to return to the account login page</Typography>
+        <Button fullWidth component={AdapterLink} to="/">Login to your account</Button>
+        <br/>
+      </Paper>
     </Container>
   );
 };
 
-export default ResetSuccess;
+const ResetSuccessPassword = withDialog(ResetSuccess);
+const ResetSuccessPage = props => <ResetSuccessPassword noClosingDialog {...props} />;
+export default ResetSuccessPage;
+
+

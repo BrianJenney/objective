@@ -36,6 +36,7 @@ const getVariantSlugs = (productId, variants) => {
 export const getProducts = (products, variants) => {
   const productSlugs = [];
   const productMap = new Map();
+
   products.forEach(product => {
     const item = {
       id: product._id,
@@ -46,6 +47,7 @@ export const getProducts = (products, variants) => {
       description: product.description,
       variantSlugs: getVariantSlugs(product._id, variants),
       assets: product.assets,
+      category: product.category,
       attributes: product.attributes.map(attribute => attribute.value)
     };
     productSlugs.push(product.slug);
@@ -56,6 +58,24 @@ export const getProducts = (products, variants) => {
 
 const getEffectivePrice = (sku, pricesMap) => pricesMap.get(sku);
 
+/*
+@description - Returns product category slugs
+@param {Array} products
+@return - {Array} product categories
+*/
+export const getProductCategories = products => {
+  const productCategoriesMap = new Map();
+  const productCategories = [];
+  products.map(product => {
+    if (!productCategoriesMap.has(product.category)) {
+      productCategoriesMap.set(product.category, true);
+      productCategories.push(product.category);
+    }
+  });
+
+  return productCategories;
+};
+
 export const getVariants = (products, variants, priceMap) => {
   const variantSlugs = [];
   const variantMap = new Map();
@@ -65,7 +85,7 @@ export const getVariants = (products, variants, priceMap) => {
       .forEach(variant => {
         const item = {
           id: variant._id,
-          productSlug: product.slug,
+          prodSlug: product.slug,
           name: variant.name,
           sku: variant.sku,
           slug: variant.slug,
@@ -74,12 +94,14 @@ export const getVariants = (products, variants, priceMap) => {
           assets: variant.assets,
           variantInfo: variant.variantInfo,
           attributes: variant.attributes,
+          productCategory: product.category,
           effectivePrice: getEffectivePrice(variant.sku, priceMap)
         };
         variantSlugs.push(variant.slug);
         variantMap.set(variant.slug, item);
       });
   });
+
   return [variantSlugs, variantMap];
 };
 

@@ -1,12 +1,14 @@
 import './config';
-import Stomp from 'stompjs'; //simple text-based protocol for message-oriented middleware.
-//It provides interoperable wire format allows STOMP clients to talk with any message broker supporting the protocol
-//without it, message will send lack of info to make Spring route it to a specific message handler method
+import Stomp from 'stompjs';
+/* simple text-based protocol for message-oriented middleware.
+ * It provides interoperable wire format allows STOMP clients to talk with any message broker supporting the protocol
+ * without it, message will send lack of info to make Spring route it to a specific message handler method */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
-import { ThemeProvider } from '@material-ui/styles';
+import { IntlProvider } from 'react-intl';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { makeStyles } from '@material-ui/core/styles';
 import App from './App';
 import { connectStomp } from './modules/stomp/actions';
@@ -21,34 +23,36 @@ const stompClient = Stomp.over(wss);
 const replyTo = ObjectId();
 
 const useStyles = makeStyles(theme => ({
-  success: {backgroundColor: 'green'},
-  error: {backgroundColor: 'blue'},
-  warning: {backgroundColor: 'green'},
-  info: {backgroundColor: 'yellow'},
+  success: { backgroundColor: 'green' },
+  error: { backgroundColor: 'red' },
+  warning: { backgroundColor: 'orange' },
+  info: { backgroundColor: 'yellow' }
 }));
 
 const Main = () => {
   const classes = useStyles();
   return (
     <Provider store={store}>
-      <ThemeProvider theme={nxtTheme}>
-        <SnackbarProvider
-          maxSnack={5}
-          anchorOrigin={{
-            horizontal: 'right',
-            vertical: 'top'
-          }}
-          classes={{
-            variantSuccess: classes.success,
-            variantError: classes.error,
-            variantWarning: classes.warning,
-            variantInfo: classes.info,
-          }}
-          autoHideDuration={1500}
-        >
-          <App />
-        </SnackbarProvider>
-      </ThemeProvider>
+      <IntlProvider locale="en">
+        <ThemeProvider theme={nxtTheme}>
+          <SnackbarProvider
+            maxSnack={5}
+            anchorOrigin={{
+              horizontal: 'right',
+              vertical: 'top'
+            }}
+            classes={{
+              variantSuccess: classes.success,
+              variantError: classes.error,
+              variantWarning: classes.warning,
+              variantInfo: classes.info
+            }}
+            autoHideDuration={2000}
+          >
+            <App />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </IntlProvider>
     </Provider>
   );
 };
@@ -72,8 +76,7 @@ const onStompConnectSuccess = () => {
     }
   );
 
-  ReactDOM.render(<Main />, document.querySelector('#root')
-  );
+  ReactDOM.render(<Main />, document.querySelector('#root'));
 };
 
 /**

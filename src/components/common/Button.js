@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button, Box, CircularProgress } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 
 const CustomizedBtn = withStyles({
   root: {
-    height: '50px',
     fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    padding: '24px 0 26px',
+    minWidth: '282px'
   }
 })(Button);
 
@@ -18,6 +22,8 @@ const ButtonComponent = ({
   children,
   ml,
   mr,
+  mt,
+  mb,
   fullWidth,
   ...rest
 }) => (
@@ -27,6 +33,8 @@ const ButtonComponent = ({
     width={fullWidth ? 1 : 'auto'}
     ml={ml}
     mr={mr}
+    mt={mt}
+    mb={mb}
   >
     <CustomizedBtn
       disabled={loading || disabled}
@@ -53,6 +61,8 @@ const ButtonComponent = ({
 ButtonComponent.propTypes = {
   ml: PropTypes.any,
   mr: PropTypes.any,
+  mt: PropTypes.any,
+  mb: PropTypes.any,
   fullWidth: PropTypes.bool,
   children: PropTypes.node,
   icon: PropTypes.string,

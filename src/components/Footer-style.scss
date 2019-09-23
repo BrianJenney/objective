@@ -6,11 +6,6 @@
   background-color: #000000;
   border-top: 3px solid #000000;
   color: #ffffff;
-  padding: 0 15px;
-
-  @media (min-width: 1200px) {
-    padding: 0 84px;
-  }
 
   a {
     color: #ffffff;
@@ -23,12 +18,11 @@
     color: #ffffff;
   }
 
-  .p-20 {
-    padding: 20px;
+  .h-100 {
+    height: 100%;
   }
-
-  .p-40 {
-    padding: 40px;
+  .copy {
+    margin-left: -1px;
   }
 
   .promise {
@@ -71,9 +65,10 @@
     font-family: freight-text-pro, sans-serif;
     font-size: 13px;
     text-transform: none;
-    padding: 10px 30px;
+    padding: 10px 30px 10px;
     @media (min-width: 1200px) {
       font-size: 16px;
+      padding: 30px 50px;
     }
     form {
       display: flex;
@@ -83,13 +78,36 @@
         width: 70%;
       }
     }
+    @media (max-width: 768px) {
+      form {
+        .MuiFormControl-fullWidth {
+          width: 100%;
+        }
+      }
+      button {
+        min-width: auto;
+        padding: 0;
+      }
+    }
     .signup-arrow {
-      margin-top: -35px;
-      margin-left: 130px;
+      margin-top: -4px;
+      margin-left: -175px;
+      position: absolute;
+    }
+    .mobile-arrow {
+      margin-top: 4px;
+      margin-left: -70px;
     }
   }
   .icon {
-    padding: 28px;
+    padding: 25px;
+    text-align: center;
+    @media (min-width: 1200px) {
+      padding: 50px 35px;
+    }
+    @media (min-width: 1600px) {
+      padding: 50px;
+    }
     img {
       vertical-align: bottom;
     }
@@ -102,6 +120,10 @@
     border-bottom: 1px solid $gray;
   }
 
+  .border-right {
+    border-right: 1px solid $gray;
+  }
+
   .uppercase {
     text-transform: uppercase;
   }
@@ -111,11 +133,11 @@
     padding: 25px 0 60px;
 
     @media (min-width: 1200px) {
-      padding: 55px 40px 195px;
+      padding: 55px 0px 100px;
     }
 
     @media (min-width: 1600px) {
-      padding: 55px 200px 195px;
+      padding: 55px 0px 100px;
     }
   }
 
@@ -132,24 +154,17 @@
       text-align: left;
 
       @media (min-width: 1200px) {
-        padding: 30px;
+        padding: 45px 50px;
       }
     }
 
     .links {
-      font-family: 'freight-text-pro';
-      font-size: 14px;
-      letter-spacing: 1px;
-      line-height: 1.9;
       text-transform: capitalize;
-      padding: 0 0 0 20px;
-      margin-bottom: 30px;
       li {
-        padding-top: 0;
-        padding-left: 0;
+        padding: 0;
       }
       @media (min-width: 1200px) {
-        padding: 30px;
+        padding: 30px 50px;
         font-size: 18px;
         line-height: 2.22;
       }
@@ -164,7 +179,9 @@
         display: flex;
         justify-content: center;
       }
-
+      @media (min-width: 1200px) {
+        border-top: 1px solid #414141;
+      }
       @media (min-width: 1600px) {
         display: flex;
         justify-content: center;
@@ -189,7 +206,7 @@
 
     .rotate {
       text-transform: uppercase;
-      font-size: 10px;
+      font-size: 14px;
       letter-spacing: 1.5px;
       @media (min-width: 1200px) {
         /* Safari */
@@ -201,14 +218,24 @@
         /* Opera */
         -o-transform: rotate(-90deg);
         float: left;
-        margin-top: 92px;
+        margin-top: 145px;
+        margin-left: -20px;
+        position: absolute;
+      }
+      @media (min-width: 1600px) {
+        margin-left: -5px;
       }
     }
 
     input {
       margin: 0;
       color: #ffffff;
-      padding: 10px 1px;
+      padding: 10px;
+      border: 1px solid #fff;
+      background-color: #000000;
+      &:hover {
+        border: 1px solid #fff;
+      }
     }
 
     input::placeholder {
@@ -216,19 +243,34 @@
       color: #ffffff !important;
       opacity: 1;
       /* Firefox */
-      font-size: 28px;
+      font-size: 24px;
+      font-family: $brandSans;
     }
 
     input:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
       color: #ffffff !important;
-      font-size: 28px;
+      font-size: 24px;
+      font-family: $brandSans;
     }
 
     input::-ms-input-placeholder {
       /* Microsoft Edge */
       color: #ffffff !important;
-      font-size: 28px;
+      font-size: 24px;
+      font-family: $brandSans;
+    }
+  }
+  @media (max-width: 768px) {
+    .footer-main {
+      .links {
+        padding: 0 25px 10px;
+        font-size: 15px;
+      }
+      .legal ul li {
+        font-size: 10px;
+        font-family: p22-underground, sans-serif;
+      }
     }
   }
 }

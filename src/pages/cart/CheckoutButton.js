@@ -14,33 +14,67 @@ class CheckoutButton extends Component {
     const { onClick, children } = this.props;
     console.log('from CheckoutButton ====>', this.props, '<====');
     return (
-      <Link
-        to="/checkout"
-        style={{
-          color: 'white',
-          'text-decoration': 'none',
-          'font-family': $brandSans,
-          'font-weight': 'bold'
-        }}
-      >
-      <Grid container xs={12}>
-        <Grid item xs={12} style={{ display: 'flex', paddingBottom: '30px' }}>
-          <StyledCheckoutButton
-            style={{ margin: '0 auto' }}
-            onClick={onClick}
-            children={children}
-            id="checkout-button"
-            color="primary"
-            variant="contained"
-            disabled={this.props.cart.items.length === 0}
-          >
-              Checkout
+      <>
+        {
+          this.props.cart.items.length !== 0 ?
+            <Link
+              to="/checkout"
+              style={{
+                color: 'white',
+                'text-decoration': 'none',
+                'font-family': $brandSans,
+                'font-weight': 'bold'
+              }}
+            >
+              <Grid container xs={12}>
+                <Grid item xs={12} style={{ display: 'flex', padding: '10px 16px 30px' }}>
+                  <StyledCheckoutButton
+                    style={{ margin: '0 auto' }}
+                    onClick={onClick}
+                    children={children}
+                    id="checkout-button"
+                    color="primary"
+                    variant="contained"
+                    disabled={this.props.cart.items.length === 0}
+                  >
+                    Checkout
           </StyledCheckoutButton>
-        </Grid>
-        </Grid>
-      </Link>
-    );
+                </Grid>
+              </Grid>
+            </Link>
+            :
+            <Link
+              to="/checkout"
+              style={{
+                color: 'white',
+                'text-decoration': 'none',
+                'font-family': $brandSans,
+                'font-weight': 'bold'
+              }}
+              onClick={e => e.preventDefault()}
+            >
+              <Grid container xs={12}>
+                <Grid item xs={12} style={{ display: 'flex', padding: '0 16px 30px' }}>
+                  <StyledCheckoutButton
+                    style={{ margin: '0 auto' }}
+                    onClick={onClick}
+                    children={children}
+                    id="checkout-button"
+                    color="primary"
+                    variant="contained"
+                    disabled={this.props.cart.items.length === 0}
+                  >
+                    Checkout
+          </StyledCheckoutButton>
+                </Grid>
+              </Grid>
+            </Link>
+        }
+      </>
+    )
   }
+
+
 }
 
 CheckoutButton.propTypes = {

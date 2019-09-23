@@ -1,0 +1,1 @@
+export const OBJECTIVE_SPACE = 'mj9bpefl6wof';

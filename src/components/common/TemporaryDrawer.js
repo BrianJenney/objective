@@ -1,9 +1,13 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Drawer, Box, Fab } from '@material-ui/core';
-import { useWindowSize } from '../../hooks';
+import { useSelector } from 'react-redux';
+import Drawer from '@material-ui/core/Drawer';
+import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
+import { useWindowSize } from '../../hooks';
 import CheckoutButton from '../../pages/cart/CheckoutButton';
+import ContShoppingButton from '../../pages/cart/ContShoppingButton';
 
 export const SIDES = {
   TOP: 'top',
@@ -56,13 +60,15 @@ const TemporaryDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-    ? '100%'
-    : 415;
+      ? '100%'
+      : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
   const listPanel = (
     <StyledDrawerWrapper width={listPanelWidth} children={listContent} />
   );
+
+  const cartItem = useSelector(state => state.cart);
 
   return (
     <Box {...rest}>
@@ -74,7 +80,11 @@ const TemporaryDrawer = ({
       <Drawer anchor={side} open={drawer.open} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
-        <CheckoutButton onClick={toggleDrawer(false)} />
+        {cartItem.items.length !== 0 ?
+          <CheckoutButton onClick={toggleDrawer(false)} />
+          :
+          <ContShoppingButton onClick={toggleDrawer(false)} />
+        }
       </Drawer>
     </Box>
   );

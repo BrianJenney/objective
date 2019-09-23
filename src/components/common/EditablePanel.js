@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import Panel from './Panel';
 import MenuLink from './MenuLink';
 
 const EditablePanel = ({
   title,
   defaultValues,
-  onSubmit,
+  onFormSubmit,
   onRemove,
   onSetDefault,
   Form,
@@ -17,33 +17,39 @@ const EditablePanel = ({
   const [editing, setEditing] = useState(false);
   const handleSave = async (...args) => {
     try {
-      if (onSubmit) {
-        await onSubmit(...args);
+      if (onFormSubmit) {
+        await onFormSubmit(...args);
       }
       setEditing(false);
     } catch (err) {
       throw err;
     }
   };
+  const handleCancel = () => setEditing(false);
 
   return (
     <Panel title={title}>
       {editing && Form ? (
-        <Form defaultValues={defaultValues} onSubmit={handleSave} {...rest} />
+        <Form
+          defaultValues={defaultValues}
+          onSubmit={handleSave}
+          onBack={handleCancel}
+          {...rest}
+        />
       ) : (
         <Summary values={defaultValues} {...rest}>
-          <Box fontSize={16} display="flex" alignItems="center">
+          <Box fontSize={16} display="grid" alignItems="center">
             {onSetDefault && (
-              <Box mr={1}>
+              <Box mr={1} fontSize={16}>
                 <MenuLink
                   onClick={onSetDefault}
-                  children="Set Default"
+                  children="Make default"
                   underline="always"
                 />
               </Box>
             )}
             {onRemove && (
-              <Box mr={1}>
+              <Box mr={1} fontSize={16}>
                 <MenuLink
                   onClick={onRemove}
                   children="Remove"
@@ -51,7 +57,7 @@ const EditablePanel = ({
                 />
               </Box>
             )}
-            {onSubmit && (
+            {onFormSubmit && (
               <Box>
                 <MenuLink
                   onClick={() => setEditing(true)}
@@ -70,7 +76,7 @@ const EditablePanel = ({
 EditablePanel.propTypes = {
   title: PropTypes.string,
   defaultValues: PropTypes.object,
-  onSubmit: PropTypes.func,
+  onFormSubmit: PropTypes.func,
   onRemove: PropTypes.func,
   onSetDefault: PropTypes.func,
   Form: PropTypes.any,

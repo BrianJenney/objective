@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import StarIcon from './StarIcon';
@@ -29,7 +29,7 @@ const BestSeller = () => {
         Best Seller
       </Typography>
     </div>
-  )
-}
+  );
+};
 
-export default BestSeller
+export default BestSeller;

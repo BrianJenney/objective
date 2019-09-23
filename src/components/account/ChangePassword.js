@@ -1,111 +1,120 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
+import PropTypes from 'prop-types';
 import { object, string } from 'yup';
-import { omit } from 'lodash';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import { Formik, Field, Form } from 'formik';
+import Box from '@material-ui/core/Box';
+import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { fonts } from '../../components/Theme/fonts.js';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
+import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
-
-const pStyle = {
-  padding: 20,
-  textAlign: 'center'
-};
+import { Button } from '../common';
+import { getInitialValues } from '../../utils/misc';
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
-  newPassword1: string().required('Both password fields are required.'),
-  newPassword2: string().required('Both password fields are required.')
+  newPassword1: string().required('Both password fields are required'),
+  newPassword2: string().required('Both password fields are required')
 });
-
-class ChangePassword extends React.Component {
-  renderForm = () => {
-    return (
-      <Container>
-        <Form>
-          <Grid item xs={12}>
-            <Field
-              label="Current Password"
-              name="currentPassword"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              label="New Password"
-              name="newPassword1"
-              helperText="Must be at least 6 characters"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              label="Confirm New Password"
-              name="newPassword2"
-              component={InputField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit">Change Password</Button>
-          </Grid>
-        </Form>
-      </Container>
-    );
-  };
-
-  handleSubmit = values => {
-    // if (values.newPassword1 !== values.newPassword2) {
-    //   return false;
-    // }
-    store.dispatch(requestPatchAccount(this.props.account.data.account_jwt, values));
-  };
-
-  render() {
-    const { account } = this.props;
-
-    const INITIAL_VALUES = {};
-
-    if (!account.data.account_jwt) {
-      return <div>No Account</div>;
-    }
-    
-    return (
-      <Container>
-        <Typography variant="h3" gutterBottom>
-          Change Password
-        </Typography>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper style={pStyle}>
-              <Formik
-                initialValues={INITIAL_VALUES}
-                onSubmit={this.handleSubmit}
-                validationSchema={schema}
-                render={this.renderForm}
-              />
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
+const INITIAL_VALUES = {
+  currentPassword: '',
+  newPassword1: '',
+  newPassword2: ''
 };
-
-const mapDispatchToProps = {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChangePassword);
+const useStyles = makeStyles(theme => ({
+  info: {
+    fontFamily: 'p22-underground, sans-serif',
+    fontSize: 18,
+    fontWeight: 600,
+    lineHeight: 'normal',
+    marginBottom: 20
+  }
+}));
+const ChangePasswordForm = ({
+  title,
+  defaultValues,
+  onSubmit,
+  onBack,
+  submitLabel,
+  backLabel
+}) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const renderForm = () => (
+    <Form>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography className={classes.info} variant="h3" gutterBottom>
+            CHANGE PASSWORD
+          </Typography>
+          <Field
+            name="currentPassword"
+            label="Current Password"
+            component={InputField}
+            type="password"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="newPassword1"
+            label="New Password"
+            component={InputField}
+            type="password"
+            helperText="Must be at least 6 characters"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="newPassword2"
+            label="Confirm New Password"
+            component={InputField}
+            type="password"
+          />
+        </Grid>
+        <Grid item xs={xs ? 12 : 4}>
+          <Box display="flex" alignItems="center">
+            {' '}
+            {onBack && (
+              <Button
+                type="button"
+                onClick={onBack}
+                children={backLabel}
+                mr={2}
+              />
+            )}
+            <Button fullWidth type="submit" children={submitLabel} />
+          </Box>
+        </Grid>
+      </Grid>
+    </Form>
+  );
+  return (
+    <Grid container className="account-change-password">
+      <Grid item xs={12} md={12}>
+        <Formik
+          initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+          onSubmit={onSubmit}
+          validationSchema={schema}
+          render={renderForm}
+        />
+      </Grid>
+    </Grid>
+  );
+};
+ChangePasswordForm.propTypes = {
+  title: PropTypes.string,
+  defaultValues: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
+  submitLabel: PropTypes.string,
+  backLabel: PropTypes.string
+};
+ChangePasswordForm.defaultProps = {
+  defaultValues: {},
+  submitLabel: 'Change Password',
+  backLabel: 'Cancel'
+};
+export default ChangePasswordForm;

@@ -1,10 +1,10 @@
 import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER,
-  REQUEST_FIND_ALL_ORDERS,
-  RECEIVED_FIND_ALL_ORDERS,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
-  RECEIVED_FIND_ORDERS_BY_ACCOUNT
+  RECEIVED_FIND_ORDERS_BY_ACCOUNT,
+  REQUEST_GET_ORDER,
+  RECEIVED_GET_ORDER
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -14,11 +14,17 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
+  dispatch({
+    type: REQUEST_CREATE_ORDER,
+    payload: { isLoading: true }
+  });
   // The account JWT needs to be passed in as its own argument
-  const account_jwt = { account_jwt: cart.account_jwt}
+  const account_jwt = cart.account_jwt;
+  delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
   const params = {
-    data: { ...account_jwt, cart, nonceOrToken }
+    data: { cart },
+    params: { account_jwt, nonceOrToken }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
@@ -26,14 +32,12 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     '/exchange/order/order.request.create',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      jwt: account_jwt,
+      originalRequest: 'order.request.create'
     },
     payload
   );
-  await dispatch({
-    type: REQUEST_CREATE_ORDER,
-    payload: {}
-  });
 };
 
 export const receivedCreateOrder = order => {
@@ -43,13 +47,17 @@ export const receivedCreateOrder = order => {
   };
 };
 
-export const requestFindAllOrderIDs = accountJwt => (dispatch, getState) => {
+
+export const requestFindOrdersByAccount = accountJwt => (
+  dispatch,
+  getState
+) => {
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
-      query: {
-        'cart.account_id': accountJwt
-      }
+      account_jwt: accountJwt,
+      idField: 'account_id', // use this to tell the MS where to substitute the decoded id
+      query: { account_id: null }
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));
@@ -67,30 +75,33 @@ export const requestFindAllOrderIDs = accountJwt => (dispatch, getState) => {
   });
 };
 
-export const requestFindOrdersByAccount = accountJwt => (
-  dispatch,
-  getState
-) => {
+export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
-  const params = {
+  dispatch({
+    type: REQUEST_GET_ORDER,
+    payload: { isLoading: true }
+  });
+  const getParams = {
+    id: orderId,
     params: {
-      account_jwt: accountJwt,
-      query: {
-        account_id: accountJwt
-      }
+      account_jwt: accountJwt
     }
   };
-  const payload = JSON.stringify(msgpack.encode(params));
+  const payload = JSON.stringify(msgpack.encode(getParams));
+
   client.send(
-    '/exchange/order/order.request.find',
+    '/exchange/order/order.request.get',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     },
     payload
   );
-  dispatch({
-    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
-    payload: {}
-  });
+};
+
+export const receivedGetOrder = order => {
+  return {
+    type: RECEIVED_GET_ORDER,
+    payload: order
+  };
 };

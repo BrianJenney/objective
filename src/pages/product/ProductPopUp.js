@@ -1,19 +1,18 @@
 import React from 'react';
 import { object, string } from 'yup';
 import { Formik, Field } from 'formik';
-import {
-  CssBaseline,
-  Paper,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-  CardMedia,
-  Box
-} from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CardMedia from '@material-ui/core/CardMedia';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { InputField } from '../../components/form-fields';
-import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '../../components/common';
+
 const schema = object().shape({
   email: string()
     .required('Email is required')

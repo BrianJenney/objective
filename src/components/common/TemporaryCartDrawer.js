@@ -1,13 +1,14 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { Drawer, Box, Fab } from '@material-ui/core';
-import { useWindowSize } from '../../hooks';
+import Drawer from '@material-ui/core/Drawer';
+import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
 import { withStyles } from '@material-ui/core/styles';
+import { useWindowSize } from '../../hooks';
 import CheckoutButton from '../../pages/cart/CheckoutButton';
-
-import { setCartDrawerOpened} from '../../modules/cart/actions';
+import { setCartDrawerOpened } from '../../modules/cart/actions';
+import ContShoppingButton from '../../pages/cart/ContShoppingButton';
 
 export const SIDES = {
   TOP: 'top',
@@ -27,7 +28,12 @@ const StyledFab = withStyles(theme => ({
 
 const StyledDrawerWrapper = withStyles(theme => ({
   root: {
-    padding: '36px 34px'
+    [theme.breakpoints.up('sm')]: {
+      padding: '36px 35px'
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: '20px 16px'
+    }
   }
 }))(Box);
 
@@ -59,7 +65,7 @@ const TemporaryCartDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-      ? '100%'
+      ? 335
       : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
@@ -67,19 +73,25 @@ const TemporaryCartDrawer = ({
     <StyledDrawerWrapper width={listPanelWidth} children={listContent} />
   );
 
+  const cartItem = useSelector(state => state.cart);
+
   return (
     <Box {...rest}>
-      {toggleContent &&
-      <StyledFab
-        size="small"
-        onClick={toggleDrawer(true)}
-        children={toggleContent}
-      />
-      }
+      {toggleContent && (
+        <StyledFab
+          size="small"
+          onClick={toggleDrawer(true)}
+          children={toggleContent}
+        />
+      )}
       <Drawer anchor={side} open={drawerOpened} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
-        <CheckoutButton onClick={toggleDrawer(false)} />
+        {cartItem.items.length !== 0 ?
+          <CheckoutButton onClick={toggleDrawer(false)} />
+          :
+          <ContShoppingButton onClick={toggleDrawer(false)} />
+        }
       </Drawer>
     </Box>
   );
@@ -89,7 +101,7 @@ TemporaryCartDrawer.propTypes = {
   side: PropTypes.oneOf(Object.values(SIDES)).isRequired,
   toggleContent: PropTypes.node.isRequired,
   closer: PropTypes.node,
-  listContent: PropTypes.node.isRequired,
+  listContent: PropTypes.node.isRequired
 };
 
 export default TemporaryCartDrawer;

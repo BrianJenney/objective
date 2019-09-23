@@ -9,7 +9,9 @@
   font-size: 16px;
   display: flex;
   height: 100px;
-
+  .align-right {
+    text-align: right;
+  }
   @media (min-width: 1200px) {
     height: 161px;
     border-bottom: 1px solid #000000;
@@ -20,8 +22,7 @@
   }
 
   .holder {
-    padding: 0 82px;
-    max-width: 1600px;
+    width: 100%;
   }
 
   .headerBar {
@@ -30,6 +31,7 @@
     height: 40px;
     // padding: 12px;
     letter-spacing: 0.8px;
+    width: 100%;
 
     .option {
       padding: 0 10px;
