@@ -322,9 +322,9 @@ const StyledLegalList = withStyles(() => ({
 const Footer = ({ location }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const isCheckoutPage = '';//matchPath(location.pathname, { path: '/checkout' });
 
-  console.log('here', location, isCheckoutPage)
+  //console.log('here', location, isCheckoutPage)
   return (
     <>
       {xs ? (
@@ -586,7 +586,7 @@ const Footer = ({ location }) => {
               </Container>
             </StyledBox>
           )
-          : <CheckoutFooter/>
+          : <CheckoutFooter />
         )
       }
     </>
