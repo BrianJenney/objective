@@ -7,6 +7,7 @@ import cartReducer from './modules/cart/reducers';
 import accountReducer from './modules/account/reducers';
 import orderReducer from './modules/order/reducers';
 import catalogReducer from './modules/catalog/reducers';
+import taxReducer from './modules/tax/reducers';
 
 const rootReducer = combineReducers({
   stomp: stompReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   account: accountReducer,
   order: orderReducer,
-  products: catalogReducer
+  products: catalogReducer,
+  tax: taxReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
