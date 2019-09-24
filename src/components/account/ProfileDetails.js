@@ -7,7 +7,7 @@ import { object, string } from 'yup';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { fonts } from '../../components/Theme/fonts.js';
-import { Button } from '../common';
+import { Button, AlertPanel } from '../common';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
@@ -15,7 +15,9 @@ import { InputField } from '../form-fields';
 const schema = object().shape({
   firstName: string(),
   lastName: string(),
-  email: string().email('Please enter a valid email.')
+  email: string()
+    .required('Email is required')
+    .email('Please enter a valid email.')
 });
 
 const useStyles = makeStyles(theme => ({
@@ -94,6 +96,16 @@ const ProfileDetails = props => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
+            {props.account.data.errorMessage && (
+              <AlertPanel
+                my={2}
+                p={2}
+                type="error"
+                bgcolor="#ffcdd2"
+                text={props.account.data.errorMessage}
+                variant="subtitle2"
+              />
+            )}
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
