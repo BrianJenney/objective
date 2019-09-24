@@ -315,6 +315,26 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
+        {cart.items.length !== 0 && cart.calculatedTax ? (
+          <Grid
+            container
+            direction="row"
+            xs={12}
+            justify="space-between"
+            style={{ margin: '20px 0' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+                Tax
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={6} style={{ 'text-align': 'right' }}>
+              <StyledProductPrice style={{ 'font-size': '18px' }}>
+                {`$${cart.calculatedTax.toFixed(2)}`}
+              </StyledProductPrice>
+            </Grid>
+          </Grid>
+        ) : null}
 
         {cart.items.length !== 0 ? (
           cart.promo ? (
