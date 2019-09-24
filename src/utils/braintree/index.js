@@ -1,5 +1,3 @@
 export { default as createBraintreeClient } from './client';
-export {
-  fetchCreditCardBrainTreeNonce,
-  fetchPaypalCheckoutBrainTreeNonce
-} from './nonce';
+export { sendCreditCardRequest } from './creditCard';
+export { sendPaypalCheckoutRequest } from './paypal';

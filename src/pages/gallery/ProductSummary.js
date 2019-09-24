@@ -8,15 +8,16 @@ import './gallery-style.scss';
 const skinImg = require('../../../src/assets/images/skin-cat.png');
 const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
 
-const ProductSummary = ({ product, variantMap }) => {
+const ProductSummary = ({ product, styleMap, variantMap }) => {
+  
   return (
     <React.Fragment>
       <Grid item xs={12} sm={12} md={6} lg={6}>
-        <div className="opt1">
+        <div className="opt1" style={styleMap.container}>
           {/* <ProductCard product={product} /> */}
           <Grid container className="gallery-content-blurb">
             <Grid item item xs={12} md={5} className="leftside">
-              <h3>Skin & Beauty</h3>
+              <h3 style={styleMap.text}>Skin & Beauty</h3>
               <img src={skinIcon} alt="" className="blurb-icon" />
               <Divider variant="fullWidth" />
               <p>{product.description}</p>
@@ -32,8 +33,8 @@ const ProductSummary = ({ product, variantMap }) => {
 
         return (
           <Grid item xs={12} sm={3} md={3} lg={3} key={variant.sku}>
-            <div className="opt2">
-              <VariantCard variant={variant} product={product} />
+            <div className="opt2" style={styleMap.container}>
+              <VariantCard variant={variant} product={product} styleMap={styleMap} />
             </div>
           </Grid>
         );

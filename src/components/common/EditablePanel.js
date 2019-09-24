@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import CheckIcon from '@material-ui/icons/Check';
 import Panel from './Panel';
 import MenuLink from './MenuLink';
 
@@ -38,34 +40,44 @@ const EditablePanel = ({
         />
       ) : (
         <Summary values={defaultValues} {...rest}>
-          <Box fontSize={16} display="grid" alignItems="center">
-            {onSetDefault && (
-              <Box mr={1} fontSize={16}>
-                <MenuLink
-                  onClick={onSetDefault}
-                  children="Make default"
-                  underline="always"
+          <Box mt={4} fontSize={16} display="flex" flexDirection="column">
+            {onSetDefault ? (
+              <MenuLink
+                onClick={onSetDefault}
+                children="Make default"
+                underline="always"
+              />
+            ) : (
+              <Box display="flex" alignItems="center">
+                <CheckIcon style={{ width: '16px', height: '16px' }} />
+                <Typography
+                  variant="body2"
+                  children="Saved as default"
+                  style={{ marginLeft: 5 }}
                 />
               </Box>
             )}
-            {onRemove && (
-              <Box mr={1} fontSize={16}>
+            <Box mt="13px" height={16} display="flex" alignItems="center">
+              {onRemove && (
                 <MenuLink
                   onClick={onRemove}
                   children="Remove"
                   underline="always"
+                  style={{
+                    paddingRight: 9,
+                    borderRight: onFormSubmit ? '1px solid #231f20' : 0
+                  }}
                 />
-              </Box>
-            )}
-            {onFormSubmit && (
-              <Box>
+              )}
+              {onFormSubmit && (
                 <MenuLink
                   onClick={() => setEditing(true)}
                   children="Edit"
                   underline="always"
+                  style={{ paddingLeft: onRemove ? 9 : 0 }}
                 />
-              </Box>
-            )}
+              )}
+            </Box>
           </Box>
         </Summary>
       )}

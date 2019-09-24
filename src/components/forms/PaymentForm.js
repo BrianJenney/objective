@@ -227,6 +227,7 @@ const PaymentForm = ({
           <ButtonGroup fullWidth aria-label="full width button group">
             {onBack && (
               <Button
+                color="secondary"
                 type="button"
                 onClick={onBack}
                 children={backLabel}

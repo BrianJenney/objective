@@ -26,13 +26,13 @@ const FormSummarySection = ({ title, pairs, children, ...rest }) => (
                 whiteSpace="nowrap"
                 textOverflow="ellipsis"
                 overflow="hidden"
-                lineHeight={2.3}
               />
             )}
             <Box
               component={Typography}
               flex={1}
               fontSize={20}
+              lineHeight={1.2}
               variant="body2"
               children={value}
               whiteSpace="nowrap"

@@ -57,11 +57,17 @@ const nxtTheme = createMuiTheme({
     htmlFontSize: 16,
     fontSize: 16,
     fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
-    body2: {
+    body1: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
       fontSize: sizes.productDetail,
       fontWeight: 400,
       lineHeight: '2.3rem'
+    },
+    body2: {
+      fontFamily: `${fonts.body2}, ${backupFontStack.sans}`,
+      fontSize: sizes.smallText1,
+      fontWeight: 400,
+      lineHeight: '1rem'
     },
     h1: {
       fontFamily: `${fonts.header}, ${backupFontStack.sans}`,
@@ -167,9 +173,32 @@ const nxtTheme = createMuiTheme({
     }
   },
   overrides: {
+    MuiButton: {
+      containedSecondary: {
+        backgroundColor: '#fff',
+        '&:hover': {
+          backgroundColor: '#fff'
+        }
+      }
+    },
     MuiFormLabel: {
       root: {
-        fontFamily: 'unset'
+        fontFamily: 'unset',
+        color: color.MEDIUM_GRAY
+      },
+      filled: {
+        color: color.BLACK
+      }
+    },
+    MuiInputBase: {
+      root: {
+        fontFamily: 'p22-underground, sans-serif'
+      }
+    },
+    MuiInputLabel: {
+      root: {
+        fontFamily: 'p22-underground, sans-serif',
+        fontSize: '1rem'
       }
     },
     MuiGrid: {

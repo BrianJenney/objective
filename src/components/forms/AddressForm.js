@@ -4,6 +4,7 @@ import { object, string, boolean } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
@@ -86,24 +87,24 @@ const AddressForm = ({
         <Grid item xs={12}>
           <Field name="line2" label="Address Line 2" component={InputField} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field name="city" label="City" component={InputField} />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field
             name="state"
             label="State/Province/Region"
             component={InputField}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field
             name="postalCode"
             label="Zip/Postal Code"
             component={InputField}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Field
             name="countryCode"
             label="Country"
@@ -121,9 +122,10 @@ const AddressForm = ({
           </Grid>
         )}
         <Grid item xs={12}>
-          <Box display="flex" alignItems="center">
+          <ButtonGroup fullWidth>
             {onBack && (
               <Button
+                color="secondary"
                 type="button"
                 onClick={onBack}
                 children={backLabel}
@@ -131,7 +133,7 @@ const AddressForm = ({
               />
             )}
             <Button type="submit" children={submitLabel} />
-          </Box>
+          </ButtonGroup>
         </Grid>
       </Grid>
     </Form>

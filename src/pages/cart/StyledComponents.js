@@ -267,7 +267,8 @@ export const StyledPromoLink = withStyles(theme => ({
     fontWeight: 'normal',
     color: BLACK,
     textTransform: 'uppercase',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    cursor: 'pointer',
   }
 }))(Typography);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import Link from '@material-ui/core/Link';
 import NavLink from './NavLink';
 
@@ -8,7 +9,10 @@ const MenuLink = ({ to, ...rest }) => {
     return <NavLink to={to} {...rest} />;
   }
 
-  return <Link style={{ cursor: 'pointer' }} {...rest} />;
+  const style = get(rest, 'style', {});
+  style.cursor = 'pointer';
+
+  return <Link {...rest} style={style} />;
 };
 
 MenuLink.propTypes = {

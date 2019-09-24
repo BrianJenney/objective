@@ -96,7 +96,7 @@ export const requestPatchAccount = (authToken, patches) => (
       account_jwt: authToken
     }
   };
-  console.log(params);
+  // console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
 
   client.send(
@@ -115,6 +115,7 @@ export const requestPatchAccount = (authToken, patches) => (
 };
 
 export const receivedPatchAccount = account => dispatch => {
+  console.log('ACTION', account);
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT,
     payload: account

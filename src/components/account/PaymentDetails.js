@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { fonts } from '../../components/Theme/fonts.js';
 import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import { fetchCreditCardBrainTreeNonce } from '../../utils/braintree';
+import { fonts } from '../Theme/fonts';
+import { sendCreditCardRequest } from '../../utils/braintree';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
@@ -66,6 +65,7 @@ const AccountPaymentDetails = ({
   subTitle,
   onBack,
   onSubmit,
+  selectionEnabled,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -74,7 +74,7 @@ const AccountPaymentDetails = ({
   ...rest
 }) => {
   const classes = useStyles();
-  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }); 
+  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   will fix later, it broke the code*/
   let isCheckoutPage = false;
   if (window.location.pathname.includes('checkout')) {
@@ -113,17 +113,16 @@ const AccountPaymentDetails = ({
     const { paymentDetails, billingAddress } = pureValues;
 
     try {
-      const nonce = await fetchCreditCardBrainTreeNonce({
-        paymentDetails,
-        billingAddress
+      const cardResult = await sendCreditCardRequest({
+        ...paymentDetails,
+        postalCode: billingAddress.postalCode
       });
+      const { nonce, details } = cardResult.creditCards[0];
       const payload = {
         newCreditCard: {
           name: paymentDetails.cardholderName,
-          last4: paymentDetails.number.substring(
-            paymentDetails.number.length - 4
-          ),
-          expirationDate: paymentDetails.expirationDate,
+          last4: `${details.cardType} ${details.lastFour}`,
+          expirationDate: `Expires ${paymentDetails.expirationDate}`,
           billingAddress
         },
         nonce
@@ -212,17 +211,19 @@ const AccountPaymentDetails = ({
                 m={1}
                 px={4}
                 py={3}
-                className="checkout-box"
+                border="2px solid #979797"
               >
-                <Box ml="-17px" mt="-9px">
-                  <Radio
-                    name="payment-method-selector"
-                    style={{ color: '#231f20' }}
-                    value={index.toString()}
-                    onChange={handleSelect}
-                    checked={selectedIndex === index}
-                  />
-                </Box>
+                {selectionEnabled && (
+                  <Box ml="-17px" mt="-9px">
+                    <Radio
+                      name="payment-method-selector"
+                      style={{ color: '#231f20' }}
+                      value={index.toString()}
+                      onChange={handleSelect}
+                      checked={selectedIndex === index}
+                    />
+                  </Box>
+                )}
                 <EditablePanel
                   title=""
                   defaultValues={creditCardEntity}
@@ -243,7 +244,7 @@ const AccountPaymentDetails = ({
           ))}
         </Grid>
       </Box>
-      <Box my={2}>
+      <Box mt="26px" mb="55px">
         {isEmpty(creditCards) && (
           <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
         )}
@@ -275,7 +276,13 @@ const AccountPaymentDetails = ({
       {!addModeEnabled && (
         <ButtonGroup fullWidth aria-label="full width button group">
           {onBack && (
-            <Button type="button" onClick={onBack} children="Back" mr={2} />
+            <Button
+              color="secondary"
+              type="button"
+              onClick={onBack}
+              children="Back"
+              mr={2}
+            />
           )}
           {onSubmit && (
             <Button type="button" onClick={handleSubmit} children="Next" />
@@ -294,6 +301,7 @@ AccountPaymentDetails.propTypes = {
   subTitle: PropTypes.string,
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
+  selectionEnabled: PropTypes.bool,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
