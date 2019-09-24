@@ -924,6 +924,7 @@ html,
     display: flex;
     justify-content: center;
     overflow-x: visible;
+    padding-top: 20px
   }
 
   .step-slide {
@@ -956,7 +957,7 @@ html,
 .three-label {
   height: 20px;
   font-family: P22-underground, Helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -964,7 +965,7 @@ html,
   letter-spacing: 1.6px;
   text-align: center;
   color: #000000;
-  padding-top: 20px;
+  padding-top: 40px;
 }
 
 .one-bottom-color,
@@ -1004,6 +1005,7 @@ html,
   letter-spacing: normal;
   text-align: center;
   color: #daeff1;
+  padding-top: 15px;
 }
 
 .clock-icon {
@@ -1039,7 +1041,7 @@ html,
 
 .whhm-slide {
   flex-shrink: 0;
-  margin: 5px;
+  margin: 6px;
   scroll-snap-align: start;
 }
 
@@ -1076,7 +1078,7 @@ html,
   .two-label,
   .three-label {
     position: absolute;
-    top: 300px;
+    top: 290px;
     right: 0;
     left: 0;
   }
@@ -1111,7 +1113,7 @@ html,
   .one-label,
   .two-label,
   .three-label {
-    top: 315px;
+    top: 290px;
   }
 }
 

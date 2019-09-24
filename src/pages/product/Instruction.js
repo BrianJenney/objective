@@ -5,19 +5,14 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
 import ProductContext from '../../contexts/ProductContext';
+import { Typography } from '@material-ui/core';
 
 export default function Instruction() {
   const { content } = useContext(ProductContext);
   const box = {
-    height: 80,
+    height: 24,
     display: 'flex',
     justifyContent: 'center',
-    fontWeight: 600,
-    fontSize: 24,
-    letterSpacing: 2.25,
-    fontFamily: 'p22-underground, sans-serif',
-    textAlign: 'center',
-    alignItems: 'center',
     pt: 10,
     pb: 5
   };
@@ -32,7 +27,16 @@ export default function Instruction() {
     <Container>
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={5}>
-          <Box {...box}>HOW TO TAKE</Box>
+          <Box {...box}>
+            <Typography style={{
+              fontWeight: 600,
+              fontSize: 24,
+              letterSpacing: 2.25,
+              fontFamily: 'p22-underground, sans-serif',
+              textAlign: 'center',
+              alignItems: 'center',
+            }}>HOW TO TAKE</Typography>
+          </Box>
         </Grid>
       </Grid>
       <div className="whhm-wrapper">
