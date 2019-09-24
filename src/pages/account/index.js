@@ -39,7 +39,7 @@ const Account = ({ routes }) => {
       <Container>
         <Box className={classes.paper}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Box>
                 <AccountMenu />
               </Box>
