@@ -15,7 +15,7 @@ import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
 import './Header-style.scss';
-import Typography from '@material-ui/core/Typography';
+import CheckoutHeader from './CheckoutHeader';
 
 const StyledLink = withStyles(() => ({
   root: {
@@ -156,9 +156,7 @@ const Header = ({ currentUser, location }) => {
               </Container>
             </div>
           </>
-        ) : (<>
-        <Typography style={{fontSize: 48, fontFamily: 'p22-underground, Helvetica, sans'}}> Truehealth</Typography>
-        </>))
+        ) : <CheckoutHeader/>)
         }
       </Grid>
     </Grid>
