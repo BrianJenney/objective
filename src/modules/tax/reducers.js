@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CALCULATE_TAX:
-      return { ...state, isLoading: true, calculatedTax: null, rate: null };
+      return { ...state, isLoading: true, tax: null, rate: null };
 
     case RECEIVED_CALCULATE_TAX:
       const { tax, rate} = action.payload;
