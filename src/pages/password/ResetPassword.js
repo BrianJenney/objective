@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Formik, Field, Form } from 'formik';
@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Button } from '../../components/common';
+import { Button, NavLink } from '../../components/common';
 import { requestPatchAccount } from '../../modules/account/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -56,10 +56,28 @@ const validatePassword = values => {
 const ResetPassword = ({ history, location }) => {
   const INITIAL_VALUES = {
     newPassword1: '',
-    newPassword2: '',
+    newPassword2: ''
   };
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const [firstNewPasswordVisible, setFirstPasswordVisible] = useState(false);
+  const toggleFirstPassword = useCallback(
+    event => {
+      event.preventDefault();
+      setFirstPasswordVisible(!firstNewPasswordVisible);
+    },
+    [firstNewPasswordVisible, setFirstPasswordVisible]
+  );
+
+  const [secondNewPasswordVisible, setSecondPasswordVisible] = useState(false);
+  const toggleSecondPassword = useCallback(
+    event => {
+      event.preventDefault();
+      setSecondPasswordVisible(!secondNewPasswordVisible);
+    },
+    [secondNewPasswordVisible, setSecondPasswordVisible]
+  );
 
   const renderForm = ({ isValid }) => {
     return (
@@ -71,6 +89,27 @@ const ResetPassword = ({ history, location }) => {
               name="newPassword1"
               type="password"
               component={InputField}
+              type={firstNewPasswordVisible ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <Box width={1} textAlign="right">
+                    <NavLink
+                      style={{
+                        fontFamily: 'p22-underground',
+                        fontSize: '12px'
+                      }}
+                      component="button"
+                      underline="always"
+                      onClick={event => toggleFirstPassword(event)}
+                      children={
+                        firstNewPasswordVisible
+                          ? 'HIDE PASSWORD'
+                          : 'SHOW PASSWORD'
+                      }
+                    ></NavLink>
+                  </Box>
+                )
+              }}
             />
             <Typography
               style={{
@@ -89,6 +128,27 @@ const ResetPassword = ({ history, location }) => {
               name="newPassword2"
               type="password"
               component={InputField}
+              type={secondNewPasswordVisible ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <Box width={1} textAlign="right">
+                    <NavLink
+                      style={{
+                        fontFamily: 'p22-underground',
+                        fontSize: '12px'
+                      }}
+                      component="button"
+                      underline="always"
+                      onClick={event => toggleSecondPassword(event)}
+                      children={
+                        secondNewPasswordVisible
+                          ? 'HIDE PASSWORD'
+                          : 'SHOW PASSWORD'
+                      }
+                    ></NavLink>
+                  </Box>
+                )
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -129,5 +189,3 @@ const ResetPassword = ({ history, location }) => {
 };
 
 export default withDialog(ResetPassword);
-
-
