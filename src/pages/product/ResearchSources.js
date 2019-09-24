@@ -5,7 +5,7 @@ import ProductContext from '../../contexts/ProductContext';
 export default function ResearchSources() {
   const { content } = useContext(ProductContext);
 
-  if (!content) {
+  if (!content || !content.researchSources) {
     return null;
   }
 
