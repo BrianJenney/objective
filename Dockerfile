@@ -15,7 +15,7 @@ COPY --from=build-stage /app/build/ /usr/share/nginx/html
 
 # Copy our nginx.conf to image
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha
+RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha.txt
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget localhost:80/ -q -O - > /dev/null 2>&1
 CMD ["nginx", "-g", "daemon off;"]

@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { withDialog} from '../../hoc';
+import { withDialog } from '../../hoc';
 import { AdapterLink, Button } from '../../components/common';
 
 const useStyles = makeStyles(theme => ({
@@ -37,17 +37,23 @@ const ResetSuccess = () => {
   return (
     <Container>
       <Paper className={classes.paper}>
-        <Typography className={classes.title}>Your password has been reset</Typography>
-        <Typography className={classes.subTitle}>Click below to return to the account login page</Typography>
-        <Button fullWidth component={AdapterLink} to="/">Login to your account</Button>
-        <br/>
+        <Typography className={classes.title}>
+          Your password has been reset
+        </Typography>
+        <Typography className={classes.subTitle}>
+          Click below to return to the account login page
+        </Typography>
+        <Button fullWidth component={AdapterLink} to="/">
+          Login to your account
+        </Button>
+        <br />
       </Paper>
     </Container>
   );
 };
 
 const ResetSuccessPassword = withDialog(ResetSuccess);
-const ResetSuccessPage = props => <ResetSuccessPassword noClosingDialog {...props} />;
+const ResetSuccessPage = props => (
+  <ResetSuccessPassword noClosingDialog {...props} />
+);
 export default ResetSuccessPage;
-
-

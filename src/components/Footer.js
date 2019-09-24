@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter, matchPath} from 'react-router-dom';
+import { withRouter, matchPath } from 'react-router-dom';
 import { compose } from 'redux';
 
 
@@ -141,7 +141,7 @@ const ContactUsDialogMobile = () => {
             <Typography variant="h1">Contact us</Typography>
           </Box>
           <Box textAlign="center">
-            <Typography gutterBottom>
+            <Typography gutterBottom variant="h4">
               We'd love to hear from you. You can reach us by phone or email.
             </Typography>
           </Box>
@@ -154,10 +154,10 @@ const ContactUsDialogMobile = () => {
                   <ContactPhone />
                 </Box>
                 <Box textAlign="center" pb={2}>
-                  <Typography>
+                  <Typography variant="h4">
                     Give us a call for immediate assistance and chat with one of our customer care specialists.
                   </Typography>
-                  <Typography variant="h4">(800) 270-5771</Typography>
+                  <Typography>(800) 270-5771</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -167,12 +167,105 @@ const ContactUsDialogMobile = () => {
                   <ContactMail />
                 </Box>
                 <Box textAlign="center">
-                  <Typography>
+                  <Typography variant="h4">
                     Email our customer care department. We'll respond as soon as possible.
                   </Typography>
                   <Box>
                     <Typography variant="h4">help@objectivewellnes.com</Typography>
                   </Box>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </div >
+  );
+};
+
+const NeedHelpDialogDesktop = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <div>
+      <ListItem>
+        <NavLink onClick={handleClickOpen}>Need Help</NavLink>
+      </ListItem>
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+        <DialogContent>
+          <Box textAlign="center">
+            <Grid container spacing={0} style={{ borderBottom: '0.1em solid #979797' }}>
+              <Grid item>
+                <Box textAlign="center">
+                  <ContactPhone />
+                </Box>
+                <Box textAlign="center" pb={2}>
+                  <Typography variant="h1">Need help? Give us a call for immediate assistance</Typography>
+                  <Typography variant="h1">(800) 270-5771</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid container spacing={0}>
+              <Grid item>
+                <Box textAlign="center" pl={20}>
+                  <Typography variant="h4">
+                    or send us an email and will get
+                  </Typography>
+                  <Typography variant="h4">
+                    back to you as soon as possible:
+                  </Typography>
+                  <Typography variant="h4">help@objectivewellnes.com</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </div >
+  );
+};
+
+const NeedHelpDialogMobile = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <div>
+      <ListItem>
+        <NavLink onClick={handleClickOpen}>Need Help</NavLink>
+      </ListItem>
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+        <DialogContent>
+          <Box textAlign="center">
+            <Grid container spacing={0} style={{ borderBottom: '0.1em solid #979797' }}>
+              <Grid item>
+                <Box textAlign="center">
+                  <ContactPhone />
+                </Box>
+                <Box textAlign="center" pb={2}>
+                  <Typography>Need help? Give us a call for immediate assistance</Typography>
+                  <Typography>(800) 270-5771</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid container spacing={0}>
+              <Grid item>
+                <Box textAlign="center" px={3}>
+                  <Typography variant="h4">
+                    or send us an email and will get back to you as soon as possible:
+                  </Typography>
+                  <Typography variant="h4">help@objectivewellnes.com</Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -225,11 +318,11 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = ({location}) => {
+const Footer = ({ location }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
-  
+
   console.log('here', location, isCheckoutPage)
   return (
     <>
@@ -358,147 +451,147 @@ const Footer = ({location}) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : 
-      (!isCheckoutPage ? 
-        (
-          <StyledBox className="footer-container">
-            <Container>
-              <Grid container spacing={0}>
-                <Grid container item={true} xs={12} className="promise">
-                  <Grid item xs={12}>
-                    Diamond Logo
+      ) :
+        (!isCheckoutPage ?
+          (
+            <StyledBox className="footer-container">
+              <Container>
+                <Grid container spacing={0}>
+                  <Grid container item={true} xs={12} className="promise">
+                    <Grid item xs={12}>
+                      Diamond Logo
                 </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="h4" gutterBottom className="uppercase">
-                      Dek Line Goes Here
+                    <Grid item xs={12}>
+                      <Typography variant="h4" gutterBottom className="uppercase">
+                        Dek Line Goes Here
                   </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <p>
-                      Brunch church-key reclette chartreuse poke, XOXO next level
-                      shaman hot chicken sustainable vegan yr jianbing affogato.
-                      Hot chicken Schlitz squad, migas single-origin single-origin
-                      coffee chambray umami raclette.
+                    </Grid>
+                    <Grid item xs={12}>
+                      <p>
+                        Brunch church-key reclette chartreuse poke, XOXO next level
+                        shaman hot chicken sustainable vegan yr jianbing affogato.
+                        Hot chicken Schlitz squad, migas single-origin single-origin
+                        coffee chambray umami raclette.
                   </p>
+                    </Grid>
                   </Grid>
-                </Grid>
-                <div className="footer-main-holder">
-                  <Grid container item={true} xs={12} className="footer-main">
-                    <Grid item xs={5} className="title border-bottom">
-                      <StyledBox>
-                        <NavLink to="/gallery">About</NavLink>
-                      </StyledBox>
-                    </Grid>
-                    <Grid item xs={6} className="title border-bottom border-left">
-                      <StyledBox>
-                        <NavLink to="/help">Help</NavLink>
-                      </StyledBox>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={1}
-                      className="border-bottom logo border-left copy"
-                    >
-                      <StyledBox>Logo</StyledBox>
-                    </Grid>
-                    <Grid item xs={5} className="border-bottom">
-                      <StyledList className="links">
-                        <ListItem>
-                          <NavLink to="/ourstory">Our Story</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to="/ingredients">Ingredients</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <ContactUsDialogDesktop />
-                        </ListItem>
-                      </StyledList>
-                    </Grid>
-                    <Grid item xs={6} className="border-left border-bottom">
-                      <StyledList className="links">
-                        <ListItem>
-                          <NavLink to="/shipping">Shipping &amp; Returns</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to="/account">My Account</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to="/ordertracking">Track an Order</NavLink>
-                        </ListItem>
-                      </StyledList>
-                    </Grid>
-                    <Grid item xs={1} className="border-left copy">
-                      <StyledBox>
-                        <div className="rotate">Copyright 2019</div>
-                      </StyledBox>
-                    </Grid>
-                    <Grid item xs={8} className="signup-box">
-                      <span>Sign up for tips and new product launches.</span>
-                      <Formik
-                        initialValues={{ email: '' }}
-                        onSubmit={() => null}
-                        validationSchema={schema}
-                        render={() => (
-                          <Form>
-                            <Field
-                              name="email"
-                              label=""
-                              placeholder="Your Email"
-                              component={InputField}
-                            />
-                            <Button type="submit">
-                              <img
-                                src={arrowImage}
-                                className="signup-arrow"
-                                alt="arrow"
+                  <div className="footer-main-holder">
+                    <Grid container item={true} xs={12} className="footer-main">
+                      <Grid item xs={5} className="title border-bottom">
+                        <StyledBox>
+                          <NavLink to="/gallery">About</NavLink>
+                        </StyledBox>
+                      </Grid>
+                      <Grid item xs={6} className="title border-bottom border-left">
+                        <StyledBox>
+                          <NavLink to="/help">Help</NavLink>
+                        </StyledBox>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={1}
+                        className="border-bottom logo border-left copy"
+                      >
+                        <StyledBox>Logo</StyledBox>
+                      </Grid>
+                      <Grid item xs={5} className="border-bottom">
+                        <StyledList className="links">
+                          <ListItem>
+                            <NavLink to="/ourstory">Our Story</NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink to="/ingredients">Ingredients</NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <ContactUsDialogDesktop />
+                          </ListItem>
+                        </StyledList>
+                      </Grid>
+                      <Grid item xs={6} className="border-left border-bottom">
+                        <StyledList className="links">
+                          <ListItem>
+                            <NavLink to="/shipping">Shipping &amp; Returns</NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink to="/account">My Account</NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink to="/ordertracking">Track an Order</NavLink>
+                          </ListItem>
+                        </StyledList>
+                      </Grid>
+                      <Grid item xs={1} className="border-left copy">
+                        <StyledBox>
+                          <div className="rotate">Copyright 2019</div>
+                        </StyledBox>
+                      </Grid>
+                      <Grid item xs={8} className="signup-box">
+                        <span>Sign up for tips and new product launches.</span>
+                        <Formik
+                          initialValues={{ email: '' }}
+                          onSubmit={() => null}
+                          validationSchema={schema}
+                          render={() => (
+                            <Form>
+                              <Field
+                                name="email"
+                                label=""
+                                placeholder="Your Email"
+                                component={InputField}
                               />
-                            </Button>
-                          </Form>
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Grid container className="h-100">
-                        <Grid item xs={6} className="border-left icon">
-                          <Link href="https://www.instagram.com/">
-                            <img src={igIcon} alt="instagram" />
-                          </Link>
-                        </Grid>
-                        <Grid
-                          item
-                          xs={6}
-                          className="border-left icon border-right"
-                        >
-                          <Link href="https://www.facebook.com/">
-                            <img src={fbIcon} alt="facebook" />
-                          </Link>
+                              <Button type="submit">
+                                <img
+                                  src={arrowImage}
+                                  className="signup-arrow"
+                                  alt="arrow"
+                                />
+                              </Button>
+                            </Form>
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Grid container className="h-100">
+                          <Grid item xs={6} className="border-left icon">
+                            <Link href="https://www.instagram.com/">
+                              <img src={igIcon} alt="instagram" />
+                            </Link>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={6}
+                            className="border-left icon border-right"
+                          >
+                            <Link href="https://www.facebook.com/">
+                              <img src={fbIcon} alt="facebook" />
+                            </Link>
+                          </Grid>
                         </Grid>
                       </Grid>
+                      <Grid container item={true} xs={12} className="legal">
+                        <StyledLegalList>
+                          <ListItem>Objective &bull; All rights reserved</ListItem>
+                          <ListItem>
+                            <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink to="/terms">Terms of use</NavLink>
+                          </ListItem>
+                        </StyledLegalList>
+                      </Grid>
                     </Grid>
-                    <Grid container item={true} xs={12} className="legal">
-                      <StyledLegalList>
-                        <ListItem>Objective &bull; All rights reserved</ListItem>
-                        <ListItem>
-                          <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to="/terms">Terms of use</NavLink>
-                        </ListItem>
-                      </StyledLegalList>
-                    </Grid>
-                  </Grid>
-                </div>
-              </Grid>
-            </Container>
-          </StyledBox>
+                  </div>
+                </Grid>
+              </Container>
+            </StyledBox>
+          )
+          : (
+            <div style={{ padding: 50, background: 'rgba(252, 248, 244, 0.5)', borderTop: 'solid', fontFamily: 'p22-underground, sans-serif', fontSize: 18, display: 'flex' }}>
+              <span style={{ paddingRight: 5 }}>Need Help?</span>
+              <a href='' style={{ color: 'black' }}>CONTACT US</a>
+            </div>)
         )
-        : (
-        <div style={{padding: 50, background: 'rgba(252, 248, 244, 0.5)', borderTop: 'solid', fontFamily: 'p22-underground, sans-serif', fontSize: 18, display: 'flex'}}>
-        <span style={{paddingRight: 5}}>Need Help?</span>
-        <a href='' style={{color: 'black'}}>CONTACT US</a>
-        </div>)
-        )
-        }
+      }
     </>
   );
 };

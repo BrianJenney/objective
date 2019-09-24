@@ -3,8 +3,6 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { fonts } from '../../components/Theme/fonts.js';
@@ -14,6 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { NavLink } from '../../components/common';
+
 const pStyle = {
   padding: 20
 };
@@ -93,9 +93,9 @@ const AccountOverview = props => {
       <p>
         <strong>PASSWORD</strong>
         xxxxxx
-        <a href="/account/profile" style={change}>
+        <NavLink to="/account/profile" style={change}>
           CHANGE
-        </a>
+        </NavLink>
       </p>
       <p>
         <strong>SAVED PAYMENT METHOD</strong>
