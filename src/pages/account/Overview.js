@@ -102,29 +102,7 @@ const AccountOverview = props => {
       </p>
     </div>
   );
-  return xs ? (
-    <Container style={pStyle} className="overview-mobile">
-      <Box className={classes.root}>
-        <List>
-          <ListItem className={classes.box} button onClick={handleClick}>
-            <ListItemText className="stepper-item" primary="OVERVIEW" />
-            {open ? (
-              <ExpandLess style={{ color: 'white' }} />
-            ) : (
-              <ExpandMore style={{ color: 'white' }} />
-            )}
-          </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div">
-              <ListItem button className={classes.nested}>
-                <RenderOverview />
-              </ListItem>
-            </List>
-          </Collapse>
-        </List>
-      </Box>
-    </Container>
-  ) : (
+  return (
     <RenderOverview />
   );
 };
