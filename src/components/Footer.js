@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {withRouter, matchPath} from 'react-router-dom';
+import { compose } from 'redux';
+
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -17,7 +21,6 @@ import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
 import { Container } from '@material-ui/core';
-import {matchPath} from 'react-router-dom';
 
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -222,7 +225,7 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = (location) => {
+const Footer = ({location}) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
@@ -356,8 +359,7 @@ const Footer = (location) => {
           </Container>
         </StyledBox>
       ) : 
-      //for checkoutpage footer
-      // (isCheckoutPage !== null ? 
+      (!isCheckoutPage ? 
         (
           <StyledBox className="footer-container">
             <Container>
@@ -490,15 +492,22 @@ const Footer = (location) => {
             </Container>
           </StyledBox>
         )
-        // : (
-        // <div style={{padding: 50, background: 'rgba(252, 248, 244, 0.5)', borderTop: 'solid', fontFamily: 'p22-underground, sans-serif', fontSize: 18}}>
-        // <Typography>Need Help?</Typography>
-        // <a href='' style={{color: 'black'}}>CONTACT US</a>
-        // </div>)
-        // )
+        : (
+        <div style={{padding: 50, background: 'rgba(252, 248, 244, 0.5)', borderTop: 'solid', fontFamily: 'p22-underground, sans-serif', fontSize: 18, display: 'flex'}}>
+        <span style={{paddingRight: 5}}>Need Help?</span>
+        <a href='' style={{color: 'black'}}>CONTACT US</a>
+        </div>)
+        )
         }
     </>
   );
 };
+Footer.propTypes = {
+  location: PropTypes.object.isRequired
+};
 
-export default Footer;
+const enhance = compose(
+  withRouter
+);
+
+export default enhance(Footer);
