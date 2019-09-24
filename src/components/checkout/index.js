@@ -102,6 +102,13 @@ const Checkout = ({
     }
   }, [currentUser.data.account_jwt]);
 
+  useEffect(() => {
+    if (activeStep === 2) {
+      console.log('Payload *********', { activeStep, shippingAddress: payload.shippingAddress, subtotal});
+      dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
+    }
+  },[activeStep, payload.shippingAddress, subtotal, dispatch, requestCalculateTax]);
+
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
     const dataKey = DATA_KEYS[activeStep];
@@ -153,10 +160,6 @@ const Checkout = ({
     let result = null;
 
     if (activeStep <= 2) {
-      if (activeStep === 2) {
-        console.log('Payload *********', { activeStep, payload });
-        dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
-      }
       result = await handleAddressesAndCardSteps(values);
     } else if (activeStep === 3) {
       handleReviewStep();
