@@ -2,6 +2,7 @@ import {
   REQUEST_CALCULATE_TAX,
   RECEIVED_CALCULATE_TAX,
 } from './types';
+import {updateCartWithTaxCalculation} from "../cart/actions";
 
 // const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -15,10 +16,8 @@ export const requestCalculateTax = (shippingAddress, subtotal) => (dispatch, get
   });
 
   const params = {
-    data: {
-      shippingAddress,
-      subtotal
-    }
+    shippingAddress,
+    subtotal
   };
   const payload = JSON.stringify(msgpack.encode(params));
   client.send(
@@ -29,12 +28,11 @@ export const requestCalculateTax = (shippingAddress, subtotal) => (dispatch, get
     },
     payload
   );
-
 };
 
 export const receivedCalculateTax = data => dispatch => {
+  dispatch(updateCartWithTaxCalculation(data.tax, data.rate));
   dispatch({
     type: RECEIVED_CALCULATE_TAX,
-    payload: data
   });
 };
