@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -79,6 +79,8 @@ const ProductDetail = ({ variantSlug }) => {
   const { product, variants, prices, content } = useContext(ProductContext);
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
+  const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdding, setATCAdding] = useState(false);
   const [open, setOpen] = useState(false);
 
   const windowSize = useWindowSize();
@@ -110,15 +112,23 @@ const ProductDetail = ({ variantSlug }) => {
   );
 
   const handleAddToCart = useCallback(() => {
-    addToCart(
-      localStorageClient.get('cartId'),
-      cart,
-      variantMap.get(selectedVariantSku),
-      quantity
-    );
-    // enqueueSnackbar(message, { variant: 'success' });
-    setATCEnabled(false);
-    dispatch(setCartDrawerOpened(true));
+    setATCAdded(true);
+    setATCAdding(true);
+    setTimeout(()=>{
+
+      addToCart(
+        localStorageClient.get('cartId'),
+        cart,
+        variantMap.get(selectedVariantSku),
+        quantity
+      );
+      // enqueueSnackbar(message, { variant: 'success' });
+      // setATCEnabled(false);
+      setATCAdding(false);
+      dispatch(setCartDrawerOpened(true));
+
+    },500);
+   
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
   const handleEmailPopup = () => {
@@ -147,7 +157,12 @@ const ProductDetail = ({ variantSlug }) => {
     setSelectedVariantSku(defaultSku);
   }, [defaultSku]);
 
-  if (product === null || variants.length === 0 || typeof content === 'undefined') return null;
+  if (
+    product === null ||
+    variants.length === 0 ||
+    typeof content === 'undefined'
+  )
+    return null;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
@@ -171,7 +186,9 @@ const ProductDetail = ({ variantSlug }) => {
                         productVariant={variantMap.get(selectedVariantSku)}
                       />
                     </div>
-                    <div className="pdp-subtitle">{content.shortPurposeHeadline}</div>
+                    <div className="pdp-subtitle">
+                      {content.shortPurposeHeadline}
+                    </div>
                     <div className="mobile-padding">
                       <Typography className="pdp-description">
                         {content.shortDescription}
@@ -198,7 +215,7 @@ const ProductDetail = ({ variantSlug }) => {
                           onClick={handleAddToCart}
                           disabled={selectedVariantSku === null}
                         >
-                          ADD TO CART
+                          {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
                         </Button>
                       </CardActions>
                     </Grid>
@@ -229,53 +246,59 @@ const ProductDetail = ({ variantSlug }) => {
           </Grid>
         </>
       ) : (
-        <Grid container className={classes.gridModifications} xs={12} sm={12}>
-          <Grid container justify="space-between" xs={10} sm={11}>
-            <Grid item xs={12} sm={6}>
-              <Carousel prodId={product._id} />
-            </Grid>
-            <Grid item xs={12} sm={5}>
-              <Card className={classes.box}>
-                <CardContent
-                  className={classes.cardRootOverrides}
-                  className="pdp-content"
-                >
-                  <h1 className="pdp-header">{content.productTitle}</h1>
-                  <ProductVariant
-                    productVariant={variantMap.get(selectedVariantSku)}
-                  />
-                  <div className="pdp-subtitle">{content.shortPurposeHeadline}</div>
-                  <Typography className="pdp-description">
-                    {content.shortDescription}
-                  </Typography>
-                  <Typography className="pdp-direction">DIRECTIONS</Typography>
-                  <Typography className="pdp-direction-description">
-                    {content.shortDirections}
-                  </Typography>
+        <div className={classes.gridModifications}>
+          <Container>
+            <Grid container xs={12} sm={12}>
+              <Grid container spacing={5} xs={12} sm={12}>
+                <Grid item xs={12} sm={6}>
+                  <Carousel prodId={product._id} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Card className={classes.box}>
+                    <CardContent
+                      className={classes.cardRootOverrides}
+                      className="pdp-content"
+                    >
+                      <h1 className="pdp-header">{content.productTitle}</h1>
+                      <ProductVariant
+                        productVariant={variantMap.get(selectedVariantSku)}
+                      />
+                      <div className="pdp-subtitle">
+                        {content.shortPurposeHeadline}
+                      </div>
+                      <Typography className="pdp-description">
+                        {content.shortDescription}
+                      </Typography>
+                      <Typography className="pdp-direction">
+                        DIRECTIONS
+                      </Typography>
+                      <Typography className="pdp-direction-description">
+                        {content.shortDirections}
+                      </Typography>
 
-                  {/* <ProductVariantType
+                      {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                  {!ATCEnabled && <Quantity />}
-                </CardContent>
-                {ATCEnabled && (
-                  <Grid>
-                    <CardActions className={classes.maxWidth}>
-                      <Button
-                        fullWidth
-                        onClick={handleAddToCart}
-                        disabled={selectedVariantSku === null}
-                      >
-                        ADD TO CART
-                      </Button>
-                    </CardActions>
-                  </Grid>
-                )}
+                      {!ATCEnabled && <Quantity />}
+                    </CardContent>
+                    {ATCEnabled && (
+                      <Grid>
+                        <CardActions className={classes.maxWidth}>
+                          <Button
+                            fullWidth
+                            onClick={handleAddToCart}
+                            disabled={selectedVariantSku === null}
+                          >
+                            {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
+                          </Button>
+                        </CardActions>
+                      </Grid>
+                    )}
 
-                {/* Render this button when Product is out of stock hiding for now */}
-                {/* <Grid>
+                    {/* Render this button when Product is out of stock hiding for now */}
+                    {/* <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
                       className={classes.btnOOS}
@@ -293,10 +316,12 @@ const ProductDetail = ({ variantSlug }) => {
                     />
                   )}
                 </Grid> */}
-              </Card>
+                  </Card>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </Container>
+        </div>
       )}
     </>
   );

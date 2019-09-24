@@ -36,7 +36,7 @@ const getVariantSlugs = (productId, variants) => {
 export const getProducts = (products, variants) => {
   const productSlugs = [];
   const productMap = new Map();
- 
+
   products.forEach(product => {
     const item = {
       id: product._id,
@@ -48,6 +48,7 @@ export const getProducts = (products, variants) => {
       variantSlugs: getVariantSlugs(product._id, variants),
       assets: product.assets,
       category: product.category,
+      color : product.color,
       attributes: product.attributes.map(attribute => attribute.value)
     };
     productSlugs.push(product.slug);
@@ -85,7 +86,7 @@ export const getVariants = (products, variants, priceMap) => {
       .forEach(variant => {
         const item = {
           id: variant._id,
-          productSlug: product.slug,
+          prodSlug: product.slug,
           name: variant.name,
           sku: variant.sku,
           slug: variant.slug,

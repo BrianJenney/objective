@@ -1,0 +1,152 @@
+/* .right-side-account {
+  border-left: 2px solid;
+  margin-left: 20px !important;
+  padding-left: 55px !important;
+} */
+.account-side-menu {
+  font-family: p22-underground, sans-serif;
+  font-size: 16px;
+  a {
+    &:hover {
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+}
+
+.account-overview {
+  font-family: FreightTextProBook;
+  font-size: 21px;
+  strong {
+    font-family: p22-underground, sans-serif;
+    font-size: 18px;
+    margin-right: 25px;
+  }
+  a {
+    font-family: p22-undergrounf, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+.overview-mobile {
+  .MuiListItem-button {
+    padding: 0;
+  }
+}
+.account-profile {
+  input {
+    font-family: p22-undergrounf, sans-serif;
+  }
+  button {
+    margin-bottom: 50px;
+  }
+  .MuiFormHelperText-contained {
+    font-family: p22-undergrounf, sans-serif;
+    font-size: 11px;
+    margin: 5px 0 0;
+  }
+}
+.account-change-password {
+  input {
+    font-family: p22-undergrounf, sans-serif;
+  }
+  button {
+    margin-top: 16px;
+  }
+  .MuiFormHelperText-contained {
+    font-family: p22-undergrounf, sans-serif;
+    font-size: 11px;
+    margin: 5px 0 0;
+  }
+}
+
+.account-payment-details,
+.account-addresses {
+  .MuiBox-root.MuiBox-root-226 {
+    width: 100%;
+  }
+}
+.account-orders {
+  .MuiToolbar-root-760,
+  .MUIDataTableToolbar-root-1332 {
+    padding: 0;
+  }
+  h3 {
+    font-family: CanelaText;
+    font-size: 48px;
+    margin-bottom: 30px;
+  }
+  h6 {
+    font-family: p22-underground, sans-serif;
+  }
+  th,
+  th > div {
+    font-family: p22-underground, sans-serif;
+    font-weight: 600;
+    color: #231f20;
+    font-size: 18px;
+    padding: 0 0 15px;
+  }
+  td,
+  th {
+    border-bottom: none;
+  }
+  td {
+    padding: 10px 0;
+  }
+  /* tr {
+    width: 100%;
+    display: table;
+  }
+  tbody > tr {
+    background-color: #fbf7f3;
+    height: 50px;
+    margin-bottom: 8px;
+    width: 100%;
+    display: table;
+  } */
+  tbody > tr {
+    background-color: #fbf7f3;
+    height: 50px;
+    margin-bottom: 8px;
+    td,
+    td a,
+    td p {
+      font-family: p22-underground, sans-serif;
+      font-size: 18px !important;
+      text-transform: capitalize;
+    }
+  }
+  tfoot {
+    display: none;
+  }
+  a,
+  a:hover,
+  a:visited,
+  a:active {
+    text-decoration: underline;
+    color: #231f20;
+  }
+}
+@media (max-width: 768px) {
+  .account-menu-box {
+    display: none;
+  }
+  .overview-mobile {
+    padding: 0 !important;
+    div {
+      max-width: 100%;
+      width: 100%;
+    }
+    .stepper-item {
+      span {
+        color: #fff;
+        font-size: 16px;
+        font-family: p22-underground, sans-serif;
+        padding: 17px 10px;
+        font-weight: 600;
+        line-height: 1.88;
+      }
+    }
+  }
+}

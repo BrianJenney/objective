@@ -59,9 +59,10 @@ const PromoCodeForm = () => {
                 color: '#000000',
                 'backgroundColor': 'transparent',
                 'textDecoration': 'underline',
-                'padding': '0 ',
                 'minWidth': '0',
-                'fontWeight': 'normal'
+                'fontWeight': 'normal',
+                'border': 'none',
+                'paddingTop': '10px',
               }}
             />
           </Grid>

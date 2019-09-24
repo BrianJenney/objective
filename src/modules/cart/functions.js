@@ -37,7 +37,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   newItems.filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
       alreadyInCart = true;
-      item.quantity = quantity;
+      item.quantity += quantity;
     });
 
   if (!alreadyInCart) {
@@ -52,7 +52,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
       unit_price: parseFloat(selectedVariant.effectivePrice),
       discount_price: parseFloat(selectedVariant.effectivePrice),
       varSlug: selectedVariant.slug,
-      prodSlug: selectedVariant.productSlug,
+      prodSlug: selectedVariant.prodSlug,
     };
     newItems.push(newItem);
   }

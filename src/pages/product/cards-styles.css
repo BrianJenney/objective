@@ -3,9 +3,9 @@ html,
   box-sizing: border-box;
 }
 
-h2 {
+/* h2 {
   font-size: 22px !important;
-}
+} */
 
 .label-info-wrapper {
   width: 100%;
@@ -299,7 +299,7 @@ h2 {
   color: #000000;
 }
 
-.how-it-works-wrapper h2 {
+.how-it-works-wrapper h2:first-of-type {
   max-width: 700px;
   margin: 0 auto 50px auto;
   font-family: CanelaText;
@@ -313,8 +313,37 @@ h2 {
   color: #000000;
 }
 
+.how-it-works-wrapper .topBlock .leftCol h2,
+.how-it-works-wrapper .topBlock .rightCol h2,
+.how-it-works-wrapper .topBlock .leftCol h2 b,
+.how-it-works-wrapper .topBlock .rightCol h2 b {
+  font-family: p22-underground, sans-serif;
+  font-size: 18px !important;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.44px;
+  color: #000000;
+  margin: 35px 0 0 !important;
+  text-align: left;
+}
+
+.how-it-works-wrapper .topBlock .leftCol p,
+.how-it-works-wrapper .topBlock .rightCol p,
+.how-it-works-wrapper .bottomBlock .leftCol p,
+.how-it-works-wrapper .bottomBlock .rightCol p {
+  font-family: FreightTextProBook;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #000000;
+}
 .how-it-works-wrapper .coreBenefits {
-  margin: 30px auto 0 auto;
+  margin: 0 auto 0 auto;
 }
 
 .how-it-works-wrapper .topBlock,
@@ -374,6 +403,10 @@ h2 {
 }
 
 @media only screen and (min-width: 735.99px) {
+  .how-it-works-wrapper .topBlock .leftCol img,
+  .how-it-works-wrapper .topBlock .rightCol img {
+    height: 400px;
+  }
   .how-it-works-wrapper .topBlock {
     width: 96%;
     flex-wrap: nowrap;
@@ -399,18 +432,84 @@ h2 {
 
 .how-it-works-wrapper .coreBenefits .textTitle {
   width: 100%;
-  margin: 28px auto 28px auto;
+  padding: 25px;
   font-family: P22-underground, Helvetica, sans-serif;
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1.25px;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #fcf8f4;
+}
+.how-it-works-wrapper .coreBenefits .topBlock .leftCol,
+.how-it-works-wrapper .coreBenefits .topBlock .rightCol {
+  max-height: 530px;
+}
+.how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
+.how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
+.how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
+  height: 56px;
+  width: 36px;
+  position: absolute;
+}
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
+  height: 335px;
+  width: 100%;
+}
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol p:first-of-type {
+  margin-top: 0;
+}
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol p:nth-of-type(2) {
+  width: 100%;
+  text-align: center;
+}
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol a {
+  font-family: p22-underground, sans-serif;
+  text-decoration: underline;
+  font-size: 16px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: 1px;
   text-align: center;
+  color: #000000;
   text-transform: uppercase;
 }
+.how-it-works-wrapper .coreBenefits .topBlock .leftCol h2,
+.how-it-works-wrapper .coreBenefits .topBlock .rightCol h2,
+.how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
+  margin: 0px 0px 25px 65px !important;
+  font-family: FreightTextProBook;
+  font-size: 40px !important;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+}
+.how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+.how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
+  height: 94px;
+}
+.how-it-works-wrapper .coreBenefits .topBlock .leftCol ul,
+.how-it-works-wrapper .coreBenefits .topBlock .rightCol ul {
+  list-style-type: square;
+}
 
+.how-it-works-wrapper .coreBenefits .topBlock .leftCol ul p,
+.how-it-works-wrapper .coreBenefits .topBlock .rightCol ul p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 24px;
+  line-height: 2.08;
+}
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop {
   height: auto;
 }
@@ -579,11 +678,20 @@ h2 {
   line-height: 2.4;
   letter-spacing: normal;
 }
+.how-it-works-wrapper .coreBenefits .bottomBlock .textTitle {
+  border-bottom: solid 1px #003833;
+}
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop,
-  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop {
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .content,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .content {
     flex-direction: column;
+    padding: 60px 30px 0px 60px;
+  }
+  .flex-desktop {
+    display: flex;
   }
 }
 
@@ -781,7 +889,7 @@ h2 {
   height: 380px;
   display: flex;
   flex-direction: row;
-  overflow-x: auto;
+  overflow-x: scroll;
   scroll-snap-type: x mandatory;
   margin-bottom: 50px;
 }
@@ -815,6 +923,8 @@ h2 {
     height: 450px;
     display: flex;
     justify-content: center;
+    overflow-x: visible;
+    padding-top: 20px
   }
 
   .step-slide {
@@ -825,7 +935,7 @@ h2 {
 .whhm-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   width: 100%;
   align-items: center;
 }
@@ -835,7 +945,7 @@ h2 {
 .three-box {
   width: 100%;
   height: 400px;
-  border: solid 1px #003833;
+  border: solid 2px #1f396d;
   margin: 16px 0;
   display: flex;
   flex-direction: column;
@@ -847,7 +957,7 @@ h2 {
 .three-label {
   height: 20px;
   font-family: P22-underground, Helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -855,7 +965,7 @@ h2 {
   letter-spacing: 1.6px;
   text-align: center;
   color: #000000;
-  padding-top: 20px;
+  padding-top: 40px;
 }
 
 .one-bottom-color,
@@ -863,7 +973,7 @@ h2 {
 .three-bottom-color {
   width: 100%;
   height: 125px;
-  background-color: #003833;
+  background-color: #1f396d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -871,7 +981,6 @@ h2 {
 
 .one-title,
 .two-title {
-  width: 133px;
   font-family: FreightTextProBook;
   font-size: 24px;
   font-weight: normal;
@@ -880,7 +989,8 @@ h2 {
   line-height: 1.33;
   letter-spacing: normal;
   text-align: center;
-  color: #b3dcc5;
+  color: #daeff1;
+  padding: 0 25px;
 }
 
 .three-title {
@@ -894,7 +1004,8 @@ h2 {
   line-height: 1.33;
   letter-spacing: normal;
   text-align: center;
-  color: #b3dcc5;
+  color: #daeff1;
+  padding-top: 15px;
 }
 
 .clock-icon {
@@ -915,6 +1026,35 @@ h2 {
 .img-container {
   display: flex;
   justify-content: center;
+}
+
+.whhm-slider {
+  padding-top: 50px;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-bottom: 50px;
+}
+
+.whhm-slide {
+  flex-shrink: 0;
+  margin: 6px;
+  scroll-snap-align: start;
+}
+
+.whhm-slider::-webkit-scrollbar {
+  height: 2px;
+}
+
+.whhm-slider::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.whmm-slider::-webkit-scrollbar-thumb {
+  background: #1f396d;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -938,7 +1078,7 @@ h2 {
   .two-label,
   .three-label {
     position: absolute;
-    top: 300px;
+    top: 290px;
     right: 0;
     left: 0;
   }
@@ -968,12 +1108,12 @@ h2 {
     position: relative;
   }
   .img-container {
-    top: 75px;
+    top: 50px;
   }
   .one-label,
   .two-label,
   .three-label {
-    top: 315px;
+    top: 290px;
   }
 }
 
@@ -1036,5 +1176,86 @@ h2 {
   .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTitle,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTitle {
     margin-bottom: 25px;
+  }
+}
+@media only screen and (max-width: 734px) {
+  .how-it-works-wrapper .topBlock {
+    width: 100% !important;
+  }
+  .how-it-works-wrapper h2:first-of-type {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    font-family: CanelaText;
+    font-size: 24px !important;
+    line-height: 1.33;
+    letter-spacing: -1.09px;
+  }
+  .how-it-works-wrapper .topBlock .leftCol h2,
+  .how-it-works-wrapper .topBlock .rightCol h2,
+  .how-it-works-wrapper .topBlock .leftCol h2 b,
+  .how-it-works-wrapper .topBlock .rightCol h2 b {
+    font-size: 16px !important;
+    letter-spacing: 1.28px;
+    margin: 22px 0 0 !important;
+  }
+  .how-it-works-wrapper .topBlock .leftCol p,
+  .how-it-works-wrapper .topBlock .rightCol p,
+  .how-it-works-wrapper .bottomBlock .leftCol p,
+  .how-it-works-wrapper .bottomBlock .rightCol p {
+    font-size: 18px;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
+    position: relative;
+    margin: 20px auto;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol h2,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol h2,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
+    margin: 0 !important;
+    text-align: center;
+    font-size: 36px !important;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol ul p,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol ul p {
+    font-size: 20px;
+  }
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
+    height: auto;
+  }
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol .content,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol .content {
+    width: 100%;
+    text-align: center;
+  }
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol .content p,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol .content p {
+    text-align: left;
+  }
+  .how-it-works-wrapper
+    .coreBenefits
+    .bottomBlock
+    .rightCol
+    img:nth-of-type(2) {
+    height: 260px;
+  }
+  .one-box,
+  .two-box,
+  .three-box {
+    width: 240px;
+    height: 314px;
+  }
+  .one-bottom-color,
+  .two-bottom-color,
+  .three-bottom-color {
+    height: 90px;
+  }
+  .research-sources h2 {
+    font-size: 18px !important;
+    text-align: center;
   }
 }

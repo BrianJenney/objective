@@ -1,40 +1,45 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-import { DataTable, AdapterLink }  from '../../components/common';
+import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime } from '../../utils/misc';
 
 const columns = [
   {
-    name: "_id",
-    label: "ORDER ID",
+    name: '_id',
+    label: 'ORDER ID',
     options: {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         return (
-          <Button color="primary" component={AdapterLink} to={`/orders/${value}`}>
+          <Button
+            color="primary"
+            component={AdapterLink}
+            to={`/orders/${value}`}
+          >
             {value}
           </Button>
         );
-      },
-    },
+      }
+    }
   },
   {
-    name: "createdAt",
-    label: "ORDER DATE",
+    name: 'createdAt',
+    label: 'ORDER DATE',
     options: {
       filter: false,
       sort: false,
       sortDirection: 'desc',
-      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, false),
-    },
+      customBodyRender: (value, tableMeta, updateValue) =>
+        formatDateTime(value, false)
+    }
   },
   /*
   {
@@ -61,31 +66,37 @@ const columns = [
   },
   */
   {
-    name: "status",
-    label: "STATUS",
+    name: 'status',
+    label: 'STATUS',
     options: {
       filter: true,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => (
-        <Typography component="p" align="left" style={{fontSize: "0.875rem"}}>{value}</Typography>
+        <Typography component="p" align="left" style={{ fontSize: '0.875rem' }}>
+          {value}
+        </Typography>
       )
     }
   },
   {
-    name: "_id",
-    label: "TRACKING INFORMATION",
+    name: '_id',
+    label: 'TRACKING INFORMATION',
     options: {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         return (
-          <Button color="primary" component={AdapterLink} to={`/transactions/${value}`}>
+          <Button
+            color="primary"
+            component={AdapterLink}
+            to={`/transactions/${value}`}
+          >
             {' '}
           </Button>
         );
-      },
+      }
     }
-  },
+  }
 
   /*
   {
@@ -100,7 +111,7 @@ const columns = [
   */
 ];
 
-const AccountOrders = ({ currentUser: { data}}) => {
+const AccountOrders = ({ currentUser: { data } }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -111,13 +122,13 @@ const AccountOrders = ({ currentUser: { data}}) => {
     } else {
       setIsLoading(false);
     }
-  },[ dispatch, data.orders]);
+  }, [dispatch, data.orders]);
 
   return (
-    <Grid container direction="column" spacing={3}>
+    <Grid container direction="column" spacing={3} className="account-orders">
       <Grid item sm={12} md={12} lg={12}>
         <DataTable
-          title={"Your Orders"}
+          title={'Your Orders'}
           data={data.orders}
           columns={columns}
           isLoading={isLoading}

@@ -19,4 +19,4 @@ export const colorPalette = {
   GRAY: '#A69B95',
   LIGHT_GRAY: '#646464',
   MEDIUM_GRAY: '#979797'
-}
+};

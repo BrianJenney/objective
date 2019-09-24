@@ -12,9 +12,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }
-  },
-  box: {
-    padding: theme.spacing(0, 1, 0, 0)
   }
 }));
 const CheckboxField = ({ field, form, disabled, label, ...rest }) => {
@@ -22,7 +19,7 @@ const CheckboxField = ({ field, form, disabled, label, ...rest }) => {
   return (
     <Box display="flex" alignItems="center">
       <Checkbox
-        className={classes.box}
+        color="primary"
         id={field.name}
         disabled={form.isSubmitting || disabled}
         checked={field.value === true}
