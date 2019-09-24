@@ -9,6 +9,7 @@ const skinImg = require('../../../src/assets/images/skin-cat.png');
 const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
 
 const ProductSummary = ({ product, styleMap, variantMap }) => {
+  
   return (
     <React.Fragment>
       <Grid item xs={12} sm={12} md={6} lg={6}>
