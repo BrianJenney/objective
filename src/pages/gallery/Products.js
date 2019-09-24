@@ -44,6 +44,7 @@ const Products = () => {
           <ProductSummary
             key={productSlug}
             product={productMap.get(productSlug)}
+            styleMap={{container:{borderColor:productMap.get(productSlug).color},text:{color:productMap.get(productSlug).color}}}
             variantMap={variantMap}
           />
         ))}

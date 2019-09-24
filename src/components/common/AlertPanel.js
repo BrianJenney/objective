@@ -20,7 +20,7 @@ const AlertPanel = ({ type, text, style, ...rest }) => {
 
   return (
     <Box color={color} alignItems="center" width={1} {...rest}>
-      <Typography style={style} children={text} />
+      <Typography variant="body2" style={style} children={text} />
     </Box>
   );
 };

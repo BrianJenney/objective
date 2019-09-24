@@ -2,65 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { pick } from 'lodash';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import CheckIcon from '@material-ui/icons/Check';
 import { FormSummarySection } from '../common';
 
-const PAYMENT_FIELDS = ['name', 'last4', 'expirationDate', 'isDefault'];
+const PAYMENT_FIELDS = ['name', 'last4', 'expirationDate'];
 const labelsMap = {
   name: 'Name',
   last4: 'Last 4 digits',
-  expirationDate: 'Expires',
-  isDefault: ''
+  expirationDate: 'Expires'
 };
-const getValuesWithoutLabels = payload => Object.values(payload);
+const getValuesWithoutLabels = ({ name, last4, expirationDate }) => [
+  last4,
+  expirationDate,
+  name
+];
 
-const PaymentSummary = ({ withLabels, noDefault, values, children }) => {
-  let defaultIndicator = null;
-  if (!noDefault) {
-    defaultIndicator = values.isDefault ? (
-      <Box my="10px" height={37} display="flex" alignItems="center">
-        <CheckIcon style={{ width: '20px', height: '20px' }} />
-        <Typography
-          variant="body1"
-          children="Saved as default"
-          style={{ fontSize: 16, marginLeft: 7 }}
-        />
-      </Box>
-    ) : null;
-  }
-
+const PaymentSummary = ({ withLabels, values, children, ...rest }) => {
   const neededValues = pick(values, PAYMENT_FIELDS);
   let pairs = null;
 
   if (withLabels) {
     pairs = PAYMENT_FIELDS.map(key => ({
       label: labelsMap[key],
-      value: key === 'isDefault' ? defaultIndicator : neededValues[key]
+      value: neededValues[key]
     }));
   } else {
-    const pre = getValuesWithoutLabels(neededValues).map(value => ({ value }));
-    pairs = [...pre, { value: defaultIndicator }];
+    pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
   }
 
   return (
-    <>
+    <Box {...rest}>
       <FormSummarySection title="" pairs={pairs} />
       {children}
-    </>
+    </Box>
   );
 };
 
 PaymentSummary.propTypes = {
   withLabels: PropTypes.bool,
-  noDefault: PropTypes.bool,
   values: PropTypes.object.isRequired,
   children: PropTypes.node
 };
 
 PaymentSummary.defaultProps = {
-  withLabels: false,
-  noDefault: false
+  withLabels: false
 };
 
 export default PaymentSummary;

@@ -11,7 +11,7 @@ const CustomizedBtn = withStyles({
     fontFamily: 'p22-underground, Helvetica, sans',
     fontWeight: 'bold',
     padding: '24px 0 26px',
-    minWidth: '282px'
+    border: '1px solid #000'
   }
 })(Button);
 
@@ -20,6 +20,7 @@ const ButtonComponent = ({
   disabled,
   icon,
   children,
+  flex,
   ml,
   mr,
   mt,
@@ -31,6 +32,7 @@ const ButtonComponent = ({
     display="inline-block"
     position="relative"
     width={fullWidth ? 1 : 'auto'}
+    flex={flex}
     ml={ml}
     mr={mr}
     mt={mt}
@@ -59,6 +61,7 @@ const ButtonComponent = ({
 );
 
 ButtonComponent.propTypes = {
+  flex: PropTypes.any,
   ml: PropTypes.any,
   mr: PropTypes.any,
   mt: PropTypes.any,
