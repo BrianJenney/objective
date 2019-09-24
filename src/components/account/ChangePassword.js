@@ -5,13 +5,14 @@ import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
-import { fonts } from '../../components/Theme/fonts.js';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
 import { Button } from '../common';
 import { getInitialValues } from '../../utils/misc';
+import { requestPatchAccount } from '../../modules/account/actions';
+import store from '../../store';
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
   newPassword1: string().required('Both password fields are required'),
@@ -33,15 +34,20 @@ const useStyles = makeStyles(theme => ({
 }));
 const ChangePasswordForm = ({
   title,
-  defaultValues,
-  onSubmit,
+  currentUser,
   onBack,
+  backLabel,
   submitLabel,
-  backLabel
+  defaultValues
 }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const handleSubmit = values => {
+    store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
+  };
+
   const renderForm = () => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
@@ -96,7 +102,7 @@ const ChangePasswordForm = ({
       <Grid item xs={12} md={12}>
         <Formik
           initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           validationSchema={schema}
           render={renderForm}
         />

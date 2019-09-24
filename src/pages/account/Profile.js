@@ -7,19 +7,21 @@ import {
   AccountChangePassword
 } from '../../components/account';
 
-const AccountProfile = ({ currentUser, requestPatchAccount }) => (
-  <div>
-    <AccountProfileDetails
-      currentUser={currentUser}
-      requestPatchAccount={requestPatchAccount}
-      mb={2}
-    />
-    <AccountChangePassword
-      currentUser={currentUser}
-      requestPatchAccount={requestPatchAccount}
-    />
-  </div>
-);
+const AccountProfile = ({ currentUser, requestPatchAccount }) => {
+  return (
+    <div>
+      <AccountProfileDetails
+        currentUser={currentUser}
+        requestPatchAccount={requestPatchAccount}
+        mb={2}
+      />
+      <AccountChangePassword
+        currentUser={currentUser}
+        requestPatchAccount={requestPatchAccount}
+      />
+    </div>
+  );
+};
 
 AccountProfile.propTypes = {
   currentUser: PropTypes.object.isRequired,
