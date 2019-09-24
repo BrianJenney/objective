@@ -18,7 +18,7 @@ const Gallery = () => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   return (
-    <ScrollToTop>
+    
       <Box pb={10}>
         <Box mb={10} className="hero-holder">
           {mobile ? (
@@ -31,7 +31,7 @@ const Gallery = () => {
           <Products></Products>
         </GalleryStore>
       </Box>
-    </ScrollToTop>
+    
   );
 };
 

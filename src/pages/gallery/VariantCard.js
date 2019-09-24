@@ -52,6 +52,7 @@ const VariantCard = ({ variant, product, styleMap }) => {
     setATCAdding(true);
     setTimeout(() => {
 //Give effect of item being added
+
 addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
 
     setATCAdding(false);
