@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
-import { Button } from '../common';
+import { Button, NavLink } from '../common';
 import { getInitialValues } from '../../utils/misc';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
@@ -48,6 +48,33 @@ const ChangePasswordForm = ({
     store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
   };
 
+  const [currentPasswordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = useCallback(
+    event => {
+      event.preventDefault();
+      setPasswordVisible(!currentPasswordVisible);
+    },
+    [currentPasswordVisible, setPasswordVisible]
+  );
+
+  const [firstNewPasswordVisible, setFirstPasswordVisible] = useState(false);
+  const toggleFirstPassword = useCallback(
+    event => {
+      event.preventDefault();
+      setFirstPasswordVisible(!firstNewPasswordVisible);
+    },
+    [firstNewPasswordVisible, setFirstPasswordVisible]
+  );
+
+  const [secondNewPasswordVisible, setSecondPasswordVisible] = useState(false);
+  const toggleSecondPassword = useCallback(
+    event => {
+      event.preventDefault();
+      setSecondPasswordVisible(!secondNewPasswordVisible);
+    },
+    [secondNewPasswordVisible, setSecondPasswordVisible]
+  );
+
   const renderForm = () => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
@@ -61,6 +88,25 @@ const ChangePasswordForm = ({
             label="Current Password"
             component={InputField}
             type="password"
+            type={currentPasswordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    style={{
+                      fontFamily: 'p22-underground',
+                      fontSize: '12px'
+                    }}
+                    component="button"
+                    underline="always"
+                    onClick={event => togglePasswordVisibility(event)}
+                    children={
+                      currentPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
+                    }
+                  ></NavLink>
+                </Box>
+              )
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -69,6 +115,27 @@ const ChangePasswordForm = ({
             label="New Password"
             component={InputField}
             type="password"
+            type={firstNewPasswordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    style={{
+                      fontFamily: 'p22-underground',
+                      fontSize: '12px'
+                    }}
+                    component="button"
+                    underline="always"
+                    onClick={event => toggleFirstPassword(event)}
+                    children={
+                      firstNewPasswordVisible
+                        ? 'HIDE PASSWORD'
+                        : 'SHOW PASSWORD'
+                    }
+                  ></NavLink>
+                </Box>
+              )
+            }}
             helperText="Must be at least 6 characters"
           />
         </Grid>
@@ -78,6 +145,27 @@ const ChangePasswordForm = ({
             label="Confirm New Password"
             component={InputField}
             type="password"
+            type={secondNewPasswordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    style={{
+                      fontFamily: 'p22-underground',
+                      fontSize: '12px'
+                    }}
+                    component="button"
+                    underline="always"
+                    onClick={event => toggleSecondPassword(event)}
+                    children={
+                      secondNewPasswordVisible
+                        ? 'HIDE PASSWORD'
+                        : 'SHOW PASSWORD'
+                    }
+                  ></NavLink>
+                </Box>
+              )
+            }}
           />
         </Grid>
         <Grid item xs={xs ? 12 : 4}>
