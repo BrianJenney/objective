@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
@@ -9,6 +9,12 @@ import { NavLink, MenuLink } from '../common';
 import { withLogout } from '../../hoc';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+
+import {withRouter} from 'react-router-dom';
+
+import TextField from '@material-ui/core/TextField';
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
@@ -20,9 +26,43 @@ const StyledMenuItem = withStyles(theme => ({
   }
 }))(MenuItem);
 
-const AccountMenu = ({ logout }) => {
-  return (
+const AccountMenu = ({ logout}) => {
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const [selected,setSelected] = useState(window.location.pathname);
+
+ 
+  const NTextField = withRouter(({history}) =>(
+    
+    <TextField 
+    style={{ fontFamily: 'P22-underground', fontSize: '18px' , marginTop: '50px'}}
+    variant="outlined"
+    fullWidth
+    select
+    value = {selected}
+    onChange = {(e) => {history.push(e.target.value,history.location.state); setSelected(e.target.value)}}
+    >
+        {ACCOUNT_MENU_ITEMS.map(menuItem => (
+           <MenuItem key={menuItem.key} value={menuItem.to}>
+           {menuItem.label}
+         </MenuItem>
+        ))}
+    </TextField>
+  )
+
+
+  );
+  
+  return xs ? (
+   
+ <NTextField/>  
+
+  ) : (
+    
     <Box width={1} className="account-menu-box">
+
+    
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
           <ListItem key={menuItem.key}>
@@ -45,7 +85,8 @@ const AccountMenu = ({ logout }) => {
 };
 
 AccountMenu.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  router : PropTypes.object
 };
 
 export default withLogout(AccountMenu);
