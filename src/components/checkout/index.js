@@ -220,6 +220,7 @@ const Checkout = ({
                     title="Shipping Address"
                     withSmallTitle
                     onSubmit={handleNext}
+                    selectionEnabled
                     allowFlyMode
                     mt={4}
                     mx={10}

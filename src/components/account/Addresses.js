@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, isNil, omit } from 'lodash';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Radio from '@material-ui/core/Radio';
 import { makeStyles } from '@material-ui/core/styles';
 import { fonts } from '../Theme/fonts';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
@@ -58,6 +59,7 @@ const AccountAddresses = ({
   title,
   withSmallTitle,
   onSubmit,
+  selectionEnabled,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -73,8 +75,20 @@ const AccountAddresses = ({
     isCheckoutPage = true;
   }
   const [addModeEnabled, setAddModeEnabled] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
+
+  useEffect(() => {
+    const addressesData = currentUser.data.addressBook || [];
+    const defaultIndex = addressesData.findIndex(address => address.isDefault);
+    setSelectedIndex(defaultIndex);
+  }, [currentUser.data.addressBook]);
+
+  const handleSelect = evt => {
+    const index = parseInt(evt.target.value, 10);
+    setSelectedIndex(index);
+  };
 
   const deleteAddress = deletedIndex => {
     const newAddressBook = addressBook.filter(
@@ -137,6 +151,17 @@ const AccountAddresses = ({
     return true;
   };
 
+  const handleSubmit = () => {
+    if (selectedIndex < 0) {
+      return false;
+    }
+
+    const selectedAddress = addressBook[selectedIndex];
+    onSubmit(selectedAddress);
+
+    return true;
+  };
+
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
       {isCheckoutPage ? (
@@ -158,7 +183,25 @@ const AccountAddresses = ({
         <Grid container>
           {addressBook.map((addressEntity, index) => (
             <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-              <Box m={1} px={4} py={3} border="2px solid #979797">
+              <Box
+                display="flex"
+                alignItems="flex-start"
+                m={1}
+                px={4}
+                py={3}
+                border="2px solid #979797"
+              >
+                {selectionEnabled && (
+                  <Box ml="-17px" mt="-9px">
+                    <Radio
+                      name="address-selector"
+                      style={{ color: '#231f20' }}
+                      value={index.toString()}
+                      onChange={handleSelect}
+                      checked={selectedIndex === index}
+                    />
+                  </Box>
+                )}
                 <EditablePanel
                   title=""
                   defaultValues={addressEntity}
@@ -214,7 +257,7 @@ const AccountAddresses = ({
           <Button
             fullWidth
             type="button"
-            onClick={() => onSubmit()}
+            onClick={handleSubmit}
             children="Continue"
           />
         </Box>
@@ -229,6 +272,7 @@ AccountAddresses.propTypes = {
   title: PropTypes.string,
   withSmallTitle: PropTypes.bool,
   onSubmit: PropTypes.func,
+  selectionEnabled: PropTypes.bool,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,

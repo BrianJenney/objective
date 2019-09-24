@@ -37,7 +37,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   newItems.filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
       alreadyInCart = true;
-      item.quantity = quantity;
+      item.quantity += quantity;
     });
 
   if (!alreadyInCart) {
