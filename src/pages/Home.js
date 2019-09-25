@@ -94,7 +94,7 @@ export default class Home extends Component {
             <p>{welcomeText}</p>
           </Box>
         </Container>
-        <div className="home-bestsellers">
+        <div className="home-bestsellers beige-bg">
           <Container>
             <Box py={10}>
               <h1>Our Bestsellers</h1>
@@ -105,11 +105,12 @@ export default class Home extends Component {
         <Container>
           <Box py={10}>{this.renderSections()}</Box>
         </Container>
-        <div className="home-bestsellers">
+        <div className="his-hers-theirs beige-bg">
           <Container>
             <Box py={10}>
               <h1>HIS, HERS & THEIRS</h1>
               <p>Solutions for the whole family!</p>
+              <p>TILES HERE!</p>
             </Box>
           </Container>
         </div>
