@@ -14,6 +14,7 @@ import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
+import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
 
@@ -103,7 +104,7 @@ const Header = ({ currentUser, location }) => {
               </Grid>
             </Grid>
           </>
-        ) : (!isCheckoutPage ? (
+        ) : !isCheckoutPage ? (
           <>
             <div className="headerBar">
               <Container>
@@ -124,12 +125,12 @@ const Header = ({ currentUser, location }) => {
                 <Grid container>
                   <Grid item xs={4}>
                     <Grid container>
-                      <Grid item xs={6}>
+                      <Grid item xs={6} className="h-pding">
                         <StyledLink component={RouterLink} to="/gallery">
                           Shop
                         </StyledLink>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={6} className="h-pding">
                         <StyledLink component={RouterLink} to="/">
                           Science
                         </StyledLink>
@@ -137,17 +138,19 @@ const Header = ({ currentUser, location }) => {
                     </Grid>
                   </Grid>
                   <Grid item xs={4} className="logo text-center">
-                    <NavLink to="/">OBJECTIVE</NavLink>
+                    <NavLink to="/">
+                      <Logo />
+                    </NavLink>
                   </Grid>
                   <Grid item xs={4}>
                     <Grid container className="align-right">
-                      <Grid item xs={6}>
+                      <Grid item xs={6} className="h-pding">
                         <StyledLink
                           component={RouterLink}
                           {...accountMenuItemConf}
                         />
                       </Grid>
-                      <Grid item xs={6} className="header-shop-holder">
+                      <Grid item xs={6} className="header-shop-holder h-pding">
                         {!isCheckoutPage && <ShoppingCart />}
                       </Grid>
                     </Grid>
@@ -156,8 +159,9 @@ const Header = ({ currentUser, location }) => {
               </Container>
             </div>
           </>
-        ) : <CheckoutHeader/>)
-        }
+        ) : (
+          <CheckoutHeader />
+        )}
       </Grid>
     </Grid>
   );

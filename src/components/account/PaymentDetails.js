@@ -90,6 +90,7 @@ const AccountPaymentDetails = ({
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
+  const actionError = get(currentUser, 'error.message', '');
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
@@ -125,8 +126,9 @@ const AccountPaymentDetails = ({
       const payload = {
         newCreditCard: {
           name: paymentDetails.cardholderName,
-          last4: `${details.cardType} ${details.lastFour}`,
-          expirationDate: `Expires ${paymentDetails.expirationDate}`,
+          cardType: details.cardType,
+          last4: details.lastFour,
+          expirationDate: paymentDetails.expirationDate,
           billingAddress
         },
         nonce
@@ -230,21 +232,25 @@ const AccountPaymentDetails = ({
                     />
                   </Box>
                 )}
-                <EditablePanel
-                  title=""
-                  defaultValues={creditCardEntity}
-                  Summary={PaymentSummary}
-                  onRemove={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => deleteCreditCard(creditCardEntity.token)
-                  }
-                  onSetDefault={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => setDefaultCreditCard(creditCardEntity.token)
-                  }
-                />
+                <Box
+                  maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={creditCardEntity}
+                    Summary={PaymentSummary}
+                    onRemove={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => deleteCreditCard(creditCardEntity.token)
+                    }
+                    onSetDefault={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => setDefaultCreditCard(creditCardEntity.token)
+                    }
+                  />
+                </Box>
               </Box>
             </Grid>
           ))}
@@ -279,6 +285,7 @@ const AccountPaymentDetails = ({
           </Box>
         )}
       </Box>
+      {actionError && <AlertPanel mb={2} type="error" text={actionError} />}
       {!addModeEnabled && (
         <ButtonGroup fullWidth aria-label="full width button group">
           {onBack && (
