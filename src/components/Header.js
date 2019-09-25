@@ -79,7 +79,7 @@ const Header = ({ currentUser, location }) => {
   return (
     <Grid container item={true} xs={12} className="headerContainer">
       <Grid container item={true} xs={12} spacing={0}>
-        {burger ? (
+        {burger && !isCheckoutPage ? (
           <>
             <Grid container className="top">
               <Grid item xs={1}>

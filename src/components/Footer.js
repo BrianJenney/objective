@@ -327,7 +327,7 @@ const Footer = ({ location }) => {
   console.log('here', location, isCheckoutPage)
   return (
     <>
-      {xs ? (
+      {xs && !isCheckoutPage ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>

@@ -6,6 +6,7 @@ class CheckoutHeader extends React.Component {
     return (
       <>
         <Typography
+        xs={12}
           style={{
             fontSize: 48,
             fontFamily: 'p22-underground, Helvetica, sans'
