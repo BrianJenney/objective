@@ -12,6 +12,15 @@
   .align-right {
     text-align: right;
   }
+  .logo {
+    svg {
+      width: 150px;
+      padding-top: 12px;
+    }
+  }
+  .mobile-cart-icon {
+    padding-top: 11px;
+  }
   @media (min-width: 1200px) {
     height: 161px;
     border-bottom: 1px solid #000000;
@@ -39,7 +48,7 @@
       }
     }
     .h-pding {
-      padding-top: 20px;
+      padding-top: 35px;
     }
     .logged-in-user-desktop {
       svg {
