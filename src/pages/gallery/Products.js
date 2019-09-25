@@ -9,12 +9,13 @@ import { getGallery } from '../../hooks';
 const Products = () => {
   const { products, variants, prices } = useContext(GalleryContext);
   if (!products) return null;
-  const [productSlugs, productMap, variantSlugs, variantMap, productCategories] = getGallery(
-    products,
-    variants,
-    prices
-  );
-
+  const [
+    productSlugs,
+    productMap,
+    variantSlugs,
+    variantMap,
+    productCategories
+  ] = getGallery(products, variants, prices);
 
   const productCategoriesToProducts = {};
   productCategories.map(productCategory => {
@@ -24,27 +25,29 @@ const Products = () => {
       })
       .map(product => {
         product = productMap.get(product.slug);
-        
-        if(productCategoriesToProducts[productCategory]){
 
+        if (productCategoriesToProducts[productCategory]) {
           productCategoriesToProducts[productCategory].push(product);
-
-        }else{
+        } else {
           productCategoriesToProducts[productCategory] = [product];
-          
         }
       });
   });
+  //Replace colors in DB with these:
+  const colors = { TMNO: '#88341f', TIMN: '#003833', TSGF: '#003670' };
 
- 
   return (
     <Container>
-      <Grid container spacing={4}>
-{productSlugs.map(productSlug => (
+      <Grid container xs={12}>
+        {productSlugs.map((productSlug, id) => (
           <ProductSummary
             key={productSlug}
+            ind={id}
             product={productMap.get(productSlug)}
-            styleMap={{container:{borderColor:productMap.get(productSlug).color},text:{color:productMap.get(productSlug).color}}}
+            styleMap={{
+              container: { borderColor: colors[productSlug] },
+              text: { color: colors[productSlug] }
+            }}
             variantMap={variantMap}
           />
         ))}
