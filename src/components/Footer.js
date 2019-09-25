@@ -586,7 +586,7 @@ const Footer = ({ location }) => {
               </Container>
             </StyledBox>
           )
-          : <CheckoutFooter/>
+          : <CheckoutFooter />
         )
       }
     </>

@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
 import ProductContext from '../../contexts/ProductContext';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 export default function Instruction() {
   const { content } = useContext(ProductContext);
