@@ -1,6 +1,7 @@
 import {
   REQUEST_CREATE_ACCOUNT,
   RECEIVED_CREATE_ACCOUNT,
+  REQUEST_CREATE_ACCOUNT_FAILURE,
   REQUEST_FETCH_ACCOUNT,
   RECEIVED_FETCH_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
@@ -9,7 +10,7 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
-  RECEIVED_PATCH_ACCOUNT_FAILURE,
+  RECEIVED_PATCH_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD
 } from './types';
@@ -26,6 +27,14 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CREATE_ACCOUNT:
+    case REQUEST_CREATE_ACCOUNT_FAILURE:
+      return {
+        error: action.payload,
+        loading: false,
+        data: {
+          ...state.data
+        }
+      };
     case REQUEST_LOGIN_ATTEMPT:
     case REQUEST_FORGOT_PASSWORD:
     case REQUEST_FETCH_ACCOUNT:
@@ -49,7 +58,15 @@ export default (state = INITIAL_STATE, action) => {
           ...action.payload
         }
       };
-    case RECEIVED_PATCH_ACCOUNT_FAILURE:
+    case RECEIVED_PATCH_FAILURE:
+      console.log('PAYLOAD', action.payload);
+      return {
+        error: action.payload,
+        loading: false,
+        data: {
+          ...state.data
+        }
+      };
     case RECEIVED_LOGIN_FAILURE:
       return {
         error: action.payload,
