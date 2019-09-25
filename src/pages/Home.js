@@ -7,6 +7,11 @@ import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
+import { Button } from '../components/common';
+import './home/home-style.scss';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
@@ -34,63 +39,86 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    contentfulClient.getEntry(OBJECTIVE_HOMEPAGE)
-    .then(entry => {
-      let content = entry.fields;
+    contentfulClient
+      .getEntry(OBJECTIVE_HOMEPAGE)
+      .then(entry => {
+        let content = entry.fields;
 
-      this.setState({
-        content: {
-          ...content
-        }
+        this.setState({
+          content: {
+            ...content
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    })
-    .catch(err => {
-      console.log(err);
-    });
   }
 
   renderHeroSlider() {
-    if (!this.state.content.heroSlider)
-      return <></>;
+    if (!this.state.content.heroSlider) return <></>;
 
-    return this.state.content.heroSlider.map(image => 
-      <li><img src={image.fields.file.url} /></li>
-    );
+    return this.state.content.heroSlider.map(image => (
+      <li>
+        <img src={image.fields.file.url} style={{ width: '100%' }} />
+      </li>
+    ));
   }
 
   renderSections() {
-    if (!this.state.content.homepageSection)
-      return <></>;
+    if (!this.state.content.homepageSection) return <></>;
 
-    return this.state.content.homepageSection.map(section =>
-      <div className="homepage-section">
+    return this.state.content.homepageSection.map(section => (
+      <div className="section">
         {documentToReactComponents(
           section.fields.mainContent,
           contentfulOptions
         )}
       </div>
-    );
+    ));
   }
 
   renderContent() {
-    if (!this.state.content)
-      return <></>;
+    if (!this.state.content) return <></>;
 
     let { welcomeHeader, welcomeText } = this.state.content;
 
     return (
-      <Container>
-        <ul>
-          {this.renderHeroSlider()}
-        </ul>
-        <h1>{ welcomeHeader }</h1>
-        <p>{ welcomeText }</p>
-        {this.renderSections()}
-      </Container>
+      <div className="home-style">
+        <Link to="/gallery">
+          <ul>{this.renderHeroSlider()}</ul>
+        </Link>
+        <Container>
+          <Box py={10} className="welcome">
+            <h1>{welcomeHeader}</h1>
+            <p>{welcomeText}</p>
+          </Box>
+        </Container>
+        <div className="home-bestsellers beige-bg">
+          <Container>
+            <Box py={10}>
+              <h1>Our Bestsellers</h1>
+              <p>TILES HERE!</p>
+            </Box>
+          </Container>
+        </div>
+        <Container>
+          <Box py={10}>{this.renderSections()}</Box>
+        </Container>
+        <div className="his-hers-theirs beige-bg">
+          <Container>
+            <Box py={10}>
+              <h1>HIS, HERS & THEIRS</h1>
+              <p>Solutions for the whole family!</p>
+              <p>TILES HERE!</p>
+            </Box>
+          </Container>
+        </div>
+      </div>
     );
   }
 
   render() {
     return this.renderContent();
   }
-};
+}
