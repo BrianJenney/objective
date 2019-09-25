@@ -14,6 +14,8 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -73,6 +75,8 @@ const AccountPaymentDetails = ({
   location,
   ...rest
 }) => {
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
   /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   will fix later, it broke the code*/
@@ -193,9 +197,11 @@ const AccountPaymentDetails = ({
         </Box>
       ) : (
         <div>
+          { xs ? '' : (
           <Typography className={classes.title} variant="h1" gutterBottom>
             Payment Details
           </Typography>
+          )}
           <Typography className={classes.info} variant="h3" gutterBottom>
             CREDIT CARD
           </Typography>

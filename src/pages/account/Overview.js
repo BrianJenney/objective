@@ -3,16 +3,14 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { fonts } from '../../components/Theme/fonts.js';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+
 import { NavLink } from '../../components/common';
+import { Button} from '../../components/common';
+import PropTypes from 'prop-types';
+import { withLogout } from '../../hoc';
 
 const pStyle = {
   padding: 20
@@ -100,10 +98,18 @@ const AccountOverview = props => {
       <p>
         <strong>SAVED PAYMENT METHOD</strong>
       </p>
+      {xs ? (<Button mt={2} mp={3} fullWidth type="submit" onClick={props.logout}>
+              Logout
+      </Button>) : ''}
     </div>
   );
   return (
     <RenderOverview />
   );
 };
-export default AccountOverview;
+
+AccountOverview.propTypes = {
+  logout: PropTypes.func.isRequired,
+
+};
+export default withLogout(AccountOverview);

@@ -12,6 +12,7 @@ import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
 
+
 const schema = object().shape({
   firstName: string(),
   lastName: string(),
@@ -116,9 +117,9 @@ const ProfileDetails = props => {
   };
   return (
     <div className="account-profile">
-      <Typography className={classes.title} variant="h1" gutterBottom>
+      { xs ? '' : (<Typography className={classes.title} variant="h1" gutterBottom>
         Your Profile
-      </Typography>
+      </Typography> )}
       <Typography className={classes.info} variant="h3" gutterBottom>
         NAME {'&'} EMAIL
       </Typography>
