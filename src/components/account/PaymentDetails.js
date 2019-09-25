@@ -86,13 +86,24 @@ const AccountPaymentDetails = ({
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
-  const actionError = get(currentUser, 'error.message', '');
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
     const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
     setSelectedIndex(defaultIndex);
   }, [currentUser.data.paymentMethods]);
+  useEffect(() => {
+    if (currentUser.error) {
+      const errors = Array.isArray(currentUser.error)
+        ? currentUser.error
+        : [currentUser.error];
+      const errorMessage = errors.map(err => err.message).join('\n');
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+        autoHideDuration: 5000
+      });
+    }
+  }, [currentUser.error]);
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
@@ -279,7 +290,6 @@ const AccountPaymentDetails = ({
           </Box>
         )}
       </Box>
-      {actionError && <AlertPanel mb={2} type="error" text={actionError} />}
       {!addModeEnabled && (
         <ButtonGroup fullWidth aria-label="full width button group">
           {onBack && (
