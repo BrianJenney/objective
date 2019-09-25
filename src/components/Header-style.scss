@@ -23,6 +23,11 @@
 
   .holder {
     width: 100%;
+    button {
+      .MuiButton-label {
+        align-items: initial;
+      }
+    }
   }
 
   .headerBar {

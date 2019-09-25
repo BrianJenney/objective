@@ -4,10 +4,10 @@ import { Switch, Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
 import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
 import { fonts } from '../../components/Theme/fonts';
-import { makeStyles } from '@material-ui/core/styles';
 
 import './account-style.scss';
 export { default as AccountOverviewPage } from './Overview';

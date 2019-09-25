@@ -14,6 +14,7 @@ import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
+import Logo from '../components/common/Icons/Logo/Logo';
 import './Header-style.scss';
 import Typography from '@material-ui/core/Typography';
 
@@ -103,7 +104,7 @@ const Header = ({ currentUser, location }) => {
               </Grid>
             </Grid>
           </>
-        ) : (!isCheckoutPage ? (
+        ) : !isCheckoutPage ? (
           <>
             <div className="headerBar">
               <Container>
@@ -137,7 +138,9 @@ const Header = ({ currentUser, location }) => {
                     </Grid>
                   </Grid>
                   <Grid item xs={4} className="logo text-center">
-                    <NavLink to="/">OBJECTIVE</NavLink>
+                    <NavLink to="/">
+                      <Logo />
+                    </NavLink>
                   </Grid>
                   <Grid item xs={4}>
                     <Grid container className="align-right">
@@ -156,10 +159,19 @@ const Header = ({ currentUser, location }) => {
               </Container>
             </div>
           </>
-        ) : (<>
-        <Typography style={{fontSize: 48, fontFamily: 'p22-underground, Helvetica, sans'}}> Truehealth</Typography>
-        </>))
-        }
+        ) : (
+          <>
+            <Typography
+              style={{
+                fontSize: 48,
+                fontFamily: 'p22-underground, Helvetica, sans'
+              }}
+            >
+              {' '}
+              Truehealth
+            </Typography>
+          </>
+        )}
       </Grid>
     </Grid>
   );

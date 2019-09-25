@@ -74,13 +74,14 @@ const LoggedInUser = ({ name, logout }) => {
         margin="0 10px"
         aria-haspopup="true"
         onClick={handleClick}
-        style={{ backgroundColor: 'transparent' }}
+        style={{ backgroundColor: 'transparent', padding: 0 }}
       >
         <Typography
           style={{
             fontFamily: $brandSans,
             fontSize: '16px',
-            letterSpacing: '1px'
+            letterSpacing: '1px',
+            lineHeight: '1rem'
           }}
         >
           Hi, {name}
