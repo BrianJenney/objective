@@ -33,20 +33,17 @@ const Products = () => {
         }
       });
   });
-  //Replace colors in DB with these:
-  const colors = { TMNO: '#88341f', TIMN: '#003833', TSGF: '#003670' };
 
   return (
     <Container>
-      <Grid container xs={12}>
-        {productSlugs.map((productSlug, id) => (
+      <Grid container spacing={4}>
+        {productSlugs.map(productSlug => (
           <ProductSummary
             key={productSlug}
-            ind={id}
             product={productMap.get(productSlug)}
             styleMap={{
-              container: { borderColor: colors[productSlug] },
-              text: { color: colors[productSlug] }
+              container: { borderColor: productMap.get(productSlug).color },
+              text: { color: productMap.get(productSlug).color }
             }}
             variantMap={variantMap}
           />
