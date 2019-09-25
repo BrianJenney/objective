@@ -1,5 +1,5 @@
 import store from '../../store';
-import { receivedCreateOrder, receivedGetOrder } from './actions';
+import { receivedCreateOrder, receivedGetOrder, receivedTransactionRequestRefund } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 
@@ -45,6 +45,15 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       console.log(properties);
       // This is in the *account* module, so state updates are made in that reducer.
       store.dispatch(receivedGetOrder(data));
+      break;
+    case 'transaction.request.refund':
+        console.log('***** Transaction Request refund');
+        console.log(status);
+        console.log(data);
+        console.log(fields);
+        console.log(properties);
+        store.dispatch(receivedTransactionRequestRefund(data));
+
       break;
     default:
       console.log('bad response ' + fields.routingKey);
