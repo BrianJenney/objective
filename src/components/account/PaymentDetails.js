@@ -226,21 +226,25 @@ const AccountPaymentDetails = ({
                     />
                   </Box>
                 )}
-                <EditablePanel
-                  title=""
-                  defaultValues={creditCardEntity}
-                  Summary={PaymentSummary}
-                  onRemove={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => deleteCreditCard(creditCardEntity.token)
-                  }
-                  onSetDefault={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => setDefaultCreditCard(creditCardEntity.token)
-                  }
-                />
+                <Box
+                  maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={creditCardEntity}
+                    Summary={PaymentSummary}
+                    onRemove={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => deleteCreditCard(creditCardEntity.token)
+                    }
+                    onSetDefault={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => setDefaultCreditCard(creditCardEntity.token)
+                    }
+                  />
+                </Box>
               </Box>
             </Grid>
           ))}

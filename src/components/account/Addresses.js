@@ -202,23 +202,27 @@ const AccountAddresses = ({
                     />
                   </Box>
                 )}
-                <EditablePanel
-                  title=""
-                  defaultValues={addressEntity}
-                  onFormSubmit={(...args) => handleSave(...args, index)}
-                  Form={AddressForm}
-                  Summary={AddressSummary}
-                  onRemove={
-                    addressEntity.isDefault
-                      ? undefined
-                      : () => deleteAddress(index)
-                  }
-                  onSetDefault={
-                    addressEntity.isDefault
-                      ? undefined
-                      : () => setDefaultAddress(index)
-                  }
-                />
+                <Box
+                  maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={addressEntity}
+                    onFormSubmit={(...args) => handleSave(...args, index)}
+                    Form={AddressForm}
+                    Summary={AddressSummary}
+                    onRemove={
+                      addressEntity.isDefault
+                        ? undefined
+                        : () => deleteAddress(index)
+                    }
+                    onSetDefault={
+                      addressEntity.isDefault
+                        ? undefined
+                        : () => setDefaultAddress(index)
+                    }
+                  />
+                </Box>
               </Box>
             </Grid>
           ))}
