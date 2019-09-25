@@ -9,6 +9,7 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
+  RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD
 } from './types';
@@ -119,6 +120,14 @@ export const receivedPatchAccount = account => dispatch => {
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT,
     payload: account
+  });
+};
+
+export const receivedPatchAccountFailure = err => dispatch => {
+  console.log('ACTION', err);
+  dispatch({
+    type: RECEIVED_PATCH_ACCOUNT_FAILURE,
+    payload: err
   });
 };
 

@@ -4,7 +4,8 @@ import {
   receivedFetchAccount,
   receivedLoginFailure,
   receivedLoginSuccess,
-  receivedPatchAccount
+  receivedPatchAccount,
+  receivedPatchAccountFailure
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields) => {
@@ -16,7 +17,11 @@ export const handleAccountResponse = (status, data, fields) => {
       store.dispatch(receivedFetchAccount(data));
       break;
     case 'account.request.patch':
-      store.dispatch(receivedPatchAccount(data));
+      if (status === 'success') {
+        store.dispatch(receivedPatchAccount(data));
+      } else {
+        store.dispatch(receivedPatchAccountFailure(data));
+      }
       break;
     case 'account.request.login':
       if (status === 'success') {
