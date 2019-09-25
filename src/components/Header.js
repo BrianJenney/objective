@@ -125,12 +125,12 @@ const Header = ({ currentUser, location }) => {
                 <Grid container>
                   <Grid item xs={4}>
                     <Grid container>
-                      <Grid item xs={6}>
+                      <Grid item xs={6} className="h-pding">
                         <StyledLink component={RouterLink} to="/gallery">
                           Shop
                         </StyledLink>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={6} className="h-pding">
                         <StyledLink component={RouterLink} to="/">
                           Science
                         </StyledLink>
@@ -144,13 +144,13 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <Grid container className="align-right">
-                      <Grid item xs={6}>
+                      <Grid item xs={6} className="h-pding">
                         <StyledLink
                           component={RouterLink}
                           {...accountMenuItemConf}
                         />
                       </Grid>
-                      <Grid item xs={6} className="header-shop-holder">
+                      <Grid item xs={6} className="header-shop-holder h-pding">
                         {!isCheckoutPage && <ShoppingCart />}
                       </Grid>
                     </Grid>

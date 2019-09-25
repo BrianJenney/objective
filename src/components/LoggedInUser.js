@@ -69,7 +69,7 @@ const LoggedInUser = ({ name, logout }) => {
   return xs ? (
     <NavLink to="/account/overview">Hi, {name}</NavLink>
   ) : (
-    <div>
+    <div className="logged-in-user-desktop">
       <Button
         margin="0 10px"
         aria-haspopup="true"
