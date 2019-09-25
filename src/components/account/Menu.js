@@ -8,14 +8,14 @@ import { ACCOUNT_MENU_KEYS, ACCOUNT_MENU_ITEMS } from '../../constants/menu';
 import { NavLink, MenuLink } from '../common';
 import { withLogout } from '../../hoc';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles,makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
 import {withRouter} from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
-
+import Typography from '@material-ui/core/Typography';
 const StyledMenuItem = withStyles(theme => ({
   root: {
     fontFamily: 'p22-underground',
@@ -26,9 +26,26 @@ const StyledMenuItem = withStyles(theme => ({
   }
 }))(MenuItem);
 
+const useStyles = makeStyles(theme => ({
+  
+  accountHeaderMobile : {
+    fontSize : '24px',
+    color : '#231f20',
+    fontFamily: 'p22-underground, sans-serif',
+    fontWeight : '600',
+    marginTop: '32px'
+  },
+  nxTextField : { 
+    fontFamily: 'P22-underground', 
+    fontSize: '18px' , 
+    marginTop: '5px', 
+    border: '1px solid #000000'}
+}));
+
 const AccountMenu = ({ logout}) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const classes = useStyles();
 
   const [selected,setSelected] = useState(window.location.pathname);
 
@@ -36,7 +53,7 @@ const AccountMenu = ({ logout}) => {
   const NTextField = withRouter(({history}) =>(
     
     <TextField 
-    style={{ fontFamily: 'P22-underground', fontSize: '18px' , marginTop: '50px'}}
+    className={classes.nxTextField}
     variant="outlined"
     fullWidth
     select
@@ -55,9 +72,13 @@ const AccountMenu = ({ logout}) => {
   );
   
   return xs ? (
-   
+  <>
+  <Typography className={classes.accountHeaderMobile} variant="h1">
+        ACCOUNT
+      </Typography>
+    
  <NTextField/>  
-
+</>
   ) : (
     
     <Box width={1} className="account-menu-box">
