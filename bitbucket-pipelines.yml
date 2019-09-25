@@ -53,7 +53,7 @@ pipelines:
             # add bits react needs to build_env file
             - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
             - echo REACT_APP_CLOUDAMQP_HOSTNAME=$DEV_RMQ_HOSTNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_USERNAME=$RDEV_RMQ_USERNAME >> build_env
+            - echo REACT_APP_CLOUDAMQP_USERNAME=$DEV_RMQ_USERNAME >> build_env
             - echo REACT_APP_CLOUDAMQP_PASSWORD=$DEV_RMQ_PASSWORD >> build_env
             - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
             - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
