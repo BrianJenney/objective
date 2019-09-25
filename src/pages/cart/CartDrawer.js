@@ -58,6 +58,7 @@ const Cart = ({
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
+  const isTaxCalculationInProgress = useSelector(state => state.tax.isLoading);
   //const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -330,7 +331,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductPrice style={{ 'font-size': '18px' }}>
-                {totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$XXX.XX'}
+                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : ''}
               </StyledProductPrice>
             </Grid>
           </Grid>
