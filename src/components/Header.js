@@ -87,9 +87,11 @@ const Header = ({ currentUser, location }) => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJ</NavLink>
+                <NavLink to="/">
+                  <Logo />
+                </NavLink>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={1} className="mobile-cart-icon">
                 {!isCheckoutPage && <ShoppingCart />}
               </Grid>
             </Grid>
@@ -144,7 +146,7 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <Grid container className="align-right">
-                      <Grid item xs={6} className="h-pding">
+                      <Grid item xs={6} className="acct h-pding">
                         <StyledLink
                           component={RouterLink}
                           {...accountMenuItemConf}
