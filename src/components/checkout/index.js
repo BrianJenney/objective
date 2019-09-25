@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { get, isNil } from 'lodash';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +18,7 @@ import { getDefaultEntity } from '../../utils/misc';
 import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
+import { requestCalculateTax } from '../../modules/tax/actions'
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -90,6 +92,8 @@ const Checkout = ({
 }) => {
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
+  const subtotal = useSelector(state => state.cart.subtotal);
+  const dispatch = useDispatch();
   const { account_jwt, email: currentUserEmail } = currentUser.data;
 
   useEffect(() => {
@@ -97,6 +101,13 @@ const Checkout = ({
       history.push('/');
     }
   }, [currentUser.data.account_jwt]);
+
+  useEffect(() => {
+    if (activeStep === 2) {
+      console.log('Payload *********', { activeStep, shippingAddress: payload.shippingAddress, subtotal});
+      dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
+    }
+  },[activeStep, payload.shippingAddress, subtotal, dispatch, requestCalculateTax]);
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];

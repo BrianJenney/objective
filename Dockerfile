@@ -3,7 +3,8 @@ FROM node:10 as build-stage
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
-RUN npm install --silent
+COPY package-lock.json /app/package-lock.json
+RUN npm ci
 COPY . /app
 COPY build_env /app/.env
 RUN npm run build
