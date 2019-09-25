@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-router-dom';
@@ -17,8 +17,10 @@ import {StyledArrowIcon, StyledSmallCaps} from '../../pages/cart/StyledComponent
 import { formatDateTime } from '../../utils/misc';
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
+import { Button as CommonButton} from '../../components/common';
 import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 import StatusStepper from './StatusStepper';
+import { requestRefundTransaction } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,6 +73,18 @@ const OrderCartSummary = ({ cart }) => {
   return cart ? <CartSummary cart={cart} /> : null;
 };
 
+const refundTransaction = (accountJwt,orderId,transaction,dispatch) => {
+  
+  const refundedTransaction = {
+    braintreeId: transaction.braintreeId,
+    amount: transaction.amount,
+    orderId: orderId
+
+  };
+  dispatch(requestRefundTransaction(accountJwt, refundedTransaction));
+  
+}
+
 const OrderSummary = ({
   account,
   cart,
@@ -80,14 +94,26 @@ const OrderSummary = ({
   createdAt,
   addressesWidth,
   xs,
-  statusStepperDate
+  statusStepperDate,
+  orderStatus
 }) => {
   const { cardType, last4 } = transactions[0].paymentMethod;
   const {
     shippingAddress,
     paymentDetails: { billingAddress },
   } = cart;
-  const { email, phoneBook } = account.data;
+  const { email, phoneBook, account_jwt } = account.data;
+  const dispatch = useDispatch();
+
+  let orderRefunded = false;
+
+  transactions.map(transaction => {
+    if(transaction.transactionStatus==="voided"){
+      orderRefunded = true;
+    }
+  })
+
+  console.log('tra',transactions)
   return (
     <Box className={classes.paper}>
       <Box>
@@ -108,6 +134,10 @@ const OrderSummary = ({
       </Typography>
       <br />
       <StatusStepper statusStepperDate={statusStepperDate}/>
+      {orderStatus!=='placedd' ? (<CommonButton style={{padding:"23px 23px",marginBottom:"25px",width:"210px"}} onClick={() => {if(!orderRefunded){refundTransaction(account_jwt,orderId,transactions[0],dispatch)}}}>
+        {orderRefunded ? 'Order Refunded' : 'Cancel Order'}
+        
+      </CommonButton>) : ''}
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
@@ -150,8 +180,11 @@ const OrderSummary = ({
 };
 
 const OrderDetail = () => {
+ 
   const account = useSelector(state => state.account);
+  
   const order = useSelector(state => state.order.order);
+  
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -161,6 +194,7 @@ const OrderDetail = () => {
 
   if (!order) return null;
   const { cart, transactions } = order;
+  
   const statusStepperDate = getStatusStepperDate(order);
 
   return (
@@ -176,6 +210,7 @@ const OrderDetail = () => {
                 createdAt={formatDateTime(order.createdAt, false)}
                 cart={cart}
                 transactions={transactions}
+                orderStatus={order.status}
                 classes={classes}
                 addressesWidth={addressesWidth}
                 xs={xs}
