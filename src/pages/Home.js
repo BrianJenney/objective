@@ -69,7 +69,7 @@ export default class Home extends Component {
     if (!this.state.content.homepageSection) return <></>;
 
     return this.state.content.homepageSection.map(section => (
-      <div className="homepage-section">
+      <div className="section">
         {documentToReactComponents(
           section.fields.mainContent,
           contentfulOptions
@@ -93,9 +93,26 @@ export default class Home extends Component {
             <h1>{welcomeHeader}</h1>
             <p>{welcomeText}</p>
           </Box>
-
-          {this.renderSections()}
         </Container>
+        <div className="home-bestsellers">
+          <Container>
+            <Box py={10}>
+              <h1>Our Bestsellers</h1>
+              <p>TILES HERE!</p>
+            </Box>
+          </Container>
+        </div>
+        <Container>
+          <Box py={10}>{this.renderSections()}</Box>
+        </Container>
+        <div className="home-bestsellers">
+          <Container>
+            <Box py={10}>
+              <h1>HIS, HERS & THEIRS</h1>
+              <p>Solutions for the whole family!</p>
+            </Box>
+          </Container>
+        </div>
       </div>
     );
   }

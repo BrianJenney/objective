@@ -14,7 +14,7 @@ import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
-import Logo from '../components/common/Icons/Logo/Logo';
+import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
 
