@@ -21,9 +21,9 @@ pipelines:
             - apk add curl
             # add bits react needs to build_env file
             - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
-            - echo REACT_APP_CLOUDAMQP_HOSTNAME=$REACT_APP_CLOUDAMQP_HOSTNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_USERNAME=$REACT_APP_CLOUDAMQP_USERNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_PASSWORD=$REACT_APP_CLOUDAMQP_PASSWORD >> build_env
+            - echo REACT_APP_CLOUDAMQP_HOSTNAME=$RMQ_HOSTNAME >> build_env
+            - echo REACT_APP_CLOUDAMQP_USERNAME=$RMQ_USERNAME >> build_env
+            - echo REACT_APP_CLOUDAMQP_PASSWORD=$RMQ_PASSWORD >> build_env
             - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
             - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
             - echo REACT_APP_VOUCHERIFY_URL=$REACT_APP_VOUCHERIFY_URL >> build_env
@@ -52,9 +52,9 @@ pipelines:
             - apk add curl
             # add bits react needs to build_env file
             - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
-            - echo REACT_APP_CLOUDAMQP_HOSTNAME=$REACT_APP_CLOUDAMQP_HOSTNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_USERNAME=$REACT_APP_CLOUDAMQP_USERNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_PASSWORD=$REACT_APP_CLOUDAMQP_PASSWORD >> build_env
+            - echo REACT_APP_CLOUDAMQP_HOSTNAME=$DEV_RMQ_HOSTNAME >> build_env
+            - echo REACT_APP_CLOUDAMQP_USERNAME=$RDEV_RMQ_USERNAME >> build_env
+            - echo REACT_APP_CLOUDAMQP_PASSWORD=$DEV_RMQ_PASSWORD >> build_env
             - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
             - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
             - echo REACT_APP_VOUCHERIFY_URL=$REACT_APP_VOUCHERIFY_URL >> build_env
