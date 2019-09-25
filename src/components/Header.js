@@ -144,7 +144,7 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <Grid container className="align-right">
-                      <Grid item xs={6} className="h-pding">
+                      <Grid item xs={6} className="acct h-pding">
                         <StyledLink
                           component={RouterLink}
                           {...accountMenuItemConf}
