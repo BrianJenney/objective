@@ -4,15 +4,16 @@ import { pick } from 'lodash';
 import Box from '@material-ui/core/Box';
 import { FormSummarySection } from '../common';
 
-const PAYMENT_FIELDS = ['name', 'last4', 'expirationDate'];
+const PAYMENT_FIELDS = ['name', 'cardType', 'last4', 'expirationDate'];
 const labelsMap = {
   name: 'Name',
+  cardType: 'Card Type',
   last4: 'Last 4 digits',
   expirationDate: 'Expires'
 };
-const getValuesWithoutLabels = ({ name, last4, expirationDate }) => [
-  last4,
-  expirationDate,
+const getValuesWithoutLabels = ({ name, cardType, last4, expirationDate }) => [
+  `${cardType} ${last4}`,
+  `Expires ${expirationDate}`,
   name
 ];
 

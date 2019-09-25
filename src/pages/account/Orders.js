@@ -9,6 +9,8 @@ import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime } from '../../utils/misc';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const columns = [
   {
@@ -114,6 +116,8 @@ const columns = [
 const AccountOrders = ({ currentUser: { data } }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
     if (!data.orders) {
@@ -128,7 +132,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
     <Grid container direction="column" spacing={3} className="account-orders">
       <Grid item sm={12} md={12} lg={12}>
         <DataTable
-          title={'Your Orders'}
+          title={xs? '' : 'Your Orders'}
           data={data.orders}
           columns={columns}
           isLoading={isLoading}

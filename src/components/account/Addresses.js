@@ -10,6 +10,8 @@ import { fonts } from '../Theme/fonts';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -67,6 +69,8 @@ const AccountAddresses = ({
   location,
   ...rest
 }) => {
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
   /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   will fix later, it broke the code*/
@@ -174,7 +178,7 @@ const AccountAddresses = ({
           fontFamily="Canela Text, serif"
           mb={4}
         />
-      ) : (
+      ) :  xs ? '' : (
         <Typography className={classes.title} variant="h1" gutterBottom>
           Saved Addresses
         </Typography>
@@ -202,23 +206,27 @@ const AccountAddresses = ({
                     />
                   </Box>
                 )}
-                <EditablePanel
-                  title=""
-                  defaultValues={addressEntity}
-                  onFormSubmit={(...args) => handleSave(...args, index)}
-                  Form={AddressForm}
-                  Summary={AddressSummary}
-                  onRemove={
-                    addressEntity.isDefault
-                      ? undefined
-                      : () => deleteAddress(index)
-                  }
-                  onSetDefault={
-                    addressEntity.isDefault
-                      ? undefined
-                      : () => setDefaultAddress(index)
-                  }
-                />
+                <Box
+                  maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={addressEntity}
+                    onFormSubmit={(...args) => handleSave(...args, index)}
+                    Form={AddressForm}
+                    Summary={AddressSummary}
+                    onRemove={
+                      addressEntity.isDefault
+                        ? undefined
+                        : () => deleteAddress(index)
+                    }
+                    onSetDefault={
+                      addressEntity.isDefault
+                        ? undefined
+                        : () => setDefaultAddress(index)
+                    }
+                  />
+                </Box>
               </Box>
             </Grid>
           ))}

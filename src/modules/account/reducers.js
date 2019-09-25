@@ -9,6 +9,7 @@ import {
   RECEIVED_LOGIN_SUCCESS,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT,
+  RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD
 } from './types';
@@ -48,6 +49,7 @@ export default (state = INITIAL_STATE, action) => {
           ...action.payload
         }
       };
+    case RECEIVED_PATCH_ACCOUNT_FAILURE:
     case RECEIVED_LOGIN_FAILURE:
       return {
         error: action.payload,

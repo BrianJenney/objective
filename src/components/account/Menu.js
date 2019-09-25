@@ -43,7 +43,7 @@ const AccountMenu = ({ logout}) => {
     value = {selected}
     onChange = {(e) => {history.push(e.target.value,history.location.state); setSelected(e.target.value)}}
     >
-        {ACCOUNT_MENU_ITEMS.map(menuItem => (
+        {ACCOUNT_MENU_ITEMS.filter(item => item.key !== ACCOUNT_MENU_KEYS.LOGOUT).map(menuItem => (
            <MenuItem key={menuItem.key} value={menuItem.to}>
            {menuItem.label}
          </MenuItem>

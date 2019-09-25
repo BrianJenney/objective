@@ -14,6 +14,8 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -73,6 +75,8 @@ const AccountPaymentDetails = ({
   location,
   ...rest
 }) => {
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
   /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   will fix later, it broke the code*/
@@ -86,6 +90,7 @@ const AccountPaymentDetails = ({
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
+  const actionError = get(currentUser, 'error.message', '');
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
@@ -121,8 +126,9 @@ const AccountPaymentDetails = ({
       const payload = {
         newCreditCard: {
           name: paymentDetails.cardholderName,
-          last4: `${details.cardType} ${details.lastFour}`,
-          expirationDate: `Expires ${paymentDetails.expirationDate}`,
+          cardType: details.cardType,
+          last4: details.lastFour,
+          expirationDate: paymentDetails.expirationDate,
           billingAddress
         },
         nonce
@@ -193,9 +199,11 @@ const AccountPaymentDetails = ({
         </Box>
       ) : (
         <div>
+          { xs ? '' : (
           <Typography className={classes.title} variant="h1" gutterBottom>
             Payment Details
           </Typography>
+          )}
           <Typography className={classes.info} variant="h3" gutterBottom>
             CREDIT CARD
           </Typography>
@@ -224,21 +232,25 @@ const AccountPaymentDetails = ({
                     />
                   </Box>
                 )}
-                <EditablePanel
-                  title=""
-                  defaultValues={creditCardEntity}
-                  Summary={PaymentSummary}
-                  onRemove={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => deleteCreditCard(creditCardEntity.token)
-                  }
-                  onSetDefault={
-                    creditCardEntity.isDefault
-                      ? undefined
-                      : () => setDefaultCreditCard(creditCardEntity.token)
-                  }
-                />
+                <Box
+                  maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}
+                >
+                  <EditablePanel
+                    title=""
+                    defaultValues={creditCardEntity}
+                    Summary={PaymentSummary}
+                    onRemove={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => deleteCreditCard(creditCardEntity.token)
+                    }
+                    onSetDefault={
+                      creditCardEntity.isDefault
+                        ? undefined
+                        : () => setDefaultCreditCard(creditCardEntity.token)
+                    }
+                  />
+                </Box>
               </Box>
             </Grid>
           ))}
@@ -273,6 +285,7 @@ const AccountPaymentDetails = ({
           </Box>
         )}
       </Box>
+      {actionError && <AlertPanel mb={2} type="error" text={actionError} />}
       {!addModeEnabled && (
         <ButtonGroup fullWidth aria-label="full width button group">
           {onBack && (
