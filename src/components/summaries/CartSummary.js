@@ -14,6 +14,8 @@ import {
   StyledTotalWrapper
 } from '../../pages/cart/StyledComponents';
 
+import { calculateCartTotals } from '../../modules/cart/functions';
+
 import { colorPalette } from '../Theme/color-palette';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -58,6 +60,7 @@ const { MEDIUM_GRAY } = colorPalette;
 
 const CartSummary = ({ cart }) => {
   const classes = useStyles();
+  const totalSummary = calculateCartTotals(cart);
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -115,7 +118,7 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${cart.subtotal.toFixed(2)}`}
+                {`$${totalSummary.subtotal.toFixed(2)}`}
               </StyledSmallCaps>
             </Grid>
           </StyledTotalWrapper>
@@ -155,7 +158,7 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                $XXX.xx
+                {`$${totalSummary.calculatedTax ? totalSummary.calculatedTax.toFixed(2) : 'XXX'}`}
               </StyledSmallCaps>
             </Grid>
           </Grid>
@@ -178,7 +181,7 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <Typography className={classes.total}>
-                {`$${cart.total.toFixed(2)}`}
+                {`$${totalSummary.total.toFixed(2)}`}
               </Typography>
             </Grid>
           </Grid>
