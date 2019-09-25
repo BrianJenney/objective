@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { isNil, isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
@@ -68,25 +68,27 @@ const PaymentForm = ({
   backLabel,
   allowFlyMode
 }) => {
-  const [initialValues, setInitialValues] = useState(
-    getInitialValues(INITIAL_VALUES, defaultValues)
-  );
-  const handleUseAddressSeedToggle = event => {
+  const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
-      setInitialValues({
-        ...initialValues,
+      setValues({
+        ...values,
         billingAddress: {
-          ...initialValues.billingAddress,
+          ...values.billingAddress,
           ...addressSeed
         }
       });
     } else {
-      setInitialValues(getInitialValues(INITIAL_VALUES, defaultValues));
+      setValues({
+        ...values,
+        billingAddress: {
+          ...INITIAL_VALUES.billingAddress
+        }
+      });
     }
   };
 
   /* eslint-disable */
-  const renderForm = ({ values }) => (
+  const renderForm = ({ values, setValues }) => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
@@ -142,7 +144,9 @@ const PaymentForm = ({
                 <Box display="flex" alignItems="center">
                   <Checkbox
                     id="useAddressSeedToggle"
-                    onChange={handleUseAddressSeedToggle}
+                    onChange={evt =>
+                      handleUseAddressSeedToggle(evt, values, setValues)
+                    }
                   />
                   <Typography children={useSeedLabel} />
                 </Box>
@@ -244,10 +248,9 @@ const PaymentForm = ({
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
       onSubmit={onSubmit}
       render={renderForm}
-      enableReinitialize
     />
   );
 };
