@@ -20,7 +20,7 @@ import Button from "@material-ui/core/Button";
 import { Button as CommonButton} from '../../components/common';
 import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 import StatusStepper from './StatusStepper';
-import { requestRefundTransaction } from '../../modules/order/actions';
+import { requestRefundTransaction,receivedTransactionRequestRefund } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -113,7 +113,7 @@ const OrderSummary = ({
     }
   })
 
-  console.log('tra',transactions)
+  
   return (
     <Box className={classes.paper}>
       <Box>
@@ -134,7 +134,7 @@ const OrderSummary = ({
       </Typography>
       <br />
       <StatusStepper statusStepperDate={statusStepperDate}/>
-      {orderStatus!=='placedd' ? (<CommonButton style={{padding:"23px 23px",marginBottom:"25px",width:"210px"}} onClick={() => {if(!orderRefunded){refundTransaction(account_jwt,orderId,transactions[0],dispatch)}}}>
+      {orderStatus!=='shipped' ? (<CommonButton style={{padding:"23px 23px",marginBottom:"25px",width:"210px"}} onClick={() => {if(!orderRefunded){refundTransaction(account_jwt,orderId,transactions[0],dispatch)}}}>
         {orderRefunded ? 'Order Refunded' : 'Cancel Order'}
         
       </CommonButton>) : ''}
@@ -184,6 +184,7 @@ const OrderDetail = () => {
   const account = useSelector(state => state.account);
   
   const order = useSelector(state => state.order.order);
+
   
   const theme = useTheme();
   const classes = useStyles();

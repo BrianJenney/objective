@@ -34,7 +34,7 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_REFUND_TRANSACTION:
       return {...state, refunding:true};
     case RECEIVED_TRANSACTION_REQUEST_REFUND:
-      return {...state, refunding:false};  
+      return {...state, order: action.payload, refunding:false};  
     default:
       return state;
   }
