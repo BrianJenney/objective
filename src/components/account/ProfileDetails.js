@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -11,6 +11,7 @@ import { Button, AlertPanel } from '../common';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
+import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
 const schema = object().shape({
   firstName: string(),
@@ -63,6 +64,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProfileDetails = props => {
+  const [isClicked, handleSubmitBtn] = useState(false);
+
+  const handleSubmit = useCallback(
+    values => {
+      store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
+      //handleSubmitBtn(!isClicked);
+    },
+    [isClicked, handleSubmitBtn]
+  );
+
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -76,9 +87,13 @@ const ProfileDetails = props => {
   if (!account.data.account_jwt) {
     return <div>No Account</div>;
   }
-  const handleSubmit = values => {
-    store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
-  };
+
+  // const handleSubmit = values => {
+  //   console.log('click click');
+  //   store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
+  // };
+
+
   const renderForm = () => {
     return (
       <Form>
@@ -96,24 +111,26 @@ const ProfileDetails = props => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
-            {props.account.data.errorMessage && (
+            {account.error && (
               <AlertPanel
                 my={2}
                 p={2}
                 type="error"
                 bgcolor="#ffcdd2"
-                text={props.account.data.errorMessage}
+                text={account.error}
                 variant="subtitle2"
               />
             )}
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
+
           </Grid>
         </Grid>
       </Form>
     );
   };
+  //{isClicked ? <ProfileUpdateFeedback error={account.error} /> : null}
   return (
     <div className="account-profile">
       <Typography className={classes.title} variant="h1" gutterBottom>
