@@ -2,13 +2,8 @@ import { requestPatchCart } from '../../modules/cart/actions';
 
 import store from '../../store';
 
-<<<<<<< HEAD
-const calculateCartTotals = cart => {
-  let subtotal = cart.items.reduce(function(prev, curr) {
-=======
 export const calculateCartTotals = cart => {
   let subtotal = cart.items.reduce(function (prev, curr) {
->>>>>>> 8e18d4bcf227c95eee84afa089a827d54d81c735
     return prev + curr.unit_price * curr.quantity;
   }, 0.0);
 
