@@ -18,20 +18,18 @@ const Gallery = () => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   return (
-    <ScrollToTop>
-      <Box pb={10}>
-        <Box mb={10} className="hero-holder">
-          {mobile ? (
-            <img src={imageHeroMobile} alt="" className="gallery-hero" />
-          ) : (
-              <img src={imageHeroDesktop} alt="" className="gallery-hero" />
-            )}
-        </Box>
-        <GalleryStore productIds={productIds}>
-          <Products></Products>
-        </GalleryStore>
+    <Box>
+      <Box className="hero-holder">
+        {mobile ? (
+          <img src={imageHeroMobile} alt="" className="gallery-hero" />
+        ) : (
+          <img src={imageHeroDesktop} alt="" className="gallery-hero" />
+        )}
       </Box>
-    </ScrollToTop>
+      <GalleryStore productIds={productIds}>
+        <Products></Products>
+      </GalleryStore>
+    </Box>
   );
 };
 

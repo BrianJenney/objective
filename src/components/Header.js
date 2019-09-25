@@ -16,7 +16,7 @@ import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
 import Logo from '../components/common/Icons/Logo/Logo';
 import './Header-style.scss';
-import Typography from '@material-ui/core/Typography';
+import CheckoutHeader from './CheckoutHeader';
 
 const StyledLink = withStyles(() => ({
   root: {
@@ -160,17 +160,7 @@ const Header = ({ currentUser, location }) => {
             </div>
           </>
         ) : (
-          <>
-            <Typography
-              style={{
-                fontSize: 48,
-                fontFamily: 'p22-underground, Helvetica, sans'
-              }}
-            >
-              {' '}
-              Truehealth
-            </Typography>
-          </>
+          <CheckoutHeader />
         )}
       </Grid>
     </Grid>

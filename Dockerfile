@@ -3,7 +3,8 @@ FROM node:10 as build-stage
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
-RUN npm install --silent
+COPY package-lock.json /app/package-lock.json
+RUN npm ci
 COPY . /app
 COPY build_env /app/.env
 RUN npm run build
@@ -15,7 +16,7 @@ COPY --from=build-stage /app/build/ /usr/share/nginx/html
 
 # Copy our nginx.conf to image
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha
+RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha.txt
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget localhost:80/ -q -O - > /dev/null 2>&1
 CMD ["nginx", "-g", "daemon off;"]

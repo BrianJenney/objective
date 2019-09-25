@@ -5,7 +5,8 @@
 .opt1,
 .opt2 {
   border: 1px solid #8b3a26;
-  padding: 20px;
+  padding: 33px 30px 34px 45px;
+  height: 484px;
 }
 .gallery-hero {
   width: 100%;
@@ -17,18 +18,20 @@
   }
 }
 .opt1 {
-  min-height: 474px;
+  max-height: 524px;
+  max-width: 706px;
+
   .blurb-img {
     width: 100%;
     padding: 10px 10px 0px 20px;
   }
   h3 {
     font-family: 'CanelaText';
-    color: #88341f;
     line-height: 1.4;
-    margin: 0 0 10px;
+    margin: 10px 0 10px;
     font-weight: 500;
-    font-size: 36px;
+    font-size: 28px;
+    width: 516px;
   }
   p {
     font-size: 18px;
@@ -36,19 +39,21 @@
     max-height: 222px;
     overflow: hidden;
   }
-  .icon {
-    margin-bottom: 10px;
+  .blurb-icon {
+    margin-bottom: 35px;
   }
   hr {
-    background-color: #88341f;
+    background-color: blue;
   }
   .leftside {
-    padding-right: 20px;
+    padding-right: 54px;
   }
 }
 
 .opt2 {
   padding: 0 !important;
+  margin-left: 23px;
+  width: 342px;
   .gallery-prod-card {
     text-align: left;
     .prod-name-holder {

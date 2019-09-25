@@ -17,7 +17,7 @@ import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag'
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
 
-import { removeFromCart, adjustQty } from '../../modules/cart/functions';
+import { removeFromCart, adjustQty, calculateCartTotals } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 import { colorPalette } from '../../components/Theme/color-palette';
@@ -90,7 +90,7 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-
+  const totalSummary = calculateCartTotals(cart);
   return (
     <Grid
       container
@@ -268,7 +268,7 @@ const Cart = ({
               </Grid>
               <Grid item xs={3} style={{ 'text-align': 'right' }}>
                 <StyledProductTotal style={{ 'font-size': '18px' }}>
-                  {`$${cart.subtotal.toFixed(2)}`}
+                  {`$${totalSummary.subtotal.toFixed(2)}`}
                 </StyledProductTotal>
               </Grid>
             </StyledTotalWrapper>
@@ -289,7 +289,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                {`$${shippingData.price.toFixed(2)}`}
+                {shippingData.price && `$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint component="p">{shippingData.name}</StyledFinePrint>
@@ -312,6 +312,26 @@ const Cart = ({
               <StyledProductTotal style={{ 'font-size': '18px' }}>
                 $XX.xx
               </StyledProductTotal>
+            </Grid>
+          </Grid>
+        ) : null}
+        {cart.items.length !== 0 && cart.calculatedTax ? (
+          <Grid
+            container
+            direction="row"
+            xs={12}
+            justify="space-between"
+            style={{ margin: '20px 0' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ 'font-size': '14px' }}>
+                Tax
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={6} style={{ 'text-align': 'right' }}>
+              <StyledProductPrice style={{ 'font-size': '18px' }}>
+                {totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$XXX.XX'}
+              </StyledProductPrice>
             </Grid>
           </Grid>
         ) : null}
@@ -347,7 +367,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductPrice style={{ 'font-size': '22px' }}>
-                {`$${cart.total.toFixed(2)}`}
+                {`$${totalSummary.total.toFixed(2)}`}
               </StyledProductPrice>
             </Grid>
           </Grid>

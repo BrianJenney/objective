@@ -9,7 +9,8 @@ import {
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
   REQUEST_FETCH_CART_BY_EMAIL,
-  REQUEST_REMOVE_CART_BY_ID
+  REQUEST_REMOVE_CART_BY_ID,
+  UPDATE_CART_WITH_TAX_CALCULATION
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -51,7 +52,7 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    data: {}
+    data: { storeCode:process.env.REACT_APP_STORE_CODE }
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -197,4 +198,11 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
     type: REQUEST_REMOVE_CART_BY_ID,
     payload: {}
   });
+};
+
+export const updateCartWithTaxCalculation = (tax, rate) => {
+  return {
+    type: UPDATE_CART_WITH_TAX_CALCULATION,
+    payload: {tax, rate}
+  };
 };

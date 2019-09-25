@@ -48,7 +48,7 @@ export const getProducts = (products, variants) => {
       variantSlugs: getVariantSlugs(product._id, variants),
       assets: product.assets,
       category: product.category,
-      color : product.color,
+      color: product.color,
       attributes: product.attributes.map(attribute => attribute.value)
     };
     productSlugs.push(product.slug);

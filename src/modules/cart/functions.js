@@ -2,7 +2,7 @@ import { requestPatchCart } from "../../modules/cart/actions";
 
 import store from '../../store';
 
-const calculateCartTotals = cart => {
+export const calculateCartTotals = cart => {
   let subtotal = cart.items.reduce(function (prev, curr) {
     return prev + curr.unit_price * curr.quantity;
   }, 0.00);
@@ -22,9 +22,15 @@ const calculateCartTotals = cart => {
     }
   }
 
+  let calculatedTax = null;
+  if (cart.calculatedTax) {
+    calculatedTax = cart.calculatedTax;
+    total += calculatedTax;
+  }
   return {
     discount,
     subtotal,
+    calculatedTax,
     total
   };
 };
@@ -37,7 +43,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   newItems.filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
       alreadyInCart = true;
-      item.quantity = quantity;
+      item.quantity += quantity;
     });
 
   if (!alreadyInCart) {
