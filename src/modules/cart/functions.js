@@ -1,13 +1,13 @@
-import { requestPatchCart } from "../../modules/cart/actions";
+import { requestPatchCart } from '../../modules/cart/actions';
 
 import store from '../../store';
 
 export const calculateCartTotals = cart => {
   let subtotal = cart.items.reduce(function (prev, curr) {
     return prev + curr.unit_price * curr.quantity;
-  }, 0.00);
+  }, 0.0);
 
-  let discount = 0.00;
+  let discount = 0.0;
   let total = subtotal;
 
   if (cart.promo) {
@@ -15,9 +15,9 @@ export const calculateCartTotals = cart => {
       discount = cart.promo.discount.amount_off / 100;
       total = subtotal - discount;
     } else if (cart.promo.discount.type === 'PERCENT') {
-      total = cart.items.reduce(function (prev, curr) {
+      total = cart.items.reduce(function(prev, curr) {
         return prev + curr.discount_price * curr.quantity;
-      }, 0.00);
+      }, 0.0);
       discount = subtotal - total;
     }
   }
@@ -40,7 +40,8 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   let newItems = cart.items;
   let alreadyInCart = false;
 
-  newItems.filter(item => item.sku === selectedVariant.sku)
+  newItems
+    .filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
       alreadyInCart = true;
       item.quantity += quantity;
@@ -49,7 +50,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   if (!alreadyInCart) {
     const newItem = {
       variant_name: selectedVariant.name,
-      variant_id: selectedVariant._id,
+      variant_id: selectedVariant.id,
       variant_img: selectedVariant.assets.imgs,
       sku: selectedVariant.sku,
       variantInfo: selectedVariant.variantInfo,
@@ -58,7 +59,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
       unit_price: parseFloat(selectedVariant.effectivePrice),
       discount_price: parseFloat(selectedVariant.effectivePrice),
       varSlug: selectedVariant.slug,
-      prodSlug: selectedVariant.prodSlug,
+      prodSlug: selectedVariant.prodSlug
     };
     newItems.push(newItem);
   }
@@ -112,8 +113,34 @@ export const removeFromCart = (cart, product) => {
 };
 
 export const addCoupon = (cart, promo) => {
-  const { campaign, category, code, discount, expiration_date, gift, is_referral_code, loyalty_card, metadata, object, start_date, type } = promo;
-  const promoCode = { campaign, category, code, discount, expiration_date, gift, is_referral_code, loyalty_card, metadata, object, start_date, type };
+  const {
+    campaign,
+    category,
+    code,
+    discount,
+    expiration_date,
+    gift,
+    is_referral_code,
+    loyalty_card,
+    metadata,
+    object,
+    start_date,
+    type
+  } = promo;
+  const promoCode = {
+    campaign,
+    category,
+    code,
+    discount,
+    expiration_date,
+    gift,
+    is_referral_code,
+    loyalty_card,
+    metadata,
+    object,
+    start_date,
+    type
+  };
 
   let localCart = cart;
   let items = cart.items;
@@ -122,7 +149,7 @@ export const addCoupon = (cart, promo) => {
     const discount = promoCode.discount.percent_off / 100;
 
     items.forEach(item => {
-      item.discount_price = item.unit_price - (item.unit_price * discount);
+      item.discount_price = item.unit_price - item.unit_price * discount;
     });
 
     localCart.items = items;

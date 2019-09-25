@@ -23,6 +23,29 @@
 
   .holder {
     width: 100%;
+    button {
+      .MuiButton-label {
+        align-items: initial;
+      }
+    }
+    .logo {
+      svg {
+        width: 240px;
+      }
+    }
+    .header-shop-holder {
+      button {
+        margin-top: -13px;
+      }
+    }
+    .h-pding {
+      padding-top: 20px;
+    }
+    .logged-in-user-desktop {
+      svg {
+        margin-top: -7px;
+      }
+    }
   }
 
   .headerBar {

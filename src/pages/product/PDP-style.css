@@ -52,21 +52,19 @@ html,
 }
 
 .pdp-direction-description {
-  width: 334px;
-  height: 32px;
-  font-family: FreightTextProBook;
-  font-size: 20px;
-  font-weight: normal;
+  font-family: FreightTextProBook !important;
+  font-size: 20px !important;
+  font-weight: normal !important;
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.6;
+  line-height: 1.6 !important;
   letter-spacing: normal;
   color: #000000;
   text-align: left;
 }
 
 .pdp-product-variant {
-  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .pdp-price {
@@ -85,12 +83,11 @@ html,
 
 .pdp-price-description {
   font-family: p22-underground, sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   color: #000000;
-  padding-top: 4px;
 }
 .research-sources {
   margin-bottom: 60px;
@@ -109,6 +106,9 @@ html,
   font-family: FreightTextProBook;
   font-size: 12px;
   margin: 0;
+}
+.research-sources ul li {
+  margin-bottom: 15px;
 }
 
 @media only screen and (min-width: 735.99px) {

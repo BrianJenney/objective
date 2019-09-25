@@ -886,7 +886,6 @@ html,
 .step-slider {
   padding-top: 50px;
   width: 100%;
-  height: 380px;
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
@@ -909,7 +908,7 @@ html,
 }
 
 .step-slider::-webkit-scrollbar-thumb {
-  background: #003833;
+  background: #1f396d;
 }
 
 @media only screen and (min-width: 735.99px) {
@@ -1041,7 +1040,6 @@ html,
 
 .whhm-slide {
   flex-shrink: 0;
-  margin: 6px;
   scroll-snap-align: start;
 }
 
@@ -1068,7 +1066,6 @@ html,
   .one-box,
   .two-box,
   .three-box {
-    margin: 50px;
     width: 298px;
     height: 298px;
     position: relative;
@@ -1248,14 +1245,12 @@ html,
   .three-box {
     width: 240px;
     height: 314px;
+    margin-right: 16px;
+    margin-bottom: 16px;
   }
   .one-bottom-color,
   .two-bottom-color,
   .three-bottom-color {
     height: 90px;
-  }
-  .research-sources h2 {
-    font-size: 18px !important;
-    text-align: center;
   }
 }
