@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { fonts } from '../../components/Theme/fonts.js';
 
-import { NavLink } from '../../components/common';
-import { Button} from '../../components/common';
+import { NavLink,Button} from '../../components/common';
 import PropTypes from 'prop-types';
 import { withLogout } from '../../hoc';
 

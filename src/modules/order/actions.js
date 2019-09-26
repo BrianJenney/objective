@@ -4,11 +4,51 @@ import {
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
-  RECEIVED_GET_ORDER
+  RECEIVED_GET_ORDER,
+  REQUEST_REFUND_TRANSACTION,
+  RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+
+export const requestRefundTransaction = (authToken, transaction) => (
+  dispatch,
+  getState
+) => {
+  const { client, replyTo } = getState().stomp;
+  const { amount, braintreeId} = transaction;
+  const params = {
+    id: transaction.orderId,
+    data: {
+      amount: amount,
+      braintreeId: braintreeId,
+      orderId: transaction.orderId
+    },
+    params: { 
+      account_jwt: authToken, 
+      jwt: authToken,
+      originalRequest: 'transaction.request.void'
+    }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+  console.log("SENDING PAYLOAD",payload);
+  client.send(
+    '/exchange/transaction/transaction.request.refund',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      jwt: authToken,
+      originalRequest: 'transaction.request.refund'
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_REFUND_TRANSACTION,
+    payload: {}
+  });
+};
 
 export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
@@ -61,6 +101,7 @@ export const requestFindOrdersByAccount = accountJwt => (
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));
+  
   client.send(
     '/exchange/order/order.request.find',
     {
@@ -102,6 +143,13 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
 export const receivedGetOrder = order => {
   return {
     type: RECEIVED_GET_ORDER,
+    payload: order
+  };
+};
+
+export const receivedTransactionRequestRefund = order => {
+  return {
+    type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order
   };
 };

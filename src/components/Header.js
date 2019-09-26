@@ -79,7 +79,7 @@ const Header = ({ currentUser, location }) => {
   return (
     <Grid container item={true} xs={12} className="headerContainer">
       <Grid container item={true} xs={12} spacing={0}>
-        {burger ? (
+        {burger && !isCheckoutPage ? (
           <>
             <Grid container className="top">
               <Grid item xs={1}>
@@ -87,9 +87,11 @@ const Header = ({ currentUser, location }) => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">OBJ</NavLink>
+                <NavLink to="/">
+                  <Logo />
+                </NavLink>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={1} className="mobile-cart-icon">
                 {!isCheckoutPage && <ShoppingCart />}
               </Grid>
             </Grid>

@@ -28,7 +28,7 @@ export default body => {
       handleAccountResponse(status, data, fields, properties);
       break;
 
-    case 'order':
+    case 'order': case 'transaction' :
       handleOrderResponse(status, data, fields, properties);
       break;
 
