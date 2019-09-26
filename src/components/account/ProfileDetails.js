@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -11,7 +11,7 @@ import { Button, AlertPanel } from '../common';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
 import { InputField } from '../form-fields';
-
+import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
 const schema = object().shape({
   firstName: string(),
@@ -20,6 +20,14 @@ const schema = object().shape({
     .required('Email is required')
     .email('Please enter a valid email.')
 });
+
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -63,11 +71,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfileDetails = props => {
+const ProfileDetails = ({ account }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { account } = props;
+  const [isClicked, handleSubmitBtn] = useState(false);
+  const prevSubmitting = usePrevious(account.loading);
+
+  const handleSubmit = useCallback(values => {
+    store.dispatch(requestPatchAccount(account.data.account_jwt, values));
+  });
+
+  useEffect(() => {
+    if (prevSubmitting && !account.loading && !account.error) {
+      handleSubmitBtn(!isClicked);
+    }
+  }, [account.loading]);
+
   const INITIAL_VALUES = {
     firstName: account.data.firstName,
     lastName: account.data.lastName,
@@ -77,9 +97,7 @@ const ProfileDetails = props => {
   if (!account.data.account_jwt) {
     return <div>No Account</div>;
   }
-  const handleSubmit = values => {
-    store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
-  };
+
   const renderForm = () => {
     return (
       <Form>
@@ -97,29 +115,36 @@ const ProfileDetails = props => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
-            {props.account.data.errorMessage && (
+            {account.error === 'Email address is already taken.' && (
               <AlertPanel
                 my={2}
                 p={2}
                 type="error"
                 bgcolor="#ffcdd2"
-                text={props.account.data.errorMessage}
+                text={account.error}
                 variant="subtitle2"
               />
             )}
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
+            {isClicked && <ProfileUpdateFeedback error={account.error} />}
           </Grid>
         </Grid>
       </Form>
     );
   };
+  console.log('--PROFILEDETAIL--', account);
   return (
     <div className="account-profile">
-      { xs ? '' : (<Typography className={classes.title} variant="h1" gutterBottom>
-        Your Profile
-      </Typography> )}
+      {xs ? (
+        ''
+      ) : (
+        <Typography className={classes.title} variant="h1" gutterBottom>
+          Your Profile
+        </Typography>
+      )}
+
       <Typography className={classes.info} variant="h3" gutterBottom>
         NAME {'&'} EMAIL
       </Typography>
