@@ -5,12 +5,13 @@ import {
   receivedLoginFailure,
   receivedLoginSuccess,
   receivedPatchAccount,
-  receivedPatchFailure
+  receivedPatchAccountFailure
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields) => {
   switch (fields.routingKey) {
     case 'account.request.create':
+      //general-error
       store.dispatch(receivedCreateAccount(data));
       break;
     case 'account.request.get':
@@ -21,9 +22,13 @@ export const handleAccountResponse = (status, data, fields) => {
         store.dispatch(receivedPatchAccount(data));
       } else if (status === 'duplicate-email-error') {
         console.log('set email is taken');
-        store.dispatch(receivedPatchFailure('Email address is already taken.'));
+        store.dispatch(
+          receivedPatchAccountFailure('Email address is already taken.')
+        );
       } else {
-        store.dispatch(receivedPatchFailure('Current password is incorrect.'));
+        store.dispatch(
+          receivedPatchAccountFailure('Current password is incorrect.')
+        );
       }
       break;
     case 'account.request.login':
