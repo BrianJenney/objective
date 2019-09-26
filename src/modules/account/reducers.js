@@ -18,7 +18,7 @@ const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
 const INITIAL_STATE = {
   error: null,
-  loading: false,
+  loading: null,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
