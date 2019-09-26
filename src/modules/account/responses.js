@@ -5,7 +5,7 @@ import {
   receivedLoginFailure,
   receivedLoginSuccess,
   receivedPatchAccount,
-  receivedPatchFailure
+  receivedPatchAccountFailure
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields) => {
@@ -19,11 +19,8 @@ export const handleAccountResponse = (status, data, fields) => {
     case 'account.request.patch':
       if (status === 'success') {
         store.dispatch(receivedPatchAccount(data));
-      } else if (status === 'duplicate-email-error') {
-        console.log('set email is taken');
-        store.dispatch(receivedPatchFailure('Email address is already taken.'));
       } else {
-        store.dispatch(receivedPatchFailure('Current password is incorrect.'));
+        store.dispatch(receivedPatchAccountFailure(data));
       }
       break;
     case 'account.request.login':

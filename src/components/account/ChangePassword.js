@@ -17,12 +17,8 @@ import ResetSuccess from '../../pages/password/ResetSuccess';
 
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
-  newPassword1: string()
-    .min(6, 'Password has to be longer than 6 characters!')
-    .required('Both password fields are required'),
-  newPassword2: string()
-    .min(6, 'Password has to be longer than 6 characters!')
-    .required('Both password fields are required')
+  newPassword1: string().required('Both password fields are required'),
+  newPassword2: string().required('Both password fields are required')
 });
 const INITIAL_VALUES = {
   currentPassword: '',
@@ -50,9 +46,14 @@ const ChangePasswordForm = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const handleSubmit = useCallback(values => {
-    store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
-  });
+  const [isClicked, handleSubmitBtn] = useState(false);
+  const handleSubmit = useCallback(
+    values => {
+      handleSubmitBtn(!isClicked);
+      store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
+    },
+    [isClicked, handleSubmitBtn]
+  );
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
@@ -186,7 +187,7 @@ const ChangePasswordForm = ({
               />
             )}
             <Button fullWidth type="submit" children={submitLabel} />
-            {/* {isClicked ? <ResetSuccess /> : null} */}
+            {isClicked ? <ResetSuccess /> : null}
           </Box>
         </Grid>
       </Grid>
