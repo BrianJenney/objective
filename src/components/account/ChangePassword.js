@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { object, string } from 'yup';
+import { object, string, ref } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
@@ -13,12 +13,18 @@ import { Button, NavLink } from '../common';
 import { getInitialValues } from '../../utils/misc';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
-import ResetSuccess from '../../pages/password/ResetSuccess';
+// import ResetSuccess from '../../pages/password/ResetSuccess';
 
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
-  newPassword1: string().required('Both password fields are required'),
-  newPassword2: string().required('Both password fields are required')
+  newPassword1: string()
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Both password fields are required'),
+
+  newPassword2: string()
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Both password fields are required')
+    .oneOf([ref('newPassword1'), null], 'Passwords must match')
 });
 const INITIAL_VALUES = {
   currentPassword: '',
@@ -46,14 +52,9 @@ const ChangePasswordForm = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const [isClicked, handleSubmitBtn] = useState(false);
-  const handleSubmit = useCallback(
-    values => {
-      handleSubmitBtn(!isClicked);
-      store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
-    },
-    [isClicked, handleSubmitBtn]
-  );
+  const handleSubmit = useCallback(values => {
+    store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
+  });
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
@@ -187,12 +188,13 @@ const ChangePasswordForm = ({
               />
             )}
             <Button fullWidth type="submit" children={submitLabel} />
-            {isClicked ? <ResetSuccess /> : null}
+            {/* {isClicked ? <ResetSuccess /> : null} */}
           </Box>
         </Grid>
       </Grid>
     </Form>
   );
+
   return (
     <Grid container className="account-change-password">
       <Grid item xs={12} md={12}>
