@@ -10,7 +10,9 @@ import {
   SET_CART_DRAWER_OPENED,
   REQUEST_FETCH_CART_BY_EMAIL,
   REQUEST_REMOVE_CART_BY_ID,
-  UPDATE_CART_WITH_TAX_CALCULATION
+  UPDATE_CART_WITH_TAX_CALCULATION,
+  RESET_TAX_CALCULATION_IN_CART,
+  RESET_CART,
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -204,5 +206,11 @@ export const updateCartWithTaxCalculation = (tax, rate) => {
   return {
     type: UPDATE_CART_WITH_TAX_CALCULATION,
     payload: {tax, rate}
+  };
+};
+
+export const resetCart = () => {
+  return {
+    type: RESET_CART,
   };
 };
