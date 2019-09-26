@@ -21,6 +21,14 @@ const schema = object().shape({
     .email('Please enter a valid email.')
 });
 
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
+
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: fonts.header,
@@ -63,24 +71,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const usePrevious = value => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-};
-
-const ProfileDetails = props => {
+const ProfileDetails = ({ account }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { account } = props;
   const [isClicked, handleSubmitBtn] = useState(false);
   const prevSubmitting = usePrevious(account.loading);
 
   const handleSubmit = useCallback(values => {
-    store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
+    store.dispatch(requestPatchAccount(account.data.account_jwt, values));
   });
 
   useEffect(() => {
@@ -116,6 +115,16 @@ const ProfileDetails = props => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
+            {account.error === 'Email address is already taken.' && (
+              <AlertPanel
+                my={2}
+                p={2}
+                type="error"
+                bgcolor="#ffcdd2"
+                text={account.error}
+                variant="subtitle2"
+              />
+            )}
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
@@ -125,7 +134,7 @@ const ProfileDetails = props => {
       </Form>
     );
   };
-
+  console.log('--PROFILEDETAIL--', account);
   return (
     <div className="account-profile">
       {xs ? (
@@ -135,18 +144,7 @@ const ProfileDetails = props => {
           Your Profile
         </Typography>
       )}
-      <Grid item xs={xs ? 12 : 4}>
-        {account.error && (
-          <AlertPanel
-            my={2}
-            p={2}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={account.error}
-            variant="subtitle2"
-          />
-        )}
-      </Grid>
+
       <Typography className={classes.info} variant="h3" gutterBottom>
         NAME {'&'} EMAIL
       </Typography>
