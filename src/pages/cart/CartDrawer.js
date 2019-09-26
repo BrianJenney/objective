@@ -316,7 +316,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && totalSummary.calculatedTax ? (
           <Grid
             container
             direction="row"
