@@ -89,7 +89,7 @@ const NeedHelpDialog = () => {
                 </Box>
                 <Box textAlign="center" pb={2}>
                   <Typography variant="h2">
-                    Need help? Give us a call for immediate assistance
+                    Need help? Give us a call for immediate assistance:
                   </Typography>
                   <Typography>(800) 270-5771</Typography>
                 </Box>
@@ -103,7 +103,10 @@ const NeedHelpDialog = () => {
                     possible:
                   </Typography>
                   <Typography variant="h4">
-                    <Link style={{ cursor: "pointer", textDecoration: "underline" }}>
+                    <Link style={{
+                      cursor: "pointer", borderBottom: "1px solid #000",
+                      paddingBottom: "", textDecoration: "none"
+                    }}>
                       help@objectivewellnes.com
                     </Link>
                   </Typography>
