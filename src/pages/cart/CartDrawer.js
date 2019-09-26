@@ -100,7 +100,7 @@ const Cart = ({
       className="cart-drawer"
     >
       <div>
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
               <StyledCartHeader align="center">Your Cart </StyledCartHeader>
@@ -148,7 +148,7 @@ const Cart = ({
             </StyledSmallCapsEmptyCart>
           </StyledGridEmptyCart>
         ) : null}
-        {cart.items.length !== 0
+        {cart.items.length > 0
           ? Object.values(cart.items).map((item, index) => (
               <>
                 <StyledDrawerGrid container xs={12} direction="row">
@@ -254,7 +254,7 @@ const Cart = ({
               </>
             ))
           : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid item xs={12} style={{ 'text-align': 'left' }}>
             <StyledTotalWrapper
               container
@@ -275,7 +275,7 @@ const Cart = ({
             </StyledTotalWrapper>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -296,7 +296,7 @@ const Cart = ({
             <StyledFinePrint component="p">{shippingData.name}</StyledFinePrint>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -316,7 +316,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 && cart.calculatedTax ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -337,7 +337,7 @@ const Cart = ({
           </Grid>
         ) : null}
 
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           cart.promo ? (
             <PromoCodeView />
           ) : (
@@ -350,7 +350,7 @@ const Cart = ({
           )
         ) : null}
 
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -373,7 +373,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 && !hideTaxLabel && (
+        {cart.items.length > 0 && !hideTaxLabel && (
           <Grid container xs={12}>
             <Grid item xs={12}>
               <StyledFinePrint component="div">
