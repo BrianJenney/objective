@@ -4,8 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
+import ScrollToTop from './common/ScrollToTop';
 
 import { Button, NavLink } from './common';
+import Link from '@material-ui/core/Link';
 import './Footer-style.scss';
 
 
@@ -65,9 +67,10 @@ const NeedHelpDialog = () => {
   return (
     <div>
       <ListItem>
-        <NavLink onClick={handleClickOpen}>CONTACT US</NavLink>
+        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>CONTACT US</NavLink>
       </ListItem>
       <Dialog
+        className="checkout-contact-container"
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
@@ -78,14 +81,14 @@ const NeedHelpDialog = () => {
             <Grid
               container
               spacing={0}
-              style={{ borderBottom: '0.1em solid #979797' }}
+              style={{ borderBottom: '1px solid #979797' }}
             >
               <Grid item>
                 <Box textAlign="center">
                   <ContactPhone />
                 </Box>
                 <Box textAlign="center" pb={2}>
-                  <Typography>
+                  <Typography variant="h2">
                     Need help? Give us a call for immediate assistance
                   </Typography>
                   <Typography>(800) 270-5771</Typography>
@@ -95,12 +98,14 @@ const NeedHelpDialog = () => {
             <Grid container spacing={0}>
               <Grid item>
                 <Box textAlign="center" px={3}>
-                  <Typography variant="h4">
+                  <Typography variant="h3">
                     or send us an email and will get back to you as soon as
                     possible:
                   </Typography>
                   <Typography variant="h4">
-                    help@objectivewellnes.com
+                    <Link style={{ cursor: "pointer", textDecoration: "underline" }}>
+                      help@objectivewellnes.com
+                    </Link>
                   </Typography>
                 </Box>
               </Grid>
@@ -116,6 +121,7 @@ class CheckoutFooter extends React.Component {
   render() {
     return (
       <div
+        className="checkout-button-container"
         style={{
           padding: 50,
           background: 'rgba(252, 248, 244, 0.5)',
@@ -126,7 +132,9 @@ class CheckoutFooter extends React.Component {
         }}
       >
         <span style={{ paddingRight: 5 }}>Need Help?</span>
-        <NeedHelpDialog />
+        <ScrollToTop>
+          <NeedHelpDialog />
+        </ScrollToTop>
       </div>
     );
   }

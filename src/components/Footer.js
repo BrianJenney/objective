@@ -30,6 +30,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ContactMail from './common/Icons/ContactMail/ContactMail';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
+import ScrollToTop from './common/ScrollToTop';
 
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
@@ -128,7 +129,11 @@ const ContactUsDialogDesktop = () => {
                   <Typography variant="h5" pl={8}>
                     Email our customer care department. We'll respond as soon as possible.
                   </Typography>
-                  <Typography variant="h4">help@objectivewellnes.com</Typography>
+                  <Typography variant="h4">
+                    <Link style={{ cursor: "pointer", textDecoration: "underline" }}>
+                      help@objectivewellnes.com
+                    </Link>
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -424,7 +429,9 @@ const Footer = ({ location }) => {
                           <NavLink to="/ingredients">Ingredients</NavLink>
                         </ListItem>
                         <ListItem>
-                          <ContactUsDialogMobile />
+                          <ScrollToTop>
+                            <ContactUsDialogMobile />
+                          </ScrollToTop>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -563,7 +570,9 @@ const Footer = ({ location }) => {
                         <NavLink to="/ingredients">Ingredients</NavLink>
                       </ListItem>
                       <ListItem>
-                        <ContactUsDialogDesktop />
+                        <ScrollToTop>
+                          <ContactUsDialogDesktop />
+                        </ScrollToTop>
                       </ListItem>
                     </StyledList>
                   </Grid>
