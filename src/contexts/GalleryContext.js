@@ -21,14 +21,15 @@ export class GalleryStore extends Component {
 
   componentDidMount() {
     EventEmitter.addListener('product.request.find', data => {
-      this.setState({ 'products': data.data.data });
+      this.setState({ products: data.data.data });
     });
     EventEmitter.addListener('variant.request.find', data => {
-      this.setState({ ...this.state, 'variants': data.data.data });
+      this.setState({ ...this.state, variants: data.data.data });
     });
     EventEmitter.addListener('price.request.find', data => {
-      this.setState({ ...this.state, 'prices': data.data.data });
+      this.setState({ ...this.state, prices: data.data.data });
     });
+    console.log(this.state.prices);
     this.getGalleryData();
   }
 
@@ -39,50 +40,73 @@ export class GalleryStore extends Component {
   }
 
   getGalleryData() {
+    console.log('top of gGD');
     const { stomp } = store.getState();
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
+
+    console.log('sending product');
+
     let params = {
-      'params': {
-        'query': {
-          '_id': { $in: this.props.productIds },
+      params: {
+        query: {
+          _id: { $in: this.props.productIds },
           $sort: { category: -1 }
         }
       }
     };
 
     var obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/product/product.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/product/product.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
+
+    console.log('sending variant');
 
     params = {
-      'params': {
-        'query': {
-          'product_id': { $in: this.props.productIds }
+      params: {
+        query: {
+          product_id: { $in: this.props.productIds }
         }
       }
     };
 
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/variant/variant.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    stompClient.send(
+      '/exchange/variant/variant.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
 
+    console.log('sending price');
+    console.log('productIDs', this.props.productIds);
     params = {
-      'params': {
-        'query': {
-          'product_id': { $in: this.props.productIds }
+      params: {
+        query: {
+          product_id: { $in: this.props.productIds }
         }
       }
     };
     obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send('/exchange/price/price.request.find', {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    }, obj);
+    console.log(params);
+    stompClient.send(
+      '/exchange/price/price.request.find',
+      {
+        'reply-to': replyTo,
+        'correlation-id': ObjectId()
+      },
+      obj
+    );
+
+    console.log('leaving gGd');
   }
 
   render() {

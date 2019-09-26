@@ -115,7 +115,6 @@ const ProductDetail = ({ variantSlug }) => {
     setATCAdded(true);
     setATCAdding(true);
     setTimeout(()=>{
-
       addToCart(
         localStorageClient.get('cartId'),
         cart,
@@ -126,32 +125,9 @@ const ProductDetail = ({ variantSlug }) => {
       // setATCEnabled(false);
       setATCAdding(false);
       dispatch(setCartDrawerOpened(true));
-
-    },500);
-   
+    }, 500);
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
-  const handleEmailPopup = () => {
-    setOpen(true);
-  };
-
-  const updateTerminalVariant = useCallback(
-    terminalVariant => {
-      /*
-    if (terminalVariant['Diet Type'] === null) {
-      setATCEnabled(true);
-      setQuantity(1);
-      setSelectedProductVariant(null);
-    } else {
-      setSelectedProductVariant(getVariantByTerminalVariant(variants, pricesMap, terminalVariant));
-    }
-     */
-      setSelectedVariantSku(terminalVariant['Product Type']);
-      setQuantity(1);
-      setATCEnabled(true);
-    },
-    [setSelectedVariantSku, setQuantity]
-  );
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);

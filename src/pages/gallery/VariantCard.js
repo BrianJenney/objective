@@ -60,53 +60,51 @@ const VariantCard = ({ variant, product, styleMap }) => {
   }, [cart, variant, quantity, dispatch]);
 
   return (
-    typeof variant.effectivePrice !== 'undefined' && (
-      <Card className="gallery-prod-card">
-        <CardMedia
-          style={{ height: 500, width: 324 }}
-          image={variant.assets.imgs}
-          title={variant.name}
-          className="gallery-prod-img"
-        />
-        <CardContent className="pding">
-          <div className="prod-name-holder">
-            <Typography>
-              <Link
-                to={`/products/${product.slug}/${variant.slug}`}
-                className="title"
-                style={styleMap.text}
-              >
-                {variant.name}
-              </Link>
-            </Typography>
-          </div>
-          <div className="variant-info">
-            <PriceVariantInfo variant={variant} />
-          </div>
-        </CardContent>
-        <div className="cta-area">
-          {ATCEnabled ? (
-            <CardActions className="gallery-atc">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddToCart}
-                fullWidth={true}
-                className="atc-button"
-              >
-                {!ATCAdded
+    <Card className="gallery-prod-card">
+      <CardMedia
+        style={{ height: 500, width: 324 }}
+        image={variant.assets.imgs}
+        title={variant.name}
+        className="gallery-prod-img"
+      />
+      <CardContent className="pding">
+        <div className="prod-name-holder">
+          <Typography>
+            <Link
+              to={`/products/${product.slug}/${variant.slug}`}
+              className="title"
+              style={styleMap.text}
+            >
+              {variant.name}
+            </Link>
+          </Typography>
+        </div>
+        <div className="variant-info">
+          <PriceVariantInfo variant={variant} />
+        </div>
+      </CardContent>
+      <div className="cta-area">
+        {ATCEnabled ? (
+          <CardActions className="gallery-atc">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddToCart}
+              fullWidth={true}
+              className="atc-button"
+            >
+              {!ATCAdded
                   ? 'ADD TO CART'
                   : !ATCAdding
                   ? 'PRODUCT ADDED'
                   : 'ADDING...'}
-              </Button>
-            </CardActions>
-          ) : (
-            <Quantity className="gallery-atc" />
-          )}
-        </div>
-      </Card>
-    )
+            </Button>
+          </CardActions>
+        ) : (
+          <Quantity className="gallery-atc" />
+        )}
+      </div>
+    </Card>
   );
 };
 

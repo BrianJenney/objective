@@ -8,6 +8,7 @@ import { getGallery } from '../../hooks';
 
 const Products = () => {
   const { products, variants, prices } = useContext(GalleryContext);
+
   if (!products) return null;
   const [
     productSlugs,

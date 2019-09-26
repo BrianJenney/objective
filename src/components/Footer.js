@@ -324,7 +324,7 @@ const Footer = ({ location }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
 
-  console.log('here', location, isCheckoutPage)
+  //console.log('here', location, isCheckoutPage)
   return (
     <>
       {xs ? (
