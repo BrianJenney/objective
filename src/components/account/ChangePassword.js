@@ -52,9 +52,14 @@ const ChangePasswordForm = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const handleSubmit = useCallback(values => {
-    store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
-  });
+  const [isClicked, handleSubmitBtn] = useState(false);
+  const handleSubmit = useCallback(
+    values => {
+      handleSubmitBtn(!isClicked);
+      store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
+    },
+    [isClicked, handleSubmitBtn]
+  );
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
