@@ -84,61 +84,58 @@ const ContactUsDialogDesktop = () => {
       <ListItem>
         <NavLink onClick={handleClickOpen}>Contact Us</NavLink>
       </ListItem>
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
+      <Dialog className="contact-container" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           <Box textAlign="center">
-            <Typography variant="h1">Contact us</Typography>
+            <Typography className="contact-title" variant="h1">Contact us</Typography>
           </Box>
           <Box textAlign="center">
-            <Typography gutterBottom>
+            <Typography variant="h4" gutterBottom>
               We'd love to hear from you. You can reach us by phone or email.
             </Typography>
           </Box>
         </DialogTitle>
-        <DialogContent>
-          <Box py={3} px={4}>
-            <Grid container spacing={0}>
-              <Grid
-                item
-                xs={6}
-                px={4}
-                py={4}
-                style={{ borderRight: '0.1em solid #979797' }}
-              >
+        <DialogContent style={{ display: "flex", alignItems: "center" }}>
+          <Box>
+            <Grid container spacing={0} style={{ height: "270px" }}>
+              <Grid item xs={6} px={4} py={4} style={{
+                borderRight: '1px solid #979797',
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: "28px"
+              }}>
                 <Box textAlign="center">
-                  <ContactPhone />
+                  <ContactPhone className="phone-icon" />
                 </Box>
                 <Box textAlign="center">
-                  <Typography>
-                    Give us a call for immediate assistance and chat with one of
-                    our customer care specialists.
+                  <Typography variant="h5">
+                    Give us a call for immediate assistance and chat with one of our customer care specialists.
                   </Typography>
                   <Typography variant="h4">(800) 270-5771</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={6} pl={8} py={4}>
+              <Grid item xs={6} pl={8} py={4} style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: "28px"
+              }}>
                 <Box textAlign="center">
                   <ContactMail />
                 </Box>
                 <Box textAlign="center">
-                  <Typography pl={8}>
-                    Email our customer care department. We'll respond as soon as
-                    possible.
+                  <Typography variant="h5" pl={8}>
+                    Email our customer care department. We'll respond as soon as possible.
                   </Typography>
-                  <Typography variant="h4">
-                    help@objectivewellnes.com
-                  </Typography>
+                  <Typography variant="h4">help@objectivewellnes.com</Typography>
                 </Box>
               </Grid>
             </Grid>
           </Box>
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   );
 };
 const ContactUsDialogMobile = () => {
@@ -154,14 +151,10 @@ const ContactUsDialogMobile = () => {
       <ListItem>
         <NavLink onClick={handleClickOpen}>Contact Us</NavLink>
       </ListItem>
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <Dialog className="contact-container" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle className="contact-title-container" id="customized-dialog-title" onClose={handleClose}>
           <Box textAlign="center">
-            <Typography variant="h1">Contact us</Typography>
+            <Typography className="contact-title" variant="h1">Contact us</Typography>
           </Box>
           <Box textAlign="center">
             <Typography gutterBottom variant="h4">
@@ -171,19 +164,14 @@ const ContactUsDialogMobile = () => {
         </DialogTitle>
         <DialogContent>
           <Box textAlign="center">
-            <Grid
-              container
-              spacing={0}
-              style={{ borderBottom: '0.1em solid #979797' }}
-            >
+            <Grid container spacing={0} style={{ borderBottom: '1px solid #979797', marginBottom: " 18px" }}>
               <Grid item>
                 <Box textAlign="center">
                   <ContactPhone />
                 </Box>
                 <Box textAlign="center" pb={2}>
                   <Typography variant="h4">
-                    Give us a call for immediate assistance and chat with one of
-                    our customer care specialists.
+                    Give us a call for immediate assistance and chat with one of our customer care specialists.
                   </Typography>
                   <Typography>(800) 270-5771</Typography>
                 </Box>
@@ -191,18 +179,15 @@ const ContactUsDialogMobile = () => {
             </Grid>
             <Grid container spacing={0}>
               <Grid item>
-                <Box textAlign="center" pt={2}>
+                <Box textAlign="center" pt={2} style={{ padding: 0 }}>
                   <ContactMail />
                 </Box>
                 <Box textAlign="center">
                   <Typography variant="h4">
-                    Email our customer care department. We'll respond as soon as
-                    possible.
+                    Email our customer care department. We'll respond as soon as possible.
                   </Typography>
                   <Box>
-                    <Typography variant="h4">
-                      help@objectivewellnes.com
-                    </Typography>
+                    <Typography variant="h3">help@objectivewellnes.com</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -210,10 +195,9 @@ const ContactUsDialogMobile = () => {
           </Box>
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   );
 };
-
 const NeedHelpDialogDesktop = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -662,8 +646,8 @@ const Footer = ({ location }) => {
           </Container>
         </StyledBox>
       ) : (
-        <CheckoutFooter />
-      )}
+            <CheckoutFooter />
+          )}
     </>
   );
 };
