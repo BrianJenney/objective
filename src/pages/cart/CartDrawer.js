@@ -58,6 +58,7 @@ const Cart = ({
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
+  const isTaxCalculationInProgress = useSelector(state => state.tax.isLoading);
   //const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -99,7 +100,7 @@ const Cart = ({
       className="cart-drawer"
     >
       <div>
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
               <StyledCartHeader align="center">Your Cart </StyledCartHeader>
@@ -147,7 +148,7 @@ const Cart = ({
             </StyledSmallCapsEmptyCart>
           </StyledGridEmptyCart>
         ) : null}
-        {cart.items.length !== 0
+        {cart.items.length > 0
           ? Object.values(cart.items).map((item, index) => (
               <>
                 <StyledDrawerGrid container xs={12} direction="row">
@@ -253,7 +254,7 @@ const Cart = ({
               </>
             ))
           : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid item xs={12} style={{ 'text-align': 'left' }}>
             <StyledTotalWrapper
               container
@@ -274,7 +275,7 @@ const Cart = ({
             </StyledTotalWrapper>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -295,7 +296,7 @@ const Cart = ({
             <StyledFinePrint component="p">{shippingData.name}</StyledFinePrint>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -315,7 +316,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 && cart.calculatedTax ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -330,13 +331,13 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductPrice style={{ 'font-size': '18px' }}>
-                {totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$XXX.XX'}
+                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : ''}
               </StyledProductPrice>
             </Grid>
           </Grid>
         ) : null}
 
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           cart.promo ? (
             <PromoCodeView />
           ) : (
@@ -349,7 +350,7 @@ const Cart = ({
           )
         ) : null}
 
-        {cart.items.length !== 0 ? (
+        {cart.items.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -372,7 +373,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length !== 0 && !hideTaxLabel && (
+        {cart.items.length > 0 && !hideTaxLabel && (
           <Grid container xs={12}>
             <Grid item xs={12}>
               <StyledFinePrint component="div">
