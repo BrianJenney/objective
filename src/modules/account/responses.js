@@ -11,6 +11,7 @@ import {
 export const handleAccountResponse = (status, data, fields) => {
   switch (fields.routingKey) {
     case 'account.request.create':
+      //general-error
       store.dispatch(receivedCreateAccount(data));
       break;
     case 'account.request.get':
