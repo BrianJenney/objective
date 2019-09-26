@@ -92,7 +92,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
                     children={
                       passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                     }
-                  ></NavLink>
+                  />
                 </Box>
               )
             }}
