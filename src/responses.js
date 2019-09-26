@@ -37,6 +37,8 @@ export default body => {
       break;
 
     default:
+      console.log('received ' + fields.routingKey);
+      console.log(data);
       EventEmitter.emit(fields.routingKey, {
         'status': status,
         'data': data,

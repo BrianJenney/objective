@@ -39,7 +39,7 @@ export const addToCart = (cartId, cart, selectedVariant, quantity) => {
   let localCart = cart;
   let newItems = cart.items;
   let alreadyInCart = false;
-
+console.log(selectedVariant);
   newItems
     .filter(item => item.sku === selectedVariant.sku)
     .forEach(item => {
