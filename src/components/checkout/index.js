@@ -19,6 +19,7 @@ import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions'
+import { resetTaxCalculationInCart, resetCart } from '../../modules/cart/actions';
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -148,9 +149,9 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-
+    dispatch(resetCart());
     setPayload({});
-    history.push('/order');
+    history.replace('/order');
 
     return true;
   };
