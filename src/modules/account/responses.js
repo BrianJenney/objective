@@ -23,9 +23,7 @@ export const handleAccountResponse = (status, data, fields) => {
         console.log('set email is taken');
         store.dispatch(receivedPatchFailure('Email address is already taken.'));
       } else {
-        store.dispatch(
-          receivedPatchFailure('Unexpected patch failure. Contact us.')
-        );
+        store.dispatch(receivedPatchFailure('Current password is incorrect.'));
       }
       break;
     case 'account.request.login':
