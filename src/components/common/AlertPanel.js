@@ -17,6 +17,10 @@ const COLOR_MAP = {
 
 const AlertPanel = ({ type, text, style, ...rest }) => {
   const color = COLOR_MAP[type];
+  
+  if (!text) {
+    return null;
+  }
 
   return (
     <Box color={color} alignItems="center" width={1} {...rest}>
