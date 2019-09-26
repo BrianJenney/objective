@@ -17,8 +17,12 @@ import ResetSuccess from '../../pages/password/ResetSuccess';
 
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
-  newPassword1: string().required('Both password fields are required'),
-  newPassword2: string().required('Both password fields are required')
+  newPassword1: string()
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Both password fields are required'),
+  newPassword2: string()
+    .min(6, 'Password has to be longer than 6 characters!')
+    .required('Both password fields are required')
 });
 const INITIAL_VALUES = {
   currentPassword: '',

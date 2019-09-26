@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -63,24 +63,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
+
 const ProfileDetails = props => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account } = props;
-  // const [isClicked, handleSubmitBtn] = useState(false);
-  let isClicked = false;
-  const handleSubmit = useCallback(
-    values => {
-      store.dispatch(
-        requestPatchAccount(props.account.data.account_jwt, values)
-      );
+  const [isClicked, handleSubmitBtn] = useState(false);
+  const prevSubmitting = usePrevious(account.loading);
 
-      // handleSubmitBtn(!isClicked);
+  const handleSubmit = useCallback(values => {
+    store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
+  });
+
+  useEffect(() => {
+    if (prevSubmitting && !account.loading && !account.error) {
+      handleSubmitBtn(!isClicked);
     }
-    // [isClicked, handleSubmitBtn]
-  );
-  console.log('TETTTT', account.error);
+  }, [account.loading]);
 
   const INITIAL_VALUES = {
     firstName: account.data.firstName,
@@ -91,12 +98,7 @@ const ProfileDetails = props => {
   if (!account.data.account_jwt) {
     return <div>No Account</div>;
   }
-  //const handleSubmit = values => {
-  // console.log('click click');
-  // store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
-  //};
 
-  // console.log('PROFILE DETAIL', account.error);
   const renderForm = () => {
     return (
       <Form>
@@ -127,7 +129,7 @@ const ProfileDetails = props => {
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
-            {isClicked ? <ProfileUpdateFeedback error={account.error} /> : null}
+            {isClicked && <ProfileUpdateFeedback error={account.error} />}
           </Grid>
         </Grid>
       </Form>

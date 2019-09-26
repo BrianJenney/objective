@@ -71,9 +71,9 @@ const UpdateFeedback = props => {
   const error = props.err;
   console.log('update feedback error', props.error);
 
-  //   if (error) {
-  //     return <ErrorFeedback err={props.err} />;
-  //   }
+  if (error) {
+    return <ErrorFeedback err={props.err} />;
+  }
   return <SuccessFeedback />;
 };
 

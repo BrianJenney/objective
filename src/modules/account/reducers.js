@@ -18,7 +18,7 @@ const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
 const INITIAL_STATE = {
   error: null,
-  loading: null,
+  loading: false,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
@@ -35,9 +35,16 @@ export default (state = INITIAL_STATE, action) => {
           ...state.data
         }
       };
-    case REQUEST_LOGIN_ATTEMPT:
     case REQUEST_FORGOT_PASSWORD:
     case REQUEST_FETCH_ACCOUNT:
+      return {
+        error: false,
+        loading: false,
+        data: {
+          ...state.data
+        }
+      };
+    case REQUEST_LOGIN_ATTEMPT:
     case REQUEST_PATCH_ACCOUNT:
       return {
         error: false,
