@@ -20,6 +20,8 @@ import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions'
 import { resetTaxCalculationInCart, resetCart } from '../../modules/cart/actions';
+import {useTheme} from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -96,6 +98,8 @@ const Checkout = ({
   const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -191,8 +195,10 @@ const Checkout = ({
   return (
     <ScrollToTop>
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
-        <Container>
-          <Box py={10} className="checkout-wrapper">
+        <Container style={xs ? {padding:0} : {} }>
+          <Box 
+           py={10}
+           className="checkout-wrapper">
             <CssBaseline />
             <Grid container spacing={4}>
               <Grid item flex={1} xs={12} md={8} className="right-side">
