@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ requestLoginAttempt, switchToSignup }) => {
+const Login = ({ requestLogin, switchToSignup }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -43,7 +43,7 @@ const Login = ({ requestLoginAttempt, switchToSignup }) => {
             Log in to your account
           </Typography>
           <Box pt={4}>
-            <LoginForm onSubmit={requestLoginAttempt} />
+            <LoginForm onSubmit={requestLogin} />
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>
@@ -57,7 +57,12 @@ const Login = ({ requestLoginAttempt, switchToSignup }) => {
               {switchToSignup ? (
                 <MenuLink onClick={switchToSignup} children="Signup!" />
               ) : (
-                <NavLink to="/signup" children="Signup!" replace underline="always" />
+                <NavLink
+                  to="/signup"
+                  children="Signup!"
+                  replace
+                  underline="always"
+                />
               )}
             </Typography>
           </Box>
@@ -68,7 +73,7 @@ const Login = ({ requestLoginAttempt, switchToSignup }) => {
 };
 
 Login.propTypes = {
-  requestLoginAttempt: PropTypes.func.isRequired,
+  requestLogin: PropTypes.func.isRequired,
   switchToSignup: PropTypes.func,
   closeDialog: PropTypes.func
 };
