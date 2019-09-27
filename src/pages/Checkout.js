@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Checkout from '../components/checkout';
 import {
   requestCreateAccount,
-  requestLoginAttempt,
+  requestLogin,
   requestPatchAccount
 } from '../modules/account/actions';
 import { requestCreateOrder } from '../modules/order/actions';
@@ -11,7 +11,7 @@ import { withCart } from '../hoc';
 
 const mapDispatchToProps = {
   requestCreateAccount,
-  requestLoginAttempt,
+  requestLogin,
   requestPatchAccount,
   requestCreateOrder
 };

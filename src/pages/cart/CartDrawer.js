@@ -185,6 +185,7 @@ const Cart = ({
                         }}
                       >
                         <StyledProductLink
+                          style={{fontSize:'18px'}}
                           align="left"
                           onClick={onClickProduct}
                         >
@@ -194,6 +195,7 @@ const Cart = ({
                       <Grid item style={{ padding: '0' }}>
                         {disableItemEditing ? (
                           <Box
+                            style={{position:"relative",top:"-33px",fontSize:"16px"}}
                             component={Typography}
                             children={`QTY: ${item.quantity}`}
                           />
@@ -292,7 +294,7 @@ const Cart = ({
                 {shippingData.price && `$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint component="p">{shippingData.name}</StyledFinePrint>
+            <StyledFinePrint component="p" style={{position:"relative",top:"10px"}}>{shippingData.name}</StyledFinePrint>
           </Grid>
         ) : null}
         {cart.items.length > 0 ? (

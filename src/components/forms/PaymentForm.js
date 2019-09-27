@@ -36,20 +36,20 @@ const validateNumberField = value => {
 const INITIAL_VALUES = {
   paymentDetails: {
     paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
-    cardholderName: 'Kevin C',
-    number: '4111111111111111',
-    expirationDate: '02/20/2023',
-    cvv: '837'
+    cardholderName: '',
+    number: '',
+    expirationDate: '',
+    cvv: ''
   },
   billingAddress: {
-    firstName: 'Kevin',
-    lastName: 'Christian',
-    line1: '1111 Sprng Street',
+    firstName: '',
+    lastName: '',
+    line1: '',
     line2: '',
-    city: 'Raleigh',
-    state: 'NC',
-    postalCode: '22222',
-    countryCode: 'US'
+    city: '',
+    state: '',
+    postalCode: '',
+    countryCode: ''
   },
   isDefault: false,
   shouldSaveData: true

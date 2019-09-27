@@ -8,39 +8,39 @@ import {
   Paper
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import withDialog from '../../hoc/withDialog';
+import withDialog from '../hoc/withDialog';
 
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '40px',
     fontWeight: 'bold',
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(2)
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '36px'
+    }
   }
 }));
 
-const ConfirmPassword = () => {
+const ConfirmSignupEmail = () => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={8} textAlign="center">
-        <Typography className={classes.title}>
-          We have sent you an email
-        </Typography>
+        <Typography className={classes.title}>Thank you</Typography>
         <Typography variant="body1">
-          If your email exists in our system, you will receive a link to reset
-          your password shortly.
+          You have been successfully signed up.
         </Typography>
       </Box>
     </Container>
   );
 };
 
-const ConfirmPasswordDialog = withDialog(ConfirmPassword);
+const ConfirmEmailDialog = withDialog(ConfirmSignupEmail);
 
-const ConfirmPasswordPage = props => (
-  <ConfirmPasswordDialog onExited={props.history.goBack} {...props} />
+const ConfirmEmailPage = props => (
+  <ConfirmEmailDialog onExited={props.history.goBack} {...props} />
 );
 
-export default withRouter(ConfirmPasswordPage);
+export default withRouter(ConfirmEmailPage);

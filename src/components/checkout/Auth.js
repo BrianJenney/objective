@@ -13,7 +13,7 @@ const AUTH_MODES = {
 const CheckoutAuth = ({
   currentUser,
   requestCreateAccount,
-  requestLoginAttempt,
+  requestLogin,
   handleNext
 }) => {
   const [authMode, setAuthMode] = useState(AUTH_MODES.SIGNUP);
@@ -43,7 +43,7 @@ const CheckoutAuth = ({
         />
       ) : (
         <Login
-          requestLoginAttempt={requestLoginAttempt}
+          requestLogin={requestLogin}
           switchToSignup={() => setAuthMode(AUTH_MODES.SIGNUP)}
         />
       )}
@@ -54,7 +54,7 @@ const CheckoutAuth = ({
 CheckoutAuth.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestCreateAccount: PropTypes.func.isRequired,
-  requestLoginAttempt: PropTypes.func.isRequired,
+  requestLogin: PropTypes.func.isRequired,
   handleNext: PropTypes.func.isRequired
 };
 

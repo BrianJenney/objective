@@ -19,8 +19,8 @@ const schema = object().shape({
 });
 
 const INITIAL_VALUES = {
-  email: 'kevinch@nutranext.net',
-  password: '444444'
+  email: '',
+  password: ''
 };
 
 const LoginForm = ({ title, onSubmit, currentUser }) => {
@@ -33,19 +33,23 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
     [passwordVisible, setPasswordVisible]
   );
 
-  const renderForm = () => (
-    <>
-      {currentUser.error && (
-        <AlertPanel
-          mb={3}
-          p={1}
-          bgcolor="#ffcdd2"
-          text={currentUser.error}
-          style={{ fontFamily: smallHeader, fontSize: '14px' }}
-        />
-      )}
+  const renderForm = () => {
+    let loginError = null;
+    if (currentUser.loginError) {
+      loginError = currentUser.loginError.message;
+    }
+
+    return (
       <Form>
         {title && <Typography variant="h6" gutterBottom children={title} />}
+        <AlertPanel
+          my={2}
+          p={2}
+          type="error"
+          bgcolor="#ffcdd2"
+          text={loginError}
+          variant="subtitle2"
+        />
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Field
@@ -95,8 +99,8 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
           </Grid>
         </Grid>
       </Form>
-    </>
-  );
+    );
+  };
 
   return (
     <Formik

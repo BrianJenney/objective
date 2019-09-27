@@ -25,14 +25,14 @@ const schema = object().shape({
 });
 
 const INITIAL_VALUES = {
-  firstName: 'Kevin',
-  lastName: 'Christian',
-  line1: '1111 Sprng Street',
+  firstName: '',
+  lastName: '',
+  line1: '',
   line2: '',
-  city: 'Raleigh',
-  state: 'NC',
-  postalCode: '22222',
-  countryCode: 'US',
+  city: '',
+  state: '',
+  postalCode: '',
+  countryCode: '',
   isDefault: false,
   shouldSaveData: true
 };
