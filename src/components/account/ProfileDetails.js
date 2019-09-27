@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Formik, Field, Form } from 'formik';
@@ -9,10 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { fonts } from '../Theme/fonts';
 import { Button, AlertPanel } from '../common';
-import {
-  requestPatchAccount as requestPatchAccountAction,
-  clearAccountError as clearAccountErrorAction
-} from '../../modules/account/actions';
 import { InputField } from '../form-fields';
 import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
@@ -75,7 +70,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProfileDetails = ({
-  account,
+  currentUser,
   requestPatchAccount,
   clearAccountError
 }) => {
@@ -83,33 +78,38 @@ const ProfileDetails = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [isClicked, handleSubmitBtn] = useState(false);
-  const prevSubmitting = usePrevious(account.loading);
+  const prevSubmitting = usePrevious(currentUser.loading);
 
   const handleSubmit = useCallback(values => {
-    requestPatchAccount(account.data.account_jwt, values);
+    requestPatchAccount(currentUser.data.account_jwt, values);
   });
-  useEffect(() => clearAccountError(), []);
+  useEffect(() => {
+    clearAccountError();
+  }, []);
 
   useEffect(() => {
-    if (prevSubmitting && !account.loading && !account.error) {
+    if (prevSubmitting && !currentUser.loading && !currentUser.error) {
       handleSubmitBtn(!isClicked);
     }
-  }, [account.loading]);
+  }, [currentUser.loading]);
 
   const INITIAL_VALUES = {
-    firstName: account.data.firstName,
-    lastName: account.data.lastName,
-    email: account.data.email,
-    phone: account.data.phone
+    firstName: currentUser.data.firstName,
+    lastName: currentUser.data.lastName,
+    email: currentUser.data.email,
+    phone: currentUser.data.phone
   };
-  if (!account.data.account_jwt) {
+  if (!currentUser.data.account_jwt) {
     return <div>No Account</div>;
   }
 
   const renderForm = () => {
     let accountError = null;
-    if (account.error) {
-      accountError = account.error.message || account.data.errorMessage;
+    if (currentUser.error) {
+      accountError =
+        currentUser.error.message ||
+        currentUser.error.errorMessage ||
+        currentUser.data.errorMessage;
     }
 
     return (
@@ -145,7 +145,7 @@ const ProfileDetails = ({
       </Form>
     );
   };
-  console.log('--PROFILEDETAIL--', account);
+  console.log('--PROFILEDETAIL--', currentUser);
   return (
     <div className="account-profile">
       {xs ? (
@@ -166,6 +166,7 @@ const ProfileDetails = ({
             onSubmit={handleSubmit}
             validationSchema={schema}
             render={renderForm}
+            enableReinitialize
           />
         </Grid>
       </Grid>
@@ -174,21 +175,9 @@ const ProfileDetails = ({
 };
 
 ProfileDetails.propTypes = {
-  account: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   clearAccountError: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  stompClient: state.stomp.client,
-  account: state.account
-});
-const mapDispatchToProps = {
-  requestPatchAccount: requestPatchAccountAction,
-  clearAccountError: clearAccountErrorAction
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileDetails);
+export default ProfileDetails;
