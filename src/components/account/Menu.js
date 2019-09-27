@@ -81,7 +81,7 @@ const AccountMenu = ({ logout}) => {
 </>
   ) : (
     
-    <Box width={1} className="account-menu-box" style={{borderRight:"1px solid #231f20"}}>
+    <Box width={1} className="account-menu-box">
 
     
       <List component="nav" className="account-left-side">
