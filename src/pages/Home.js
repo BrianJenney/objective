@@ -102,8 +102,10 @@ export default class Home extends Component {
             </Box>
           </Container>
         </div>
-        <Container>
-          <Box py={10}>{this.renderSections()}</Box>
+        <Container className="section-container">
+          <Box py={10} className="section-holder">
+            {this.renderSections()}
+          </Box>
         </Container>
         <div className="his-hers-theirs beige-bg">
           <Container>

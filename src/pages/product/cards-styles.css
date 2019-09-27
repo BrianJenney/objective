@@ -923,7 +923,7 @@ html,
     display: flex;
     justify-content: center;
     overflow-x: visible;
-    padding-top: 20px
+    padding-top: 20px;
   }
 
   .step-slide {
@@ -993,7 +993,7 @@ html,
 }
 
 .three-title {
-  width: 70px;
+  width: auto;
   height: 64px;
   font-family: FreightTextProBook;
   font-size: 24px;
