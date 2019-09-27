@@ -5,7 +5,7 @@ import ProductContext from '../../contexts/ProductContext';
 export default function ResearchSources() {
   const { content } = useContext(ProductContext);
 
-  if (!content || !content.researchSources) {
+  if (!content || !content.researchSources == null || typeof content.researchSources !== 'array') {
     return null;
   }
 
