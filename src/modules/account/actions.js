@@ -13,7 +13,8 @@ import {
   RECEIVED_PATCH_ACCOUNT_SUCCESS,
   RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
-  REQUEST_FORGOT_PASSWORD
+  REQUEST_FORGOT_PASSWORD,
+  CLEAR_ACCOUNT_ERROR
 } from './types';
 import store from '../../store';
 import { requestCreateCart, requestFetchCartByEmail } from '../cart/actions';
@@ -229,5 +230,11 @@ export const requestForgotPassword = email => (dispatch, getState) => {
   dispatch({
     type: REQUEST_FORGOT_PASSWORD,
     payload: {}
+  });
+};
+
+export const clearAccountError = () => dispatch => {
+  dispatch({
+    type: CLEAR_ACCOUNT_ERROR
   });
 };

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -6,10 +7,12 @@ import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { fonts } from '../../components/Theme/fonts.js';
+import { fonts } from '../Theme/fonts';
 import { Button, AlertPanel } from '../common';
-import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
+import {
+  requestPatchAccount as requestPatchAccountAction,
+  clearAccountError as clearAccountErrorAction
+} from '../../modules/account/actions';
 import { InputField } from '../form-fields';
 import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
@@ -71,7 +74,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfileDetails = ({ account }) => {
+const ProfileDetails = ({
+  account,
+  requestPatchAccount,
+  clearAccountError
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -79,8 +86,9 @@ const ProfileDetails = ({ account }) => {
   const prevSubmitting = usePrevious(account.loading);
 
   const handleSubmit = useCallback(values => {
-    store.dispatch(requestPatchAccount(account.data.account_jwt, values));
+    requestPatchAccount(account.data.account_jwt, values);
   });
+  useEffect(() => clearAccountError(), []);
 
   useEffect(() => {
     if (prevSubmitting && !account.loading && !account.error) {
@@ -99,6 +107,11 @@ const ProfileDetails = ({ account }) => {
   }
 
   const renderForm = () => {
+    let accountError = null;
+    if (account.error) {
+      accountError = account.error.message || account.data.errorMessage;
+    }
+
     return (
       <Form>
         <Grid container spacing={2}>
@@ -115,20 +128,18 @@ const ProfileDetails = ({ account }) => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
-            {account.error === 'Email address is already taken.' && (
-              <AlertPanel
-                my={2}
-                p={2}
-                type="error"
-                bgcolor="#ffcdd2"
-                text={account.error}
-                variant="subtitle2"
-              />
-            )}
+            <AlertPanel
+              my={2}
+              p={2}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={accountError}
+              variant="subtitle2"
+            />
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
-            {isClicked && <ProfileUpdateFeedback error={account.error} />}
+            {isClicked && <ProfileUpdateFeedback error={accountError} />}
           </Grid>
         </Grid>
       </Form>
@@ -161,13 +172,22 @@ const ProfileDetails = ({ account }) => {
     </div>
   );
 };
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
+
+ProfileDetails.propTypes = {
+  account: PropTypes.object.isRequired,
+  requestPatchAccount: PropTypes.func.isRequired,
+  clearAccountError: PropTypes.func.isRequired
 };
-const mapDispatchToProps = {};
+
+const mapStateToProps = state => ({
+  stompClient: state.stomp.client,
+  account: state.account
+});
+const mapDispatchToProps = {
+  requestPatchAccount: requestPatchAccountAction,
+  clearAccountError: clearAccountErrorAction
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
