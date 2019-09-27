@@ -77,8 +77,6 @@ const Header = ({ currentUser, location }) => {
     />
   );
 
-  console.log('panda', burger && !isCheckoutPage && !isOrderPage)
-
   return (
     <Grid container item={true} xs={12} className="headerContainer">
       <Grid container item={true} xs={12} spacing={0}>

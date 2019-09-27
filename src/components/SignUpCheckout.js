@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { SignupForm } from './forms';
 import { MenuLink, NavLink } from './common';
 import { fontFamily } from '@material-ui/system';
+import {useTheme} from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -22,17 +24,31 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'p22-underground, Helvetica, sans-serif',
     fontWeight: '600',
     paddingTop: '13px'
+  },
+  mobileBox : {
+
   }
 }));
 
 const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" 
+     maxWidth="md"
+    >
       <CssBaseline />
-      <Box component={Paper} py={3} px={5}>
+      <Box component={Paper} 
+       py={xs ? {} : 3} px={xs ? {} : 5}
+      >
         <Box>
-          <Box display="flex" pb={2} className="justify-content">
+          <Box 
+           display="flex" 
+           pb={2} 
+          className="justify-content"
+          >
             <Typography gutterBottom className={classes.title}>
               Create your Account
             </Typography>

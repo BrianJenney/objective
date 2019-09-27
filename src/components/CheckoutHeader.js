@@ -5,7 +5,7 @@ import Logo from './common/Icons/Logo/Logo';
 class CheckoutHeader extends React.Component {
   render() {
     return (
-      <Grid item xs={12} className="logo text-center">
+      <Grid item xs={12} className="logo text-center" style={{paddingTop: 35}}>
         
           <Logo />
         

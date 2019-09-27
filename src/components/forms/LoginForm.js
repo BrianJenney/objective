@@ -19,8 +19,8 @@ const schema = object().shape({
 });
 
 const INITIAL_VALUES = {
-  email: 'kevinch@nutranext.net',
-  password: '444444'
+  email: '',
+  password: ''
 };
 
 const LoginForm = ({ title, onSubmit, currentUser }) => {
