@@ -32,6 +32,8 @@ export class ProductStore extends Component {
       'fields.sku': this.props.productSlug
     })
     .then(entry => {
+      console.log('***** CONTENTFUL *****');
+      console.log(entry);
       this.setState({ ...this.state, content: entry.items[0].fields });
     })
     .catch(err => {

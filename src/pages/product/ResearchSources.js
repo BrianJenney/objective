@@ -1,5 +1,9 @@
 import React, { useContext } from 'react';
+
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
 import Container from '@material-ui/core/Container';
+
 import ProductContext from '../../contexts/ProductContext';
 
 export default function ResearchSources() {
@@ -9,14 +13,12 @@ export default function ResearchSources() {
     return null;
   }
 
-  const sources = content.researchSources.map(source => (
-    <li>{source.replace(/\|/, ',')}</li>
-  ));
-
   return (
     <Container className="research-sources">
       <h2>Research Sources &amp; Studies</h2>
-      <ul>{sources}</ul>
+      {documentToReactComponents(
+        content.researchSources
+      )}
     </Container>
   );
 }
