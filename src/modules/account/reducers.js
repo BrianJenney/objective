@@ -1,15 +1,16 @@
 import {
   REQUEST_CREATE_ACCOUNT,
-  RECEIVED_CREATE_ACCOUNT,
-  REQUEST_CREATE_ACCOUNT_FAILURE,
+  RECEIVED_CREATE_ACCOUNT_SUCCESS,
+  RECEIVED_CREATE_ACCOUNT_FAILURE,
   REQUEST_FETCH_ACCOUNT,
-  RECEIVED_FETCH_ACCOUNT,
+  RECEIVED_FETCH_ACCOUNT_SUCCESS,
+  RECEIVED_FETCH_ACCOUNT_FAILURE,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
-  REQUEST_LOGIN_ATTEMPT,
-  RECEIVED_LOGIN_FAILURE,
+  REQUEST_LOGIN,
   RECEIVED_LOGIN_SUCCESS,
+  RECEIVED_LOGIN_FAILURE,
   REQUEST_PATCH_ACCOUNT,
-  RECEIVED_PATCH_ACCOUNT,
+  RECEIVED_PATCH_ACCOUNT_SUCCESS,
   RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD
@@ -27,7 +28,8 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CREATE_ACCOUNT:
-    case REQUEST_LOGIN_ATTEMPT:
+    case REQUEST_LOGIN:
+    case REQUEST_FETCH_ACCOUNT:
     case REQUEST_FORGOT_PASSWORD:
     case REQUEST_PATCH_ACCOUNT:
       return {
@@ -37,27 +39,10 @@ export default (state = INITIAL_STATE, action) => {
           ...state.data
         }
       };
-    case REQUEST_FETCH_ACCOUNT:
-      return {
-        error: false,
-        loading: false,
-        data: {
-          ...state.data
-        }
-      };
-    case REQUEST_CREATE_ACCOUNT_FAILURE:
-      return {
-        error: action.payload,
-        loading: false,
-        data: {
-          ...state.data
-        }
-      };
-
-    case RECEIVED_CREATE_ACCOUNT:
+    case RECEIVED_CREATE_ACCOUNT_SUCCESS:
     case RECEIVED_LOGIN_SUCCESS:
-    case RECEIVED_FETCH_ACCOUNT:
-    case RECEIVED_PATCH_ACCOUNT:
+    case RECEIVED_FETCH_ACCOUNT_SUCCESS:
+    case RECEIVED_PATCH_ACCOUNT_SUCCESS:
       return {
         error: false,
         loading: false,
@@ -66,8 +51,10 @@ export default (state = INITIAL_STATE, action) => {
           ...action.payload
         }
       };
-    case RECEIVED_PATCH_ACCOUNT_FAILURE:
+    case RECEIVED_CREATE_ACCOUNT_FAILURE:
     case RECEIVED_LOGIN_FAILURE:
+    case RECEIVED_FETCH_ACCOUNT_FAILURE:
+    case RECEIVED_PATCH_ACCOUNT_FAILURE:
       return {
         error: action.payload,
         loading: false,
