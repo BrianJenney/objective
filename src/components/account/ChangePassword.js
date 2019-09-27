@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
-import { Button, NavLink } from '../common';
+import { Button, NavLink, AlertPanel } from '../common';
 import { getInitialValues } from '../../utils/misc';
 import { requestPatchAccount } from '../../modules/account/actions';
 import store from '../../store';
@@ -52,9 +52,14 @@ const ChangePasswordForm = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
-  const handleSubmit = useCallback(values => {
-    store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
-  });
+  const [isClicked, handleSubmitBtn] = useState(false);
+  const handleSubmit = useCallback(
+    values => {
+      // handleSubmitBtn(!isClicked);
+      store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
+    },
+    [isClicked, handleSubmitBtn]
+  );
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
@@ -176,7 +181,18 @@ const ChangePasswordForm = ({
             }}
           />
         </Grid>
+
         <Grid item xs={xs ? 12 : 4}>
+          {currentUser.error === 'Current password is incorrect.' && (
+            <AlertPanel
+              my={2}
+              p={2}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={currentUser.error}
+              variant="subtitle2"
+            />
+          )}
           <Box display="flex" alignItems="center">
             {' '}
             {onBack && (
@@ -194,7 +210,7 @@ const ChangePasswordForm = ({
       </Grid>
     </Form>
   );
-
+  console.log('--CHANGEPASS--', currentUser);
   return (
     <Grid container className="account-change-password">
       <Grid item xs={12} md={12}>

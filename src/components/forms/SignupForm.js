@@ -92,7 +92,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
                     children={
                       passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                     }
-                  ></NavLink>
+                  />
                 </Box>
               )
             }}
@@ -125,11 +125,11 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
             p={2}
             type="error"
             bgcolor="#ffcdd2"
-            text={currentUser.error}
+            text={currentUser.error.message}
             variant="subtitle2"
           />
         )}
-        {currentUser.data.errorMessage && (
+        {currentUser.data && (
           <AlertPanel
             my={2}
             p={2}
