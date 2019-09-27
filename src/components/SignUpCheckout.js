@@ -43,7 +43,7 @@ const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Container className='5555555555555555555' component="main" maxWidth="md">
+    <Container component="main" maxWidth="md" style={xs ? {padding: 0} : {}}>
       <CssBaseline />
       <Box component={Paper} py={xs ? 0 : 3} px={xs ? 0 : 5}>
         <Box>
