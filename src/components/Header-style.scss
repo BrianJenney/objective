@@ -8,7 +8,7 @@
   letter-spacing: 1px;
   font-size: 16px;
   display: flex;
-  height: 100px;
+  height: 160px;
   .align-right {
     text-align: right;
   }
@@ -98,7 +98,13 @@
     text-decoration: none;
   }
 }
-
+.checkout-header {
+  text-align: center;
+  padding: 25px;
+  svg {
+    width: 240px;
+  }
+}
 .text-right {
   text-align: right;
 }
@@ -114,5 +120,6 @@
 @media (max-width: 450px) {
   .headerContainer {
     min-height: 117px;
+    height: auto;
   }
 }

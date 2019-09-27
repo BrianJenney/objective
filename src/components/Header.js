@@ -78,95 +78,103 @@ const Header = ({ currentUser, location }) => {
   );
 
   return (
-    <Grid container item={true} xs={12} className="headerContainer">
-      <Grid container item={true} xs={12} spacing={0}>
-        {(burger && !isCheckoutPage && !isOrderPage) ? (
-          <>
-            <Grid container className="top">
-              <Grid item xs={1}>
-                {renderBurgerIcon()}
-              </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={8} className="logo text-center">
-                <NavLink to="/">
-                  <Logo />
-                </NavLink>
-              </Grid>
-              <Grid item xs={1} className="mobile-cart-icon">
-                {!isCheckoutPage && <ShoppingCart />}
-              </Grid>
-            </Grid>
-            <Grid container item={true} xs={12} className="headerBar">
-              <Grid item xs={8} className="option text-right">
-                <StyledBox fontSize={9}>
-                  Free Shipping On Orders Over $75
-                </StyledBox>
-              </Grid>
-              <Grid item xs={4} className="option text-left">
-                <StyledBox fontSize={9}>Free Returns</StyledBox>
-              </Grid>
-            </Grid>
-          </>
-        ) : (!isCheckoutPage && !isOrderPage) ? (
-          <>
-            <div className="headerBar">
-              <Container>
-                <Grid container item={true} xs={12}>
-                  <Grid item xs={6} className="option text-right">
-                    <StyledBox fontSize={12}>
-                      Free Shipping On Orders Over $75
-                    </StyledBox>
+    <>
+      {isCheckoutPage || isOrderPage ? (
+        <CheckoutHeader />
+      ) : (
+        <Grid container item={true} xs={12} className="headerContainer">
+          <Grid container item={true} xs={12} spacing={0}>
+            {burger ? (
+              <>
+                <Grid container className="top">
+                  <Grid item xs={1}>
+                    {renderBurgerIcon()}
                   </Grid>
-                  <Grid item xs={6} className="option text-left">
-                    <StyledBox fontSize={12}>Free Returns</StyledBox>
-                  </Grid>
-                </Grid>
-              </Container>
-            </div>
-            <div className="holder">
-              <Container>
-                <Grid container>
-                  <Grid item xs={4}>
-                    <Grid container>
-                      <Grid item xs={6} className="h-pding">
-                        <StyledLink component={RouterLink} to="/gallery">
-                          Shop
-                        </StyledLink>
-                      </Grid>
-                      <Grid item xs={6} className="h-pding">
-                        <StyledLink component={RouterLink} to="/">
-                          Science
-                        </StyledLink>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={4} className="logo text-center">
+                  <Grid item xs={1}></Grid>
+                  <Grid item xs={8} className="logo text-center">
                     <NavLink to="/">
                       <Logo />
                     </NavLink>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Grid container className="align-right">
-                      <Grid item xs={6} className="acct h-pding">
-                        <StyledLink
-                          component={RouterLink}
-                          {...accountMenuItemConf}
-                        />
-                      </Grid>
-                      <Grid item xs={6} className="header-shop-holder h-pding">
-                        {!isCheckoutPage && <ShoppingCart />}
-                      </Grid>
-                    </Grid>
+                  <Grid item xs={1} className="mobile-cart-icon">
+                    {!isCheckoutPage && <ShoppingCart />}
                   </Grid>
                 </Grid>
-              </Container>
-            </div>
-          </>
-        ) : (
-          <CheckoutHeader />
-        )}
-      </Grid>
-    </Grid>
+                <Grid container item={true} xs={12} className="headerBar">
+                  <Grid item xs={8} className="option text-right">
+                    <StyledBox fontSize={9}>
+                      Free Shipping On Orders Over $75
+                    </StyledBox>
+                  </Grid>
+                  <Grid item xs={4} className="option text-left">
+                    <StyledBox fontSize={9}>Free Returns</StyledBox>
+                  </Grid>
+                </Grid>
+              </>
+            ) : (
+              <>
+                <div className="headerBar">
+                  <Container>
+                    <Grid container item={true} xs={12}>
+                      <Grid item xs={6} className="option text-right">
+                        <StyledBox fontSize={12}>
+                          Free Shipping On Orders Over $75
+                        </StyledBox>
+                      </Grid>
+                      <Grid item xs={6} className="option text-left">
+                        <StyledBox fontSize={12}>Free Returns</StyledBox>
+                      </Grid>
+                    </Grid>
+                  </Container>
+                </div>
+                <div className="holder">
+                  <Container>
+                    <Grid container>
+                      <Grid item xs={4}>
+                        <Grid container>
+                          <Grid item xs={6} className="h-pding">
+                            <StyledLink component={RouterLink} to="/gallery">
+                              Shop
+                            </StyledLink>
+                          </Grid>
+                          <Grid item xs={6} className="h-pding">
+                            <StyledLink component={RouterLink} to="/">
+                              Science
+                            </StyledLink>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={4} className="logo text-center">
+                        <NavLink to="/">
+                          <Logo />
+                        </NavLink>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Grid container className="align-right">
+                          <Grid item xs={6} className="acct h-pding">
+                            <StyledLink
+                              component={RouterLink}
+                              {...accountMenuItemConf}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            xs={6}
+                            className="header-shop-holder h-pding"
+                          >
+                            {!isCheckoutPage && <ShoppingCart />}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Container>
+                </div>
+              </>
+            )}
+          </Grid>
+        </Grid>
+      )}
+    </>
   );
 };
 
