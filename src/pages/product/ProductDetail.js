@@ -1,6 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -136,7 +137,8 @@ const ProductDetail = ({ variantSlug }) => {
   if (
     product === null ||
     variants.length === 0 ||
-    typeof content === 'undefined'
+    typeof content === 'undefined' ||
+    content == null
   )
     return null;
 
