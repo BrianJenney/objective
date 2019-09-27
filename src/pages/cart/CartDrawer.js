@@ -295,7 +295,7 @@ const Cart = ({
                 {shippingData.price && `$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint component="p" style={{position:"relative",top:"10px"}}>{shippingData.name}</StyledFinePrint>
+            <StyledFinePrint component="p" style={{position:"relative",top:"6px"}}>{shippingData.name}</StyledFinePrint>
           </Grid>
         ) : null}
         {cart.items.length > 0 ? (

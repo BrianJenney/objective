@@ -128,7 +128,7 @@ const CartSummary = ({ cart }) => {
               <StyledSmallCaps>
                 Shipping
               </StyledSmallCaps>
-              <StyledFinePrint component="p"  style={{position:"relative",top:"10px"}}>
+              <StyledFinePrint component="p"  style={{position:"relative",top:"6px"}}>
                 Ground 3-5 Business Days
               </StyledFinePrint>
             </Grid>
