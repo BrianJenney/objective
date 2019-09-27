@@ -1,14 +1,16 @@
 import {
   REQUEST_CREATE_ACCOUNT,
-  RECEIVED_CREATE_ACCOUNT,
+  RECEIVED_CREATE_ACCOUNT_SUCCESS,
+  RECEIVED_CREATE_ACCOUNT_FAILURE,
   REQUEST_FETCH_ACCOUNT,
-  RECEIVED_FETCH_ACCOUNT,
+  RECEIVED_FETCH_ACCOUNT_SUCCESS,
+  RECEIVED_FETCH_ACCOUNT_FAILURE,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
-  REQUEST_LOGIN_ATTEMPT,
-  RECEIVED_LOGIN_FAILURE,
+  REQUEST_LOGIN,
   RECEIVED_LOGIN_SUCCESS,
+  RECEIVED_LOGIN_FAILURE,
   REQUEST_PATCH_ACCOUNT,
-  RECEIVED_PATCH_ACCOUNT,
+  RECEIVED_PATCH_ACCOUNT_SUCCESS,
   RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD
@@ -50,11 +52,18 @@ export const requestCreateAccount = account => (dispatch, getState) => {
   });
 };
 
-export const receivedCreateAccount = createReply => dispatch => {
+export const receivedCreateAccountSuccess = createReply => dispatch => {
   localStorageClient.set('token', createReply.jwt);
   dispatch({
-    type: RECEIVED_CREATE_ACCOUNT,
+    type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
     payload: createReply
+  });
+};
+
+export const receivedCreateAccountFailure = error => dispatch => {
+  dispatch({
+    type: RECEIVED_CREATE_ACCOUNT_FAILURE,
+    payload: error
   });
 };
 
@@ -78,10 +87,17 @@ export const requestFetchAccount = id => (dispatch, getState) => {
   });
 };
 
-export const receivedFetchAccount = account => dispatch => {
+export const receivedFetchAccountSuccess = account => dispatch => {
   dispatch({
-    type: RECEIVED_FETCH_ACCOUNT,
+    type: RECEIVED_FETCH_ACCOUNT_SUCCESS,
     payload: account
+  });
+};
+
+export const receivedFetchAccountFailure = error => dispatch => {
+  dispatch({
+    type: RECEIVED_FETCH_ACCOUNT_FAILURE,
+    payload: error
   });
 };
 
@@ -115,10 +131,10 @@ export const requestPatchAccount = (authToken, patches) => (
   });
 };
 
-export const receivedPatchAccount = account => dispatch => {
+export const receivedPatchAccountSuccess = account => dispatch => {
   console.log('ACTION', account);
   dispatch({
-    type: RECEIVED_PATCH_ACCOUNT,
+    type: RECEIVED_PATCH_ACCOUNT_SUCCESS,
     payload: account
   });
 };
@@ -131,10 +147,7 @@ export const receivedPatchAccountFailure = patchError => dispatch => {
   });
 };
 
-export const requestLoginAttempt = ({ email, password }) => (
-  dispatch,
-  getState
-) => {
+export const requestLogin = ({ email, password }) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -156,7 +169,7 @@ export const requestLoginAttempt = ({ email, password }) => (
   );
 
   dispatch({
-    type: REQUEST_LOGIN_ATTEMPT,
+    type: REQUEST_LOGIN,
     payload: {}
   });
 };
