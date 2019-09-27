@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 import { Formik, Field, Form } from 'formik';
 import { object, string, boolean } from 'yup';
 import { CheckboxField, InputField } from '../form-fields';
 import { Button, NavLink, AlertPanel } from '../common';
-import { makeStyles } from '@material-ui/core/styles';
 import { withCurrentUser } from '../../hoc';
 
 const useStyles = makeStyles(theme => ({
@@ -57,30 +57,26 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
     [passwordVisible, setPasswordVisible]
   );
 
-  const renderForm = ({ isValid }) => (
-    <>
-      {currentUser.error && (
-        <AlertPanel
-          my={2}
-          p={2}
-          type="error"
-          bgcolor="#ffcdd2"
-          text={currentUser.error}
-          variant="subtitle2"
-        />
-      )}
-      {currentUser.data.errorMessage && (
-        <AlertPanel
-          my={2}
-          p={2}
-          type="error"
-          bgcolor="#ffcdd2"
-          text={currentUser.data.errorMessage}
-          variant="subtitle2"
-        />
-      )}
+  const renderForm = ({ isValid }) => {
+    let signupError = null;
+    if (currentUser.signupError) {
+      signupError =
+        currentUser.signupError.message ||
+        currentUser.signupError.errorMessage ||
+        currentUser.data.errorMessage;
+    }
+
+    return (
       <Form>
         {title && <Typography variant="h6" gutterBottom children={title} />}
+        <AlertPanel
+          my={2}
+          p={2}
+          type="error"
+          bgcolor="#ffcdd2"
+          text={signupError}
+          variant="subtitle2"
+        />
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Field name="firstName" label="First Name" component={InputField} />
@@ -116,7 +112,7 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
                       children={
                         passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                       }
-                    ></NavLink>
+                    />
                   </Box>
                 )
               }}
@@ -161,8 +157,8 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
           </Grid>
         </Grid>
       </Form>
-    </>
-  );
+    );
+  };
 
   return (
     <Formik

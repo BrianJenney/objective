@@ -1,45 +1,43 @@
 import store from '../../store';
 import {
-  receivedCreateAccount,
-  receivedFetchAccount,
-  receivedLoginFailure,
+  receivedCreateAccountSuccess,
+  receivedCreateAccountFailure,
+  receivedFetchAccountSuccess,
+  receivedFetchAccountFailure,
   receivedLoginSuccess,
-  receivedPatchAccount,
+  receivedLoginFailure,
+  receivedPatchAccountSuccess,
   receivedPatchAccountFailure
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields) => {
   switch (fields.routingKey) {
     case 'account.request.create':
-      //general-error
-      store.dispatch(receivedCreateAccount(data));
+      if (status === 'success') {
+        store.dispatch(receivedCreateAccountSuccess(data));
+      } else {
+        store.dispatch(receivedCreateAccountFailure(data));
+      }
       break;
     case 'account.request.get':
-      store.dispatch(receivedFetchAccount(data));
+      if (status === 'success') {
+        store.dispatch(receivedFetchAccountSuccess(data));
+      } else {
+        store.dispatch(receivedFetchAccountFailure(data));
+      }
       break;
     case 'account.request.patch':
       if (status === 'success') {
-        store.dispatch(receivedPatchAccount(data));
-      } else if (status === 'duplicate-email-error') {
-        console.log('set email is taken');
-        store.dispatch(
-          receivedPatchAccountFailure('Email address is already taken.')
-        );
+        store.dispatch(receivedPatchAccountSuccess(data));
       } else {
-        store.dispatch(
-          receivedPatchAccountFailure('Current password is incorrect.')
-        );
+        store.dispatch(receivedPatchAccountFailure(data));
       }
       break;
     case 'account.request.login':
       if (status === 'success') {
         store.dispatch(receivedLoginSuccess(data.data[0]));
       } else {
-        store.dispatch(
-          receivedLoginFailure(
-            'Password or username is not valid. Please check your spelling and try again.'
-          )
-        );
+        store.dispatch(receivedLoginFailure(data));
       }
       break;
     default:
