@@ -136,7 +136,8 @@ const ProductDetail = ({ variantSlug }) => {
   if (
     product === null ||
     variants.length === 0 ||
-    typeof content === 'undefined'
+    typeof content === 'undefined' ||
+    content == null
   )
     return null;
 
