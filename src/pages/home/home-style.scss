@@ -148,23 +148,26 @@
     }
   }
   @media (min-width: 1400px) {
+    .section-holder {
+      margin-top: 95px;
+    }
     .section {
-      min-height: 600px;
+      min-height: 800px;
       img {
         position: absolute;
         margin-top: -685px;
         right: 35px;
-        height: auto;
-        width: auto;
+        height: 800px;
+        width: 825px;
         margin-left: 165px;
       }
       &:nth-of-type(2) {
         img {
           position: absolute;
-          margin-top: 0;
+          margin-top: -700px;
           left: -130px;
-          height: auto;
-          width: auto;
+          height: 800px;
+          width: 825px;
           margin-right: 165px;
         }
         h1 {
@@ -184,11 +187,16 @@
         margin-bottom: 0;
         img {
           margin-top: -560px;
+          height: 800px;
+          width: 825px;
         }
       }
     }
   }
   @media (min-width: 1600px) {
+    .section-holder {
+      margin-top: 135px;
+    }
     .section {
       min-height: 800px;
       img {
@@ -266,7 +274,7 @@
         margin-right: 16px;
       }
       p {
-        width: 100%;
+        width: auto;
         font-size: 16px;
         line-height: 1.63;
         margin-left: 16px;
@@ -320,6 +328,54 @@
         p {
           a {
             padding: 25px 88px;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 413px) {
+    .section {
+      p {
+        a {
+          padding: 25px 134px;
+        }
+      }
+      &:nth-of-type(3) {
+        p {
+          a {
+            padding: 25px 69px;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 360px) {
+    .section {
+      p {
+        a {
+          padding: 25px 127px;
+        }
+      }
+      &:nth-of-type(3) {
+        p {
+          a {
+            padding: 25px 61px;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 320px) {
+    .section {
+      p {
+        a {
+          padding: 25px 107px;
+        }
+      }
+      &:nth-of-type(3) {
+        p {
+          a {
+            padding: 25px 41px;
           }
         }
       }
