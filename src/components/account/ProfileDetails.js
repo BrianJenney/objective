@@ -1,17 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { fonts } from '../../components/Theme/fonts.js';
+import { fonts } from '../Theme/fonts';
 import { Button, AlertPanel } from '../common';
-import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
 import { InputField } from '../form-fields';
-
+import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
 const schema = object().shape({
   firstName: string(),
@@ -20,6 +18,14 @@ const schema = object().shape({
     .required('Email is required')
     .email('Please enter a valid email.')
 });
+
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -63,24 +69,49 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfileDetails = props => {
+const ProfileDetails = ({
+  currentUser,
+  requestPatchAccount,
+  clearAccountError
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { account } = props;
+  const [isClicked, handleSubmitBtn] = useState(false);
+  const prevSubmitting = usePrevious(currentUser.loading);
+
+  const handleSubmit = useCallback(values => {
+    requestPatchAccount(currentUser.data.account_jwt, values);
+  });
+  useEffect(() => {
+    clearAccountError();
+  }, []);
+
+  useEffect(() => {
+    if (prevSubmitting && !currentUser.loading && !currentUser.error) {
+      handleSubmitBtn(!isClicked);
+    }
+  }, [currentUser.loading]);
+
   const INITIAL_VALUES = {
-    firstName: account.data.firstName,
-    lastName: account.data.lastName,
-    email: account.data.email,
-    phone: account.data.phone
+    firstName: currentUser.data.firstName,
+    lastName: currentUser.data.lastName,
+    email: currentUser.data.email,
+    phone: currentUser.data.phone
   };
-  if (!account.data.account_jwt) {
+  if (!currentUser.data.account_jwt) {
     return <div>No Account</div>;
   }
-  const handleSubmit = values => {
-    store.dispatch(requestPatchAccount(props.account.data.account_jwt, values));
-  };
+
   const renderForm = () => {
+    let accountError = null;
+    if (currentUser.error) {
+      accountError =
+        currentUser.error.message ||
+        currentUser.error.errorMessage ||
+        currentUser.data.errorMessage;
+    }
+
     return (
       <Form>
         <Grid container spacing={2}>
@@ -97,29 +128,34 @@ const ProfileDetails = props => {
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
-            {props.account.data.errorMessage && (
-              <AlertPanel
-                my={2}
-                p={2}
-                type="error"
-                bgcolor="#ffcdd2"
-                text={props.account.data.errorMessage}
-                variant="subtitle2"
-              />
-            )}
+            <AlertPanel
+              my={2}
+              p={2}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={accountError}
+              variant="subtitle2"
+            />
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
+            {isClicked && <ProfileUpdateFeedback error={accountError} />}
           </Grid>
         </Grid>
       </Form>
     );
   };
+  console.log('--PROFILEDETAIL--', currentUser);
   return (
     <div className="account-profile">
-      { xs ? '' : (<Typography className={classes.title} variant="h1" gutterBottom>
-        Your Profile
-      </Typography> )}
+      {xs ? (
+        ''
+      ) : (
+        <Typography className={classes.title} variant="h1" gutterBottom>
+          Your Profile
+        </Typography>
+      )}
+
       <Typography className={classes.info} variant="h3" gutterBottom>
         NAME {'&'} EMAIL
       </Typography>
@@ -130,20 +166,18 @@ const ProfileDetails = props => {
             onSubmit={handleSubmit}
             validationSchema={schema}
             render={renderForm}
+            enableReinitialize
           />
         </Grid>
       </Grid>
     </div>
   );
 };
-const mapStateToProps = state => {
-  return {
-    stompClient: state.stomp.client,
-    account: state.account
-  };
+
+ProfileDetails.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  requestPatchAccount: PropTypes.func.isRequired,
+  clearAccountError: PropTypes.func.isRequired
 };
-const mapDispatchToProps = {};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileDetails);
+
+export default ProfileDetails;

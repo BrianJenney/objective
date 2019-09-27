@@ -12,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 import { AlertPanel } from '../../components/common';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
-import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
@@ -25,7 +24,7 @@ import {
   StyledCartHeader,
   StyledSmallCaps,
   StyledFinePrint,
-  StyledCartCount,
+//  StyledCartCount,
   StyledHeaderWrapper,
   StyledProductLink,
   StyledCounterButton,
@@ -35,7 +34,7 @@ import {
   StyledGridEmptyCart,
   StyledTotalWrapper,
   StyledArrowIcon,
-  StyledBadge,
+//  StyledBadge,
   StyledHeaderWrapperEmptyCart,
   StyledSmallCapsEmptyCart,
   StyledPromoLink,
@@ -47,7 +46,7 @@ import {
   StyledEstimatedTotal
 } from './StyledComponents';
 
-const { LIGHT_GRAY, MEDIUM_GRAY } = colorPalette;
+const { MEDIUM_GRAY } = colorPalette;
 
 const Cart = ({
   history,
@@ -186,6 +185,7 @@ const Cart = ({
                         }}
                       >
                         <StyledProductLink
+                          style={{fontSize:'18px'}}
                           align="left"
                           onClick={onClickProduct}
                         >
@@ -195,6 +195,7 @@ const Cart = ({
                       <Grid item style={{ padding: '0' }}>
                         {disableItemEditing ? (
                           <Box
+                            style={{position:"relative",top:"-33px",fontSize:"16px"}}
                             component={Typography}
                             children={`QTY: ${item.quantity}`}
                           />
@@ -293,7 +294,7 @@ const Cart = ({
                 {shippingData.price && `$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint component="p">{shippingData.name}</StyledFinePrint>
+            <StyledFinePrint component="p" style={{position:"relative",top:"6px"}}>{shippingData.name}</StyledFinePrint>
           </Grid>
         ) : null}
         {cart.items.length > 0 ? (
@@ -331,7 +332,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductPrice style={{ 'font-size': '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : ''}
+                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$XX.XX'}
               </StyledProductPrice>
             </Grid>
           </Grid>

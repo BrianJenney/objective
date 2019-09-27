@@ -1,21 +1,12 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Logo from './common/Icons/Logo/Logo';
 
 class CheckoutHeader extends React.Component {
   render() {
     return (
-      <>
-        <Typography
-        xs={12}
-          style={{
-            fontSize: 48,
-            fontFamily: 'p22-underground, Helvetica, sans'
-          }}
-        >
-          {' '}
-          Truehealth
-        </Typography>
-      </>
+      <div className="checkout-header">
+        <Logo />
+      </div>
     );
   }
 }

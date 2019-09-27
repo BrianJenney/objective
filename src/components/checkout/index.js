@@ -18,7 +18,13 @@ import { getDefaultEntity } from '../../utils/misc';
 import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
-import { requestCalculateTax } from '../../modules/tax/actions'
+import { requestCalculateTax } from '../../modules/tax/actions';
+import {
+  resetTaxCalculationInCart,
+  resetCart
+} from '../../modules/cart/actions';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const getPanelTitleContent = (step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -86,7 +92,7 @@ const Checkout = ({
   currentUser,
   cart,
   requestCreateAccount,
-  requestLoginAttempt,
+  requestLogin,
   requestPatchAccount,
   requestCreateOrder
 }) => {
@@ -95,6 +101,8 @@ const Checkout = ({
   const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -104,10 +112,20 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2) {
-      console.log('Payload *********', { activeStep, shippingAddress: payload.shippingAddress, subtotal});
+      console.log('Payload *********', {
+        activeStep,
+        shippingAddress: payload.shippingAddress,
+        subtotal
+      });
       dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
     }
-  },[activeStep, payload.shippingAddress, subtotal, dispatch, requestCalculateTax]);
+  }, [
+    activeStep,
+    payload.shippingAddress,
+    subtotal,
+    dispatch,
+    requestCalculateTax
+  ]);
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -148,9 +166,9 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-
+    dispatch(resetCart());
     setPayload({});
-    history.push('/order');
+    history.replace('/order');
 
     return true;
   };
@@ -190,7 +208,7 @@ const Checkout = ({
   return (
     <ScrollToTop>
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
-        <Container>
+        <Container style={xs ? { padding: 0 } : {}}>
           <Box py={10} className="checkout-wrapper">
             <CssBaseline />
             <Grid container spacing={4}>
@@ -207,7 +225,7 @@ const Checkout = ({
                   <CheckoutAuth
                     currentUser={currentUser}
                     requestCreateAccount={requestCreateAccount}
-                    requestLoginAttempt={requestLoginAttempt}
+                    requestLogin={requestLogin}
                     handleNext={() => {
                       if (activeStep === 0) {
                         setActiveStep(1);
@@ -296,7 +314,7 @@ Checkout.propTypes = {
   currentUser: PropTypes.object.isRequired,
   cart: PropTypes.object.isRequired,
   requestCreateAccount: PropTypes.func.isRequired,
-  requestLoginAttempt: PropTypes.func.isRequired,
+  requestLogin: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   requestCreateOrder: PropTypes.func.isRequired
 };
