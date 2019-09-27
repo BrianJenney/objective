@@ -29,7 +29,7 @@ const ConfirmPassword = () => {
           We have sent you an email
         </Typography>
         <Typography variant="body1">
-          If your email exists in our system, you will receive a link to reset
+          If you email exists in our system you will receive a link to reset
           your password shortly.
         </Typography>
       </Box>
@@ -39,8 +39,6 @@ const ConfirmPassword = () => {
 
 const ConfirmPasswordDialog = withDialog(ConfirmPassword);
 
-const ConfirmPasswordPage = props => (
-  <ConfirmPasswordDialog onExited={props.history.goBack} {...props} />
-);
+const ConfirmPasswordPage = (props) => <ConfirmPasswordDialog onExited={props.history.goBack} {...props} />;
 
 export default withRouter(ConfirmPasswordPage);

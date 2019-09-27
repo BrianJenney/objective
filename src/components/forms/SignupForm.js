@@ -58,110 +58,105 @@ const SignupForm = ({ title, onSubmit, currentUser }) => {
   );
 
   const renderForm = ({ isValid }) => (
-    <>
-      {currentUser.error && (
-        <AlertPanel
-          my={2}
-          p={2}
-          type="error"
-          bgcolor="#ffcdd2"
-          text={currentUser.error}
-          variant="subtitle2"
-        />
-      )}
-      {currentUser.data.errorMessage && (
-        <AlertPanel
-          my={2}
-          p={2}
-          type="error"
-          bgcolor="#ffcdd2"
-          text={currentUser.data.errorMessage}
-          variant="subtitle2"
-        />
-      )}
-      <Form>
-        {title && <Typography variant="h6" gutterBottom children={title} />}
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Field name="firstName" label="First Name" component={InputField} />
-          </Grid>
-          <Grid item xs={6}>
-            <Field name="lastName" label="Last Name" component={InputField} />
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              name="email"
-              label="Email Address"
-              component={InputField}
-              autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs>
-            <Field
-              name="password"
-              label="Password"
-              component={InputField}
-              type={passwordVisible ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <Box width={1} textAlign="right">
-                    <NavLink
-                      style={{
-                        fontFamily: 'P22-underground',
-                        fontSize: '12px'
-                      }}
-                      component="button"
-                      underline="always"
-                      onClick={event => togglePasswordVisibility(event)}
-                      children={
-                        passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
-                      }
-                    ></NavLink>
-                  </Box>
-                )
-              }}
-              autoComplete="current-password"
-            />
-            <Typography className={classes.subText}>
-              Must be at least 6 characters
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              name="newsletter"
-              color="primary"
-              label="Subscribe to True Health news"
-              component={CheckboxField}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              type="submit"
-              children="Create account"
-              disabled={!isValid}
-              className="create-account-btn"
-            />
-          </Grid>
+    <Form>
+      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Field name="firstName" label="First Name" component={InputField} />
         </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
+        <Grid item xs={6}>
+          <Field name="lastName" label="Last Name" component={InputField} />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="email"
+            label="Email Address"
+            component={InputField}
+            autoComplete="email"
+          />
+        </Grid>
+        <Grid item xs>
+          <Field
+            name="password"
+            label="Password"
+            component={InputField}
+            type={passwordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    style={{ fontFamily: 'P22-underground', fontSize: '12px' }}
+                    component="button"
+                    underline="always"
+                    onClick={event => togglePasswordVisibility(event)}
+                    children={
+                      passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
+                    }
+                  />
+                </Box>
+              )
+            }}
+            autoComplete="current-password"
+          />
+          <Typography className={classes.subText}>
+            Must be at least 6 characters
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="newsletter"
+            color="primary"
+            label="Subscribe to True Health news"
+            component={CheckboxField}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            fullWidth
+            type="submit"
+            children="Create account"
+            disabled={!isValid}
+            className="create-account-btn"
+          />
+        </Grid>
+        {currentUser.error && (
+          <AlertPanel
+            my={2}
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={currentUser.error.message}
+            variant="subtitle2"
+          />
+        )}
+        {currentUser.data && (
+          <AlertPanel
+            my={2}
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={currentUser.data.errorMessage}
+            variant="subtitle2"
+          />
+        )}
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography className={classes.text}>
+            By creating an account you agree to the Objective Wellness&nbsp;
             <Typography className={classes.text}>
-              By creating an account you agree to the Objective Wellness&nbsp;
-              <Typography className={classes.text}>
-                <NavLink to="/termsandconditions" underline="always">
-                  Terms &amp; Conditions&nbsp;
-                </NavLink>
-                &amp;&nbsp;
-                <NavLink to="/privacypolicy" underline="always">
-                  Privacy Policy
-                </NavLink>
-              </Typography>
+              <NavLink to="/termsandconditions" underline="always">
+                Terms &amp; Conditions&nbsp;
+              </NavLink>
+              &amp;&nbsp;
+              <NavLink to="/privacypolicy" underline="always">
+                Privacy Policy
+              </NavLink>
             </Typography>
-          </Grid>
+          </Typography>
         </Grid>
-      </Form>
-    </>
+      </Grid>
+    </Form>
   );
 
   return (
