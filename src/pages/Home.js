@@ -5,7 +5,6 @@ import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -102,8 +101,10 @@ export default class Home extends Component {
             </Box>
           </Container>
         </div>
-        <Container>
-          <Box py={10}>{this.renderSections()}</Box>
+        <Container className="section-container">
+          <Box py={10} className="section-holder">
+            {this.renderSections()}
+          </Box>
         </Container>
         <div className="his-hers-theirs beige-bg">
           <Container>
