@@ -595,7 +595,7 @@ const Footer = ({ location }) => {
                         <NavLink to="/account">My Account</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/ordertracking">Track an Order</NavLink>
+                        <NavLink to="/account/orders">Track an Order</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
