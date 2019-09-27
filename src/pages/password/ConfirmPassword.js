@@ -12,10 +12,22 @@ import withDialog from '../../hoc/withDialog';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '40px',
-    fontWeight: 'bold',
+    fontSize: '48px',
+    fontFamily: 'Canela Text',
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(2)
+    paddingBottom: theme.spacing(3),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '36px',
+      lineHeight: '1.11',
+      paddingBottom: '10px'
+    }
+  },
+  text: {
+    fontSize: '18px',
+    lineHeight: 'normal',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '16px'
+    }
   }
 }));
 
@@ -25,10 +37,8 @@ const ConfirmPassword = () => {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={8} textAlign="center">
-        <Typography className={classes.title}>
-          We have sent you an email
-        </Typography>
-        <Typography variant="body1">
+        <Typography className={classes.title}>We sent you an email</Typography>
+        <Typography className={classes.text}>
           If your email exists in our system, you will receive a link to reset
           your password shortly.
         </Typography>
