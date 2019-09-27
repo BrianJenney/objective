@@ -1,21 +1,15 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Logo from './common/Icons/Logo/Logo';
 
 class CheckoutHeader extends React.Component {
   render() {
     return (
-      <>
-        <Typography
-        xs={12}
-          style={{
-            fontSize: 48,
-            fontFamily: 'p22-underground, Helvetica, sans'
-          }}
-        >
-          {' '}
-          Truehealth
-        </Typography>
-      </>
+      <Grid item xs={12} className="logo text-center">
+        
+          <Logo />
+        
+      </Grid>
     );
   }
 }

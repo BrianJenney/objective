@@ -3,6 +3,7 @@ import { receivedFetchStorefront } from '../storefront/actions';
 import { receivedFetchAccount } from '../account/actions';
 import { receivedFetchCatalog } from '../catalog/actions';
 import { receivedFetchCart } from '../cart/actions';
+import {get} from 'lodash';
 
 const localStorageClient = require('store');
 
@@ -13,7 +14,7 @@ export const handleBootstrapResponse = (status, data, fields, properties) => {
     store.dispatch(receivedFetchCatalog(data.catalog.products));
     store.dispatch(receivedFetchCart(data.cart));
     store.dispatch(receivedFetchAccount(data.account));
-    localStorageClient.set('cartId', data.cart._id);
+    localStorageClient.set('cartId', get(data, 'cart._id', ''));
     break;
   default:
     console.log('bad response');
