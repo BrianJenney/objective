@@ -81,12 +81,12 @@ const AccountMenu = ({ logout}) => {
 </>
   ) : (
     
-    <Box width={1} className="account-menu-box">
+    <Box width={1} className="account-menu-box" style={{borderRight:"1px solid #231f20"}}>
 
     
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
-          <ListItem key={menuItem.key}>
+          <ListItem key={menuItem.key} style={{paddingBottom:"0px"}}>
             <ListItemText
               primary={
                 <div className="account-side-menu">
