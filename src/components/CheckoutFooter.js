@@ -105,7 +105,7 @@ const NeedHelpDialog = () => {
                   <Typography variant="h4">
                     <Link style={{
                       cursor: "pointer", borderBottom: "1px solid #000",
-                      paddingBottom: "", textDecoration: "none"
+                      paddingBottom: "1px", textDecoration: "none"
                     }}>
                       help@objectivewellnes.com
                     </Link>

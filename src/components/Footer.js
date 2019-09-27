@@ -130,7 +130,10 @@ const ContactUsDialogDesktop = () => {
                     Email our customer care department. We'll respond as soon as possible.
                   </Typography>
                   <Typography variant="h4">
-                    <Link style={{ cursor: "pointer", textDecoration: "underline" }}>
+                    <Link style={{
+                      cursor: "pointer", borderBottom: "1px solid #000",
+                      paddingBottom: "1px", textDecoration: "none"
+                    }}>
                       help@objectivewellnes.com
                     </Link>
                   </Typography>
@@ -192,7 +195,14 @@ const ContactUsDialogMobile = () => {
                     Email our customer care department. We'll respond as soon as possible.
                   </Typography>
                   <Box>
-                    <Typography variant="h3">help@objectivewellnes.com</Typography>
+                    <Typography variant="h3">
+                      <Link style={{
+                        cursor: "pointer", borderBottom: "1px solid #000",
+                        paddingBottom: "1px", textDecoration: "none"
+                      }}>
+                        help@objectivewellnes.com
+                      </Link>
+                    </Typography>
                   </Box>
                 </Box>
               </Grid>
