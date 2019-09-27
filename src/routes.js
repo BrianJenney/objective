@@ -17,7 +17,8 @@ import {
   ConfirmPassword,
   ResetPassword,
   ResetSuccess,
-  OrderConfirmationPage
+  OrderConfirmationPage,
+  ConfirmEmail
 } from './pages';
 
 export default [
@@ -25,6 +26,7 @@ export default [
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
+  { path: '/email/confirm', exact: true, component: ConfirmEmail },
   {
     path: '/order',
     auth: true,

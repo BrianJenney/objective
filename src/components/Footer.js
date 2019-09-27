@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter, matchPath } from 'react-router-dom';
 import { compose } from 'redux';
@@ -12,7 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Link from '@material-ui/core/Link';
-import { Divider } from '@material-ui/core';
 
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -21,7 +21,7 @@ import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
 import { Container } from '@material-ui/core';
-
+import { requestForgotPassword } from '../modules/account/actions';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -374,15 +374,23 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = ({ location }) => {
+const Footer = ({ history, location }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const isCheckoutPage = matchPath(location.pathname, {
+    path: '/checkout'
+  });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
+  const dispatch = useDispatch();
+
+  const handleSubmit = ({ email }) => {
+    dispatch(requestForgotPassword(email));
+    history.replace('/email/confirm');
+  };
 
   return (
     <>
-      {(xs && !isCheckoutPage && !isOrderPage) ? (
+      {xs && !isCheckoutPage && !isOrderPage ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -467,7 +475,7 @@ const Footer = ({ location }) => {
                     <span>Sign up for tips and new product launches.</span>
                     <Formik
                       initialValues={{ email: '' }}
-                      onSubmit={() => null}
+                      onSubmit={handleSubmit}
                       validationSchema={schema}
                       render={() => (
                         <Form>
@@ -476,6 +484,7 @@ const Footer = ({ location }) => {
                             label=""
                             placeholder="Your Email"
                             component={InputField}
+                            autoComplete="email"
                           />
                           <Button type="submit">
                             <img
@@ -520,7 +529,7 @@ const Footer = ({ location }) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : (!isCheckoutPage && !isOrderPage) ? (
+      ) : !isCheckoutPage && !isOrderPage ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -605,7 +614,7 @@ const Footer = ({ location }) => {
                     <span>Sign up for tips and new product launches.</span>
                     <Formik
                       initialValues={{ email: '' }}
-                      onSubmit={() => null}
+                      onSubmit={handleSubmit}
                       validationSchema={schema}
                       render={() => (
                         <Form>
@@ -614,6 +623,7 @@ const Footer = ({ location }) => {
                             label=""
                             placeholder="Your Email"
                             component={InputField}
+                            autoComplete="email"
                           />
                           <Button type="submit">
                             <img
@@ -668,7 +678,8 @@ const Footer = ({ location }) => {
   );
 };
 Footer.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const enhance = compose(withRouter);
