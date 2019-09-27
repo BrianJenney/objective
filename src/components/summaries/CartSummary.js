@@ -96,8 +96,8 @@ const CartSummary = ({ cart }) => {
                     justifyContent: 'space-between'
                   }}
                 >
-                  <StyledProductLink>{item.variant_name}</StyledProductLink>
-                  <Typography className={classes.text}>
+                  <StyledProductLink style={{fontSize:'18px'}}>{item.variant_name}</StyledProductLink>
+                  <Typography className={classes.text} style={{position:"relative",top:"-33px",fontSize:"16px"}}>
                     QTY: {item.quantity}
                   </Typography>
 
@@ -125,10 +125,10 @@ const CartSummary = ({ cart }) => {
 
           <Grid container xs={12} style={{ margin: '15px 0' }}>
             <Grid item xs>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
+              <StyledSmallCaps>
                 Shipping
               </StyledSmallCaps>
-              <StyledFinePrint component="p">
+              <StyledFinePrint component="p"  style={{position:"relative",top:"6px"}}>
                 Ground 3-5 Business Days
               </StyledFinePrint>
             </Grid>
