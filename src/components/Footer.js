@@ -377,11 +377,11 @@ const Footer = ({ location }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const isOrderPage = matchPath(location.pathname, { path: '/order' });
 
-  //console.log('here', location, isCheckoutPage)
   return (
     <>
-      {xs && !isCheckoutPage ? (
+      {(xs && !isCheckoutPage && !isOrderPage) ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -521,7 +521,7 @@ const Footer = ({ location }) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : !isCheckoutPage ? (
+      ) : (!isCheckoutPage && !isOrderPage) ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>

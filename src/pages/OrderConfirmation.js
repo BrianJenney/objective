@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -72,7 +73,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const OrderConfirmation = ({ onSubmit }) => {
+const OrderConfirmation = ({ history }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
   const theme = useTheme();
@@ -99,6 +100,10 @@ const OrderConfirmation = ({ onSubmit }) => {
       paymentDetails: { billingAddress }
     } = cart;
     const { email } = account.data;
+    const handleOrderDetail = useCallback((e) => {
+      e.preventDefault();
+      history.replace(`/orders/${order._id}`)
+    },[history, order._id]);
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -111,7 +116,7 @@ const OrderConfirmation = ({ onSubmit }) => {
         </Typography>
         <Button
           type="button"
-          onClick={onSubmit}
+          onClick={handleOrderDetail}
           children="Check Order Status"
           className={classes.button}
         />
@@ -189,4 +194,4 @@ OrderConfirmation.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-export default OrderConfirmation;
+export default withRouter(OrderConfirmation);

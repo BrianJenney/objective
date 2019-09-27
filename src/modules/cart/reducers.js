@@ -8,7 +8,8 @@ import {
   SET_CART_DRAWER_OPENED,
   REQUEST_FETCH_CART_BY_EMAIL,
   REQUEST_REMOVE_CART_BY_ID,
-  UPDATE_CART_WITH_TAX_CALCULATION
+  UPDATE_CART_WITH_TAX_CALCULATION,
+  RESET_CART,
 } from './types';
 
 const localStorageClient = require('store');
@@ -49,6 +50,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case UPDATE_CART_WITH_TAX_CALCULATION:
       return { ...state, calculatedTax: action.payload.tax, taxRate: action.payload.rate };
+    case RESET_CART:
+      return INITIAL_STATE;
     default:
       return state;
   }

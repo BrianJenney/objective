@@ -45,6 +45,7 @@ const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const { account_jwt, firstName } = currentUser.data;
   const accountMenuItemConf = account_jwt
     ? {
@@ -76,10 +77,12 @@ const Header = ({ currentUser, location }) => {
     />
   );
 
+  console.log('panda', burger && !isCheckoutPage && !isOrderPage)
+
   return (
     <Grid container item={true} xs={12} className="headerContainer">
       <Grid container item={true} xs={12} spacing={0}>
-        {burger && !isCheckoutPage ? (
+        {(burger && !isCheckoutPage && !isOrderPage) ? (
           <>
             <Grid container className="top">
               <Grid item xs={1}>
@@ -106,7 +109,7 @@ const Header = ({ currentUser, location }) => {
               </Grid>
             </Grid>
           </>
-        ) : !isCheckoutPage ? (
+        ) : (!isCheckoutPage && !isOrderPage) ? (
           <>
             <div className="headerBar">
               <Container>
