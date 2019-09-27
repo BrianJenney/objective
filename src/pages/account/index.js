@@ -30,6 +30,18 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       padding: 0
     }
+  },
+  rightSideGrid: {
+    paddingLeft: '58px !important',
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: "12px !important"
+    }
+  },
+  accountMenuGrid: {
+    borderRight: "1px solid #231f20",
+    [theme.breakpoints.down('xs')]: {
+      borderRight: "unset"
+    }
   }
 }));
 const Account = ({ routes }) => {
@@ -39,12 +51,12 @@ const Account = ({ routes }) => {
       <Container>
         <Box className={classes.paper}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={3} className={classes.accountMenuGrid}>
               <Box>
                 <AccountMenu />
               </Box>
             </Grid>
-            <Grid item xs={12} md={9} className="right-side-account">
+            <Grid item xs={12} md={9} className={`right-side-account ${classes.rightSideGrid}`}>
               <Switch>
                 <Redirect exact from="/account" to="/account/overview" />
                 {routes.map(route => (
