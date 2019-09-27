@@ -247,22 +247,22 @@
         font-size: 14px;
         font-weight: 600;
         letter-spacing: 0.88px;
-        padding-left: 16px;
-        padding-right: 16px;
+        margin-left: 16px;
+        margin-right: 16px;
       }
       h2 {
         font-size: 36px !important;
         line-height: 1.17;
         letter-spacing: -0.059px;
-        padding-left: 16px;
-        padding-right: 16px;
+        margin-left: 16px;
+        margin-right: 16px;
       }
       p {
         width: 100%;
         font-size: 16px;
         line-height: 1.63;
-        padding-left: 16px;
-        padding-right: 16px;
+        margin-left: 16px;
+        margin-right: 16px;
         a {
           font-size: 14px;
           line-height: 2.14;
@@ -282,12 +282,18 @@
       &:nth-of-type(2) {
         h1 {
           margin-left: 0;
+          margin-right: 16px;
+          margin-left: 16px;
         }
         h2 {
           margin-left: 0;
+          margin-right: 16px;
+          margin-left: 16px;
         }
         p {
           margin-left: 0;
+          margin-right: 16px;
+          margin-left: 16px;
         }
         img {
           position: relative;
