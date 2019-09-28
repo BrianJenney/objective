@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isNil, isNaN } from 'lodash';
+import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -24,10 +24,10 @@ const validateTextField = value => {
 };
 
 const validateNumberField = value => {
-  if (isNil(value) || value === '') {
+  if (!value) {
     return 'This field is required';
   }
-  if (isNaN(value)) {
+  if (isNaN(Number(value))) {
     return 'This field should be a number';
   }
   return undefined;
@@ -49,14 +49,13 @@ const INITIAL_VALUES = {
     city: '',
     state: '',
     postalCode: '',
-    countryCode: ''
+    countryCode: 'US'
   },
   isDefault: false,
   shouldSaveData: true
 };
 
 const PaymentForm = ({
-  title,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -90,7 +89,14 @@ const PaymentForm = ({
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (
     <Form>
-      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Box
+        component={Typography}
+        color="#231f20"
+        variant="h5"
+        children="Credit Card"
+        fontSize={30}
+        mb={4}
+      />
       <Grid container spacing={2}>
         {!onlyCard && (
           <Grid item xs={12}>
@@ -148,7 +154,11 @@ const PaymentForm = ({
                       handleUseAddressSeedToggle(evt, values, setValues)
                     }
                   />
-                  <Typography children={useSeedLabel} />
+                  <Typography
+                    variant="body2"
+                    children={useSeedLabel}
+                    style={{ color: '#231f20' }}
+                  />
                 </Box>
               </Grid>
             )}
@@ -171,19 +181,20 @@ const PaymentForm = ({
             <Grid item xs={12}>
               <Field
                 name="billingAddress.line1"
-                label="Address Line 1"
+                label="Street Address"
                 component={InputField}
                 validate={validateTextField}
+                helperText="*No PO Boxes or APO/FPO addresses"
               />
             </Grid>
             <Grid item xs={12}>
               <Field
                 name="billingAddress.line2"
-                label="Address Line 2"
+                label="Apt. suite, bldg, c/o (optional)"
                 component={InputField}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <Field
                 name="billingAddress.city"
                 label="City"
@@ -194,7 +205,7 @@ const PaymentForm = ({
             <Grid item xs={12} sm={6}>
               <Field
                 name="billingAddress.state"
-                label="State/Province/Region"
+                label="State"
                 component={InputField}
                 validate={validateTextField}
               />
@@ -202,18 +213,27 @@ const PaymentForm = ({
             <Grid item xs={12} sm={6}>
               <Field
                 name="billingAddress.postalCode"
-                label="Zip/Postal Code"
+                label="Zip Code"
                 component={InputField}
                 validate={validateTextField}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.phone"
+                label="Phone #"
+                component={InputField}
+                helperText="*No PO Boxes or APO/FPO addresses"
+                validate={validateTextField}
+              />
+            </Grid>
+            <Grid item xs={12}>
               <Field
                 name="billingAddress.countryCode"
                 label="Country"
                 component={SelectField}
                 options={COUNTRY_OPTIONS}
-                validate={validateTextField}
+                disabled
               />
             </Grid>
             {allowFlyMode && (
@@ -228,7 +248,7 @@ const PaymentForm = ({
           </>
         )}
         <Grid item xs={12}>
-          <ButtonGroup fullWidth aria-label="full width button group">
+          <ButtonGroup fullWidth>
             {onBack && (
               <Button
                 color="secondary"
@@ -256,7 +276,6 @@ const PaymentForm = ({
 };
 
 PaymentForm.propTypes = {
-  title: PropTypes.string,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,

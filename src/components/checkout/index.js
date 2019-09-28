@@ -9,8 +9,10 @@ import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
+import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
 import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
 import { CheckoutReviewForm } from '../forms';
+import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
@@ -246,8 +248,7 @@ const Checkout = ({
                   <AccountAddresses
                     currentUser={currentUser}
                     requestPatchAccount={requestPatchAccount}
-                    title="Shipping Address"
-                    withSmallTitle
+                    formType={ADDRESS_FORM_TYPES.CHECKOUT}
                     onSubmit={handleNext}
                     selectionEnabled
                     allowFlyMode
@@ -269,9 +270,7 @@ const Checkout = ({
                   <AccountPaymentDetails
                     currentUser={currentUser}
                     requestPatchAccount={requestPatchAccount}
-                    title="Credit Card"
-                    withSmallTitle
-                    subTitle=""
+                    formType={PAYMENT_FORM_TYPES.CHECKOUT}
                     onBack={handleBack}
                     onSubmit={handleNext}
                     selectionEnabled

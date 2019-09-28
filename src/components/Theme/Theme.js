@@ -184,7 +184,7 @@ const nxtTheme = createMuiTheme({
     MuiFormLabel: {
       root: {
         fontFamily: 'unset',
-        color: color.MEDIUM_GRAY
+        color: color.DARK_GRAY
       },
       filled: {
         color: color.BLACK
