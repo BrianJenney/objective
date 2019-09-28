@@ -20,7 +20,8 @@ const schema = object().shape({
 
 const INITIAL_VALUES = {
   email: '',
-  password: ''
+  password: '',
+  rememberMe: false
 };
 
 const LoginForm = ({ title, onSubmit, currentUser }) => {
@@ -37,6 +38,10 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
     let loginError = null;
     if (currentUser.loginError) {
       loginError = currentUser.loginError.message;
+    }
+
+    const toggleRememberMe = () => {
+
     }
 
     return (
@@ -79,7 +84,7 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
                       children={
                         passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                       }
-                    ></NavLink>
+                    />
                   </Box>
                 )
               }}
@@ -92,6 +97,7 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
               color="primary"
               label="Remember me"
               component={CheckboxField}
+              onChange={toggleRememberMe}
             />
           </Grid>
           <Grid item xs={12}>
