@@ -32,6 +32,8 @@ import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
 import ScrollToTop from './common/ScrollToTop';
 
+import { withCurrentUser } from '../hoc';
+
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
@@ -373,11 +375,15 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = ({ location }) => {
+const Footer = ({ location, currentUser }) => {{
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
+
+  const gotoUrl = (url, login) => {
+    return currentUser.data.account_jwt ? url : login;
+  };
 
   return (
     <>
@@ -589,13 +595,13 @@ const Footer = ({ location }) => {
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to="/shipping">Shipping &amp; Returns</NavLink>
+                        <NavLink to={gotoUrl("/shipping", "/login/shipping")} >Shipping &amp; Returns</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/account">My Account</NavLink>
+                        <NavLink to={gotoUrl("/account", "/login/account")}>My Account</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/account/orders">Track an Order</NavLink>
+                        <NavLink to={gotoUrl("/account/orders", "/login/order")} >Track an Order</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
@@ -674,6 +680,6 @@ Footer.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const enhance = compose(withRouter);
+const enhance = compose(withRouter, withCurrentUser);
 
 export default enhance(Footer);
