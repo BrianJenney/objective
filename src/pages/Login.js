@@ -23,7 +23,7 @@ const LoginPage = props => (
 export default withRouter(LoginPage);
 
 const LoginToOrder = props => (
-  <LoginDialog onExited={props.history.goBack} loginTitle="Login to your orders" {...props} />
+  <LoginDialog onExited={props.history.goBack} loginTitle="Login to Track your orders" {...props} />
 );
 export const LoginToOrderPage = withRouter(LoginToOrder);
 
