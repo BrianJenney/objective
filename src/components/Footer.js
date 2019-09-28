@@ -459,13 +459,16 @@ const Footer = ({ location, currentUser }) => {
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/ourstory">FAQs</NavLink>
+                          <NavLink to="/faq">FAQs</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/ingredients">Contact Us</NavLink>
+                          <NavLink to="/contactus">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/contact">Accounts &amp; Orders</NavLink>
+                          <NavLink to={gotoUrl("/account", "/login/account")}>My Account</NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to={gotoUrl("/account/orders", "/login/order")} >Track an Order</NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
