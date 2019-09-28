@@ -1,11 +1,14 @@
 import React from 'react';
 import Logo from './common/Icons/Logo/Logo';
+import { NavLink } from 'react-router-dom';
 
 class CheckoutHeader extends React.Component {
   render() {
     return (
       <div className="checkout-header">
-        <Logo />
+        <NavLink to="/">
+          <Logo />
+        </NavLink>
       </div>
     );
   }
