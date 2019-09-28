@@ -465,10 +465,7 @@ const Footer = ({ location, currentUser }) => {
                           <NavLink to="/ingredients">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to={gotoUrl("/account", "/login/account")}>My Account</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to={gotoUrl("/account/orders", "/login/order")} >Orders</NavLink>
+                          <NavLink to="/contact">Accounts &amp; Orders</NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
