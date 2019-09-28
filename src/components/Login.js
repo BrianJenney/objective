@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ requestLogin, switchToSignup }) => {
+const Login = ({ requestLogin, switchToSignup, loginTitle }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -40,7 +40,7 @@ const Login = ({ requestLogin, switchToSignup }) => {
       <Box component={Paper}>
         <Box textAlign="center">
           <Typography gutterBottom className={classes.title}>
-            Log in to your account
+            { loginTitle ? loginTitle : 'Log in to your account' }
           </Typography>
           <Box pt={4}>
             <LoginForm onSubmit={requestLogin} />
