@@ -375,7 +375,7 @@ const StyledLegalList = withStyles(() => ({
   }
 }))(List);
 
-const Footer = ({ location, currentUser }) => {{
+const Footer = ({ location, currentUser }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
@@ -658,7 +658,7 @@ const Footer = ({ location, currentUser }) => {{
                     <StyledLegalList>
                       <ListItem>Objective &bull; All rights reserved</ListItem>
                       <ListItem>
-                        <NavLink to="/pricavypolicy">Privacy Policy</NavLink>
+                        <NavLink to="/privacypolicy">Privacy Policy</NavLink>
                       </ListItem>
                       <ListItem>
                         <NavLink to="/terms">Terms of use</NavLink>
@@ -676,8 +676,9 @@ const Footer = ({ location, currentUser }) => {{
     </>
   );
 };
+
 Footer.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 };
 
 const enhance = compose(withRouter, withCurrentUser);
