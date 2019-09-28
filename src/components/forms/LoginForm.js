@@ -34,14 +34,15 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
     [passwordVisible, setPasswordVisible]
   );
 
-  const renderForm = () => {
+  const renderForm = ({ values, handleChange }) => {
     let loginError = null;
     if (currentUser.loginError) {
       loginError = currentUser.loginError.message;
     }
-
-    const toggleRememberMe = () => {
-
+    const toggleRememberMe = (e) => {
+      handleChange(e);
+      localStorage.setItem('_rememberme_', !values.rememberMe)
+      console.log('toggleRemember me', !values.rememberMe)
     }
 
     return (
@@ -93,11 +94,12 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="remember me"
+              name="rememberMe"
               color="primary"
               label="Remember me"
               component={CheckboxField}
               onChange={toggleRememberMe}
+              value={values.rememberMe}
             />
           </Grid>
           <Grid item xs={12}>
