@@ -19,23 +19,11 @@ pipelines:
           image: docker
           script:
             - apk add curl
-            # add bits react needs to build_env file
-            - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
-            - echo REACT_APP_CLOUDAMQP_HOSTNAME=$RMQ_HOSTNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_USERNAME=$RMQ_USERNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_PASSWORD=$RMQ_PASSWORD >> build_env
-            - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
-            - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
-            - echo REACT_APP_VOUCHERIFY_URL=$REACT_APP_VOUCHERIFY_URL >> build_env
-            - echo REACT_APP_VOUCHERIFY_APPLICATION_ID=$REACT_APP_VOUCHERIFY_APPLICATION_ID >> build_env
-            - echo REACT_APP_VOUCHERIFY_SECRET_KEY=$REACT_APP_VOUCHERIFY_SECRET_KEY >> build_env
-            - echo REACT_APP_CONTENTFUL_TOKEN=$REACT_APP_CONTENTFUL_TOKEN >> build_env
             # build the image
             - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
             - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
             - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
             - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:latest .
-            - rm -rf build_env
             # push to repo
             - docker push ${NXT_REGISTRY_URL}:latest
             - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
@@ -50,23 +38,11 @@ pipelines:
           image: docker
           script:
             - apk add curl
-            # add bits react needs to build_env file
-            - echo REACT_APP_STORE_CODE=$REACT_APP_STORE_CODE > build_env
-            - echo REACT_APP_CLOUDAMQP_HOSTNAME=$DEV_RMQ_HOSTNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_USERNAME=$DEV_RMQ_USERNAME >> build_env
-            - echo REACT_APP_CLOUDAMQP_PASSWORD=$DEV_RMQ_PASSWORD >> build_env
-            - echo REACT_APP_BRAINTREE_ENV=$REACT_APP_BRAINTREE_ENV >> build_env
-            - echo REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION=$REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION >> build_env
-            - echo REACT_APP_VOUCHERIFY_URL=$REACT_APP_VOUCHERIFY_URL >> build_env
-            - echo REACT_APP_VOUCHERIFY_APPLICATION_ID=$REACT_APP_VOUCHERIFY_APPLICATION_ID >> build_env
-            - echo REACT_APP_VOUCHERIFY_SECRET_KEY=$REACT_APP_VOUCHERIFY_SECRET_KEY >> build_env
-            - echo REACT_APP_CONTENTFUL_TOKEN=$REACT_APP_CONTENTFUL_TOKEN >> build_env
             # build the image
             - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
             - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
             - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
             - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:dev .
-            - rm -rf build_env
             # push to repo
             - docker push ${NXT_REGISTRY_URL}:dev
             - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
