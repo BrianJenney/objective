@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import TabSection from './product/TabSection';
 import Instruction from './product/Instruction';
@@ -24,4 +26,8 @@ const Product = ({ match }) => {
   );
 };
 
-export default Product;
+Product.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
+export default withRouter(Product);
