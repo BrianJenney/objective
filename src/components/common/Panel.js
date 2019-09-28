@@ -9,6 +9,8 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MenuLink from './MenuLink';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {useTheme} from '@material-ui/core/styles';
 
 const styles = {
   root: {
@@ -48,6 +50,8 @@ const Panel = ({
 }) => {
   const [expandedInternal, setExpandedInternal] = useState(false);
   const isPanelExpanded = isNil(expanded) ? expandedInternal : expanded;
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   if (collapsible) {
     return (

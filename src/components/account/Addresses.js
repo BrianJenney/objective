@@ -12,6 +12,8 @@ import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import {withRouter, matchPath} from 'react-router-dom';
+import { compose } from 'redux';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -72,12 +74,7 @@ const AccountAddresses = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
-  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
-  will fix later, it broke the code*/
-  let isCheckoutPage = false;
-  if (window.location.pathname.includes('checkout')) {
-    isCheckoutPage = true;
-  }
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const [addModeEnabled, setAddModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const addressBook = get(currentUser, 'data.addressBook', []);
@@ -284,7 +281,8 @@ AccountAddresses.propTypes = {
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
-  allowFlyMode: PropTypes.bool
+  allowFlyMode: PropTypes.bool,
+  location: PropTypes.object.isRequired
 };
 
 AccountAddresses.defaultProps = {
@@ -293,4 +291,8 @@ AccountAddresses.defaultProps = {
   allowFlyMode: false
 };
 
-export default AccountAddresses;
+const enhance = compose(
+  withRouter
+);
+
+export default enhance(AccountAddresses);
