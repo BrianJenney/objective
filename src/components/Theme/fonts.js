@@ -6,6 +6,7 @@ export const fonts = {
   $brandSerif: 'Canela Text, serif',
   $brandSans: 'p22-underground, Helvetica, sans-serif',
   smallHeader: 'p22-underground',
+  variant: 'Canela Text, serif',
   captionBook: {
     header: 'p22-underground, Helvetica, sans-serif',
     weight: 400

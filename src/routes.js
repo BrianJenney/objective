@@ -71,8 +71,6 @@ export default [
         path: '/account/payment-details',
         exact: true,
         injectCurrentUser: true,
-        seedEnabled: true,
-        useSeedLabel: 'Use default address',
         component: AccountPaymentDetailsPage
       },
       {

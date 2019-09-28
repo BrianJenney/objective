@@ -8,10 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   text: {
     fontFamily: 'p22-underground',
-    fontSize: '18px',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '16px'
-    }
+    fontSize: '16px',
+    color: '#231f20'
   }
 }));
 const CheckboxField = ({ field, form, disabled, label, ...rest }) => {

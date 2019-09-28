@@ -4,67 +4,24 @@ import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import { fonts } from '../Theme/fonts';
 import { sendCreditCardRequest } from '../../utils/braintree';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  title: {
-    fontFamily: fonts.header,
-    fontSize: 48,
-    marginBottom: 30,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '36px'
-    }
-  },
-  info: {
-    fontFamily: 'p22-underground, sans-serif',
-    fontSize: 18,
-    fontWeight: 600,
-    lineHeight: 'normal',
-    marginBottom: 20
-  },
-  subTexts: {
-    fontFamily: fonts.body,
-    fontSize: '21px',
-    padding: 10
-  },
-  inline: {
-    display: 'flex'
-  },
-  root: {
-    width: '100%',
-    maxWidth: 360
-  },
-  nested: {
-    paddingLeft: theme.spacing(4)
-  },
-  box: {
-    backgroundColor: '#003833',
-    '&:hover': {
-      backgroundColor: '#003833'
-    }
-  },
-  item: {
-    color: 'white'
-  }
-}));
+export const FORM_TYPES = {
+  ACCOUNT: 'account',
+  CHECKOUT: 'checkout'
+};
 
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
-  title,
-  withSmallTitle,
-  subTitle,
+  formType,
   onBack,
   onSubmit,
   selectionEnabled,
@@ -72,19 +29,9 @@ const AccountPaymentDetails = ({
   addressSeed,
   useSeedLabel,
   allowFlyMode,
-  location,
   ...rest
 }) => {
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const classes = useStyles();
-  /* const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
-  will fix later, it broke the code*/
-  let isCheckoutPage = false;
-  if (window.location.pathname.includes('checkout')) {
-    isCheckoutPage = true;
-  }
-  const [addModeEnabled, setAddModeEnabled] = useState(false);
+  const [formModeEnabled, setFormModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { enqueueSnackbar } = useSnackbar();
   const creditCards = get(currentUser, 'data.paymentMethods', []);
@@ -96,33 +43,24 @@ const AccountPaymentDetails = ({
     const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
     setSelectedIndex(defaultIndex);
   }, [currentUser.data.paymentMethods]);
-  useEffect(() => {
-    if (currentUser.error) {
-      const errors = Array.isArray(currentUser.error)
-        ? currentUser.error
-        : [currentUser.error];
-      const errorMessage = errors.map(err => err.message).join('\n');
-      enqueueSnackbar(errorMessage, {
-        variant: 'error',
-        autoHideDuration: 5000
-      });
-    }
-  }, [currentUser.error]);
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
     setSelectedIndex(index);
   };
+
   const deleteCreditCard = deletedCreditCardToken => {
     const payload = { deletedCreditCardToken };
 
     requestPatchAccount(account_jwt, payload);
   };
+
   const setDefaultCreditCard = defaultCreditCardToken => {
     const payload = { defaultCreditCardToken };
 
     requestPatchAccount(account_jwt, payload);
   };
+
   const handleSave = async (values, actions) => {
     const pureValues = omit(values, ['shouldSaveData']);
     const { shouldSaveData } = values;
@@ -147,7 +85,8 @@ const AccountPaymentDetails = ({
 
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
-        setAddModeEnabled(false);
+        setFormModeEnabled(false);
+
         return onSubmit({
           ...payload.newCreditCard,
           nonce: payload.nonce
@@ -163,10 +102,11 @@ const AccountPaymentDetails = ({
       enqueueSnackbar(err.message, { variant: 'error' });
     }
     actions.setSubmitting(false);
-    setAddModeEnabled(false);
+    setFormModeEnabled(false);
 
     return true;
   };
+
   const handleSubmit = () => {
     if (selectedIndex < 0) {
       return false;
@@ -185,21 +125,36 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
-      {isCheckoutPage ? (
-        <Box color="#231f20">
+      {formModeEnabled ? (
+        <PaymentForm
+          seedEnabled={seedEnabled}
+          addressSeed={addressSeedData}
+          useSeedLabel={useSeedLabel}
+          onlyCard
+          onSubmit={handleSave}
+          onBack={() => setFormModeEnabled(false)}
+          allowFlyMode={allowFlyMode}
+        />
+      ) : (
+        <>
           <Box
             component={Typography}
+            color="#231f20"
             variant="h5"
-            children={title}
-            fontSize={withSmallTitle ? 30 : 48}
-            fontFamily="Canela Text, serif"
-            mb={4}
+            children={
+              formType === FORM_TYPES.ACCOUNT
+                ? 'Payment Details'
+                : 'Credit Card'
+            }
+            fontSize={formType === FORM_TYPES.ACCOUNT ? 48 : 30}
+            mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
           />
-          {subTitle && (
+          {formType === FORM_TYPES.ACCOUNT && (
             <Box
+              color="#231f20"
               component={Typography}
               variant="h5"
-              children={subTitle}
+              children="Credit Card"
               fontSize={18}
               fontWeight={600}
               fontFamily="P22Underground"
@@ -207,110 +162,87 @@ const AccountPaymentDetails = ({
               mb={4}
             />
           )}
-        </Box>
-      ) : (
-        <div>
-          { xs ? '' : (
-          <Typography className={classes.title} variant="h1" gutterBottom>
-            Payment Details
-          </Typography>
+          {isEmpty(creditCards) && (
+            <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
           )}
-          <Typography className={classes.info} variant="h3" gutterBottom>
-            CREDIT CARD
-          </Typography>
-        </div>
-      )}
-      <Box mx="-8px" my="-8px">
-        <Grid container>
-          {creditCards.map((creditCardEntity, index) => (
-            <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
-              <Box
-                display="flex"
-                alignItems="flex-start"
-                m={1}
-                px={4}
-                py={3}
-                border="2px solid #979797"
-              >
-                {selectionEnabled && (
-                  <Box ml="-17px" mt="-9px">
-                    <Radio
-                      name="payment-method-selector"
-                      style={{ color: '#231f20' }}
-                      value={index.toString()}
-                      onChange={handleSelect}
-                      checked={selectedIndex === index}
-                    />
+          <Box mx="-8px" my="-8px">
+            <Grid container>
+              {creditCards.map((creditCardEntity, index) => (
+                <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    m={1}
+                    px={4}
+                    py={3}
+                    border="2px solid #979797"
+                  >
+                    {selectionEnabled && (
+                      <Box ml="-17px" mt="-9px">
+                        <Radio
+                          name="payment-method-selector"
+                          style={{ color: '#231f20' }}
+                          value={index.toString()}
+                          onChange={handleSelect}
+                          checked={selectedIndex === index}
+                        />
+                      </Box>
+                    )}
+                    <Box
+                      maxWidth={
+                        selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
+                      }
+                    >
+                      <EditablePanel
+                        title=""
+                        defaultValues={creditCardEntity}
+                        Summary={PaymentSummary}
+                        onRemove={
+                          creditCardEntity.isDefault
+                            ? undefined
+                            : () => deleteCreditCard(creditCardEntity.token)
+                        }
+                        onSetDefault={
+                          creditCardEntity.isDefault
+                            ? undefined
+                            : () => setDefaultCreditCard(creditCardEntity.token)
+                        }
+                      />
+                    </Box>
                   </Box>
-                )}
-                <Box
-                  maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}
-                >
-                  <EditablePanel
-                    title=""
-                    defaultValues={creditCardEntity}
-                    Summary={PaymentSummary}
-                    onRemove={
-                      creditCardEntity.isDefault
-                        ? undefined
-                        : () => deleteCreditCard(creditCardEntity.token)
-                    }
-                    onSetDefault={
-                      creditCardEntity.isDefault
-                        ? undefined
-                        : () => setDefaultCreditCard(creditCardEntity.token)
-                    }
-                  />
-                </Box>
-              </Box>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Box>
-      <Box mt="26px" mb="55px">
-        {isEmpty(creditCards) && (
-          <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
-        )}
-        {addModeEnabled ? (
-          <PaymentForm
-            title=""
-            seedEnabled={seedEnabled}
-            addressSeed={addressSeedData}
-            useSeedLabel={useSeedLabel}
-            onlyCard
-            onSubmit={handleSave}
-            onBack={() => setAddModeEnabled(false)}
-            allowFlyMode={allowFlyMode}
-          />
-        ) : (
+          </Box>
           <Box
+            mt="26px"
             fontSize={16}
             fontWeight={600}
             style={{ textTransform: 'uppercase' }}
           >
             <MenuLink
-              onClick={() => setAddModeEnabled(true)}
+              onClick={() => setFormModeEnabled(true)}
               children="Add New Card"
               underline="always"
             />
           </Box>
-        )}
-      </Box>
-      {!addModeEnabled && (
-        <ButtonGroup fullWidth aria-label="full width button group">
-          {onBack && (
-            <Button
-              color="secondary"
-              type="button"
-              onClick={onBack}
-              children="Back"
-              mr={2}
-            />
-          )}
-          {onSubmit && (
-            <Button type="button" onClick={handleSubmit} children="Next" />
-          )}
-        </ButtonGroup>
+          <Box mt="55px">
+            <ButtonGroup fullWidth>
+              {onBack && (
+                <Button
+                  color="secondary"
+                  type="button"
+                  onClick={onBack}
+                  children="Back"
+                  mr={2}
+                />
+              )}
+              {onSubmit && (
+                <Button type="button" onClick={handleSubmit} children="Next" />
+              )}
+            </ButtonGroup>
+          </Box>
+        </>
       )}
     </Box>
   );
@@ -319,9 +251,7 @@ const AccountPaymentDetails = ({
 AccountPaymentDetails.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  withSmallTitle: PropTypes.bool,
-  subTitle: PropTypes.string,
+  formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,
   selectionEnabled: PropTypes.bool,
@@ -332,9 +262,7 @@ AccountPaymentDetails.propTypes = {
 };
 
 AccountPaymentDetails.defaultProps = {
-  title: 'Payment Details',
-  withSmallTitle: false,
-  subTitle: 'Credit Card',
+  formType: FORM_TYPES.ACCOUNT,
   allowFlyMode: false
 };
 
