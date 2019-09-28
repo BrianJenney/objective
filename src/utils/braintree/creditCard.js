@@ -13,7 +13,7 @@ export const sendCreditCardRequest = async payload => {
         creditCard: {
           cardholderName,
           number: parseInt(number, 10),
-          expirationDate: moment(expirationDate).format('MM/YYYY'),
+          expirationDate,
           cvv: parseInt(cvv, 10),
           postalCode
         }

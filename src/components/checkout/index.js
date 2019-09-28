@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { get, isNil } from 'lodash';
+import { useSnackbar } from 'notistack';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -102,9 +103,28 @@ const Checkout = ({
   const [activeStep, setActiveStep] = useState(0);
   const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const { account_jwt, email: currentUserEmail } = currentUser.data;
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+
+  useEffect(() => {
+    if (currentUser.error) {
+      const errors = Array.isArray(currentUser.error)
+        ? currentUser.error
+        : [currentUser.error];
+      const errorMessage = errors
+        .map(
+          err =>
+            err.message || err.errorMessage || currentUser.data.errorMessage
+        )
+        .join('\n');
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+        autoHideDuration: 10000
+      });
+    }
+  }, [currentUser.error]);
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
