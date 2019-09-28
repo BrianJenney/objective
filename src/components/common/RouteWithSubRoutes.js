@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { compose } from 'redux';
+
+import { Route, Redirect, withRouter } from 'react-router-dom';
 import { withCurrentUser } from '../../hoc';
 
 const RouteWithSubRoutes = ({
+  location,
   injectCurrentUser,
   currentUser,
   path,
@@ -25,8 +28,20 @@ const RouteWithSubRoutes = ({
     }
     Component = () => <Redirect to={redirectPath} />;
   } else if (nonAuth && account_jwt) {
-    if (!redirectPath) {
-      redirectPath = '/gallery';
+    switch (location.pathname) {
+      case '/login/order':
+        redirectPath = '/account/orders';
+        break;
+      case '/login/account':
+        redirectPath = '/account';
+        break;
+      case '/login/shipping':
+        redirectPath = '/shipping';
+        break;
+      default:
+        if (!redirectPath) {
+          redirectPath = '/gallery';
+        }
     }
     Component = () => <Redirect to={redirectPath} />;
   }
@@ -57,4 +72,7 @@ RouteWithSubRoutes.defaultProps = {
   exact: false
 };
 
-export default withCurrentUser(RouteWithSubRoutes);
+export default compose(
+  withRouter,
+  withCurrentUser
+)(RouteWithSubRoutes);
