@@ -235,12 +235,16 @@ const AccountPaymentDetails = ({
                   color="secondary"
                   type="button"
                   onClick={onBack}
-                  children="Back"
+                  children={backLabel}
                   mr={2}
                 />
               )}
               {onSubmit && (
-                <Button type="button" onClick={handleSubmit} children="Next" />
+                <Button
+                  type="button"
+                  onClick={handleSubmit}
+                  children={submitLabel}
+                />
               )}
             </ButtonGroup>
           </Box>
