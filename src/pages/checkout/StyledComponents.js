@@ -90,7 +90,7 @@ export const StyledCartCount = withStyles(theme => ({
 
 export const StyledDrawerGrid = withStyles(theme => ({
   root: {
-    padding: '26px 0',
+    padding: '12px 0',
     borderTop: $thin1pxRuler_gray,
     flexWrap: 'nowrap'
   }
@@ -106,7 +106,7 @@ export const StyledGridEmptyCart = withStyles(theme => ({
 
 export const StyledHeaderWrapper = withStyles(theme => ({
   root: {
-    paddingBottom: '34px'
+    paddingBottom: '18px'
   }
 }))(Grid);
 
@@ -187,7 +187,7 @@ export const StyledCardContent = withStyles(theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    padding: 0,
+    paddingTop: 31,
     marginBottom: 0
   }
 }))(CardContent);

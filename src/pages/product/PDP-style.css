@@ -107,6 +107,12 @@ html,
   font-size: 12px;
   margin: 0;
 }
+.research-sources ol {
+  padding-left: 0;
+  font-family: FreightTextProBook;
+  font-size: 12px;
+  margin: 0 0 0 12px;
+}
 .research-sources ul li {
   margin-bottom: 15px;
 }

@@ -26,6 +26,10 @@
     font-family: p22-undergrounf, sans-serif;
     font-size: 12px;
     font-weight: 600;
+    text-decoration: underline;
+  }
+  p {
+    line-height: 1.6;
   }
 }
 .overview-mobile {
@@ -67,9 +71,10 @@
   }
 }
 .account-orders {
-  .MuiToolbar-root-760,
-  .MUIDataTableToolbar-root-1332 {
-    padding: 0;
+  .data-table > div {
+    &:first-of-type {
+      padding: 0;
+    }
   }
   h3 {
     font-family: CanelaText;

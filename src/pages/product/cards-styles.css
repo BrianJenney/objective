@@ -229,6 +229,15 @@ html,
 .label-info-wrapper .bottom-block .other-ingredients h6 {
   margin-left: 20px;
 }
+.label-info-wrapper .bottom-block .other-ingredients p {
+  font-family: FreightTextProBook;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  line-height: 1.6;
+}
 
 @media only screen and (min-width: 735.99px) {
   .label-info-wrapper .bottom-block .other-ingredients h6 {
@@ -271,7 +280,7 @@ html,
 }
 
 .label-info-wrapper .bottom-block .important ul {
-  list-style-type: none;
+  list-style-type: square;
   margin: 20px 0 40px 30px;
 }
 
@@ -327,6 +336,7 @@ html,
   color: #000000;
   margin: 35px 0 0 !important;
   text-align: left;
+  text-transform: uppercase;
 }
 
 .how-it-works-wrapper .topBlock .leftCol p,
@@ -493,6 +503,7 @@ html,
   line-height: normal;
   letter-spacing: normal;
   text-align: left;
+  text-transform: none;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
@@ -508,7 +519,7 @@ html,
   margin-top: 0;
   margin-bottom: 0;
   font-size: 24px;
-  line-height: 2.08;
+  line-height: 1;
 }
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop {
   height: auto;
@@ -530,7 +541,7 @@ html,
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom {
-    min-height: 700px;
+    /* min-height: 700px; */
   }
 }
 
@@ -675,7 +686,7 @@ html,
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  line-height: 2.4;
+  line-height: 3.4;
   letter-spacing: normal;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .textTitle {
@@ -1060,7 +1071,6 @@ html,
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: center;
-    padding-bottom: 100px;
   }
 
   .one-box,
@@ -1173,6 +1183,15 @@ html,
   .how-it-works-wrapper .coreBenefits .topBlock .cardBottom .blockTitle,
   .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom .blockTitle {
     margin-bottom: 25px;
+  }
+  .tabpanel > div {
+    padding: 16px 0;
+  }
+  .tabpanel h2,
+  .tabpanel img,
+  .tabpanel p,
+  .tabpanel ul {
+    padding: 0 16px;
   }
 }
 @media only screen and (max-width: 734px) {

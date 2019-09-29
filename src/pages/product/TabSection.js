@@ -109,7 +109,12 @@ export default function PdpTabs() {
                 />
               </Tabs>
             </AppBar>
-            <TabPanel value={value} index={0} dir={theme.direction}>
+            <TabPanel
+              value={value}
+              index={0}
+              dir={theme.direction}
+              className="tabpanel"
+            >
               <HowItWorksTab />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>

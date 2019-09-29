@@ -132,7 +132,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
     <Grid container direction="column" spacing={3} className="account-orders">
       <Grid item sm={12} md={12} lg={12}>
         <DataTable
-          title={xs? '' : 'Your Orders'}
+          title={xs ? '' : 'Your Orders'}
           data={data.orders}
           columns={columns}
           isLoading={isLoading}
