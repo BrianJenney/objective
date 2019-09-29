@@ -54,7 +54,10 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    data: { storeCode:process.env.REACT_APP_STORE_CODE }
+    data: {
+      storeCode: getState().storefront.code,
+      catalogId: getState().storefront.catalogId
+    }
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
