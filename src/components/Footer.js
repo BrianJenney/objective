@@ -87,10 +87,17 @@ const ContactUsDialogDesktop = () => {
       <ListItem>
         <NavLink onClick={handleClickOpen}>Contact Us</NavLink>
       </ListItem>
-      <Dialog className="contact-container" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+      <Dialog
+        className="contact-container"
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           <Box textAlign="center">
-            <Typography className="contact-title" variant="h1">Contact us</Typography>
+            <Typography className="contact-title" variant="h1">
+              Contact us
+            </Typography>
           </Box>
           <Box textAlign="center">
             <Typography variant="h4" gutterBottom>
@@ -98,44 +105,62 @@ const ContactUsDialogDesktop = () => {
             </Typography>
           </Box>
         </DialogTitle>
-        <DialogContent style={{ display: "flex", alignItems: "center" }}>
+        <DialogContent style={{ display: 'flex', alignItems: 'center' }}>
           <Box>
-            <Grid container spacing={0} style={{ height: "270px" }}>
-              <Grid item xs={6} px={4} py={4} style={{
-                borderRight: '1px solid #979797',
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "28px"
-              }}>
+            <Grid container spacing={0} style={{ height: '270px' }}>
+              <Grid
+                item
+                xs={6}
+                px={4}
+                py={4}
+                style={{
+                  borderRight: '1px solid #979797',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  padding: '28px'
+                }}
+              >
                 <Box textAlign="center">
                   <ContactPhone className="phone-icon" />
                 </Box>
                 <Box textAlign="center">
                   <Typography variant="h5">
-                    Give us a call for immediate assistance and chat with one of our customer care specialists.
+                    Give us a call for immediate assistance and chat with one of
+                    our customer care specialists.
                   </Typography>
                   <Typography variant="h4">(800) 270-5771</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={6} pl={8} py={4} style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: "28px"
-              }}>
+              <Grid
+                item
+                xs={6}
+                pl={8}
+                py={4}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  padding: '28px'
+                }}
+              >
                 <Box textAlign="center">
                   <ContactMail />
                 </Box>
                 <Box textAlign="center">
                   <Typography variant="h5" pl={8}>
-                    Email our customer care department. We'll respond as soon as possible.
+                    Email our customer care department. We'll respond as soon as
+                    possible.
                   </Typography>
                   <Typography variant="h4">
-                    <Link style={{
-                      cursor: "pointer", borderBottom: "1px solid #000",
-                      paddingBottom: "1px", textDecoration: "none"
-                    }}>
+                    <Link
+                      style={{
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #000',
+                        paddingBottom: '1px',
+                        textDecoration: 'none'
+                      }}
+                    >
                       help@objectivewellnes.com
                     </Link>
                   </Typography>
@@ -145,7 +170,7 @@ const ContactUsDialogDesktop = () => {
           </Box>
         </DialogContent>
       </Dialog>
-    </div >
+    </div>
   );
 };
 const ContactUsDialogMobile = () => {
@@ -161,10 +186,21 @@ const ContactUsDialogMobile = () => {
       <ListItem>
         <NavLink onClick={handleClickOpen}>Contact Us</NavLink>
       </ListItem>
-      <Dialog className="contact-container" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle className="contact-title-container" id="customized-dialog-title" onClose={handleClose}>
+      <Dialog
+        className="contact-container"
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle
+          className="contact-title-container"
+          id="customized-dialog-title"
+          onClose={handleClose}
+        >
           <Box textAlign="center">
-            <Typography className="contact-title" variant="h1">Contact us</Typography>
+            <Typography className="contact-title" variant="h1">
+              Contact us
+            </Typography>
           </Box>
           <Box textAlign="center">
             <Typography gutterBottom variant="h4">
@@ -174,14 +210,22 @@ const ContactUsDialogMobile = () => {
         </DialogTitle>
         <DialogContent>
           <Box textAlign="center">
-            <Grid container spacing={0} style={{ borderBottom: '1px solid #979797', marginBottom: " 18px" }}>
+            <Grid
+              container
+              spacing={0}
+              style={{
+                borderBottom: '1px solid #979797',
+                marginBottom: ' 18px'
+              }}
+            >
               <Grid item>
                 <Box textAlign="center">
                   <ContactPhone />
                 </Box>
                 <Box textAlign="center" pb={2}>
                   <Typography variant="h4">
-                    Give us a call for immediate assistance and chat with one of our customer care specialists.
+                    Give us a call for immediate assistance and chat with one of
+                    our customer care specialists.
                   </Typography>
                   <Typography>(800) 270-5771</Typography>
                 </Box>
@@ -194,14 +238,19 @@ const ContactUsDialogMobile = () => {
                 </Box>
                 <Box textAlign="center">
                   <Typography variant="h4">
-                    Email our customer care department. We'll respond as soon as possible.
+                    Email our customer care department. We'll respond as soon as
+                    possible.
                   </Typography>
                   <Box>
                     <Typography variant="h3">
-                      <Link style={{
-                        cursor: "pointer", borderBottom: "1px solid #000",
-                        paddingBottom: "1px", textDecoration: "none"
-                      }}>
+                      <Link
+                        style={{
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #000',
+                          paddingBottom: '1px',
+                          textDecoration: 'none'
+                        }}
+                      >
                         help@objectivewellnes.com
                       </Link>
                     </Typography>
@@ -212,7 +261,7 @@ const ContactUsDialogMobile = () => {
           </Box>
         </DialogContent>
       </Dialog>
-    </div >
+    </div>
   );
 };
 const NeedHelpDialogDesktop = () => {
@@ -387,7 +436,7 @@ const Footer = ({ location, currentUser }) => {
 
   return (
     <>
-      {(xs && !isCheckoutPage && !isOrderPage) ? (
+      {xs && !isCheckoutPage && !isOrderPage ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -439,10 +488,10 @@ const Footer = ({ location, currentUser }) => {
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/ourstory">Our Story</NavLink>
+                          <NavLink to="/">Our Story</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/ingredients">Ingredients</NavLink>
+                          <NavLink to="/">Journal</NavLink>
                         </ListItem>
                         <ListItem>
                           <ScrollToTop>
@@ -455,20 +504,26 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/gallery">Help</NavLink>
+                        <NavLink to="/">Help</NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/faq">FAQs</NavLink>
+                          <NavLink to="/">FAQs</NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink to="/contactus">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to={gotoUrl("/account", "/login/account")}>My Account</NavLink>
+                          <NavLink to={gotoUrl('/account', '/login/account')}>
+                            My Account
+                          </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to={gotoUrl("/account/orders", "/login/order")} >Track an Order</NavLink>
+                          <NavLink
+                            to={gotoUrl('/account/orders', '/login/order')}
+                          >
+                            Track an Order
+                          </NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -530,7 +585,7 @@ const Footer = ({ location, currentUser }) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : (!isCheckoutPage && !isOrderPage) ? (
+      ) : !isCheckoutPage && !isOrderPage ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -586,7 +641,7 @@ const Footer = ({ location, currentUser }) => {
                         <NavLink to="/ourstory">Our Story</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/ingredients">Ingredients</NavLink>
+                        <NavLink to="/ingredients">Journal</NavLink>
                       </ListItem>
                       <ListItem>
                         <ScrollToTop>
@@ -598,13 +653,21 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to={gotoUrl("/shipping", "/login/shipping")} >Shipping &amp; Returns</NavLink>
+                        <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
+                          Shipping &amp; Returns
+                        </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to={gotoUrl("/account", "/login/account")}>My Account</NavLink>
+                        <NavLink to={gotoUrl('/account', '/login/account')}>
+                          My Account
+                        </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to={gotoUrl("/account/orders", "/login/order")} >Track an Order</NavLink>
+                        <NavLink
+                          to={gotoUrl('/account/orders', '/login/order')}
+                        >
+                          Track an Order
+                        </NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
@@ -674,16 +737,19 @@ const Footer = ({ location, currentUser }) => {
           </Container>
         </StyledBox>
       ) : (
-            <CheckoutFooter />
-          )}
+        <CheckoutFooter />
+      )}
     </>
   );
 };
 
 Footer.propTypes = {
-  location: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
-const enhance = compose(withRouter, withCurrentUser);
+const enhance = compose(
+  withRouter,
+  withCurrentUser
+);
 
 export default enhance(Footer);
