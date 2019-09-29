@@ -139,7 +139,7 @@ const Header = ({ currentUser, location }) => {
                           </Grid>
                           <Grid item xs={6} className="h-pding">
                             <StyledLink component={RouterLink} to="/">
-                              Science
+                              Journal
                             </StyledLink>
                           </Grid>
                         </Grid>
