@@ -17,6 +17,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuLink from './MenuLink';
 import { fonts, sizes } from '../Theme/fonts';
+import { NavLink } from "../common";
 
 const drawerWidth = 300;
 const { smallText2 } = sizes;
@@ -76,6 +77,10 @@ const DropdownMenu = ({
   };
   const handleClose = () => setAnchorEl(null);
 
+
+  console.log('itemRestProps', menuItems);
+
+
   return (
     <Box {...rest}>
       <CssBaseline />
@@ -115,20 +120,22 @@ const DropdownMenu = ({
         </div>
         <Divider />
         <List id={panelId} anchorEl={anchorEl}>
-          {menuItems.map(({ key, ...itemRestProps }) => (
+          {menuItems.map(({ key, link, ...itemRestProps }) => (
             <>
-              <ListItem key={key} justify="center" button onClick={handleClose}>
-                <Typography className={classes.styledMenu}>
-                  <MenuLink {...itemRestProps} />
-                </Typography>
-                <ChevronRightIcon />
-              </ListItem>
+              <NavLink to={link}>
+                <ListItem key={key} justify="center" button onClick={handleClose}>
+                  <Typography className={classes.styledMenu}>
+                    <MenuLink {...itemRestProps} />
+                  </Typography>
+                  <ChevronRightIcon />
+                </ListItem>
+              </NavLink>
               <Divider />
             </>
           ))}
         </List>
       </Drawer>
-    </Box>
+    </Box >
   );
 };
 
