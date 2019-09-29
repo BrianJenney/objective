@@ -29,6 +29,8 @@ const AccountPaymentDetails = ({
   addressSeed,
   useSeedLabel,
   allowFlyMode,
+  backLabel,
+  submitLabel,
   ...rest
 }) => {
   const [formModeEnabled, setFormModeEnabled] = useState(false);
@@ -258,7 +260,9 @@ AccountPaymentDetails.propTypes = {
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
-  allowFlyMode: PropTypes.bool
+  allowFlyMode: PropTypes.bool,
+  backLabel: 'Back',
+  submitLabel: 'Next'
 };
 
 AccountPaymentDetails.defaultProps = {
