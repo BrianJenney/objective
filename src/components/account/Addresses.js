@@ -9,6 +9,9 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
 import { FORM_TYPES } from '../forms/AddressForm';
+import {compose} from 'redux';
+import {withRouter, matchPath} from 'react-router-dom';
+
 
 const AccountAddresses = ({
   currentUser,
@@ -237,7 +240,8 @@ AccountAddresses.propTypes = {
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
-  allowFlyMode: PropTypes.bool
+  allowFlyMode: PropTypes.bool,
+  location: PropTypes.object.isRequired
 };
 
 AccountAddresses.defaultProps = {
@@ -245,4 +249,8 @@ AccountAddresses.defaultProps = {
   allowFlyMode: false
 };
 
-export default AccountAddresses;
+const enhance = compose(
+  withRouter
+);
+
+export default enhance(AccountAddresses);

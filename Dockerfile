@@ -6,7 +6,7 @@ COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm ci
 COPY . /app
-COPY build_env /app/.env
+RUN bash fix-src.sh
 RUN npm run build
 
 # Stage 2, based on Nginx, to have only the compiled app,
@@ -18,6 +18,16 @@ COPY --from=build-stage /app/build/ /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha.txt
 EXPOSE 80
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget localhost:80/ -q -O - > /dev/null 2>&1
-CMD ["nginx", "-g", "daemon off;"]
 
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html
+COPY ./startup.sh .
+
+# Add bash
+RUN apk add --no-cache bash
+
+# Make our shell script executable
+RUN chmod +x startup.sh
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget localhost:80/ -q -O - > /dev/null 2>&1
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/startup.sh"]
