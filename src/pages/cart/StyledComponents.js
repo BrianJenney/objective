@@ -29,7 +29,7 @@ export const StyledCartHeader = withStyles(theme => ({
       fontStretch: 'normal',
       lineHeight: 'normal',
       letterSpacing: 'normal',
-      paddingTop: '11px',
+      paddingTop: '11px'
     },
     [theme.breakpoints.up('sm')]: {
       fontSize: '32px',
@@ -110,7 +110,7 @@ export const StyledFinePrint = withStyles(theme => ({
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 0,
-    letterSpacing: 'normal',
+    letterSpacing: 'normal'
   }
 }))(Typography);
 
@@ -125,7 +125,7 @@ export const StyledCartCountHeader = withStyles(theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: '#000000',
-    marginLeft: '8px',
+    marginLeft: '8px'
   }
 }))(Typography);
 
@@ -139,13 +139,13 @@ export const StyledCartCount = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: '#000000',
+    color: '#000000'
   }
 }))(Typography);
 
 export const StyledDrawerGrid = withStyles(theme => ({
   root: {
-    padding: '26px 0',
+    padding: '12px 0',
     borderTop: $thin1pxRuler_gray,
     flexWrap: 'nowrap'
   }
@@ -164,7 +164,7 @@ export const StyledGridEmptyCart = withStyles(theme => ({
 
 export const StyledHeaderWrapper = withStyles(theme => ({
   root: {
-    paddingBottom: '34px'
+    paddingBottom: '18px'
   }
 }))(Grid);
 
@@ -214,9 +214,9 @@ export const StyledCardActions = withStyles(theme => ({
     width: '86px',
     height: '30px',
     padding: '7px',
-    marginTop: '-10px',
     display: 'flex',
     flexDirection: 'row',
+    marginTop: '5px',
     justifyContent: 'space-between'
   }
 }))(CardActions);
@@ -244,7 +244,7 @@ export const StyledProductLink = withStyles(theme => ({
     lineHeight: 1.17,
     letterSpacing: 'normal',
     paddingRight: '45px',
-    paddingBottom: '15px',
+    paddingBottom: '0',
     [theme.breakpoints.up('sm')]: {
       fontSize: '18px',
       fontFamily: $brandSerif,
@@ -254,8 +254,7 @@ export const StyledProductLink = withStyles(theme => ({
       fontStyle: 'normal',
       fontStretch: 'normal',
       lineHeight: 1.17,
-      letterSpacing: 'normal',
-      paddingRight: '50px',
+      letterSpacing: 'normal'
     }
   }
 }))(Typography);
@@ -268,7 +267,7 @@ export const StyledPromoLink = withStyles(theme => ({
     color: BLACK,
     textTransform: 'uppercase',
     textDecoration: 'underline',
-    cursor: 'pointer',
+    cursor: 'pointer'
   }
 }))(Typography);
 
@@ -278,7 +277,7 @@ export const StyledCardContent = withStyles(theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    padding: 0,
+    paddingTop: 26,
     marginBottom: 0
   }
 }))(CardContent);
@@ -297,9 +296,8 @@ export const StyledCartCloseIcon = withStyles(theme => ({
       cursor: 'pointer',
       borderRadius: '50%',
       '&:hover': {
-        backgroundColor: 'rgba(0, 0, 0, 0.08)',
+        backgroundColor: 'rgba(0, 0, 0, 0.08)'
       }
-
     },
     [theme.breakpoints.down('sm')]: {
       position: 'absolute',
@@ -318,7 +316,7 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-      }`
+    }`
   }
 }))(Badge);
 
@@ -330,7 +328,7 @@ export const StyledProductPrice = withStyles(theme => ({
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 1.82,
-    letterSpacing: 'normal',
+    letterSpacing: 'normal'
   }
 }))(Typography);
 
@@ -390,6 +388,6 @@ export const StyledPromoCode = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: '#000000',
+    color: '#000000'
   }
 }))(Typography);
