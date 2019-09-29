@@ -301,6 +301,8 @@ const Checkout = ({
                     mt={4}
                     mx={10}
                     mb={5}
+                    backLabel="Cancel"
+                    submitLabel="Review Order"
                   />
                 </Panel>
                 <Panel

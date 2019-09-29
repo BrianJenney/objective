@@ -29,6 +29,8 @@ const AccountPaymentDetails = ({
   addressSeed,
   useSeedLabel,
   allowFlyMode,
+  backLabel,
+  submitLabel,
   ...rest
 }) => {
   const [formModeEnabled, setFormModeEnabled] = useState(false);
@@ -157,7 +159,7 @@ const AccountPaymentDetails = ({
               children="Credit Card"
               fontSize={18}
               fontWeight={600}
-              fontFamily="P22Underground"
+              fontFamily="p22-underground"
               style={{ textTransform: 'uppercase' }}
               mb={4}
             />
@@ -258,7 +260,9 @@ AccountPaymentDetails.propTypes = {
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
-  allowFlyMode: PropTypes.bool
+  allowFlyMode: PropTypes.bool,
+  backLabel: 'Back',
+  submitLabel: 'Next'
 };
 
 AccountPaymentDetails.defaultProps = {
