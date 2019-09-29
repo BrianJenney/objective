@@ -4,9 +4,7 @@ import ProductContext from '../../contexts/ProductContext';
 
 const ServingList = ({ data }) => {
   if (data) {
-    let servings = data.map(
-      serving => <li>{serving}</li>
-    );
+    let servings = data.map(serving => <li>{serving}</li>);
 
     return (
       <div>
@@ -21,13 +19,9 @@ const ServingList = ({ data }) => {
 
 const ServingNotes = ({ data }) => {
   if (data) {
-    let notes = data.map(
-      note => <li>{note.replace(/\|/g, ',')}</li>
-    );
+    let notes = data.map(note => <li>{note.replace(/\|/g, ',')}</li>);
 
-    return (
-      <ul className="fineprint">{notes}</ul>
-    );
+    return <ul className="fineprint">{notes}</ul>;
   }
 
   return null;
@@ -35,14 +29,14 @@ const ServingNotes = ({ data }) => {
 
 const OtherIngredients = ({ data }) => {
   if (data) {
-    let otherIngredients = data.map(
-      otherIngredient => <li>{otherIngredient.replace(/\|/g, ',')}</li>
-    );
+    let otherIngredients = data.map(otherIngredient => (
+      <p>{otherIngredient.replace(/\|/g, ',')}</p>
+    ));
 
     return (
       <>
         <h6>Other Ingredients</h6>
-        <ul>{otherIngredients}</ul>
+        <div>{otherIngredients}</div>
       </>
     );
   }
@@ -52,9 +46,7 @@ const OtherIngredients = ({ data }) => {
 
 const ImportantNotes = ({ data }) => {
   if (data) {
-    let importantNotes = data.map(
-      note => <li>{note.replace(/\|/g, ',')}</li>
-    );
+    let importantNotes = data.map(note => <li>{note.replace(/\|/g, ',')}</li>);
 
     return (
       <>
@@ -105,7 +97,7 @@ export default function SupplementFactsTab() {
         <div className="card facts-table">
           {content.supplementFactsIngredientsParagraph ? (
             ingredientList
-          ): (
+          ) : (
             <table>
               <thead>
                 <tr>
