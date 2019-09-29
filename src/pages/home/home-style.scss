@@ -36,7 +36,7 @@
       letter-spacing: -1px;
       text-align: center;
       color: #231f20;
-      margin: 0 auto;
+      margin: 0 auto 60px;
     }
   }
   .welcome {
@@ -144,6 +144,65 @@
       margin-bottom: 0;
       img {
         margin-top: -450px;
+      }
+    }
+  }
+  .tile {
+    text-align: left;
+    .prod-name-holder {
+      margin-bottom: 10px;
+      p {
+        text-align: left;
+        margin: 0;
+      }
+      .title {
+        font-family: CanelaText;
+        font-size: 32px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.31;
+        letter-spacing: normal;
+        text-decoration: none;
+      }
+    }
+    .variant-info {
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #2f2f2f;
+      strong {
+        font-size: 30px;
+        color: #231f20;
+        font-weight: normal;
+      }
+    }
+    .pding {
+      padding: 40px 35px 30px;
+    }
+    .home-atc {
+      padding: 0 35px 40px;
+    }
+    &.green {
+      border: 1px solid #003833;
+      .title {
+        color: #003833;
+      }
+    }
+    &.blue {
+      border: 1px solid #1f396d;
+      .title {
+        color: #1f396d;
+      }
+    }
+    &.red {
+      border: 1px solid #87331f;
+      .title {
+        color: #87331f;
       }
     }
   }
@@ -330,6 +389,28 @@
             padding: 25px 88px;
           }
         }
+      }
+    }
+    .tile {
+      .pding {
+        padding: 30px 20px 20px;
+      }
+      .tile-img {
+        height: 335px !important;
+        width: 100% !important;
+      }
+      .title {
+        font-size: 24px;
+      }
+
+      .variant-info {
+        font-size: 13.3px;
+        strong {
+          font-size: 22px;
+        }
+      }
+      .home-atc {
+        padding: 0 20px 30px;
       }
     }
   }

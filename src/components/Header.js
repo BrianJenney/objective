@@ -50,19 +50,21 @@ const Header = ({ currentUser, location }) => {
   const accountMenuItemConf = account_jwt
     ? {
         key: 'third',
-        children: <LoggedInUser name={firstName} />
+        children: <LoggedInUser name={firstName} />,
+        link: '/account/overview'
       }
     : burger
-    ? { key: 'third', to: '/login', children: ' Account' }
+    ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
     : {
         key: 'third',
-        children: <LoginDropdown />
+        children: <LoginDropdown />,
+        link: '/login'
       };
   const burgerMenuItems = [
-    { key: 'first', to: '/gallery', children: 'Shop' },
-    { key: 'second', to: '/', children: 'Journal' },
+    { key: 'first', to: '/gallery', link: '/gallery', children: 'Shop' },
+    { key: 'second', to: '/', link: '/', children: 'Journal' },
     accountMenuItemConf,
-    { key: 'fourth', to: '/help', children: 'Help' }
+    { key: 'fourth', to: '/help', link: '/help', children: 'Help' }
   ];
   const renderBurgerIcon = () => (
     <DropdownMenu
@@ -139,7 +141,7 @@ const Header = ({ currentUser, location }) => {
                           </Grid>
                           <Grid item xs={6} className="h-pding">
                             <StyledLink component={RouterLink} to="/">
-                              Science
+                              Journal
                             </StyledLink>
                           </Grid>
                         </Grid>
