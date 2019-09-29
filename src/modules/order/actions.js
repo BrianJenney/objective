@@ -96,8 +96,8 @@ export const requestFindOrdersByAccount = accountJwt => (
   const params = {
     params: {
       account_jwt: accountJwt,
-      idField: 'account_id', // use this to tell the MS where to substitute the decoded id
-      query: { account_id: null }
+      idField: 'accountId', // use this to tell the MS where to substitute the decoded id
+      query: { accountId: null }
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));
