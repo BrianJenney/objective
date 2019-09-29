@@ -79,7 +79,11 @@ const Header = ({ currentUser, location }) => {
 
   return (
     <>
+<<<<<<< HEAD
       {isCheckoutPage || isOrderPage ? (
+=======
+      {isCheckoutPage || isOrderPage ?  ? (
+>>>>>>> style-changes-4
         <CheckoutHeader />
       ) : (
         <Grid container item={true} xs={12} className="headerContainer">
