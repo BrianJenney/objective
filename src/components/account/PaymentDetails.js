@@ -157,7 +157,7 @@ const AccountPaymentDetails = ({
               children="Credit Card"
               fontSize={18}
               fontWeight={600}
-              fontFamily="P22Underground"
+              fontFamily="p22-underground"
               style={{ textTransform: 'uppercase' }}
               mb={4}
             />
