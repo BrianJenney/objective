@@ -18,11 +18,7 @@ const schema = object().shape({
   password: string().required('Password is required')
 });
 
-const INITIAL_VALUES = {
-  email: '',
-  password: '',
-  rememberMe: false
-};
+
 
 const LoginForm = ({ title, onSubmit, currentUser }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -44,7 +40,7 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
       localStorage.setItem('_rememberme_', !values.rememberMe)
       console.log('toggleRemember me', !values.rememberMe)
     }
-
+console.log('renderForm', values)
     return (
       <Form>
         {title && <Typography variant="h6" gutterBottom children={title} />}
@@ -109,6 +105,12 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
       </Form>
     );
   };
+  const INITIAL_VALUES = {
+    email: '',
+    password: '',
+    rememberMe: localStorage.getItem('_rememberme_') || false
+  };
+  console.log('rememberme',  {INITIAL_VALUES})
 
   return (
     <Formik
