@@ -173,7 +173,12 @@
   hr {
     background-color: #003833;
   }
-  .opt2 .gallery-prod-card .prod-name-holder .title {
-    color: #003833;
+  .opt2 {
+    .gallery-prod-card {
+      background-color: rgba(252, 248, 244, 0.5);
+      .prod-name-holder .title {
+        color: #003833;
+      }
+    }
   }
 }
