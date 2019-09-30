@@ -31,6 +31,7 @@ export const requestRefundTransaction = (authToken, transaction) => (
       originalRequest: 'transaction.request.void'
     }
   };
+  console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
   console.log("SENDING PAYLOAD",payload);
   client.send(
