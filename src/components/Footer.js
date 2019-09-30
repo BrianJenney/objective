@@ -84,7 +84,7 @@ const NeedHelpDialog = () => {
   };
   return (
     <div>
-      <ListItem>
+      <ListItem style={{ padding: "0px" }}>
         <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>HELP</NavLink>
       </ListItem>
       <Dialog
