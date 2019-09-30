@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, createRef } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
 
@@ -101,6 +101,7 @@ export const HomeVariantCard = ({variant}) => {
   const dispatch = useDispatch();
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
+  const ref = createRef();
   const {name, effectivePrice,prodSlug, slug, variantInfo, assets, cardColor} = variant;
 
   const handleAddToCart = useCallback(() => {
@@ -112,11 +113,15 @@ export const HomeVariantCard = ({variant}) => {
       setATCAdding(false);
       dispatch(setCartDrawerOpened(true));
     }, 500);
-  }, [cart, variant, dispatch]);
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, [cart, variant, dispatch, ref]);
 
   return (
-    <Grid item xs={12} md={4}>
-      <Card className={`tile ${cardColor}`}>
+    <Grid item xs={12} md={4} >
+      <Card className={`tile ${cardColor}`} ref={ref}>
         <CardMedia
           style={{ height: 430, width: 430 }}
           image={assets.imgs}
