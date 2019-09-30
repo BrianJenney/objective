@@ -11,7 +11,6 @@ import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
 import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-import { setCartDrawerOpened } from '../../modules/cart/actions';
 const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
@@ -35,8 +34,7 @@ const VariantCard = ({ variant, product, styleMap }) => {
 
   const updateQuantityToCart = useCallback(
     qty => {
-      addToCart(localStorageClient.get('cartId'), cart, variant, qty);
-      dispatch(setCartDrawerOpened(true));
+      addToCart(cart, variant, qty);
       // enqueueSnackbar(message, { variant: 'success' });
     },
     [cart, variant, dispatch]
@@ -52,10 +50,9 @@ const VariantCard = ({ variant, product, styleMap }) => {
     setTimeout(() => {
       //Give effect of item being added
 
-      addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
+      addToCart(cart, variant, quantity);
 
       setATCAdding(false);
-      dispatch(setCartDrawerOpened(true));
     }, 500);
   }, [cart, variant, quantity, dispatch]);
 

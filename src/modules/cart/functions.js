@@ -1,4 +1,9 @@
-import { requestPatchCart } from '../../modules/cart/actions';
+import {
+  requestPatchCart,
+  requestAddToCart,
+  requestRemoveFromCart,
+  requestUpdateQuantity
+} from '../../modules/cart/actions';
 
 import store from '../../store';
 
@@ -35,81 +40,16 @@ export const calculateCartTotals = cart => {
   };
 };
 
-export const addToCart = (cartId, cart, selectedVariant, quantity) => {
-  let localCart = cart;
-  let newItems = cart.items;
-  let alreadyInCart = false;
-console.log(selectedVariant);
-  newItems
-    .filter(item => item.sku === selectedVariant.sku)
-    .forEach(item => {
-      alreadyInCart = true;
-      item.quantity += quantity;
-    });
-
-  if (!alreadyInCart) {
-    const newItem = {
-      variant_name: selectedVariant.name,
-      variant_id: selectedVariant.id,
-      variant_img: selectedVariant.assets.imgs,
-      sku: selectedVariant.sku,
-      variantInfo: selectedVariant.variantInfo,
-      attributes: selectedVariant.attributes,
-      quantity: quantity,
-      unit_price: parseFloat(selectedVariant.effectivePrice),
-      discount_price: parseFloat(selectedVariant.effectivePrice),
-      varSlug: selectedVariant.slug,
-      prodSlug: selectedVariant.prodSlug
-    };
-    newItems.push(newItem);
-  }
-
-  localCart.items = newItems;
-
-  let totals = calculateCartTotals(localCart);
-
-  const patches = {
-    items: newItems,
-    ...totals
-  };
-
-  store.dispatch(requestPatchCart(cartId, patches));
+export const addToCart = (cart, selectedVariant, quantity) => {
+  store.dispatch(requestAddToCart(cart, selectedVariant, quantity));
 };
 
 export const adjustQty = (cart, product, amount) => {
-  let localCart = cart;
-  let newItems = cart.items;
-
-  newItems[product].quantity += amount;
-
-  localCart.items = newItems;
-
-  let totals = calculateCartTotals(localCart);
-
-  const patches = {
-    items: newItems,
-    ...totals
-  };
-
-  store.dispatch(requestPatchCart(cart._id, patches));
+  store.dispatch(requestUpdateQuantity(cart, product, amount));
 };
 
 export const removeFromCart = (cart, product) => {
-  let localCart = cart;
-  let newItems = [...cart.items];
-
-  newItems.splice(product, 1);
-
-  localCart.items = newItems;
-
-  let totals = calculateCartTotals(localCart);
-
-  const patches = {
-    items: newItems,
-    ...totals
-  };
-
-  store.dispatch(requestPatchCart(cart._id, patches));
+  store.dispatch(requestRemoveFromCart(cart, product));
 };
 
 export const addCoupon = (cart, promo) => {
