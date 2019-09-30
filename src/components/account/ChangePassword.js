@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 import { object, string, ref } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import Box from '@material-ui/core/Box';
-import { useTheme } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
-import { Button, NavLink, AlertPanel } from '../common';
+import { Button, NavLink } from '../common';
 import { getInitialValues } from '../../utils/misc';
-import { requestPatchAccount } from '../../modules/account/actions';
-import store from '../../store';
-// import ResetSuccess from '../../pages/password/ResetSuccess';
 
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
@@ -40,14 +36,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 20
   }
 }));
-const ChangePasswordForm = ({
-  title,
-  currentUser,
-  onBack,
-  backLabel,
-  submitLabel,
-  defaultValues
-}) => {
+const ChangePassword = ({ currentUser, requestPatchAccount }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -55,8 +44,7 @@ const ChangePasswordForm = ({
   const [isClicked, handleSubmitBtn] = useState(false);
   const handleSubmit = useCallback(
     values => {
-      // handleSubmitBtn(!isClicked);
-      store.dispatch(requestPatchAccount(currentUser.data.account_jwt, values));
+      requestPatchAccount(currentUser.data.account_jwt, values);
     },
     [isClicked, handleSubmitBtn]
   );
@@ -90,7 +78,6 @@ const ChangePasswordForm = ({
 
   const renderForm = () => (
     <Form>
-      {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography className={classes.info} variant="h3" gutterBottom>
@@ -100,7 +87,6 @@ const ChangePasswordForm = ({
             name="currentPassword"
             label="Current Password"
             component={InputField}
-            type="password"
             type={currentPasswordVisible ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -127,7 +113,6 @@ const ChangePasswordForm = ({
             name="newPassword1"
             label="New Password"
             component={InputField}
-            type="password"
             type={firstNewPasswordVisible ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -157,7 +142,6 @@ const ChangePasswordForm = ({
             name="newPassword2"
             label="Confirm New Password"
             component={InputField}
-            type="password"
             type={secondNewPasswordVisible ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -183,39 +167,18 @@ const ChangePasswordForm = ({
         </Grid>
 
         <Grid item xs={xs ? 12 : 4}>
-          {currentUser.error === 'Current password is incorrect.' && (
-            <AlertPanel
-              my={2}
-              p={2}
-              type="error"
-              bgcolor="#ffcdd2"
-              text={currentUser.error}
-              variant="subtitle2"
-            />
-          )}
           <Box display="flex" alignItems="center">
-            {' '}
-            {onBack && (
-              <Button
-                type="button"
-                onClick={onBack}
-                children={backLabel}
-                mr={2}
-              />
-            )}
-            <Button fullWidth type="submit" children={submitLabel} />
-            {/* {isClicked ? <ResetSuccess /> : null} */}
+            <Button fullWidth type="submit" children="Change Password" />
           </Box>
         </Grid>
       </Grid>
     </Form>
   );
-  console.log('--CHANGEPASS--', currentUser);
   return (
     <Grid container className="account-change-password">
       <Grid item xs={12} md={12}>
         <Formik
-          initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+          initialValues={getInitialValues(INITIAL_VALUES, {})}
           onSubmit={handleSubmit}
           validationSchema={schema}
           render={renderForm}
@@ -224,17 +187,10 @@ const ChangePasswordForm = ({
     </Grid>
   );
 };
-ChangePasswordForm.propTypes = {
-  title: PropTypes.string,
-  defaultValues: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func,
-  submitLabel: PropTypes.string,
-  backLabel: PropTypes.string
+
+ChangePassword.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  requestPatchAccount: PropTypes.func.isRequired
 };
-ChangePasswordForm.defaultProps = {
-  defaultValues: {},
-  submitLabel: 'Change Password',
-  backLabel: 'Cancel'
-};
-export default ChangePasswordForm;
+
+export default ChangePassword;

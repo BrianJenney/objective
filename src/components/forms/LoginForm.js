@@ -8,12 +8,10 @@ import { Formik, Field, Form } from 'formik';
 import { Button, NavLink, AlertPanel } from '../common';
 import { withCurrentUser } from '../../hoc';
 import { CheckboxField, InputField } from '../form-fields';
-import { fonts } from '../Theme/fonts';
-const { smallHeader } = fonts;
 
 const getBoolean = value => {
   if (!value) return false;
-  return value === "false" ? false : true;
+  return value !== 'false';
 };
 
 const schema = object().shape({
@@ -35,16 +33,19 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
     [passwordVisible, setPasswordVisible]
   );
 
-  const handleLogin = useCallback((values) => {
-    const { email, rememberMe } = values;
-    localStorage.setItem('_rememberme_', rememberMe);
-    if (rememberMe) {
-      localStorage.setItem('_email_', email);
-    } else {
-      localStorage.removeItem('_email_');
-    }
-    onSubmit(values);
-  },[onSubmit]);
+  const handleLogin = useCallback(
+    values => {
+      const { email, rememberMe } = values;
+      localStorage.setItem('_rememberme_', rememberMe);
+      if (rememberMe) {
+        localStorage.setItem('_email_', email);
+      } else {
+        localStorage.removeItem('_email_');
+      }
+      onSubmit(values);
+    },
+    [onSubmit]
+  );
 
   const renderForm = ({ values, isValid }) => {
     let loginError = null;
@@ -83,8 +84,8 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
                   <Box width={1} textAlign="right">
                     <NavLink
                       style={{
-                        fontFamily: smallHeader,
-                        fontSize: '12px'
+                        fontFamily: 'p22-underground',
+                        fontSize: 12
                       }}
                       component="button"
                       underline="always"
@@ -109,7 +110,12 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button fullWidth type="submit" children="Login" disabled={!isValid}/>
+            <Button
+              fullWidth
+              type="submit"
+              children="Login"
+              disabled={!isValid}
+            />
           </Grid>
         </Grid>
       </Form>
@@ -119,7 +125,7 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
   const INITIAL_VALUES = {
     email: localStorage.getItem('_email_') || '',
     password: '',
-    rememberMe,
+    rememberMe
   };
 
   return (

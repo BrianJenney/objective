@@ -7,7 +7,7 @@ import { object, string } from 'yup';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { fonts } from '../Theme/fonts';
-import { Button, AlertPanel } from '../common';
+import { Button } from '../common';
 import { InputField } from '../form-fields';
 import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
@@ -69,11 +69,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfileDetails = ({
-  currentUser,
-  requestPatchAccount,
-  clearAccountError
-}) => {
+const ProfileDetails = ({ currentUser, requestPatchAccount }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -83,9 +79,6 @@ const ProfileDetails = ({
   const handleSubmit = useCallback(values => {
     requestPatchAccount(currentUser.data.account_jwt, values);
   });
-  useEffect(() => {
-    clearAccountError();
-  }, []);
 
   useEffect(() => {
     if (prevSubmitting && !currentUser.loading && !currentUser.error) {
@@ -128,14 +121,6 @@ const ProfileDetails = ({
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
           <Grid item xs={xs ? 12 : 4}>
-            <AlertPanel
-              my={2}
-              p={2}
-              type="error"
-              bgcolor="#ffcdd2"
-              text={accountError}
-              variant="subtitle2"
-            />
             <Button mt={2} mp={3} fullWidth type="submit">
               Save Changes
             </Button>
@@ -176,8 +161,7 @@ const ProfileDetails = ({
 
 ProfileDetails.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  requestPatchAccount: PropTypes.func.isRequired,
-  clearAccountError: PropTypes.func.isRequired
+  requestPatchAccount: PropTypes.func.isRequired
 };
 
 export default ProfileDetails;
