@@ -185,9 +185,6 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'unset',
         color: color.DARK_GRAY
-      },
-      filled: {
-        color: color.BLACK
       }
     },
     MuiInputBase: {
@@ -199,6 +196,18 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'p22-underground, sans-serif',
         fontSize: '1rem'
+      },
+      outlined: {
+        '&.MuiInputLabel-shrink': {
+          transform: 'translate(14px, 4px) scale(0.75)'
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      notchedOutline: {
+        '& legend': {
+          display: 'none'
+        }
       }
     },
     MuiGrid: {
