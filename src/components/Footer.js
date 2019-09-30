@@ -491,12 +491,10 @@ const Footer = ({ location, currentUser }) => {
                           <NavLink to="/">Our Story</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/">Journal</NavLink>
+                          <NavLink to="/">Ingredients</NavLink>
                         </ListItem>
                         <ListItem>
-                          <ScrollToTop>
-                            <ContactUsDialogMobile />
-                          </ScrollToTop>
+                          <NavLink to="/">Read Our Journal</NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -511,18 +509,15 @@ const Footer = ({ location, currentUser }) => {
                           <NavLink to="/">FAQs</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/contactus">Contact Us</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to={gotoUrl('/account', '/login/account')}>
-                            My Account
-                          </NavLink>
+                          <ScrollToTop>
+                            <ContactUsDialogMobile />
+                          </ScrollToTop>
                         </ListItem>
                         <ListItem>
                           <NavLink
                             to={gotoUrl('/account/orders', '/login/order')}
                           >
-                            Track an Order
+                            Account & Orders
                           </NavLink>
                         </ListItem>
                       </StyledList>
@@ -737,8 +732,8 @@ const Footer = ({ location, currentUser }) => {
           </Container>
         </StyledBox>
       ) : (
-        <CheckoutFooter />
-      )}
+            <CheckoutFooter />
+          )}
     </>
   );
 };
