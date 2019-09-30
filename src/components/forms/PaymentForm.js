@@ -21,9 +21,6 @@ const useStyles = makeStyles(() => ({
   noBorderField: {
     '& .MuiOutlinedInput-notchedOutline': {
       border: 0
-    },
-    '& .MuiInputLabel-shrink': {
-      display: 'none'
     }
   }
 }));
