@@ -269,9 +269,6 @@ const Footer = ({ location, currentUser }) => {
                           <NavLink to="/">FAQs</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/contactus">Contact Us</NavLink>
-                        </ListItem>
-                        <ListItem>
                           <NavLink to={gotoUrl('/account', '/login/account')}>
                             My Account
                           </NavLink>
