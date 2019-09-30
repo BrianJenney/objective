@@ -225,6 +225,20 @@ const nxtTheme = createMuiTheme({
     },
     MuiContainer: {
       maxWidth: 1504
+    },
+    MuiFormHelperText: {
+      root: {
+        '&.Mui-error': {
+          backgroundColor: 'rgba(208, 2, 27, 0.15)',
+          color: '#000'
+        }
+      },
+      contained: {
+        margin: 0,
+        height: 24,
+        lineHeight: '24px',
+        padding: '0 5px'
+      }
     }
   },
   shape: {
