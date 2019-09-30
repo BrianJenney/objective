@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {makeStyles, useTheme, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
 import StepConnector from '@material-ui/core/StepConnector';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -82,13 +83,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '90%',
   },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
 }));
 
 const getSteps = () => {
@@ -97,12 +91,15 @@ const getSteps = () => {
 
 const StatusStepper = ({statusStepperDate}) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+
   const [activeStep, setActiveStep] = React.useState(3);
   const steps = getSteps();
 
-  return (
-    <div className={classes.root}>
-      <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
+  const DesktopStatusStepper = () => {
+    return (
+      <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />} >
         {steps.map(label => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>
@@ -111,6 +108,29 @@ const StatusStepper = ({statusStepperDate}) => {
           </Step>
         ))}
       </Stepper>
+    );
+  };
+
+  const MobileStatusStepper = () => {
+    return (
+      <>
+        <Stepper activeStep={activeStep}  orientation="vertical">
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel>
+                {label} {statusStepperDate[label]}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <br/>
+      </>
+    );
+  };
+
+  return (
+    <div className={classes.root}>
+      {xs ? <MobileStatusStepper /> : <DesktopStatusStepper/> }
     </div>
   );
 };
