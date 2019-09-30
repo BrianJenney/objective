@@ -15,6 +15,7 @@ import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
 import nxtTheme from './components/Theme/Theme';
+import './assets/styles/global.scss';
 
 const ObjectId = require('bson-objectid');
 
@@ -22,9 +23,9 @@ const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
 const stompClient = Stomp.over(wss);
 const replyTo = ObjectId();
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   success: { backgroundColor: 'green' },
-  error: { backgroundColor: 'red' },
+  error: { backgroundColor: '#fad9dd', color: '#231f20' },
   warning: { backgroundColor: 'orange' },
   info: { backgroundColor: 'yellow' }
 }));
