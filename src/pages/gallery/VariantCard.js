@@ -17,8 +17,10 @@ const localStorageClient = require('store');
 const PriceVariantInfo = ({ variant }) => {
   return variant ? (
     <div>
-      <strong>${variant.effectivePrice}</strong> / {variant.variantInfo.size}{' '}
-      {variant.variantInfo.prodType}
+      <strong>${variant.effectivePrice}</strong>&nbsp;&mdash;{' '}
+      <span>
+        {variant.variantInfo.size} {variant.variantInfo.prodType}
+      </span>
     </div>
   ) : null;
 };
@@ -94,10 +96,10 @@ const VariantCard = ({ variant, product, styleMap }) => {
               className="atc-button"
             >
               {!ATCAdded
-                  ? 'ADD TO CART'
-                  : !ATCAdding
-                  ? 'PRODUCT ADDED'
-                  : 'ADDING...'}
+                ? 'ADD TO CART'
+                : !ATCAdding
+                ? 'PRODUCT ADDED'
+                : 'ADDING...'}
             </Button>
           </CardActions>
         ) : (

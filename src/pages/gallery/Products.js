@@ -72,30 +72,28 @@ const Products = () => {
                 </Grid>
               </div>
             </Grid>
-            <div>
-              <CategorySummary
-                key={'core'}
-                products={productCategoriesToProducts.core}
-                variantMap={variantMap}
-                category={{
-                  title: 'Skin & Beauty',
-                  description: 'Some description',
-                  slug: 'core'
-                }}
-                styleMap={{
-                  container: {
-                    borderColor: productCategoriesToProducts.core[0].color
-                  },
-                  text: { color: productCategoriesToProducts.core[0].color }
-                }}
-              />
-            </div>
+            <CategorySummary
+              key={'core'}
+              products={productCategoriesToProducts.core}
+              variantMap={variantMap}
+              category={{
+                title: 'Skin & Beauty',
+                description: 'Some description',
+                slug: 'core'
+              }}
+              styleMap={{
+                container: {
+                  borderColor: productCategoriesToProducts.core[0].color
+                },
+                text: { color: productCategoriesToProducts.core[0].color }
+              }}
+            />
           </Grid>
         </Container>
       </Box>
       <Box py={10} className="beige-bg moodenergy">
         <Container className="beige-container">
-          <Grid container>
+          <Grid container spacing={4}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <div className="opt1">
                 <Grid container className="gallery-content-blurb">
@@ -111,31 +109,28 @@ const Products = () => {
                 </Grid>
               </div>
             </Grid>
-            <div>
-              <CategorySummary
-                key={'energy'}
-                products={productCategoriesToProducts.energy}
-                variantMap={variantMap}
-                category={{
-                  title: 'Skin & Beauty',
-                  description: 'Some description',
-                  slug: 'energy'
-                }}
-                styleMap={{
-                  container: {
-                    borderColor: productCategoriesToProducts.energy[0].color
-                  },
-                  text: { color: productCategoriesToProducts.energy[0].color }
-                }}
-              />
-            </div>
-
+            <CategorySummary
+              key={'energy'}
+              products={productCategoriesToProducts.energy}
+              variantMap={variantMap}
+              category={{
+                title: 'Skin & Beauty',
+                description: 'Some description',
+                slug: 'energy'
+              }}
+              styleMap={{
+                container: {
+                  borderColor: productCategoriesToProducts.energy[0].color
+                },
+                text: { color: productCategoriesToProducts.energy[0].color }
+              }}
+            />
           </Grid>
         </Container>
       </Box>
       <Box py={10} className="skinbeauty">
         <Container>
-          <Grid container>
+          <Grid container spacing={4}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <div className="opt1">
                 <Grid container className="gallery-content-blurb">
@@ -151,24 +146,22 @@ const Products = () => {
                 </Grid>
               </div>
             </Grid>
-            <div>
-              <CategorySummary
-                key={'skin'}
-                products={productCategoriesToProducts.skin}
-                variantMap={variantMap}
-                category={{
-                  title: 'Skin & Beauty',
-                  description: 'Some description',
-                  slug: 'skin'
-                }}
-                styleMap={{
-                  container: {
-                    borderColor: productCategoriesToProducts.skin[0].color
-                  },
-                  text: { color: productCategoriesToProducts.skin[0].color }
-                }}
-              />
-            </div>
+            <CategorySummary
+              key={'skin'}
+              products={productCategoriesToProducts.skin}
+              variantMap={variantMap}
+              category={{
+                title: 'Skin & Beauty',
+                description: 'Some description',
+                slug: 'skin'
+              }}
+              styleMap={{
+                container: {
+                  borderColor: productCategoriesToProducts.skin[0].color
+                },
+                text: { color: productCategoriesToProducts.skin[0].color }
+              }}
+            />
           </Grid>
         </Container>
       </Box>

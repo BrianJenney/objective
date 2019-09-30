@@ -43,29 +43,25 @@ const CategorySummary = ({ category, products, variantMap, styleMap }) => {
 
   const __category = { title: title, description: products[0].description };
   return (
-    <Container>
-      <Grid container spacing={4}>
-        <Container className="section">
-          {products.map(product => {
-            return product.variantSlugs.map(variantSlug => {
-              const variant = variantMap.get(variantSlug);
+    <>
+      {products.map(product => {
+        return product.variantSlugs.map(variantSlug => {
+          const variant = variantMap.get(variantSlug);
 
-              return (
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                  <div className="opt2" style={styleMap.container}>
-                    <VariantCard
-                      variant={variant}
-                      product={product}
-                      styleMap={styleMap}
-                    />
-                  </div>
-                </Grid>
-              );
-            });
-          })}
-        </Container>
-      </Grid>
-    </Container>
+          return (
+            <Grid item xs={12} sm={3} md={3} lg={3}>
+              <div className="opt2" style={styleMap.container}>
+                <VariantCard
+                  variant={variant}
+                  product={product}
+                  styleMap={styleMap}
+                />
+              </div>
+            </Grid>
+          );
+        });
+      })}
+    </>
   );
 };
 
