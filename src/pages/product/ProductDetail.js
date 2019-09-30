@@ -149,7 +149,7 @@ const ProductDetail = ({ variantSlug }) => {
     <>
       {isMobile ? (
         <>
-          <Carousel prodId={product._id} />
+          <Carousel images={content.productImages} />
           <Grid container className="mobile-grid-modifications" xs={12} sm={12}>
             <Grid container justify="space-between">
               <Grid item xs={12} sm={5}>
@@ -229,7 +229,7 @@ const ProductDetail = ({ variantSlug }) => {
             <Grid container xs={12} sm={12}>
               <Grid container spacing={5} xs={12} sm={12}>
                 <Grid item xs={12} sm={6}>
-                  <Carousel prodId={product._id} />
+                  <Carousel images={content.productImages} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Card className={classes.box}>
