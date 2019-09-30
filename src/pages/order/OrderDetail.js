@@ -82,11 +82,12 @@ const OrderCartSummary = ({ cart }) => {
   return cart ? <CartSummary cart={cart} /> : null;
 };
 
-const refundTransaction = (accountJwt, orderId, transaction, dispatch) => {
+const refundTransaction = (accountJwt, orderId, transaction, dispatch, orderRef) => {
   const refundedTransaction = {
     braintreeId: transaction.braintreeId,
     amount: transaction.amount,
-    orderId: orderId
+    orderId: orderId,
+    orderReference: orderRef
   };
 
   dispatch(requestRefundTransaction(accountJwt, refundedTransaction));
@@ -100,6 +101,7 @@ const OrderSummary = ({
   transactions,
   classes,
   orderId,
+  orderRef,
   createdAt,
   addressesWidth,
   xs,
@@ -145,7 +147,8 @@ const OrderSummary = ({
                 account_jwt,
                 orderId,
                 transactions[0],
-                dispatch
+                dispatch,
+                orderRef
               );
             }
           }}
@@ -210,7 +213,6 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
-
   const statusStepperDate = getStatusStepperDate(order);
   const orderId =
     order.orderId.substring(0, 3) +
@@ -233,6 +235,7 @@ const OrderDetail = () => {
               <OrderSummary
                 account={account}
                 orderId={orderId}
+                orderRef={order._id}
                 createdAt={formatDateTime(order.createdAt, false)}
                 shippingAddress={order.shippingAddress}
                 billingAddress={order.billingAddress}
