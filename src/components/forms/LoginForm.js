@@ -87,7 +87,7 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
                         fontFamily: 'p22-underground',
                         fontSize: 12
                       }}
-                      component="button"
+                      type="button"
                       underline="always"
                       onClick={event => togglePasswordVisibility(event)}
                       children={

@@ -1,4 +1,6 @@
 import React from 'react';
+import { get } from 'lodash';
+import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
@@ -6,9 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { fonts } from '../../components/Theme/fonts.js';
-
-import { NavLink,Button} from '../../components/common';
-import PropTypes from 'prop-types';
+import { getDefaultEntity } from '../../utils/misc';
+import { NavLink, Button } from '../../components/common';
 import { withLogout } from '../../hoc';
 
 const pStyle = {
@@ -70,7 +71,8 @@ const AccountOverview = props => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [open, setOpen] = React.useState(true);
-  console.log('USER', currentUser);
+  const paymentMethods = get(currentUser, 'data.paymentMethods', []);
+  const defaultPaymentMethod = getDefaultEntity(paymentMethods) || {};
   const handleClick = () => {
     setOpen(!open);
   };
@@ -96,19 +98,21 @@ const AccountOverview = props => {
       </p>
       <p>
         <strong>SAVED PAYMENT METHOD</strong>
+        {`${defaultPaymentMethod.cardType} ${defaultPaymentMethod.last4}`}
       </p>
-      {xs ? (<Button mt={2} mp={3} fullWidth type="submit" onClick={props.logout}>
-              Logout
-      </Button>) : ''}
+      {xs ? (
+        <Button mt={2} mp={3} fullWidth type="submit" onClick={props.logout}>
+          Logout
+        </Button>
+      ) : (
+        ''
+      )}
     </div>
   );
-  return (
-    <RenderOverview />
-  );
+  return <RenderOverview />;
 };
 
 AccountOverview.propTypes = {
-  logout: PropTypes.func.isRequired,
-
+  logout: PropTypes.func.isRequired
 };
 export default withLogout(AccountOverview);

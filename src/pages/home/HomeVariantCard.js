@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -14,9 +14,6 @@ import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 import { Button } from '../../components/common';
 import './home-style.scss';
-
-const placeholderImg = require('../../../src/assets/images/658x658.png');
-const localStorageClient = require('store');
 
 export const bestSellers = [
   {
@@ -118,6 +115,7 @@ export const HomeVariantCard = ({ variant }) => {
   const dispatch = useDispatch();
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
+  const ref = createRef();
   const {
     name,
     effectivePrice,
@@ -133,15 +131,18 @@ export const HomeVariantCard = ({ variant }) => {
     setATCAdding(true);
     setTimeout(() => {
       //Give effect of item being added
-      addToCart(localStorageClient.get('cartId'), cart, variant, 1);
+      addToCart(cart, variant, 1);
       setATCAdding(false);
-      dispatch(setCartDrawerOpened(true));
     }, 500);
-  }, [cart, variant, dispatch]);
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, [cart, variant, dispatch, ref]);
 
   return (
     <Grid item xs={12} md={4}>
-      <Card className={`tile ${cardColor}`}>
+      <Card className={`tile ${cardColor}`} ref={ref}>
         <CardMedia
           style={{ height: 430, width: 430 }}
           image={assets.imgs}

@@ -109,24 +109,6 @@ const Checkout = ({
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
-    if (currentUser.error) {
-      const errors = Array.isArray(currentUser.error)
-        ? currentUser.error
-        : [currentUser.error];
-      const errorMessage = errors
-        .map(
-          err =>
-            err.message || err.errorMessage || currentUser.data.errorMessage
-        )
-        .join('\n');
-      enqueueSnackbar(errorMessage, {
-        variant: 'error',
-        autoHideDuration: 10000
-      });
-    }
-  }, [currentUser.error]);
-
-  useEffect(() => {
     if (!account_jwt && activeStep > 0) {
       history.push('/');
     }

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState,createRef } from 'react';
 import { Link } from 'react-router-dom';
 // import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,6 +27,7 @@ const PriceVariantInfo = ({ variant }) => {
 const VariantCard = ({ variant, product, styleMap }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const ref = createRef();
   // const windowSize = useWindowSize();
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
@@ -56,10 +57,14 @@ const VariantCard = ({ variant, product, styleMap }) => {
 
       setATCAdding(false);
     }, 500);
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }, [cart, variant, quantity, dispatch]);
 
   return (
-    <Card className="gallery-prod-card">
+    <Card className="gallery-prod-card" ref={ref}>
       <CardMedia
         style={{ height: 500, width: 324 }}
         image={variant.assets.imgs}
