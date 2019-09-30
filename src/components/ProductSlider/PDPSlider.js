@@ -1,22 +1,35 @@
 import React, { useContext, useState, useEffect } from 'react';
+
 import ProductContext from '../../contexts/ProductContext';
 import ImageGallery from 'react-image-gallery';
+
 import './image-gallery-overrides.css';
 import styles from './overrides.module.scss';
 
 const Carousel = props => {
-  const { product } = useContext(ProductContext);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  console.log(product);
+  let { images } = props;
+
+  if (!images) {
+    images = [
+      {
+        'fields': {
+          'file': {
+            'url': 'https://cdn1.stopagingnow.com/objective/658x658.png'
+          }
+        }
+      }
+    ];
+  }
 
   useEffect(() => {
-    const imageWrapper = document.getElementsByClassName(
-      'image-gallery-slide-wrapper'
-    );
+    const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper');
     const largeImg = document.getElementsByClassName('image-gallery-image');
-    const thumbImg = document.getElementsByClassName(
-      'image-gallery-thumbnails-container'
-    );
+    const thumbImg = document.getElementsByClassName('image-gallery-thumbnails-container');
+
+    if (imageWrapper.length < 1) {
+      return undefined;
+    }
 
     for (let imgParent of largeImg) {
       imgParent.classList.add(styles['reset-display']);
@@ -35,7 +48,6 @@ const Carousel = props => {
       }
     }
 
-    console.log(largeImg);
     if (windowWidth < 769) {
       imageWrapper[0].classList.add(styles['newWidth']);
     } else if (windowWidth > 769) {
@@ -56,21 +68,13 @@ const Carousel = props => {
     };
   });
 
-  const transformProduct = (id, product) => {
-    const { assets, _id } = product;
-    const imgUrl = Object.values(assets);
-    const imgArr = [...imgUrl];
-
+  const renderImages = images => {
     let carouselImages = [];
 
-    imgArr.map(url => {
-      carouselImages.push({ original: url, thumbnail: url });
+    images.map(image => {
+      carouselImages.push({ original: image.fields.file.url, thumbnail: image.fields.file.url });
       return carouselImages;
     });
-
-    if (!_id) {
-      return null;
-    }
 
     return (
       <ImageGallery
@@ -85,9 +89,7 @@ const Carousel = props => {
     );
   };
 
-  const renderProducts = id => transformProduct(id, product);
-
-  return <>{renderProducts(product._id)}</>;
+  return <>{renderImages(images)}</>;
 };
 
 export default Carousel;
