@@ -29,21 +29,26 @@
   min-height: 474px;
   .blurb-img {
     width: 100%;
-    padding: 10px 10px 0px 20px;
+    padding: 0;
+    height: 430px;
+  }
+  .blurb-icon {
+    margin-bottom: 24px;
   }
   h3 {
     font-family: 'CanelaText';
     color: #88341f;
     line-height: 1.4;
-    margin: 0 0 10px;
+    margin: 0 0 24px;
     font-weight: 500;
-    font-size: 36px;
+    font-size: 28px;
   }
   p {
     font-size: 18px;
     line-height: 1.56;
     max-height: 222px;
     overflow: hidden;
+    font-family: FreightTextProBook;
   }
   .icon {
     margin-bottom: 10px;
@@ -61,9 +66,7 @@
   .gallery-prod-card {
     text-align: left;
     .prod-name-holder {
-      height: 60px;
       margin-bottom: 10px;
-      overflow: hidden;
       .title {
         line-height: 1.17;
         text-align: left;
@@ -77,11 +80,15 @@
       color: #2f2f2f;
       font-size: 13.3px;
       font-family: p22-underground, sans-serif;
-      margin-bottom: 10px;
+      margin-bottom: 45px;
       /*overflow: hidden;*/
       strong {
         font-size: 22px;
         color: #000000;
+        font-weight: normal;
+      }
+      span {
+        padding-bottom: 10px;
       }
     }
     .atc-button {
@@ -102,7 +109,10 @@
       margin: 8px 0;
     }
     .cta-area {
-      margin-bottom: 20px;
+      margin: 20px 0;
+      .gallery-atc {
+        padding: 0 20px;
+      }
     }
   }
   .gallery-prod-img {
@@ -155,6 +165,7 @@
   .opt1,
   .opt2 {
     border: 1px solid #003833;
+    direction: ltr;
   }
   h3 {
     color: #003833;
@@ -162,7 +173,12 @@
   hr {
     background-color: #003833;
   }
-  .opt2 .gallery-prod-card .prod-name-holder .title {
-    color: #003833;
+  .opt2 {
+    .gallery-prod-card {
+      background-color: rgba(252, 248, 244, 0.5);
+      .prod-name-holder .title {
+        color: #003833;
+      }
+    }
   }
 }

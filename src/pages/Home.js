@@ -11,17 +11,13 @@ import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import './home/home-style.scss';
-import {
-  bestSellers, familySolutions, HomeVariantCard,
-} from './home/';
+import { bestSellers, familySolutions, HomeVariantCard } from './home/';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
   accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
 });
-
-
 
 const contentfulOptions = {
   renderNode: {
@@ -35,8 +31,6 @@ const contentfulOptions = {
     }
   }
 };
-
-
 
 export default class Home extends Component {
   constructor(props) {
@@ -91,9 +85,16 @@ export default class Home extends Component {
 
     return (
       <div className="home-style">
-        <Link to="/gallery">
+        <Link to="/gallery" className="xs-hidden">
           <ul>{this.renderHeroSlider()}</ul>
         </Link>
+        <div className="xs-visible md-hidden mobile-banner">
+          <h1>Targeted Health Solutions for You and Yours</h1>
+          <h2>
+            CRAFTED FROM nature's most effective ingredients, backed by clinical
+            studies
+          </h2>
+        </div>
         <Container>
           <Box py={10} className="welcome">
             <h1>{welcomeHeader}</h1>
@@ -105,9 +106,9 @@ export default class Home extends Component {
             <Box py={10}>
               <h1>Our Bestsellers</h1>
               <Grid container spacing={3}>
-                {
-                  bestSellers.map(variant => (<HomeVariantCard variant={variant} />))
-                }
+                {bestSellers.map(variant => (
+                  <HomeVariantCard variant={variant} />
+                ))}
               </Grid>
             </Box>
           </Container>
@@ -123,9 +124,9 @@ export default class Home extends Component {
               <h1>HIS, HERS & THEIRS</h1>
               <p>Solutions for the whole family!</p>
               <Grid container spacing={3}>
-                {
-                  familySolutions.map(variant => (<HomeVariantCard variant={variant} />))
-                }
+                {familySolutions.map(variant => (
+                  <HomeVariantCard variant={variant} />
+                ))}
               </Grid>
             </Box>
           </Container>

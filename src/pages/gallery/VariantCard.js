@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState,createRef } from 'react';
 import { Link } from 'react-router-dom';
 // import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,14 +11,15 @@ import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
 import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-import { setCartDrawerOpened } from '../../modules/cart/actions';
 const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
   return variant ? (
     <div>
-      <strong>${variant.effectivePrice}</strong> / {variant.variantInfo.size}{' '}
-      {variant.variantInfo.prodType}
+      <strong>${variant.effectivePrice}</strong>&nbsp;&mdash;{' '}
+      <span>
+        {variant.variantInfo.size} {variant.variantInfo.prodType}
+      </span>
     </div>
   ) : null;
 };
@@ -26,6 +27,7 @@ const PriceVariantInfo = ({ variant }) => {
 const VariantCard = ({ variant, product, styleMap }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const ref = createRef();
   // const windowSize = useWindowSize();
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
@@ -35,8 +37,7 @@ const VariantCard = ({ variant, product, styleMap }) => {
 
   const updateQuantityToCart = useCallback(
     qty => {
-      addToCart(localStorageClient.get('cartId'), cart, variant, qty);
-      dispatch(setCartDrawerOpened(true));
+      addToCart(cart, variant, qty);
       // enqueueSnackbar(message, { variant: 'success' });
     },
     [cart, variant, dispatch]
@@ -52,15 +53,18 @@ const VariantCard = ({ variant, product, styleMap }) => {
     setTimeout(() => {
       //Give effect of item being added
 
-      addToCart(localStorageClient.get('cartId'), cart, variant, quantity);
+      addToCart(cart, variant, quantity);
 
       setATCAdding(false);
-      dispatch(setCartDrawerOpened(true));
     }, 500);
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }, [cart, variant, quantity, dispatch]);
 
   return (
-    <Card className="gallery-prod-card">
+    <Card className="gallery-prod-card" ref={ref}>
       <CardMedia
         style={{ height: 500, width: 324 }}
         image={variant.assets.imgs}
@@ -94,10 +98,10 @@ const VariantCard = ({ variant, product, styleMap }) => {
               className="atc-button"
             >
               {!ATCAdded
-                  ? 'ADD TO CART'
-                  : !ATCAdding
-                  ? 'PRODUCT ADDED'
-                  : 'ADDING...'}
+                ? 'ADD TO CART'
+                : !ATCAdding
+                ? 'PRODUCT ADDED'
+                : 'ADDING...'}
             </Button>
           </CardActions>
         ) : (

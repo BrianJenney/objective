@@ -29,7 +29,7 @@ export class GalleryStore extends Component {
     EventEmitter.addListener('price.request.find', data => {
       this.setState({ ...this.state, prices: data.data.data });
     });
-    console.log(this.state.prices);
+    
     this.getGalleryData();
   }
 
@@ -40,12 +40,9 @@ export class GalleryStore extends Component {
   }
 
   getGalleryData() {
-    console.log('top of gGD');
     const { stomp } = store.getState();
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
-
-    console.log('sending product');
 
     let params = {
       params: {
@@ -66,8 +63,6 @@ export class GalleryStore extends Component {
       obj
     );
 
-    console.log('sending variant');
-
     params = {
       params: {
         query: {
@@ -86,8 +81,6 @@ export class GalleryStore extends Component {
       obj
     );
 
-    console.log('sending price');
-    console.log('productIDs', this.props.productIds);
     params = {
       params: {
         query: {
@@ -96,7 +89,7 @@ export class GalleryStore extends Component {
       }
     };
     obj = JSON.stringify(msgpack.encode(params));
-    console.log(params);
+
     stompClient.send(
       '/exchange/price/price.request.find',
       {
