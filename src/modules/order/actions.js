@@ -16,14 +16,15 @@ export const requestRefundTransaction = (authToken, transaction) => (
   dispatch,
   getState
 ) => {
+  console.log(transaction);
   const { client, replyTo } = getState().stomp;
-  const { amount, braintreeId} = transaction;
   const params = {
     id: transaction.orderId,
     data: {
-      amount: amount,
-      braintreeId: braintreeId,
-      orderId: transaction.orderId
+      amount: transaction.amount,
+      braintreeId: transaction.braintreeId,
+      orderId: transaction.orderId,
+      orderReference: transaction.orderReference
     },
     params: { 
       account_jwt: authToken, 
