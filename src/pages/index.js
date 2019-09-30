@@ -11,4 +11,5 @@ export { default as ForgotPassword } from './password/ForgotPassword';
 export { default as ConfirmPassword } from './password/ConfirmPassword';
 export { default as ResetPassword } from './password/ResetPassword';
 export { default as ResetSuccess } from './password/ResetSuccess';
-export { default as OrderPage} from './order/Order';
+export { default as OrderPage } from './order/Order';
+export { default as ContactUsPage } from './ContactUs';

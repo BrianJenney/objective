@@ -382,6 +382,70 @@ const NeedHelpDialogMobile = () => {
   );
 };
 
+const NeedHelpDialog = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <div>
+      <ListItem>
+        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>HELP</NavLink>
+      </ListItem>
+      <Dialog
+        className="checkout-contact-container"
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+        <DialogContent>
+          <Box textAlign="center">
+            <Grid
+              container
+              spacing={0}
+              style={{ borderBottom: '1px solid #979797' }}
+            >
+              <Grid item>
+                <Box textAlign="center">
+                  <ContactPhone />
+                </Box>
+                <Box textAlign="center" pb={2}>
+                  <Typography variant="h2">
+                    Need help? Give us a call for immediate assistance:
+                  </Typography>
+                  <Typography>(800) 270-5771</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid container spacing={0}>
+              <Grid item>
+                <Box textAlign="center" px={3}>
+                  <Typography variant="h3">
+                    or send us an email and will get back to you as soon as
+                    possible:
+                  </Typography>
+                  <Typography variant="h4">
+                    <Link style={{
+                      cursor: "pointer", borderBottom: "1px solid #000",
+                      paddingBottom: "1px", textDecoration: "none"
+                    }}>
+                      help@objectivewellnes.com
+                    </Link>
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
 const schema = object().shape({
   email: string()
     .required('Email is required')
@@ -495,7 +559,7 @@ const Footer = ({ location, currentUser }) => {
                         </ListItem>
                         <ListItem>
                           <ScrollToTop>
-                            <ContactUsDialogMobile />
+                            <NavLink to="/contact">Contact Us</NavLink>
                           </ScrollToTop>
                         </ListItem>
                       </StyledList>
@@ -504,7 +568,9 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/">Help</NavLink>
+                        <ScrollToTop>
+                          <NeedHelpDialog />
+                        </ScrollToTop>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
@@ -623,7 +689,9 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <NavLink to="/help">Help</NavLink>
+                      <ScrollToTop>
+                        <NeedHelpDialog />
+                      </ScrollToTop>
                     </StyledBox>
                   </Grid>
                   <Grid
@@ -645,7 +713,7 @@ const Footer = ({ location, currentUser }) => {
                       </ListItem>
                       <ListItem>
                         <ScrollToTop>
-                          <ContactUsDialogDesktop />
+                          <NavLink to="/contact">Contact Us</NavLink>
                         </ScrollToTop>
                       </ListItem>
                     </StyledList>
@@ -737,8 +805,8 @@ const Footer = ({ location, currentUser }) => {
           </Container>
         </StyledBox>
       ) : (
-        <CheckoutFooter />
-      )}
+            <CheckoutFooter />
+          )}
     </>
   );
 };
