@@ -505,10 +505,10 @@ html,
   text-align: left;
   text-transform: none;
 }
-.how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+/* .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
   height: 94px;
-}
+} */
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol ul,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol ul {
   list-style-type: square;
