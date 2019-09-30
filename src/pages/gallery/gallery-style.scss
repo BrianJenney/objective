@@ -1,6 +1,14 @@
 .white-bg {
   background-color: #ffffff;
 }
+.gallery-page {
+  .beige-bg {
+    background-color: rgba(252, 248, 244, 0.5);
+    .beige-container {
+      direction: rtl;
+    }
+  }
+}
 
 .opt1,
 .opt2 {
@@ -125,5 +133,36 @@
   }
   .opt1 {
     min-height: fit-content;
+  }
+}
+
+.corehealth {
+  .opt1,
+  .opt2 {
+    border: 1px solid #003670;
+  }
+  h3 {
+    color: #003670;
+  }
+  hr {
+    background-color: #003670;
+  }
+  .opt2 .gallery-prod-card .prod-name-holder .title {
+    color: #003670;
+  }
+}
+.moodenergy {
+  .opt1,
+  .opt2 {
+    border: 1px solid #003833;
+  }
+  h3 {
+    color: #003833;
+  }
+  hr {
+    background-color: #003833;
+  }
+  .opt2 .gallery-prod-card .prod-name-holder .title {
+    color: #003833;
   }
 }
