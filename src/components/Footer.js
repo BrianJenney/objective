@@ -30,7 +30,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import ContactMail from './common/Icons/ContactMail/ContactMail';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
-import ScrollToTop from './common/ScrollToTop';
 
 import { withCurrentUser } from '../hoc';
 
@@ -244,15 +243,10 @@ const Footer = ({ location, currentUser }) => {
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/">Our Story</NavLink>
+                          <NavLink to="/contact">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/">Journal</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <ScrollToTop>
-                            <NavLink to="/contact">Contact Us</NavLink>
-                          </ScrollToTop>
+                          <NavLink to="/faq">FAQs</NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -260,17 +254,17 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <ScrollToTop>
-                          <NeedHelpDialog />
-                        </ScrollToTop>
+                        <NeedHelpDialog />
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/">FAQs</NavLink>
-                        </ListItem>
-                        <ListItem>
                           <NavLink to={gotoUrl('/account', '/login/account')}>
                             My Account
+                          </NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
+                            Shipping &amp; Returns
                           </NavLink>
                         </ListItem>
                         <ListItem>
@@ -378,9 +372,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <ScrollToTop>
-                        <NeedHelpDialog />
-                      </ScrollToTop>
+                      <NeedHelpDialog />
                     </StyledBox>
                   </Grid>
                   <Grid
@@ -395,28 +387,23 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={5} className="border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to="/ourstory">Our Story</NavLink>
+                        <NavLink to="/contact">Contact Us</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/ingredients">Journal</NavLink>
-                      </ListItem>
-                      <ListItem>
-                        <ScrollToTop>
-                          <NavLink to="/contact">Contact Us</NavLink>
-                        </ScrollToTop>
+                        <NavLink to="/faq">FAQs</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
-                          Shipping &amp; Returns
-                        </NavLink>
-                      </ListItem>
-                      <ListItem>
                         <NavLink to={gotoUrl('/account', '/login/account')}>
                           My Account
+                          </NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
+                          Shipping &amp; Returns
                         </NavLink>
                       </ListItem>
                       <ListItem>
