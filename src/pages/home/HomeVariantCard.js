@@ -10,13 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 
 import {addToCart} from '../../modules/cart/functions';
-import {setCartDrawerOpened} from '../../modules/cart/actions';
 
 import {Button} from '../../components/common';
 import './home-style.scss';
-
-const placeholderImg = require('../../../src/assets/images/658x658.png');
-const localStorageClient = require('store');
 
 export const bestSellers = [
   {
@@ -108,9 +104,8 @@ export const HomeVariantCard = ({variant}) => {
     setATCAdding(true);
     setTimeout(() => {
       //Give effect of item being added
-      addToCart(localStorageClient.get('cartId'), cart, variant, 1);
+      addToCart(cart, variant, 1);
       setATCAdding(false);
-      dispatch(setCartDrawerOpened(true));
     }, 500);
   }, [cart, variant, dispatch]);
 
