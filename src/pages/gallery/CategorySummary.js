@@ -24,6 +24,7 @@ const CategorySummary = ({ category, products, variantMap, styleMap }) => {
   //Will need to be refactor later on to grab categories and their data directly out of a collection in Mongo
   //..for now we're hard coding the titles, and using the first product's description as the description
   let title, catIcon, catImg;
+  console.log(category);
   if (category.slug === 'skin') {
     title = <h3 style={styleMap.text}>Skin & Beauty</h3>;
     catIcon = skinIcon;
@@ -42,45 +43,25 @@ const CategorySummary = ({ category, products, variantMap, styleMap }) => {
 
   const __category = { title: title, description: products[0].description };
   return (
-    <Container>
-      <h1>old code below</h1>
-      <Grid container spacing={4}>
-        <React.Fragment className="section">
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <div className="opt1" style={styleMap.container}>
-              <Grid container className="gallery-content-blurb">
-                <Grid item xs={12} md={5} className="leftside">
-                  <h3>{__category.title}</h3>
-                  <img src={skinIcon} alt="" className="blurb-icon" />
-                  <Divider variant="fullWidth" />
-                  <p>{__category.description}</p>
-                </Grid>
-                <Grid item xs={12} md={7}>
-                  <img src={skinImg} alt="" className="blurb-img" />
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-          {products.map(product => {
-            return product.variantSlugs.map(variantSlug => {
-              const variant = variantMap.get(variantSlug);
+    <>
+      {products.map(product => {
+        return product.variantSlugs.map(variantSlug => {
+          const variant = variantMap.get(variantSlug);
 
-              return (
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                  <div className="opt2" style={styleMap.container}>
-                    <VariantCard
-                      variant={variant}
-                      product={product}
-                      styleMap={styleMap}
-                    />
-                  </div>
-                </Grid>
-              );
-            });
-          })}
-        </React.Fragment>
-      </Grid>
-    </Container>
+          return (
+            <Grid item xs={12} sm={3} md={3} lg={3}>
+              <div className="opt2" style={styleMap.container}>
+                <VariantCard
+                  variant={variant}
+                  product={product}
+                  styleMap={styleMap}
+                />
+              </div>
+            </Grid>
+          );
+        });
+      })}
+    </>
   );
 };
 
