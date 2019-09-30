@@ -19,7 +19,7 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       switch (status) {
         case 'success':
           // clear cart on success
-          store.dispatch(requestRemoveCartById(data.cart.cart_id));
+          store.dispatch(requestRemoveCartById(data.cartId));
           store.dispatch(requestCreateCart());
           break;
         default:

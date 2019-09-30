@@ -8,20 +8,20 @@ import { Formik, Field, Form } from 'formik';
 import { Button, NavLink, AlertPanel } from '../common';
 import { withCurrentUser } from '../../hoc';
 import { CheckboxField, InputField } from '../form-fields';
-import { fonts } from '../Theme/fonts';
-const { smallHeader } = fonts;
+
+const getBoolean = value => {
+  if (!value) return false;
+  return value !== 'false';
+};
 
 const schema = object().shape({
   email: string()
     .required('Email is required')
     .email('Input valid email'),
-  password: string().required('Password is required')
+  password: string()
+    .required('Password is required')
+    .min(6, 'Password has to be longer than 6 characters!')
 });
-
-const INITIAL_VALUES = {
-  email: '',
-  password: ''
-};
 
 const LoginForm = ({ title, onSubmit, currentUser }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -33,7 +33,21 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
     [passwordVisible, setPasswordVisible]
   );
 
-  const renderForm = () => {
+  const handleLogin = useCallback(
+    values => {
+      const { email, rememberMe } = values;
+      localStorage.setItem('_rememberme_', rememberMe);
+      if (rememberMe) {
+        localStorage.setItem('_email_', email);
+      } else {
+        localStorage.removeItem('_email_');
+      }
+      onSubmit(values);
+    },
+    [onSubmit]
+  );
+
+  const renderForm = ({ values, isValid }) => {
     let loginError = null;
     if (currentUser.loginError) {
       loginError = currentUser.loginError.message;
@@ -70,16 +84,16 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
                   <Box width={1} textAlign="right">
                     <NavLink
                       style={{
-                        fontFamily: smallHeader,
-                        fontSize: '12px'
+                        fontFamily: 'p22-underground',
+                        fontSize: 12
                       }}
-                      component="button"
+                      type="button"
                       underline="always"
                       onClick={event => togglePasswordVisibility(event)}
                       children={
                         passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
                       }
-                    ></NavLink>
+                    />
                   </Box>
                 )
               }}
@@ -88,24 +102,36 @@ const LoginForm = ({ title, onSubmit, currentUser }) => {
           </Grid>
           <Grid item xs={12}>
             <Field
-              name="remember me"
+              name="rememberMe"
               color="primary"
               label="Remember me"
               component={CheckboxField}
+              value={values.rememberMe}
             />
           </Grid>
           <Grid item xs={12}>
-            <Button fullWidth type="submit" children="Login" />
+            <Button
+              fullWidth
+              type="submit"
+              children="Login"
+              disabled={!isValid}
+            />
           </Grid>
         </Grid>
       </Form>
     );
   };
+  const rememberMe = getBoolean(localStorage.getItem('_rememberme_'));
+  const INITIAL_VALUES = {
+    email: localStorage.getItem('_email_') || '',
+    password: '',
+    rememberMe
+  };
 
   return (
     <Formik
       initialValues={INITIAL_VALUES}
-      onSubmit={onSubmit}
+      onSubmit={handleLogin}
       validationSchema={schema}
       render={renderForm}
     />

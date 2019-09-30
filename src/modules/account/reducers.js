@@ -13,7 +13,8 @@ import {
   RECEIVED_PATCH_ACCOUNT_SUCCESS,
   RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
-  REQUEST_FORGOT_PASSWORD
+  REQUEST_FORGOT_PASSWORD,
+  CLEAR_ACCOUNT_ERROR
 } from './types';
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
@@ -116,6 +117,11 @@ export default (state = INITIAL_STATE, action) => {
         error: false,
         loading: false,
         data: {}
+      };
+    case CLEAR_ACCOUNT_ERROR:
+      return {
+        ...state,
+        error: false
       };
     default:
       return state;

@@ -2,16 +2,18 @@ import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { Button, Address } from '../components/common';
-import { CartSummary } from '../components/summaries';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { Button, Address } from '../components/common';
+import { CartSummary } from '../components/summaries';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -88,22 +90,21 @@ const OrderConfirmation = ({ history }) => {
     return null;
   }
 
-  const { cart, transactions } = order;
   const OrderCartSummary = () => {
-    return <CartSummary cart={cart} />;
+    return <CartSummary cart={order} />;
   };
 
   const OrderDetail = () => {
-    const { cardType, last4 } = transactions[0].paymentMethod;
+    const { cardType, last4 } = order.paymentData;
     const {
       shippingAddress,
-      paymentDetails: { billingAddress }
-    } = cart;
+      billingAddress
+    } = order;
     const { email } = account.data;
     const handleOrderDetail = useCallback((e) => {
       e.preventDefault();
       history.replace(`/orders/${order._id}`)
-    },[history, order._id]);
+    }, [history, order._id]);
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -112,7 +113,7 @@ const OrderConfirmation = ({ history }) => {
           {email}.
         </Typography>
         <Typography className={classes.text1}>
-          Your order number: <strong>{order._id}</strong>
+          Your order number: <strong>{order.orderId.substring(0, 3) + '-' + order.orderId.substring(3, 6) + '-' + order.orderId.substring(6, 10) + '-' + order.orderId.substring(10, 16) + '-' + order.orderId.substring(16)}</strong>
         </Typography>
         <Button
           type="button"

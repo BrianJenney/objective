@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
-import { Button } from '../components/common';
 import './home/home-style.scss';
+import { bestSellers, familySolutions, HomeVariantCard } from './home/';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
@@ -85,9 +85,16 @@ export default class Home extends Component {
 
     return (
       <div className="home-style">
-        <Link to="/gallery">
+        <Link to="/gallery" className="xs-hidden">
           <ul>{this.renderHeroSlider()}</ul>
         </Link>
+        <div className="xs-visible md-hidden mobile-banner">
+          <h1>Targeted Health Solutions for You and Yours</h1>
+          <h2>
+            CRAFTED FROM nature's most effective ingredients, backed by clinical
+            studies
+          </h2>
+        </div>
         <Container>
           <Box py={10} className="welcome">
             <h1>{welcomeHeader}</h1>
@@ -98,19 +105,29 @@ export default class Home extends Component {
           <Container>
             <Box py={10}>
               <h1>Our Bestsellers</h1>
-              <p>TILES HERE!</p>
+              <Grid container spacing={3}>
+                {bestSellers.map(variant => (
+                  <HomeVariantCard variant={variant} />
+                ))}
+              </Grid>
             </Box>
           </Container>
         </div>
-        <Container>
-          <Box py={10}>{this.renderSections()}</Box>
+        <Container className="section-container">
+          <Box py={10} className="section-holder">
+            {this.renderSections()}
+          </Box>
         </Container>
         <div className="his-hers-theirs beige-bg">
           <Container>
             <Box py={10}>
               <h1>HIS, HERS & THEIRS</h1>
               <p>Solutions for the whole family!</p>
-              <p>TILES HERE!</p>
+              <Grid container spacing={3}>
+                {familySolutions.map(variant => (
+                  <HomeVariantCard variant={variant} />
+                ))}
+              </Grid>
             </Box>
           </Container>
         </div>

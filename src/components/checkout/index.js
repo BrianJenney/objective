@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { get, isNil } from 'lodash';
+import { useSnackbar } from 'notistack';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
+import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
 import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
 import { CheckoutReviewForm } from '../forms';
+import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
@@ -100,6 +103,7 @@ const Checkout = ({
   const [activeStep, setActiveStep] = useState(0);
   const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const { account_jwt, email: currentUserEmail } = currentUser.data;
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -246,8 +250,7 @@ const Checkout = ({
                   <AccountAddresses
                     currentUser={currentUser}
                     requestPatchAccount={requestPatchAccount}
-                    title="Shipping Address"
-                    withSmallTitle
+                    formType={ADDRESS_FORM_TYPES.CHECKOUT}
                     onSubmit={handleNext}
                     selectionEnabled
                     allowFlyMode
@@ -269,9 +272,7 @@ const Checkout = ({
                   <AccountPaymentDetails
                     currentUser={currentUser}
                     requestPatchAccount={requestPatchAccount}
-                    title="Credit Card"
-                    withSmallTitle
-                    subTitle=""
+                    formType={PAYMENT_FORM_TYPES.CHECKOUT}
                     onBack={handleBack}
                     onSubmit={handleNext}
                     selectionEnabled
@@ -282,6 +283,8 @@ const Checkout = ({
                     mt={4}
                     mx={10}
                     mb={5}
+                    backLabel="Cancel"
+                    submitLabel="Review Order"
                   />
                 </Panel>
                 <Panel

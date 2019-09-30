@@ -23,9 +23,6 @@ import {
   getVariantMap
 } from '../../utils/product';
 import './PDP-style.css';
-import { setCartDrawerOpened } from '../../modules/cart/actions';
-
-const localStorageClient = require('store');
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
@@ -96,13 +93,8 @@ const ProductDetail = ({ variantSlug }) => {
   const updateQuantityToCart = useCallback(
     qty => {
       if (selectedVariantSku === null) return;
-      addToCart(
-        localStorageClient.get('cartId'),
-        cart,
-        variantMap.get(selectedVariantSku),
-        qty
-      );
-      dispatch(setCartDrawerOpened(true));
+
+      addToCart(cart, variantMap.get(selectedVariantSku), qty);
       // enqueueSnackbar(message, { variant: 'success' });
     },
     [cart, selectedVariantSku, variantMap, dispatch]
@@ -115,17 +107,11 @@ const ProductDetail = ({ variantSlug }) => {
   const handleAddToCart = useCallback(() => {
     setATCAdded(true);
     setATCAdding(true);
-    setTimeout(()=>{
-      addToCart(
-        localStorageClient.get('cartId'),
-        cart,
-        variantMap.get(selectedVariantSku),
-        quantity
-      );
+    setTimeout(() => {
+      addToCart(cart, variantMap.get(selectedVariantSku), quantity);
       // enqueueSnackbar(message, { variant: 'success' });
       // setATCEnabled(false);
       setATCAdding(false);
-      dispatch(setCartDrawerOpened(true));
     }, 500);
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
@@ -149,7 +135,7 @@ const ProductDetail = ({ variantSlug }) => {
     <>
       {isMobile ? (
         <>
-          <Carousel prodId={product._id} />
+          <Carousel images={content.productImages} />
           <Grid container className="mobile-grid-modifications" xs={12} sm={12}>
             <Grid container justify="space-between">
               <Grid item xs={12} sm={5}>
@@ -229,7 +215,7 @@ const ProductDetail = ({ variantSlug }) => {
             <Grid container xs={12} sm={12}>
               <Grid container spacing={5} xs={12} sm={12}>
                 <Grid item xs={12} sm={6}>
-                  <Carousel prodId={product._id} />
+                  <Carousel images={content.productImages} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Card className={classes.box}>

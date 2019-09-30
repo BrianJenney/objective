@@ -18,15 +18,20 @@ import {
   ResetPassword,
   ResetSuccess,
   OrderConfirmationPage,
-  ConfirmEmail
+  ContactUsPage
 } from './pages';
+
+import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage} from './pages/Login';
 
 export default [
   { path: '/', exact: true, component: HomePage },
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
+  { path: '/login/account', exact: true, nonAuth: true, component: LoginToAccountPage },
+  { path: '/login/order', exact: true, nonAuth: true, component: LoginToOrderPage },
+  { path: '/login/shipping', exact: true, nonAuth: true, component: LoginToShippingPage },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
-  { path: '/email/confirm', exact: true, component: ConfirmEmail },
+  { path: '/contact', exact: true, component: ContactUsPage },
   {
     path: '/order',
     auth: true,
@@ -73,8 +78,6 @@ export default [
         path: '/account/payment-details',
         exact: true,
         injectCurrentUser: true,
-        seedEnabled: true,
-        useSeedLabel: 'Use default address',
         component: AccountPaymentDetailsPage
       },
       {

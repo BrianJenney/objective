@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import CardMedia from '@material-ui/core/CardMedia';
+
 import {
   StyledDrawerGrid,
   StyledFinePrint,
@@ -96,8 +98,16 @@ const CartSummary = ({ cart }) => {
                     justifyContent: 'space-between'
                   }}
                 >
-                  <StyledProductLink>{item.variant_name}</StyledProductLink>
-                  <Typography className={classes.text}>
+                  <StyledProductLink style={{ fontSize: '18px' }}>
+                    {item.variant_name}
+                  </StyledProductLink>
+                  <Typography
+                    className={classes.text}
+                    style={{
+                      fontFamily: 'p22-underground, sans-serif',
+                      fontSize: '16px'
+                    }}
+                  >
                     QTY: {item.quantity}
                   </Typography>
 
@@ -125,10 +135,11 @@ const CartSummary = ({ cart }) => {
 
           <Grid container xs={12} style={{ margin: '15px 0' }}>
             <Grid item xs>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Shipping
-              </StyledSmallCaps>
-              <StyledFinePrint component="p">
+              <StyledSmallCaps>Shipping</StyledSmallCaps>
+              <StyledFinePrint
+                component="p"
+                style={{ position: 'relative', top: '6px' }}
+              >
                 Ground 3-5 Business Days
               </StyledFinePrint>
             </Grid>
@@ -158,7 +169,11 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${totalSummary.calculatedTax ? totalSummary.calculatedTax.toFixed(2) : 'XXX'}`}
+                {`$${
+                  totalSummary.calculatedTax
+                    ? totalSummary.calculatedTax.toFixed(2)
+                    : 'XXX'
+                }`}
               </StyledSmallCaps>
             </Grid>
           </Grid>

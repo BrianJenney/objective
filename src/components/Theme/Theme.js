@@ -184,10 +184,7 @@ const nxtTheme = createMuiTheme({
     MuiFormLabel: {
       root: {
         fontFamily: 'unset',
-        color: color.MEDIUM_GRAY
-      },
-      filled: {
-        color: color.BLACK
+        color: color.DARK_GRAY
       }
     },
     MuiInputBase: {
@@ -199,6 +196,18 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'p22-underground, sans-serif',
         fontSize: '1rem'
+      },
+      outlined: {
+        '&.MuiInputLabel-shrink': {
+          transform: 'translate(14px, 4px) scale(0.75)'
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      notchedOutline: {
+        '& legend': {
+          display: 'none'
+        }
       }
     },
     MuiGrid: {
@@ -216,6 +225,20 @@ const nxtTheme = createMuiTheme({
     },
     MuiContainer: {
       maxWidth: 1504
+    },
+    MuiFormHelperText: {
+      root: {
+        '&.Mui-error': {
+          backgroundColor: 'rgba(208, 2, 27, 0.15)',
+          color: '#000'
+        }
+      },
+      contained: {
+        margin: 0,
+        minHeight: 24,
+        lineHeight: '24px',
+        padding: '0 5px'
+      }
     }
   },
   shape: {

@@ -13,10 +13,81 @@ import {
   UPDATE_CART_WITH_TAX_CALCULATION,
   RESET_TAX_CALCULATION_IN_CART,
   RESET_CART,
+  REQUEST_ADD_TO_CART,
+  REQUEST_REMOVE_FROM_CART,
+  REQUEST_UPDATE_QUANTITY,
 } from './types';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+
+export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cart,
+    product,
+    quantity
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.addtocart',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+  dispatch({
+    type: REQUEST_ADD_TO_CART,
+    payload: {}
+  });
+};
+
+export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cart,
+    product
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.removefromcart',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+  dispatch({
+    type: REQUEST_REMOVE_FROM_CART,
+    payload: {}
+  });
+};
+
+export const requestUpdateQuantity = (cart, product, quantity) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cart,
+    product,
+    quantity
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.updatequantity',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+  dispatch({
+    type: REQUEST_UPDATE_QUANTITY,
+    payload: {}
+  });
+};
 
 export const requestFetchCart = cartId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -54,7 +125,10 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
   const params = {
-    data: { storeCode:process.env.REACT_APP_STORE_CODE }
+    data: {
+      storeCode: getState().storefront.code,
+      catalogId: getState().storefront.catalogId
+    }
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -148,7 +222,7 @@ export const receivedPatchCart = cart => {
   };
 };
 
-export const setCartDrawerOpened = (open) => {
+export const setCartDrawerOpened = open => {
   return {
     type: SET_CART_DRAWER_OPENED,
     payload: open

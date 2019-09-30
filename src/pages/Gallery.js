@@ -18,8 +18,8 @@ const Gallery = () => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   return (
-    <Box pb={10}>
-      <Box mb={10} className="hero-holder">
+    <Box className="gallery-page">
+      <Box className="hero-holder">
         {mobile ? (
           <img src={imageHeroMobile} alt="" className="gallery-hero" />
         ) : (

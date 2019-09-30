@@ -10,6 +10,7 @@ const EditablePanel = ({
   title,
   defaultValues,
   onFormSubmit,
+  onEdit,
   onRemove,
   onSetDefault,
   Form,
@@ -69,9 +70,15 @@ const EditablePanel = ({
                   }}
                 />
               )}
-              {onFormSubmit && (
+              {(onFormSubmit || onEdit) && (
                 <MenuLink
-                  onClick={() => setEditing(true)}
+                  onClick={() => {
+                    if (onFormSubmit) {
+                      setEditing(true);
+                    } else {
+                      onEdit();
+                    }
+                  }}
                   children="Edit"
                   underline="always"
                   style={{ paddingLeft: onRemove ? 9 : 0 }}
@@ -89,6 +96,7 @@ EditablePanel.propTypes = {
   title: PropTypes.string,
   defaultValues: PropTypes.object,
   onFormSubmit: PropTypes.func,
+  onEdit: PropTypes.func,
   onRemove: PropTypes.func,
   onSetDefault: PropTypes.func,
   Form: PropTypes.any,

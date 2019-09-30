@@ -12,6 +12,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import routes from './routes';
 
+import './assets/styles/global.scss';
+
 const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
 
@@ -24,10 +26,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const {
-      account,
-      requestFetchBootstrap
-    } = this.props;
+    const { account, requestFetchBootstrap } = this.props;
     const { data: accountData } = account;
 
     let accountId = null;

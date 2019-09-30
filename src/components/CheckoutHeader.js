@@ -1,21 +1,15 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import Logo from './common/Icons/Logo/Logo';
-import { NavLink } from './common';
+import { NavLink } from 'react-router-dom';
 
 class CheckoutHeader extends React.Component {
   render() {
     return (
-      <Grid
-        item
-        xs={12}
-        className="logo text-center"
-        style={{ paddingTop: 35 }}
-      >
+      <div className="checkout-header">
         <NavLink to="/">
           <Logo />
         </NavLink>
-      </Grid>
+      </div>
     );
   }
 }

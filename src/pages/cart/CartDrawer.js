@@ -16,7 +16,11 @@ import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/Shopp
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
 
-import { removeFromCart, adjustQty, calculateCartTotals } from '../../modules/cart/functions';
+import {
+  removeFromCart,
+  adjustQty,
+  calculateCartTotals
+} from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 
 import { colorPalette } from '../../components/Theme/color-palette';
@@ -24,7 +28,7 @@ import {
   StyledCartHeader,
   StyledSmallCaps,
   StyledFinePrint,
-//  StyledCartCount,
+  //  StyledCartCount,
   StyledHeaderWrapper,
   StyledProductLink,
   StyledCounterButton,
@@ -34,7 +38,7 @@ import {
   StyledGridEmptyCart,
   StyledTotalWrapper,
   StyledArrowIcon,
-//  StyledBadge,
+  //  StyledBadge,
   StyledHeaderWrapperEmptyCart,
   StyledSmallCapsEmptyCart,
   StyledPromoLink,
@@ -172,7 +176,7 @@ const Cart = ({
                       style={{
                         display: 'flex',
                         'flex-direction': 'column',
-                        height: '135px',
+                        height: 'auto',
                         'justify-content': 'space-between'
                       }}
                     >
@@ -185,7 +189,7 @@ const Cart = ({
                         }}
                       >
                         <StyledProductLink
-                          style={{fontSize:'18px'}}
+                          style={{ fontSize: '18px' }}
                           align="left"
                           onClick={onClickProduct}
                         >
@@ -195,7 +199,10 @@ const Cart = ({
                       <Grid item style={{ padding: '0' }}>
                         {disableItemEditing ? (
                           <Box
-                            style={{position:"relative",top:"-33px",fontSize:"16px"}}
+                            style={{
+                              fontFamily: 'p22-underground, sans-serif',
+                              fontSize: '16px'
+                            }}
                             component={Typography}
                             children={`QTY: ${item.quantity}`}
                           />
@@ -291,13 +298,18 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                {shippingData.price && `$${shippingData.price.toFixed(2)}`}
+                {`$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint component="p" style={{position:"relative",top:"10px"}}>{shippingData.name}</StyledFinePrint>
+            <StyledFinePrint
+              component="p"
+              style={{ position: 'relative', top: '6px' }}
+            >
+              {shippingData.name}
+            </StyledFinePrint>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && cart.savings ? (
           <Grid
             container
             direction="row"
@@ -312,7 +324,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                $XX.xx
+                {`$${cart.savings.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
           </Grid>
@@ -331,9 +343,9 @@ const Cart = ({
               </StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
-              <StyledProductPrice style={{ 'font-size': '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$XX.XX'}
-              </StyledProductPrice>
+              <StyledProductTotal style={{ 'font-size': '18px' }}>
+                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$0.00'}
+              </StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}

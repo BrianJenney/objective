@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 import { removeCoupon } from '../../modules/cart/functions';
-import { StyledSmallCaps, StyledFinePrint } from '../../pages/cart/StyledComponents';
+import { StyledSmallCaps, StyledFinePrint, StyledProductTotal } from '../../pages/cart/StyledComponents';
 import { colorPalette } from '../../components/Theme/color-palette';
 
 const { LIGHT_GRAY } = colorPalette;
@@ -27,9 +27,9 @@ const PromoCodeView = () => {
         </StyledSmallCaps>
       </Grid>
       <Grid item xs={6} style={{ 'text-align': 'right' }}>
-        <StyledSmallCaps style={{ 'font-size': '18px' }}>
+        <StyledProductTotal style={{ 'font-size': '18px' }}>
           {`$${cart.discount.toFixed(2)}`}
-        </StyledSmallCaps>
+        </StyledProductTotal>
       </Grid>
       <StyledFinePrint component="p">
         {cart.promo.code}<br />
@@ -37,7 +37,8 @@ const PromoCodeView = () => {
           onClick={e => removeCoupon(cart)}
           style={{
             'text-transform': 'uppercase',
-            color: LIGHT_GRAY
+            color: LIGHT_GRAY,
+            'line-height': '26px'
           }}
         >
           Remove

@@ -8,7 +8,7 @@
   letter-spacing: 1px;
   font-size: 16px;
   display: flex;
-  height: 100px;
+  height: 160px;
   .align-right {
     text-align: right;
   }
@@ -22,7 +22,7 @@
     padding-top: 11px;
   }
   @media (min-width: 1200px) {
-    height: 126.5px;
+    height: 161px;
     border-bottom: 1px solid #000000;
   }
 
@@ -98,7 +98,14 @@
     text-decoration: none;
   }
 }
-
+.checkout-header {
+  border-bottom: 1px solid #000000;
+  text-align: center;
+  padding: 25px;
+  svg {
+    width: 240px;
+  }
+}
 .text-right {
   text-align: right;
 }
@@ -114,5 +121,6 @@
 @media (max-width: 450px) {
   .headerContainer {
     min-height: 117px;
+    height: auto;
   }
 }

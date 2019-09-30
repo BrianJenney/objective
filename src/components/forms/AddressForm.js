@@ -9,17 +9,23 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
-import { COUNTRY_OPTIONS } from '../../constants/location';
+import { COUNTRY_OPTIONS,STATE_OPTIONS } from '../../constants/location';
 import { getInitialValues } from '../../utils/misc';
+
+export const FORM_TYPES = {
+  ACCOUNT: 'account',
+  CHECKOUT: 'checkout'
+};
 
 const schema = object().shape({
   firstName: string().required('First name is required'),
   lastName: string().required('Last name is required'),
-  line1: string().required('Address1 is required'),
+  line1: string().required('Street address is required'),
   line2: string().nullable(),
   city: string().required('City is required'),
   state: string().required('State is required'),
-  postalCode: string().required('Postal code is required'),
+  postalCode: string().required('Zip code is required'),
+  phone: string().required('Phone number is required'),
   countryCode: string().required('Country is required'),
   shouldSaveData: boolean()
 });
@@ -32,13 +38,14 @@ const INITIAL_VALUES = {
   city: '',
   state: '',
   postalCode: '',
-  countryCode: '',
+  phone: '',
+  countryCode: 'US',
   isDefault: false,
   shouldSaveData: true
 };
 
 const AddressForm = ({
-  title,
+  formType,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -59,10 +66,20 @@ const AddressForm = ({
       setInitialValues(getInitialValues(INITIAL_VALUES, defaultValues));
     }
   };
+  const topTitle =
+    formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
+  const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
 
   const renderForm = () => (
     <Form>
-      {title && <Typography variant="h6" gutterBottom children={title} />}
+      <Box
+        component={Typography}
+        color="#231f20"
+        variant="h5"
+        children={topTitle}
+        fontSize={30}
+        mb={4}
+      />
       <Grid container spacing={2}>
         {seedEnabled && (
           <Grid item xs={12}>
@@ -71,7 +88,11 @@ const AddressForm = ({
                 id="useAddressSeedToggle"
                 onChange={handleUseAddressSeedToggle}
               />
-              <Typography children={useSeedLabel} />
+              <Typography
+                variant="body2"
+                children={useSeedLabel}
+                style={{ color: '#231f20' }}
+              />
             </Box>
           </Grid>
         )}
@@ -82,26 +103,35 @@ const AddressForm = ({
           <Field name="lastName" label="Last Name" component={InputField} />
         </Grid>
         <Grid item xs={12}>
-          <Field name="line1" label="Address Line 1" component={InputField} />
-        </Grid>
-        <Grid item xs={12}>
-          <Field name="line2" label="Address Line 2" component={InputField} />
-        </Grid>
-        <Grid item xs={12}>
-          <Field name="city" label="City" component={InputField} />
-        </Grid>
-        <Grid item xs={12}>
           <Field
-            name="state"
-            label="State/Province/Region"
+            name="line1"
+            label="Street Address"
             component={InputField}
+            helperText="*No PO Boxes or APO/FPO addresses"
           />
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="postalCode"
-            label="Zip/Postal Code"
+            name="line2"
+            label="Apt. suite, bldg, c/o (optional)"
             component={InputField}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field name="city" label="City" component={InputField} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Field name="state" label="State" component={SelectField} options={STATE_OPTIONS} />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Field name="postalCode" label="Zip Code" component={InputField} />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="phone"
+            label="Phone #"
+            component={InputField}
+            helperText="*No PO Boxes or APO/FPO addresses"
           />
         </Grid>
         <Grid item xs={12}>
@@ -110,6 +140,7 @@ const AddressForm = ({
             label="Country"
             component={SelectField}
             options={COUNTRY_OPTIONS}
+            disabled
           />
         </Grid>
         {allowFlyMode && (
@@ -119,6 +150,36 @@ const AddressForm = ({
               label="Save details in account"
               component={CheckboxField}
             />
+          </Grid>
+        )}
+        {formType === FORM_TYPES.CHECKOUT && (
+          <Grid item xs={12}>
+            <Box
+              component={Typography}
+              color="#231f20"
+              variant="h5"
+              children={bottomTitle}
+              fontSize={30}
+              mb={4}
+            />
+            <Box border="1px solid rgb(0, 0, 0, 0.23)" p="14px" mb="29px">
+              <Box
+                component={Typography}
+                color="#231f20"
+                variant="body2"
+                children="Standard Shipping"
+                fontSize={18}
+                lineHeight={1.69}
+              />
+              <Box
+                component={Typography}
+                color="#979797"
+                variant="body2"
+                children="FedEx Ground 3-5 days"
+                fontSize={16}
+                lineHeight={1.69}
+              />
+            </Box>
           </Grid>
         )}
         <Grid item xs={12}>
@@ -151,7 +212,7 @@ const AddressForm = ({
 };
 
 AddressForm.propTypes = {
-  title: PropTypes.string,
+  formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
@@ -164,6 +225,7 @@ AddressForm.propTypes = {
 };
 
 AddressForm.defaultProps = {
+  formType: FORM_TYPES.ACCOUNT,
   seedEnabled: false,
   addressSeed: {},
   defaultValues: {},

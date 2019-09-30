@@ -16,14 +16,15 @@ export const requestRefundTransaction = (authToken, transaction) => (
   dispatch,
   getState
 ) => {
+  console.log(transaction);
   const { client, replyTo } = getState().stomp;
-  const { amount, braintreeId} = transaction;
   const params = {
     id: transaction.orderId,
     data: {
-      amount: amount,
-      braintreeId: braintreeId,
-      orderId: transaction.orderId
+      amount: transaction.amount,
+      braintreeId: transaction.braintreeId,
+      orderId: transaction.orderId,
+      orderReference: transaction.orderReference
     },
     params: { 
       account_jwt: authToken, 
@@ -31,6 +32,7 @@ export const requestRefundTransaction = (authToken, transaction) => (
       originalRequest: 'transaction.request.void'
     }
   };
+  console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
   console.log("SENDING PAYLOAD",payload);
   client.send(
@@ -96,8 +98,8 @@ export const requestFindOrdersByAccount = accountJwt => (
   const params = {
     params: {
       account_jwt: accountJwt,
-      idField: 'account_id', // use this to tell the MS where to substitute the decoded id
-      query: { account_id: null }
+      idField: 'accountId', // use this to tell the MS where to substitute the decoded id
+      query: { accountId: null }
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));

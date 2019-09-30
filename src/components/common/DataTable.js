@@ -56,6 +56,7 @@ const DataTable = ({ title, data, columns, isLoading }) => {
         data={data}
         columns={columns}
         options={options}
+        className="data-table"
       />
     </MuiThemeProvider>
   );

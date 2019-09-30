@@ -9,13 +9,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import { SignupForm } from './forms';
 import { MenuLink, NavLink } from './common';
 import { fontFamily } from '@material-ui/system';
-import {useTheme} from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '30px',
-    fontWeight: '600'
+    fontFamily: 'CanelaText'
+  },
+  mobileTitle: {
+    fontSize: 24,
+    fontFamily: 'FreightTextProBook'
   },
   subTitle: {
     textAlign: 'right',
@@ -25,9 +29,12 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '600',
     paddingTop: '13px'
   },
-  mobileBox : {
-
-  }
+  mobileLogin: {
+    fontFamily: 'P22Underground',
+    fontSize: 16,
+    fontWeight: 600
+  },
+  mobileBox: {}
 }));
 
 const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
@@ -36,23 +43,18 @@ const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Container component="main" 
-     maxWidth="md"
-    >
+    <Container component="main" maxWidth="md" style={xs ? {padding: 0} : {}}>
       <CssBaseline />
-      <Box component={Paper} 
-       py={xs ? {} : 3} px={xs ? {} : 5}
-      >
+      <Box component={Paper} py={xs ? 0 : 3} px={xs ? 0 : 5}>
         <Box>
-          <Box 
-           display="flex" 
-           pb={2} 
-          className="justify-content"
-          >
-            <Typography gutterBottom className={classes.title}>
+          <Box display="flex" pb={2} className="justify-content">
+            <Typography
+              gutterBottom
+              className={xs ? classes.mobileTitle : classes.title}
+            >
               Create your Account
             </Typography>
-            <Typography variant="body1" className={classes.subTitle}>
+            <Typography variant="body1" className={xs ? classes.mobileLogin : classes.subTitle}>
               {switchToLogin ? (
                 <MenuLink
                   onClick={switchToLogin}
