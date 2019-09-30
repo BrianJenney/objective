@@ -22,12 +22,14 @@ const PromoCodeForm = () => {
   const [promoCodeErr, setPromoCodeErr] = useState(null);
   const onSubmit = useCallback(
     async e => {
-      let response = await redeemPromoCode(e.promoCode);
+      const response = await redeemPromoCode(e.promoCode);
       if (response.result == 'SUCCESS') {
         addCoupon(cart, response.voucher);
+      } else if (response.key === 'resource_not_found') {
+        // Should rewrite error message so user can easily understand it
+        setPromoCodeErr('Coupon code does not exist');
       } else {
-        //Should rewrite error message so user can easily understand it
-        setPromoCodeErr(response.message);
+        setPromoCodeErr(response.details);
       }
     },
     [promoCodeErr, setPromoCodeErr, redeemPromoCode]

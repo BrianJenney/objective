@@ -17,7 +17,8 @@ import {
   ConfirmPassword,
   ResetPassword,
   ResetSuccess,
-  OrderConfirmationPage
+  OrderConfirmationPage,
+  ContactUsPage
 } from './pages';
 
 import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage} from './pages/Login';
@@ -30,6 +31,7 @@ export default [
   { path: '/login/shipping', exact: true, nonAuth: true, component: LoginToShippingPage },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
+  { path: '/contact', exact: true, component: ContactUsPage },
   {
     path: '/order',
     auth: true,

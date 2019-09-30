@@ -17,7 +17,7 @@ export const colorPalette = {
   RED: '#C10230',
   WHITE: '#ffffff',
   GRAY: '#A69B95',
-  DARK_GRAY: '#444444',
+  DARK_GRAY: '#585858',
   LIGHT_GRAY: '#646464',
   MEDIUM_GRAY: '#979797'
 };

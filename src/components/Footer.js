@@ -74,7 +74,7 @@ const DialogContent = withStyles(theme => ({
   }
 }))(MuiDialogContent);
 
-const ContactUsDialogDesktop = () => {
+const NeedHelpDialog = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -84,200 +84,11 @@ const ContactUsDialogDesktop = () => {
   };
   return (
     <div>
-      <ListItem>
-        <NavLink onClick={handleClickOpen}>Contact Us</NavLink>
+      <ListItem style={{ padding: "0px" }}>
+        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>HELP</NavLink>
       </ListItem>
       <Dialog
-        className="contact-container"
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          <Box textAlign="center">
-            <Typography className="contact-title" variant="h1">
-              Contact us
-            </Typography>
-          </Box>
-          <Box textAlign="center">
-            <Typography variant="h4" gutterBottom>
-              We'd love to hear from you. You can reach us by phone or email.
-            </Typography>
-          </Box>
-        </DialogTitle>
-        <DialogContent style={{ display: 'flex', alignItems: 'center' }}>
-          <Box>
-            <Grid container spacing={0} style={{ height: '270px' }}>
-              <Grid
-                item
-                xs={6}
-                px={4}
-                py={4}
-                style={{
-                  borderRight: '1px solid #979797',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  padding: '28px'
-                }}
-              >
-                <Box textAlign="center">
-                  <ContactPhone className="phone-icon" />
-                </Box>
-                <Box textAlign="center">
-                  <Typography variant="h5">
-                    Give us a call for immediate assistance and chat with one of
-                    our customer care specialists.
-                  </Typography>
-                  <Typography variant="h4">(800) 270-5771</Typography>
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs={6}
-                pl={8}
-                py={4}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  padding: '28px'
-                }}
-              >
-                <Box textAlign="center">
-                  <ContactMail />
-                </Box>
-                <Box textAlign="center">
-                  <Typography variant="h5" pl={8}>
-                    Email our customer care department. We'll respond as soon as
-                    possible.
-                  </Typography>
-                  <Typography variant="h4">
-                    <Link
-                      style={{
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #000',
-                        paddingBottom: '1px',
-                        textDecoration: 'none'
-                      }}
-                    >
-                      help@objectivewellnes.com
-                    </Link>
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-};
-const ContactUsDialogMobile = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <div>
-      <ListItem>
-        <NavLink onClick={handleClickOpen}>Contact Us</NavLink>
-      </ListItem>
-      <Dialog
-        className="contact-container"
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle
-          className="contact-title-container"
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          <Box textAlign="center">
-            <Typography className="contact-title" variant="h1">
-              Contact us
-            </Typography>
-          </Box>
-          <Box textAlign="center">
-            <Typography gutterBottom variant="h4">
-              We'd love to hear from you. You can reach us by phone or email.
-            </Typography>
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <Box textAlign="center">
-            <Grid
-              container
-              spacing={0}
-              style={{
-                borderBottom: '1px solid #979797',
-                marginBottom: ' 18px'
-              }}
-            >
-              <Grid item>
-                <Box textAlign="center">
-                  <ContactPhone />
-                </Box>
-                <Box textAlign="center" pb={2}>
-                  <Typography variant="h4">
-                    Give us a call for immediate assistance and chat with one of
-                    our customer care specialists.
-                  </Typography>
-                  <Typography>(800) 270-5771</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-            <Grid container spacing={0}>
-              <Grid item>
-                <Box textAlign="center" pt={2} style={{ padding: 0 }}>
-                  <ContactMail />
-                </Box>
-                <Box textAlign="center">
-                  <Typography variant="h4">
-                    Email our customer care department. We'll respond as soon as
-                    possible.
-                  </Typography>
-                  <Box>
-                    <Typography variant="h3">
-                      <Link
-                        style={{
-                          cursor: 'pointer',
-                          borderBottom: '1px solid #000',
-                          paddingBottom: '1px',
-                          textDecoration: 'none'
-                        }}
-                      >
-                        help@objectivewellnes.com
-                      </Link>
-                    </Typography>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-};
-const NeedHelpDialogDesktop = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <div>
-      <ListItem>
-        <NavLink onClick={handleClickOpen}>Need Help</NavLink>
-      </ListItem>
-      <Dialog
+        className="checkout-contact-container"
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
@@ -288,75 +99,15 @@ const NeedHelpDialogDesktop = () => {
             <Grid
               container
               spacing={0}
-              style={{ borderBottom: '0.1em solid #979797' }}
+              style={{ borderBottom: '1px solid #979797' }}
             >
               <Grid item>
                 <Box textAlign="center">
                   <ContactPhone />
                 </Box>
                 <Box textAlign="center" pb={2}>
-                  <Typography variant="h1">
-                    Need help? Give us a call for immediate assistance
-                  </Typography>
-                  <Typography variant="h1">(800) 270-5771</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-            <Grid container spacing={0}>
-              <Grid item>
-                <Box textAlign="center" pl={20}>
-                  <Typography variant="h4">
-                    or send us an email and will get
-                  </Typography>
-                  <Typography variant="h4">
-                    back to you as soon as possible:
-                  </Typography>
-                  <Typography variant="h4">
-                    help@objectivewellnes.com
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-};
-
-const NeedHelpDialogMobile = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <div>
-      <ListItem>
-        <NavLink onClick={handleClickOpen}>Need Help</NavLink>
-      </ListItem>
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose} />
-        <DialogContent>
-          <Box textAlign="center">
-            <Grid
-              container
-              spacing={0}
-              style={{ borderBottom: '0.1em solid #979797' }}
-            >
-              <Grid item>
-                <Box textAlign="center">
-                  <ContactPhone />
-                </Box>
-                <Box textAlign="center" pb={2}>
-                  <Typography>
-                    Need help? Give us a call for immediate assistance
+                  <Typography variant="h2">
+                    Need help? Give us a call for immediate assistance:
                   </Typography>
                   <Typography>(800) 270-5771</Typography>
                 </Box>
@@ -365,12 +116,17 @@ const NeedHelpDialogMobile = () => {
             <Grid container spacing={0}>
               <Grid item>
                 <Box textAlign="center" px={3}>
-                  <Typography variant="h4">
+                  <Typography variant="h3">
                     or send us an email and will get back to you as soon as
                     possible:
                   </Typography>
                   <Typography variant="h4">
-                    help@objectivewellnes.com
+                    <Link style={{
+                      cursor: "pointer", borderBottom: "1px solid #000",
+                      paddingBottom: "1px", textDecoration: "none"
+                    }}>
+                      help@objectivewellnes.com
+                    </Link>
                   </Typography>
                 </Box>
               </Grid>
@@ -495,7 +251,7 @@ const Footer = ({ location, currentUser }) => {
                         </ListItem>
                         <ListItem>
                           <ScrollToTop>
-                            <ContactUsDialogMobile />
+                            <NavLink to="/contact">Contact Us</NavLink>
                           </ScrollToTop>
                         </ListItem>
                       </StyledList>
@@ -504,14 +260,13 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/">Help</NavLink>
+                        <ScrollToTop>
+                          <NeedHelpDialog />
+                        </ScrollToTop>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
                           <NavLink to="/">FAQs</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink to="/contactus">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink to={gotoUrl('/account', '/login/account')}>
@@ -623,7 +378,9 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <NavLink to="/help">Help</NavLink>
+                      <ScrollToTop>
+                        <NeedHelpDialog />
+                      </ScrollToTop>
                     </StyledBox>
                   </Grid>
                   <Grid
@@ -645,7 +402,7 @@ const Footer = ({ location, currentUser }) => {
                       </ListItem>
                       <ListItem>
                         <ScrollToTop>
-                          <ContactUsDialogDesktop />
+                          <NavLink to="/contact">Contact Us</NavLink>
                         </ScrollToTop>
                       </ListItem>
                     </StyledList>
@@ -737,8 +494,8 @@ const Footer = ({ location, currentUser }) => {
           </Container>
         </StyledBox>
       ) : (
-        <CheckoutFooter />
-      )}
+            <CheckoutFooter />
+          )}
     </>
   );
 };

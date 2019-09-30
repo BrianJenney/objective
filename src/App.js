@@ -24,10 +24,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const {
-      account,
-      requestFetchBootstrap
-    } = this.props;
+    const { account, requestFetchBootstrap } = this.props;
     const { data: accountData } = account;
 
     let accountId = null;
