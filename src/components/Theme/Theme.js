@@ -235,7 +235,7 @@ const nxtTheme = createMuiTheme({
       },
       contained: {
         margin: 0,
-        height: 24,
+        minHeight: 24,
         lineHeight: '24px',
         padding: '0 5px'
       }
