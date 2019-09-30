@@ -12,7 +12,8 @@ import {
   StyledContainerBackground,
   StyledHeader,
   StyledSubHeader,
-  StyledParagraph,
+  StyledParagraph1,
+  StyledParagraph2,
   StyledPhoneNumber,
   StyledEmail
 } from './contactUs/StyledComponents';
@@ -21,9 +22,11 @@ const useStyles = makeStyles(theme => ({
   box: {
     display: 'flex',
     flexDirection: 'row',
+    height: 270,
     [theme.breakpoints.down('xs')]: {
       display: 'flex',
       flexDirection: 'column',
+      height: 'auto',
     }
   },
   phoneGrid: {
@@ -44,6 +47,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     width: '600px',
+    paddingTop: 10,
     [theme.breakpoints.down('xs')]: {
       width: 'auto',
     }
@@ -59,7 +63,7 @@ const ContactUs = () => {
           <Grid>
             <Box textAlign="center">
               <StyledHeader>
-                Contact Us
+                Contact us
                   </StyledHeader>
             </Box>
             <Box textAlign="center">
@@ -74,10 +78,10 @@ const ContactUs = () => {
                 <ContactPhone />
               </Box>
               <Box textAlign="center">
-                <StyledParagraph>
+                <StyledParagraph1>
                   Give us a call for immediate assistance and chat with one of
                   our customer care specialists.
-                </StyledParagraph>
+                </StyledParagraph1>
                 <StyledPhoneNumber>(800) 270-5771</StyledPhoneNumber>
               </Box>
             </Grid>
@@ -86,21 +90,21 @@ const ContactUs = () => {
                 <ContactMail />
               </Box>
               <Box textAlign="center">
-                <StyledParagraph>
+                <StyledParagraph2>
                   Email our customer care department. We'll respond as soon as
                   possible.
-                </StyledParagraph>
+                </StyledParagraph2>
                 <StyledEmail>
                   <Link
                     style={{
                       cursor: 'pointer',
                       borderBottom: '1px solid #000',
-                      paddingBottom: '1px',
+                      paddingBottom: '1.5px',
                       textDecoration: 'none'
                     }}
                   >
                     help@objectivewellnes.com
-                            </Link>
+                  </Link>
                 </StyledEmail>
               </Box>
             </Grid>
