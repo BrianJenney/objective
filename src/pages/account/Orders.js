@@ -128,6 +128,12 @@ const AccountOrders = ({ currentUser: { data } }) => {
     }
   }, [dispatch, data.orders]);
 
+  for (let key in data.orders) {
+    if(data.orders[key].status == 'cancelled') {
+      data.orders[key].status = 'Order Cancelled';
+    }
+  }
+  
   return (
     <Grid container direction="column" spacing={3} className="account-orders">
       <Grid item sm={12} md={12} lg={12}>
