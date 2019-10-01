@@ -463,8 +463,8 @@ html,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
   height: 56px;
-  width: 36px;
-  position: absolute;
+  width: 50px;
+  position: absolute !important;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
   height: 335px;
@@ -1104,7 +1104,13 @@ html,
     bottom: 0;
   }
 }
-
+@media only screen and (min-width: 1050px) {
+  .one-box,
+  .three-box,
+  .two-box {
+    margin: 25px;
+  }
+}
 @media only screen and (min-width: 1600px) {
   .one-box,
   .two-box,
@@ -1129,6 +1135,10 @@ html,
 @media (max-width: 768px) {
   .how-it-works-wrapper {
     padding-top: 20px;
+  }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop ul,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop ul {
+    padding-left: 0 !important;
   }
   .how-it-works-wrapper h2 {
     font-size: 24px !important;
@@ -1240,6 +1250,13 @@ html,
   }
 }
 @media only screen and (max-width: 734px) {
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type,
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol img {
+    position: relative !important;
+    width: auto;
+  }
   .how-it-works-wrapper .topBlock {
     width: 100% !important;
   }
@@ -1283,6 +1300,7 @@ html,
   .how-it-works-wrapper .coreBenefits .topBlock .leftCol ul p,
   .how-it-works-wrapper .coreBenefits .topBlock .rightCol ul p {
     font-size: 20px;
+    line-height: 1;
   }
   .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
   .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {

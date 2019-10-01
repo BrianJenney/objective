@@ -114,17 +114,22 @@
   }
   .gallery-prod-img {
     width: 100% !important;
-    height: 258px !important;
+    height: 335px !important;
     margin-bottom: 15px;
   }
   @media (min-width: 1200px) {
     .gallery-prod-img {
-      height: 244px !important;
+      height: 258px !important;
+    }
+  }
+  @media (min-width: 1300px) {
+    .gallery-prod-img {
+      height: 283px !important;
     }
   }
   @media (min-width: 1400px) {
     .gallery-prod-img {
-      height: 264px !important;
+      height: 308px !important;
     }
   }
   .pding {
@@ -132,9 +137,9 @@
   }
 }
 @media (max-width: 768px) {
-  .hero-holder {
+  /* .hero-holder {
     margin-bottom: 20px !important;
-  }
+  } */
   .blurb-img {
     display: none;
   }
@@ -146,16 +151,16 @@
 .corehealth {
   .opt1,
   .opt2 {
-    border: 1px solid #003670;
+    border: 1px solid #003833;
   }
   h3 {
-    color: #003670;
+    color: #003833;
   }
   hr {
-    background-color: #003670;
+    background-color: #003833;
   }
   .opt2 .gallery-prod-card .prod-name-holder .title {
-    color: #003670;
+    color: #003833;
   }
 }
 .skinbeauty {
@@ -176,19 +181,19 @@
 .moodenergy {
   .opt1,
   .opt2 {
-    border: 1px solid #003833;
+    border: 1px solid #003670;
   }
   h3 {
-    color: #003833;
+    color: #003670;
   }
   hr {
-    background-color: #003833;
+    background-color: #003670;
   }
   .opt2 {
     .gallery-prod-card {
       background-color: rgba(252, 248, 244, 0.5);
       .prod-name-holder .title {
-        color: #003833;
+        color: #003670;
       }
     }
   }

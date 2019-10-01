@@ -20,11 +20,11 @@ import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
 import {
   getPrices,
-  getVariantSkuBySlug,
   getVariantMap,
   getDefaultSkuByProduct
 } from '../../utils/product';
-import ProductPopUp from './ProductPopUp';
+
+import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 
 import './PDP-style.css';
 
@@ -74,7 +74,7 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
-const ProductDetail = ({ variantSlug }) => {
+const ProductDetail = () => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
@@ -83,15 +83,14 @@ const ProductDetail = ({ variantSlug }) => {
   const [ATCEnabled, setATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
 
   const windowSize = useWindowSize();
-  // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
-  //const defaultSku = getVariantSkuBySlug(variants, variantSlug);
+
   const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
-  const variantMap = getVariantMap(variants, pricesMap);
+  const variantMap = getVariantMap(product, variants, pricesMap);
 
   // const message = (<ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />);
 
@@ -120,9 +119,13 @@ const ProductDetail = ({ variantSlug }) => {
     }, 500);
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
-  const handleEmailPopup = () => {
-    setOpen(true);
-  };
+  const handleOpenOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(true);
+  }, [setOpenOutOfStockDialog]);
+
+  const closeOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(false);
+  }, [setOpenOutOfStockDialog]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -201,13 +204,14 @@ const ProductDetail = ({ variantSlug }) => {
                         <Button
                           className={classes.btnOOS}
                           fullWidth
-                          onClick={handleEmailPopup}
+                          onClick={handleOpenOutOfStockDialog}
                         >
                           <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
                         </Button>
                       </CardActions>
-                      {open && (
-                        <ProductPopUp
+                      {openOutOfStockDialog && (
+                        <ProductOutOfStockDialog
+                          onExited={closeOutOfStockDialog}
                           product_img={product.assets.img_front}
                           product_name={product.name}
                         />
@@ -276,13 +280,14 @@ const ProductDetail = ({ variantSlug }) => {
                             <Button
                               className={classes.btnOOS}
                               fullWidth
-                              onClick={handleEmailPopup}
+                              onClick={handleOpenOutOfStockDialog}
                             >
                               <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
                             </Button>
                           </CardActions>
-                          {open && (
-                            <ProductPopUp
+                          {openOutOfStockDialog && (
+                            <ProductOutOfStockDialog
+                              onExited={closeOutOfStockDialog}
                               product_img={product.assets.img_front}
                               product_name={product.name}
                             />
