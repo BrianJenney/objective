@@ -101,9 +101,25 @@
   }
   .home-bestsellers {
     text-align: center;
+    border: solid #fff;
+    border-width: 0.25rem 0 0;
+    position: relative;
     h1 {
       margin-top: 0;
       margin-bottom: 60px;
+    }
+    &:before {
+      border-right: 1rem solid transparent;
+      border-bottom: calc(1rem * 1.732) solid #fff;
+      border-left: 1rem solid transparent;
+      height: 0;
+      width: 0;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: calc(50% - 1rem);
+      transform: rotate(180deg);
     }
   }
   .section-holder {
