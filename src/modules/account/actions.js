@@ -14,6 +14,7 @@ import {
   RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD,
+  REQUEST_SIGNUP_EMAIL,
   CLEAR_ACCOUNT_ERROR
 } from './types';
 import store from '../../store';
@@ -229,6 +230,32 @@ export const requestForgotPassword = email => (dispatch, getState) => {
 
   dispatch({
     type: REQUEST_FORGOT_PASSWORD,
+    payload: {}
+  });
+};
+
+export const requestSignupEmail = email => (dispatch, getState) => {
+  const { client, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      query: {
+        email
+      }
+    }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  client.send(
+    '/exchange/account/account.request.signupemail',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_SIGNUP_EMAIL,
     payload: {}
   });
 };

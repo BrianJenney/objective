@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { withRouter, matchPath } from 'react-router-dom';
 import { compose } from 'redux';
 import CheckoutFooter from './CheckoutFooter';
@@ -30,7 +31,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ContactMail from './common/Icons/ContactMail/ContactMail';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
-
+import { requestSignupEmail } from '../modules/account/actions';
 import { withCurrentUser } from '../hoc';
 
 const arrowImage = require('../../src/assets/images/arrow.png');
@@ -74,7 +75,7 @@ const DialogContent = withStyles(theme => ({
 }))(MuiDialogContent);
 
 const NeedHelpDialog = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -187,13 +188,24 @@ const StyledLegalList = withStyles(() => ({
 
 const Footer = ({ location, currentUser }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
 
+  const [confirmationVisibility, setConfirmationVisibility] = useState(false);
   const gotoUrl = (url, login) => {
     return currentUser.data.account_jwt ? url : login;
   };
+
+  const handleSubmit = useCallback(
+    ({ email }) => {
+      console.log('SUBMIT SUCCEED!!!', email);
+      dispatch(requestSignupEmail(email));
+      setConfirmationVisibility(!confirmationVisibility);
+    },
+    [confirmationVisibility, setConfirmationVisibility]
+  );
 
   return (
     <>
@@ -284,29 +296,62 @@ const Footer = ({ location, currentUser }) => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} className="border-bottom signup-box p-20">
-                    <span>Sign up for tips and new product launches.</span>
-                    <Formik
-                      initialValues={{ email: '' }}
-                      onSubmit={() => null}
-                      validationSchema={schema}
-                      render={() => (
-                        <Form>
-                          <Field
-                            name="email"
-                            label=""
-                            placeholder="Your Email"
-                            component={InputField}
-                          />
-                          <Button type="submit">
-                            <img
-                              src={arrowImage}
-                              className="mobile-arrow"
-                              alt="arrow"
-                            />
-                          </Button>
-                        </Form>
-                      )}
-                    />
+                    {confirmationVisibility ? (
+                      <>
+                        <Typography
+                          style={{
+                            fontFamily: 'P22-Underground',
+                            fontSize: '22px',
+                            lineHeight: 'normal',
+                            letterSpacing: 'normal'
+                          }}
+                        >
+                          Awesome! You're on the list!
+                        </Typography>
+                        <Typography
+                          style={{
+                            fontFamily: 'FreightTextProBook',
+                            fontSize: '16px',
+                            opacity: '0.75',
+                            letterSpacing: 'normal'
+                          }}
+                        >
+                          Be a step ahead and{' '}
+                          <NavLink
+                            to="/signup"
+                            underline="always"
+                            children="create an account"
+                          ></NavLink>{' '}
+                          in seconds.
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        <span>Sign up for tips and new product launches.</span>
+                        <Formik
+                          initialValues={{ email: '' }}
+                          onSubmit={handleSubmit}
+                          validationSchema={schema}
+                          render={() => (
+                            <Form>
+                              <Field
+                                name="email"
+                                label=""
+                                placeholder="Your Email"
+                                component={InputField}
+                              />
+                              <Button type="submit">
+                                <img
+                                  src={arrowImage}
+                                  className="mobile-arrow"
+                                  alt="arrow"
+                                />
+                              </Button>
+                            </Form>
+                          )}
+                        />
+                      </>
+                    )}
                   </Grid>
                   <Grid item xs={6} className="border-bottom icon">
                     <NavLink href="http://www.instagram.com">
@@ -462,29 +507,62 @@ const Footer = ({ location, currentUser }) => {
                     </StyledBox>
                   </Grid>
                   <Grid item xs={5} className="signup-box">
-                    <span>Sign up for tips and new product launches.</span>
-                    <Formik
-                      initialValues={{ email: '' }}
-                      onSubmit={() => null}
-                      validationSchema={schema}
-                      render={() => (
-                        <Form>
-                          <Field
-                            name="email"
-                            label=""
-                            placeholder="Your Email"
-                            component={InputField}
-                          />
-                          <Button type="submit">
-                            <img
-                              src={arrowImage}
-                              className="signup-arrow"
-                              alt="arrow"
-                            />
-                          </Button>
-                        </Form>
-                      )}
-                    />
+                    {confirmationVisibility ? (
+                      <>
+                        <Typography
+                          style={{
+                            fontFamily: 'P22-Underground',
+                            fontSize: '24px',
+                            lineHeight: 'normal',
+                            letterSpacing: 'normal'
+                          }}
+                        >
+                          Awesome! You're on the list!
+                        </Typography>
+                        <Typography
+                          style={{
+                            fontFamily: 'FreightTextProBook',
+                            fontSize: '16px',
+                            opacity: '0.5',
+                            letterSpacing: 'normal'
+                          }}
+                        >
+                          Be a step ahead and{' '}
+                          <NavLink
+                            to="/signup"
+                            underline="always"
+                            children="create an account"
+                          ></NavLink>{' '}
+                          in seconds.
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        <span>Sign up for tips and new product launches.</span>
+                        <Formik
+                          initialValues={{ email: '' }}
+                          onSubmit={handleSubmit}
+                          validationSchema={schema}
+                          render={() => (
+                            <Form>
+                              <Field
+                                name="email"
+                                label=""
+                                placeholder="Your Email"
+                                component={InputField}
+                              />
+                              <Button type="submit">
+                                <img
+                                  src={arrowImage}
+                                  className="signup-arrow"
+                                  alt="arrow"
+                                />
+                              </Button>
+                            </Form>
+                          )}
+                        />
+                      </>
+                    )}
                   </Grid>
                   <Grid item xs={3}></Grid>
                   <Grid item xs={3}>
