@@ -29,6 +29,8 @@ import {
   receivedTransactionRequestRefund
 } from '../../modules/order/actions';
 
+import { getOrderTotalSummary } from '../../utils/order/OrderUtils';
+
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: '#fffde7'
@@ -78,8 +80,8 @@ const TrackingInfo = ({ trackingId }, classes) => {
   );
 };
 
-const OrderCartSummary = ({ cart }) => {
-  return cart ? <CartSummary cart={cart} /> : null;
+const OrderCartSummary = ({ order }) => {
+  return order ? <CartSummary order={order} /> : null;
 };
 
 const refundTransaction = (accountJwt, orderId, transaction, dispatch, orderRef) => {
@@ -224,7 +226,7 @@ const OrderDetail = () => {
     order.orderId.substring(10, 16) +
     '-' +
     order.orderId.substring(16);
-
+console.log('order detail', { order })
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
@@ -249,7 +251,7 @@ const OrderDetail = () => {
               />
             </Grid>
             <Grid item xs={cartWidth}>
-              <OrderCartSummary cart={order} />
+              <OrderCartSummary order={order} />
             </Grid>
           </Grid>
         </Box>
