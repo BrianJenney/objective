@@ -31,7 +31,7 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#fffde7'
+    backgroundColor: 'rgba(252, 248, 244, 0.6)'
   },
   main: {
     padding: theme.spacing(10, 5),
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(3, 4),
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: '#fffde7'
+      backgroundColor: 'rgba(252, 248, 244, 0.6)'
     }
   },
   title: {
@@ -82,7 +82,13 @@ const OrderCartSummary = ({ cart }) => {
   return cart ? <CartSummary cart={cart} /> : null;
 };
 
-const refundTransaction = (accountJwt, orderId, transaction, dispatch, orderRef) => {
+const refundTransaction = (
+  accountJwt,
+  orderId,
+  transaction,
+  dispatch,
+  orderRef
+) => {
   const refundedTransaction = {
     braintreeId: transaction.braintreeId,
     amount: transaction.amount,

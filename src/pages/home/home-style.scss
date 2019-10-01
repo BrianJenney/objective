@@ -466,7 +466,10 @@
           font-size: 14px;
           line-height: 2.14;
           letter-spacing: 1.17px;
-          padding: 25px 154px;
+          padding: 25px 0;
+          width: 100%;
+          display: block;
+          text-align: center;
         }
       }
       img {
@@ -535,54 +538,6 @@
       }
       .home-atc {
         padding: 0 20px 30px;
-      }
-    }
-  }
-  @media (max-width: 413px) {
-    .section {
-      p {
-        a {
-          padding: 25px 133px;
-        }
-      }
-      &:nth-of-type(3) {
-        p {
-          a {
-            padding: 25px 68px;
-          }
-        }
-      }
-    }
-  }
-  @media (max-width: 360px) {
-    .section {
-      p {
-        a {
-          padding: 25px 126px;
-        }
-      }
-      &:nth-of-type(3) {
-        p {
-          a {
-            padding: 25px 60px;
-          }
-        }
-      }
-    }
-  }
-  @media (max-width: 320px) {
-    .section {
-      p {
-        a {
-          padding: 25px 107px;
-        }
-      }
-      &:nth-of-type(3) {
-        p {
-          a {
-            padding: 25px 41px;
-          }
-        }
       }
     }
   }

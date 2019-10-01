@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
   text: {
     fontSize: '20px',
     fontFamily: 'p22-underground',
+    lineHeight: '1.2',
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }

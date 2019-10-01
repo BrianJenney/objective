@@ -10,14 +10,12 @@ import { Button, NavLink } from './common';
 import Link from '@material-ui/core/Link';
 import './Footer-style.scss';
 
-
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
-
 
 const styles = theme => ({
   root: {
@@ -55,7 +53,6 @@ const DialogContent = withStyles(theme => ({
   }
 }))(MuiDialogContent);
 
-
 const NeedHelpDialog = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -67,7 +64,9 @@ const NeedHelpDialog = () => {
   return (
     <div>
       <ListItem>
-        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>CONTACT US</NavLink>
+        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>
+          CONTACT US
+        </NavLink>
       </ListItem>
       <Dialog
         className="checkout-contact-container"
@@ -103,10 +102,14 @@ const NeedHelpDialog = () => {
                     possible:
                   </Typography>
                   <Typography variant="h4">
-                    <Link style={{
-                      cursor: "pointer", borderBottom: "1px solid #000",
-                      paddingBottom: "1px", textDecoration: "none"
-                    }}>
+                    <Link
+                      style={{
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #000',
+                        paddingBottom: '1px',
+                        textDecoration: 'none'
+                      }}
+                    >
                       help@objectivewellnes.com
                     </Link>
                   </Typography>
@@ -124,11 +127,11 @@ class CheckoutFooter extends React.Component {
   render() {
     return (
       <div
-        className="checkout-button-container"
+        className="checkout-footer-container"
         style={{
           padding: 50,
           background: 'rgba(252, 248, 244, 0.5)',
-          borderTop: 'solid',
+          borderTop: '1px solid',
           fontFamily: 'p22-underground, sans-serif',
           fontSize: 18,
           display: 'flex'
