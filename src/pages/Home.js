@@ -122,7 +122,7 @@ export default class Home extends Component {
           <Container>
             <Box py={10}>
               <h1>HIS, HERS & THEIRS</h1>
-              <p>Solutions for the whole family!</p>
+              <p>Solutions for the whole family</p>
               <Grid container spacing={3}>
                 {familySolutions.map(variant => (
                   <HomeVariantCard variant={variant} />

@@ -12,10 +12,18 @@ html,
   margin: 0 auto;
   color: #000000;
 }
+.label-info-wrapper .top-block .card.facts-table {
+  font-size: 18px;
+  font-family: FreightTextProBook;
+}
 
 @media only screen and (min-width: 735.99px) {
   .label-info-wrapper {
     margin-bottom: 50px;
+  }
+  .label-info-wrapper .bottom-block .other-ingredients,
+  .label-info-wrapper .bottom-block .important {
+    padding: 0 20px 0 0;
   }
 }
 
@@ -139,6 +147,11 @@ html,
   display: flex;
   flex-direction: column;
   margin-bottom: 40px;
+}
+.label-info-wrapper .top-block .facts-text p {
+  font-size: 20px;
+  font-family: FreightBookText;
+  line-height: 1.6;
 }
 
 .label-info-wrapper .top-block .facts-text div h6 {
@@ -456,7 +469,7 @@ html,
 }
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol {
-  max-height: 530px;
+  max-height: 555px;
 }
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
@@ -467,7 +480,8 @@ html,
   position: absolute !important;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
-  height: 335px;
+  /* height: 335px; */
+  height: auto;
   width: 100%;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol p:first-of-type {
@@ -527,7 +541,7 @@ html,
 
 @media only screen and (min-width: 735.99px) {
   .how-it-works-wrapper .coreBenefits .topBlock .cardTop {
-    min-height: 530px;
+    min-height: 555px;
   }
 }
 

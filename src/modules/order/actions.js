@@ -158,7 +158,10 @@ export const receivedTransactionRequestRefund = order => (
   dispatch,
   getState
 ) => {
+<<<<<<< HEAD
   console.log('in action');
+=======
+>>>>>>> frontend-changes-2
   dispatch(
     requestFindOrdersByAccount(
       getState().account.data.account_jwt,
