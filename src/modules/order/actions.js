@@ -155,7 +155,7 @@ export const receivedGetOrder = order => (dispatch, getState) => {
 export const receivedTransactionRequestRefund = order => (
   dispatch,
   getState
-) => {git 
+) => {
   dispatch(
     requestFindOrdersByAccount(
       getState().account.data.account_jwt,
