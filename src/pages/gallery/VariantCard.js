@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
-import { Button } from '../../components/common';
+import { Button, NavLink } from '../../components/common';
 import '../../assets/styles/_variables.scss';
 
 const PriceVariantInfo = ({ variant }) => {
@@ -65,28 +65,34 @@ const VariantCard = ({ variant, styleMap }) => {
 
   return (
     <Card className="gallery-prod-card" ref={ref}>
-      <CardMedia
-        style={{ height: 500, width: 324 }}
-        image={variant.assets.imgs}
-        title={variant.name}
-        className="gallery-prod-img"
-      />
+      <NavLink to={`/products/${variant.slug}`} underline="none">
+        <CardMedia
+          style={{ height: 500, width: 324 }}
+          image={variant.assets.imgs}
+          title={variant.name}
+          className="gallery-prod-img"
+        />
+      </NavLink>
       <CardContent className="pding">
-        <div className="prod-name-holder">
-          <Typography>
-            <Link
-              to={`/products/${variant.slug}`}
-              className="title"
-              style={styleMap.text}
-            >
-              {variant.name}
-            </Link>
-          </Typography>
-        </div>
-        <div className="variant-info">
-          <PriceVariantInfo variant={variant} />
-        </div>
+        <NavLink to={`/products/${variant.slug}`} underline="none">
+          <div className="prod-name-holder">
+            <Typography>
+              <Link
+                to={`/products/${variant.slug}`}
+                className="title"
+                style={styleMap.text}
+              >
+                {variant.name}
+              </Link>
+            </Typography>
+
+          </div>
+          <div className="variant-info">
+            <PriceVariantInfo variant={variant} />
+          </div>
+        </NavLink>
       </CardContent>
+
       <div className="cta-area">
         {ATCEnabled ? (
           <CardActions className="gallery-atc">
