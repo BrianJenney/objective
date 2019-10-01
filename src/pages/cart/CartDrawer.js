@@ -161,7 +161,7 @@ const Cart = ({
                   <Grid
                     item
                     xs={4}
-                    style={!xsBreakpoint ? { 'min-width': '126px', 'margin-right': '18px' } : { 'min-width': '126px', 'margin-right': '0px' }}
+                    style={!xsBreakpoint ? { 'min-width': '126px', 'margin-right': '18px' } : { 'min-width': '126px', 'margin-right': '18px' }}
                   >
                     <Card>
                       <Link to={`/products/${item.slug}`}>
