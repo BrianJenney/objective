@@ -29,16 +29,16 @@ export class ProductStore extends Component {
   componentDidMount() {
     contentfulClient.getEntries({
       'content_type': 'product',
-      'fields.sku': this.props.productSlug
+      'fields.Slug': this.props.productSlug
     })
-    .then(entry => {
-      console.log('***** CONTENTFUL *****');
-      console.log(entry);
-      this.setState({ ...this.state, content: entry.items[0].fields });
-    })
-    .catch(err => {
-      this.setState({ ...this.state, content: null });
-    });
+      .then(entry => {
+        console.log('***** CONTENTFUL *****');
+        console.log(entry);
+        this.setState({ ...this.state, content: entry.items[0].fields });
+      })
+      .catch(err => {
+        this.setState({ ...this.state, content: null });
+      });
     EventEmitter.addListener('product.request.find', data => {
       this.setState({ ...this.state, product: data.data.data[0] });
     });
@@ -124,6 +124,7 @@ export class ProductStore extends Component {
   }
 
   render() {
+    console.log('product state', this.state);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}

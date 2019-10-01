@@ -20,7 +20,8 @@ import { addToCart } from '../../modules/cart/functions';
 import {
   getPrices,
   getVariantSkuBySlug,
-  getVariantMap
+  getVariantMap,
+  getDefaultSkuByProduct
 } from '../../utils/product';
 import './PDP-style.css';
 
@@ -77,13 +78,14 @@ const ProductDetail = ({ variantSlug }) => {
   const { product, variants, prices, content } = useContext(ProductContext);
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
   const [open, setOpen] = useState(false);
 
   const windowSize = useWindowSize();
   // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
-  const defaultSku = getVariantSkuBySlug(variants, variantSlug);
+  //const defaultSku = getVariantSkuBySlug(variants, variantSlug);
+  const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
@@ -210,59 +212,59 @@ const ProductDetail = ({ variantSlug }) => {
           </Grid>
         </>
       ) : (
-        <div className={classes.gridModifications}>
-          <Container>
-            <Grid container xs={12} sm={12}>
-              <Grid container spacing={5} xs={12} sm={12}>
-                <Grid item xs={12} sm={6}>
-                  <Carousel images={content.productImages} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Card className={classes.box}>
-                    <CardContent
-                      className={classes.cardRootOverrides}
-                      className="pdp-content"
-                    >
-                      <h1 className="pdp-header">{content.productTitle}</h1>
-                      <ProductVariant
-                        productVariant={variantMap.get(selectedVariantSku)}
-                      />
-                      <div className="pdp-subtitle">
-                        {content.shortPurposeHeadline}
-                      </div>
-                      <Typography className="pdp-description">
-                        {content.shortDescription}
+          <div className={classes.gridModifications}>
+            <Container>
+              <Grid container xs={12} sm={12}>
+                <Grid container spacing={5} xs={12} sm={12}>
+                  <Grid item xs={12} sm={6}>
+                    <Carousel images={content.productImages} />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Card className={classes.box}>
+                      <CardContent
+                        className={classes.cardRootOverrides}
+                        className="pdp-content"
+                      >
+                        <h1 className="pdp-header">{content.productTitle}</h1>
+                        <ProductVariant
+                          productVariant={variantMap.get(selectedVariantSku)}
+                        />
+                        <div className="pdp-subtitle">
+                          {content.shortPurposeHeadline}
+                        </div>
+                        <Typography className="pdp-description">
+                          {content.shortDescription}
+                        </Typography>
+                        <Typography className="pdp-direction">
+                          DIRECTIONS
                       </Typography>
-                      <Typography className="pdp-direction">
-                        DIRECTIONS
-                      </Typography>
-                      <Typography className="pdp-direction-description">
-                        {content.shortDirections}
-                      </Typography>
+                        <Typography className="pdp-direction-description">
+                          {content.shortDirections}
+                        </Typography>
 
-                      {/* <ProductVariantType
+                        {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                      {!ATCEnabled && <Quantity />}
-                    </CardContent>
-                    {ATCEnabled && (
-                      <Grid>
-                        <CardActions className={classes.maxWidth}>
-                          <Button
-                            fullWidth
-                            onClick={handleAddToCart}
-                            disabled={selectedVariantSku === null}
-                          >
-                            {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
-                          </Button>
-                        </CardActions>
-                      </Grid>
-                    )}
+                        {!ATCEnabled && <Quantity />}
+                      </CardContent>
+                      {ATCEnabled && (
+                        <Grid>
+                          <CardActions className={classes.maxWidth}>
+                            <Button
+                              fullWidth
+                              onClick={handleAddToCart}
+                              disabled={selectedVariantSku === null}
+                            >
+                              {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
+                            </Button>
+                          </CardActions>
+                        </Grid>
+                      )}
 
-                    {/* Render this button when Product is out of stock hiding for now */}
-                    {/* <Grid>
+                      {/* Render this button when Product is out of stock hiding for now */}
+                      {/* <Grid>
                   <CardActions className={classes.maxWidth}>
                     <Button
                       className={classes.btnOOS}
@@ -280,13 +282,13 @@ const ProductDetail = ({ variantSlug }) => {
                     />
                   )}
                 </Grid> */}
-                  </Card>
+                    </Card>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Container>
-        </div>
-      )}
+            </Container>
+          </div>
+        )}
     </>
   );
 };

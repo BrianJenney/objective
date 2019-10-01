@@ -21,7 +21,7 @@ import {
   ContactUsPage
 } from './pages';
 
-import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage} from './pages/Login';
+import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pages/Login';
 
 export default [
   { path: '/', exact: true, component: HomePage },
@@ -89,7 +89,7 @@ export default [
     ]
   },
   {
-    path: '/products/:product_slug/:variant_slug',
+    path: '/products/:product_slug',
     exact: true,
     component: ProductPage
   },

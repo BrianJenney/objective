@@ -17,7 +17,8 @@ const Product = ({ match }) => {
   return (
     <ScrollToTop>
       <ProductStore productSlug={product_slug}>
-        <ProductDetail variantSlug={variant_slug} />
+        <ProductDetail />
+        {/* <ProductDetail variantSlug={variant_slug} /> */}
         <TabSection />
         <Instruction />
         <ResearchSources />
