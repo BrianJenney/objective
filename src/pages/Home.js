@@ -98,7 +98,7 @@ class Home extends Component {
     return (
       <>
         {bps.map(variant => (
-          <HomeVariantCard variant={variant} className="home-variant" />
+          <HomeVariantCard variant={variant} />
         ))}
       </>
     );
@@ -122,7 +122,7 @@ class Home extends Component {
     return (
       <>
         {fps.map(variant => (
-          <HomeVariantCard variant={variant} className="home-variant" />
+          <HomeVariantCard variant={variant} />
         ))}
       </>
     );
