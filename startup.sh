@@ -7,11 +7,12 @@ if [ ! -f .env ]; then
 fi
 
 # Recreate config file
-rm -rf ./env-config.js
-touch ./env-config.js
+rm -rf ./env-config-*.js
+ENV_JS=env-config-$(cat _tstamp).js
+touch ${ENV_JS}
 
 # Add assignment
-echo "window._env_ = {" >> ./env-config.js
+echo "window._env_ = {" >> ${ENV_JS}
 
 # Read each line in .env file
 # Each line represents key=value pairs
@@ -29,10 +30,10 @@ do
   [[ -z $value ]] && value=${varvalue}
 
   # Append configuration property to JS file
-  echo "  $varname: \"$value\"," >> ./env-config.js
+  echo "  $varname: \"$value\"," >> ${ENV_JS}
 done < .env
 
-echo "}" >> ./env-config.js
+echo "}" >> ${ENV_JS}
 
 # Start program
 exec nginx -g "daemon off;"
