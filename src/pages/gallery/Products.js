@@ -50,7 +50,7 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>General Health</h3>
-                    <img src={healthIcon} alt="" className="blurb-icon" />
+                    {/* <img src={healthIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Powerful, science-based formulas designed to keep you
@@ -90,7 +90,7 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>Targeted Solutions</h3>
-                    <img src={energyIcon} alt="" className="blurb-icon" />
+                    {/* <img src={energyIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Crafted with ingredients shown to deliver specific
@@ -131,7 +131,7 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>Skin Health</h3>
-                    <img src={skinIcon} alt="" className="blurb-icon" />
+                    {/* <img src={skinIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Nourish your skin from within and topically for fewer
