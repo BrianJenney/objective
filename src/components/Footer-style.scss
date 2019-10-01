@@ -629,12 +629,25 @@
     }
   }
 }
+.checkout-footer-container {
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    color: #000;
+    text-decoration: none;
+  }
+}
 @media (max-width: 768px) {
   .checkout-footer-container {
     padding: 20px !important;
     font-size: 12px !important;
-    li {
-      padding: 0;
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: #000;
+      text-decoration: none;
     }
   }
 }
