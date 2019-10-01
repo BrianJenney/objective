@@ -119,12 +119,17 @@
   }
   @media (min-width: 1200px) {
     .gallery-prod-img {
-      height: 244px !important;
+      height: 258px !important;
+    }
+  }
+  @media (min-width: 1300px) {
+    .gallery-prod-img {
+      height: 283px !important;
     }
   }
   @media (min-width: 1400px) {
     .gallery-prod-img {
-      height: 264px !important;
+      height: 308px !important;
     }
   }
   .pding {
