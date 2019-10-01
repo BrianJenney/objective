@@ -124,13 +124,15 @@ export const receivedFetchCart = cart => {
 export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
-  const params = {
+  let params = {
     data: {
       storeCode: getState().storefront.code,
-      catalogId: getState().storefront.catalogId,
-      email: getState().account.data.email
+      catalogId: getState().storefront.catalogId
     }
   };
+  if(getState().account.data) {
+    params.data.email = getState().account.data.email;
+  }
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/cart/cart.request.create',
