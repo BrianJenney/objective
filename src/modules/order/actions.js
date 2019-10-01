@@ -145,18 +145,25 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
   );
 };
 
-export const receivedGetOrder = order => {
-  return {
+export const receivedGetOrder = order => (dispatch, getState) => {
+  dispatch({
     type: RECEIVED_GET_ORDER,
     payload: order
-  };
+  });
 };
 
-export const receivedTransactionRequestRefund = order => (dispatch, getState) => {
-  console.log(order);
-  dispatch(requestFindOrdersByAccount(getState().account.data.account_jwt,order.accountId));
-  return {
+export const receivedTransactionRequestRefund = order => (
+  dispatch,
+  getState
+) => {
+  dispatch(
+    requestFindOrdersByAccount(
+      getState().account.data.account_jwt,
+      order.accountId
+    )
+  );
+  dispatch({
     type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order
-  };
+  });
 };
