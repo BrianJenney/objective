@@ -1,5 +1,10 @@
 import store from '../../store';
-import { receivedCreateOrder, receivedGetOrder, receivedTransactionRequestRefund } from './actions';
+import { 
+  receivedCreateOrderSuccess,
+  receivedCreateOrderFailure,
+  receivedGetOrder, 
+  receivedTransactionRequestRefund 
+} from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 
@@ -13,19 +18,17 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       console.log(data);
       console.log(fields);
       console.log(properties);
-      store.dispatch(receivedCreateOrder(data));
 
       // status handling
-      switch (status) {
-        case 'success':
-          // clear cart on success
-          store.dispatch(requestRemoveCartById(data.cartId));
-          store.dispatch(requestCreateCart());
-          break;
-        default:
-          console.log('unknown status ' + status);
+      if (status == 'success') {
+        // clear cart on success
+        store.dispatch(receivedCreateOrderSuccess(data));
+        store.dispatch(requestRemoveCartById(data.cartId));
+        store.dispatch(requestCreateCart());
+      } else {
+        store.dispatch(receivedCreateOrderFailure(data));
       }
-      break;
+    break;
     case 'order.request.find':
       console.log(
         '****************** Order Find By Account Response ******************'

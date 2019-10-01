@@ -13,7 +13,7 @@ import { requestCreateOrder } from '../modules/order/actions';
 import { withCart } from '../hoc';
 
 const CheckoutContainer = props => {
-  const { currentUser } = props;
+  const { currentUser, orderError } = props;
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const CheckoutContainer = props => {
     }
   }, [currentUser.error]);
 
-  return <Checkout {...props} />;
+  return <Checkout {...props } />;
 };
 
 CheckoutContainer.propTypes = {
