@@ -128,6 +128,7 @@ export const requestCreateCart = () => async (dispatch, getState) => {
     data: {
       storeCode: getState().storefront.code,
       catalogId: getState().storefront.catalogId,
+      email: getState().account.data.email
     }
   };
   const obj = JSON.stringify(msgpack.encode(params));
@@ -235,7 +236,10 @@ export const requestFetchCartByEmail = email => async (dispatch, getState) => {
   const replyTo = getState().stomp.replyTo;
   const params = {
     params: {
-      createOnMiss: 'OBJ',
+      createOnMiss: {
+        storeCode: getState().storefront.code,
+        catalogId: getState().storefront.catalogId
+      },
       query: {
         email
       }

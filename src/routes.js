@@ -18,10 +18,11 @@ import {
   ResetPassword,
   ResetSuccess,
   OrderConfirmationPage,
-  ContactUsPage
+  ContactUsPage,
+  FAQPage
 } from './pages';
 
-import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage} from './pages/Login';
+import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pages/Login';
 
 export default [
   { path: '/', exact: true, component: HomePage },
@@ -32,6 +33,7 @@ export default [
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/contact', exact: true, component: ContactUsPage },
+  { path: '/faq', exact: true, component: FAQPage },
   {
     path: '/order',
     auth: true,
@@ -89,7 +91,7 @@ export default [
     ]
   },
   {
-    path: '/products/:product_slug/:variant_slug',
+    path: '/products/:product_slug',
     exact: true,
     component: ProductPage
   },
