@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { object, string, boolean } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -8,9 +8,9 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button } from '../common';
+import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
-import { getInitialValues } from '../../utils/misc';
+import { getInitialValues, getErrorMessage } from '../../utils/misc';
 
 export const FORM_TYPES = {
   ACCOUNT: 'account',
@@ -45,11 +45,13 @@ const INITIAL_VALUES = {
 };
 
 const AddressForm = ({
+  currentUser,
   formType,
   seedEnabled,
   addressSeed,
   useSeedLabel,
   defaultValues,
+  clearPatchAccountError,
   onSubmit,
   onBack,
   submitLabel,
@@ -69,6 +71,11 @@ const AddressForm = ({
   const topTitle =
     formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
+  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+
+  useEffect(() => {
+    clearPatchAccountError();
+  }, []);
 
   const renderForm = () => (
     <Form>
@@ -81,6 +88,15 @@ const AddressForm = ({
         mb={4}
       />
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <AlertPanel
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={errorMessage}
+            variant="subtitle2"
+          />
+        </Grid>
         {seedEnabled && (
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
@@ -217,12 +233,14 @@ const AddressForm = ({
 };
 
 AddressForm.propTypes = {
+  currentUser: PropTypes.object.isRequired,
   formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
   defaultValues: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
+  clearPatchAccountError: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   submitLabel: PropTypes.string,
   backLabel: PropTypes.string,

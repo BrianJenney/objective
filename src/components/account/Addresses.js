@@ -9,13 +9,11 @@ import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
 import { FORM_TYPES } from '../forms/AddressForm';
-import {compose} from 'redux';
-import {withRouter, matchPath} from 'react-router-dom';
-
 
 const AccountAddresses = ({
   currentUser,
   requestPatchAccount,
+  clearPatchAccountError,
   formType,
   onSubmit,
   selectionEnabled,
@@ -121,12 +119,14 @@ const AccountAddresses = ({
     <Box {...rest} className="step-2-wrapper account-addresses">
       {formModeEnabled ? (
         <AddressForm
+          currentUser={currentUser}
           formType={formType}
           seedEnabled={seedEnabled}
           addressSeed={addressSeed}
           useSeedLabel={useSeedLabel}
           defaultValues={editedIndex > -1 ? addressBook[editedIndex] : null}
           onSubmit={handleSave}
+          clearPatchAccountError={clearPatchAccountError}
           onBack={() => {
             setFormModeEnabled(false);
             setEditedIndex(-1);
@@ -234,14 +234,14 @@ const AccountAddresses = ({
 AccountAddresses.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
+  clearPatchAccountError: PropTypes.func.isRequired,
   formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
   onSubmit: PropTypes.func,
   selectionEnabled: PropTypes.bool,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
-  allowFlyMode: PropTypes.bool,
-  location: PropTypes.object.isRequired
+  allowFlyMode: PropTypes.bool
 };
 
 AccountAddresses.defaultProps = {
@@ -249,8 +249,4 @@ AccountAddresses.defaultProps = {
   allowFlyMode: false
 };
 
-const enhance = compose(
-  withRouter
-);
-
-export default enhance(AccountAddresses);
+export default AccountAddresses;
