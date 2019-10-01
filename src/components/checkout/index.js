@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,6 +9,8 @@ import { useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
@@ -22,7 +25,10 @@ import { getDefaultEntity } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions';
+import TransactionErrorMsg from './TransactionErrorMsg';
 import { resetCart } from '../../modules/cart/actions';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -80,7 +86,8 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 };
 
 const Checkout = ({
-  orderError,
+  // orderIsLoading,
+  // orderError,
   history,
   currentUser,
   cart,
@@ -99,6 +106,9 @@ const Checkout = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+  const orderError = useSelector(state => state.order.transactionError);
+  const orderIsLoading = useSelector(state => state.order.isLoading);
+  const [checkoutModalOpen, setCheckoutModalOpen] = React.useState(false);
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -117,6 +127,10 @@ const Checkout = ({
     dispatch,
     requestCalculateTax
   ]);
+
+  const handleCheckoutModalClose = () => {
+    setCheckoutModalOpen(false);
+  }
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -157,10 +171,18 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    dispatch(resetCart());
-    setPayload({});
-    history.replace('/order');
 
+    console.log(orderIsLoading, orderError);
+    if (orderIsLoading === true || orderError === null) return null;
+
+    if (orderError === true) {
+      setCheckoutModalOpen(true);
+    } else {
+      console.log('in else block');
+      dispatch(resetCart());
+      setPayload({});
+      history.replace('/order');
+    }
     return true;
   };
 
@@ -322,6 +344,16 @@ const Checkout = ({
                 ''
               )}
             </Grid>
+            <Modal
+              // className={classes.modal}
+              open={checkoutModalOpen}
+              onClose={handleCheckoutModalClose}
+              closeAfterTransition
+            >
+              <Fade in={checkoutModalOpen}>
+                <TransactionErrorMsg />
+              </Fade>
+            </Modal>
           </Box>
         </Container>
       </Box>
@@ -341,5 +373,14 @@ Checkout.propTypes = {
   clearPatchAccountError: PropTypes.func.isRequired,
   requestCreateOrder: PropTypes.func.isRequired
 };
+
+// const mapStateToProps = state => ({
+//   orderIsLoading: state.order.isLoading,
+//   orderError: state.order.transactionError
+// });
+
+// export default connect(
+//   mapStateToProps, null
+// )(withRouter(Checkout));
 
 export default withRouter(Checkout);

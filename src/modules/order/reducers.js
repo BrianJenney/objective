@@ -1,6 +1,7 @@
 import {
   REQUEST_CREATE_ORDER,
-  RECEIVED_CREATE_ORDER,
+  RECEIVED_CREATE_ORDER_SUCCESS,
+  RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_FIND_ALL_ORDERS,
   RECEIVED_FIND_ALL_ORDERS,
   REQUEST_GET_ORDER,
@@ -12,16 +13,28 @@ import {
 
 const INITIAL_STATE = {
   isLoading: false,
+  transactionError: null,
   order: null
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case REQUEST_CREATE_ORDER:
-      return { ...state, isLoading: true, order: null };
-    case RECEIVED_CREATE_ORDER:
-      console.log(action);
-      return { ...state, order: action.payload, isLoading: false };
+      return { ...state, isLoading: true, transactionError: null };
+    case RECEIVED_CREATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        order: action.payload,
+        isLoading: false,
+        transactionError: false
+      };
+    case RECEIVED_CREATE_ORDER_FAILURE:
+      return {
+        ...state,
+        order: action.payload,
+        isLoading: false,
+        transactionError: true
+      };
     case REQUEST_FIND_ALL_ORDERS:
       return { ...state };
     case RECEIVED_FIND_ALL_ORDERS:
