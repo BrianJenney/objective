@@ -10,7 +10,7 @@ const CheckoutReviewForm = ({ onSubmit,xsBreakpoint }) => (
     flexDirection="column"
     alignItems="center"
     className="step-4-wrapper"
-    style={xsBreakpoint ? {overflow:"hidden"} : {}}
+    style={xsBreakpoint ? {overflow:"hidden", marginTop:"18px"} : {}}
   >
     {!xsBreakpoint ? (<Box
       component={Typography}
