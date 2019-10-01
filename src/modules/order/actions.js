@@ -9,9 +9,7 @@ import {
   RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
 
-import {
-  resetCart
-} from '../../modules/cart/actions';
+import { resetCart } from '../../modules/cart/actions';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
@@ -29,15 +27,15 @@ export const requestRefundTransaction = (authToken, transaction) => (
       orderId: transaction.orderId,
       orderReference: transaction.orderReference
     },
-    params: { 
-      account_jwt: authToken, 
+    params: {
+      account_jwt: authToken,
       jwt: authToken,
       originalRequest: 'transaction.request.void'
     }
   };
   console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
-  console.log("SENDING PAYLOAD",payload);
+  console.log('SENDING PAYLOAD', payload);
   client.send(
     '/exchange/transaction/transaction.request.refund',
     {
@@ -59,7 +57,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
-  dispatch({ 
+  dispatch({
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
   });
@@ -89,10 +87,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   );
 };
 
-export const receivedCreateOrder = order => async (
-  dispatch,
-  getState
- ) => {
+export const receivedCreateOrder = order => async (dispatch, getState) => {
   dispatch(resetCart());
   //setPayload({});
   //history.replace('/order');
@@ -101,7 +96,6 @@ export const receivedCreateOrder = order => async (
     payload: order
   };
 };
-
 
 export const requestFindOrdersByAccount = accountJwt => (
   dispatch,
@@ -116,7 +110,7 @@ export const requestFindOrdersByAccount = accountJwt => (
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));
-  
+
   client.send(
     '/exchange/order/order.request.find',
     {
@@ -131,7 +125,10 @@ export const requestFindOrdersByAccount = accountJwt => (
   });
 };
 
-export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
+export const requestGetOrder = (accountJwt, orderId) => (
+  dispatch,
+  getState
+) => {
   const { client, replyTo } = getState().stomp;
   dispatch({
     type: REQUEST_GET_ORDER,
