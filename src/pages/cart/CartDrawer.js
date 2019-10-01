@@ -372,18 +372,23 @@ const Cart = ({
             direction="row"
             xs={12}
             justify="space-between"
-            style={{
+            style={!xsBreakpoint ? {
               'margin-bottom': '0',
               'border-top': `solid 2px ${MEDIUM_GRAY}`,
               'padding-top': '29px',
               'margin-top': '30px'
+            } : {
+              'margin-bottom': '0',
+              'border-top': `solid 2px ${MEDIUM_GRAY}`,
+              'padding-top': '21px',
+              'margin-top': '30px'
             }}
           >
             <Grid item xs={6}>
-              <StyledEstimatedTotal>Estimated Total</StyledEstimatedTotal>
+              <StyledEstimatedTotal style={xsBreakpoint ? {fontSize:"20px"} : {}}>{xsBreakpoint ? 'Total' : 'Estimated Total'}</StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
-              <StyledProductPrice style={{ 'font-size': '22px' }}>
+              <StyledProductPrice style={!xsBreakpoint ? { 'font-size': '22px' } : {fontSize:"18px"}}>
                 {`$${totalSummary.total.toFixed(2)}`}
               </StyledProductPrice>
             </Grid>
