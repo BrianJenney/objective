@@ -171,6 +171,12 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
+<<<<<<< HEAD
+=======
+    // dispatch(resetCart());
+    // setPayload({});
+    // history.replace('/order');
+>>>>>>> Trying to split out actions
 
     console.log(orderIsLoading, orderError);
     if (orderIsLoading === true || orderError === null) return null;
