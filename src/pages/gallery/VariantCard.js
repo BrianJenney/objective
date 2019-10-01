@@ -55,10 +55,12 @@ const VariantCard = ({ variant, styleMap }) => {
 
       setATCAdding(false);
     }, 500);
+    /*
     ref.current.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
+    */
   }, [cart, variant, quantity, dispatch]);
 
   return (
