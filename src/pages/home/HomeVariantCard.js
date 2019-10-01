@@ -49,8 +49,7 @@ export const bestSellers = [
     name: 'Smooth + Luminous',
     id: '5d8bb840f5005515a437d4cb',
     assets: {
-      imgs:
-        'https://res.cloudinary.com/dhp51sf7h/image/upload/v1567535317/productpictures/healthy_vision_lsjatq.jpg'
+      imgs: 'https://cdn1.stopagingnow.com/objective/smooth_luminous_front.png'
     },
     sku: 'TCNB-1BOT-PWD',
     variantInfo: { prodType: 'OZ', size: '2.7' },
@@ -82,8 +81,7 @@ export const familySolutions = [
     name: 'Keep Cool',
     id: '5ce6d310585756469c36e250',
     assets: {
-      imgs:
-        'https://res.cloudinary.com/dhp51sf7h/image/upload/v1567535319/productpictures/ultimate_blood_frmula_rrgiw0.jpg'
+      imgs: 'https://cdn1.stopagingnow.com/objective/keep_cool_front.png'
     },
     sku: 'TMNO-1BOT-CAPS',
     variantInfo: { prodType: 'Veggie Capsules', size: '30' },
