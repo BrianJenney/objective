@@ -86,8 +86,6 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 };
 
 const Checkout = ({
-// orderIsLoading,
-  // orderError,
   history,
   currentUser,
   cart,
@@ -172,6 +170,7 @@ const Checkout = ({
       );
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     // dispatch(resetCart());
     // setPayload({});
@@ -180,6 +179,11 @@ const Checkout = ({
 
     console.log(orderIsLoading, orderError);
     if (orderIsLoading === true || orderError === null) return null;
+=======
+    dispatch(resetCart());
+    setPayload({});
+    history.replace('/order');
+>>>>>>> undoing prior work, want to do it all in checkout.js
 
     if (orderError === true) {
       setCheckoutModalOpen(true);
