@@ -11,7 +11,6 @@ import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
 import { Button } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-const localStorageClient = require('store');
 
 const PriceVariantInfo = ({ variant }) => {
   return variant ? (
@@ -24,13 +23,13 @@ const PriceVariantInfo = ({ variant }) => {
   ) : null;
 };
 
-const VariantCard = ({ variant, product, styleMap }) => {
+const VariantCard = ({ variant, styleMap }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const ref = createRef();
   // const windowSize = useWindowSize();
   // const { enqueueSnackbar } = useSnackbar();
-  const [ATCEnabled, setATCEnabled] = useState(true);
+  const [ATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
   // const message = <ATCSnackbarAction variant={variant} />;
@@ -42,7 +41,7 @@ const VariantCard = ({ variant, product, styleMap }) => {
     },
     [cart, variant, dispatch]
   );
-  const [quantity, setQuantity, Quantity] = useQuantity(
+  const [quantity, Quantity] = useQuantity(
     updateQuantityToCart,
     'QTY'
   );
@@ -52,7 +51,6 @@ const VariantCard = ({ variant, product, styleMap }) => {
     setATCAdding(true);
     setTimeout(() => {
       //Give effect of item being added
-
       addToCart(cart, variant, quantity);
 
       setATCAdding(false);
@@ -75,7 +73,7 @@ const VariantCard = ({ variant, product, styleMap }) => {
         <div className="prod-name-holder">
           <Typography>
             <Link
-              to={`/products/${product.slug}`}
+              to={`/products/${variant.slug}`}
               className="title"
               style={styleMap.text}
             >

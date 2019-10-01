@@ -19,7 +19,7 @@ class App extends Component {
   static propTypes = {
     account: PropTypes.object.isRequired,
     storefront: PropTypes.object.isRequired,
-    products: PropTypes.object.isRequired,
+    catalog: PropTypes.object.isRequired,
     requestFetchBootstrap: PropTypes.func.isRequired
   };
 
@@ -75,7 +75,7 @@ const mapStateToProps = state => ({
   storefront: state.storefront,
   cart: state.cart,
   account: state.account,
-  products: state.products
+  catalog: state.catalog
 });
 
 const mapDispatchToProps = {

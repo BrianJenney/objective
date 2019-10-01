@@ -20,7 +20,6 @@ import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
 import {
   getPrices,
-  getVariantSkuBySlug,
   getVariantMap,
   getDefaultSkuByProduct
 } from '../../utils/product';
@@ -87,8 +86,7 @@ const ProductDetail = () => {
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
 
   const windowSize = useWindowSize();
-  // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
-  //const defaultSku = getVariantSkuBySlug(variants, variantSlug);
+
   const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
