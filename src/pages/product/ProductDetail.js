@@ -90,7 +90,7 @@ const ProductDetail = () => {
   const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
-  const variantMap = getVariantMap(variants, pricesMap);
+  const variantMap = getVariantMap(product, variants, pricesMap);
 
   // const message = (<ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />);
 
