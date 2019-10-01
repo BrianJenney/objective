@@ -10,7 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
-import { COUNTRY_OPTIONS,STATE_OPTIONS } from '../../constants/location';
+import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
