@@ -7,12 +7,12 @@ import {
   RECEIVED_GET_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND 
+  RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
 
 const INITIAL_STATE = {
   isLoading: false,
-  order: null,
+  order: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,9 +32,10 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_FIND_ORDERS_BY_ACCOUNT:
       return { ...state };
     case REQUEST_REFUND_TRANSACTION:
-      return {...state, refunding:true};
+      return { ...state, refunding: true };
     case RECEIVED_TRANSACTION_REQUEST_REFUND:
-      return {...state, order: action.payload, refunding:false};  
+      console.log('reducer');
+      return { ...state, order: action.payload, refunding: false };
     default:
       return state;
   }
