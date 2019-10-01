@@ -9,6 +9,7 @@ import { useWindowSize } from '../../hooks';
 import CheckoutButton from '../../pages/cart/CheckoutButton';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import ContShoppingButton from '../../pages/cart/ContShoppingButton';
+import '../../pages/cart/cart-style.scss';
 
 export const SIDES = {
   TOP: 'top',
@@ -65,8 +66,8 @@ const TemporaryCartDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-      ? 335
-      : 415;
+    ? 335
+    : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
   const listPanel = (
@@ -84,14 +85,19 @@ const TemporaryCartDrawer = ({
           children={toggleContent}
         />
       )}
-      <Drawer anchor={side} open={drawerOpened} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor={side}
+        open={drawerOpened}
+        onClose={toggleDrawer(false)}
+        className="temp-cart-drawer"
+      >
         {closePanel}
         {listPanel}
-        {cartItem.items.length !== 0 ?
+        {cartItem.items.length !== 0 ? (
           <CheckoutButton onClick={toggleDrawer(false)} />
-          :
+        ) : (
           <ContShoppingButton onClick={toggleDrawer(false)} />
-        }
+        )}
       </Drawer>
     </Box>
   );
