@@ -9,12 +9,12 @@ import CategorySummary from './CategorySummary';
 //import ProductSummary from './ProductSummary';
 import { getProductCategories } from '../../utils/product';
 
-const skinImg = require('../../../src/assets/images/skin-cat.png');
-const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
-const healthIcon = require('../../../src/assets/images/health-cat-icon.png');
-const healthImg = require('../../../src/assets/images/health-cat.png');
-const energyIcon = require('../../../src/assets/images/energy-cat-icon.png');
-const energyImg = require('../../../src/assets/images/energy-cat.png');
+const skinImg = require('../../../src/assets/images/skin.png');
+const skinIcon = require('../../../src/assets/images/skin.png');
+const healthIcon = require('../../../src/assets/images/general.png');
+const healthImg = require('../../../src/assets/images/general.png');
+const energyIcon = require('../../../src/assets/images/targeted.png');
+const energyImg = require('../../../src/assets/images/targeted.png');
 
 const Products = () => {
   const products = useContext(GalleryContext);

@@ -5,12 +5,12 @@ import ProductCard from './ProductCard';
 import VariantCard from './VariantCard';
 import './gallery-style.scss';
 
-const skinImg = require('../../../src/assets/images/skin-cat.png');
-const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
-const healthIcon = require('../../../src/assets/images/health-cat-icon.png');
-const healthImg = require('../../../src/assets/images/health-cat.png');
-const energyIcon = require('../../../src/assets/images/energy-cat-icon.png');
-const energyImg = require('../../../src/assets/images/energy-cat.png');
+const skinImg = require('../../../src/assets/images/skin.png');
+const skinIcon = require('../../../src/assets/images/skin.png');
+const healthIcon = require('../../../src/assets/images/general.png');
+const healthImg = require('../../../src/assets/images/general.png');
+const energyIcon = require('../../../src/assets/images/targeted.png');
+const energyImg = require('../../../src/assets/images/targeted.png');
 
 const ProductSummary = ({ product, ind, styleMap, variantMap }) => {
   //Below condition will be based on product's category

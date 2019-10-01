@@ -3,12 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import VariantCard from './VariantCard';
 import './gallery-style.scss';
 
-const skinImg = require('../../../src/assets/images/skin-cat.png');
-const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
-const healthIcon = require('../../../src/assets/images/health-cat-icon.png');
-const healthImg = require('../../../src/assets/images/health-cat.png');
-const energyIcon = require('../../../src/assets/images/energy-cat-icon.png');
-const energyImg = require('../../../src/assets/images/energy-cat.png');
+const skinImg = require('../../../src/assets/images/skin.png');
+const skinIcon = require('../../../src/assets/images/skin.png');
+const healthIcon = require('../../../src/assets/images/general.png');
+const healthImg = require('../../../src/assets/images/general.png');
+const energyIcon = require('../../../src/assets/images/targeted.png');
+const energyImg = require('../../../src/assets/images/targeted.png');
 
 /*
 @description - Returns Product Summary based on category
@@ -43,10 +43,7 @@ const CategorySummary = ({ category, products, styleMap }) => {
         return (
           <Grid item xs={12} sm={3} md={3} lg={3}>
             <div className="opt2" style={styleMap.container}>
-              <VariantCard
-                variant={product}
-                styleMap={styleMap}
-              />
+              <VariantCard variant={product} styleMap={styleMap} />
             </div>
           </Grid>
         );
