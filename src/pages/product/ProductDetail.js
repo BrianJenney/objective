@@ -75,7 +75,7 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
-const ProductDetail = ({ variantSlug }) => {
+const ProductDetail = () => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
