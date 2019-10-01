@@ -4,20 +4,21 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Button, NavLink } from '../common';
 
-const CheckoutReviewForm = ({ onSubmit }) => (
+const CheckoutReviewForm = ({ onSubmit,xsBreakpoint }) => (
   <Box
     display="flex"
     flexDirection="column"
     alignItems="center"
     className="step-4-wrapper"
+    style={xsBreakpoint ? {overflow:"hidden"} : {}}
   >
-    <Box
+    {!xsBreakpoint ? (<Box
       component={Typography}
       my={3}
       variant="h5"
       fontFamily="Canela Text, serif"
       children="Please take a moment to review your order."
-    />
+    />) : ''}
     <Box width={532} mb={2} className="button-holder-mobile">
       <Button
         type="button"

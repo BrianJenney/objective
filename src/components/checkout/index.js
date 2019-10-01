@@ -301,7 +301,7 @@ const Checkout = ({
                   showOrderSummaryText
                   xsBreakpoint={xs}
                 /> : '' }
-                  <CheckoutReviewForm onSubmit={handleNext} />
+                  <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
                 </Panel>
               </Grid>
              { !xs ? <Grid item xs={12} md={4} className="left-side">
