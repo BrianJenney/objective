@@ -29,10 +29,10 @@ const getMuiTheme = () =>
     }
   });
 
-const DataTable = ({ title, data, columns, isLoading }) => {
+const DataTable = ({ title, data, columns, isLoading, moreOptions }) => {
   const options = {
     filterType: 'dropdown',
-    responsive: 'scrollFullHeight',
+    responsive: 'stacked',
     selectableRows: 'none',
     rowsPerPage: 10,
     page: 0,
@@ -41,7 +41,8 @@ const DataTable = ({ title, data, columns, isLoading }) => {
     search: false,
     download: false,
     viewColumns: false,
-    filter: false
+    filter: false,
+    ...moreOptions
   };
 
   return (
