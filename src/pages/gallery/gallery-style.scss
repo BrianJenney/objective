@@ -114,7 +114,7 @@
   }
   .gallery-prod-img {
     width: 100% !important;
-    height: 258px !important;
+    height: 335px !important;
     margin-bottom: 15px;
   }
   @media (min-width: 1200px) {
@@ -132,9 +132,9 @@
   }
 }
 @media (max-width: 768px) {
-  .hero-holder {
+  /* .hero-holder {
     margin-bottom: 20px !important;
-  }
+  } */
   .blurb-img {
     display: none;
   }
