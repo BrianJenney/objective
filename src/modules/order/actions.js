@@ -9,9 +9,7 @@ import {
   RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
 
-import {
-  resetCart
-} from '../../modules/cart/actions';
+import { resetCart } from '../../modules/cart/actions';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
@@ -59,7 +57,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
-  dispatch({ 
+  dispatch({
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
   });
@@ -89,10 +87,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   );
 };
 
-export const receivedCreateOrder = order => async (
-  dispatch,
-  getState
- ) => {
+export const receivedCreateOrder = order => async (dispatch, getState) => {
   dispatch(resetCart());
   //setPayload({});
   //history.replace('/order');
