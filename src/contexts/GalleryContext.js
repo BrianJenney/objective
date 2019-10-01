@@ -84,7 +84,8 @@ export class GalleryStore extends Component {
     params = {
       params: {
         query: {
-          product_id: { $in: this.props.productIds }
+          product_id: { $in: this.props.productIds },
+          catalogId: store.getState().storefront.catalogId
         }
       }
     };
