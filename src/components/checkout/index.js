@@ -219,7 +219,14 @@ const Checkout = ({
           <Box py={10} className="checkout-wrapper">
             <CssBaseline />
             <Grid container spacing={4}>
-              <Grid item flex={1} xs={12} md={8} className="right-side">
+              <Grid
+                item
+                flex={1}
+                xs={12}
+                md={8}
+                className="right-side"
+                style={xs ? { padding: 0 } : {}}
+              >
                 <Panel
                   title={getPanelTitleContent(0, activeStep, {
                     email: currentUserEmail
@@ -301,25 +308,33 @@ const Checkout = ({
                   expanded={activeStep === 3}
                   onChange={e => onPanelChange(e, 3)}
                 >
-                { xs ? <CartDrawer
-                  disableItemEditing
-                  hideCheckoutProceedLink
-                  hideTaxLabel
-                  showOrderSummaryText
-                  xsBreakpoint={xs}
-                /> : '' }
+                  {xs ? (
+                    <CartDrawer
+                      disableItemEditing
+                      hideCheckoutProceedLink
+                      hideTaxLabel
+                      showOrderSummaryText
+                      xsBreakpoint={xs}
+                    />
+                  ) : (
+                    ''
+                  )}
                   <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
                 </Panel>
               </Grid>
-             { !xs ? <Grid item xs={12} md={4} className="left-side">
-                <CartDrawer
-                  disableItemEditing
-                  hideCheckoutProceedLink
-                  hideTaxLabel
-                  showOrderSummaryText={false}
-                  xsBreakpoint={xs}
-                />
-             </Grid> : ''}
+              {!xs ? (
+                <Grid item xs={12} md={4} className="left-side">
+                  <CartDrawer
+                    disableItemEditing
+                    hideCheckoutProceedLink
+                    hideTaxLabel
+                    showOrderSummaryText={false}
+                    xsBreakpoint={xs}
+                  />
+                </Grid>
+              ) : (
+                ''
+              )}
             </Grid>
           </Box>
         </Container>

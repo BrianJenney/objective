@@ -301,7 +301,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                {`$${shippingData.price.toFixed(2)}`}
+               {`$${shippingData.price ?shippingData.price.toFixed(2) : '0.00'}`}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint
