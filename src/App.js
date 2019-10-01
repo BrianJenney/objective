@@ -69,7 +69,6 @@ class App extends Component {
 
     // Vertical scrolling does not work when you start swiping horizontally.
     if (Math.abs(this.clientX) > minValue) {
-      e.preventDefault();
       e.returnValue = false;
       return false;
     }
