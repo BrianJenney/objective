@@ -7,7 +7,8 @@ import { object, string } from 'yup';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { fonts } from '../Theme/fonts';
-import { Button } from '../common';
+import { Button, AlertPanel } from '../common';
+import { getErrorMessage } from '../../utils/misc';
 import { InputField } from '../form-fields';
 import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
@@ -69,16 +70,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfileDetails = ({ currentUser, requestPatchAccount }) => {
+const ProfileDetails = ({
+  currentUser,
+  requestPatchAccount,
+  clearPatchAccountError
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [isClicked, handleSubmitBtn] = useState(false);
   const prevSubmitting = usePrevious(currentUser.loading);
-
+  const errorMessage = getErrorMessage(currentUser.patchAccountError);
   const handleSubmit = useCallback(values => {
     requestPatchAccount(currentUser.data.account_jwt, values);
   });
+
+  useEffect(() => {
+    clearPatchAccountError();
+  }, []);
 
   useEffect(() => {
     if (prevSubmitting && !currentUser.loading && !currentUser.error) {
@@ -96,41 +105,40 @@ const ProfileDetails = ({ currentUser, requestPatchAccount }) => {
     return <div>No Account</div>;
   }
 
-  const renderForm = () => {
-    let accountError = null;
-    if (currentUser.error) {
-      accountError =
-        currentUser.error.message ||
-        currentUser.error.errorMessage ||
-        currentUser.data.errorMessage;
-    }
-
-    return (
-      <Form>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Field label="First Name" name="firstName" component={InputField} />
-          </Grid>
-          <Grid item xs={6}>
-            <Field label="Last Name" name="lastName" component={InputField} />
-          </Grid>
-          <Grid item xs={12}>
-            <Field label="Email" name="email" component={InputField} />
-          </Grid>
-          {/* <Grid item xs={12}>
+  const renderForm = () => (
+    <Form>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <AlertPanel
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={errorMessage}
+            variant="subtitle2"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Field label="First Name" name="firstName" component={InputField} />
+        </Grid>
+        <Grid item xs={6}>
+          <Field label="Last Name" name="lastName" component={InputField} />
+        </Grid>
+        <Grid item xs={12}>
+          <Field label="Email" name="email" component={InputField} />
+        </Grid>
+        {/* <Grid item xs={12}>
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
-          <Grid item xs={xs ? 12 : 4}>
-            <Button mt={2} mp={3} fullWidth type="submit">
-              Save Changes
-            </Button>
-            {isClicked && <ProfileUpdateFeedback error={accountError} />}
-          </Grid>
+        <Grid item xs={xs ? 12 : 4}>
+          <Button mt={2} mp={3} fullWidth type="submit">
+            Save Changes
+          </Button>
+          {isClicked && <ProfileUpdateFeedback error={errorMessage} />}
         </Grid>
-      </Form>
-    );
-  };
-  console.log('--PROFILEDETAIL--', currentUser);
+      </Grid>
+    </Form>
+  );
+
   return (
     <div className="account-profile">
       {xs ? (
@@ -161,7 +169,8 @@ const ProfileDetails = ({ currentUser, requestPatchAccount }) => {
 
 ProfileDetails.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  requestPatchAccount: PropTypes.func.isRequired
+  requestPatchAccount: PropTypes.func.isRequired,
+  clearPatchAccountError: PropTypes.func.isRequired
 };
 
 export default ProfileDetails;

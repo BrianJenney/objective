@@ -2,20 +2,23 @@ import {
   REQUEST_CREATE_ACCOUNT,
   RECEIVED_CREATE_ACCOUNT_SUCCESS,
   RECEIVED_CREATE_ACCOUNT_FAILURE,
+  CLEAR_CREATE_ACCOUNT_ERROR,
   REQUEST_FETCH_ACCOUNT,
   RECEIVED_FETCH_ACCOUNT_SUCCESS,
   RECEIVED_FETCH_ACCOUNT_FAILURE,
+  CLEAR_FETCH_ACCOUNT_ERROR,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_LOGIN,
   RECEIVED_LOGIN_SUCCESS,
   RECEIVED_LOGIN_FAILURE,
+  CLEAR_LOGIN_ERROR,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT_SUCCESS,
   RECEIVED_PATCH_ACCOUNT_FAILURE,
+  CLEAR_PATCH_ACCOUNT_ERROR,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD,
-  REQUEST_SIGNUP_EMAIL,
-  CLEAR_ACCOUNT_ERROR
+  REQUEST_SIGNUP_EMAIL
 } from './types';
 import store from '../../store';
 import { requestCreateCart, requestFetchCartByEmail } from '../cart/actions';
@@ -69,6 +72,12 @@ export const receivedCreateAccountFailure = error => dispatch => {
   });
 };
 
+export const clearCreateAccountError = () => dispatch => {
+  dispatch({
+    type: CLEAR_CREATE_ACCOUNT_ERROR
+  });
+};
+
 export const requestFetchAccount = id => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = { id };
@@ -100,6 +109,12 @@ export const receivedFetchAccountFailure = error => dispatch => {
   dispatch({
     type: RECEIVED_FETCH_ACCOUNT_FAILURE,
     payload: error
+  });
+};
+
+export const clearFetchAccountError = () => dispatch => {
+  dispatch({
+    type: CLEAR_FETCH_ACCOUNT_ERROR
   });
 };
 
@@ -149,6 +164,64 @@ export const receivedPatchAccountFailure = patchError => dispatch => {
   });
 };
 
+export const clearPatchAccountError = () => dispatch => {
+  dispatch({
+    type: CLEAR_PATCH_ACCOUNT_ERROR
+  });
+};
+
+export const requestChangePassword = (authToken, patches) => (
+  dispatch,
+  getState
+) => {
+  const { client, replyTo } = getState().stomp;
+  const params = {
+    id: authToken,
+    data: patches,
+    params: {
+      account_jwt: authToken
+    }
+  };
+  // console.log(params);
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  client.send(
+    '/exchange/account/account.request.changePassword',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_CHANGE_PASSWORD,
+    payload: {}
+  });
+};
+
+export const receivedChangePasswordSuccess = account => dispatch => {
+  console.log('ACTION', account);
+  dispatch({
+    type: RECEIVED_CHANGE_PASSWORD_SUCCESS,
+    payload: account
+  });
+};
+
+export const receivedChangePasswordFailure = patchError => dispatch => {
+  console.log('ERROR-ACTION', patchError);
+  dispatch({
+    type: RECEIVED_CHANGE_PASSWORD_FAILURE,
+    payload: patchError
+  });
+};
+
+export const clearChangePasswordError = () => dispatch => {
+  dispatch({
+    type: CLEAR_CHANGE_PASSWORD_ERROR
+  });
+};
+
 export const requestLogin = ({ email, password }) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = {
@@ -189,6 +262,12 @@ export const receivedLoginFailure = loginError => dispatch => {
   dispatch({
     type: RECEIVED_LOGIN_FAILURE,
     payload: loginError
+  });
+};
+
+export const clearLoginError = () => dispatch => {
+  dispatch({
+    type: CLEAR_LOGIN_ERROR
   });
 };
 
@@ -257,11 +336,5 @@ export const requestSignupEmail = email => (dispatch, getState) => {
   dispatch({
     type: REQUEST_SIGNUP_EMAIL,
     payload: {}
-  });
-};
-
-export const clearAccountError = () => dispatch => {
-  dispatch({
-    type: CLEAR_ACCOUNT_ERROR
   });
 };

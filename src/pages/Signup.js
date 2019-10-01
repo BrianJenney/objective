@@ -4,9 +4,9 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { withDialog } from '../hoc';
 import Signup from '../components/Signup';
-import { requestCreateAccount } from '../modules/account/actions';
+import { requestCreateAccount, clearCreateAccountError } from '../modules/account/actions';
 
-const mapDispatchToProps = { requestCreateAccount };
+const mapDispatchToProps = { requestCreateAccount, clearCreateAccountError };
 
 const SignupDialog = compose(
   connect(
