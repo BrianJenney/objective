@@ -30,7 +30,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import ContactMail from './common/Icons/ContactMail/ContactMail';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
-import ScrollToTop from './common/ScrollToTop';
 
 import { withCurrentUser } from '../hoc';
 
@@ -244,15 +243,10 @@ const Footer = ({ location, currentUser }) => {
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/">Our Story</NavLink>
+                          <NavLink to="/contact">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/">Journal</NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <ScrollToTop>
-                            <NavLink to="/contact">Contact Us</NavLink>
-                          </ScrollToTop>
+                          <NavLink to="/faq">FAQs</NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -260,17 +254,17 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <ScrollToTop>
-                          <NeedHelpDialog />
-                        </ScrollToTop>
+                        <NeedHelpDialog />
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/">FAQs</NavLink>
-                        </ListItem>
-                        <ListItem>
                           <NavLink to={gotoUrl('/account', '/login/account')}>
                             My Account
+                          </NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
+                            Shipping &amp; Returns
                           </NavLink>
                         </ListItem>
                         <ListItem>
@@ -336,6 +330,20 @@ const Footer = ({ location, currentUser }) => {
                     </StyledList>
                   </Grid>
                 </Grid>
+                <Grid item xs={12} className="disclaimer-container">
+                  <Typography className="disclaimer-text">
+                    * Statements on this website have not been evaluated by the Food and Drug Administration. Any products discussed or advertised are not intended to diagnose, treat, cure or prevent any disease. Testimonial results are not typical. Customers may have received a gift certificate after submitting their testimonial. If you are pregnant, nursing, taking medication, or have a medical condition, consult your physician before using any dietary supplement.
+                    </Typography>
+                  <Typography className="disclaimer-text">
+                    Objective is committed to making its website accessible for all users, and will continue to take all steps necessary to ensure compliance with applicable laws.
+                    </Typography>
+                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                    If you have difficulty accessing any content, feature or functionality on our website or on our other electronic platforms, please email us at <Link style={{
+                      borderBottom: '1px solid #fff',
+                      textDecoration: 'none',
+                    }}>Help@objectivewellness.com</Link> or call us at 800-270-5771 so that we can provide you access through an alternative method.
+                    </Typography>
+                </Grid>
               </div>
             </Grid>
           </Container>
@@ -378,9 +386,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <ScrollToTop>
-                        <NeedHelpDialog />
-                      </ScrollToTop>
+                      <NeedHelpDialog />
                     </StyledBox>
                   </Grid>
                   <Grid
@@ -395,28 +401,23 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={5} className="border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to="/ourstory">Our Story</NavLink>
+                        <NavLink to="/contact">Contact Us</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/ingredients">Journal</NavLink>
-                      </ListItem>
-                      <ListItem>
-                        <ScrollToTop>
-                          <NavLink to="/contact">Contact Us</NavLink>
-                        </ScrollToTop>
+                        <NavLink to="/faq">FAQs</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
-                          Shipping &amp; Returns
-                        </NavLink>
-                      </ListItem>
-                      <ListItem>
                         <NavLink to={gotoUrl('/account', '/login/account')}>
                           My Account
+                          </NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
+                          Shipping &amp; Returns
                         </NavLink>
                       </ListItem>
                       <ListItem>
@@ -488,6 +489,23 @@ const Footer = ({ location, currentUser }) => {
                       </ListItem>
                     </StyledLegalList>
                   </Grid>
+                </Grid>
+                <Grid item xs={12} className="disclaimer-container">
+                  <Typography className="disclaimer-text">
+                    * Statements on this website have not been evaluated by the Food and Drug Administration. Any products discussed or advertised are not intended to diagnose, treat, cure or prevent any disease. Testimonial results are not typical. Customers may have received a gift certificate after submitting their testimonial. If you are pregnant, nursing, taking medication, or have a medical condition, consult your physician before using any dietary supplement.
+                    </Typography>
+                  <Typography className="disclaimer-text">
+                    Objective is committed to making its website accessible for all users, and will continue to take all steps necessary to ensure compliance with applicable laws.
+                    </Typography>
+                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                    If you have difficulty accessing any content, feature or functionality on our website or on our other electronic platforms, please email us at <Link
+                      style={{
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #fff',
+                        textDecoration: 'none'
+                      }}
+                    >Help@objectivewellness.com</Link> or call us at 800-270-5771 so that we can provide you access through an alternative method.
+                    </Typography>
                 </Grid>
               </div>
             </Grid>

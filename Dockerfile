@@ -6,6 +6,7 @@ COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm ci
 COPY . /app
+RUN echo $(date +%s) > /app/_tstamp
 RUN bash fix-src.sh
 RUN npm run build
 
@@ -13,6 +14,7 @@ RUN npm run build
 FROM nginx:1.17.3-alpine
 ARG GIT_COMMIT=n/a
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
+COPY --from=build-stage /app/_tstamp /usr/share/nginx/html/_tstamp
 
 # Copy our nginx.conf to image
 COPY nginx.conf /etc/nginx/conf.d/default.conf
