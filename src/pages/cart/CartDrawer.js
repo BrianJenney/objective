@@ -56,7 +56,9 @@ const Cart = ({
   history,
   hideCheckoutProceedLink,
   disableItemEditing,
-  hideTaxLabel
+  hideTaxLabel,
+  showOrderSummaryText,
+  xsBreakpoint
 }) => {
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
@@ -95,20 +97,20 @@ const Cart = ({
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
   const totalSummary = calculateCartTotals(cart);
-
+  const mobileDrawerPadding = xsBreakpoint ? "0px" : "24px 20px";
   return (
     <Grid
       container
       xs={12}
-      style={{ width: '100%', 'min-width': '90%', margin: '0 auto' }}
+      style={{ width: '100%', 'min-width': '90%', margin: '0 auto', padding: mobileDrawerPadding }}
       className="cart-drawer"
     >
       <div>
         {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader align="center">Your Cart </StyledCartHeader>
-              <StyledCartCountHeader component="span">
+              <StyledCartHeader align="center" style={xsBreakpoint ? {fontSize:"24px", fontWeight:"normal"} : {}}>{showOrderSummaryText ? 'Order Summary' : 'Your Cart'} </StyledCartHeader>
+              <StyledCartCountHeader component="span" style={xsBreakpoint ? {fontSize:"11px",fontWeight:"600"} : {}}>
                 {' '}
                 ({cartCount} Items)
               </StyledCartCountHeader>
