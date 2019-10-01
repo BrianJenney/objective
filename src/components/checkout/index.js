@@ -80,6 +80,7 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 };
 
 const Checkout = ({
+  orderError,
   history,
   currentUser,
   cart,
@@ -156,9 +157,9 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    // dispatch(resetCart());
-    // setPayload({});
-    // history.replace('/order');
+    dispatch(resetCart());
+    setPayload({});
+    history.replace('/order');
 
     return true;
   };
