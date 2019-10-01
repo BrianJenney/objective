@@ -152,7 +152,9 @@ export const receivedGetOrder = order => {
   };
 };
 
-export const receivedTransactionRequestRefund = order => {
+export const receivedTransactionRequestRefund = order => (dispatch, getState) => {
+  console.log(order);
+  dispatch(requestFindOrdersByAccount(getState().account.data.account_jwt,order.accountId));
   return {
     type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order

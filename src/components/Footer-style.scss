@@ -189,10 +189,11 @@
     }
 
     .title {
+      font-family: p22-underground, Helvetica, sans-serif;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
-      padding: 20px;
+      padding: 40px 20px 20px 20px;
       letter-spacing: 1px;
       text-align: left;
 
@@ -317,7 +318,7 @@
   @media (max-width: 768px) {
     .footer-main {
       .links {
-        padding: 0 25px 10px;
+        padding: 0px 0px 36px 20px;
         font-size: 15px;
       }
       .legal ul li {
@@ -653,18 +654,5 @@
     font-stretch: normal;
     line-height: 1.29;
     letter-spacing: normal;
-  }
-  @media only screen and (min-width: 600px) {
-    .disclaimer-text {
-      font-size: 19px;
-      text-transform: none;
-      font-family: p22-underground, Helvetica, sans-serif;
-      margin-bottom: 30px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.29;
-      letter-spacing: normal;
-    }
   }
 }
