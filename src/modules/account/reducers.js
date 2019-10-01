@@ -14,6 +14,7 @@ import {
   RECEIVED_PATCH_ACCOUNT_FAILURE,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD,
+  REQUEST_SIGNUP_EMAIL,
   CLEAR_ACCOUNT_ERROR
 } from './types';
 const localStorageClient = require('store');
@@ -44,6 +45,7 @@ export default (state = INITIAL_STATE, action) => {
       };
     case REQUEST_FETCH_ACCOUNT:
     case REQUEST_FORGOT_PASSWORD:
+    case REQUEST_SIGNUP_EMAIL:
     case REQUEST_PATCH_ACCOUNT:
       return {
         ...state,
