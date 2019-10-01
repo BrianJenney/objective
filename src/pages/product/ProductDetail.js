@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import MailOutline from '@material-ui/icons/MailOutline';
 
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
@@ -23,6 +24,8 @@ import {
   getVariantMap,
   getDefaultSkuByProduct
 } from '../../utils/product';
+import ProductPopUp from './ProductPopUp';
+
 import './PDP-style.css';
 
 const useStyles = makeStyles(theme => ({
@@ -117,6 +120,9 @@ const ProductDetail = ({ variantSlug }) => {
     }, 500);
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
+  const handleEmailPopup = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -126,12 +132,15 @@ const ProductDetail = ({ variantSlug }) => {
     product === null ||
     variants.length === 0 ||
     typeof content === 'undefined' ||
-    content == null
+    content == null ||
+    selectedVariantSku == null
   )
     return null;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
+
+  const variant = variantMap.get(selectedVariantSku);
 
   return (
     <>
@@ -173,7 +182,7 @@ const ProductDetail = ({ variantSlug }) => {
                 /> */}
                     {!ATCEnabled && <Quantity />}
                   </CardContent>
-                  {ATCEnabled && (
+                  {ATCEnabled && variant.inventory.quantityInStock > 0 && (
                     <Grid className="mobile-padding-small">
                       <CardActions className={classes.maxWidth}>
                         <Button
@@ -186,26 +195,25 @@ const ProductDetail = ({ variantSlug }) => {
                       </CardActions>
                     </Grid>
                   )}
-
-                  {/* Render this button when Product is out of stock hiding for now */}
-                  {/* <Grid>
-                    <CardActions className={classes.maxWidth}>
-                      <Button
-                        className={classes.btnOOS}
-                        fullWidth
-                        onClick={handleEmailPopup}
-                      >
-                        <MailOutline className={classes.icon} /> TELL ME WHEN
-                        IT'S AVAILABLE
-                      </Button>
-                    </CardActions>
-                    {open && (
-                      <ProductPopUp
-                        product_img={product.assets.img_front}
-                        product_name={product.name}
-                      />
-                    )}
-                  </Grid> */}
+                  {variant.inventory.quantityInStock < 1 && (
+                    <Grid>
+                      <CardActions className={classes.maxWidth}>
+                        <Button
+                          className={classes.btnOOS}
+                          fullWidth
+                          onClick={handleEmailPopup}
+                        >
+                          <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
+                        </Button>
+                      </CardActions>
+                      {open && (
+                        <ProductPopUp
+                          product_img={product.assets.img_front}
+                          product_name={product.name}
+                        />
+                      )}
+                    </Grid>
+                  )}
                 </Card>
               </Grid>
             </Grid>
@@ -237,7 +245,7 @@ const ProductDetail = ({ variantSlug }) => {
                         </Typography>
                         <Typography className="pdp-direction">
                           DIRECTIONS
-                      </Typography>
+                        </Typography>
                         <Typography className="pdp-direction-description">
                           {content.shortDirections}
                         </Typography>
@@ -249,7 +257,7 @@ const ProductDetail = ({ variantSlug }) => {
                 /> */}
                         {!ATCEnabled && <Quantity />}
                       </CardContent>
-                      {ATCEnabled && (
+                      {ATCEnabled && variant.inventory.quantityInStock > 0 && (
                         <Grid>
                           <CardActions className={classes.maxWidth}>
                             <Button
@@ -262,26 +270,25 @@ const ProductDetail = ({ variantSlug }) => {
                           </CardActions>
                         </Grid>
                       )}
-
-                      {/* Render this button when Product is out of stock hiding for now */}
-                      {/* <Grid>
-                  <CardActions className={classes.maxWidth}>
-                    <Button
-                      className={classes.btnOOS}
-                      fullWidth
-                      onClick={handleEmailPopup}
-                    >
-                      <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
-                      AVAILABLE
-                    </Button>
-                  </CardActions>
-                  {open && (
-                    <ProductPopUp
-                      product_img={product.assets.img_front}
-                      product_name={product.name}
-                    />
-                  )}
-                </Grid> */}
+                      {variant.inventory.quantityInStock < 1 && (
+                        <Grid>
+                          <CardActions className={classes.maxWidth}>
+                            <Button
+                              className={classes.btnOOS}
+                              fullWidth
+                              onClick={handleEmailPopup}
+                            >
+                              <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
+                            </Button>
+                          </CardActions>
+                          {open && (
+                            <ProductPopUp
+                              product_img={product.assets.img_front}
+                              product_name={product.name}
+                            />
+                          )}
+                        </Grid>
+                      )}
                     </Card>
                   </Grid>
                 </Grid>
