@@ -156,9 +156,9 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    dispatch(resetCart());
-    setPayload({});
-    history.replace('/order');
+    // dispatch(resetCart());
+    // setPayload({});
+    // history.replace('/order');
 
     return true;
   };
