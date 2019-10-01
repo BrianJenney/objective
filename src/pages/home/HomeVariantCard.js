@@ -34,7 +34,8 @@ export const bestSellers = [
     name: 'Focus + Clarity',
     id: '5ceebfdca686a03bccfa67c0',
     assets: {
-      imgs: 'http://cdn1.stopagingnow.com/objective/focus_and_clarity_front.png'
+      imgs:
+        'https://cdn1.stopagingnow.com/objective/focus_and_clarity_front.png'
     },
     sku: 'TSGF-1BOT-CAPS',
     variantInfo: { prodType: 'Veggie Capsules', size: '30' },
@@ -67,7 +68,7 @@ export const familySolutions = [
     id: '5d8ba4f6f5005515a437d4be',
     assets: {
       imgs:
-        'https://res.cloudinary.com/dhp51sf7h/image/upload/v1567535317/productpictures/healthy_vision_lsjatq.jpg'
+        'https://cdn1.stopagingnow.com/objective/Proactive_Prostate_Front.png'
     },
     sku: 'TOPT-1BOT-GELS',
     variantInfo: { prodType: 'Softgels', size: '60' },
@@ -174,8 +175,8 @@ export const HomeVariantCard = ({ variant }) => {
               {!ATCAdded
                 ? 'ADD TO CART'
                 : !ATCAdding
-                  ? 'PRODUCT ADDED'
-                  : 'ADDING...'}
+                ? 'PRODUCT ADDED'
+                : 'ADDING...'}
             </Button>
           </CardActions>
         </div>
