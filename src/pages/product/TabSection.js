@@ -117,7 +117,12 @@ export default function PdpTabs() {
             >
               <HowItWorksTab />
             </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
+            <TabPanel
+              value={value}
+              index={1}
+              dir={theme.direction}
+              className="tabpanel"
+            >
               <SupplementFactsTab />
             </TabPanel>
           </div>
