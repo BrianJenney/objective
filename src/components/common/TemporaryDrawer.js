@@ -60,8 +60,8 @@ const TemporaryDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-      ? '100%'
-      : 415;
+    ? '100%'
+    : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
   const listPanel = (
@@ -77,14 +77,19 @@ const TemporaryDrawer = ({
         onClick={toggleDrawer(true)}
         children={toggleContent}
       />
-      <Drawer anchor={side} open={drawer.open} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor={side}
+        open={drawer.open}
+        onClose={toggleDrawer(false)}
+        className="pizza"
+      >
         {closePanel}
         {listPanel}
-        {cartItem.items.length !== 0 ?
+        {cartItem.items.length !== 0 ? (
           <CheckoutButton onClick={toggleDrawer(false)} />
-          :
+        ) : (
           <ContShoppingButton onClick={toggleDrawer(false)} />
-        }
+        )}
       </Drawer>
     </Box>
   );

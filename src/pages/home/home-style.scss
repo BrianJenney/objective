@@ -263,6 +263,28 @@
       }
     }
   }
+  @media (min-width: 1200px) {
+    .section-holder {
+    }
+    .section {
+      img {
+        height: 600px;
+        width: 620px;
+      }
+      &:nth-of-type(2) {
+        img {
+          height: 600px;
+          width: 620px;
+        }
+      }
+      &:nth-of-type(3) {
+        img {
+          height: 600px;
+          width: 620px;
+        }
+      }
+    }
+  }
   @media (min-width: 1400px) {
     .section-holder {
       margin-top: 95px;
