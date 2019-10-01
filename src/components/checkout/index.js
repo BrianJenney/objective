@@ -294,16 +294,25 @@ const Checkout = ({
                   expanded={activeStep === 3}
                   onChange={e => onPanelChange(e, 3)}
                 >
-                  <CheckoutReviewForm onSubmit={handleNext} />
+                { xs ? <CartDrawer
+                  disableItemEditing
+                  hideCheckoutProceedLink
+                  hideTaxLabel
+                  showOrderSummaryText
+                  xsBreakpoint={xs}
+                /> : '' }
+                  <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
                 </Panel>
               </Grid>
-              <Grid item xs={12} md={4} className="left-side">
+             { !xs ? <Grid item xs={12} md={4} className="left-side">
                 <CartDrawer
                   disableItemEditing
                   hideCheckoutProceedLink
                   hideTaxLabel
+                  showOrderSummaryText={false}
+                  xsBreakpoint={xs}
                 />
-              </Grid>
+             </Grid> : ''}
             </Grid>
           </Box>
         </Container>

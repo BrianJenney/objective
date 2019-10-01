@@ -126,7 +126,9 @@ const OrderSummary = ({
   const dispatch = useDispatch();
 
   let orderRefunded = false;
+
   transactions.map(transaction => {
+    console.log(transaction.status);
     if (transaction.transactionStatus === 'voided') {
       orderRefunded = true;
     }
@@ -235,7 +237,7 @@ const OrderDetail = () => {
     order.orderId.substring(10, 16) +
     '-' +
     order.orderId.substring(16);
-console.log('order detail', { order })
+
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
