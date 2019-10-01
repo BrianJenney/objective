@@ -20,8 +20,7 @@ export const bestSellers = [
     name: 'Everything Armor',
     id: '5d8bb76ff5005515a437d4c8',
     assets: {
-      imgs:
-        'https://res.cloudinary.com/dhp51sf7h/image/upload/v1567535317/productpictures/healthy_vision_lsjatq.jpg'
+      imgs: 'https://cdn1.stopagingnow.com/objective/everything_armor_front.png'
     },
     sku: 'TPZU-1BOT-GELS',
     variantInfo: { prodType: 'Softgels', size: '30' },
