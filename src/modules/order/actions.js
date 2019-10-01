@@ -9,6 +9,9 @@ import {
   RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
 
+import {
+  resetCart
+} from '../../modules/cart/actions';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
@@ -56,7 +59,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
-  dispatch({
+  dispatch({ 
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
   });
@@ -64,9 +67,10 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
-  // total hack here, but if you refresh the page, you don't get a
-  // catalog id in your cart & orders will fail.  Just make sure its there
+  //hacky, but we need to make sure these are here.  Can remove later.
   cart.catalogId = getState().storefront.catalogId;
+  cart.storeCode = getState().storefront.code;
+  cart.email = getState().account.data.email;
   const params = {
     data: { cart },
     params: { account_jwt, nonceOrToken }
@@ -85,7 +89,13 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   );
 };
 
-export const receivedCreateOrder = order => {
+export const receivedCreateOrder = order => async (
+  dispatch,
+  getState
+ ) => {
+  dispatch(resetCart());
+  //setPayload({});
+  //history.replace('/order');
   return {
     type: RECEIVED_CREATE_ORDER,
     payload: order

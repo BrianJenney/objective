@@ -26,7 +26,6 @@ const Products = () => {
     variantMap,
     productCategories
   ] = getGallery(products, variants, prices);
-  console.log(products, variants, prices);
 
   const productCategoriesToProducts = {};
 
@@ -47,9 +46,6 @@ const Products = () => {
   });
 
   if (!productCategoriesToProducts.skin) return null;
-  console.log(productMap, variantMap, productCategories);
-  console.log(productCategoriesToProducts);
-  console.log(productCategoriesToProducts.skin);
   //Code needs to be replaced to map through different categories in different containers
 
   return (

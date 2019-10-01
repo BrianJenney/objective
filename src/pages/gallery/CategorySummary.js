@@ -24,7 +24,7 @@ const CategorySummary = ({ category, products, variantMap, styleMap }) => {
   //Will need to be refactor later on to grab categories and their data directly out of a collection in Mongo
   //..for now we're hard coding the titles, and using the first product's description as the description
   let title, catIcon, catImg;
-  console.log(category);
+
   if (category.slug === 'skin') {
     title = <h3 style={styleMap.text}>Skin & Beauty</h3>;
     catIcon = skinIcon;
