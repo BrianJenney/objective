@@ -301,7 +301,7 @@ const Checkout = ({
                   <CheckoutReviewForm onSubmit={handleNext} />
                 </Panel>
               </Grid>
-              <Grid item xs={12} md={4} className="left-side" style={xs ? {padding: 0} : {}} className='pandaaaaaaaaa'>
+              <Grid item xs={12} md={4} className="left-side" style={xs ? {padding: 0} : {}}>
                 <CartDrawer
                   disableItemEditing
                   hideCheckoutProceedLink
