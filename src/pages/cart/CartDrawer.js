@@ -161,7 +161,7 @@ const Cart = ({
                     style={{ 'min-width': '126px', 'margin-right': '18px' }}
                   >
                     <Card>
-                      <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                      <Link to={`/products/${item.prodSlug}`}>
                         <CardMedia
                           style={{ height: 126, width: 126 }}
                           image={item.variant_img}
@@ -181,7 +181,7 @@ const Cart = ({
                       }}
                     >
                       <Link
-                        to={`/products/${item.prodSlug}/${item.varSlug}`}
+                        to={`/products/${item.prodSlug}}`}
                         style={{
                           'text-decoration': 'none',
                           'max-height': '40px',
