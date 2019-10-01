@@ -165,7 +165,7 @@ const FAQ = () => {
                 </QAContainer>
                 <MoreInfoContainer>
                   <StyledText>
-                    For more information visit:<MoreInfoLink href="https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language">
+                    For more information visit: <MoreInfoLink href="https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language">
                       https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language
                     </MoreInfoLink>
                   </StyledText>
