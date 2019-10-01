@@ -1147,6 +1147,10 @@ html,
 /* Mobile Only */
 
 @media (max-width: 768px) {
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop ul li,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop ul li {
+    line-height: 2;
+  }
   .how-it-works-wrapper {
     padding-top: 20px;
   }
