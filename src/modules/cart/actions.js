@@ -127,7 +127,8 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   const params = {
     data: {
       storeCode: getState().storefront.code,
-      catalogId: getState().storefront.catalogId
+      catalogId: getState().storefront.catalogId,
+      email: getState().account.data.email
     }
   };
   const obj = JSON.stringify(msgpack.encode(params));
@@ -196,6 +197,7 @@ export const requestPatchCart = (cartId, patches) => async (
   const replyTo = getState().stomp.replyTo;
   const email = getState().account.data.email;
   const realPatches = { ...patches, email };
+  console.log(cartId, email);
   const params = {
     id: cartId,
     data: realPatches
@@ -234,6 +236,10 @@ export const requestFetchCartByEmail = email => async (dispatch, getState) => {
   const replyTo = getState().stomp.replyTo;
   const params = {
     params: {
+      createOnMiss: {
+        storeCode: getState().storefront.code,
+        catalogId: getState().storefront.catalogId
+      },
       query: {
         email
       }

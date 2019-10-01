@@ -13,3 +13,4 @@ export { default as ResetPassword } from './password/ResetPassword';
 export { default as ResetSuccess } from './password/ResetSuccess';
 export { default as OrderPage } from './order/Order';
 export { default as ContactUsPage } from './ContactUs';
+export { default as FAQPage } from './FAQ';

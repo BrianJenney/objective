@@ -65,8 +65,8 @@ const TemporaryCartDrawer = ({
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
     : isMobile
-      ? 335
-      : 415;
+    ? 335
+    : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
   const listPanel = (
@@ -87,11 +87,11 @@ const TemporaryCartDrawer = ({
       <Drawer anchor={side} open={drawerOpened} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
-        {cartItem.items.length !== 0 ?
+        {cartItem.items.length !== 0 ? (
           <CheckoutButton onClick={toggleDrawer(false)} />
-          :
+        ) : (
           <ContShoppingButton onClick={toggleDrawer(false)} />
-        }
+        )}
       </Drawer>
     </Box>
   );
