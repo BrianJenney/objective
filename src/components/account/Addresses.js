@@ -98,8 +98,6 @@ const AccountAddresses = ({
 
     requestPatchAccount(account_jwt, payload);
     actions.setSubmitting(false);
-    setFormModeEnabled(false);
-    setEditedIndex(-1);
 
     return true;
   };

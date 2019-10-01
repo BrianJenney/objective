@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
@@ -24,6 +24,14 @@ const useStyles = makeStyles(() => ({
     }
   }
 }));
+
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
 
 const validateTextField = value => {
   if (value) {
@@ -110,11 +118,22 @@ const PaymentForm = ({
       });
     }
   };
+  const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
 
   useEffect(() => {
     clearPatchAccountError();
   }, []);
+
+  useEffect(() => {
+    if (
+      prevSubmitting &&
+      !currentUser.patchAccountSubmitting &&
+      !currentUser.patchAccountError
+    ) {
+      onBack();
+    }
+  }, [currentUser.patchAccountSubmitting]);
 
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (

@@ -105,7 +105,6 @@ const AccountPaymentDetails = ({
       enqueueSnackbar(err.message, { variant: 'error' });
     }
     actions.setSubmitting(false);
-    setFormModeEnabled(false);
 
     return true;
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { object, string, boolean } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -15,6 +15,14 @@ import { getInitialValues, getErrorMessage } from '../../utils/misc';
 export const FORM_TYPES = {
   ACCOUNT: 'account',
   CHECKOUT: 'checkout'
+};
+
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
 };
 
 const schema = object().shape({
@@ -71,11 +79,22 @@ const AddressForm = ({
   const topTitle =
     formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
+  const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
 
   useEffect(() => {
     clearPatchAccountError();
   }, []);
+
+  useEffect(() => {
+    if (
+      prevSubmitting &&
+      !currentUser.patchAccountSubmitting &&
+      !currentUser.patchAccountError
+    ) {
+      onBack();
+    }
+  }, [currentUser.patchAccountSubmitting]);
 
   const renderForm = () => (
     <Form>
