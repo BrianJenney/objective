@@ -181,7 +181,7 @@ const Cart = ({
                       }}
                     >
                       <Link
-                        to={`/products/${item.prodSlug}}`}
+                        to={`/products/${item.prodSlug}`}
                         style={{
                           'text-decoration': 'none',
                           'max-height': '40px',
