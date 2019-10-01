@@ -188,7 +188,7 @@ html,
 }
 
 .label-info-wrapper .top-block .facts-table table td {
-  font-family: P22-underground, Helvetica, sans;
+  font-family: FreightTextProBook;
   font-size: 18px;
 }
 
@@ -1147,6 +1147,10 @@ html,
 /* Mobile Only */
 
 @media (max-width: 768px) {
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop ul li,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop ul li {
+    line-height: 2;
+  }
   .how-it-works-wrapper {
     padding-top: 20px;
   }
@@ -1262,6 +1266,9 @@ html,
   .label-info-wrapper .bottom-block .other-ingredients p {
     font-size: 18px;
   }
+  .tabpanel li > p {
+    padding: 0 !important;
+  }
 }
 @media only screen and (max-width: 734px) {
   .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
@@ -1334,7 +1341,7 @@ html,
     .bottomBlock
     .rightCol
     img:nth-of-type(2) {
-    height: 260px;
+    height: auto;
   }
   .one-box,
   .two-box,

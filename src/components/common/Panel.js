@@ -11,6 +11,7 @@ import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MenuLink from './MenuLink';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {useTheme} from '@material-ui/core/styles';
+import { relative } from 'path';
 
 const styles = {
   root: {
@@ -73,7 +74,7 @@ const Panel = ({
               <MenuLink
                 children="CHANGE"
                 underline="always"
-                style={{ fontSize: 16, color: '#6f6f6f' }}
+                style={{fontSize: 16, color: '#6f6f6f'}}
               />
             )
           }
