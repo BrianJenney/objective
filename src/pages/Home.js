@@ -85,14 +85,20 @@ class Home extends Component {
       return null;
     }
 
-    const bestsellers = ['5d8bb76ff5005515a437d4c8', '5ceebfdca686a03bccfa67c0', '5d8bb840f5005515a437d4cb'];
+    const bestsellers = [
+      '5d8bb76ff5005515a437d4c8',
+      '5ceebfdca686a03bccfa67c0',
+      '5d8bb840f5005515a437d4cb'
+    ];
 
-    const bps = this.props.products.filter(product => bestsellers.includes(product.id)).map(product => product);
+    const bps = this.props.products
+      .filter(product => bestsellers.includes(product.id))
+      .map(product => product);
 
     return (
       <>
         {bps.map(variant => (
-          <HomeVariantCard variant={variant} />
+          <HomeVariantCard variant={variant} className="home-variant" />
         ))}
       </>
     );
@@ -103,14 +109,20 @@ class Home extends Component {
       return null;
     }
 
-    const family = ['5d8ba4f6f5005515a437d4be', '5ce6d310585756469c36e250', '5ceec52ba686a03bccfa67c5'];
+    const family = [
+      '5d8ba4f6f5005515a437d4be',
+      '5ce6d310585756469c36e250',
+      '5ceec52ba686a03bccfa67c5'
+    ];
 
-    const fps = this.props.products.filter(product => family.includes(product.id)).map(product => product);
+    const fps = this.props.products
+      .filter(product => family.includes(product.id))
+      .map(product => product);
 
     return (
       <>
         {fps.map(variant => (
-          <HomeVariantCard variant={variant} />
+          <HomeVariantCard variant={variant} className="home-variant" />
         ))}
       </>
     );
@@ -143,7 +155,7 @@ class Home extends Component {
           <Container>
             <Box py={10}>
               <h1>Our Bestsellers</h1>
-              <Grid container spacing={3}>
+              <Grid container spacing={3} className="best-container">
                 {this.renderBestsellers()}
               </Grid>
             </Box>
@@ -159,7 +171,7 @@ class Home extends Component {
             <Box py={10}>
               <h1>HIS, HERS & THEIRS</h1>
               <p>Solutions for the whole family</p>
-              <Grid container spacing={3}>
+              <Grid container spacing={3} className="solutions-container">
                 {this.renderFamily()}
               </Grid>
             </Box>
@@ -178,6 +190,4 @@ const mapStateToProps = state => ({
   products: state.catalog.variants
 });
 
-export default connect(
-  mapStateToProps
-)(Home);
+export default connect(mapStateToProps)(Home);
