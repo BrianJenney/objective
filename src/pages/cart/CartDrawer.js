@@ -161,7 +161,7 @@ const Cart = ({
                   <Grid
                     item
                     xs={4}
-                    style={{ 'min-width': '126px', 'margin-right': '18px' }}
+                    style={!xsBreakpoint ? { 'min-width': '126px', 'margin-right': '18px' } : { 'min-width': '126px', 'margin-right': '0px' }}
                   >
                     <Card>
                       <Link to={`/products/${item.slug}`}>
@@ -174,7 +174,7 @@ const Cart = ({
                       </Link>
                     </Card>
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={xsBreakpoint ? 8 : 7}>
                     <Card
                       style={{
                         display: 'flex',
@@ -244,7 +244,7 @@ const Cart = ({
                           </StyledCardActions>
                         )}
                       </Grid>
-                      <StyledCardContent style={{ 'padding-bottom': '0' }}>
+                      <StyledCardContent style={!xsBreakpoint ? { 'padding-bottom': '0' } : {paddingBottom:'0px', paddingRight:'0px'}}>
                         <StyledFinePrint component="div" value={index}>
                           {!disableItemEditing && (
                             <Link
@@ -255,7 +255,7 @@ const Cart = ({
                             </Link>
                           )}
                         </StyledFinePrint>
-                        <StyledProductPrice>
+                        <StyledProductPrice style={xsBreakpoint ? {fontSize:"16px"} : {}}>
                           {`$${(item.quantity * item.unit_price).toFixed(2)}`}
                         </StyledProductPrice>
                       </StyledCardContent>
