@@ -86,12 +86,8 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 };
 
 const Checkout = ({
-<<<<<<< HEAD
-  // orderIsLoading,
+// orderIsLoading,
   // orderError,
-=======
-  orderError,
->>>>>>> undoing prior work, want to do it all in checkout.js
   history,
   currentUser,
   cart,
