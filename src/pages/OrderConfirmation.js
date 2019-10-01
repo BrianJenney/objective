@@ -95,7 +95,7 @@ const OrderConfirmation = ({ history }) => {
   }
 
   const OrderCartSummary = () => {
-    return <CartSummary cart={order} />;
+    return <CartSummary order={order} />;
   };
 
   const OrderDetail = () => {
