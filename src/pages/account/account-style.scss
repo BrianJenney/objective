@@ -70,6 +70,30 @@
     width: 100%;
   }
 }
+
+.account-orders-mobile-row{
+  td{
+    padding-left:16px;
+  }
+
+  .order-meta-title-item,.order-meta-item-info{
+    font-size:16px;
+    display: inline;
+  }
+
+  .order-meta-title-item{
+    font-weight:600;
+  }
+
+  .order-meta-item-info{
+    margin-left:7px;
+  }
+
+  .order-meta-item-info a{
+    
+  }
+}
+
 .account-orders {
   .data-table > div {
     &:first-of-type {
@@ -133,7 +157,29 @@
     color: #231f20;
   }
 }
+
+
+
 @media (max-width: 768px) {
+
+
+
+  .account-orders{
+
+    tbody > tr {
+      background-color: #fbf7f3;
+      height: auto;
+      margin-bottom: 16px;
+      display: block;
+      padding:10px;
+    }
+
+    
+      
+    
+
+  }
+
   .account-menu-box {
     display: none;
   }
