@@ -126,8 +126,9 @@ const OrderSummary = ({
   const dispatch = useDispatch();
 
   let orderRefunded = false;
-  
+
   transactions.map(transaction => {
+    console.log(transaction.status);
     if (transaction.transactionStatus === 'voided') {
       orderRefunded = true;
     }
