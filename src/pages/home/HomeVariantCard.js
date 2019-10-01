@@ -27,7 +27,7 @@ export const bestSellers = [
     attributes: [],
     effectivePrice: 35.0,
     slug: 'TPZU1',
-    prodSlug: 'TPZU',
+    prodSlug: 'everything-armor',
     cardColor: 'green'
   },
   {
@@ -41,7 +41,7 @@ export const bestSellers = [
     attributes: [],
     effectivePrice: 50.0,
     slug: 'TSGF1',
-    prodSlug: 'TSGF',
+    prodSlug: 'focus-clarity',
     cardColor: 'blue'
   },
   {
@@ -56,7 +56,7 @@ export const bestSellers = [
     attributes: [],
     effectivePrice: 35.0,
     slug: 'TCNB1',
-    prodSlug: 'TCNB',
+    prodSlug: 'smooth-luminous',
     cardColor: 'red'
   }
 ];
@@ -74,7 +74,7 @@ export const familySolutions = [
     attributes: [],
     effectivePrice: 51.0,
     slug: 'TOPT1',
-    prodSlug: 'TOPT',
+    prodSlug: 'proactive-prostate',
     cardColor: 'green'
   },
   {
@@ -89,7 +89,7 @@ export const familySolutions = [
     attributes: [],
     effectivePrice: 50.0,
     slug: 'TMNO1',
-    prodSlug: 'TMNO',
+    prodSlug: 'keep-cool',
     cardColor: 'blue'
   },
   {
@@ -104,7 +104,7 @@ export const familySolutions = [
     attributes: [],
     effectivePrice: 80.04,
     slug: 'TIMN1',
-    prodSlug: 'TIMN',
+    prodSlug: 'immune-wellness',
     cardColor: 'red'
   }
 ];
@@ -150,7 +150,7 @@ export const HomeVariantCard = ({ variant }) => {
         <CardContent className="pding">
           <div className="prod-name-holder">
             <Typography>
-              <Link to={`/products/${prodSlug}/${slug}`} className="title">
+              <Link to={`/products/${prodSlug}`} className="title">
                 {name}
               </Link>
             </Typography>
@@ -174,8 +174,8 @@ export const HomeVariantCard = ({ variant }) => {
               {!ATCAdded
                 ? 'ADD TO CART'
                 : !ATCAdding
-                ? 'PRODUCT ADDED'
-                : 'ADDING...'}
+                  ? 'PRODUCT ADDED'
+                  : 'ADDING...'}
             </Button>
           </CardActions>
         </div>
