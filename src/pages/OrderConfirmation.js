@@ -74,7 +74,9 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '1.88',
     letterSpacing: '1.33px',
     [theme.breakpoints.down('xs')]: {
-      width: '385px'
+      width: '385px',
+      paddingRight: '50px',
+      overflow: 'hidden'
     }
   }
 }));
@@ -130,12 +132,26 @@ const OrderConfirmation = ({ history }) => {
               order.orderId.substring(16)}
           </strong>
         </Typography>
+        { xs ? 
+
+        (<Grid container style={{overflow: 'hidden'}}>
+          <Grid item style={{overflow: 'hidden'}}>
+
         <Button
           type="button"
           onClick={handleOrderDetail}
           children="Check Order Status"
           className={classes.button}
         />
+          </Grid>
+
+        </Grid>)
+         : (<Button
+          type="button"
+          onClick={handleOrderDetail}
+          children="Check Order Status"
+          className={classes.button}
+        />)}
         <Box
           display="flex"
           flexDirection={xs ? 'column' : 'row'}

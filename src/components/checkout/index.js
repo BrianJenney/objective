@@ -211,12 +211,16 @@ const Checkout = ({
 
   return (
     <ScrollToTop>
-      <Box bgcolor="rgba(252, 248, 244, 0.5)">
+      <Box bgcolor="rgba(252, 248, 244, 0.5)" >
         <Container style={xs ? { padding: 0 } : {}}>
-          <Box py={10} className="checkout-wrapper">
+          <Box py={10} 
+          className="checkout-wrapper"
+          >
             <CssBaseline />
             <Grid container spacing={4}>
-              <Grid item flex={1} xs={12} md={8} className="right-side">
+              <Grid item flex={1} xs={12} md={8} className="right-side" 
+              style={xs ? {padding: 0} : {}}
+              >
                 <Panel
                   title={getPanelTitleContent(0, activeStep, {
                     email: currentUserEmail
@@ -297,7 +301,7 @@ const Checkout = ({
                   <CheckoutReviewForm onSubmit={handleNext} />
                 </Panel>
               </Grid>
-              <Grid item xs={12} md={4} className="left-side">
+              <Grid item xs={12} md={4} className="left-side" style={xs ? {padding: 0} : {}}>
                 <CartDrawer
                   disableItemEditing
                   hideCheckoutProceedLink
