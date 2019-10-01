@@ -4,9 +4,6 @@
 .gallery-page {
   .beige-bg {
     background-color: rgba(252, 248, 244, 0.5);
-    .beige-container {
-      direction: rtl;
-    }
   }
 }
 
@@ -180,7 +177,6 @@
   .opt1,
   .opt2 {
     border: 1px solid #003833;
-    direction: ltr;
   }
   h3 {
     color: #003833;

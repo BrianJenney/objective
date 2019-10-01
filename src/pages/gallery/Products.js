@@ -61,10 +61,13 @@ const Products = () => {
               <div className="opt1">
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
-                    <h3>Core Health</h3>
+                    <h3>General Health</h3>
                     <img src={healthIcon} alt="" className="blurb-icon" />
                     <Divider variant="fullWidth" />
-                    <p>Core Health is great and important!</p>
+                    <p>
+                      Powerful, science-based formulas designed to keep you
+                      strong, active and feeling good day in and day out.
+                    </p>
                   </Grid>
                   <Grid item xs={12} md={7}>
                     <img src={healthImg} alt="" className="blurb-img" />
@@ -98,10 +101,14 @@ const Products = () => {
               <div className="opt1">
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
-                    <h3>Mood & Energy</h3>
+                    <h3>Targeted Solutions</h3>
                     <img src={energyIcon} alt="" className="blurb-icon" />
                     <Divider variant="fullWidth" />
-                    <p>Mood and energy is great and important!</p>
+                    <p>
+                      Crafted with ingredients shown to deliver specific
+                      results, from better sleep to sharper thinking and hormone
+                      help.
+                    </p>
                   </Grid>
                   <Grid item xs={12} md={7}>
                     <img src={energyImg} alt="" className="blurb-img" />
@@ -135,10 +142,13 @@ const Products = () => {
               <div className="opt1">
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
-                    <h3>Skin & Beauty</h3>
+                    <h3>Skin Health</h3>
                     <img src={skinIcon} alt="" className="blurb-icon" />
                     <Divider variant="fullWidth" />
-                    <p>Skin & beauty is great and important!</p>
+                    <p>
+                      Nourish your skin from within and topically for fewer
+                      wrinkles, even tone and a healthy, radiant glow.
+                    </p>
                   </Grid>
                   <Grid item xs={12} md={7}>
                     <img src={skinImg} alt="" className="blurb-img" />
