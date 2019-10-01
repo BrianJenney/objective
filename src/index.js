@@ -1,3 +1,6 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+
 import './config';
 import Stomp from 'stompjs';
 /* simple text-based protocol for message-oriented middleware.
