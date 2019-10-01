@@ -189,10 +189,11 @@
     }
 
     .title {
+      font-family: p22-underground, Helvetica, sans-serif;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
-      padding: 20px;
+      padding: 40px 20px 20px 20px;
       letter-spacing: 1px;
       text-align: left;
 
@@ -317,7 +318,7 @@
   @media (max-width: 768px) {
     .footer-main {
       .links {
-        padding: 0 25px 10px;
+        padding: 0px 0px 36px 20px;
         font-size: 15px;
       }
       .legal ul li {
@@ -330,14 +331,14 @@
 
 .contact-container {
   div {
-    &:nth-of-type(3) > div{
+    &:nth-of-type(3) > div {
       margin: 16px;
       height: 588px;
     }
   }
-  @media only screen and (min-width:600px)  {
+  @media only screen and (min-width: 600px) {
     div {
-      &:nth-of-type(3) > div{
+      &:nth-of-type(3) > div {
         padding: 50px 0px;
         max-width: none;
         width: 796px;
@@ -358,7 +359,7 @@
       padding: 15px 27px;
     }
     h4 {
-    font-family: p22-underground, Helvetica, sans-serif;
+      font-family: p22-underground, Helvetica, sans-serif;
       font-size: 22px;
       font-weight: normal;
       font-style: normal;
@@ -367,10 +368,10 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
-   }
-   .MuiDialogTitle-root {
-     padding: 0px !important
-   }
+    }
+    .MuiDialogTitle-root {
+      padding: 0px !important;
+    }
   }
 
   .MuiDialogTitle-root {
@@ -388,7 +389,7 @@
       padding-bottom: 7px;
     }
     h4 {
-    font-family: FreightTextProBook, serif;
+      font-family: FreightTextProBook, serif;
       font-size: 16px;
       font-weight: normal;
       font-style: normal;
@@ -403,7 +404,7 @@
       top: -9px;
       right: -9px;
     }
-    @media only screen and (min-width:600px)  {
+    @media only screen and (min-width: 600px) {
       h1 {
         font-family: CanelaText, serif;
         font-size: 38px;
@@ -414,7 +415,7 @@
         letter-spacing: normal;
         text-align: center;
         color: #231f20;
-        padding: 0px
+        padding: 0px;
       }
       h4 {
         font-family: FreightTextProBook, serif;
@@ -428,21 +429,21 @@
         color: #231f20;
       }
       button {
-      top: 0px;
-      right: 0px;
+        top: 0px;
+        right: 0px;
       }
     }
   }
   .MuiDialogContent-root {
     padding: 10px 40px;
-    overflow-y: hidden; 
+    overflow-y: hidden;
     svg:nth-child(1) {
-       width: auto;
-       height: 44px;
-       margin-bottom: 10px;
+      width: auto;
+      height: 44px;
+      margin-bottom: 10px;
     }
     h4 {
-    font-family: FreightTextProBook, serif;
+      font-family: FreightTextProBook, serif;
       font-size: 16px;
       font-weight: normal;
       font-style: normal;
@@ -454,30 +455,30 @@
       padding: 10px 7px 7px 7px;
     }
     p {
-     font-family: p22-underground, Helvetica, sans-serif;
-     font-size: 25px;
-     font-weight: normal;
-     font-style: normal;
-     font-stretch: normal;
-     line-height: normal;
-     letter-spacing: normal;
-     text-align: center;
-     color: #231f20;
-     padding: 10px 0px;
+      font-family: p22-underground, Helvetica, sans-serif;
+      font-size: 25px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #231f20;
+      padding: 10px 0px;
     }
     h3 {
       font-family: p22-underground, Helvetica, sans-serif;
-       font-size: 20px;
-       font-weight: 300;
-       font-style: normal;
-       font-stretch: normal;
-       line-height: normal;
-       letter-spacing: normal;
-       text-align: center;
-       color: #231f20;
-       padding-top: 3px;
+      font-size: 20px;
+      font-weight: 300;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #231f20;
+      padding-top: 3px;
     }
-    @media only screen and (min-width:600px)  {
+    @media only screen and (min-width: 600px) {
       svg:nth-child(1) {
         width: fit-content;
         height: 65px;
@@ -499,7 +500,7 @@
   }
 }
 .checkout-button-container {
-  .MuiListItem-root{
+  .MuiListItem-root {
     padding: 0px !important;
     border-bottom: 1px solid #000;
     padding-bottom: 2px;
@@ -507,14 +508,14 @@
 }
 .checkout-contact-container {
   div {
-    &:nth-of-type(3) > div{
+    &:nth-of-type(3) > div {
       margin: 16px;
       height: 522px;
     }
   }
-  @media only screen and (min-width:600px)  {
+  @media only screen and (min-width: 600px) {
     div {
-      &:nth-of-type(3) > div{
+      &:nth-of-type(3) > div {
         width: 576px;
         height: 567px;
         padding: 0px 27px;
@@ -537,7 +538,7 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
-      padding: 18px 2px 20px 2px
+      padding: 18px 2px 20px 2px;
     }
     p {
       font-family: p22-underground, Helvetica, sans-serif;
@@ -574,7 +575,7 @@
       text-align: center;
       color: #231f20;
     }
-    @media only screen and (min-width:600px)  {
+    @media only screen and (min-width: 600px) {
       svg:nth-child(1) {
         width: 69px;
         height: 69px;
@@ -629,5 +630,42 @@
     }
   }
 }
-
-
+.checkout-footer-container {
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    color: #000;
+    text-decoration: none;
+  }
+}
+@media (max-width: 768px) {
+  .checkout-footer-container {
+    padding: 20px !important;
+    font-size: 12px !important;
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+}
+.disclaimer-container {
+  padding-top: 18px;
+  @media only screen and (min-width: 600px) {
+    padding-top: 39px;
+  }
+  .disclaimer-text {
+    font-size: 14px;
+    text-transform: none;
+    font-family: p22-underground, Helvetica, sans-serif;
+    margin-bottom: 30px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.29;
+    letter-spacing: normal;
+  }
+}

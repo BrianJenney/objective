@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
-import { COUNTRY_OPTIONS } from '../../constants/location';
+import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import { getInitialValues } from '../../utils/misc';
 
 export const FORM_TYPES = {
@@ -121,7 +121,12 @@ const AddressForm = ({
           <Field name="city" label="City" component={InputField} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field name="state" label="State" component={InputField} />
+          <Field
+            name="state"
+            label="State"
+            component={SelectField}
+            options={STATE_OPTIONS}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Field name="postalCode" label="Zip Code" component={InputField} />

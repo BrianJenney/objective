@@ -10,7 +10,7 @@ import { StyledPromoCode } from '../../pages/cart/StyledComponents';
 import { InputField } from '../form-fields';
 import './forms-styles.scss';
 const schema = object().shape({
-  promoCode: string().required('Promo Code is required')
+  promoCode: string()
 });
 
 const INITIAL_VALUES = {
@@ -27,7 +27,7 @@ const PromoCodeForm = () => {
         addCoupon(cart, response.voucher);
       } else if (response.key === 'resource_not_found') {
         // Should rewrite error message so user can easily understand it
-        setPromoCodeErr('Coupon code does not exist');
+        setPromoCodeErr('\'' + e.promoCode + '\' does not appear to be a valid code');
       } else {
         setPromoCodeErr(response.details);
       }
@@ -39,11 +39,21 @@ const PromoCodeForm = () => {
     <Form className="promo-code-form">
       <Grid container direction="row" xs={12} justify="space-between">
         <Grid item xs={12}>
-          <StyledPromoCode
-            style={{ 'font-size': '14px', paddingBottom: '10px' }}
-          >
-            Promo Code
+
+          {promoCodeErr ? (
+            <StyledPromoCode
+              style={{ 'font-size': '12px', paddingBottom: '10px', 'color': 'red' }}
+            >
+              Promo Code
           </StyledPromoCode>
+          ) : (
+              <StyledPromoCode
+                style={{ 'font-size': '12px', paddingBottom: '10px' }}
+              >
+                Promo Code
+          </StyledPromoCode>
+            )}
+
         </Grid>
         <Grid
           container
@@ -51,15 +61,29 @@ const PromoCodeForm = () => {
           style={{ 'align-items': 'flex-start', height: '42px' }}
         >
           <Grid item xs={10}>
-            <Field
+            {/* <Field
               name="promoCode"
               component={InputField}
               className="promo-code-input"
-            />
+            /> */}
+            {promoCodeErr ? (
+              <Field
+                name="promoCode"
+                component={InputField}
+                className="promo-code-input-error"
+              />
+            ) : (
+                <Field
+                  name="promoCode"
+                  component={InputField}
+                  className="promo-code-input"
+                />
+              )}
+
             {promoCodeErr && (
               <StyledPromoCode
                 style={{
-                  'font-size': '14px',
+                  'font-size': '12px',
                   'padding-top': '10px',
                   color: 'red'
                 }}

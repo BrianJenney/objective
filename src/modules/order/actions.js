@@ -16,14 +16,15 @@ export const requestRefundTransaction = (authToken, transaction) => (
   dispatch,
   getState
 ) => {
+  console.log(transaction);
   const { client, replyTo } = getState().stomp;
-  const { amount, braintreeId} = transaction;
   const params = {
     id: transaction.orderId,
     data: {
-      amount: amount,
-      braintreeId: braintreeId,
-      orderId: transaction.orderId
+      amount: transaction.amount,
+      braintreeId: transaction.braintreeId,
+      orderId: transaction.orderId,
+      orderReference: transaction.orderReference
     },
     params: { 
       account_jwt: authToken, 
@@ -63,6 +64,9 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
+  // total hack here, but if you refresh the page, you don't get a
+  // catalog id in your cart & orders will fail.  Just make sure its there
+  cart.catalogId = getState().storefront.catalogId;
   const params = {
     data: { cart },
     params: { account_jwt, nonceOrToken }
@@ -148,7 +152,9 @@ export const receivedGetOrder = order => {
   };
 };
 
-export const receivedTransactionRequestRefund = order => {
+export const receivedTransactionRequestRefund = order => (dispatch, getState) => {
+  console.log(order);
+  dispatch(requestFindOrdersByAccount(getState().account.data.account_jwt,order.accountId));
   return {
     type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order

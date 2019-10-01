@@ -161,7 +161,7 @@ const Cart = ({
                     style={{ 'min-width': '126px', 'margin-right': '18px' }}
                   >
                     <Card>
-                      <Link to={`/products/${item.prodSlug}/${item.varSlug}`}>
+                      <Link to={`/products/${item.slug}`}>
                         <CardMedia
                           style={{ height: 126, width: 126 }}
                           image={item.variant_img}
@@ -181,7 +181,7 @@ const Cart = ({
                       }}
                     >
                       <Link
-                        to={`/products/${item.prodSlug}/${item.varSlug}`}
+                        to={`/products/${item.slug}`}
                         style={{
                           'text-decoration': 'none',
                           'max-height': '40px',
@@ -298,7 +298,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                {shippingData.price && `$${shippingData.price.toFixed(2)}`}
+                {`$${shippingData.price.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint
@@ -309,7 +309,7 @@ const Cart = ({
             </StyledFinePrint>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && cart.savings ? (
           <Grid
             container
             direction="row"
@@ -324,7 +324,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={3} style={{ 'text-align': 'right' }}>
               <StyledProductTotal style={{ 'font-size': '18px' }}>
-                $XX.xx
+                {`$${cart.savings.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
           </Grid>
@@ -343,11 +343,9 @@ const Cart = ({
               </StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ 'text-align': 'right' }}>
-              <StyledProductPrice style={{ 'font-size': '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.calculatedTax
-                  ? `$${totalSummary.calculatedTax.toFixed(2)}`
-                  : '$XX.XX'}
-              </StyledProductPrice>
+              <StyledProductTotal style={{ 'font-size': '18px' }}>
+                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$0.00'}
+              </StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}

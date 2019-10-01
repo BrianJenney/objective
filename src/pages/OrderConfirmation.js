@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -30,16 +30,17 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     backgroundColor: theme.palette.common.white,
-    padding: theme.spacing(4),
+    padding: '40px',
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: '#fffde7',
+      backgroundColor: 'rgba(252, 248, 244, 0.6)',
       padding: '15px'
     }
   },
   title: {
     fontSize: '55px',
     fontFamily: 'Canela Text',
-    paddingBottom: theme.spacing(3),
+    paddingBottom: '0',
+    marginBottom: '22px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '40px'
     }
@@ -61,6 +62,7 @@ const useStyles = makeStyles(theme => ({
   subText: {
     fontSize: '20px',
     fontFamily: 'p22-underground',
+    lineHeight: '1.2',
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }
@@ -69,6 +71,8 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 4),
     width: '409px',
     height: '80px',
+    lineHeight: '1.88',
+    letterSpacing: '1.33px',
     [theme.breakpoints.down('xs')]: {
       width: '385px'
     }
@@ -91,20 +95,20 @@ const OrderConfirmation = ({ history }) => {
   }
 
   const OrderCartSummary = () => {
-    return <CartSummary cart={order} />;
+    return <CartSummary order={order} />;
   };
 
   const OrderDetail = () => {
     const { cardType, last4 } = order.paymentData;
-    const {
-      shippingAddress,
-      billingAddress
-    } = order;
+    const { shippingAddress, billingAddress } = order;
     const { email } = account.data;
-    const handleOrderDetail = useCallback((e) => {
-      e.preventDefault();
-      history.replace(`/orders/${order._id}`)
-    }, [history, order._id]);
+    const handleOrderDetail = useCallback(
+      e => {
+        e.preventDefault();
+        history.replace(`/orders/${order._id}`);
+      },
+      [history, order._id]
+    );
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -113,7 +117,18 @@ const OrderConfirmation = ({ history }) => {
           {email}.
         </Typography>
         <Typography className={classes.text1}>
-          Your order number: <strong>{order.orderId.substring(0, 3) + '-' + order.orderId.substring(3, 6) + '-' + order.orderId.substring(6, 10) + '-' + order.orderId.substring(10, 16) + '-' + order.orderId.substring(16)}</strong>
+          Your order number:{' '}
+          <strong>
+            {order.orderId.substring(0, 3) +
+              '-' +
+              order.orderId.substring(3, 6) +
+              '-' +
+              order.orderId.substring(6, 10) +
+              '-' +
+              order.orderId.substring(10, 16) +
+              '-' +
+              order.orderId.substring(16)}
+          </strong>
         </Typography>
         <Button
           type="button"

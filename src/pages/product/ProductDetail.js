@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import MailOutline from '@material-ui/icons/MailOutline';
 
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
@@ -19,13 +20,13 @@ import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
 import {
   getPrices,
-  getVariantSkuBySlug,
-  getVariantMap
+  getVariantMap,
+  getDefaultSkuByProduct
 } from '../../utils/product';
-import './PDP-style.css';
-import { setCartDrawerOpened } from '../../modules/cart/actions';
 
-const localStorageClient = require('store');
+import ProductOutOfStockDialog from './ProductOutOfStockDialog';
+
+import './PDP-style.css';
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
@@ -73,20 +74,20 @@ const ProductVariant = ({ productVariant }) => {
   ) : null;
 };
 
-const ProductDetail = ({ variantSlug }) => {
+const ProductDetail = () => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const { product, variants, prices, content } = useContext(ProductContext);
   // const { enqueueSnackbar } = useSnackbar();
   const [ATCEnabled, setATCEnabled] = useState(true);
-  const [ATCAdded, setATCAdded ] = useState(false);
+  const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
 
   const windowSize = useWindowSize();
-  // const [selectedProductVariant, setSelectedProductVariant] = useState(getVariantByVariantSlug(variants, pricesMap, variantSlug));
-  const defaultSku = getVariantSkuBySlug(variants, variantSlug);
+
+  const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(variants, pricesMap);
@@ -96,13 +97,8 @@ const ProductDetail = ({ variantSlug }) => {
   const updateQuantityToCart = useCallback(
     qty => {
       if (selectedVariantSku === null) return;
-      addToCart(
-        localStorageClient.get('cartId'),
-        cart,
-        variantMap.get(selectedVariantSku),
-        qty
-      );
-      dispatch(setCartDrawerOpened(true));
+
+      addToCart(cart, variantMap.get(selectedVariantSku), qty);
       // enqueueSnackbar(message, { variant: 'success' });
     },
     [cart, selectedVariantSku, variantMap, dispatch]
@@ -115,20 +111,21 @@ const ProductDetail = ({ variantSlug }) => {
   const handleAddToCart = useCallback(() => {
     setATCAdded(true);
     setATCAdding(true);
-    setTimeout(()=>{
-      addToCart(
-        localStorageClient.get('cartId'),
-        cart,
-        variantMap.get(selectedVariantSku),
-        quantity
-      );
+    setTimeout(() => {
+      addToCart(cart, variantMap.get(selectedVariantSku), quantity);
       // enqueueSnackbar(message, { variant: 'success' });
       // setATCEnabled(false);
       setATCAdding(false);
-      dispatch(setCartDrawerOpened(true));
     }, 500);
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 
+  const handleOpenOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(true);
+  }, [setOpenOutOfStockDialog]);
+
+  const closeOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(false);
+  }, [setOpenOutOfStockDialog]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -138,12 +135,15 @@ const ProductDetail = ({ variantSlug }) => {
     product === null ||
     variants.length === 0 ||
     typeof content === 'undefined' ||
-    content == null
+    content == null ||
+    selectedVariantSku == null
   )
     return null;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
+
+  const variant = variantMap.get(selectedVariantSku);
 
   return (
     <>
@@ -185,7 +185,7 @@ const ProductDetail = ({ variantSlug }) => {
                 /> */}
                     {!ATCEnabled && <Quantity />}
                   </CardContent>
-                  {ATCEnabled && (
+                  {ATCEnabled && variant.inventory.quantityInStock > 0 && (
                     <Grid className="mobile-padding-small">
                       <CardActions className={classes.maxWidth}>
                         <Button
@@ -198,109 +198,109 @@ const ProductDetail = ({ variantSlug }) => {
                       </CardActions>
                     </Grid>
                   )}
-
-                  {/* Render this button when Product is out of stock hiding for now */}
-                  {/* <Grid>
-                    <CardActions className={classes.maxWidth}>
-                      <Button
-                        className={classes.btnOOS}
-                        fullWidth
-                        onClick={handleEmailPopup}
-                      >
-                        <MailOutline className={classes.icon} /> TELL ME WHEN
-                        IT'S AVAILABLE
-                      </Button>
-                    </CardActions>
-                    {open && (
-                      <ProductPopUp
-                        product_img={product.assets.img_front}
-                        product_name={product.name}
-                      />
-                    )}
-                  </Grid> */}
+                  {variant.inventory.quantityInStock < 1 && (
+                    <Grid>
+                      <CardActions className={classes.maxWidth}>
+                        <Button
+                          className={classes.btnOOS}
+                          fullWidth
+                          onClick={handleOpenOutOfStockDialog}
+                        >
+                          <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
+                        </Button>
+                      </CardActions>
+                      {openOutOfStockDialog && (
+                        <ProductOutOfStockDialog
+                          onExited={closeOutOfStockDialog}
+                          product_img={product.assets.img_front}
+                          product_name={product.name}
+                        />
+                      )}
+                    </Grid>
+                  )}
                 </Card>
               </Grid>
             </Grid>
           </Grid>
         </>
       ) : (
-        <div className={classes.gridModifications}>
-          <Container>
-            <Grid container xs={12} sm={12}>
-              <Grid container spacing={5} xs={12} sm={12}>
-                <Grid item xs={12} sm={6}>
-                  <Carousel images={content.productImages} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Card className={classes.box}>
-                    <CardContent
-                      className={classes.cardRootOverrides}
-                      className="pdp-content"
-                    >
-                      <h1 className="pdp-header">{content.productTitle}</h1>
-                      <ProductVariant
-                        productVariant={variantMap.get(selectedVariantSku)}
-                      />
-                      <div className="pdp-subtitle">
-                        {content.shortPurposeHeadline}
-                      </div>
-                      <Typography className="pdp-description">
-                        {content.shortDescription}
-                      </Typography>
-                      <Typography className="pdp-direction">
-                        DIRECTIONS
-                      </Typography>
-                      <Typography className="pdp-direction-description">
-                        {content.shortDirections}
-                      </Typography>
+          <div className={classes.gridModifications}>
+            <Container>
+              <Grid container xs={12} sm={12}>
+                <Grid container spacing={5} xs={12} sm={12}>
+                  <Grid item xs={12} sm={6}>
+                    <Carousel images={content.productImages} />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Card className={classes.box}>
+                      <CardContent
+                        className={classes.cardRootOverrides}
+                        className="pdp-content"
+                      >
+                        <h1 className="pdp-header">{content.productTitle}</h1>
+                        <ProductVariant
+                          productVariant={variantMap.get(selectedVariantSku)}
+                        />
+                        <div className="pdp-subtitle">
+                          {content.shortPurposeHeadline}
+                        </div>
+                        <Typography className="pdp-description">
+                          {content.shortDescription}
+                        </Typography>
+                        <Typography className="pdp-direction">
+                          DIRECTIONS
+                        </Typography>
+                        <Typography className="pdp-direction-description">
+                          {content.shortDirections}
+                        </Typography>
 
-                      {/* <ProductVariantType
+                        {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                      {!ATCEnabled && <Quantity />}
-                    </CardContent>
-                    {ATCEnabled && (
-                      <Grid>
-                        <CardActions className={classes.maxWidth}>
-                          <Button
-                            fullWidth
-                            onClick={handleAddToCart}
-                            disabled={selectedVariantSku === null}
-                          >
-                            {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
-                          </Button>
-                        </CardActions>
-                      </Grid>
-                    )}
-
-                    {/* Render this button when Product is out of stock hiding for now */}
-                    {/* <Grid>
-                  <CardActions className={classes.maxWidth}>
-                    <Button
-                      className={classes.btnOOS}
-                      fullWidth
-                      onClick={handleEmailPopup}
-                    >
-                      <MailOutline className={classes.icon} /> TELL ME WHEN IT'S
-                      AVAILABLE
-                    </Button>
-                  </CardActions>
-                  {open && (
-                    <ProductPopUp
-                      product_img={product.assets.img_front}
-                      product_name={product.name}
-                    />
-                  )}
-                </Grid> */}
-                  </Card>
+                        {!ATCEnabled && <Quantity />}
+                      </CardContent>
+                      {ATCEnabled && variant.inventory.quantityInStock > 0 && (
+                        <Grid>
+                          <CardActions className={classes.maxWidth}>
+                            <Button
+                              fullWidth
+                              onClick={handleAddToCart}
+                              disabled={selectedVariantSku === null}
+                            >
+                              {!ATCAdded ? 'ADD TO CART' : (!ATCAdding ? 'PRODUCT ADDED' : 'ADDING...')}
+                            </Button>
+                          </CardActions>
+                        </Grid>
+                      )}
+                      {variant.inventory.quantityInStock < 1 && (
+                        <Grid>
+                          <CardActions className={classes.maxWidth}>
+                            <Button
+                              className={classes.btnOOS}
+                              fullWidth
+                              onClick={handleOpenOutOfStockDialog}
+                            >
+                              <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
+                            </Button>
+                          </CardActions>
+                          {openOutOfStockDialog && (
+                            <ProductOutOfStockDialog
+                              onExited={closeOutOfStockDialog}
+                              product_img={product.assets.img_front}
+                              product_name={product.name}
+                            />
+                          )}
+                        </Grid>
+                      )}
+                    </Card>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Container>
-        </div>
-      )}
+            </Container>
+          </div>
+        )}
     </>
   );
 };

@@ -171,6 +171,7 @@ html,
   .pdp-subtitle {
     padding: 20px 16px;
     margin-bottom: 25px;
+    line-height: 1;
   }
   .pdp-price {
     font-size: 22px;

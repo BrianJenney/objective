@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   account: accountReducer,
   order: orderReducer,
-  products: catalogReducer,
+  catalog: catalogReducer,
   tax: taxReducer,
 });
 

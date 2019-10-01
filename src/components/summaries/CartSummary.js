@@ -16,7 +16,7 @@ import {
   StyledTotalWrapper
 } from '../../pages/cart/StyledComponents';
 
-import { calculateCartTotals } from '../../modules/cart/functions';
+import { getOrderTotalSummary } from '../../utils/order';
 
 import { colorPalette } from '../Theme/color-palette';
 import { makeStyles } from '@material-ui/core/styles';
@@ -60,9 +60,11 @@ const useStyles = makeStyles(theme => ({
 }));
 const { MEDIUM_GRAY } = colorPalette;
 
-const CartSummary = ({ cart }) => {
+const CartSummary = ({ order }) => {
   const classes = useStyles();
-  const totalSummary = calculateCartTotals(cart);
+  // const totalSummary = calculateCartTotals(cart);
+  const { items } = order;
+  const totalSummary = getOrderTotalSummary(order);
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -73,11 +75,11 @@ const CartSummary = ({ cart }) => {
 
           <Grid item>
             <StyledSmallCaps style={{ fontSize: '12px' }}>
-              ({cart.items.length} items){' '}
+              ({items.length} items){' '}
             </StyledSmallCaps>
           </Grid>
         </Grid>
-        {cart.items.map((item, index) => (
+        {items.map((item, index) => (
           <>
             <StyledDrawerGrid container xs={12}>
               <Grid item xs={4} style={{ minWidth: '126px' }}>
@@ -123,12 +125,12 @@ const CartSummary = ({ cart }) => {
           <StyledTotalWrapper container xs={12}>
             <Grid item xs>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Subtotal <span>({cart.items.length} items):</span>
+                Subtotal <span>({items.length} items):</span>
               </StyledSmallCaps>
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${totalSummary.subtotal.toFixed(2)}`}
+                {`$${totalSummary.subtotal}`}
               </StyledSmallCaps>
             </Grid>
           </StyledTotalWrapper>
@@ -145,7 +147,7 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                $XXX.xx
+                $0.00
               </StyledSmallCaps>
             </Grid>
           </Grid>
@@ -157,7 +159,11 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                $XXX.xx
+                {`$${
+                  totalSummary.discount
+                    ? totalSummary.discount
+                    : '0.00'
+                }`}
               </StyledSmallCaps>
             </Grid>
           </Grid>
@@ -170,18 +176,20 @@ const CartSummary = ({ cart }) => {
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
                 {`$${
-                  totalSummary.calculatedTax
-                    ? totalSummary.calculatedTax.toFixed(2)
-                    : 'XXX'
+                  totalSummary.tax
+                    ? totalSummary.tax
+                    : '0.00'
                 }`}
               </StyledSmallCaps>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Link component="button" underline="always">
-              <Typography className={classes.code}>Enter Promo Code</Typography>
-            </Link>
-          </Grid>
+          {/*
+            <Grid item xs={12}>
+              <Link component="button" underline="always">
+                <Typography className={classes.code}>Enter Promo Code</Typography>
+              </Link>
+            </Grid>
+          */}
           <Grid
             container
             xs={12}
@@ -196,7 +204,7 @@ const CartSummary = ({ cart }) => {
             </Grid>
             <Grid item>
               <Typography className={classes.total}>
-                {`$${totalSummary.total.toFixed(2)}`}
+                {`$${totalSummary.total}`}
               </Typography>
             </Grid>
           </Grid>

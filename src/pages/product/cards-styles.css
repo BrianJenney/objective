@@ -464,7 +464,7 @@ html,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
   height: 56px;
   width: 36px;
-  position: absolute;
+  position: absolute !important;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
   height: 335px;
@@ -505,10 +505,10 @@ html,
   text-align: left;
   text-transform: none;
 }
-.how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
+/* .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol h2,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol h2 {
   height: 94px;
-}
+} */
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol ul,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol ul {
   list-style-type: square;
@@ -519,7 +519,7 @@ html,
   margin-top: 0;
   margin-bottom: 0;
   font-size: 24px;
-  line-height: 1;
+  line-height: 1.5;
 }
 .how-it-works-wrapper .coreBenefits .topBlock .cardTop {
   height: auto;
@@ -1130,6 +1130,10 @@ html,
   .how-it-works-wrapper {
     padding-top: 20px;
   }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop ul,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop ul {
+    padding-left: 0 !important;
+  }
   .how-it-works-wrapper h2 {
     font-size: 24px !important;
     line-height: 1.33;
@@ -1190,11 +1194,63 @@ html,
   .tabpanel h2,
   .tabpanel img,
   .tabpanel p,
-  .tabpanel ul {
-    padding: 0 16px;
+  .tabpanel ul,
+  .tabpanel h6 {
+    padding: 0 16px !important;
+  }
+  .label-info-wrapper h2 {
+    font-size: 27px;
+  }
+  .label-info-wrapper .top-block {
+    border-top: none;
+    padding-top: 0;
+  }
+  .label-info-wrapper .top-block .card h6,
+  .label-info-wrapper .bottom-block .card h6 {
+    font-size: 16px;
+  }
+  .label-info-wrapper .top-block .card ul li,
+  .label-info-wrapper .bottom-block .card ul li {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+  .label-info-wrapper .top-block .card ul,
+  .label-info-wrapper .bottom-block .card ul {
+    margin-bottom: 0;
+  }
+  .label-info-wrapper .top-block .facts-text div p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+  .label-info-wrapper .top-block .facts-table table th {
+    font-size: 14px;
+    line-height: normal;
+    padding: 30px 15px;
+  }
+  .label-info-wrapper .top-block .facts-table table td {
+    font-size: 16px;
+    line-height: 1.25;
+    padding: 15px;
+  }
+  .label-info-wrapper .bottom-block .card h6 {
+    margin-left: 0;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    padding-bottom: 20px !important;
+  }
+  .label-info-wrapper .bottom-block .other-ingredients p {
+    font-size: 18px;
   }
 }
 @media only screen and (max-width: 734px) {
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type,
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol img {
+    position: relative !important;
+    width: auto;
+  }
   .how-it-works-wrapper .topBlock {
     width: 100% !important;
   }

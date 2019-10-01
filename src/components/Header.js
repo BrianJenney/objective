@@ -36,7 +36,6 @@ const StyledBox = withStyles(() => ({
     color: '#ffffff',
     textTransform: 'uppercase',
     letterSpacing: '1px',
-    fontSize: '12px',
     lineHeight: '44px'
   }
 }))(Box);

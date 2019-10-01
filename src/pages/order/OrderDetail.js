@@ -29,9 +29,11 @@ import {
   receivedTransactionRequestRefund
 } from '../../modules/order/actions';
 
+import { getOrderTotalSummary } from '../../utils/order/OrderUtils';
+
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#fffde7'
+    backgroundColor: 'rgba(252, 248, 244, 0.6)'
   },
   main: {
     padding: theme.spacing(10, 5),
@@ -43,16 +45,21 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(3, 4),
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: '#fffde7'
+      backgroundColor: 'rgba(252, 248, 244, 0.6)'
     }
   },
   title: {
-    fontSize: '45px',
+    fontSize: '55px',
     fontWeight: 'bold',
+    marginTop: '30px',
+    fontFamily: 'Canela Text Web',
+    fontWeight: 'normal',
     paddingBottom: theme.spacing(4)
   },
   text: {
-    fontSize: '20px'
+    fontSize: '20px',
+    fontFamily: 'p22-underground, sans-serif',
+    lineHeight: '1.2'
   },
   button: {
     margin: theme.spacing(3, 0, 4)
@@ -78,15 +85,22 @@ const TrackingInfo = ({ trackingId }, classes) => {
   );
 };
 
-const OrderCartSummary = ({ cart }) => {
-  return cart ? <CartSummary cart={cart} /> : null;
+const OrderCartSummary = ({ order }) => {
+  return order ? <CartSummary order={order} /> : null;
 };
 
-const refundTransaction = (accountJwt, orderId, transaction, dispatch) => {
+const refundTransaction = (
+  accountJwt,
+  orderId,
+  transaction,
+  dispatch,
+  orderRef
+) => {
   const refundedTransaction = {
     braintreeId: transaction.braintreeId,
     amount: transaction.amount,
-    orderId: orderId
+    orderId: orderId,
+    orderReference: orderRef
   };
 
   dispatch(requestRefundTransaction(accountJwt, refundedTransaction));
@@ -100,6 +114,7 @@ const OrderSummary = ({
   transactions,
   classes,
   orderId,
+  orderRef,
   createdAt,
   addressesWidth,
   xs,
@@ -120,14 +135,12 @@ const OrderSummary = ({
   return (
     <Box className={classes.paper}>
       <Box>
-        <Button color="primary" component={AdapterLink} to="/account/orders">
+        <Link to="/account/orders" className="account-history-return">
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
-          <StyledSmallCaps component="span">
-            {'Return to order history'}
-          </StyledSmallCaps>
-        </Button>
+          <span>{'Return to order history'}</span>
+        </Link>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
       <Typography className={classes.text}>
@@ -145,7 +158,8 @@ const OrderSummary = ({
                 account_jwt,
                 orderId,
                 transactions[0],
-                dispatch
+                dispatch,
+                orderRef
               );
             }
           }}
@@ -210,7 +224,6 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
-
   const statusStepperDate = getStatusStepperDate(order);
   const orderId =
     order.orderId.substring(0, 3) +
@@ -222,7 +235,7 @@ const OrderDetail = () => {
     order.orderId.substring(10, 16) +
     '-' +
     order.orderId.substring(16);
-
+console.log('order detail', { order })
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
@@ -233,6 +246,7 @@ const OrderDetail = () => {
               <OrderSummary
                 account={account}
                 orderId={orderId}
+                orderRef={order._id}
                 createdAt={formatDateTime(order.createdAt, false)}
                 shippingAddress={order.shippingAddress}
                 billingAddress={order.billingAddress}
@@ -246,7 +260,7 @@ const OrderDetail = () => {
               />
             </Grid>
             <Grid item xs={cartWidth}>
-              <OrderCartSummary cart={order} />
+              <OrderCartSummary order={order} />
             </Grid>
           </Grid>
         </Box>
