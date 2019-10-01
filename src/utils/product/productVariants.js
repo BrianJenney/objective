@@ -196,6 +196,12 @@ export const getVariantSkuBySlug = (variants, variantSlug) => {
   return variantSku;
 };
 
+export const getDefaultSkuByProduct = product => {
+  let defaultVariantSku = null;
+  if (product) defaultVariantSku = product.defaultVariantSku;
+  return defaultVariantSku;
+};
+
 export const getVariantMap = (variants, pricesMap) => {
   const variantMap = new Map();
   variants.forEach(variant => {

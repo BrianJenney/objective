@@ -91,7 +91,7 @@ export default [
     ]
   },
   {
-    path: '/products/:product_slug/:variant_slug',
+    path: '/products/:product_slug',
     exact: true,
     component: ProductPage
   },
