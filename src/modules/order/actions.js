@@ -58,7 +58,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
 ) => {
-  dispatch({
+  dispatch({ 
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
   });
