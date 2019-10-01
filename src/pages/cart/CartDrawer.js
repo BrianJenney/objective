@@ -95,6 +95,7 @@ const Cart = ({
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
   const totalSummary = calculateCartTotals(cart);
+
   return (
     <Grid
       container
