@@ -32,12 +32,16 @@ const CheckoutReviewForm = ({ onSubmit,xsBreakpoint }) => (
       <Typography variant="body2" style={{ fontSize: '14px' }}>
         By placing this order I agree to the
       </Typography>
-      <Box
+
+    </Box>
+    <Box display="flex" alignItems="center" justifyContent="center" style={{width:"100%",margin:"0px auto",maxWidth:"430px"}}>
+    <Box
         component={NavLink}
-        mx={1}
         to="/terms-conditions"
         underline="always"
         fontSize={14}
+        mx={1}
+        style={{width:"30%",marginRight:"3px"}}
       >
         Terms &amp; Conditions
       </Box>
@@ -50,6 +54,7 @@ const CheckoutReviewForm = ({ onSubmit,xsBreakpoint }) => (
         to="/privacy-policy"
         underline="always"
         fontSize={14}
+        style={{marginLeft:"3px"}}
       >
         Privacy Policy
       </Box>
