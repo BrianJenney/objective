@@ -23,6 +23,10 @@ const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
 const stompClient = Stomp.over(wss);
 const replyTo = ObjectId();
 
+if (process.env.REACT_APP_ENVIRONMENT !== 'development') {
+  stompClient.debug = null;
+}
+
 const useStyles = makeStyles(() => ({
   success: { backgroundColor: 'green' },
   error: { backgroundColor: '#fad9dd', color: '#231f20' },
