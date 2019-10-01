@@ -20,6 +20,7 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_CREATE_ORDER:
       return { ...state, isLoading: true, order: null };
     case RECEIVED_CREATE_ORDER:
+      console.log(action);
       return { ...state, order: action.payload, isLoading: false };
     case REQUEST_FIND_ALL_ORDERS:
       return { ...state };

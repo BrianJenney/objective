@@ -88,9 +88,6 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 };
 
 export const receivedCreateOrder = order => async (dispatch, getState) => {
-  dispatch(resetCart());
-  //setPayload({});
-  //history.replace('/order');
   return {
     type: RECEIVED_CREATE_ORDER,
     payload: order
