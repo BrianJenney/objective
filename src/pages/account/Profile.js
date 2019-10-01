@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useSnackbar } from 'notistack';
 import {
   requestPatchAccount as requestPatchAccountAction,
-  clearAccountError as clearAccountErrorAction
+  requestChangePassword as requestChangePasswordAction,
+  clearPatchAccountError as clearPatchAccountErrorAction,
+  clearChangePasswordError as clearChangePasswordErrorAction
 } from '../../modules/account/actions';
 import {
   AccountProfileDetails,
@@ -14,51 +15,38 @@ import {
 const AccountProfile = ({
   currentUser,
   requestPatchAccount,
-  clearAccountError
-}) => {
-  const { enqueueSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    clearAccountError();
-  }, []);
-
-  useEffect(() => {
-    if (currentUser.error) {
-      const accountError =
-        currentUser.error.message ||
-        currentUser.error.errorMessage ||
-        currentUser.data.errorMessage;
-      enqueueSnackbar(accountError, {
-        variant: 'error',
-        autoHideDuration: 10000
-      });
-    }
-  }, [currentUser.error]);
-
-  return (
-    <div>
-      <AccountProfileDetails
-        currentUser={currentUser}
-        requestPatchAccount={requestPatchAccount}
-        mb={2}
-      />
-      <AccountChangePassword
-        currentUser={currentUser}
-        requestPatchAccount={requestPatchAccount}
-      />
-    </div>
-  );
-};
+  requestChangePassword,
+  clearPatchAccountError,
+  clearChangePasswordError
+}) => (
+  <div>
+    <AccountProfileDetails
+      currentUser={currentUser}
+      requestPatchAccount={requestPatchAccount}
+      clearPatchAccountError={clearPatchAccountError}
+      mb={2}
+    />
+    <AccountChangePassword
+      currentUser={currentUser}
+      requestChangePassword={requestChangePassword}
+      clearChangePasswordError={clearChangePasswordError}
+    />
+  </div>
+);
 
 AccountProfile.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
-  clearAccountError: PropTypes.func.isRequired
+  requestChangePassword: PropTypes.func.isRequired,
+  clearPatchAccountError: PropTypes.func.isRequired,
+  clearChangePasswordError: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
   requestPatchAccount: requestPatchAccountAction,
-  clearAccountError: clearAccountErrorAction
+  requestChangePassword: requestChangePasswordAction,
+  clearPatchAccountError: clearPatchAccountErrorAction,
+  clearChangePasswordError: clearChangePasswordErrorAction
 };
 
 export default connect(

@@ -21,6 +21,7 @@ export const FORM_TYPES = {
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
+  clearPatchAccountError,
   formType,
   onBack,
   onSubmit,
@@ -104,7 +105,6 @@ const AccountPaymentDetails = ({
       enqueueSnackbar(err.message, { variant: 'error' });
     }
     actions.setSubmitting(false);
-    setFormModeEnabled(false);
 
     return true;
   };
@@ -129,10 +129,12 @@ const AccountPaymentDetails = ({
     <Box {...rest} className="step-3-wrapper account-payment-details">
       {formModeEnabled ? (
         <PaymentForm
+          currentUser={currentUser}
           seedEnabled={seedEnabled}
           addressSeed={addressSeedData}
           useSeedLabel={useSeedLabel}
           onlyCard
+          clearPatchAccountError={clearPatchAccountError}
           onSubmit={handleSave}
           onBack={() => setFormModeEnabled(false)}
           allowFlyMode={allowFlyMode}
@@ -257,6 +259,7 @@ const AccountPaymentDetails = ({
 AccountPaymentDetails.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
+  clearPatchAccountError: PropTypes.func.isRequired,
   formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
   onBack: PropTypes.func,
   onSubmit: PropTypes.func,

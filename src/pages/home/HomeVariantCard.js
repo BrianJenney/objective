@@ -46,7 +46,7 @@ export const HomeVariantCard = ({ variant }) => {
     <Grid item xs={12} md={4}>
       <Card className={`tile ${cardColor}`} ref={ref}>
         <CardMedia
-          style={{ height: 430, width: 430 }}
+          style={{ height: 430, width: '100%' }}
           image={assets.imgs}
           className="tile-img"
         />
