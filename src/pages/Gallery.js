@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux';
 
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
-import { spacing } from '@material-ui/system';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { GalleryStore } from '../contexts/GalleryContext';
 import Products from './gallery/Products';
-import ScrollToTop from '../components/common/ScrollToTop';
 
 const Gallery = () => {
   const productIds = Object.values(useSelector(state => state.products));
