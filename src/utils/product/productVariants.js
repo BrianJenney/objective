@@ -104,11 +104,16 @@ export const getDefaultSkuByProduct = product => {
   return defaultVariantSku;
 };
 
-export const getVariantMap = (variants, pricesMap) => {
+export const getVariantMap = (product, variants, pricesMap) => {
   const variantMap = new Map();
+
   variants.forEach(variant => {
     variant.effectivePrice = pricesMap.get(variant._id);
+    variant.slug = product.slug;
+    variant.id = variant._id;
+
     variantMap.set(variant.sku, variant);
   });
+
   return variantMap;
 };
