@@ -72,7 +72,7 @@ const Carousel = props => {
     let carouselImages = [];
 
     images.map(image => {
-      carouselImages.push({ original: image.fields.file.url, thumbnail: image.fields.file.url });
+      carouselImages.push({ original: image.fields.file.url + '?w=687&w=687&q=90', thumbnail: image.fields.file.url + '?w=120&h=120&q=80' });
       return carouselImages;
     });
 
