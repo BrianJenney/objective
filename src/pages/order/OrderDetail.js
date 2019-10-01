@@ -47,12 +47,17 @@ const useStyles = makeStyles(theme => ({
     }
   },
   title: {
-    fontSize: '45px',
+    fontSize: '55px',
     fontWeight: 'bold',
+    marginTop: '30px',
+    fontFamily: 'Canela Text Web',
+    fontWeight: 'normal',
     paddingBottom: theme.spacing(4)
   },
   text: {
-    fontSize: '20px'
+    fontSize: '20px',
+    fontFamily: 'p22-underground, sans-serif',
+    lineHeight: '1.2'
   },
   button: {
     margin: theme.spacing(3, 0, 4)
@@ -128,14 +133,12 @@ const OrderSummary = ({
   return (
     <Box className={classes.paper}>
       <Box>
-        <Button color="primary" component={AdapterLink} to="/account/orders">
+        <Link to="/account/orders" className="account-history-return">
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
-          <StyledSmallCaps component="span">
-            {'Return to order history'}
-          </StyledSmallCaps>
-        </Button>
+          <span>{'Return to order history'}</span>
+        </Link>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
       <Typography className={classes.text}>
