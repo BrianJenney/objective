@@ -26,7 +26,14 @@ import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions';
 import TransactionErrorMsg from './TransactionErrorMsg';
+<<<<<<< HEAD
 import { resetCart } from '../../modules/cart/actions';
+=======
+import {
+  resetTaxCalculationInCart,
+  resetCart
+} from '../../modules/cart/actions';
+>>>>>>> Modal window on failed order placement
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -103,7 +110,10 @@ const Checkout = ({
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+<<<<<<< HEAD
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+=======
+>>>>>>> Modal window on failed order placement
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const [checkoutModalOpen, setCheckoutModalOpen] = React.useState(false);
@@ -171,6 +181,7 @@ const Checkout = ({
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     // dispatch(resetCart());
     // setPayload({});
@@ -185,6 +196,12 @@ const Checkout = ({
     history.replace('/order');
 >>>>>>> undoing prior work, want to do it all in checkout.js
 
+=======
+
+    console.log(orderIsLoading, orderError);
+    if (orderIsLoading === true || orderError === null) return null;
+
+>>>>>>> Modal window on failed order placement
     if (orderError === true) {
       setCheckoutModalOpen(true);
     } else {
