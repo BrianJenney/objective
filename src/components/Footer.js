@@ -83,8 +83,10 @@ const NeedHelpDialog = () => {
   };
   return (
     <div>
-      <ListItem style={{ padding: "0px" }}>
-        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>HELP</NavLink>
+      <ListItem style={{ padding: '0px' }}>
+        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>
+          HELP
+        </NavLink>
       </ListItem>
       <Dialog
         className="checkout-contact-container"
@@ -120,10 +122,14 @@ const NeedHelpDialog = () => {
                     possible:
                   </Typography>
                   <Typography variant="h4">
-                    <Link style={{
-                      cursor: "pointer", borderBottom: "1px solid #000",
-                      paddingBottom: "1px", textDecoration: "none"
-                    }}>
+                    <Link
+                      style={{
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #000',
+                        paddingBottom: '1px',
+                        textDecoration: 'none'
+                      }}
+                    >
                       help@objectivewellnes.com
                     </Link>
                   </Typography>
@@ -239,7 +245,7 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/gallery">About</NavLink>
+                        <NavLink to="/">About</NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
@@ -332,17 +338,38 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
                   <Typography className="disclaimer-text">
-                    * Statements on this website have not been evaluated by the Food and Drug Administration. Any products discussed or advertised are not intended to diagnose, treat, cure or prevent any disease. Testimonial results are not typical. Customers may have received a gift certificate after submitting their testimonial. If you are pregnant, nursing, taking medication, or have a medical condition, consult your physician before using any dietary supplement.
-                    </Typography>
+                    * Statements on this website have not been evaluated by the
+                    Food and Drug Administration. Any products discussed or
+                    advertised are not intended to diagnose, treat, cure or
+                    prevent any disease. Testimonial results are not typical.
+                    Customers may have received a gift certificate after
+                    submitting their testimonial. If you are pregnant, nursing,
+                    taking medication, or have a medical condition, consult your
+                    physician before using any dietary supplement.
+                  </Typography>
                   <Typography className="disclaimer-text">
-                    Objective is committed to making its website accessible for all users, and will continue to take all steps necessary to ensure compliance with applicable laws.
-                    </Typography>
-                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
-                    If you have difficulty accessing any content, feature or functionality on our website or on our other electronic platforms, please email us at <Link style={{
-                      borderBottom: '1px solid #fff',
-                      textDecoration: 'none',
-                    }}>Help@objectivewellness.com</Link> or call us at 800-270-5771 so that we can provide you access through an alternative method.
-                    </Typography>
+                    Objective is committed to making its website accessible for
+                    all users, and will continue to take all steps necessary to
+                    ensure compliance with applicable laws.
+                  </Typography>
+                  <Typography
+                    className="disclaimer-text"
+                    style={{ marginBottom: 0 }}
+                  >
+                    If you have difficulty accessing any content, feature or
+                    functionality on our website or on our other electronic
+                    platforms, please email us at{' '}
+                    <Link
+                      style={{
+                        borderBottom: '1px solid #fff',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      Help@objectivewellness.com
+                    </Link>{' '}
+                    or call us at 800-270-5771 so that we can provide you access
+                    through an alternative method.
+                  </Typography>
                 </Grid>
               </div>
             </Grid>
@@ -381,7 +408,7 @@ const Footer = ({ location, currentUser }) => {
                 <Grid container item={true} xs={12} className="footer-main">
                   <Grid item xs={5} className="title border-bottom">
                     <StyledBox>
-                      <NavLink to="/gallery">About</NavLink>
+                      <NavLink to="/">About</NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
@@ -413,7 +440,7 @@ const Footer = ({ location, currentUser }) => {
                       <ListItem>
                         <NavLink to={gotoUrl('/account', '/login/account')}>
                           My Account
-                          </NavLink>
+                        </NavLink>
                       </ListItem>
                       <ListItem>
                         <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
@@ -492,28 +519,47 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
                   <Typography className="disclaimer-text">
-                    * Statements on this website have not been evaluated by the Food and Drug Administration. Any products discussed or advertised are not intended to diagnose, treat, cure or prevent any disease. Testimonial results are not typical. Customers may have received a gift certificate after submitting their testimonial. If you are pregnant, nursing, taking medication, or have a medical condition, consult your physician before using any dietary supplement.
-                    </Typography>
+                    * Statements on this website have not been evaluated by the
+                    Food and Drug Administration. Any products discussed or
+                    advertised are not intended to diagnose, treat, cure or
+                    prevent any disease. Testimonial results are not typical.
+                    Customers may have received a gift certificate after
+                    submitting their testimonial. If you are pregnant, nursing,
+                    taking medication, or have a medical condition, consult your
+                    physician before using any dietary supplement.
+                  </Typography>
                   <Typography className="disclaimer-text">
-                    Objective is committed to making its website accessible for all users, and will continue to take all steps necessary to ensure compliance with applicable laws.
-                    </Typography>
-                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
-                    If you have difficulty accessing any content, feature or functionality on our website or on our other electronic platforms, please email us at <Link
+                    Objective is committed to making its website accessible for
+                    all users, and will continue to take all steps necessary to
+                    ensure compliance with applicable laws.
+                  </Typography>
+                  <Typography
+                    className="disclaimer-text"
+                    style={{ marginBottom: 0 }}
+                  >
+                    If you have difficulty accessing any content, feature or
+                    functionality on our website or on our other electronic
+                    platforms, please email us at{' '}
+                    <Link
                       style={{
                         cursor: 'pointer',
                         borderBottom: '1px solid #fff',
                         textDecoration: 'none'
                       }}
-                    >Help@objectivewellness.com</Link> or call us at 800-270-5771 so that we can provide you access through an alternative method.
-                    </Typography>
+                    >
+                      Help@objectivewellness.com
+                    </Link>{' '}
+                    or call us at 800-270-5771 so that we can provide you access
+                    through an alternative method.
+                  </Typography>
                 </Grid>
               </div>
             </Grid>
           </Container>
         </StyledBox>
       ) : (
-            <CheckoutFooter />
-          )}
+        <CheckoutFooter />
+      )}
     </>
   );
 };
