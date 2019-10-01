@@ -254,7 +254,7 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NeedHelpDialog />
+                        <NavLink to="/faq">HELP</NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
@@ -386,7 +386,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <NeedHelpDialog />
+                      <NavLink to="/faq">HELP</NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid
