@@ -1,4 +1,4 @@
-import React, { useCallback, useState,createRef } from 'react';
+import React, { useCallback, useState, createRef } from 'react';
 import { Link } from 'react-router-dom';
 // import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,7 +75,7 @@ const VariantCard = ({ variant, product, styleMap }) => {
         <div className="prod-name-holder">
           <Typography>
             <Link
-              to={`/products/${product.slug}/${variant.slug}`}
+              to={`/products/${product.slug}`}
               className="title"
               style={styleMap.text}
             >
@@ -100,13 +100,13 @@ const VariantCard = ({ variant, product, styleMap }) => {
               {!ATCAdded
                 ? 'ADD TO CART'
                 : !ATCAdding
-                ? 'PRODUCT ADDED'
-                : 'ADDING...'}
+                  ? 'PRODUCT ADDED'
+                  : 'ADDING...'}
             </Button>
           </CardActions>
         ) : (
-          <Quantity className="gallery-atc" />
-        )}
+            <Quantity className="gallery-atc" />
+          )}
       </div>
     </Card>
   );
