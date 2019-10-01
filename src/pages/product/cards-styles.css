@@ -464,7 +464,7 @@ html,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
   height: 56px;
   width: 36px;
-  position: absolute;
+  position: absolute !important;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
   height: 335px;
@@ -1130,6 +1130,10 @@ html,
   .how-it-works-wrapper {
     padding-top: 20px;
   }
+  .how-it-works-wrapper .coreBenefits .topBlock .cardTop ul,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .cardTop ul {
+    padding-left: 0 !important;
+  }
   .how-it-works-wrapper h2 {
     font-size: 24px !important;
     line-height: 1.33;
@@ -1240,6 +1244,13 @@ html,
   }
 }
 @media only screen and (max-width: 734px) {
+  .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type,
+  .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
+  .how-it-works-wrapper .coreBenefits .topBlock .rightCol img {
+    position: relative !important;
+    width: auto;
+  }
   .how-it-works-wrapper .topBlock {
     width: 100% !important;
   }
