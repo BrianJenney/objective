@@ -111,12 +111,35 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
           />
           <Box align="start">
             <Field
+<<<<<<< HEAD
               style={{ padding: '20px 7px 20px 0' }}
               name="subscribed"
               label="Subscribe to Objective news"
               color="primary"
               component={CheckboxField}
               value={values.subscribed}
+=======
+              name="email"
+              label="Email Address"
+              component={InputField}
+              autoComplete="email"
+            />
+            <Box align="start">
+              <Field
+                style={{ padding: '20px 7px 20px 0' }}
+                name="subscribed"
+                label="Subscribe to Objective news"
+                color="primary"
+                component={CheckboxField}
+                value={values.subscribed}
+              />
+            </Box>
+            <Button
+              fullWidth
+              type="submit"
+              children="Submit"
+              disabled={!isValid}
+>>>>>>> DC-453-OOS-layout
             />
           </Box>
           <Button
