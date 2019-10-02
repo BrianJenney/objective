@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: '10px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '24px',
-      paddingBottom: '8px'
+      paddingBottom: '8px',
+      paddingTop: '20px'
     }
   },
   subTitle: {
@@ -50,7 +51,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ConfirmEmail = ({ product_img, product_name }) => {
-  console.log('HEELLOOO');
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -61,7 +61,7 @@ const ConfirmEmail = ({ product_img, product_name }) => {
             Perfect, email confirmed!
           </Typography>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <Typography className={classes.subTitle}>
             Thanks for reaching out! We’ll get in touch with you when we have
             this available again.

@@ -7,15 +7,12 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MailOutline from '@material-ui/icons/MailOutline';
 
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
-import { Button } from '../../components/common';
 import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
 import {
@@ -25,7 +22,7 @@ import {
 } from '../../utils/product';
 
 import { ATC, OutOfStock } from '../../components/atcOutOfStock';
-
+import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
 import './PDP-style.css';
 
 const useStyles = makeStyles(theme => ({
@@ -125,7 +122,12 @@ const ProductDetail = () => {
 
   const closeOutOfStockDialog = useCallback(() => {
     setOpenOutOfStockDialog(false);
+    setOpenEmailConfirmation(true);
   }, [setOpenOutOfStockDialog]);
+
+  const closeEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(false);
+  }, [setOpenEmailConfirmation]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -197,14 +199,23 @@ const ProductDetail = () => {
                   )}
                   {/* Out of stock component */}
                   {variant.inventory.quantityInStock < 1 && (
-                    <OutOfStock
-                      maxWidth={classes.maxWidth}
-                      onClick={handleOpenOutOfStockDialog}
-                      onExited={closeOutOfStockDialog}
-                      product_img={product.assets.img_front}
-                      product_name={product.name}
-                      openOutOfStockDialog={openOutOfStockDialog}
-                    />
+                    <>
+                      <OutOfStock
+                        maxWidth={classes.maxWidth}
+                        onClick={handleOpenOutOfStockDialog}
+                        onExited={closeOutOfStockDialog}
+                        product_img={product.assets.img_front}
+                        product_name={product.name}
+                        openOutOfStockDialog={openOutOfStockDialog}
+                      />
+                      {openEmailConfirmation && (
+                        <ConfirmEmail
+                          onExited={closeEmailConfirmation}
+                          product_img={variant.assets.imgs}
+                          product_name={variant.name}
+                        />
+                      )}
+                    </>
                   )}
                 </Card>
               </Grid>
@@ -259,14 +270,23 @@ const ProductDetail = () => {
                       />
                     )}
                     {variant.inventory.quantityInStock < 1 && (
-                      <OutOfStock
-                        maxWidth={classes.maxWidth}
-                        onClick={handleOpenOutOfStockDialog}
-                        onExited={closeOutOfStockDialog}
-                        product_img={product.assets.img_front}
-                        product_name={product.name}
-                        openOutOfStockDialog={openOutOfStockDialog}
-                      />
+                      <>
+                        <OutOfStock
+                          maxWidth={classes.maxWidth}
+                          onClick={handleOpenOutOfStockDialog}
+                          onExited={closeOutOfStockDialog}
+                          product_img={product.assets.img_front}
+                          product_name={product.name}
+                          openOutOfStockDialog={openOutOfStockDialog}
+                        />
+                        {openEmailConfirmation && (
+                          <ConfirmEmail
+                            onExited={closeEmailConfirmation}
+                            product_img={variant.assets.imgs}
+                            product_name={variant.name}
+                          />
+                        )}
+                      </>
                     )}
                   </Card>
                 </Grid>

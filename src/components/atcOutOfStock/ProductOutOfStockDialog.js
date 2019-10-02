@@ -27,7 +27,8 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: '10px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '24px',
-      paddingBottom: '8px'
+      paddingBottom: '8px',
+      width: '300px'
     }
   },
   subTitle: {
