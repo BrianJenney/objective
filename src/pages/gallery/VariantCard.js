@@ -11,7 +11,8 @@ import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
 import { Button, NavLink } from '../../components/common';
 import '../../assets/styles/_variables.scss';
-
+import { ATC, OutOfStock } from '../../components/atcOutOfStock';
+import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmed';
 const PriceVariantInfo = ({ variant }) => {
   return variant ? (
     <div>
@@ -28,11 +29,13 @@ const VariantCard = ({ variant, styleMap }) => {
   const dispatch = useDispatch();
   const ref = createRef();
   // const windowSize = useWindowSize();
-  // const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();∆
   const [ATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
+  const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
   // const message = <ATCSnackbarAction variant={variant} />;
+  const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
 
   const updateQuantityToCart = useCallback(
     qty => {
@@ -41,10 +44,7 @@ const VariantCard = ({ variant, styleMap }) => {
     },
     [cart, variant, dispatch]
   );
-  const [quantity, Quantity] = useQuantity(
-    updateQuantityToCart,
-    'QTY'
-  );
+  const [quantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
     setATCAdded(true);
@@ -62,6 +62,21 @@ const VariantCard = ({ variant, styleMap }) => {
     });
     */
   }, [cart, variant, quantity, dispatch]);
+
+  const handleOpenOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(true);
+  }, [setOpenOutOfStockDialog]);
+
+  const closeOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(false);
+    setOpenEmailConfirmation(true);
+  }, [setOpenOutOfStockDialog]);
+
+  /*Out Of Stock email confirmation */
+
+  const closeEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(false);
+  }, [setOpenEmailConfirmation]);
 
   return (
     <Card className="gallery-prod-card" ref={ref}>
@@ -94,7 +109,34 @@ const VariantCard = ({ variant, styleMap }) => {
       </CardContent>
 
       <div className="cta-area">
-        {ATCEnabled ? (
+        {ATCEnabled && variant.inStock > 0 && (
+          <ATC
+            onClick={handleAddToCart}
+            // variantSku={selectedVariantSku}
+            ATCAdded={ATCAdded}
+            ATCAdding={ATCAdding}
+          />
+        )}
+
+        {variant.inStock < 1 && (
+          <>
+            <OutOfStock
+              onClick={handleOpenOutOfStockDialog}
+              onExited={closeOutOfStockDialog}
+              product_img={variant.assets.imgs}
+              product_name={variant.name}
+              openOutOfStockDialog={openOutOfStockDialog}
+            />
+            {openEmailConfirmation && (
+              <ConfirmEmail
+                onExited={closeEmailConfirmation}
+                product_img={variant.assets.imgs}
+                product_name={variant.name}
+              />
+            )}
+          </>
+        )}
+        {/* {ATCEnabled ? (
           <CardActions className="gallery-atc">
             <Button
               variant="contained"
@@ -106,13 +148,13 @@ const VariantCard = ({ variant, styleMap }) => {
               {!ATCAdded
                 ? 'ADD TO CART'
                 : !ATCAdding
-                  ? 'PRODUCT ADDED'
-                  : 'ADDING...'}
+                ? 'PRODUCT ADDED'
+                : 'ADDING...'}
             </Button>
           </CardActions>
         ) : (
-            <Quantity className="gallery-atc" />
-          )}
+          <Quantity className="gallery-atc" />
+        )} */}
       </div>
     </Card>
   );

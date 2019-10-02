@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   mobileBox: {}
 }));
 
-const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
+const SignupCheckout = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -66,7 +66,7 @@ const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
               )}
             </Typography>
           </Box>
-          <SignupForm onSubmit={requestCreateAccount} />
+          <SignupForm onSubmit={requestCreateAccount} clearCreateAccountError={clearCreateAccountError} />
         </Box>
       </Box>
     </Container>
@@ -75,6 +75,7 @@ const SignupCheckout = ({ requestCreateAccount, switchToLogin }) => {
 
 SignupCheckout.propTypes = {
   requestCreateAccount: PropTypes.func.isRequired,
+  clearCreateAccountError: PropTypes.func.isRequired,
   switchToLogin: PropTypes.func
 };
 

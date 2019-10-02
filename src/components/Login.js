@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ requestLogin, switchToSignup, loginTitle }) => {
+const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -43,7 +43,7 @@ const Login = ({ requestLogin, switchToSignup, loginTitle }) => {
             { loginTitle ? loginTitle : 'Log in to your account' }
           </Typography>
           <Box pt={4}>
-            <LoginForm onSubmit={requestLogin} />
+            <LoginForm onSubmit={requestLogin} clearLoginError={clearLoginError} />
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>
@@ -74,6 +74,7 @@ const Login = ({ requestLogin, switchToSignup, loginTitle }) => {
 
 Login.propTypes = {
   requestLogin: PropTypes.func.isRequired,
+  clearLoginError: PropTypes.func.isRequired,
   switchToSignup: PropTypes.func,
   closeDialog: PropTypes.func
 };

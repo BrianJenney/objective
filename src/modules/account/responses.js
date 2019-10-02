@@ -7,7 +7,9 @@ import {
   receivedLoginSuccess,
   receivedLoginFailure,
   receivedPatchAccountSuccess,
-  receivedPatchAccountFailure
+  receivedPatchAccountFailure,
+  receivedChangePasswordSuccess,
+  receivedChangePasswordFailure
 } from './actions';
 
 export const handleAccountResponse = (status, data, fields) => {
@@ -31,6 +33,13 @@ export const handleAccountResponse = (status, data, fields) => {
         store.dispatch(receivedPatchAccountSuccess(data));
       } else {
         store.dispatch(receivedPatchAccountFailure(data));
+      }
+      break;
+    case 'account.request.changePassword':
+      if (status === 'success') {
+        store.dispatch(receivedChangePasswordSuccess(data));
+      } else {
+        store.dispatch(receivedChangePasswordFailure(data));
       }
       break;
     case 'account.request.login':

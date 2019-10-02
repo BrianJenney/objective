@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { object, string, ref } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -8,8 +8,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
-import { Button, NavLink } from '../common';
-import { getInitialValues } from '../../utils/misc';
+import { Button, NavLink, AlertPanel } from '../common';
+import { getInitialValues, getErrorMessage } from '../../utils/misc';
 
 const schema = object().shape({
   currentPassword: string().required('Your current password is required'),
@@ -36,15 +36,24 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 20
   }
 }));
-const ChangePassword = ({ currentUser, requestPatchAccount }) => {
+const ChangePassword = ({
+  currentUser,
+  requestChangePassword,
+  clearChangePasswordError
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const errorMessage = getErrorMessage(currentUser.changePasswordError);
+
+  useEffect(() => {
+    clearChangePasswordError();
+  }, []);
 
   const [isClicked, handleSubmitBtn] = useState(false);
   const handleSubmit = useCallback(
     values => {
-      requestPatchAccount(currentUser.data.account_jwt, values);
+      requestChangePassword(currentUser.data.account_jwt, values);
     },
     [isClicked, handleSubmitBtn]
   );
@@ -78,11 +87,20 @@ const ChangePassword = ({ currentUser, requestPatchAccount }) => {
 
   const renderForm = () => (
     <Form>
+      <Typography className={classes.info} variant="h3" gutterBottom>
+        CHANGE PASSWORD
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography className={classes.info} variant="h3" gutterBottom>
-            CHANGE PASSWORD
-          </Typography>
+          <AlertPanel
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={errorMessage}
+            variant="subtitle2"
+          />
+        </Grid>
+        <Grid item xs={12}>
           <Field
             name="currentPassword"
             label="Current Password"
@@ -190,7 +208,8 @@ const ChangePassword = ({ currentUser, requestPatchAccount }) => {
 
 ChangePassword.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  requestPatchAccount: PropTypes.func.isRequired
+  requestChangePassword: PropTypes.func.isRequired,
+  clearChangePasswordError: PropTypes.func.isRequired
 };
 
 export default ChangePassword;

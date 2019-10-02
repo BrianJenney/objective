@@ -2,28 +2,39 @@ import {
   REQUEST_CREATE_ACCOUNT,
   RECEIVED_CREATE_ACCOUNT_SUCCESS,
   RECEIVED_CREATE_ACCOUNT_FAILURE,
+  CLEAR_CREATE_ACCOUNT_ERROR,
   REQUEST_FETCH_ACCOUNT,
   RECEIVED_FETCH_ACCOUNT_SUCCESS,
   RECEIVED_FETCH_ACCOUNT_FAILURE,
+  CLEAR_FETCH_ACCOUNT_ERROR,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_LOGIN,
   RECEIVED_LOGIN_SUCCESS,
   RECEIVED_LOGIN_FAILURE,
+  CLEAR_LOGIN_ERROR,
   REQUEST_PATCH_ACCOUNT,
   RECEIVED_PATCH_ACCOUNT_SUCCESS,
   RECEIVED_PATCH_ACCOUNT_FAILURE,
-  REQUEST_LOGOUT,
-  REQUEST_FORGOT_PASSWORD,
-  REQUEST_SIGNUP_EMAIL,
-  CLEAR_ACCOUNT_ERROR
+  CLEAR_PATCH_ACCOUNT_ERROR,
+  REQUEST_CHANGE_PASSWORD,
+  RECEIVED_CHANGE_PASSWORD_SUCCESS,
+  RECEIVED_CHANGE_PASSWORD_FAILURE,
+  CLEAR_CHANGE_PASSWORD_ERROR,
+  REQUEST_LOGOUT
 } from './types';
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
 const INITIAL_STATE = {
   loginError: null,
   signupError: null,
-  error: null,
-  loading: null,
+  fetchAccountError: null,
+  patchAccountError: null,
+  changePasswordError: null,
+  loginSubmitting: null,
+  signupSubmitting: null,
+  fetchAccountLoading: null,
+  patchAccountSubmitting: null,
+  changePasswordSubmitting: null,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
@@ -35,49 +46,13 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         signupError: false,
-        loading: true
-      };
-    case REQUEST_LOGIN:
-      return {
-        ...state,
-        loginError: false,
-        loading: true
-      };
-    case REQUEST_FETCH_ACCOUNT:
-    case REQUEST_FORGOT_PASSWORD:
-    case REQUEST_SIGNUP_EMAIL:
-    case REQUEST_PATCH_ACCOUNT:
-      return {
-        ...state,
-        error: false,
-        loading: true
+        signupSubmitting: true
       };
     case RECEIVED_CREATE_ACCOUNT_SUCCESS:
       return {
         ...state,
         signupError: false,
-        loading: false,
-        data: {
-          ...state.data,
-          ...action.payload
-        }
-      };
-    case RECEIVED_LOGIN_SUCCESS:
-      return {
-        ...state,
-        loginError: false,
-        loading: false,
-        data: {
-          ...state.data,
-          ...action.payload
-        }
-      };
-    case RECEIVED_FETCH_ACCOUNT_SUCCESS:
-    case RECEIVED_PATCH_ACCOUNT_SUCCESS:
-      return {
-        ...state,
-        error: false,
-        loading: false,
+        signupSubmitting: false,
         data: {
           ...state.data,
           ...action.payload
@@ -87,26 +62,124 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         signupError: action.payload,
-        loading: false
+        signupSubmitting: false
+      };
+    case CLEAR_CREATE_ACCOUNT_ERROR:
+      return {
+        ...state,
+        signupError: false
+      };
+    case REQUEST_LOGIN:
+      return {
+        ...state,
+        loginError: false,
+        loginSubmitting: true
+      };
+    case RECEIVED_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loginError: false,
+        loginSubmitting: false,
+        data: {
+          ...state.data,
+          ...action.payload
+        }
       };
     case RECEIVED_LOGIN_FAILURE:
       return {
         ...state,
         loginError: action.payload,
-        loading: false
+        loginSubmitting: false
+      };
+    case CLEAR_LOGIN_ERROR:
+      return {
+        ...state,
+        loginError: false
+      };
+    case REQUEST_FETCH_ACCOUNT:
+      return {
+        ...state,
+        fetchAccountError: false,
+        fetchAccountLoading: true
+      };
+    case RECEIVED_FETCH_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        fetchAccountError: false,
+        fetchAccountLoading: false,
+        data: {
+          ...state.data,
+          ...action.payload
+        }
       };
     case RECEIVED_FETCH_ACCOUNT_FAILURE:
+      return {
+        ...state,
+        fetchAccountError: action.payload,
+        fetchAccountLoading: false
+      };
+    case CLEAR_FETCH_ACCOUNT_ERROR:
+      return {
+        ...state,
+        fetchAccountError: false
+      };
+    case REQUEST_PATCH_ACCOUNT:
+      return {
+        ...state,
+        patchAccountError: false,
+        patchAccountSubmitting: true
+      };
+    case RECEIVED_PATCH_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        patchAccountError: false,
+        patchAccountSubmitting: false,
+        data: {
+          ...state.data,
+          ...action.payload
+        }
+      };
     case RECEIVED_PATCH_ACCOUNT_FAILURE:
       return {
         ...state,
-        error: action.payload,
-        loading: false
+        patchAccountError: action.payload,
+        patchAccountSubmitting: false
+      };
+    case CLEAR_PATCH_ACCOUNT_ERROR:
+      return {
+        ...state,
+        patchAccountError: false
+      };
+    case REQUEST_CHANGE_PASSWORD:
+      return {
+        ...state,
+        changePasswordError: false,
+        changePasswordSubmitting: true
+      };
+    case RECEIVED_CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        changePasswordError: false,
+        changePasswordSubmitting: false,
+        data: {
+          ...state.data,
+          ...action.payload
+        }
+      };
+    case RECEIVED_CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        changePasswordError: action.payload,
+        changePasswordSubmitting: false
+      };
+    case CLEAR_CHANGE_PASSWORD_ERROR:
+      return {
+        ...state,
+        changePasswordError: false
       };
     case RECEIVED_FIND_ORDERS_BY_ACCOUNT:
       return {
         ...state,
-        error: false,
-        loading: false,
         data: {
           ...state.data,
           orders: action.payload
@@ -116,14 +189,15 @@ export default (state = INITIAL_STATE, action) => {
       return {
         loginError: false,
         signupError: false,
-        error: false,
-        loading: false,
+        fetchAccountError: false,
+        patchAccountError: false,
+        changePasswordError: false,
+        loginSubmitting: false,
+        signupSubmitting: false,
+        fetchAccountLoading: false,
+        patchAccountSubmitting: false,
+        changePasswordSubmitting: false,
         data: {}
-      };
-    case CLEAR_ACCOUNT_ERROR:
-      return {
-        ...state,
-        error: false
       };
     default:
       return state;

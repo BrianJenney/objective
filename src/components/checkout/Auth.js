@@ -13,7 +13,9 @@ const AUTH_MODES = {
 const CheckoutAuth = ({
   currentUser,
   requestCreateAccount,
+  clearCreateAccountError,
   requestLogin,
+  clearLoginError,
   handleNext
 }) => {
   const [authMode, setAuthMode] = useState(AUTH_MODES.SIGNUP);
@@ -39,11 +41,13 @@ const CheckoutAuth = ({
       {authMode === AUTH_MODES.SIGNUP ? (
         <SignupCheckout
           requestCreateAccount={requestCreateAccount}
+          clearCreateAccountError={clearCreateAccountError}
           switchToLogin={() => setAuthMode(AUTH_MODES.LOGIN)}
         />
       ) : (
         <Login
           requestLogin={requestLogin}
+          clearLoginError={clearLoginError}
           switchToSignup={() => setAuthMode(AUTH_MODES.SIGNUP)}
         />
       )}
@@ -54,7 +58,9 @@ const CheckoutAuth = ({
 CheckoutAuth.propTypes = {
   currentUser: PropTypes.object.isRequired,
   requestCreateAccount: PropTypes.func.isRequired,
+  clearCreateAccountError: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
+  clearLoginError: PropTypes.func.isRequired,
   handleNext: PropTypes.func.isRequired
 };
 

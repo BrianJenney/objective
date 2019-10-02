@@ -18,7 +18,17 @@ export const getDefaultEntity = entities => {
   return entities.find(entity => !!entity.isDefault);
 };
 
-export const formatCurrency = (amount) => {
+export const getErrorMessage = error => {
+  if (!error) {
+    return null;
+  }
+
+  const errors = Array.isArray(error) ? error : [error];
+
+  return errors.map(err => err.message || err.errorMessage).join('\n');
+};
+
+export const formatCurrency = amount => {
   const nf = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -28,7 +38,7 @@ export const formatCurrency = (amount) => {
   return nf.format(amount);
 };
 
-const convertFormattedDateTime = (parseDate, isTimeFormatIncluded=false) => (
+const convertFormattedDateTime = (parseDate, isTimeFormatIncluded = false) => (
   <span>
     <FormattedDate
       value={parseDate}
@@ -37,16 +47,18 @@ const convertFormattedDateTime = (parseDate, isTimeFormatIncluded=false) => (
       year="numeric"
     />
     {isTimeFormatIncluded && ' '}
-    {isTimeFormatIncluded && <FormattedTime
-      value={parseDate}
-      hour="2-digit"
-      minute="numeric"
-      second="numeric"
-      timeZone={tzname}
-      timeZoneName="short"
-    /> }
+    {isTimeFormatIncluded && (
+      <FormattedTime
+        value={parseDate}
+        hour="2-digit"
+        minute="numeric"
+        second="numeric"
+        timeZone={tzname}
+        timeZoneName="short"
+      />
+    )}
   </span>
 );
 
-export const formatDateTime = (date, isTimeFormatIncluded) => convertFormattedDateTime(date, isTimeFormatIncluded);
-
+export const formatDateTime = (date, isTimeFormatIncluded) =>
+  convertFormattedDateTime(date, isTimeFormatIncluded);

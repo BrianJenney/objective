@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
@@ -9,13 +9,13 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button } from '../common';
+import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
-import { getInitialValues } from '../../utils/misc';
+import { getInitialValues, getErrorMessage } from '../../utils/misc';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -25,6 +25,14 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
+
 const validateTextField = value => {
   if (value) {
     return undefined;
@@ -32,22 +40,26 @@ const validateTextField = value => {
   return 'This field is required';
 };
 
-const validateNumberField = value => {
-  if (!value) {
-    return 'This field is required';
-  }
-  if (isNaN(Number(value))) {
-    return 'This field should be a number';
-  }
-  return undefined;
-};
-
-const validateExpirationDateField = value => {
+const validateCardNumberField = values => {
+  const { number, expirationDate, cvv } = values.paymentDetails;
   const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
-  if (expirationDatePattern.test(value)) {
-    return undefined;
+  if (!number) {
+    return 'Card number is required';
   }
-  return 'This field should be a valid date - MM/YYYY';
+  if (isNaN(Number(number))) {
+    return 'Card number should be a numeric value';
+  }
+  if (!expirationDatePattern.test(expirationDate)) {
+    return 'Expiration date should be a valid date - MM/YYYY';
+  }
+  if (!cvv) {
+    return 'CVV is required';
+  }
+  if (isNaN(Number(cvv))) {
+    return 'CVV should be a numeric value';
+  }
+
+  return undefined;
 };
 
 const INITIAL_VALUES = {
@@ -74,10 +86,12 @@ const INITIAL_VALUES = {
 };
 
 const PaymentForm = ({
+  currentUser,
   seedEnabled,
   addressSeed,
   useSeedLabel,
   defaultValues,
+  clearPatchAccountError,
   onSubmit,
   onBack,
   onlyCard,
@@ -104,6 +118,22 @@ const PaymentForm = ({
       });
     }
   };
+  const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
+  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+
+  useEffect(() => {
+    clearPatchAccountError();
+  }, []);
+
+  useEffect(() => {
+    if (
+      prevSubmitting &&
+      !currentUser.patchAccountSubmitting &&
+      !currentUser.patchAccountError
+    ) {
+      onBack();
+    }
+  }, [currentUser.patchAccountSubmitting]);
 
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (
@@ -117,6 +147,15 @@ const PaymentForm = ({
         mb={4}
       />
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <AlertPanel
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={errorMessage}
+            variant="subtitle2"
+          />
+        </Grid>
         {!onlyCard && (
           <Grid item xs={12}>
             <Field
@@ -145,7 +184,7 @@ const PaymentForm = ({
                   name="paymentDetails.number"
                   label="Card Number"
                   component={InputField}
-                  validate={validateNumberField}
+                  validate={() => validateCardNumberField(values)}
                   inputProps={{ style: { paddingRight: 214 } }}
                 />
                 <Box position="absolute" width={100} top={0} right={100}>
@@ -154,7 +193,6 @@ const PaymentForm = ({
                     name="paymentDetails.expirationDate"
                     label="MM/YYYY"
                     component={InputField}
-                    validate={validateExpirationDateField}
                   />
                 </Box>
                 <Box position="absolute" width={66} top={0} right={14}>
@@ -163,7 +201,6 @@ const PaymentForm = ({
                     name="paymentDetails.cvv"
                     label="CVV"
                     component={InputField}
-                    validate={validateNumberField}
                   />
                 </Box>
               </Box>
@@ -310,10 +347,12 @@ const PaymentForm = ({
 };
 
 PaymentForm.propTypes = {
+  currentUser: PropTypes.object.isRequired,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
   defaultValues: PropTypes.object,
+  clearPatchAccountError: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onlyCard: PropTypes.bool,
