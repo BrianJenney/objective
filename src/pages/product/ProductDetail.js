@@ -24,6 +24,7 @@ import {
 import { ATC, OutOfStock } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
 import './PDP-style.css';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
@@ -140,7 +141,7 @@ const ProductDetail = () => {
     content == null ||
     selectedVariantSku == null
   )
-    return null;
+    return <LoadingSpinner loadingMessage="Loading product" />;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
@@ -228,83 +229,83 @@ const ProductDetail = () => {
           </Grid>
         </>
       ) : (
-        <div className={classes.gridModifications}>
-          <Container>
-            <Grid container xs={12} sm={12}>
-              <Grid container spacing={5} xs={12} sm={12}>
-                <Grid item xs={12} sm={6}>
-                  <Carousel images={content.productImages} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Card className={classes.box}>
-                    <CardContent
-                      className={classes.cardRootOverrides}
-                      className="pdp-content"
-                    >
-                      <h1
-                        className="pdp-header"
-                        style={{ color: product.color }}
+          <div className={classes.gridModifications}>
+            <Container>
+              <Grid container xs={12} sm={12}>
+                <Grid container spacing={5} xs={12} sm={12}>
+                  <Grid item xs={12} sm={6}>
+                    <Carousel images={content.productImages} />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Card className={classes.box}>
+                      <CardContent
+                        className={classes.cardRootOverrides}
+                        className="pdp-content"
                       >
-                        {content.productTitle}
-                      </h1>
-                      <ProductVariant
-                        productVariant={variantMap.get(selectedVariantSku)}
-                      />
-                      <div className="pdp-subtitle">
-                        {content.shortPurposeHeadline}
-                      </div>
-                      <Typography className="pdp-description">
-                        {content.shortDescription}
+                        <h1
+                          className="pdp-header"
+                          style={{ color: product.color }}
+                        >
+                          {content.productTitle}
+                        </h1>
+                        <ProductVariant
+                          productVariant={variantMap.get(selectedVariantSku)}
+                        />
+                        <div className="pdp-subtitle">
+                          {content.shortPurposeHeadline}
+                        </div>
+                        <Typography className="pdp-description">
+                          {content.shortDescription}
+                        </Typography>
+                        <Typography className="pdp-direction">
+                          DIRECTIONS
                       </Typography>
-                      <Typography className="pdp-direction">
-                        DIRECTIONS
-                      </Typography>
-                      <Typography className="pdp-direction-description">
-                        {content.shortDirections}
-                      </Typography>
+                        <Typography className="pdp-direction-description">
+                          {content.shortDirections}
+                        </Typography>
 
-                      {/* <ProductVariantType
+                        {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                      {!ATCEnabled && <Quantity />}
-                    </CardContent>
-                    {ATCEnabled && variant.inventory.quantityInStock > 0 && (
-                      <ATC
-                        maxWidth={classes.maxWidth}
-                        onClick={handleAddToCart}
-                        variantSku={selectedVariantSku}
-                        ATCAdded={ATCAdded}
-                        ATCAdding={ATCAdding}
-                      />
-                    )}
-                    {variant.inventory.quantityInStock < 1 && (
-                      <>
-                        <OutOfStock
+                        {!ATCEnabled && <Quantity />}
+                      </CardContent>
+                      {ATCEnabled && variant.inventory.quantityInStock > 0 && (
+                        <ATC
                           maxWidth={classes.maxWidth}
-                          onClick={handleOpenOutOfStockDialog}
-                          onExited={closeOutOfStockDialog}
-                          product_img={product.assets.img_front}
-                          product_name={product.name}
-                          openOutOfStockDialog={openOutOfStockDialog}
+                          onClick={handleAddToCart}
+                          variantSku={selectedVariantSku}
+                          ATCAdded={ATCAdded}
+                          ATCAdding={ATCAdding}
                         />
-                        {openEmailConfirmation && (
-                          <ConfirmEmail
-                            onExited={closeEmailConfirmation}
-                            product_img={variant.assets.imgs}
-                            product_name={variant.name}
+                      )}
+                      {variant.inventory.quantityInStock < 1 && (
+                        <>
+                          <OutOfStock
+                            maxWidth={classes.maxWidth}
+                            onClick={handleOpenOutOfStockDialog}
+                            onExited={closeOutOfStockDialog}
+                            product_img={product.assets.img_front}
+                            product_name={product.name}
+                            openOutOfStockDialog={openOutOfStockDialog}
                           />
-                        )}
-                      </>
-                    )}
-                  </Card>
+                          {openEmailConfirmation && (
+                            <ConfirmEmail
+                              onExited={closeEmailConfirmation}
+                              product_img={variant.assets.imgs}
+                              product_name={variant.name}
+                            />
+                          )}
+                        </>
+                      )}
+                    </Card>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Container>
-        </div>
-      )}
+            </Container>
+          </div>
+        )}
     </>
   );
 };
