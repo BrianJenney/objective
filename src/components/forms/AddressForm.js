@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { object, string, boolean } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -68,8 +66,6 @@ const AddressForm = ({
   backLabel,
   allowFlyMode
 }) => {
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [initialValues, setInitialValues] = useState(
     getInitialValues(INITIAL_VALUES, defaultValues)
   );
@@ -107,8 +103,8 @@ const AddressForm = ({
         color="#231f20"
         variant="h5"
         children={topTitle}
-        fontSize={xs ? 24 : 30}
-        mb={xs ? 3 : 4}
+        fontSize={30}
+        mb={4}
       />
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -203,8 +199,8 @@ const AddressForm = ({
               color="#231f20"
               variant="h5"
               children={bottomTitle}
-              fontSize={xs ? 24 : 30}
-              mb={xs ? 3 : 4}
+              fontSize={30}
+              mb={4}
             />
             <Box border="1px solid rgb(0, 0, 0, 0.23)" p="14px" mb="29px">
               <Box

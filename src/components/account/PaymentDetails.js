@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
@@ -39,12 +37,9 @@ const AccountPaymentDetails = ({
   const [formModeEnabled, setFormModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { enqueueSnackbar } = useSnackbar();
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
-  const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
@@ -146,21 +141,19 @@ const AccountPaymentDetails = ({
         />
       ) : (
         <>
-          {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
-            <Box
-              component={Typography}
-              color="#231f20"
-              variant="h5"
-              children={
-                formType === FORM_TYPES.ACCOUNT
-                  ? 'Payment Details'
-                  : 'Credit Card'
-              }
-              fontSize={titleFontSize}
-              mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
-            />
-          )}
-          {!xs && formType === FORM_TYPES.ACCOUNT && (
+          <Box
+            component={Typography}
+            color="#231f20"
+            variant="h5"
+            children={
+              formType === FORM_TYPES.ACCOUNT
+                ? 'Payment Details'
+                : 'Credit Card'
+            }
+            fontSize={formType === FORM_TYPES.ACCOUNT ? 48 : 30}
+            mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
+          />
+          {formType === FORM_TYPES.ACCOUNT && (
             <Box
               color="#231f20"
               component={Typography}
@@ -227,7 +220,7 @@ const AccountPaymentDetails = ({
           </Box>
           <Box
             mt="26px"
-            fontSize={xs ? 14 : 16}
+            fontSize={16}
             fontWeight={600}
             style={{ textTransform: 'uppercase' }}
           >
@@ -237,7 +230,7 @@ const AccountPaymentDetails = ({
               underline="always"
             />
           </Box>
-          <Box mt={xs ? '28px' : '55px'}>
+          <Box mt="55px">
             <ButtonGroup fullWidth>
               {onBack && (
                 <Button

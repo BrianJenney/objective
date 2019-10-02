@@ -91,9 +91,19 @@
       padding: 16px 0;
       .step-2-wrapper {
         margin: 0;
+        button {
+          min-width: 280px;
+          width: 280px;
+        }
       }
       .step-3-wrapper {
         margin: 0;
+      }
+      .step-4-wrapper {
+        button {
+          min-width: 280px;
+          width: 100%;
+        }
       }
     }
     .button-holder-mobile > div {
@@ -101,7 +111,7 @@
       text-align: center;
     }
     .MuiIconButton-label a {
-      margin-right: -85px;
+      margin-right: -85px
     }
   }
 }

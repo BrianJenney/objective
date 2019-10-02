@@ -74,15 +74,9 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '1.88',
     letterSpacing: '1.33px',
     [theme.breakpoints.down('xs')]: {
-      maxWidth: 351,
-      height: '80px',
-      marginTop: '15px',
-      fontSize: '16px',
-      fontWeight: 900,
-      fontfontStyle: 'normal',
-      fontStretch: 'normal',
-      lineHeight: 1.88,
-      letterSpacing: 1.33
+      width: '385px',
+      paddingRight: '50px',
+      overflow: 'hidden'
     }
   }
 }));

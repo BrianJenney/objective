@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 import Panel from './Panel';
 import MenuLink from './MenuLink';
@@ -18,8 +17,6 @@ const EditablePanel = ({
   Summary,
   ...rest
 }) => {
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [editing, setEditing] = useState(false);
   const handleSave = async (...args) => {
     try {
@@ -44,12 +41,7 @@ const EditablePanel = ({
         />
       ) : (
         <Summary values={defaultValues} {...rest}>
-          <Box
-            mt={4}
-            fontSize={xs ? 12 : 16}
-            display="flex"
-            flexDirection="column"
-          >
+          <Box mt={4} fontSize={16} display="flex" flexDirection="column">
             {onSetDefault ? (
               <MenuLink
                 onClick={onSetDefault}
@@ -59,7 +51,11 @@ const EditablePanel = ({
             ) : (
               <Box display="flex" alignItems="center">
                 <CheckIcon style={{ width: '16px', height: '16px' }} />
-                <Box children="Saved as default" style={{ marginLeft: 5 }} />
+                <Typography
+                  variant="body2"
+                  children="Saved as default"
+                  style={{ marginLeft: 5 }}
+                />
               </Box>
             )}
             <Box mt="13px" height={16} display="flex" alignItems="center">

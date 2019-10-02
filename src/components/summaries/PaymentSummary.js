@@ -11,9 +11,10 @@ const labelsMap = {
   last4: 'Last 4 digits',
   expirationDate: 'Expires'
 };
-const getValuesWithoutLabels = ({ cardType, last4, expirationDate }) => [
+const getValuesWithoutLabels = ({ name, cardType, last4, expirationDate }) => [
   `${cardType} ${last4}`,
   `Expires ${expirationDate}`,
+  name
 ];
 
 const PaymentSummary = ({ withLabels, values, children, ...rest }) => {
