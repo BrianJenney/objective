@@ -31,7 +31,7 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const titleViewColor = isActiveStep ? '#ffffff' : '#4a4a4a';
   const titleView = (
     <Box
-      px={3}
+      px={xs ? '18px' : 3}
       py={2}
       width={1}
       color={titleViewColor}
@@ -62,8 +62,8 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
     payloadSummary && !isActiveStep ? (
       <Box
         width={1}
-        px={14}
-        py={4}
+        px={xs ? 8 : 14}
+        py={xs ? 3 : 4}
         bgcolor="rgba(252, 248, 244, 0.5)"
         color="#231f20"
       >
@@ -198,7 +198,7 @@ const Checkout = ({
   return (
     <ScrollToTop>
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
-        <Container style={xs ? { padding: 0 } : {}}>
+        <Container>
           <Box py={10} className="checkout-wrapper">
             <CssBaseline />
             <Grid container spacing={4}>
@@ -207,8 +207,8 @@ const Checkout = ({
                 flex={1}
                 xs={12}
                 md={8}
+                style={xs ? { padding: 0 } : {}}
                 className="right-side"
-                style={xs ? { padding: '0 9px' } : {}}
               >
                 <Panel
                   title={getPanelTitleContent(xs, 0, activeStep, {

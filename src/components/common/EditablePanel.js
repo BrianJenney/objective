@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 import Panel from './Panel';
 import MenuLink from './MenuLink';
@@ -60,11 +59,7 @@ const EditablePanel = ({
             ) : (
               <Box display="flex" alignItems="center">
                 <CheckIcon style={{ width: '16px', height: '16px' }} />
-                <Typography
-                  variant="body2"
-                  children="Saved as default"
-                  style={{ marginLeft: 5 }}
-                />
+                <Box children="Saved as default" style={{ marginLeft: 5 }} />
               </Box>
             )}
             <Box mt="13px" height={16} display="flex" alignItems="center">
