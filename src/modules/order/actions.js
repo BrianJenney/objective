@@ -11,6 +11,7 @@ import {
   RESET_ORDER_STATE
 } from './types';
 
+import { resetCart } from '../../modules/cart/actions';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 

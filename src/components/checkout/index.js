@@ -85,6 +85,8 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 };
 
 const Checkout = ({
+  // orderIsLoading,
+  // orderError,
   history,
   currentUser,
   cart,
@@ -183,8 +185,22 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6855e8cdc9bfa678b39c155fc97108fd65f4bad6
 
+    console.log(orderIsLoading, orderError);
+    if (orderIsLoading === true || orderError === null) return null;
+
+    if (orderError === true) {
+      setCheckoutModalOpen(true);
+    } else {
+      console.log('in else block');
+      dispatch(resetCart());
+      setPayload({});
+      history.replace('/order');
+    }
     return true;
   };
 
