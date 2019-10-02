@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -26,8 +28,11 @@ const AccountAddresses = ({
   const [formModeEnabled, setFormModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [editedIndex, setEditedIndex] = useState(-1);
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
+  const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
 
   useEffect(() => {
     const addressesData = currentUser.data.addressBook || [];
@@ -133,18 +138,20 @@ const AccountAddresses = ({
         />
       ) : (
         <>
-          <Box
-            component={Typography}
-            color="#231f20"
-            variant="h5"
-            children={
-              formType === FORM_TYPES.ACCOUNT
-                ? 'Saved Addresses'
-                : 'Shipping Address'
-            }
-            fontSize={formType === FORM_TYPES.ACCOUNT ? 48 : 30}
-            mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
-          />
+          {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
+            <Box
+              component={Typography}
+              color="#231f20"
+              variant="h5"
+              children={
+                formType === FORM_TYPES.ACCOUNT
+                  ? 'Saved Addresses'
+                  : 'Shipping Address'
+              }
+              fontSize={titleFontSize}
+              mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
+            />
+          )}
           {isEmpty(addressBook) && (
             <AlertPanel mb={2} type="info" text="No Saved Addresses." />
           )}
