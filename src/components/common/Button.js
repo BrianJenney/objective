@@ -27,7 +27,7 @@ const ButtonComponent = ({
     fontFamily: 'p22-underground, Helvetica, sans',
     border: '1px solid #000',
     fontWeight: 900,
-    padding: xs ? '15px' : '24px',
+    padding: xs ? '16px' : '22px',
     letterSpacing: xs ? '1.17px' : '1.33px',
     lineHeight: xs ? 1.88 : 2.14,
     fontSize: xs ? 14 : 16,
