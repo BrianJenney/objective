@@ -4,13 +4,13 @@
   padding-left: 55px !important;
 } */
 
-.account-orders-mobile-table div[role="toolbar"]{
-display:none;
+.account-orders-mobile-table div[role='toolbar'] {
+  display: none;
 }
-.nxTextField .MuiOutlinedInput-notchedOutline{
+.nxTextField .MuiOutlinedInput-notchedOutline {
   border-color: #000000;
 }
-.nxTextField .MuiInputBase-formControl{
+.nxTextField .MuiInputBase-formControl {
   height: 50px;
   font-weight: 600;
   font-size: 16px;
@@ -67,9 +67,6 @@ display:none;
   input {
     font-family: p22-undergrounf, sans-serif;
   }
-  button {
-    margin-bottom: 50px;
-  }
   .MuiFormHelperText-contained {
     font-family: p22-undergrounf, sans-serif;
     font-size: 11px;
@@ -79,9 +76,6 @@ display:none;
 .account-change-password {
   input {
     font-family: p22-undergrounf, sans-serif;
-  }
-  button {
-    margin-top: 16px;
   }
   .MuiFormHelperText-contained {
     font-family: p22-undergrounf, sans-serif;
