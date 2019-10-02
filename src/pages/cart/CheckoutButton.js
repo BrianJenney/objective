@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
+
 import { fonts } from '../../components/Theme/fonts';
 import { StyledCheckoutButton } from './StyledComponents';
 import { requestFetchCart } from '../../modules/cart/actions';
@@ -12,7 +14,7 @@ const { $brandSans } = fonts;
 class CheckoutButton extends Component {
   render() {
     const { onClick, children } = this.props;
-    console.log('from CheckoutButton ====>', this.props, '<====');
+
     return (
       <>
         {
@@ -21,12 +23,12 @@ class CheckoutButton extends Component {
               to="/checkout"
               style={{
                 color: 'white',
-                'text-decoration': 'none',
-                'font-family': $brandSans,
-                'font-weight': 'bold'
+                'textDecoration': 'none',
+                'fontFamily': $brandSans,
+                'fontWeight': 'bold'
               }}
             >
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={12} style={{ display: 'flex', padding: '10px 16px 30px' }}>
                   <StyledCheckoutButton
                     style={{ margin: '0 auto' }}
@@ -38,7 +40,7 @@ class CheckoutButton extends Component {
                     disabled={this.props.cart.items.length === 0}
                   >
                     Checkout
-          </StyledCheckoutButton>
+                  </StyledCheckoutButton>
                 </Grid>
               </Grid>
             </Link>
@@ -53,7 +55,7 @@ class CheckoutButton extends Component {
               }}
               onClick={e => e.preventDefault()}
             >
-              <Grid container xs={12}>
+              <Grid container>
                 <Grid item xs={12} style={{ display: 'flex', padding: '0 16px 30px' }}>
                   <StyledCheckoutButton
                     style={{ margin: '0 auto' }}
@@ -65,7 +67,7 @@ class CheckoutButton extends Component {
                     disabled={this.props.cart.items.length === 0}
                   >
                     Checkout
-          </StyledCheckoutButton>
+                  </StyledCheckoutButton>
                 </Grid>
               </Grid>
             </Link>
@@ -73,14 +75,10 @@ class CheckoutButton extends Component {
       </>
     )
   }
-
-
 }
 
 CheckoutButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

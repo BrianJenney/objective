@@ -13,7 +13,6 @@ import {
   StyledA,
   StyledAnswerContainer,
   StyledText,
-  MoreInfoContainer,
   MoreInfoLink,
 } from './faq/StyledComponents';
 
@@ -163,13 +162,11 @@ const FAQ = () => {
                     The Office of Environmental Health Hazard Assessment (OEHHA) administers the Proposition 65 program. OEHHA, which is part of the California Environmental Protection Agency (Cal/EPA), also evaluates all currently available scientific information on substances considered for placement on the Proposition 65 list.
                   </StyledText >
                 </QAContainer>
-                <MoreInfoContainer>
-                  <StyledText>
-                    For more information visit: <MoreInfoLink href="https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language">
-                      https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language
-                    </MoreInfoLink>
-                  </StyledText>
-                </MoreInfoContainer>
+                <StyledText>
+                  For more information visit: <MoreInfoLink href="https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language">
+                    https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language
+                  </MoreInfoLink>
+                </StyledText>
               </Box>
             </Grid>
           </Box>

@@ -92,13 +92,12 @@ const VariantCard = ({ variant, styleMap }) => {
         <NavLink to={`/products/${variant.slug}`} underline="none">
           <div className="prod-name-holder">
             <Typography>
-              <Link
-                to={`/products/${variant.slug}`}
+              <span
                 className="title"
                 style={styleMap.text}
               >
                 {variant.name}
-              </Link>
+              </span>
             </Typography>
 
           </div>
@@ -136,25 +135,6 @@ const VariantCard = ({ variant, styleMap }) => {
             )}
           </>
         )}
-        {/* {ATCEnabled ? (
-          <CardActions className="gallery-atc">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleAddToCart}
-              fullWidth={true}
-              className="atc-button"
-            >
-              {!ATCAdded
-                ? 'ADD TO CART'
-                : !ATCAdding
-                ? 'PRODUCT ADDED'
-                : 'ADDING...'}
-            </Button>
-          </CardActions>
-        ) : (
-          <Quantity className="gallery-atc" />
-        )} */}
       </div>
     </Card>
   );

@@ -190,15 +190,6 @@ export const StyledText = withStyles(theme => ({
   }
 }))(Typography);
 
-export const MoreInfoContainer = withStyles(theme => ({
-  root: {
-    [theme.breakpoints.down('xs')]: {
-      display: "flex",
-      alignContent: "flex-start",
-    }
-  }
-}))(Link);
-
 export const MoreInfoLink = withStyles(theme => ({
   root: {
     fontFamily: 'FreightTextProMedium-Regular',
