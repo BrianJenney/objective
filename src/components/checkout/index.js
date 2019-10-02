@@ -28,8 +28,6 @@ import { requestCalculateTax } from '../../modules/tax/actions';
 import { resetCart } from '../../modules/cart/actions';
 import TransactionMessage from './TransactionMessage';
 import { resetOrderState } from '../../modules/order/actions';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -104,10 +102,7 @@ const Checkout = ({
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-<<<<<<< HEAD
   const { account_jwt, email: currentUserEmail } = currentUser.data;
-=======
->>>>>>> Modal window on failed order placement
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const [checkoutModalOpen, setCheckoutModalOpen] = React.useState(false);
@@ -188,41 +183,8 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    // dispatch(resetCart());
-    // setPayload({});
-    // history.replace('/order');
->>>>>>> Trying to split out actions
 
-    console.log(orderIsLoading, orderError);
-    if (orderIsLoading === true || orderError === null) return null;
-=======
-    dispatch(resetCart());
-    setPayload({});
-    history.replace('/order');
->>>>>>> undoing prior work, want to do it all in checkout.js
 
-=======
-
-    // if(orderIsLoading === false && orderError === false) {
-
-    // }
-
-<<<<<<< HEAD
->>>>>>> Modal window on failed order placement
-    if (orderError === true) {
-      setCheckoutModalOpen(true);
-    } else {
-      console.log('in else block');
-      dispatch(resetCart());
-      setPayload({});
-      history.replace('/order');
-    }
-=======
->>>>>>> Functional modal window for processing and error message
     return true;
   };
 

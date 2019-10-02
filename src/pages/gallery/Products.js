@@ -17,16 +17,10 @@ const energyImg = require('../../../src/assets/images/targeted.png');
 
 const Products = () => {
   const products = useContext(GalleryContext);
-<<<<<<< HEAD
 
   if (!products)
     return <LoadingSpinner loadingMessage="Products loading ..." />;
 
-=======
-
-  if(!products) return null;
-
->>>>>>> Functional modal window for processing and error message
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
 
