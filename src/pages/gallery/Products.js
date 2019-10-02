@@ -9,6 +9,7 @@ import GalleryContext from '../../contexts/GalleryContext';
 import CategorySummary from './CategorySummary';
 //import ProductSummary from './ProductSummary';
 import { getProductCategories } from '../../utils/product';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const skinImg = require('../../../src/assets/images/skin.png');
 const healthImg = require('../../../src/assets/images/general.png');
@@ -17,7 +18,8 @@ const energyImg = require('../../../src/assets/images/targeted.png');
 const Products = () => {
   const products = useContext(GalleryContext);
 
-  if (!products) return null;
+  if (!products)
+    return <LoadingSpinner loadingMessage="Products loading ..." />;
 
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
