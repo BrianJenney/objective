@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
   text: {
     fontFamily: 'p22-underground',
     fontSize: '14px',
+    textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
       fontSize: '10px'
     }
@@ -128,7 +129,7 @@ const SignupForm = ({
           <Field
             name="newsletter"
             color="primary"
-            label="Subscribe to True Health news"
+            label="Subscribe to Objective news"
             component={CheckboxField}
           />
         </Grid>
@@ -146,7 +147,6 @@ const SignupForm = ({
         <Grid item xs={12}>
           <Typography className={classes.text}>
             By creating an account you agree to the Objective Wellness&nbsp;
-            <Typography className={classes.text}>
               <NavLink to="/termsandconditions" underline="always">
                 Terms &amp; Conditions&nbsp;
               </NavLink>
@@ -154,7 +154,6 @@ const SignupForm = ({
               <NavLink to="/privacypolicy" underline="always">
                 Privacy Policy
               </NavLink>
-            </Typography>
           </Typography>
         </Grid>
       </Grid>

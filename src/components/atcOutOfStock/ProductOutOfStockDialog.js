@@ -113,7 +113,7 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
             <Field
               style={{ padding: '20px 7px 20px 0' }}
               name="subscribed"
-              label="Subscribe to True Health news"
+              label="Subscribe to Objective news"
               color="primary"
               component={CheckboxField}
               value={values.subscribed}
