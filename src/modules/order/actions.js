@@ -67,6 +67,9 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   // total hack here, but if you refresh the page, you don't get a
   // catalog id in your cart & orders will fail.  Just make sure its there
   cart.catalogId = getState().storefront.catalogId;
+  if (!cart.email) {
+    cart.email = getState().account.email;
+  }
   const params = {
     data: { cart },
     params: { account_jwt, nonceOrToken }
