@@ -30,16 +30,25 @@ export const handleAccountResponse = (status, data, fields) => {
       break;
     case 'account.request.patch':
       if (status === 'success') {
-        store.dispatch(receivedPatchAccountSuccess(data));
+        // temp until ui approve
+        setTimeout(() => {
+          store.dispatch(receivedPatchAccountSuccess(data));
+        }, 1000);
       } else {
-        store.dispatch(receivedPatchAccountFailure(data));
+        setTimeout(() => {
+          store.dispatch(receivedPatchAccountFailure(data));
+        }, 1000);
       }
       break;
     case 'account.request.changePassword':
       if (status === 'success') {
-        store.dispatch(receivedChangePasswordSuccess(data));
+        setTimeout(() => {
+          store.dispatch(receivedChangePasswordSuccess(data));
+        }, 1000);
       } else {
-        store.dispatch(receivedChangePasswordFailure(data));
+        setTimeout(() => {
+          store.dispatch(receivedChangePasswordFailure(data));
+        }, 1000);
       }
       break;
     case 'account.request.login':

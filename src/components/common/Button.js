@@ -60,7 +60,8 @@ const ButtonComponent = ({
           position="absolute"
           top="50%"
           left="50%"
-          style={{ transform: 'translate(-50%, -50%)' }}
+          ml="-12px"
+          mt="-12px"
           size={24}
         />
       )}
