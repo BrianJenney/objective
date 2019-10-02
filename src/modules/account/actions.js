@@ -259,7 +259,7 @@ export const receivedLoginSuccess = loginReply => dispatch => {
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply
   });
-  store.dispatch(requestFetchCartByEmail(loginReply.email));
+  //store.dispatch(requestFetchCartByEmail(loginReply.email));
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
