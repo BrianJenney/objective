@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { RouteWithSubRoutes, ScrollToTop } from '../../components/common';
 import { AccountMenu } from '../../components/account';
-import { fonts } from '../../components/Theme/fonts';
 
 import './account-style.scss';
 export { default as AccountOverviewPage } from './Overview';
