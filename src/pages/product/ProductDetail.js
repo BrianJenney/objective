@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -21,7 +22,7 @@ import {
   getDefaultSkuByProduct
 } from '../../utils/product';
 
-import { ATC, OutOfStock } from '../../components/atcOutOfStock';
+import { ATC, OutOfStockPDP } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
 import './PDP-style.css';
 
@@ -198,18 +199,22 @@ const ProductDetail = () => {
                   </CardContent>
                   {/* ATC component */}
                   {ATCEnabled && variant.inventory.quantityInStock > 0 && (
-                    <ATC
-                      maxWidth={classes.maxWidth}
-                      onClick={handleAddToCart}
-                      variantSku={selectedVariantSku}
-                      ATCAdded={ATCAdded}
-                      ATCAdding={ATCAdding}
-                    />
+                    <Grid className="mobile-padding-small">
+                      <CardActions className={classes.maxWidth}>
+                        <ATC
+                          maxWidth={classes.maxWidth}
+                          onClick={handleAddToCart}
+                          variantSku={selectedVariantSku}
+                          ATCAdded={ATCAdded}
+                          ATCAdding={ATCAdding}
+                        />
+                      </CardActions>
+                    </Grid>
                   )}
                   {/* Out of stock component */}
                   {variant.inventory.quantityInStock < 1 && (
-                    <>
-                      <OutOfStock
+                    <Grid>
+                      <OutOfStockPDP
                         maxWidth={classes.maxWidth}
                         onClick={handleOpenOutOfStockDialog}
                         onExited={closeOutOfStockDialog}
@@ -220,6 +225,7 @@ const ProductDetail = () => {
                           handleOpenEmailConfirmation
                         }
                       />
+
                       {openEmailConfirmation && (
                         <ConfirmEmail
                           onExited={closeEmailConfirmation}
@@ -227,7 +233,7 @@ const ProductDetail = () => {
                           product_name={variant.name}
                         />
                       )}
-                    </>
+                    </Grid>
                   )}
                 </Card>
               </Grid>
@@ -278,17 +284,21 @@ const ProductDetail = () => {
                       {!ATCEnabled && <Quantity />}
                     </CardContent>
                     {ATCEnabled && variant.inventory.quantityInStock > 0 && (
-                      <ATC
-                        maxWidth={classes.maxWidth}
-                        onClick={handleAddToCart}
-                        variantSku={selectedVariantSku}
-                        ATCAdded={ATCAdded}
-                        ATCAdding={ATCAdding}
-                      />
+                      <Grid>
+                        <CardActions className={classes.maxWidth}>
+                          <ATC
+                            maxWidth={classes.maxWidth}
+                            onClick={handleAddToCart}
+                            variantSku={selectedVariantSku}
+                            ATCAdded={ATCAdded}
+                            ATCAdding={ATCAdding}
+                          />
+                        </CardActions>
+                      </Grid>
                     )}
                     {variant.inventory.quantityInStock < 1 && (
-                      <>
-                        <OutOfStock
+                      <Grid>
+                        <OutOfStockPDP
                           maxWidth={classes.maxWidth}
                           onClick={handleOpenOutOfStockDialog}
                           onExited={closeOutOfStockDialog}
@@ -299,6 +309,7 @@ const ProductDetail = () => {
                             handleOpenEmailConfirmation
                           }
                         />
+
                         {openEmailConfirmation && (
                           <ConfirmEmail
                             onExited={closeEmailConfirmation}
@@ -306,7 +317,7 @@ const ProductDetail = () => {
                             product_name={variant.name}
                           />
                         )}
-                      </>
+                      </Grid>
                     )}
                   </Card>
                 </Grid>

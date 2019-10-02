@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { InputField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
-import ConfirmEmail from '../../pages/product/ProductOutOfStockEmailConfirmed';
+
 const schema = object().shape({
   email: string()
     .required('Email is required')
@@ -85,7 +85,6 @@ const ProductOutOfStockForm = ({
 
   const handleEmailNotification = values => {
     const { email, subscribed } = values;
-    console.log('DIALOG====', handleOpenEmailConfirmation);
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
     handleOpenEmailConfirmation();

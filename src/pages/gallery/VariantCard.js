@@ -106,12 +106,15 @@ const VariantCard = ({ variant, styleMap }) => {
 
       <div className="cta-area">
         {ATCEnabled && variant.inStock > 0 && (
-          <ATC
-            onClick={handleAddToCart}
-            variantSku={variant.sku}
-            ATCAdded={ATCAdded}
-            ATCAdding={ATCAdding}
-          />
+          <CardActions className="gallery-atc">
+            <ATC
+              onClick={handleAddToCart}
+              variantSku={variant.sku}
+              ATCAdded={ATCAdded}
+              ATCAdding={ATCAdding}
+              btnStyle="atc-button"
+            />
+          </CardActions>
         )}
 
         {variant.inStock < 1 && (
@@ -124,6 +127,7 @@ const VariantCard = ({ variant, styleMap }) => {
               openOutOfStockDialog={openOutOfStockDialog}
               handleOpenEmailConfirmation={handleOpenEmailConfirmation}
             />
+
             {openEmailConfirmation && (
               <ConfirmEmail
                 onExited={closeEmailConfirmation}
