@@ -25,15 +25,9 @@ import { getDefaultEntity } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions';
-import TransactionErrorMsg from './TransactionErrorMsg';
-<<<<<<< HEAD
 import { resetCart } from '../../modules/cart/actions';
-=======
-import {
-  resetTaxCalculationInCart,
-  resetCart
-} from '../../modules/cart/actions';
->>>>>>> Modal window on failed order placement
+import TransactionMessage from './TransactionMessage';
+import { resetOrderState } from '../../modules/order/actions';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -119,6 +113,19 @@ const Checkout = ({
   const [checkoutModalOpen, setCheckoutModalOpen] = React.useState(false);
 
   useEffect(() => {
+    if(orderIsLoading || orderError) {
+      setCheckoutModalOpen(true);
+    } else {
+      handleCheckoutModalClose();
+      if(orderError === false) {
+        dispatch(resetCart());
+        setPayload({});
+        history.replace('/order');
+      }
+    }
+  }, [orderError, orderIsLoading]);
+
+  useEffect(() => {
     if (!account_jwt && activeStep > 0) {
       history.push('/');
     }
@@ -138,7 +145,8 @@ const Checkout = ({
 
   const handleCheckoutModalClose = () => {
     setCheckoutModalOpen(false);
-  }
+    dispatch(resetOrderState());
+  };
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -160,6 +168,7 @@ const Checkout = ({
   };
 
   const handleReviewStep = () => {
+
     const paymentMethodNonce = get(payload, 'paymentDetails.nonce');
     const paymentMethodToken = get(payload, 'paymentDetails.token');
     delete payload.paymentDetails.nonce;
@@ -198,9 +207,11 @@ const Checkout = ({
 
 =======
 
-    console.log(orderIsLoading, orderError);
-    if (orderIsLoading === true || orderError === null) return null;
+    // if(orderIsLoading === false && orderError === false) {
 
+    // }
+
+<<<<<<< HEAD
 >>>>>>> Modal window on failed order placement
     if (orderError === true) {
       setCheckoutModalOpen(true);
@@ -210,6 +221,8 @@ const Checkout = ({
       setPayload({});
       history.replace('/order');
     }
+=======
+>>>>>>> Functional modal window for processing and error message
     return true;
   };
 
@@ -378,7 +391,7 @@ const Checkout = ({
               closeAfterTransition
             >
               <Fade in={checkoutModalOpen}>
-                <TransactionErrorMsg />
+                <TransactionMessage orderError={orderError}/>
               </Fade>
             </Modal>
           </Box>

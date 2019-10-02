@@ -8,7 +8,8 @@ import {
   RECEIVED_GET_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND
+  RECEIVED_TRANSACTION_REQUEST_REFUND,
+  RESET_ORDER_STATE
 } from './types';
 
 const INITIAL_STATE = {
@@ -36,9 +37,9 @@ export default (state = INITIAL_STATE, action) => {
         transactionError: true
       };
     case REQUEST_FIND_ALL_ORDERS:
-      return { ...state };
+      return { ...state, isLoading: true };
     case RECEIVED_FIND_ALL_ORDERS:
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload, isLoading: false };
     case REQUEST_GET_ORDER:
       return { ...state, isLoading: true, order: null };
     case RECEIVED_GET_ORDER:
@@ -46,10 +47,11 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_FIND_ORDERS_BY_ACCOUNT:
       return { ...state };
     case REQUEST_REFUND_TRANSACTION:
-      return { ...state, refunding: true };
+      return { ...state, isLoading: true };
     case RECEIVED_TRANSACTION_REQUEST_REFUND:
-      console.log('reducer');
-      return { ...state, order: action.payload, refunding: false };
+      return { ...state, order: action.payload, isLoading: false };
+    case RESET_ORDER_STATE:
+      return { ...state, isLoading: false, transactionError: null }
     default:
       return state;
   }

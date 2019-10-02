@@ -7,10 +7,10 @@ import {
   REQUEST_GET_ORDER,
   RECEIVED_GET_ORDER,
   REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND
+  RECEIVED_TRANSACTION_REQUEST_REFUND,
+  RESET_ORDER_STATE
 } from './types';
 
-import { resetCart } from '../../modules/cart/actions';
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
@@ -179,3 +179,10 @@ export const receivedTransactionRequestRefund = order => (
     payload: order
   });
 };
+
+export const resetOrderState = () => {
+  return {
+    type: RESET_ORDER_STATE,
+  };
+};
+
