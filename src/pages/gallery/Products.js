@@ -4,16 +4,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
+
 import GalleryContext from '../../contexts/GalleryContext';
 import CategorySummary from './CategorySummary';
 //import ProductSummary from './ProductSummary';
 import { getProductCategories } from '../../utils/product';
 
 const skinImg = require('../../../src/assets/images/skin.png');
-const skinIcon = require('../../../src/assets/images/skin.png');
-const healthIcon = require('../../../src/assets/images/general.png');
 const healthImg = require('../../../src/assets/images/general.png');
-const energyIcon = require('../../../src/assets/images/targeted.png');
 const energyImg = require('../../../src/assets/images/targeted.png');
 
 const Products = () => {
@@ -50,7 +48,6 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>General Health</h3>
-                    {/* <img src={healthIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Powerful, science-based formulas designed to keep you
@@ -66,7 +63,6 @@ const Products = () => {
             <CategorySummary
               key={'core'}
               products={productCategoriesToProducts.core}
-              variantMap={products}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',
@@ -90,7 +86,6 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>Targeted Solutions</h3>
-                    {/* <img src={energyIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Crafted with ingredients shown to deliver specific
@@ -107,7 +102,6 @@ const Products = () => {
             <CategorySummary
               key={'energy'}
               products={productCategoriesToProducts.energy}
-              variantMap={products}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',
@@ -131,7 +125,6 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>Skin Health</h3>
-                    {/* <img src={skinIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Nourish your skin from within and topically for fewer
@@ -147,7 +140,6 @@ const Products = () => {
             <CategorySummary
               key={'skin'}
               products={productCategoriesToProducts.skin}
-              variantMap={products}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',

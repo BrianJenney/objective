@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link as RouterLink, withRouter, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
+
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
@@ -8,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { Link as RouterLink, withRouter, matchPath } from 'react-router-dom';
+
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
@@ -105,7 +107,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={8} className="option text-right">
                       <StyledBox fontSize={9}>
                         Free Shipping On Orders Over $75
-                    </StyledBox>
+                      </StyledBox>
                     </Grid>
                     <Grid item xs={4} className="option text-left">
                       <StyledBox fontSize={9}>Free Returns</StyledBox>
@@ -120,7 +122,7 @@ const Header = ({ currentUser, location }) => {
                           <Grid item xs={6} className="option text-right">
                             <StyledBox fontSize={12}>
                               Free Shipping On Orders Over $75
-                        </StyledBox>
+                            </StyledBox>
                           </Grid>
                           <Grid item xs={6} className="option text-left">
                             <StyledBox fontSize={12}>Free Returns</StyledBox>
@@ -136,12 +138,12 @@ const Header = ({ currentUser, location }) => {
                               <Grid item xs={6} className="h-pding">
                                 <StyledLink component={RouterLink} to="/gallery">
                                   Shop
-                            </StyledLink>
+                                </StyledLink>
                               </Grid>
                               <Grid item xs={6} className="h-pding">
                                 <StyledLink component={RouterLink} to="/">
                                   Journal
-                            </StyledLink>
+                                </StyledLink>
                               </Grid>
                             </Grid>
                           </Grid>

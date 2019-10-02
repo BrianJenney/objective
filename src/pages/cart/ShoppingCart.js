@@ -18,8 +18,8 @@ const ShoppingCart = () => {
           <ShoppingBag />
           <span
             style={{
-              'font-family': 'p22-underground, sans-serif',
-              'font-size': '14px'
+              'fontFamily': 'p22-underground, sans-serif',
+              'fontSize': '14px'
             }}
           >
             {cartCount}

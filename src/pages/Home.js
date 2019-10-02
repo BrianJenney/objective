@@ -61,7 +61,7 @@ class Home extends Component {
     if (!this.state.content.heroSlider) return <></>;
 
     return this.state.content.heroSlider.map(image => (
-      <li>
+      <li key={image.sys.id}>
         <img src={image.fields.file.url} style={{ width: '100%' }} />
       </li>
     ));
@@ -71,7 +71,7 @@ class Home extends Component {
     if (!this.state.content.homepageSection) return <></>;
 
     return this.state.content.homepageSection.map(section => (
-      <div className="section">
+      <div className="section" key={section.sys.id}>
         {documentToReactComponents(
           section.fields.mainContent,
           contentfulOptions
@@ -98,7 +98,7 @@ class Home extends Component {
     return (
       <>
         {bps.map(variant => (
-          <HomeVariantCard variant={variant} />
+          <HomeVariantCard variant={variant} key={variant.id} />
         ))}
       </>
     );
@@ -122,7 +122,7 @@ class Home extends Component {
     return (
       <>
         {fps.map(variant => (
-          <HomeVariantCard variant={variant} />
+          <HomeVariantCard variant={variant} key={variant.id} />
         ))}
       </>
     );
