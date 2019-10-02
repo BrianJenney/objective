@@ -54,6 +54,9 @@ const VariantCard = ({ variant, styleMap }) => {
       addToCart(cart, variant, quantity);
 
       setATCAdding(false);
+      setTimeout(() => {
+        setATCAdded(false);
+      },500)
     }, 500);
     /*
     ref.current.scrollIntoView({
