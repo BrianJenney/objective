@@ -18,8 +18,11 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 'normal',
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '36px',
-      marginBottom: theme.spacing(3)
+      fontSize: '24px',
+      fontFamily: 'FreightTextProBook',
+      textAlign: 'left',
+      margin: 0,
+      paddingTop: 15
     }
   },
   subTitle: {
@@ -39,8 +42,8 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
       <CssBaseline />
       <Box component={Paper}>
         <Box textAlign="center">
-          <Typography gutterBottom className={classes.title}>
-            { loginTitle ? loginTitle : 'Log in to your account' }
+          <Typography className={classes.title}>
+            { loginTitle ? loginTitle : 'Log in to your Account' }
           </Typography>
           <Box pt={4}>
             <LoginForm onSubmit={requestLogin} clearLoginError={clearLoginError} />
