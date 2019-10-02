@@ -70,7 +70,7 @@ export default function Instruction() {
 
   return (
     <Container>
-      <Grid container spacing={6} justify="center">
+      <Grid container justify="center">
         <Grid item xs={12} sm={5}>
           <Box {...box}>
             <Typography
