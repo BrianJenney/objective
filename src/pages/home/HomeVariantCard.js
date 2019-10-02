@@ -11,7 +11,7 @@ import CardActions from '@material-ui/core/CardActions';
 
 import { addToCart } from '../../modules/cart/functions';
 
-import { Button } from '../../components/common';
+import { Button, NavLink } from '../../components/common';
 import './home-style.scss';
 
 export const HomeVariantCard = ({ variant }) => {
@@ -45,26 +45,29 @@ export const HomeVariantCard = ({ variant }) => {
   return (
     <Grid item xs={12} md={4}>
       <Card className={`tile ${cardColor}`} ref={ref}>
-        <CardMedia
-          style={{ height: 430, width: '100%' }}
-          image={assets.imgs}
-          className="tile-img"
-        />
-        <CardContent className="pding">
-          <div className="prod-name-holder">
-            <Typography>
-              <Link to={`/products/${slug}`} className="title">
-                {name}
-              </Link>
-            </Typography>
-          </div>
-          <div className="variant-info">
-            <div>
-              <strong>${parseFloat(effectivePrice).toFixed(2)}</strong> &mdash;{' '}
-              {`${variantInfo.size} ${variantInfo.prodType}`}
+        <NavLink to={`/products/${slug}`} underline="none">
+          <CardMedia
+            style={{ height: 430, width: '100%' }}
+            image={assets.imgs}
+            className="tile-img"
+          />
+
+          <CardContent className="pding">
+            <div className="prod-name-holder">
+              <Typography>
+                <Link to={`/products/${slug}`} className="title">
+                  {name}
+                </Link>
+              </Typography>
             </div>
-          </div>
-        </CardContent>
+            <div className="variant-info">
+              <div>
+                <strong>${parseFloat(effectivePrice).toFixed(2)}</strong> &mdash;{' '}
+                {`${variantInfo.size} ${variantInfo.prodType}`}
+              </div>
+            </div>
+          </CardContent>
+        </NavLink>
         <div className="cta-area">
           <CardActions className="home-atc">
             <Button
@@ -77,8 +80,8 @@ export const HomeVariantCard = ({ variant }) => {
               {!ATCAdded
                 ? 'ADD TO CART'
                 : !ATCAdding
-                ? 'PRODUCT ADDED'
-                : 'ADDING...'}
+                  ? 'PRODUCT ADDED'
+                  : 'ADDING...'}
             </Button>
           </CardActions>
         </div>
