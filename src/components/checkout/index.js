@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { get, isNil } from 'lodash';
-import { useSnackbar } from 'notistack';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -18,42 +19,31 @@ import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from '../../utils/misc';
-import { StyledCheckoutSteps } from '../../pages/checkout/StyledComponents';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions';
-import {
-  resetTaxCalculationInCart,
-  resetCart
-} from '../../modules/cart/actions';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { resetCart } from '../../modules/cart/actions';
 
-const getPanelTitleContent = (step, activeStep, payload) => {
+const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
   const titleViewColor = isActiveStep ? '#ffffff' : '#4a4a4a';
   const titleView = (
     <Box
-      px={3}
+      px={xs ? '18px' : 3}
       py={2}
       width={1}
       color={titleViewColor}
       bgcolor={titleViewBgcolor}
       display="flex"
       alignItems="center"
-      style={{
-        fontSize: 18,
-        textTransform: 'uppercase'
-      }}
+      fontFamily="p22-underground, Helvetica, sans-serif"
+      fontSize={xs ? 14 : 18}
+      style={{ textTransform: 'uppercase' }}
     >
-      <StyledCheckoutSteps>
-        <Box mr={1} children={`STEP ${step + 1}`} />
-      </StyledCheckoutSteps>
-      <StyledCheckoutSteps>
-        <Box children={stepTitle} style={{ fontWeight: 600 }} />
-      </StyledCheckoutSteps>
+      <Box mr={1} children={`STEP ${step + 1}`} />
+      <Box children={stepTitle} style={{ fontWeight: 600 }} />
     </Box>
   );
   let payloadSummary = null;
@@ -72,11 +62,10 @@ const getPanelTitleContent = (step, activeStep, payload) => {
     payloadSummary && !isActiveStep ? (
       <Box
         width={1}
-        px={14}
-        py={4}
+        px={xs ? 8 : 14}
+        py={xs ? 3 : 4}
         bgcolor="rgba(252, 248, 244, 0.5)"
         color="#231f20"
-        style={{ fontSize: 20 }}
       >
         {payloadSummary}
       </Box>
@@ -106,10 +95,9 @@ const Checkout = ({
   const [activeStep, setActiveStep] = useState(0);
   const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
-  const { account_jwt, email: currentUserEmail } = currentUser.data;
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const { account_jwt, email: currentUserEmail } = currentUser.data;
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -119,11 +107,6 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2) {
-      console.log('Payload *********', {
-        activeStep,
-        shippingAddress: payload.shippingAddress,
-        subtotal
-      });
       dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
     }
   }, [
@@ -215,7 +198,7 @@ const Checkout = ({
   return (
     <ScrollToTop>
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
-        <Container style={xs ? { padding: 0 } : {}}>
+        <Container>
           <Box py={10} className="checkout-wrapper">
             <CssBaseline />
             <Grid container spacing={4}>
@@ -224,11 +207,11 @@ const Checkout = ({
                 flex={1}
                 xs={12}
                 md={8}
-                className="right-side"
                 style={xs ? { padding: 0 } : {}}
+                className="right-side"
               >
                 <Panel
-                  title={getPanelTitleContent(0, activeStep, {
+                  title={getPanelTitleContent(xs, 0, activeStep, {
                     email: currentUserEmail
                   })}
                   collapsible
@@ -251,6 +234,7 @@ const Checkout = ({
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(
+                    xs,
                     1,
                     activeStep,
                     payload.shippingAddress
@@ -274,6 +258,7 @@ const Checkout = ({
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(
+                    xs,
                     2,
                     activeStep,
                     payload.paymentDetails
@@ -302,7 +287,7 @@ const Checkout = ({
                   />
                 </Panel>
                 <Panel
-                  title={getPanelTitleContent(3, activeStep, {})}
+                  title={getPanelTitleContent(xs, 3, activeStep, {})}
                   collapsible
                   hideExpandIcon
                   expanded={activeStep === 3}

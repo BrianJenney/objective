@@ -2,12 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
-import { makeStyles } from '@material-ui/core/styles';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -99,6 +100,8 @@ const PaymentForm = ({
   backLabel,
   allowFlyMode
 }) => {
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -143,8 +146,8 @@ const PaymentForm = ({
         color="#231f20"
         variant="h5"
         children="Credit Card"
-        fontSize={30}
-        mb={4}
+        fontSize={xs ? 24 : 30}
+        mb={xs ? 3 : 4}
       />
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -220,7 +223,7 @@ const PaymentForm = ({
                 color="#231f20"
                 variant="h5"
                 children="Billing Address"
-                fontSize={30}
+                fontSize={xs ? 24 : 30}
                 mb={1}
               />
             </Grid>

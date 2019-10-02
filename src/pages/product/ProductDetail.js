@@ -25,6 +25,7 @@ import {
 import { ATC, OutOfStockPDP } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
 import './PDP-style.css';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
@@ -145,7 +146,7 @@ const ProductDetail = () => {
     content == null ||
     selectedVariantSku == null
   )
-    return null;
+    return <LoadingSpinner loadingMessage="Loading product" />;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;
