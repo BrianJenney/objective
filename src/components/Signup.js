@@ -11,7 +11,7 @@ import { MenuLink, NavLink } from './common';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    height: '48px',
+    minHeight: '48px',
     fontSize: '48px',
     color: '#231f20',
     fontFamily: 'Canela Text',
