@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -71,12 +71,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductOutOfStockForm = ({
-  closeDialog,
-  product_img,
-  product_name,
-  handleOpenEmailConfirmation
-}) => {
+const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
   const classes = useStyles();
   const initialValues = {
     email: '',
@@ -87,64 +82,52 @@ const ProductOutOfStockForm = ({
     const { email, subscribed } = values;
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
-    handleOpenEmailConfirmation();
     closeDialog();
   };
 
   const renderForm = ({ values, isValid }) => (
-    <>
-      <Form>
-        <Paper className={classes.paper}>
-          <CssBaseline />
-          <Box align="center">
-            <Typography className={classes.title}>
-              It'll be back soon, we promise!
+    <Form>
+      <Paper className={classes.paper}>
+        <CssBaseline />
+        <Box align="center">
+          <Typography className={classes.title}>
+            It'll be back soon, we promise!
+          </Typography>
+
+          <Box className={classes.box}>
+            <Typography className={classes.subTitle}>
+              We don't have this at the moment, but we'll let you know as soon
+              as it's in stock
             </Typography>
 
-            <Box className={classes.box}>
-              <Typography className={classes.subTitle}>
-                We don't have this at the moment, but we'll let you know as soon
-                as it's in stock
-              </Typography>
-
-              <CardMedia image={product_img} className={classes.bigAvatar} />
-              <Typography className={classes.name}>{product_name}</Typography>
-            </Box>
+            <CardMedia image={product_img} className={classes.bigAvatar} />
+            <Typography className={classes.name}>{product_name}</Typography>
+          </Box>
+          <Field
+            name="email"
+            label="Email Address"
+            component={InputField}
+            autoComplete="email"
+          />
+          <Box align="start">
             <Field
-<<<<<<< HEAD
-              name="email"
-              label="Email Address"
-              component={InputField}
-              autoComplete="email"
-            />
-            <Box align="start">
-              <Field
-                style={{ padding: '20px 7px 20px 0' }}
-                name="subscribed"
-                label="Subscribe to True Health news"
-                color="primary"
-                component={CheckboxField}
-                value={values.subscribed}
-              />
-            </Box>
-            <Button
-              fullWidth
-              type="submit"
-              children="Submit"
-              disabled={!isValid}
-=======
               style={{ padding: '20px 7px 20px 0' }}
               name="subscribed"
               label="Subscribe to Objective news"
               color="primary"
               component={CheckboxField}
               value={values.subscribed}
->>>>>>> a2b2eadbf1d79146414e13c531aabc5fbc6fd943
             />
           </Box>
-        </Paper>
-      </Form>
-    </>
+          <Button
+            fullWidth
+            type="submit"
+            children="Submit"
+            disabled={!isValid}
+          />
+        </Box>
+      </Paper>
+    </Form>
   );
   return (
     <Formik
