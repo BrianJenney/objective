@@ -23,10 +23,11 @@ export default function Instruction() {
   if (!content) {
     return null;
   }
-
+  const boxBorder = `solid 2px ${product.color}`;
   const { when, how, how_much } = content.howToTake;
+
   const When = () => (
-    <div className="one-box whhm-slide" id="slide-1">
+    <div className="one-box whhm-slide" style={{border: boxBorder}} id="slide-1">
       <div className="one-label">WHEN</div>
       <div className="img-container">
         <img className="clock-icon" src={when.icon} alt="" />
@@ -40,7 +41,7 @@ export default function Instruction() {
     </div>
   );
   const How = () => (
-    <div className="two-box whhm-slide" id="slide-2">
+    <div className="two-box whhm-slide" style={{border: boxBorder}} id="slide-2">
       <div className="two-label">HOW</div>
       <div className="img-container">
         <img className="glass-icon" src={how.icon} alt="" />
@@ -54,7 +55,7 @@ export default function Instruction() {
     </div>
   );
   const HowMuch = () => (
-    <div className="three-box whhm-slide" id="slide-3">
+    <div className="three-box whhm-slide" style={{border: boxBorder}} id="slide-3">
       <div className="three-label">HOW MUCH</div>
       <div className="img-container">
         <img className="spoons-icon" src={how_much.icon} alt="" />
@@ -90,17 +91,9 @@ export default function Instruction() {
       </Grid>
       <div className="whhm-wrapper">
         <div className="step-slider">
-          <Grid container justify="center" xs={12} space={3}>
-            <Grid item>
-              <When />
-            </Grid>
-            <Grid item>
-              <How />
-            </Grid>
-            <Grid item>
-              <HowMuch />
-            </Grid>
-          </Grid>
+          <When />
+          <How />
+          <HowMuch />
         </div>
       </div>
     </Container>
