@@ -122,8 +122,12 @@ const ProductDetail = () => {
 
   const closeOutOfStockDialog = useCallback(() => {
     setOpenOutOfStockDialog(false);
-    setOpenEmailConfirmation(true);
   }, [setOpenOutOfStockDialog]);
+
+  /*Out Of Stock email confirmation */
+  const handleOpenEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(true);
+  }, [setOpenEmailConfirmation]);
 
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
@@ -212,6 +216,9 @@ const ProductDetail = () => {
                         product_img={product.assets.img_front}
                         product_name={product.name}
                         openOutOfStockDialog={openOutOfStockDialog}
+                        handleOpenEmailConfirmation={
+                          handleOpenEmailConfirmation
+                        }
                       />
                       {openEmailConfirmation && (
                         <ConfirmEmail
@@ -288,6 +295,9 @@ const ProductDetail = () => {
                           product_img={product.assets.img_front}
                           product_name={product.name}
                           openOutOfStockDialog={openOutOfStockDialog}
+                          handleOpenEmailConfirmation={
+                            handleOpenEmailConfirmation
+                          }
                         />
                         {openEmailConfirmation && (
                           <ConfirmEmail

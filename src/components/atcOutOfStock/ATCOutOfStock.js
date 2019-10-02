@@ -49,7 +49,8 @@ export const OutOfStock = ({
   onExited,
   product_img,
   product_name,
-  openOutOfStockDialog
+  openOutOfStockDialog,
+  handleOpenEmailConfirmation
 }) => {
   const classes = useStyles();
   return (
@@ -64,6 +65,7 @@ export const OutOfStock = ({
           onExited={onExited}
           product_img={product_img}
           product_name={product_name}
+          handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}
     </Grid>

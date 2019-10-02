@@ -69,11 +69,12 @@ const VariantCard = ({ variant, styleMap }) => {
 
   const closeOutOfStockDialog = useCallback(() => {
     setOpenOutOfStockDialog(false);
-    setOpenEmailConfirmation(true);
   }, [setOpenOutOfStockDialog]);
 
   /*Out Of Stock email confirmation */
-
+  const handleOpenEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(true);
+  }, [setOpenEmailConfirmation]);
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
   }, [setOpenEmailConfirmation]);
@@ -92,14 +93,10 @@ const VariantCard = ({ variant, styleMap }) => {
         <NavLink to={`/products/${variant.slug}`} underline="none">
           <div className="prod-name-holder">
             <Typography>
-              <span
-                className="title"
-                style={styleMap.text}
-              >
+              <span className="title" style={styleMap.text}>
                 {variant.name}
               </span>
             </Typography>
-
           </div>
           <div className="variant-info">
             <PriceVariantInfo variant={variant} />
@@ -111,7 +108,7 @@ const VariantCard = ({ variant, styleMap }) => {
         {ATCEnabled && variant.inStock > 0 && (
           <ATC
             onClick={handleAddToCart}
-            // variantSku={selectedVariantSku}
+            variantSku={variant.sku}
             ATCAdded={ATCAdded}
             ATCAdding={ATCAdding}
           />
@@ -125,6 +122,7 @@ const VariantCard = ({ variant, styleMap }) => {
               product_img={variant.assets.imgs}
               product_name={variant.name}
               openOutOfStockDialog={openOutOfStockDialog}
+              handleOpenEmailConfirmation={handleOpenEmailConfirmation}
             />
             {openEmailConfirmation && (
               <ConfirmEmail

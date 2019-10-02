@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { InputField, CheckboxField } from '../form-fields';
 import { Button } from '../common';
-
+import ConfirmEmail from '../../pages/product/ProductOutOfStockEmailConfirmed';
 const schema = object().shape({
   email: string()
     .required('Email is required')
@@ -71,7 +71,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
+const ProductOutOfStockForm = ({
+  closeDialog,
+  product_img,
+  product_name,
+  handleOpenEmailConfirmation
+}) => {
   const classes = useStyles();
   const initialValues = {
     email: '',
@@ -80,54 +85,58 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
 
   const handleEmailNotification = values => {
     const { email, subscribed } = values;
+    console.log('DIALOG====', handleOpenEmailConfirmation);
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
+    handleOpenEmailConfirmation();
     closeDialog();
   };
 
   const renderForm = ({ values, isValid }) => (
-    <Form>
-      <Paper className={classes.paper}>
-        <CssBaseline />
-        <Box align="center">
-          <Typography className={classes.title}>
-            It'll be back soon, we promise!
-          </Typography>
-
-          <Box className={classes.box}>
-            <Typography className={classes.subTitle}>
-              We don't have this at the moment, but we'll let you know as soon
-              as it's in stock
+    <>
+      <Form>
+        <Paper className={classes.paper}>
+          <CssBaseline />
+          <Box align="center">
+            <Typography className={classes.title}>
+              It'll be back soon, we promise!
             </Typography>
 
-            <CardMedia image={product_img} className={classes.bigAvatar} />
-            <Typography className={classes.name}>{product_name}</Typography>
-          </Box>
-          <Field
-            name="email"
-            label="Email Address"
-            component={InputField}
-            autoComplete="email"
-          />
-          <Box align="start">
+            <Box className={classes.box}>
+              <Typography className={classes.subTitle}>
+                We don't have this at the moment, but we'll let you know as soon
+                as it's in stock
+              </Typography>
+
+              <CardMedia image={product_img} className={classes.bigAvatar} />
+              <Typography className={classes.name}>{product_name}</Typography>
+            </Box>
             <Field
-              style={{ padding: '20px 7px 20px 0' }}
-              name="subscribed"
-              label="Subscribe to True Health news"
-              color="primary"
-              component={CheckboxField}
-              value={values.subscribed}
+              name="email"
+              label="Email Address"
+              component={InputField}
+              autoComplete="email"
+            />
+            <Box align="start">
+              <Field
+                style={{ padding: '20px 7px 20px 0' }}
+                name="subscribed"
+                label="Subscribe to True Health news"
+                color="primary"
+                component={CheckboxField}
+                value={values.subscribed}
+              />
+            </Box>
+            <Button
+              fullWidth
+              type="submit"
+              children="Submit"
+              disabled={!isValid}
             />
           </Box>
-          <Button
-            fullWidth
-            type="submit"
-            children="Submit"
-            disabled={!isValid}
-          />
-        </Box>
-      </Paper>
-    </Form>
+        </Paper>
+      </Form>
+    </>
   );
   return (
     <Formik
