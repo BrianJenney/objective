@@ -12,13 +12,12 @@ import ScrollToTop from '../components/common/ScrollToTop';
 import { ProductStore } from '../contexts/ProductContext';
 
 const Product = ({ match }) => {
-  const { product_slug, variant_slug } = match.params;
+  const { product_slug } = match.params;
 
   return (
     <ScrollToTop>
       <ProductStore productSlug={product_slug}>
         <ProductDetail />
-        {/* <ProductDetail variantSlug={variant_slug} /> */}
         <TabSection />
         <Instruction />
         <ResearchSources />

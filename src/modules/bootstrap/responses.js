@@ -11,7 +11,7 @@ export const handleBootstrapResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'bootstrap-orchestration.request.get':
       store.dispatch(receivedFetchStorefront(data.store));
-      store.dispatch(receivedFetchCatalog(data.catalog.products));
+      store.dispatch(receivedFetchCatalog(data.catalog));
       store.dispatch(receivedFetchCart(data.cart));
       store.dispatch(receivedFetchAccountSuccess(data.account));
       localStorageClient.set('cartId', get(data, 'cart._id', ''));

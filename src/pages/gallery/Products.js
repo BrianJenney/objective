@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -6,38 +7,29 @@ import Divider from '@material-ui/core/Divider';
 import GalleryContext from '../../contexts/GalleryContext';
 import CategorySummary from './CategorySummary';
 //import ProductSummary from './ProductSummary';
-import { getGallery } from '../../hooks';
+import { getProductCategories } from '../../utils/product';
 
-const skinImg = require('../../../src/assets/images/skin-cat.png');
-const skinIcon = require('../../../src/assets/images/skin-cat-icon.png');
-const healthIcon = require('../../../src/assets/images/health-cat-icon.png');
-const healthImg = require('../../../src/assets/images/health-cat.png');
-const energyIcon = require('../../../src/assets/images/energy-cat-icon.png');
-const energyImg = require('../../../src/assets/images/energy-cat.png');
+const skinImg = require('../../../src/assets/images/skin.png');
+const skinIcon = require('../../../src/assets/images/skin.png');
+const healthIcon = require('../../../src/assets/images/general.png');
+const healthImg = require('../../../src/assets/images/general.png');
+const energyIcon = require('../../../src/assets/images/targeted.png');
+const energyImg = require('../../../src/assets/images/targeted.png');
 
 const Products = () => {
-  const { products, variants, prices } = useContext(GalleryContext);
+  const products = useContext(GalleryContext);
 
   if (!products) return null;
-  const [
-    productSlugs,
-    productMap,
-    variantSlugs,
-    variantMap,
-    productCategories
-  ] = getGallery(products, variants, prices);
-  console.log(products, variants, prices);
 
+  const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
 
   productCategories.map(productCategory => {
     products
       .filter(product => {
-        return product.category === productCategory;
+        return product.productCategory === productCategory;
       })
       .map(product => {
-        product = productMap.get(product.slug);
-
         if (productCategoriesToProducts[productCategory]) {
           productCategoriesToProducts[productCategory].push(product);
         } else {
@@ -47,10 +39,6 @@ const Products = () => {
   });
 
   if (!productCategoriesToProducts.skin) return null;
-  console.log(productMap, variantMap, productCategories);
-  console.log(productCategoriesToProducts);
-  console.log(productCategoriesToProducts.skin);
-  //Code needs to be replaced to map through different categories in different containers
 
   return (
     <>
@@ -62,7 +50,7 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>General Health</h3>
-                    <img src={healthIcon} alt="" className="blurb-icon" />
+                    {/* <img src={healthIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Powerful, science-based formulas designed to keep you
@@ -78,7 +66,7 @@ const Products = () => {
             <CategorySummary
               key={'core'}
               products={productCategoriesToProducts.core}
-              variantMap={variantMap}
+              variantMap={products}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',
@@ -102,7 +90,7 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>Targeted Solutions</h3>
-                    <img src={energyIcon} alt="" className="blurb-icon" />
+                    {/* <img src={energyIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Crafted with ingredients shown to deliver specific
@@ -119,7 +107,7 @@ const Products = () => {
             <CategorySummary
               key={'energy'}
               products={productCategoriesToProducts.energy}
-              variantMap={variantMap}
+              variantMap={products}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',
@@ -143,7 +131,7 @@ const Products = () => {
                 <Grid container className="gallery-content-blurb">
                   <Grid item xs={12} md={5} className="leftside">
                     <h3>Skin Health</h3>
-                    <img src={skinIcon} alt="" className="blurb-icon" />
+                    {/* <img src={skinIcon} alt="" className="blurb-icon" /> */}
                     <Divider variant="fullWidth" />
                     <p>
                       Nourish your skin from within and topically for fewer
@@ -159,7 +147,7 @@ const Products = () => {
             <CategorySummary
               key={'skin'}
               products={productCategoriesToProducts.skin}
-              variantMap={variantMap}
+              variantMap={products}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',

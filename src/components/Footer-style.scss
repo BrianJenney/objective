@@ -97,9 +97,33 @@
     font-size: 13px;
     text-transform: none;
     padding: 10px 30px 10px;
+    .MuiFormHelperText-root.Mui-error {
+        color: #fff;
+      }
+    .MuiOutlinedInput-notchedOutline {
+      top: 10px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      padding: 0;
+      position: absolute; 
+    }
     @media (min-width: 1200px) {
       font-size: 16px;
       padding: 30px 0px 30px 50px;
+      .MuiFormHelperText-root.Mui-error {
+        color: #fff
+      }
+      .MuiOutlinedInput-notchedOutline {
+        top: 10px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: 0;
+        position: absolute; 
+      }
     }
     form {
       display: flex;

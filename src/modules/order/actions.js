@@ -26,15 +26,15 @@ export const requestRefundTransaction = (authToken, transaction) => (
       orderId: transaction.orderId,
       orderReference: transaction.orderReference
     },
-    params: { 
-      account_jwt: authToken, 
+    params: {
+      account_jwt: authToken,
       jwt: authToken,
       originalRequest: 'transaction.request.void'
     }
   };
   console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
-  console.log("SENDING PAYLOAD",payload);
+  console.log('SENDING PAYLOAD', payload);
   client.send(
     '/exchange/transaction/transaction.request.refund',
     {
@@ -92,7 +92,6 @@ export const receivedCreateOrder = order => {
   };
 };
 
-
 export const requestFindOrdersByAccount = accountJwt => (
   dispatch,
   getState
@@ -106,7 +105,7 @@ export const requestFindOrdersByAccount = accountJwt => (
     }
   };
   const payload = JSON.stringify(msgpack.encode(params));
-  
+
   client.send(
     '/exchange/order/order.request.find',
     {
@@ -121,7 +120,10 @@ export const requestFindOrdersByAccount = accountJwt => (
   });
 };
 
-export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
+export const requestGetOrder = (accountJwt, orderId) => (
+  dispatch,
+  getState
+) => {
   const { client, replyTo } = getState().stomp;
   dispatch({
     type: REQUEST_GET_ORDER,
@@ -145,18 +147,25 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
   );
 };
 
-export const receivedGetOrder = order => {
-  return {
+export const receivedGetOrder = order => (dispatch, getState) => {
+  dispatch({
     type: RECEIVED_GET_ORDER,
     payload: order
-  };
+  });
 };
 
-export const receivedTransactionRequestRefund = order => (dispatch, getState) => {
-  console.log(order);
-  dispatch(requestFindOrdersByAccount(getState().account.data.account_jwt,order.accountId));
-  return {
+export const receivedTransactionRequestRefund = order => (
+  dispatch,
+  getState
+) => {
+  dispatch(
+    requestFindOrdersByAccount(
+      getState().account.data.account_jwt,
+      order.accountId
+    )
+  );
+  dispatch({
     type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order
-  };
+  });
 };

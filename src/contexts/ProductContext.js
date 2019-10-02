@@ -27,28 +27,76 @@ export class ProductStore extends Component {
   }
 
   componentDidMount() {
+    const { stomp } = store.getState();
+    const stompClient = stomp.client;
+    const replyTo = stomp.replyTo;
+
     contentfulClient.getEntries({
       'content_type': 'product',
       'fields.Slug': this.props.productSlug
     })
-      .then(entry => {
-        console.log('***** CONTENTFUL *****');
-        console.log(entry);
-        this.setState({ ...this.state, content: entry.items[0].fields });
-      })
-      .catch(err => {
-        this.setState({ ...this.state, content: null });
-      });
+    .then(entry => {
+      this.setState({ ...this.state, content: entry.items[0].fields });
+    })
+    .catch(err => {
+      this.setState({ ...this.state, content: null });
+    });
+
     EventEmitter.addListener('product.request.find', data => {
-      this.setState({ ...this.state, product: data.data.data[0] });
+      const product = data.data.data[0];
+
+      let params = {
+        params: {
+          query: {
+            product_id: product._id
+          }
+        }
+      };
+  
+      let obj = JSON.stringify(msgpack.encode(params));
+      stompClient.send(
+        '/exchange/variant/variant.request.find',
+        {
+          'reply-to': replyTo,
+          'correlation-id': ObjectId()
+        },
+        obj
+      );
+
+      this.setState({ ...this.state, product });
     });
+
     EventEmitter.addListener('variant.request.find', data => {
-      this.setState({ ...this.state, variants: data.data.data });
+      const variants = data.data.data;
+
+      let params = {
+        params: {
+          query: {
+            product_id: this.state.product._id
+          }
+        }
+      };
+
+      let obj = JSON.stringify(msgpack.encode(params));
+      stompClient.send(
+        '/exchange/price/price.request.find',
+        {
+          'reply-to': replyTo,
+          'correlation-id': ObjectId()
+        },
+        obj
+      );
+
+      this.setState({ ...this.state, variants });
     });
+
     EventEmitter.addListener('price.request.find', data => {
-      this.setState({ ...this.state, prices: data.data.data });
+      const prices = data.data.data;
+
+      this.setState({ ...this.state, prices });
     });
-    this.getProductData();
+
+    this.getProductData(stompClient, replyTo);
   }
 
   componentDidUpdate(prevProps) {
@@ -64,11 +112,7 @@ export class ProductStore extends Component {
     return updated;
   }
 
-  getProductData() {
-    const { stomp } = store.getState();
-    const stompClient = stomp.client;
-    const replyTo = stomp.replyTo;
-
+  getProductData(stompClient, replyTo) {
     let params = {
       params: {
         query: {
@@ -78,43 +122,9 @@ export class ProductStore extends Component {
     };
 
     let obj = JSON.stringify(msgpack.encode(params));
+
     stompClient.send(
       '/exchange/product/product.request.find',
-      {
-        'reply-to': replyTo,
-        'correlation-id': ObjectId()
-      },
-      obj
-    );
-
-    params = {
-      params: {
-        query: {
-          prodSlug: this.props.productSlug
-        }
-      }
-    };
-
-    obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send(
-      '/exchange/variant/variant.request.find',
-      {
-        'reply-to': replyTo,
-        'correlation-id': ObjectId()
-      },
-      obj
-    );
-
-    params = {
-      params: {
-        query: {
-          prodSlug: this.props.productSlug
-        }
-      }
-    };
-    obj = JSON.stringify(msgpack.encode(params));
-    stompClient.send(
-      '/exchange/price/price.request.find',
       {
         'reply-to': replyTo,
         'correlation-id': ObjectId()

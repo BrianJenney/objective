@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Container from '@material-ui/core/Container';
@@ -11,7 +12,7 @@ import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import './home/home-style.scss';
-import { bestSellers, familySolutions, HomeVariantCard } from './home/';
+import { HomeVariantCard } from './home/';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
@@ -32,7 +33,7 @@ const contentfulOptions = {
   }
 };
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -45,6 +46,7 @@ export default class Home extends Component {
         let content = entry.fields;
 
         this.setState({
+          ...this.state,
           content: {
             ...content
           }
@@ -78,6 +80,54 @@ export default class Home extends Component {
     ));
   }
 
+  renderBestsellers() {
+    if (!this.props.products) {
+      return null;
+    }
+
+    const bestsellers = [
+      '5d8bb76ff5005515a437d4c8',
+      '5ceebfdca686a03bccfa67c0',
+      '5d8bb840f5005515a437d4cb'
+    ];
+
+    const bps = this.props.products
+      .filter(product => bestsellers.includes(product.id))
+      .map(product => product);
+
+    return (
+      <>
+        {bps.map(variant => (
+          <HomeVariantCard variant={variant} />
+        ))}
+      </>
+    );
+  }
+
+  renderFamily() {
+    if (!this.props.products) {
+      return null;
+    }
+
+    const family = [
+      '5d8ba4f6f5005515a437d4be',
+      '5ce6d310585756469c36e250',
+      '5ceec52ba686a03bccfa67c5'
+    ];
+
+    const fps = this.props.products
+      .filter(product => family.includes(product.id))
+      .map(product => product);
+
+    return (
+      <>
+        {fps.map(variant => (
+          <HomeVariantCard variant={variant} />
+        ))}
+      </>
+    );
+  }
+
   renderContent() {
     if (!this.state.content) return <></>;
 
@@ -105,10 +155,8 @@ export default class Home extends Component {
           <Container>
             <Box py={10}>
               <h1>Our Bestsellers</h1>
-              <Grid container spacing={3}>
-                {bestSellers.map(variant => (
-                  <HomeVariantCard variant={variant} />
-                ))}
+              <Grid container spacing={3} className="best-container">
+                {this.renderBestsellers()}
               </Grid>
             </Box>
           </Container>
@@ -122,11 +170,9 @@ export default class Home extends Component {
           <Container>
             <Box py={10}>
               <h1>HIS, HERS & THEIRS</h1>
-              <p>Solutions for the whole family!</p>
-              <Grid container spacing={3}>
-                {familySolutions.map(variant => (
-                  <HomeVariantCard variant={variant} />
-                ))}
+              <p>Solutions for the whole family</p>
+              <Grid container spacing={3} className="solutions-container">
+                {this.renderFamily()}
               </Grid>
             </Box>
           </Container>
@@ -139,3 +185,9 @@ export default class Home extends Component {
     return this.renderContent();
   }
 }
+
+const mapStateToProps = state => ({
+  products: state.catalog.variants
+});
+
+export default connect(mapStateToProps)(Home);
