@@ -111,6 +111,7 @@ const ProductOutOfStockForm = ({
               <Typography className={classes.name}>{product_name}</Typography>
             </Box>
             <Field
+<<<<<<< HEAD
               name="email"
               label="Email Address"
               component={InputField}
@@ -131,6 +132,14 @@ const ProductOutOfStockForm = ({
               type="submit"
               children="Submit"
               disabled={!isValid}
+=======
+              style={{ padding: '20px 7px 20px 0' }}
+              name="subscribed"
+              label="Subscribe to Objective news"
+              color="primary"
+              component={CheckboxField}
+              value={values.subscribed}
+>>>>>>> a2b2eadbf1d79146414e13c531aabc5fbc6fd943
             />
           </Box>
         </Paper>

@@ -92,15 +92,6 @@ const ChangePassword = ({
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <AlertPanel
-            p={2}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={errorMessage}
-            variant="subtitle2"
-          />
-        </Grid>
-        <Grid item xs={12}>
           <Field
             name="currentPassword"
             label="Current Password"
@@ -124,6 +115,15 @@ const ChangePassword = ({
                 </Box>
               )
             }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <AlertPanel
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={errorMessage}
+            variant="subtitle2"
           />
         </Grid>
         <Grid item xs={12}>

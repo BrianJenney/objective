@@ -33,13 +33,13 @@ const useStyles = makeStyles(theme => ({
     color : '#231f20',
     fontFamily: 'p22-underground, sans-serif',
     fontWeight : '600',
-    marginTop: '32px'
+    marginTop: '5px'
   },
   nxTextField : { 
     fontFamily: 'P22-underground', 
     fontSize: '18px' , 
-    marginTop: '5px', 
-    border: '1px solid #000000'}
+    marginTop: '5px'
+  }
 }));
 
 const AccountMenu = ({ logout}) => {
@@ -53,7 +53,7 @@ const AccountMenu = ({ logout}) => {
   const NTextField = withRouter(({history}) =>(
     
     <TextField 
-    className={classes.nxTextField}
+    className={`${classes.nxTextField} nxTextField`}
     variant="outlined"
     fullWidth
     select
