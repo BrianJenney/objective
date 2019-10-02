@@ -42,65 +42,24 @@ export class ProductStore extends Component {
       this.setState({ ...this.state, content: null });
     });
 
-    EventEmitter.addListener('product.request.find', data => {
-      const product = data.data.data[0];
+    EventEmitter.addListener('product.request.pdp', data => {
+      if (data.status === 'success' && data.data) {
+        let { product, variants, prices } = data.data;
 
-      let params = {
-        params: {
-          query: {
-            product_id: product._id
-          }
-        }
-      };
-  
-      let obj = JSON.stringify(msgpack.encode(params));
-      stompClient.send(
-        '/exchange/variant/variant.request.find',
-        {
-          'reply-to': replyTo,
-          'correlation-id': ObjectId()
-        },
-        obj
-      );
-
-      this.setState({ ...this.state, product });
-    });
-
-    EventEmitter.addListener('variant.request.find', data => {
-      const variants = data.data.data;
-
-      let params = {
-        params: {
-          query: {
-            product_id: this.state.product._id
-          }
-        }
-      };
-
-      let obj = JSON.stringify(msgpack.encode(params));
-      stompClient.send(
-        '/exchange/price/price.request.find',
-        {
-          'reply-to': replyTo,
-          'correlation-id': ObjectId()
-        },
-        obj
-      );
-
-      this.setState({ ...this.state, variants });
-    });
-
-    EventEmitter.addListener('price.request.find', data => {
-      const prices = data.data.data;
-
-      this.setState({ ...this.state, prices });
+        this.setState({ ...this.state, product, variants, prices });
+      }
     });
 
     this.getProductData(stompClient, replyTo);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.productSlug !== this.props.productSlug) this.getProductData();
+    if (prevProps.productSlug !== this.props.productSlug) {
+      const { stomp } = store.getState();
+      const stompClient = stomp.client;
+      const replyTo = stomp.replyTo;
+      this.getProductData(stompClient, replyTo);
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -124,7 +83,7 @@ export class ProductStore extends Component {
     let obj = JSON.stringify(msgpack.encode(params));
 
     stompClient.send(
-      '/exchange/product/product.request.find',
+      '/exchange/product/product.request.pdp',
       {
         'reply-to': replyTo,
         'correlation-id': ObjectId()
@@ -134,7 +93,6 @@ export class ProductStore extends Component {
   }
 
   render() {
-    console.log('product state', this.state);
     return (
       <Context.Provider value={{ ...this.state }}>
         {this.props.children}
