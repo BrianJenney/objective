@@ -60,19 +60,21 @@ const ImportantNotes = ({ data }) => {
 };
 
 export default function SupplementFactsTab() {
-  const { content } = useContext(ProductContext);
+  const { content, product } = useContext(ProductContext);
 
   if (!content) {
     return null;
   }
+  const border1 = `solid 1px ${product ? product.color : ''}`;
+  const border2 = `solid 2px ${product ? product.color : ''}`
 
   let ingredientList = null;
   if (!content.supplementFactsIngredientsParagraph) {
     ingredientList = content.supplementFactsIngredients.map(ingredient => (
       <tr>
-        <td dangerouslySetInnerHTML={{ __html: ingredient.ingredient }}></td>
-        <td align="center">{ingredient.amount}</td>
-        <td align="center">{ingredient.daily_value}</td>
+        <td dangerouslySetInnerHTML={{ __html: ingredient.ingredient }}  style={{border: border1}}></td>
+        <td align="center" style={{border: border1}}>{ingredient.amount}</td>
+        <td align="center" style={{border: border1}}>{ingredient.daily_value}</td>
       </tr>
     ));
   } else {
@@ -82,7 +84,7 @@ export default function SupplementFactsTab() {
   return (
     <div className="label-info-wrapper">
       <h2>Supplement Facts</h2>
-      <div className="top-block">
+      <div className="top-block" style={{borderTop: border2}}>
         <div className="flex-desktop">
           <div className="card facts-text">
             <ServingList data={content.supplementFactsServing} />
@@ -101,9 +103,9 @@ export default function SupplementFactsTab() {
             <table>
               <thead>
                 <tr>
-                  <th>Each Serving Contains</th>
-                  <th align="center">Amount</th>
-                  <th align="center">% Daily Value</th>
+                  <th  style={{border: border1}}>Each Serving Contains</th>
+                  <th align="center" style={{border: border1}}>Amount</th>
+                  <th align="center" style={{border: border1}}>% Daily Value</th>
                 </tr>
               </thead>
               <tbody>{ingredientList}</tbody>
@@ -112,8 +114,8 @@ export default function SupplementFactsTab() {
           <ServingNotes data={content.supplementFactsServingNotes} />
         </div>
       </div>
-      <div className="bottom-block">
-        <div className="card other-ingredients">
+      <div className="bottom-block" style={{borderTop: border1}}>
+        <div className="card other-ingredients" style={{borderRight: border1}}>
           <OtherIngredients data={content.supplementFactsOtherIngredients} />
         </div>
         <div className="card important">
