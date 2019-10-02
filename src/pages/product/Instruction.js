@@ -31,7 +31,10 @@ export default function Instruction() {
       <div className="img-container">
         <img className="clock-icon" src={when.icon} alt="" />
       </div>
-      <div className="one-bottom-color" style={{backgroundColor: product.color}}>
+      <div
+        className="one-bottom-color"
+        style={{ backgroundColor: product.color }}
+      >
         <div className="one-title">{when.label}</div>
       </div>
     </div>
@@ -42,7 +45,10 @@ export default function Instruction() {
       <div className="img-container">
         <img className="glass-icon" src={how.icon} alt="" />
       </div>
-      <div className="two-bottom-color"  style={{backgroundColor: product.color}}>
+      <div
+        className="two-bottom-color"
+        style={{ backgroundColor: product.color }}
+      >
         <div className="two-title">{how.label}</div>
       </div>
     </div>
@@ -53,7 +59,10 @@ export default function Instruction() {
       <div className="img-container">
         <img className="spoons-icon" src={how_much.icon} alt="" />
       </div>
-      <div className="three-bottom-color" style={{backgroundColor: product.color}}>
+      <div
+        className="three-bottom-color"
+        style={{ backgroundColor: product.color }}
+      >
         <div className="three-title">{how_much.label}</div>
       </div>
     </div>
@@ -64,27 +73,31 @@ export default function Instruction() {
       <Grid container spacing={6} justify="center">
         <Grid item xs={12} sm={5}>
           <Box {...box}>
-            <Typography style={{
-              fontWeight: 600,
-              fontSize: 24,
-              letterSpacing: 2.25,
-              fontFamily: 'p22-underground, sans-serif',
-              textAlign: 'center',
-              alignItems: 'center',
-            }}>HOW TO TAKE</Typography>
+            <Typography
+              style={{
+                fontWeight: 600,
+                fontSize: 24,
+                letterSpacing: 2.25,
+                fontFamily: 'p22-underground, sans-serif',
+                textAlign: 'center',
+                alignItems: 'center'
+              }}
+            >
+              HOW TO TAKE
+            </Typography>
           </Box>
         </Grid>
       </Grid>
       <div className="whhm-wrapper">
         <div className="step-slider">
-          <Grid container space={3} direction={mobile ? "column" : "row"} justifyContent={mobile ? "center" : "space-evenly"} >
-            <Grid item xs={12} sm={4}>
+          <Grid container justify="center" xs={12} space={3}>
+            <Grid item>
               <When />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item>
               <How />
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item>
               <HowMuch />
             </Grid>
           </Grid>
