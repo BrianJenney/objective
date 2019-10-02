@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import ProductContext from '../../contexts/ProductContext';
 
 import './cards-styles.css';
 
@@ -45,13 +46,13 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles( theme => ({
   indicator: {
     backgroundColor: '#fff'
   },
   tabs: {
-    borderLeft: '2px solid #003833',
-    borderBottom: '2px solid #003833',
+    borderLeft: props => props.border,
+    borderBottom: props => props.border,
     backgroundColor: '#fdfbf9',
     padding: '30px 0',
     fontFamily: 'p22-underground, Helvetica, sans',
@@ -67,13 +68,15 @@ const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     marginTop: '50px',
-    border: '2px solid #003833',
+    border: props => props.border,
     backgroundColor: '#FFF'
   }
 }));
 
 export default function PdpTabs() {
-  const classes = useStyles();
+  const { product } = useContext(ProductContext);
+  const boxBorder = `solid 2px ${product ? product.color : ''}`;
+  const classes = useStyles({border: boxBorder});
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
@@ -81,10 +84,13 @@ export default function PdpTabs() {
     setValue(newValue);
   }
 
+  if (!product) return null;
+
+
   return (
     <Container>
       <Grid spacing={0} xs={12}>
-        <Box className={classes.wrapper}>
+        <Box className={classes.wrapper} >
           <div className={classes.root}>
             <AppBar position="static" color="white" elevation={0}>
               <Tabs
