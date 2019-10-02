@@ -6,7 +6,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import ProductContext from '../../contexts/ProductContext';
 
 export default function HowItWorksTab() {
-  const { content } = useContext(ProductContext);
+  const { content, product } = useContext(ProductContext);
 
   if (!content) {
     return null;
@@ -24,7 +24,7 @@ export default function HowItWorksTab() {
       }
     }
   };
-
+  const border = `solid 1px ${product ? product.color : ''}`
   return (
     <div className="how-it-works-wrapper">
       <h2>{content.howItWorksHeader}</h2>
@@ -47,10 +47,10 @@ export default function HowItWorksTab() {
           )}
         </div>
       </div>
-      <div className="coreBenefits">
+      <div className="coreBenefits" style={{borderTop: border}}>
         <div className="textTitle">Core Benefits</div>
         <div className="topBlock">
-          <div className="cardTop leftCol">
+          <div className="cardTop leftCol" style={{borderTop: border}}>
             {documentToReactComponents(
               content.howItWorksCoreBenefit1,
               contentfulOptions
@@ -69,7 +69,7 @@ export default function HowItWorksTab() {
             <div className="blockMisc"></div>
             */}
           </div>
-          <div className="cardTop rightCol">
+          <div className="cardTop rightCol" style={{borderTop: border, borderLeft: border}}>
             {documentToReactComponents(
               content.howItWorksCoreBenefit2,
               contentfulOptions
@@ -77,8 +77,8 @@ export default function HowItWorksTab() {
           </div>
         </div>
         <div className="bottomBlock">
-          <div className="cardBottom leftCol">
-            <div className="textTitle textTitleBotom">Who This is For</div>
+          <div className="cardBottom leftCol" style={{borderTop: border}}>
+            <div className="textTitle textTitleBotom" style={{borderBottom: border}}>Who This is For</div>
             <div className="content">
               {documentToReactComponents(
                 content.howItWorksWhoThisIsFor,
@@ -86,8 +86,8 @@ export default function HowItWorksTab() {
               )}
             </div>
           </div>
-          <div className="cardBottom rightCol">
-            <div className="textTitle textTitleBotom">Clinical Results</div>
+          <div className="cardBottom rightCol" style={{borderTop: border, borderLeft: border}}>
+            <div className="textTitle textTitleBotom" style={{borderBottom: border}}>Clinical Results</div>
             <div className="content">
               {documentToReactComponents(
                 content.howItWorksClinicalResults,
