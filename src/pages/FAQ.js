@@ -158,7 +158,7 @@ const FAQ = () => {
                       Proposition 65 requires businesses to notify Californians about the levels of chemicals in the products they purchase for their homes or workplaces, or that are released into the environment. By providing this information, Proposition 65 enables Californians to make informed decisions about protecting themselves from exposure to these chemicals.
                     </StyledAnswers>
                   </StyledAnswerContainer >
-                  <StyledText style={{ marginBottom: 30 }}>
+                  <StyledText style={{ paddingLeft: 29, marginBottom: 30 }}>
                     The Office of Environmental Health Hazard Assessment (OEHHA) administers the Proposition 65 program. OEHHA, which is part of the California Environmental Protection Agency (Cal/EPA), also evaluates all currently available scientific information on substances considered for placement on the Proposition 65 list.
                   </StyledText >
                 </QAContainer>
