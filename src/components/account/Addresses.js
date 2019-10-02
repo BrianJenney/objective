@@ -210,7 +210,7 @@ const AccountAddresses = ({
           </Box>
           <Box
             mt="26px"
-            fontSize={16}
+            fontSize={xs ? 14 : 16}
             fontWeight={600}
             style={{ textTransform: 'uppercase' }}
           >
@@ -221,7 +221,7 @@ const AccountAddresses = ({
             />
           </Box>
           {onSubmit && (
-            <Box mt="55px" width="438px" mx="auto">
+            <Box mt={xs ? '28px' : '55px'} width={xs ? 1 : '438px'} mx="auto">
               <Button
                 fullWidth
                 type="button"
