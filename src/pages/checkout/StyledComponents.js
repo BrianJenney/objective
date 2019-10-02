@@ -19,13 +19,6 @@ const { semiTight } = lineHeight;
 const $thin1pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
 const $thin2pxRuler_gray = `solid 2px ${MEDIUM_GRAY}`;
 
-export const StyledCheckoutSteps = withStyles(theme => ({
-  root: {
-    fontSize: '1.125rem',
-    fontFamily: $brandSans
-  }
-}))(Typography);
-
 export const StyledLogoContainer = withStyles(theme => ({
   root: {
     borderBottom: '1px solid #000000',

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'lodash';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -9,9 +10,6 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MenuLink from './MenuLink';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {useTheme} from '@material-ui/core/styles';
-import { relative } from 'path';
 
 const styles = {
   root: {
@@ -21,7 +19,8 @@ const styles = {
   },
   content: {
     margin: 0,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    maxWidth: '100%'
   },
   expanded: {
     '&.MuiExpansionPanelSummary-content': {
@@ -33,7 +32,7 @@ const styles = {
   },
   expandIcon: {
     position: 'absolute',
-    top: 24,
+    top: 16,
     right: 100,
     padding: 0
   }
@@ -49,10 +48,10 @@ const Panel = ({
   children,
   ...rest
 }) => {
-  const [expandedInternal, setExpandedInternal] = useState(false);
-  const isPanelExpanded = isNil(expanded) ? expandedInternal : expanded;
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const [expandedInternal, setExpandedInternal] = useState(false);
+  const isPanelExpanded = isNil(expanded) ? expandedInternal : expanded;
 
   if (collapsible) {
     return (
@@ -74,14 +73,18 @@ const Panel = ({
               <MenuLink
                 children="CHANGE"
                 underline="always"
-                style={{fontSize: 16, color: '#6f6f6f'}}
+                style={{ fontSize: 16, color: '#6f6f6f' }}
               />
             )
           }
         >
           <Box width={1} children={title} />
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        <ExpansionPanelDetails
+          style={
+            xs ? { padding: '8px 18px 24px' } : { padding: '8px 24px 24px' }
+          }
+        >
           <Box width={1} children={children} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
