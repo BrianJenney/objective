@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'lodash';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -47,6 +48,8 @@ const Panel = ({
   children,
   ...rest
 }) => {
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [expandedInternal, setExpandedInternal] = useState(false);
   const isPanelExpanded = isNil(expanded) ? expandedInternal : expanded;
 
@@ -77,7 +80,11 @@ const Panel = ({
         >
           <Box width={1} children={title} />
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
+        <ExpansionPanelDetails
+          style={
+            xs ? { padding: '8px 18px 24px' } : { padding: '8px 24px 24px' }
+          }
+        >
           <Box width={1} children={children} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
