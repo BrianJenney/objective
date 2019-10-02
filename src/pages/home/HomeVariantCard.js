@@ -34,6 +34,9 @@ export const HomeVariantCard = ({ variant }) => {
       //Give effect of item being added
       addToCart(cart, variant, 1);
       setATCAdding(false);
+      setTimeout(() => {
+        setATCAdded(false);
+      },500)
     }, 500);
     ref.current.scrollIntoView({
       behavior: 'smooth',
