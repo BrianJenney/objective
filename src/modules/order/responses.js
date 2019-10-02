@@ -47,12 +47,12 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       store.dispatch(receivedGetOrder(data));
       break;
     case 'transaction.request.refund':
-        console.log('***** Transaction Request refund');
-        console.log(status);
-        console.log(data);
-        console.log(fields);
-        console.log(properties);
-        store.dispatch(receivedTransactionRequestRefund(data));
+      console.log('***** Transaction Request refund');
+      console.log(status);
+      console.log(data);
+      console.log(fields);
+      console.log(properties);
+      store.dispatch(receivedTransactionRequestRefund(data));
 
       break;
     default:

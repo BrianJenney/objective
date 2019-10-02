@@ -95,8 +95,11 @@ const Checkout = ({
   currentUser,
   cart,
   requestCreateAccount,
+  clearCreateAccountError,
   requestLogin,
+  clearLoginError,
   requestPatchAccount,
+  clearPatchAccountError,
   requestCreateOrder
 }) => {
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
@@ -211,15 +214,18 @@ const Checkout = ({
 
   return (
     <ScrollToTop>
-      <Box bgcolor="rgba(252, 248, 244, 0.5)" >
+      <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container style={xs ? { padding: 0 } : {}}>
-          <Box py={10} 
-          className="checkout-wrapper"
-          >
+          <Box py={10} className="checkout-wrapper">
             <CssBaseline />
             <Grid container spacing={4}>
-              <Grid item flex={1} xs={12} md={8} className="right-side" 
-              style={xs ? {padding: 0} : {}}
+              <Grid
+                item
+                flex={1}
+                xs={12}
+                md={8}
+                className="right-side"
+                style={xs ? { padding: 0 } : {}}
               >
                 <Panel
                   title={getPanelTitleContent(0, activeStep, {
@@ -233,7 +239,9 @@ const Checkout = ({
                   <CheckoutAuth
                     currentUser={currentUser}
                     requestCreateAccount={requestCreateAccount}
+                    clearCreateAccountError={clearCreateAccountError}
                     requestLogin={requestLogin}
+                    clearLoginError={clearLoginError}
                     handleNext={() => {
                       if (activeStep === 0) {
                         setActiveStep(1);
@@ -254,6 +262,7 @@ const Checkout = ({
                   <AccountAddresses
                     currentUser={currentUser}
                     requestPatchAccount={requestPatchAccount}
+                    clearPatchAccountError={clearPatchAccountError}
                     formType={ADDRESS_FORM_TYPES.CHECKOUT}
                     onSubmit={handleNext}
                     selectionEnabled
@@ -276,6 +285,7 @@ const Checkout = ({
                   <AccountPaymentDetails
                     currentUser={currentUser}
                     requestPatchAccount={requestPatchAccount}
+                    clearPatchAccountError={clearPatchAccountError}
                     formType={PAYMENT_FORM_TYPES.CHECKOUT}
                     onBack={handleBack}
                     onSubmit={handleNext}
@@ -298,16 +308,33 @@ const Checkout = ({
                   expanded={activeStep === 3}
                   onChange={e => onPanelChange(e, 3)}
                 >
-                  <CheckoutReviewForm onSubmit={handleNext} />
+                  {xs ? (
+                    <CartDrawer
+                      disableItemEditing
+                      hideCheckoutProceedLink
+                      hideTaxLabel
+                      showOrderSummaryText
+                      xsBreakpoint={xs}
+                    />
+                  ) : (
+                    ''
+                  )}
+                  <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
                 </Panel>
               </Grid>
-              <Grid item xs={12} md={4} className="left-side" style={xs ? {padding: 0} : {}}>
-                <CartDrawer
-                  disableItemEditing
-                  hideCheckoutProceedLink
-                  hideTaxLabel
-                />
-              </Grid>
+              {!xs ? (
+                <Grid item xs={12} md={4} className="left-side">
+                  <CartDrawer
+                    disableItemEditing
+                    hideCheckoutProceedLink
+                    hideTaxLabel
+                    showOrderSummaryText={false}
+                    xsBreakpoint={xs}
+                  />
+                </Grid>
+              ) : (
+                ''
+              )}
             </Grid>
           </Box>
         </Container>
@@ -321,8 +348,11 @@ Checkout.propTypes = {
   currentUser: PropTypes.object.isRequired,
   cart: PropTypes.object.isRequired,
   requestCreateAccount: PropTypes.func.isRequired,
+  clearCreateAccountError: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
+  clearLoginError: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
+  clearPatchAccountError: PropTypes.func.isRequired,
   requestCreateOrder: PropTypes.func.isRequired
 };
 

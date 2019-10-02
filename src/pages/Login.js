@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withDialog } from '../hoc';
 import Login from '../components/Login';
-import { requestLogin } from '../modules/account/actions';
+import { requestLogin, clearLoginError } from '../modules/account/actions';
 
 const mapStateToProps = state => ({ account: state.account });
-const mapDispatchToProps = { requestLogin };
+const mapDispatchToProps = { requestLogin, clearLoginError };
 
 const LoginDialog = compose(
   connect(

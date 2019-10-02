@@ -4,20 +4,21 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Button, NavLink } from '../common';
 
-const CheckoutReviewForm = ({ onSubmit }) => (
+const CheckoutReviewForm = ({ onSubmit,xsBreakpoint }) => (
   <Box
     display="flex"
     flexDirection="column"
     alignItems="center"
     className="step-4-wrapper"
+    style={xsBreakpoint ? {overflow:"hidden", marginTop:"18px"} : {}}
   >
-    <Box
+    {!xsBreakpoint ? (<Box
       component={Typography}
       my={3}
       variant="h5"
       fontFamily="Canela Text, serif"
       children="Please take a moment to review your order."
-    />
+    />) : ''}
     <Box width={532} mb={2} className="button-holder-mobile">
       <Button
         type="button"
@@ -28,19 +29,23 @@ const CheckoutReviewForm = ({ onSubmit }) => (
       />
     </Box>
     <Box display="flex" alignItems="center" justifyContent="center">
-      <Typography variant="body2" style={{ fontSize: '14px' }}>
+      <Typography variant="body2" style={{ fontSize: '11px' }}>
         By placing this order I agree to the
       </Typography>
-      <Box
+
+    </Box>
+    <Box display="flex" alignItems="center" justifyContent="center" style={{width:"100%",margin:"0px auto",maxWidth:"430px"}}>
+    <Box
         component={NavLink}
-        mx={1}
         to="/terms-conditions"
         underline="always"
-        fontSize={14}
+        fontSize={11}
+        mx={1}
+        style={{width:"auto",marginRight:"3px",fontSize:"11px"}}
       >
         Terms &amp; Conditions
       </Box>
-      <Typography variant="body2" style={{ fontSize: '14px' }}>
+      <Typography variant="body2" style={{ fontSize: '11px' }}>
         and
       </Typography>
       <Box
@@ -48,7 +53,8 @@ const CheckoutReviewForm = ({ onSubmit }) => (
         mx={1}
         to="/privacy-policy"
         underline="always"
-        fontSize={14}
+        fontSize={11}
+        style={{marginLeft:"3px",fontSize:"11px"}}
       >
         Privacy Policy
       </Box>

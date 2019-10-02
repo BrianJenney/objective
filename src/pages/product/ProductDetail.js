@@ -161,7 +161,12 @@ const ProductDetail = () => {
                     className="pdp-content"
                   >
                     <div className="mobile-padding">
-                      <h1 className="pdp-header">{content.productTitle}</h1>
+                      <h1
+                        className="pdp-header"
+                        style={{ color: product.color }}
+                      >
+                        {content.productTitle}
+                      </h1>
                       <ProductVariant
                         productVariant={variantMap.get(selectedVariantSku)}
                       />
@@ -236,7 +241,12 @@ const ProductDetail = () => {
                       className={classes.cardRootOverrides}
                       className="pdp-content"
                     >
-                      <h1 className="pdp-header">{content.productTitle}</h1>
+                      <h1
+                        className="pdp-header"
+                        style={{ color: product.color }}
+                      >
+                        {content.productTitle}
+                      </h1>
                       <ProductVariant
                         productVariant={variantMap.get(selectedVariantSku)}
                       />

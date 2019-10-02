@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
@@ -9,13 +9,13 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button } from '../common';
+import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
-import { getInitialValues } from '../../utils/misc';
+import { getInitialValues, getErrorMessage } from '../../utils/misc';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -24,6 +24,14 @@ const useStyles = makeStyles(() => ({
     }
   }
 }));
+
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
 
 const validateTextField = value => {
   if (value) {
@@ -78,10 +86,12 @@ const INITIAL_VALUES = {
 };
 
 const PaymentForm = ({
+  currentUser,
   seedEnabled,
   addressSeed,
   useSeedLabel,
   defaultValues,
+  clearPatchAccountError,
   onSubmit,
   onBack,
   onlyCard,
@@ -108,6 +118,22 @@ const PaymentForm = ({
       });
     }
   };
+  const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
+  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+
+  useEffect(() => {
+    clearPatchAccountError();
+  }, []);
+
+  useEffect(() => {
+    if (
+      prevSubmitting &&
+      !currentUser.patchAccountSubmitting &&
+      !currentUser.patchAccountError
+    ) {
+      onBack();
+    }
+  }, [currentUser.patchAccountSubmitting]);
 
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (
@@ -121,6 +147,15 @@ const PaymentForm = ({
         mb={4}
       />
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <AlertPanel
+            p={2}
+            type="error"
+            bgcolor="#ffcdd2"
+            text={errorMessage}
+            variant="subtitle2"
+          />
+        </Grid>
         {!onlyCard && (
           <Grid item xs={12}>
             <Field
@@ -312,10 +347,12 @@ const PaymentForm = ({
 };
 
 PaymentForm.propTypes = {
+  currentUser: PropTypes.object.isRequired,
   seedEnabled: PropTypes.bool,
   addressSeed: PropTypes.object,
   useSeedLabel: PropTypes.string,
   defaultValues: PropTypes.object,
+  clearPatchAccountError: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onlyCard: PropTypes.bool,

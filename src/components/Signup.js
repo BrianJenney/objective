@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Signup = ({ requestCreateAccount, switchToLogin }) => {
+const Signup = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -50,7 +50,7 @@ const Signup = ({ requestCreateAccount, switchToLogin }) => {
             )}
           </Typography>
 
-          <SignupForm onSubmit={requestCreateAccount} />
+          <SignupForm onSubmit={requestCreateAccount} clearCreateAccountError={clearCreateAccountError} />
         </Box>
       </Box>
     </Container>
@@ -59,6 +59,7 @@ const Signup = ({ requestCreateAccount, switchToLogin }) => {
 
 Signup.propTypes = {
   requestCreateAccount: PropTypes.func.isRequired,
+  clearCreateAccountError: PropTypes.func.isRequired,
   switchToLogin: PropTypes.func
 };
 
