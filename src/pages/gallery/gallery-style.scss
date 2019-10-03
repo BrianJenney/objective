@@ -10,7 +10,6 @@
 .opt1,
 .opt2 {
   border: 1px solid #8b3a26;
-  padding: 20px;
   height: 100%;
 }
 .gallery-hero {
@@ -24,10 +23,11 @@
 }
 .opt1 {
   min-height: 474px;
+  padding: 20px;
   .blurb-img {
     width: 100%;
     padding: 0;
-    height: 469px;
+    height: 428px;
   }
   .blurb-icon {
     margin-bottom: 24px;
@@ -55,6 +55,11 @@
   }
   .leftside {
     padding-right: 20px;
+  }
+  @media (min-width: 1400px) {
+    .blurb-img {
+      height: 469px;
+    }
   }
 }
 
@@ -89,11 +94,11 @@
       }
     }
     .atc-button {
-      font-size: 14px;
-      font-weight: 900;
-      line-height: 2.14;
-      letter-spacing: 1.2px;
-      padding: 15px 10px;
+      font-size: 14px !important;
+      font-weight: 900 !important;
+      line-height: 1.8 !important;
+      letter-spacing: 1.33px !important;
+      padding: 15px 10px !important;
       font-family: p22-underground, sans-serif;
     }
     .qty-button {

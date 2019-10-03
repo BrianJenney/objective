@@ -128,7 +128,7 @@ const SignupForm = ({
           <Field
             name="newsletter"
             color="primary"
-            label="Subscribe to True Health news"
+            label="Subscribe to Objective news"
             component={CheckboxField}
           />
         </Grid>
