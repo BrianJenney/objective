@@ -354,12 +354,20 @@ const Footer = ({ location, currentUser }) => {
                     )}
                   </Grid>
                   <Grid item xs={6} className="border-bottom icon">
-                    <NavLink href="https://www.instagram.com/objective_wellness">
+                    <NavLink
+                      href="https://www.instagram.com/objective_wellness"
+                      target="_blank"
+                      rel="noopener"
+                    >
                       <img src={igIcon} alt="instagram" />
                     </NavLink>
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
-                    <NavLink href="https://www.facebook.com/Objective_Wellness">
+                    <NavLink
+                      href="https://www.facebook.com/Objective_Wellness"
+                      target="_blank"
+                      rel="noopener"
+                    >
                       <img src={fbIcon} alt="facebook" />
                     </NavLink>
                   </Grid>
@@ -564,7 +572,11 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={3}>
                     <Grid container className="h-100">
                       <Grid item xs={6} className="border-left icon">
-                        <Link href="https://www.instagram.com/objective_wellness">
+                        <Link
+                          href="https://www.instagram.com/objective_wellness"
+                          target="_blank"
+                          rel="noopener"
+                        >
                           <img src={igIcon} alt="instagram" />
                         </Link>
                       </Grid>
@@ -573,7 +585,11 @@ const Footer = ({ location, currentUser }) => {
                         xs={6}
                         className="border-left icon border-right"
                       >
-                        <Link href="https://www.facebook.com/Objective_Wellness">
+                        <Link
+                          href="https://www.facebook.com/Objective_Wellness"
+                          target="_blank"
+                          rel="noopener"
+                        >
                           <img src={fbIcon} alt="facebook" />
                         </Link>
                       </Grid>
