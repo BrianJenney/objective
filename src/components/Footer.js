@@ -597,10 +597,6 @@ const Footer = ({ location, currentUser }) => {
                     Food and Drug Administration. Any products discussed or
                     advertised are not intended to diagnose, treat, cure or
                     prevent any disease. Testimonial results are not typical.
-                    Customers may have received a gift certificate after
-                    submitting their testimonial. If you are pregnant, nursing,
-                    taking medication, or have a medical condition, consult your
-                    physician before using any dietary supplement.
                   </Typography>
                   <Typography className="disclaimer-text">
                     Objective is committed to making its website accessible for

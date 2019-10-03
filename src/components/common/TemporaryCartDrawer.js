@@ -32,7 +32,7 @@ const StyledDrawerWrapper = withStyles(theme => ({
       padding: '36px 35px'
     },
     [theme.breakpoints.down('sm')]: {
-      padding: '20px 16px'
+      padding: '0'
     }
   }
 }))(Box);

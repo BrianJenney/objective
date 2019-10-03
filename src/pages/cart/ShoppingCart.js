@@ -4,8 +4,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import CartDrawer from './CartDrawer';
 import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
-import { StyledCartCloseIcon, StyledEmptyCartCloseIcon } from './StyledComponents';
-
+import {
+  StyledCartCloseIcon,
+  StyledEmptyCartCloseIcon
+} from './StyledComponents';
 
 const ShoppingCart = () => {
   const cart = useSelector(state => state.cart);
@@ -18,8 +20,8 @@ const ShoppingCart = () => {
           <ShoppingBag />
           <span
             style={{
-              'fontFamily': 'p22-underground, sans-serif',
-              'fontSize': '14px'
+              fontFamily: 'p22-underground, sans-serif',
+              fontSize: '14px'
             }}
           >
             {cartCount}
@@ -28,13 +30,15 @@ const ShoppingCart = () => {
       }
       closer={
         <StyledCartCloseIcon
-          children={<CloseIcon
-            style={{
-              'width': '40px',
-              'height': '40px',
-              'color': '#979797',
-            }}
-          />}
+          children={
+            <CloseIcon
+              style={{
+                width: '40px',
+                height: '40px',
+                color: '#979797'
+              }}
+            />
+          }
         />
       }
       listContent={<CartDrawer showCheckoutProceedLink />}
