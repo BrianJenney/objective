@@ -354,7 +354,7 @@ const Footer = ({ location, currentUser }) => {
                     )}
                   </Grid>
                   <Grid item xs={6} className="border-bottom icon">
-                    <NavLink
+                    <Link
                       href="https://www.instagram.com/objective_wellness"
                       target="_blank"
                       rel="noopener"
@@ -363,7 +363,7 @@ const Footer = ({ location, currentUser }) => {
                     </NavLink>
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
-                    <NavLink
+                    <Link
                       href="https://www.facebook.com/Objective_Wellness"
                       target="_blank"
                       rel="noopener"

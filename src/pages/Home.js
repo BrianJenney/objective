@@ -59,10 +59,6 @@ class Home extends Component {
 
   renderHeroSlider() {
     if (!this.state.content.heroSlider) return <></>;
-    console.log(
-      '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
-    );
-    console.log(window.screen);
     let images = this.state.content.heroSlider;
     if (window.screen.width < 768) {
       images = this.state.content.heroSliderMobile;
