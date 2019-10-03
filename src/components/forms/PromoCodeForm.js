@@ -27,7 +27,9 @@ const PromoCodeForm = () => {
         addCoupon(cart, response.voucher);
       } else if (response.key === 'resource_not_found') {
         // Should rewrite error message so user can easily understand it
-        setPromoCodeErr('\'' + e.promoCode + '\' does not appear to be a valid code');
+        setPromoCodeErr(
+          "'" + e.promoCode + "' does not appear to be a valid code"
+        );
       } else {
         setPromoCodeErr(response.details);
       }
@@ -39,21 +41,23 @@ const PromoCodeForm = () => {
     <Form className="promo-code-form">
       <Grid container direction="row" xs={12} justify="space-between">
         <Grid item xs={12}>
-
           {promoCodeErr ? (
             <StyledPromoCode
-              style={{ 'font-size': '12px', paddingBottom: '10px', 'color': 'red' }}
+              style={{
+                'font-size': '12px',
+                paddingBottom: '5px',
+                color: 'red'
+              }}
             >
               Promo Code
-          </StyledPromoCode>
+            </StyledPromoCode>
           ) : (
-              <StyledPromoCode
-                style={{ 'font-size': '12px', paddingBottom: '10px' }}
-              >
-                Promo Code
-          </StyledPromoCode>
-            )}
-
+            <StyledPromoCode
+              style={{ 'font-size': '12px', paddingBottom: '5px' }}
+            >
+              Promo Code
+            </StyledPromoCode>
+          )}
         </Grid>
         <Grid
           container
@@ -73,17 +77,17 @@ const PromoCodeForm = () => {
                 className="promo-code-input-error"
               />
             ) : (
-                <Field
-                  name="promoCode"
-                  component={InputField}
-                  className="promo-code-input"
-                />
-              )}
+              <Field
+                name="promoCode"
+                component={InputField}
+                className="promo-code-input"
+              />
+            )}
 
             {promoCodeErr && (
               <StyledPromoCode
                 style={{
-                  'font-size': '12px',
+                  'font-size': '11px',
                   'padding-top': '10px',
                   color: 'red'
                 }}
