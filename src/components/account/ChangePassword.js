@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { object, string, ref } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -27,6 +27,15 @@ const INITIAL_VALUES = {
   newPassword1: '',
   newPassword2: ''
 };
+
+const usePrevious = value => {
+  const useRefObj = useRef();
+  useEffect(() => {
+    useRefObj.current = value;
+  }, [value]);
+  return useRefObj.current;
+};
+
 const useStyles = makeStyles(theme => ({
   info: {
     fontFamily: 'p22-underground, sans-serif',
@@ -36,6 +45,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 20
   }
 }));
+
 const ChangePassword = ({
   currentUser,
   requestChangePassword,
@@ -44,19 +54,30 @@ const ChangePassword = ({
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const [resultVisible, setResultVisible] = useState(false);
+  const prevSubmitting = usePrevious(currentUser.changePasswordSubmitting);
   const errorMessage = getErrorMessage(currentUser.changePasswordError);
+  const handleSubmit = useCallback(values => {
+    requestChangePassword(currentUser.data.account_jwt, values);
+  });
 
   useEffect(() => {
     clearChangePasswordError();
+
+    return () => {
+      clearChangePasswordError();
+    };
   }, []);
 
-  const [isClicked, handleSubmitBtn] = useState(false);
-  const handleSubmit = useCallback(
-    values => {
-      requestChangePassword(currentUser.data.account_jwt, values);
-    },
-    [isClicked, handleSubmitBtn]
-  );
+  useEffect(() => {
+    if (prevSubmitting && !currentUser.changePasswordSubmitting) {
+      if (!currentUser.changePasswordError) {
+        setResultVisible(true);
+      } else {
+        setResultVisible(false);
+      }
+    }
+  }, [currentUser.changePasswordSubmitting]);
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
@@ -84,6 +105,13 @@ const ChangePassword = ({
     },
     [secondNewPasswordVisible, setSecondPasswordVisible]
   );
+
+  if (
+    currentUser.fetchAccountLoading === null ||
+    currentUser.fetchAccountLoading
+  ) {
+    return null;
+  }
 
   const renderForm = () => (
     <Form>
@@ -118,13 +146,20 @@ const ChangePassword = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <AlertPanel
-            p={2}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={errorMessage}
-            variant="subtitle2"
-          />
+          {currentUser.changePasswordError && (
+            <AlertPanel
+              type="error"
+              text={errorMessage}
+              onClose={clearChangePasswordError}
+            />
+          )}
+          {resultVisible && (
+            <AlertPanel
+              type="success"
+              text="Password updated successfully!"
+              onClose={() => setResultVisible(false)}
+            />
+          )}
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -186,7 +221,12 @@ const ChangePassword = ({
 
         <Grid item xs={xs ? 12 : 4}>
           <Box display="flex" alignItems="center">
-            <Button fullWidth type="submit" children="Change Password" />
+            <Button
+              fullWidth
+              type="submit"
+              loading={currentUser.changePasswordSubmitting}
+              children="Change Password"
+            />
           </Box>
         </Grid>
       </Grid>

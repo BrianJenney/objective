@@ -24,7 +24,7 @@ const AccountProfile = ({
       currentUser={currentUser}
       requestPatchAccount={requestPatchAccount}
       clearPatchAccountError={clearPatchAccountError}
-      mb={2}
+      mb="50px"
     />
     <AccountChangePassword
       currentUser={currentUser}

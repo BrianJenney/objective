@@ -5,16 +5,16 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Formik, Field, Form } from 'formik';
 import { object, string } from 'yup';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { fonts } from '../Theme/fonts';
-import { Button, AlertPanel } from '../common';
+import { Button, AlertPanel, Loader } from '../common';
 import { getErrorMessage } from '../../utils/misc';
 import { InputField } from '../form-fields';
-import ProfileUpdateFeedback from '../../pages/account/ProfileUpdateFeedback';
 
 const schema = object().shape({
-  firstName: string(),
-  lastName: string(),
+  firstName: string().required('First name is required'),
+  lastName: string().required('Last name is required'),
   email: string()
     .required('Email is required')
     .email('Please enter a valid email.')
@@ -73,13 +73,14 @@ const useStyles = makeStyles(theme => ({
 const ProfileDetails = ({
   currentUser,
   requestPatchAccount,
-  clearPatchAccountError
+  clearPatchAccountError,
+  ...rest
 }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const [isClicked, handleSubmitBtn] = useState(false);
-  const prevSubmitting = usePrevious(currentUser.loading);
+  const [resultVisible, setResultVisible] = useState(false);
+  const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
   const handleSubmit = useCallback(values => {
     requestPatchAccount(currentUser.data.account_jwt, values);
@@ -87,35 +88,68 @@ const ProfileDetails = ({
 
   useEffect(() => {
     clearPatchAccountError();
+
+    return () => {
+      clearPatchAccountError();
+    };
   }, []);
 
   useEffect(() => {
-    if (prevSubmitting && !currentUser.loading && !currentUser.error) {
-      handleSubmitBtn(!isClicked);
+    if (prevSubmitting && !currentUser.patchAccountSubmitting) {
+      if (!currentUser.patchAccountError) {
+        setResultVisible(true);
+      } else {
+        setResultVisible(false);
+      }
     }
-  }, [currentUser.loading]);
+  }, [currentUser.patchAccountSubmitting]);
 
-  const INITIAL_VALUES = {
+  if (!currentUser.data.account_jwt) {
+    return <div>No Account</div>;
+  }
+
+  if (
+    currentUser.fetchAccountLoading === null ||
+    currentUser.fetchAccountLoading
+  ) {
+    return <Loader />;
+  }
+
+  if (currentUser.fetchAccountError) {
+    return (
+      <AlertPanel
+        type="error"
+        text={getErrorMessage(currentUser.fetchAccountError)}
+        notClosable
+      />
+    );
+  }
+
+  const initialValues = {
     firstName: currentUser.data.firstName,
     lastName: currentUser.data.lastName,
     email: currentUser.data.email,
     phone: currentUser.data.phone
   };
-  if (!currentUser.data.account_jwt) {
-    return <div>No Account</div>;
-  }
 
   const renderForm = () => (
     <Form>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <AlertPanel
-            p={2}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={errorMessage}
-            variant="subtitle2"
-          />
+          {currentUser.patchAccountError && (
+            <AlertPanel
+              type="error"
+              text={errorMessage}
+              onClose={clearPatchAccountError}
+            />
+          )}
+          {resultVisible && (
+            <AlertPanel
+              type="success"
+              text="Profile updated successfully!"
+              onClose={() => setResultVisible(false)}
+            />
+          )}
         </Grid>
         <Grid item xs={6}>
           <Field label="First Name" name="firstName" component={InputField} />
@@ -130,10 +164,15 @@ const ProfileDetails = ({
             <Field label="Phone Number" name="phone" component={InputField} />
           </Grid> */}
         <Grid item xs={xs ? 12 : 4}>
-          <Button mt={2} mp={3} fullWidth type="submit">
+          <Button
+            mt={2}
+            mp={3}
+            fullWidth
+            type="submit"
+            loading={currentUser.patchAccountSubmitting}
+          >
             Save Changes
           </Button>
-          {isClicked && <ProfileUpdateFeedback error={errorMessage} />}
         </Grid>
       </Grid>
     </Form>
@@ -154,13 +193,14 @@ const ProfileDetails = ({
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Formik
-            initialValues={INITIAL_VALUES}
-            onSubmit={handleSubmit}
-            validationSchema={schema}
-            render={renderForm}
-            enableReinitialize
-          />
+          <Box {...rest}>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              validationSchema={schema}
+              render={renderForm}
+            />
+          </Box>
         </Grid>
       </Grid>
     </div>

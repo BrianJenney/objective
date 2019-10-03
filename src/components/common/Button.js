@@ -60,8 +60,8 @@ const ButtonComponent = ({
           position="absolute"
           top="50%"
           left="50%"
-          mt="-12px"
           ml="-12px"
+          mt="-12px"
           size={24}
         />
       )}

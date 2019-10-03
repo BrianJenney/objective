@@ -5,9 +5,8 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import { RouteWithSubRoutes, ScrollToTop } from '../../components/common';
+import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
-import { fonts } from '../../components/Theme/fonts';
 
 import './account-style.scss';
 export { default as AccountOverviewPage } from './Overview';
@@ -47,34 +46,32 @@ const useStyles = makeStyles(theme => ({
 const Account = ({ routes }) => {
   const classes = useStyles();
   return (
-    <ScrollToTop>
-      <Box className={classes.root} py={10}>
-        <Container>
-          <Box className={classes.paper}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={3} className={classes.accountMenuGrid}>
-                <Box>
-                  <AccountMenu />
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                md={9}
-                className={`right-side-account ${classes.rightSideGrid}`}
-              >
-                <Switch>
-                  <Redirect exact from="/account" to="/account/overview" />
-                  {routes.map(route => (
-                    <RouteWithSubRoutes key={route.path} {...route} />
-                  ))}
-                </Switch>
-              </Grid>
+    <Box className={classes.root} py={10}>
+      <Container>
+        <Box className={classes.paper}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={3} className={classes.accountMenuGrid}>
+              <Box>
+                <AccountMenu />
+              </Box>
             </Grid>
-          </Box>
-        </Container>
-      </Box>
-    </ScrollToTop>
+            <Grid
+              item
+              xs={12}
+              md={9}
+              className={`right-side-account ${classes.rightSideGrid}`}
+            >
+              <Switch>
+                <Redirect exact from="/account" to="/account/overview" />
+                {routes.map(route => (
+                  <RouteWithSubRoutes key={route.path} {...route} />
+                ))}
+              </Switch>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 Account.propTypes = {
