@@ -17,11 +17,14 @@ const useStyles = makeStyles(theme => ({
   },
 
   btnOOS: {
-    border: '0.75px solid',
+    border: '1px solid',
     height: 'auto',
     backgroundColor: theme.palette.common.white,
-    padding: '20px 0',
     color: theme.palette.common.black,
+    padding: '15px 0 !important',
+    fontSize: '14px !important',
+    lineHeight: '1.8 !important',
+    letterSpacing: '1.17px !important',
     '&:hover': {
       backgroundColor: theme.palette.common.white
     }
@@ -62,7 +65,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => {
+export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding }) => {
+  return (
+    <Button
+      fullWidth
+      onClick={onClick}
+      disabled={variantSku === null}
+      className="atc-button"
+    >
+      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+    </Button>
+  );
+};
+
+export const ATCPDP = ({
+  onClick,
+  variantSku,
+  ATCAdded,
+  ATCAdding,
+  btnStyle
+}) => {
   return (
     <Button
       fullWidth
@@ -117,13 +139,11 @@ export const OutOfStock = ({
   const classes = useStyles();
   return (
     <>
-      <CardActions className={classes.maxWidth}>
+      <div className="gallery-atc">
         <Button className={classes.btnOOS} fullWidth onClick={onClick}>
-          <Typography className={classes.text}>
-            TELL ME WHEN IT'S AVAILABLE
-          </Typography>
+          TELL ME WHEN IT'S AVAILABLE
         </Button>
-      </CardActions>
+      </div>
       {openOutOfStockDialog && (
         <ProductOutOfStockDialog
           onExited={onExited}

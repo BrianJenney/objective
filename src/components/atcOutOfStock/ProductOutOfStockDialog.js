@@ -103,12 +103,6 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
             <CardMedia image={product_img} className={classes.bigAvatar} />
             <Typography className={classes.name}>{product_name}</Typography>
           </Box>
-          <Field
-            name="email"
-            label="Email Address"
-            component={InputField}
-            autoComplete="email"
-          />
           <Box align="start">
             <Field
               name="email"
@@ -133,12 +127,6 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
               disabled={!isValid}
             />
           </Box>
-          <Button
-            fullWidth
-            type="submit"
-            children="Submit"
-            disabled={!isValid}
-          />
         </Box>
       </Paper>
     </Form>
