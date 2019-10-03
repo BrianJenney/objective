@@ -63,6 +63,10 @@ const ChangePassword = ({
 
   useEffect(() => {
     clearChangePasswordError();
+
+    return () => {
+      clearChangePasswordError();
+    };
   }, []);
 
   useEffect(() => {

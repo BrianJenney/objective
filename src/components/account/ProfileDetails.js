@@ -88,6 +88,10 @@ const ProfileDetails = ({
 
   useEffect(() => {
     clearPatchAccountError();
+
+    return () => {
+      clearPatchAccountError();
+    };
   }, []);
 
   useEffect(() => {
