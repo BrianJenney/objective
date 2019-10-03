@@ -8,40 +8,40 @@ import { COUNTRY_OPTIONS } from '../../constants/location';
 const ADDRESS_FIELDS = [
   'firstName',
   'lastName',
-  'line1',
-  'line2',
+  'address1',
+  'address2',
   'city',
   'state',
-  'postalCode',
-  'countryCode'
+  'zipcode',
+  'country'
 ];
 const labelsMap = {
   firstName: 'First Name',
   lastName: 'Last Name',
-  line1: 'Address Line 1',
-  line2: 'Address Line 2',
+  address1: 'Address Line 1',
+  address2: 'Address Line 2',
   city: 'City',
   state: 'State',
-  postalCode: 'Postal Code',
-  countryCode: 'Country'
+  zipcode: 'Postal Code',
+  country: 'Country'
 };
 const getValuesWithoutLabels = ({
   firstName,
   lastName,
-  line1,
-  line2,
+  address1,
+  address2,
   city,
   state,
-  postalCode,
-  countryCode
+  zipcode,
+  country
 }) => {
   const name = [firstName, lastName].join(' ');
-  const address1 = [line1, line2].join(' ');
-  const address2 = `${city}, ${state} ${postalCode}`;
-  const country = (COUNTRY_OPTIONS.find(c => c.value === countryCode) || {})
+  const addressText1 = [address1, address2].join(' ');
+  const addressText2 = `${city}, ${state} ${zipcode}`;
+  const countryLabel = (COUNTRY_OPTIONS.find(c => c.value === country) || {})
     .label;
 
-  return [name, address1, address2, country];
+  return [name, addressText1, addressText2, countryLabel];
 };
 
 const AddressSummary = ({ withLabels, values, children, ...rest }) => {
