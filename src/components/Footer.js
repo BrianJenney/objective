@@ -360,7 +360,7 @@ const Footer = ({ location, currentUser }) => {
                       rel="noopener"
                     >
                       <img src={igIcon} alt="instagram" />
-                    </NavLink>
+                    </Link>
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
                     <Link
@@ -369,7 +369,7 @@ const Footer = ({ location, currentUser }) => {
                       rel="noopener"
                     >
                       <img src={fbIcon} alt="facebook" />
-                    </NavLink>
+                    </Link>
                   </Grid>
                   <Grid container item={true} xs={12} className="legal">
                     <StyledList>
