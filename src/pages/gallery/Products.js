@@ -42,7 +42,7 @@ const Products = () => {
 
   return (
     <>
-      <Box py={10} className="corehealth">
+      <Box py={5} className="corehealth">
         <Container>
           <Grid container spacing={4}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -80,7 +80,7 @@ const Products = () => {
           </Grid>
         </Container>
       </Box>
-      <Box py={10} className="beige-bg moodenergy">
+      <Box py={5} className="beige-bg moodenergy">
         <Container className="beige-container">
           <Grid container spacing={4}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -119,7 +119,7 @@ const Products = () => {
           </Grid>
         </Container>
       </Box>
-      <Box py={10} className="skinbeauty">
+      <Box py={5} className="skinbeauty">
         <Container>
           <Grid container spacing={4}>
             <Grid item xs={12} sm={12} md={6} lg={6}>

@@ -354,12 +354,12 @@ const Footer = ({ location, currentUser }) => {
                     )}
                   </Grid>
                   <Grid item xs={6} className="border-bottom icon">
-                    <NavLink href="http://www.instagram.com">
+                    <NavLink href="https://www.instagram.com/objective_wellness">
                       <img src={igIcon} alt="instagram" />
                     </NavLink>
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
-                    <NavLink href="https://www.facebook.com">
+                    <NavLink href="https://www.facebook.com/Objective_Wellness">
                       <img src={fbIcon} alt="facebook" />
                     </NavLink>
                   </Grid>
@@ -387,10 +387,6 @@ const Footer = ({ location, currentUser }) => {
                     Food and Drug Administration. Any products discussed or
                     advertised are not intended to diagnose, treat, cure or
                     prevent any disease. Testimonial results are not typical.
-                    Customers may have received a gift certificate after
-                    submitting their testimonial. If you are pregnant, nursing,
-                    taking medication, or have a medical condition, consult your
-                    physician before using any dietary supplement.
                   </Typography>
                   <Typography className="disclaimer-text">
                     Objective is committed to making its website accessible for
@@ -568,7 +564,7 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={3}>
                     <Grid container className="h-100">
                       <Grid item xs={6} className="border-left icon">
-                        <Link href="https://www.instagram.com/">
+                        <Link href="https://www.instagram.com/objective_wellness">
                           <img src={igIcon} alt="instagram" />
                         </Link>
                       </Grid>
@@ -577,7 +573,7 @@ const Footer = ({ location, currentUser }) => {
                         xs={6}
                         className="border-left icon border-right"
                       >
-                        <Link href="https://www.facebook.com/">
+                        <Link href="https://www.facebook.com/Objective_Wellness">
                           <img src={fbIcon} alt="facebook" />
                         </Link>
                       </Grid>
