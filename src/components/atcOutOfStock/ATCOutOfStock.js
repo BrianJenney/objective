@@ -1,46 +1,108 @@
 import React from 'react';
 import CardActions from '@material-ui/core/CardActions';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MailOutline from '@material-ui/icons/MailOutline';
+
 import { Button } from '../../components/common';
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 import '../../pages/product/overrides.css';
 import '../../pages/product/PDP-style.css';
+import { Typography } from '@material-ui/core';
+import EnvelopeIcon from './EnvelopeIcon';
+import { closeSync } from 'fs';
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
-    maxWidth: '464px'
+    maxWidth: '464px',
+    padding: '0 16px'
   },
 
   btnOOS: {
-    border: '1.5px solid',
+    border: '0.75px solid',
     height: 'auto',
     backgroundColor: theme.palette.common.white,
+    padding: '20px 0',
+    color: theme.palette.common.black,
+    '&:hover': {
+      backgroundColor: theme.palette.common.white
+    }
+  },
+  btnPDP: {
+    border: '2px solid',
+    height: 'auto',
+    backgroundColor: theme.palette.common.white,
+    padding: '30px 0',
     color: theme.palette.common.black,
     '&:hover': {
       backgroundColor: theme.palette.common.white
     }
   },
   icon: {
-    marginRight: '10px'
+    width: '33px',
+    height: '18px'
+  },
+  text: {
+    fontFamily: 'P22-Underground',
+    fontSize: '14px',
+    fontWeight: '900',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '1.33px',
+    textAlign: 'center'
+  },
+  textPDP: {
+    fontFamily: 'P22-Underground',
+    fontSize: '16px',
+    fontWeight: '900',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: '1.59px',
+    letterSpacing: '1.17px',
+    textAlign: 'center'
   }
 }));
 
-export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding }) => {
+export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => {
+  return (
+    <Button
+      fullWidth
+      onClick={onClick}
+      disabled={variantSku === null}
+      className={btnStyle}
+    >
+      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+    </Button>
+  );
+};
+
+export const OutOfStockPDP = ({
+  onClick,
+  onExited,
+  product_img,
+  product_name,
+  openOutOfStockDialog,
+  handleOpenEmailConfirmation
+}) => {
   const classes = useStyles();
   return (
-    <Grid className="mobile-padding-small">
+    <>
       <CardActions className={classes.maxWidth}>
-        <Button fullWidth onClick={onClick} disabled={variantSku === null}>
-          {!ATCAdded
-            ? 'ADD TO CART'
-            : !ATCAdding
-            ? 'PRODUCT ADDED'
-            : 'ADDING...'}
+        <Button className={classes.btnPDP} fullWidth onClick={onClick}>
+          <EnvelopeIcon />
+          <Typography className={classes.textPDP}>
+            TELL ME WHEN IT'S AVAILABLE
+          </Typography>
         </Button>
       </CardActions>
-    </Grid>
+      {openOutOfStockDialog && (
+        <ProductOutOfStockDialog
+          onExited={onExited}
+          product_img={product_img}
+          product_name={product_name}
+          handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+        />
+      )}
+    </>
   );
 };
 
@@ -49,14 +111,17 @@ export const OutOfStock = ({
   onExited,
   product_img,
   product_name,
-  openOutOfStockDialog
+  openOutOfStockDialog,
+  handleOpenEmailConfirmation
 }) => {
   const classes = useStyles();
   return (
-    <Grid>
+    <>
       <CardActions className={classes.maxWidth}>
         <Button className={classes.btnOOS} fullWidth onClick={onClick}>
-          <MailOutline className={classes.icon} /> TELL ME WHEN IT'S AVAILABLE
+          <Typography className={classes.text}>
+            TELL ME WHEN IT'S AVAILABLE
+          </Typography>
         </Button>
       </CardActions>
       {openOutOfStockDialog && (
@@ -64,8 +129,9 @@ export const OutOfStock = ({
           onExited={onExited}
           product_img={product_img}
           product_name={product_name}
+          handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}
-    </Grid>
+    </>
   );
 };
