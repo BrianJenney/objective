@@ -139,6 +139,9 @@
       form {
         .MuiFormControl-fullWidth {
           width: 98%;
+          .MuiInputBase-fullWidth {
+            width: 98%;
+          }
         }
       }
       button {
@@ -147,20 +150,23 @@
       }
     }
     .signup-arrow {
-      margin-top: 8px;
+      margin-top: 11px;
       margin-left: -65px;
       position: absolute;
+      width: 60%;
     }
     .mobile-arrow {
       z-index: 0;
       margin-top: 15px;
       margin-left: -45px;
+      position: absolute;
+      width: 90%;
     }
     @media (max-width: 375px) {
       .mobile-arrow {
         z-index: 0;
-        margin-top: 0px;
-        margin-left: -90px;
+        margin-top: 16px;
+        margin-left: -45px;
       }
     }
   }
