@@ -131,7 +131,7 @@ const NeedHelpDialog = () => {
                         textDecoration: 'none'
                       }}
                     >
-                      help@objectivewellnes.com
+                      help@objectivewellness.com
                     </Link>
                   </Typography>
                 </Box>

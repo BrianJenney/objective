@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       display: 'flex',
       flexDirection: 'column',
-      height: 'auto',
+      height: 'auto'
     }
   },
   phoneGrid: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
       width: 'auto',
       borderRight: 'none',
       borderBottom: '1px solid #979797',
-      marginBottom: 33.9,
+      marginBottom: 33.9
     }
   },
   mailGrid: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     width: '600px',
     paddingTop: 10,
     [theme.breakpoints.down('xs')]: {
-      width: 'auto',
+      width: 'auto'
     }
   }
 }));
@@ -64,13 +64,12 @@ const ContactUs = () => {
           <StyledContainerBackground>
             <Grid>
               <Box textAlign="center">
-                <StyledHeader>
-                  Contact us
-                    </StyledHeader>
+                <StyledHeader>Contact us</StyledHeader>
               </Box>
               <Box textAlign="center">
                 <StyledSubHeader>
-                  We'd love to hear from you. You can reach us by phone or email.
+                  We'd love to hear from you. You can reach us by phone or
+                  email.
                 </StyledSubHeader>
               </Box>
             </Grid>
@@ -105,7 +104,7 @@ const ContactUs = () => {
                         textDecoration: 'none'
                       }}
                     >
-                      help@objectivewellnes.com
+                      help@objectivewellness.com
                     </Link>
                   </StyledEmail>
                 </Box>
@@ -115,7 +114,7 @@ const ContactUs = () => {
         </Container>
       </StyledBackground>
     </ScrollToTop>
-  )
+  );
 };
 
 export default ContactUs;

@@ -467,10 +467,10 @@ html,
   text-transform: uppercase;
   background-color: #fcf8f4;
 }
-.how-it-works-wrapper .coreBenefits .topBlock .leftCol,
+/* .how-it-works-wrapper .coreBenefits .topBlock .leftCol,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol {
   max-height: 555px;
-}
+} */
 .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
@@ -1220,6 +1220,10 @@ html,
   .tabpanel ul,
   .tabpanel h6 {
     padding: 0 16px !important;
+  }
+  .label-info-wrapper .top-block .card .ingredients-pg {
+    margin: 0 16px;
+    line-height: 1.5;
   }
   .label-info-wrapper h2 {
     font-size: 27px;
