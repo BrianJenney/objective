@@ -59,8 +59,15 @@ class Home extends Component {
 
   renderHeroSlider() {
     if (!this.state.content.heroSlider) return <></>;
-
-    return this.state.content.heroSlider.map(image => (
+    console.log(
+      '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+    );
+    console.log(window.screen);
+    let images = this.state.content.heroSlider;
+    if (window.screen.width < 768) {
+      images = this.state.content.heroSliderMobile;
+    }
+    return images.map(image => (
       <li key={image.sys.id}>
         <img src={image.fields.file.url} style={{ width: '100%' }} />
       </li>
@@ -135,16 +142,9 @@ class Home extends Component {
 
     return (
       <div className="home-style">
-        <Link to="/gallery" className="xs-hidden">
+        <Link to="/gallery">
           <ul>{this.renderHeroSlider()}</ul>
         </Link>
-        <div className="xs-visible md-hidden mobile-banner">
-          <h1>Targeted Health Solutions for You and Yours</h1>
-          <h2>
-            CRAFTED FROM nature's most effective ingredients, backed by clinical
-            studies
-          </h2>
-        </div>
         <Container>
           <Box py={10} className="welcome">
             <h1>{welcomeHeader}</h1>
