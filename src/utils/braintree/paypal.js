@@ -6,11 +6,11 @@ import createClient from './client';
 export const sendPaypalCheckoutRequest = async (amount, shippingAddress) => {
   const {
     recipientName,
-    line1,
-    line2,
+    address1,
+    address2,
     city,
-    countryCode,
-    postalCode,
+    country,
+    zipcode,
     state,
     phone
   } = shippingAddress;
@@ -21,11 +21,11 @@ export const sendPaypalCheckoutRequest = async (amount, shippingAddress) => {
   const shippingAddressEditable = false;
   const shippingAddressOverride = {
     recipientName,
-    line1,
-    line2,
+    address1,
+    address2,
     city,
-    countryCode,
-    postalCode,
+    country,
+    postalCode: zipcode,
     state,
     phone
   };
