@@ -232,7 +232,12 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
     params: {
       query: {
         email,
-        password
+        password,
+        storeCode: getState().storefront.code
+      },
+      collation: {
+        locale: 'en_US',
+        strength: 2
       }
     }
   };
