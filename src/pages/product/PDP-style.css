@@ -150,10 +150,6 @@ html,
   }
 }
 @media (max-width: 768px) {
-  .productStore {
-    width: 100%;
-    overflow: hidden;
-  }
   .mobile-grid-modifications {
     background-color: #fdfbf9;
   }
