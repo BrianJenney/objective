@@ -31,16 +31,17 @@ export class ProductStore extends Component {
     const stompClient = stomp.client;
     const replyTo = stomp.replyTo;
 
-    contentfulClient.getEntries({
-      'content_type': 'product',
-      'fields.Slug': this.props.productSlug
-    })
-    .then(entry => {
-      this.setState({ ...this.state, content: entry.items[0].fields });
-    })
-    .catch(err => {
-      this.setState({ ...this.state, content: null });
-    });
+    contentfulClient
+      .getEntries({
+        content_type: 'product',
+        'fields.Slug': this.props.productSlug
+      })
+      .then(entry => {
+        this.setState({ ...this.state, content: entry.items[0].fields });
+      })
+      .catch(err => {
+        this.setState({ ...this.state, content: null });
+      });
 
     EventEmitter.addListener('product.request.pdp', data => {
       if (data.status === 'success' && data.data) {
@@ -94,7 +95,7 @@ export class ProductStore extends Component {
 
   render() {
     return (
-      <Context.Provider value={{ ...this.state }}>
+      <Context.Provider value={{ ...this.state }} className="productStore">
         {this.props.children}
       </Context.Provider>
     );

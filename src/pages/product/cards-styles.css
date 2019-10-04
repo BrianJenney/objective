@@ -1032,18 +1032,18 @@ html,
 }
 
 .clock-icon {
-  width: 95px;
-  height: 82px;
+  width: auto;
+  max-height: 80px;
 }
 
 .glass-icon {
-  width: 80px;
-  height: 89px;
+  width: auto;
+  max-height: 80px;
 }
 
 .spoons-icon {
-  width: 90px;
-  height: 81px;
+  width: auto;
+  max-height: 80px;
 }
 
 .img-container {
