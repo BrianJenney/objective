@@ -307,7 +307,6 @@ const PaymentForm = ({
                 label="Phone #"
                 component={InputField}
                 helperText="In case we need to contact you about your order"
-                validate={validateTextField}
               />
             </Grid>
             <Grid item xs={12}>

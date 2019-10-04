@@ -475,8 +475,10 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
-  height: 56px;
-  width: 50px;
+  height: auto;
+  width: auto;
+  max-width: 55px;
+  max-height: 80px;
   position: absolute !important;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
@@ -1032,18 +1034,18 @@ html,
 }
 
 .clock-icon {
-  width: 95px;
-  height: 82px;
+  width: auto;
+  max-height: 80px;
 }
 
 .glass-icon {
-  width: 80px;
-  height: 89px;
+  width: auto;
+  max-height: 80px;
 }
 
 .spoons-icon {
-  width: 90px;
-  height: 81px;
+  width: auto;
+  max-height: 80px;
 }
 
 .img-container {
@@ -1279,7 +1281,7 @@ html,
   .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
   .how-it-works-wrapper .coreBenefits .topBlock .rightCol img {
     position: relative !important;
-    width: auto;
+    max-width: 200px;
   }
   .how-it-works-wrapper .topBlock {
     width: 100% !important;

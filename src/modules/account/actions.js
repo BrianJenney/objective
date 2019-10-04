@@ -25,7 +25,7 @@ import {
   REQUEST_SIGNUP_EMAIL
 } from './types';
 import store from '../../store';
-import { requestCreateCart, requestFetchCartByEmail } from '../cart/actions';
+import { requestCreateCart, requestPatchCart } from '../cart/actions';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -61,8 +61,11 @@ export const requestCreateAccount = account => (dispatch, getState) => {
   });
 };
 
-export const receivedCreateAccountSuccess = createReply => dispatch => {
+export const receivedCreateAccountSuccess = createReply => (dispatch, getState) => {
   localStorageClient.set('token', createReply.jwt);
+  store.dispatch(requestPatchCart(getState().cart._id, {
+    email: createReply.email
+  }));
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
     payload: createReply
@@ -152,8 +155,10 @@ export const requestPatchAccount = (authToken, patches) => (
   });
 };
 
-export const receivedPatchAccountSuccess = account => dispatch => {
-  console.log('ACTION', account);
+export const receivedPatchAccountSuccess = account => (dispatch, getState) => {
+  store.dispatch(requestPatchCart(getState().cart._id, {
+    email: account.email
+  }));
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT_SUCCESS,
     payload: account
@@ -161,7 +166,6 @@ export const receivedPatchAccountSuccess = account => dispatch => {
 };
 
 export const receivedPatchAccountFailure = patchError => dispatch => {
-  console.log('ERROR-ACTION', patchError);
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT_FAILURE,
     payload: patchError
@@ -205,7 +209,6 @@ export const requestChangePassword = (authToken, patches) => (
 };
 
 export const receivedChangePasswordSuccess = account => dispatch => {
-  console.log('ACTION', account);
   dispatch({
     type: RECEIVED_CHANGE_PASSWORD_SUCCESS,
     payload: account
@@ -213,7 +216,6 @@ export const receivedChangePasswordSuccess = account => dispatch => {
 };
 
 export const receivedChangePasswordFailure = patchError => dispatch => {
-  console.log('ERROR-ACTION', patchError);
   dispatch({
     type: RECEIVED_CHANGE_PASSWORD_FAILURE,
     payload: patchError
@@ -258,8 +260,11 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
   });
 };
 
-export const receivedLoginSuccess = loginReply => dispatch => {
+export const receivedLoginSuccess = loginReply => (dispatch, getState) => {
   localStorageClient.set('token', loginReply.account_jwt);
+  store.dispatch(requestPatchCart(getState().cart._id, {
+    email: loginReply.email
+  }));
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply

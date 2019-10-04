@@ -97,18 +97,23 @@ const Cart = ({
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
   const totalSummary = calculateCartTotals(cart);
-  const mobileDrawerPadding = xsBreakpoint ? "0px" : "24px 20px";
+  const mobileDrawerPadding = xsBreakpoint ? '0px' : '24px 20px';
   return (
     <Grid
       container
-      style={{ width: '100%', 'minWidth': '90%', margin: '0 auto', padding: mobileDrawerPadding }}
+      style={{
+        width: '100%',
+        minWidth: '90%',
+        margin: '0 auto',
+        padding: mobileDrawerPadding
+      }}
       className="cart-drawer"
     >
       <div>
         {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader align="center" style={xsBreakpoint ? {fontSize:"24px", fontWeight:"normal"} : {}}>{showOrderSummaryText ? 'Order Summary' : 'Your Cart'} </StyledCartHeader>
+              <StyledCartHeader align="center" style={xsBreakpoint ? {fontSize:"24px", fontWeight:"normal", paddingTop:"0px"} : {}}>{showOrderSummaryText ? 'Order Summary' : 'Your Cart'} </StyledCartHeader>
               <StyledCartCountHeader component="span" style={xsBreakpoint ? {fontSize:"11px",fontWeight:"600"} : {}}>
                 {' '}
                 ({cartCount} Items)
@@ -159,7 +164,11 @@ const Cart = ({
                 <Grid
                   item
                   xs={4}
-                  style={!xsBreakpoint ? { 'minWidth': '126px', 'marginRight': '18px' } : { 'minWidth': '126px', 'marginRight': '18px' }}
+                  style={
+                    !xsBreakpoint
+                      ? { minWidth: '126px', marginRight: '18px' }
+                      : { minWidth: '126px', marginRight: '18px' }
+                  }
                 >
                   <Card>
                     <Link to={`/products/${item.slug}`}>
@@ -176,21 +185,21 @@ const Cart = ({
                   <Card
                     style={{
                       display: 'flex',
-                      'flexDirection': 'column',
+                      flexDirection: 'column',
                       height: 'auto',
-                      'justifyContent': 'space-between'
+                      justifyContent: 'space-between'
                     }}
                   >
                     <Link
                       to={`/products/${item.slug}`}
                       style={{
-                        'textDecoration': 'none',
-                        'maxHeight': '40px',
+                        textDecoration: 'none',
+                        maxHeight: '40px',
                         overflow: 'hidden'
                       }}
                     >
                       <StyledProductLink
-                        style={{ fontSize: '18px' }}
+                        style={{ fontSize: '18px', padding: '0' }}
                         align="left"
                         onClick={onClickProduct}
                       >
@@ -215,8 +224,8 @@ const Cart = ({
                               adjustQty(cart, e.currentTarget.value, -1)
                             }
                             style={{
-                              'fontSize': '20pt',
-                              'paddingBottom': '4px'
+                              fontSize: '20pt',
+                              paddingBottom: '4px'
                             }}
                             value={index}
                             disabled={item.quantity < 2}
@@ -232,8 +241,8 @@ const Cart = ({
                               adjustQty(cart, e.currentTarget.value, 1)
                             }
                             style={{
-                              'fontSize': '13pt',
-                              'paddingBottom': '2.5px'
+                              fontSize: '13pt',
+                              paddingBottom: '2.5px'
                             }}
                             value={index}
                           >
@@ -242,7 +251,13 @@ const Cart = ({
                         </StyledCardActions>
                       )}
                     </Grid>
-                    <StyledCardContent style={!xsBreakpoint ? { 'paddingBottom': '0' } : {paddingBottom:'0px', paddingRight:'0px'}}>
+                    <StyledCardContent
+                      style={
+                        !xsBreakpoint
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
+                    >
                       <StyledFinePrint component="div" value={index}>
                         {!disableItemEditing && (
                           <Link
@@ -253,7 +268,9 @@ const Cart = ({
                           </Link>
                         )}
                       </StyledFinePrint>
-                      <StyledProductPrice style={xsBreakpoint ? {fontSize:"16px"} : {}}>
+                      <StyledProductPrice
+                        style={xsBreakpoint ? { fontSize: '16px' } : {}}
+                      >
                         {`$${(item.quantity * item.unit_price).toFixed(2)}`}
                       </StyledProductPrice>
                     </StyledCardContent>
@@ -263,19 +280,19 @@ const Cart = ({
             ))
           : null}
         {cart.items.length > 0 ? (
-          <Grid item xs={12} style={{ 'textAlign': 'left' }}>
+          <Grid item xs={12} style={{ textAlign: 'left' }}>
             <StyledTotalWrapper
               container
               direction="row"
               justify="space-between"
             >
               <Grid item xs={6}>
-                <StyledSmallCaps style={{ 'fontSize': '14px' }}>
+                <StyledSmallCaps style={{ fontSize: '14px' }}>
                   Subtotal ({cartCount} Items)
                 </StyledSmallCaps>
               </Grid>
-              <Grid item xs={3} style={{ 'textAlign': 'right' }}>
-                <StyledProductTotal style={{ 'fontSize': '18px' }}>
+              <Grid item xs={3} style={{ textAlign: 'right' }}>
+                <StyledProductTotal style={{ fontSize: '18px' }}>
                   {`$${totalSummary.subtotal.toFixed(2)}`}
                 </StyledProductTotal>
               </Grid>
@@ -290,13 +307,15 @@ const Cart = ({
             style={{ margin: '20px 0px 0px' }}
           >
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ 'fontSize': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Shipping
               </StyledSmallCaps>
             </Grid>
-            <Grid item xs={6} style={{ 'textAlign': 'right' }}>
-              <StyledProductTotal style={{ 'fontSize': '18px' }}>
-               {`$${shippingData.price ?shippingData.price.toFixed(2) : '0.00'}`}
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {`$${
+                  shippingData.price ? shippingData.price.toFixed(2) : '0.00'
+                }`}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint
@@ -316,12 +335,12 @@ const Cart = ({
             style={{ margin: '20px 0' }}
           >
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ 'fontSize': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Savings
               </StyledSmallCaps>
             </Grid>
-            <Grid item xs={3} style={{ 'textAlign': 'right' }}>
-              <StyledProductTotal style={{ 'fontSize': '18px' }}>
+            <Grid item xs={3} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
                 {`$${cart.savings.toFixed(2)}`}
               </StyledProductTotal>
             </Grid>
@@ -335,13 +354,15 @@ const Cart = ({
             style={{ margin: '20px 0' }}
           >
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ 'fontSize': '14px' }}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
                 Tax
               </StyledSmallCaps>
             </Grid>
-            <Grid item xs={6} style={{ 'textAlign': 'right' }}>
-              <StyledProductTotal style={{ 'fontSize': '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.calculatedTax ? `$${totalSummary.calculatedTax.toFixed(2)}` : '$0.00'}
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {!isTaxCalculationInProgress && totalSummary.calculatedTax
+                  ? `$${totalSummary.calculatedTax.toFixed(2)}`
+                  : '$0.00'}
               </StyledProductTotal>
             </Grid>
           </Grid>
@@ -365,23 +386,35 @@ const Cart = ({
             container
             direction="row"
             justify="space-between"
-            style={!xsBreakpoint ? {
-              'marginBottom': '0',
-              'borderTop': `solid 2px ${MEDIUM_GRAY}`,
-              'paddingTop': '29px',
-              'marginTop': '30px'
-            } : {
-              'marginBottom': '0',
-              'borderTop': `solid 2px ${MEDIUM_GRAY}`,
-              'paddingTop': '21px',
-              'marginTop': '30px'
-            }}
+            style={
+              !xsBreakpoint
+                ? {
+                    marginBottom: '0',
+                    borderTop: `solid 2px ${MEDIUM_GRAY}`,
+                    paddingTop: '29px',
+                    marginTop: '30px'
+                  }
+                : {
+                    marginBottom: '0',
+                    borderTop: `solid 2px ${MEDIUM_GRAY}`,
+                    paddingTop: '21px',
+                    marginTop: '30px'
+                  }
+            }
           >
             <Grid item xs={6}>
-              <StyledEstimatedTotal style={xsBreakpoint ? {fontSize:"20px"} : {}}>{xsBreakpoint ? 'Total' : 'Estimated Total'}</StyledEstimatedTotal>
+              <StyledEstimatedTotal
+                style={xsBreakpoint ? { fontSize: '20px' } : {}}
+              >
+                {xsBreakpoint ? 'Total' : 'Estimated Total'}
+              </StyledEstimatedTotal>
             </Grid>
-            <Grid item xs={6} style={{ 'textAlign': 'right' }}>
-              <StyledProductPrice style={!xsBreakpoint ? { 'fontSize': '22px' } : {fontSize:"18px"}}>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductPrice
+                style={
+                  !xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }
+                }
+              >
                 {`$${totalSummary.total.toFixed(2)}`}
               </StyledProductPrice>
             </Grid>
