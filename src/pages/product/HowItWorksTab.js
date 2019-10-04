@@ -15,9 +15,15 @@ export default function HowItWorksTab() {
   const contentfulOptions = {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: node => {
-        return (
+          let params = '?w=555&fm=jpg&q=90';
+
+          if (window.screen.width < 768) {
+            params = '?w=450&fm=jpg&q=90';
+          }
+
+          return (
           <img
-            src={node.data.target.fields.file.url}
+            src={node.data.target.fields.file.url + params}
             alt={node.data.target.fields.title}
           />
         );

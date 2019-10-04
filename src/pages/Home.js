@@ -23,9 +23,15 @@ const contentfulClient = contentful.createClient({
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
+      let params = '?w=825&fm=jpg&q=90';
+
+      if (window.screen.width < 768) {
+        params = '?w=450&fm=jpg&q=90';
+      }
+
       return (
         <img
-          src={node.data.target.fields.file.url}
+          src={node.data.target.fields.file.url + params}
           alt={node.data.target.fields.title}
         />
       );
@@ -59,13 +65,18 @@ class Home extends Component {
 
   renderHeroSlider() {
     if (!this.state.content.heroSlider) return <></>;
+
     let images = this.state.content.heroSlider;
+    let params = '?w=2000&fm=jpg&q=90';
+
     if (window.screen.width < 768) {
       images = this.state.content.heroSliderMobile;
+      params = '?w=450&fm=jpg&q=90';
     }
+
     return images.map(image => (
       <li key={image.sys.id}>
-        <img src={image.fields.file.url} style={{ width: '100%' }} />
+        <img src={image.fields.file.url + params} style={{ width: '100%' }} />
       </li>
     ));
   }
