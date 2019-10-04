@@ -69,11 +69,13 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
    * Total hack here, but if you refresh the page, you don't get a these fields
    * in your cart & orders will fail. Just make sure they're all there.
    */
-  /*
-  cart.catalogId = getState().storefront.catalogId;
-  cart.storeCode = getState().storefront.code;
-  cart.email = getState().account.data.email;
-  */
+  if (!cart.catalogId || !cart.storeCode || !cart.email) {
+    console.log('***** HAD TO LOAD SOME CART DATA FROM HACK *****');
+    cart.catalogId = getState().storefront.catalogId;
+    cart.storeCode = getState().storefront.code;
+    cart.email = getState().account.data.email;
+  }
+
   const params = {
     data: { cart },
     params: { account_jwt, nonceOrToken }
