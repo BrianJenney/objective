@@ -64,9 +64,11 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
-  // total hack here, but if you refresh the page, you don't get a
-  // catalog id in your cart & orders will fail.  Just make sure its there
+  // total hack here, but if you refresh the page, you don't get a these fields
+  // in your cart & orders will fail.  Just make sure they're all there.
   cart.catalogId = getState().storefront.catalogId;
+  cart.storeCode = getState().storefront.code;
+  cart.email = getState().account.data.email;
   const params = {
     data: { cart },
     params: { account_jwt, nonceOrToken }
