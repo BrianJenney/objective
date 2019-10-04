@@ -113,20 +113,8 @@ const Cart = ({
         {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader
-                align="center"
-                style={
-                  xsBreakpoint ? { fontSize: '24px', fontWeight: 'normal' } : {}
-                }
-              >
-                {showOrderSummaryText ? 'Order Summary' : 'Your Cart'}{' '}
-              </StyledCartHeader>
-              <StyledCartCountHeader
-                component="span"
-                style={
-                  xsBreakpoint ? { fontSize: '11px', fontWeight: '600' } : {}
-                }
-              >
+              <StyledCartHeader align="center" style={xsBreakpoint ? {fontSize:"24px", fontWeight:"normal", paddingTop:"0px"} : {}}>{showOrderSummaryText ? 'Order Summary' : 'Your Cart'} </StyledCartHeader>
+              <StyledCartCountHeader component="span" style={xsBreakpoint ? {fontSize:"11px",fontWeight:"600"} : {}}>
                 {' '}
                 ({cartCount} Items)
               </StyledCartCountHeader>

@@ -1,3 +1,22 @@
+/* .right-side-account {
+  border-left: 2px solid;
+  margin-left: 20px !important;
+  padding-left: 55px !important;
+} */
+
+
+.account-orders-mobile-table div[role="toolbar"]{
+  display:none;
+  }
+  .nxTextField .MuiOutlinedInput-notchedOutline{
+    border-color: #000000;
+  }
+  .nxTextField .MuiInputBase-formControl{
+    height: 50px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #231f20;
+  }
 .account-side-menu {
   font-family: p22-underground, sans-serif;
   font-size: 16px;
