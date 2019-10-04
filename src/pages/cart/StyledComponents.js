@@ -277,7 +277,7 @@ export const StyledCardContent = withStyles(theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    paddingTop: 26,
+    padding: '26px 0 0 0',
     marginBottom: 0
   }
 }))(CardContent);
