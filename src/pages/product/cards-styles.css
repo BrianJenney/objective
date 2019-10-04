@@ -1281,7 +1281,7 @@ html,
   .how-it-works-wrapper .coreBenefits .topBlock .leftCol img,
   .how-it-works-wrapper .coreBenefits .topBlock .rightCol img {
     position: relative !important;
-    width: auto;
+    max-width: 200px;
   }
   .how-it-works-wrapper .topBlock {
     width: 100% !important;

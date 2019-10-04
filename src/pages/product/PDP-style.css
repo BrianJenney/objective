@@ -169,7 +169,7 @@ html,
   .pdp-subtitle {
     padding: 20px 16px;
     margin-bottom: 25px;
-    line-height: 1;
+    line-height: 1.1;
   }
   .pdp-price {
     font-size: 22px;
@@ -182,5 +182,8 @@ html,
   }
   .pdp-description {
     font-size: 18px !important;
+  }
+  .pdp-direction-description {
+    margin-bottom: 20px;
   }
 }
