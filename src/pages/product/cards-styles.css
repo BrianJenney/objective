@@ -475,8 +475,10 @@ html,
 .how-it-works-wrapper .coreBenefits .topBlock .rightCol img,
 .how-it-works-wrapper .coreBenefits .bottomBlock .leftCol img,
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:first-of-type {
-  height: 56px;
-  width: 50px;
+  height: auto;
+  width: auto;
+  max-width: 55px;
+  max-height: 80px;
   position: absolute !important;
 }
 .how-it-works-wrapper .coreBenefits .bottomBlock .rightCol img:nth-of-type(2) {
