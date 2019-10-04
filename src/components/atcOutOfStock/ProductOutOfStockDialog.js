@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
+const ProductOutOfStockForm = ({ closeDialog, product_img, product_name, handleOpenEmailConfirmation }) => {
   const classes = useStyles();
   const initialValues = {
     email: '',
@@ -82,6 +82,7 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
     const { email, subscribed } = values;
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
+    handleOpenEmailConfirmation();
     closeDialog();
   };
 
