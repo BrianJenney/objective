@@ -35,7 +35,7 @@ const schema = object().shape({
   city: string().required('City is required'),
   state: string().required('State is required'),
   zipcode: string().required('Zip code is required'),
-  phone: string().required('Phone number is required'),
+  phone: string().nullable(),
   country: string().required('Country is required'),
   shouldSaveData: boolean()
 });
