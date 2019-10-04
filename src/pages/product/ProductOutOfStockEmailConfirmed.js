@@ -47,13 +47,19 @@ const useStyles = makeStyles(theme => ({
       fontSize: '20px',
       paddingBottom: '16px'
     }
+  },
+  test: {
+    border: 'red 2px solid',
+    [theme.breakpoints.down('xs')]: {
+
+    }
   }
 }));
 
 const ConfirmEmail = ({ product_img, product_name }) => {
   const classes = useStyles();
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="lg">
       <CssBaseline />
       <Grid container xs={12} direction="row" justify="center" align="center">
         <Grid item xs={12}>
