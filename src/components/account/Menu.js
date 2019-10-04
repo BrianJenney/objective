@@ -25,22 +25,22 @@ const StyledMenuItem = withStyles(theme => ({
     }
   }
 }))(MenuItem);
-
+ 
 const useStyles = makeStyles(theme => ({
   
-  accountHeaderMobile : {
-    fontSize : '24px',
-    color : '#231f20',
-    fontFamily: 'p22-underground, sans-serif',
-    fontWeight : '600',
-    marginTop: '32px'
-  },
-  nxTextField : { 
-    fontFamily: 'P22-underground', 
-    fontSize: '18px' , 
-    marginTop: '5px', 
-    border: '1px solid #000000'}
-}));
+   accountHeaderMobile : {
+     fontSize : '24px',
+     color : '#231f20',
+     fontFamily: 'p22-underground, sans-serif',
+     fontWeight : '600',
+     marginTop: '5px'
+   },
+   nxTextField : { 
+     fontFamily: 'P22-underground', 
+     fontSize: '18px' , 
+     marginTop: '5px'
+   }
+ }));
 
 const AccountMenu = ({ logout}) => {
   const theme = useTheme();
@@ -53,7 +53,8 @@ const AccountMenu = ({ logout}) => {
   const NTextField = withRouter(({history}) =>(
     
     <TextField 
-    className={classes.nxTextField}
+    
+    className={`${classes.nxTextField} nxTextField`}
     variant="outlined"
     fullWidth
     select
