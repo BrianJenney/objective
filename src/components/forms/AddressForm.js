@@ -30,26 +30,26 @@ const usePrevious = value => {
 const schema = object().shape({
   firstName: string().required('First name is required'),
   lastName: string().required('Last name is required'),
-  line1: string().required('Street address is required'),
-  line2: string().nullable(),
+  address1: string().required('Street address is required'),
+  address2: string().nullable(),
   city: string().required('City is required'),
   state: string().required('State is required'),
-  postalCode: string().required('Zip code is required'),
+  zipcode: string().required('Zip code is required'),
   phone: string().required('Phone number is required'),
-  countryCode: string().required('Country is required'),
+  country: string().required('Country is required'),
   shouldSaveData: boolean()
 });
 
 const INITIAL_VALUES = {
   firstName: '',
   lastName: '',
-  line1: '',
-  line2: '',
+  address1: '',
+  address2: '',
   city: '',
   state: '',
-  postalCode: '',
+  zipcode: '',
   phone: '',
-  countryCode: 'US',
+  country: 'US',
   isDefault: false,
   shouldSaveData: true
 };
@@ -143,7 +143,7 @@ const AddressForm = ({
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="line1"
+            name="address1"
             label="Street Address"
             component={InputField}
             helperText="*No PO Boxes or APO/FPO addresses"
@@ -151,7 +151,7 @@ const AddressForm = ({
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="line2"
+            name="address2"
             label="Apt. suite, bldg, c/o (optional)"
             component={InputField}
           />
@@ -168,7 +168,7 @@ const AddressForm = ({
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field name="postalCode" label="Zip Code" component={InputField} />
+          <Field name="zipcode" label="Zip Code" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -180,7 +180,7 @@ const AddressForm = ({
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="countryCode"
+            name="country"
             label="Country"
             component={SelectField}
             options={COUNTRY_OPTIONS}

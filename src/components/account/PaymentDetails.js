@@ -77,7 +77,7 @@ const AccountPaymentDetails = ({
     try {
       const cardResult = await sendCreditCardRequest({
         ...paymentDetails,
-        postalCode: billingAddress.postalCode
+        zipcode: billingAddress.zipcode
       });
       const { nonce, details } = cardResult.creditCards[0];
       const payload = {
