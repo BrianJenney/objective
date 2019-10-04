@@ -139,7 +139,8 @@ const AccountOrders = ({ currentUser: { data } }) => {
   }
   
   return (
-    <Grid container direction="column" spacing={3} className={xs? "account-orders account-orders-mobile-table" : "account-orders"}>
+
+        <Grid container direction="column" spacing={3} className={xs? "account-orders account-orders-mobile-table" : "account-orders"}></Grid>
       <Grid item sm={12} md={12} lg={12}>
        {xs ? <DataTable
           title={xs ? '' : 'Your Orders'}
