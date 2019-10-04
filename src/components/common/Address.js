@@ -28,9 +28,9 @@ const Address = ({ address, email = null, phone = null }) => {
       <Typography className={classes.text}>
         {address.firstName} {address.lastName}
       </Typography>
-      <Typography className={classes.text}>{address.line1}</Typography>
+      <Typography className={classes.text}>{address.address1}</Typography>
       <Typography className={classes.text}>
-        {address.city}, {address.state} {address.postalCode}
+        {address.city}, {address.state} {address.zipcode}
       </Typography>
       <Phone phone={phone} />
       {email && <Typography className={classes.text}>{email}</Typography>}

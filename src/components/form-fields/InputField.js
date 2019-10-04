@@ -23,8 +23,6 @@ export default function InputField(props) {
 
   return (
     <TextField
-      style={{ fontFamily: 'P22-underground', fontSize: '18px' }}
-      id={field.name}
       error={!!(touched && error)}
       helperText={(touched && error) || helperText}
       {...field}

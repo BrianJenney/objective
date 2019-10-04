@@ -74,13 +74,13 @@ const INITIAL_VALUES = {
   billingAddress: {
     firstName: '',
     lastName: '',
-    line1: '',
-    line2: '',
+    address1: '',
+    address2: '',
     city: '',
     state: '',
-    postalCode: '',
+    zipcode: '',
     phone: '',
-    countryCode: 'US'
+    country: 'US'
   },
   isDefault: false,
   shouldSaveData: true
@@ -262,7 +262,7 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12}>
               <Field
-                name="billingAddress.line1"
+                name="billingAddress.address1"
                 label="Street Address"
                 component={InputField}
                 validate={validateTextField}
@@ -271,7 +271,7 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12}>
               <Field
-                name="billingAddress.line2"
+                name="billingAddress.address2"
                 label="Apt. suite, bldg, c/o (optional)"
                 component={InputField}
               />
@@ -295,7 +295,7 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12} sm={6}>
               <Field
-                name="billingAddress.postalCode"
+                name="billingAddress.zipcode"
                 label="Zip Code"
                 component={InputField}
                 validate={validateTextField}
@@ -312,7 +312,7 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12}>
               <Field
-                name="billingAddress.countryCode"
+                name="billingAddress.country"
                 label="Country"
                 component={SelectField}
                 options={COUNTRY_OPTIONS}
