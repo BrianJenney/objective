@@ -56,7 +56,7 @@ class App extends Component {
         <CssBaseline />
         <BrowserRouter>
           <Header />
-          <Box>
+          <Box className="appMain">
             <Switch>
               {routes.map(route => (
                 <RouteWithSubRoutes key={route.path} {...route} />

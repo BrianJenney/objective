@@ -211,7 +211,7 @@ const Cart = ({
                       }}
                     >
                       <StyledProductLink
-                        style={{ fontSize: '18px' }}
+                        style={{ fontSize: '18px', padding: '0' }}
                         align="left"
                         onClick={onClickProduct}
                       >

@@ -95,7 +95,7 @@ export class ProductStore extends Component {
 
   render() {
     return (
-      <Context.Provider value={{ ...this.state }} className="productStore">
+      <Context.Provider value={{ ...this.state }}>
         {this.props.children}
       </Context.Provider>
     );
