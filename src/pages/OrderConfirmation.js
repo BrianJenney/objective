@@ -104,7 +104,8 @@ const OrderConfirmation = ({ history }) => {
     quantity: item.quantity,
     sku: item.sku,
     price: item.unit_price,
-    product_id: "SOME_ID_HERE"
+    product_id: item.variant_id,
+    name: item.variant_name,
 
    });
   });
