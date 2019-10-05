@@ -91,7 +91,7 @@ const OrderConfirmation = ({ history }) => {
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
   console.log('OrderConfirmation', { order, account });
-  console.log("raw_state",useSelector(state => state));
+
 
   if (!order) {
     return null;
