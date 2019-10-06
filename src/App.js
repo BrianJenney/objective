@@ -7,10 +7,17 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 
 import { requestFetchBootstrap } from './modules/bootstrap/actions';
+import {
+  requestCreateCart,
+  requestPatchCart,
+  requestRemoveCartById,
+  requestMergeCarts
+} from './modules/cart/actions';
 import { RouteWithSubRoutes } from './components/common';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import routes from './routes';
+import EventEmitter from './events';
 
 const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
@@ -20,11 +27,22 @@ class App extends Component {
     account: PropTypes.object.isRequired,
     storefront: PropTypes.object.isRequired,
     catalog: PropTypes.object.isRequired,
-    requestFetchBootstrap: PropTypes.func.isRequired
+    requestFetchBootstrap: PropTypes.func.isRequired,
+    requestCreateCart: PropTypes.func.isRequired,
+    requestPatchCart: PropTypes.func.isRequired,
+    requestRemoveCartById: PropTypes.func.isRequired,
+    requestMergeCarts: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    const { account, requestFetchBootstrap } = this.props;
+    const {
+      account,
+      requestFetchBootstrap,
+      requestCreateCart,
+      requestPatchCart,
+      requestRemoveCartById,
+      requestMergeCarts
+    } = this.props;
     const { data: accountData } = account;
 
     let accountId = null;
@@ -34,11 +52,39 @@ class App extends Component {
     }
 
     let cartId = null;
+
     if (localStorageClient.get('cartId')) {
       cartId = localStorageClient.get('cartId');
     }
 
     requestFetchBootstrap(process.env.REACT_APP_STORE_CODE, accountId, cartId);
+
+    EventEmitter.addListener('account.created', account => {
+      if (account && account.account_jwt) {
+        let accountId = jwt.decode(account.account_jwt).account_id;
+
+        requestPatchCart(this.props.cart._id, {
+          accountId
+        });
+      }
+    });
+
+    EventEmitter.addListener('user.logged.in', account => {
+      if (account && account.account_jwt) {
+        let accountId = jwt.decode(account.account_jwt).account_id;
+
+        requestMergeCarts(localStorageClient.get('cartId'), accountId);
+      }
+    });
+
+    EventEmitter.addListener('user.logged.out', () => {
+      requestCreateCart();
+    });
+
+    EventEmitter.addListener('order.created', order => {
+      requestRemoveCartById(this.props.cart._id);
+      requestCreateCart();
+    });
   }
 
   /**
@@ -79,7 +125,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestFetchBootstrap: requestFetchBootstrap
+  requestFetchBootstrap,
+  requestCreateCart,
+  requestPatchCart,
+  requestRemoveCartById,
+  requestMergeCarts
 };
 
 export default connect(
