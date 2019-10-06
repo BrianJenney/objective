@@ -126,9 +126,7 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   let params = {
     data: {
       storeCode: getState().storefront.code,
-      catalogId: getState().storefront.catalogId,
-      accountId: null,
-      email: null
+      catalogId: getState().storefront.catalogId
     }
   };
   const obj = JSON.stringify(msgpack.encode(params));
