@@ -360,8 +360,8 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.calculatedTax
-                  ? `$${totalSummary.calculatedTax.toFixed(2)}`
+                {!isTaxCalculationInProgress && totalSummary.tax
+                  ? `$${totalSummary.tax.toFixed(2)}`
                   : '$0.00'}
               </StyledProductTotal>
             </Grid>

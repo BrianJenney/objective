@@ -30,8 +30,8 @@ export const handleCartResponse = (status, data, fields, properties) => {
       console.log(fields);
       console.log(properties);
       store.dispatch(receivedPatchCart(data));
+
       if (fields.routingKey !== 'cart.request.patch') {
-        console.log('open cart drawer');
         store.dispatch(setCartDrawerOpened(true));
       }
       break;

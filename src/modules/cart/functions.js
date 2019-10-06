@@ -27,15 +27,15 @@ export const calculateCartTotals = cart => {
     }
   }
 
-  let calculatedTax = null;
-  if (cart.calculatedTax) {
-    calculatedTax = cart.calculatedTax;
-    total += calculatedTax;
+  let tax = null;
+  if (cart.tax) {
+    tax = cart.tax;
+    total += tax;
   }
   return {
     discount,
     subtotal,
-    calculatedTax,
+    tax,
     total
   };
 };
