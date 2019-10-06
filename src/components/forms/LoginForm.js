@@ -113,7 +113,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
           <Button
             fullWidth
             type="submit"
-            children="Login"
+            children="Log in"
             disabled={!isValid}
           />
         </Grid>

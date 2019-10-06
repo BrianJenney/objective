@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+
 import { SignupForm } from './forms';
 import { MenuLink, NavLink } from './common';
 
@@ -44,9 +46,9 @@ const Signup = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }
           <Typography className={classes.subTitle}>
             Already registered?&nbsp;
             {switchToLogin ? (
-              <MenuLink onClick={switchToLogin} children="Login!" />
+              <MenuLink onClick={switchToLogin} children="Log in!" />
             ) : (
-              <NavLink to="/login" children="Login!" replace underline="always" />
+              <NavLink to="/login" children="Log in!" replace underline="always" />
             )}
           </Typography>
 
