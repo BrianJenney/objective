@@ -34,7 +34,6 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_REFUND_TRANSACTION:
       return { ...state, refunding: true };
     case RECEIVED_TRANSACTION_REQUEST_REFUND:
-      console.log('reducer');
       return { ...state, order: action.payload, refunding: false };
     default:
       return state;
