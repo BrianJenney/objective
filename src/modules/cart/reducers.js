@@ -14,10 +14,11 @@ import {
 const localStorageClient = require('store');
 
 const INITIAL_STATE = {
+  accountId: null,
   items: [],
   subtotal: 0,
   taxRate: 0,
-  calculatedTax: 0,
+  tax: 0,
   discount: 0,
   total: 0,
   savings: 0,
@@ -48,7 +49,7 @@ export default (state = INITIAL_STATE, action) => {
   case REQUEST_REMOVE_CART_BY_ID:
     return { ...state };
   case UPDATE_CART_WITH_TAX_CALCULATION:
-    return { ...state, calculatedTax: action.payload.tax, taxRate: action.payload.rate };
+    return { ...state, tax: action.payload.tax, taxRate: action.payload.rate };
   default:
     return state;
   }
