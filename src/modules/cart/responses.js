@@ -22,6 +22,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.addtocart':
     case 'cart.request.removefromcart':
     case 'cart.request.updatequantity':
+    case 'cart.request.mergecarts':
     case 'cart.request.patch':
       console.log('****************** Cart Patch Response ******************');
       console.log(status);
@@ -29,8 +30,8 @@ export const handleCartResponse = (status, data, fields, properties) => {
       console.log(fields);
       console.log(properties);
       store.dispatch(receivedPatchCart(data));
-      if (fields.routingKey !== 'cart.request.update') {
-        console.log('open cart drawer');
+
+      if (fields.routingKey !== 'cart.request.patch') {
         store.dispatch(setCartDrawerOpened(true));
       }
       break;

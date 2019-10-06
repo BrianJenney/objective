@@ -8,6 +8,7 @@ import {
   REQUEST_REFUND_TRANSACTION,
   RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
+import EventEmitter from '../../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -64,9 +65,18 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
-  // total hack here, but if you refresh the page, you don't get a
-  // catalog id in your cart & orders will fail.  Just make sure its there
-  cart.catalogId = getState().storefront.catalogId;
+
+  /**
+   * Total hack here, but if you refresh the page, you don't get a these fields
+   * in your cart & orders will fail. Just make sure they're all there.
+   */
+  if (!cart.catalogId || !cart.storeCode || !cart.email) {
+    console.log('***** HAD TO LOAD SOME CART DATA FROM HACK *****');
+    cart.catalogId = getState().storefront.catalogId;
+    cart.storeCode = getState().storefront.code;
+    cart.email = getState().account.data.email;
+  }
+
   const params = {
     data: { cart },
     params: { account_jwt, nonceOrToken }
@@ -86,6 +96,8 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 };
 
 export const receivedCreateOrder = order => {
+  EventEmitter.emit('order.created', order);
+
   return {
     type: RECEIVED_CREATE_ORDER,
     payload: order

@@ -1,7 +1,6 @@
 import store from '../../store';
 import { receivedCreateOrder, receivedGetOrder, receivedTransactionRequestRefund } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
-import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 
 export const handleOrderResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
@@ -13,14 +12,12 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       console.log(data);
       console.log(fields);
       console.log(properties);
-      store.dispatch(receivedCreateOrder(data));
 
       // status handling
       switch (status) {
         case 'success':
           // clear cart on success
-          store.dispatch(requestRemoveCartById(data.cartId));
-          store.dispatch(requestCreateCart());
+          store.dispatch(receivedCreateOrder(data));
           break;
         default:
           console.log('unknown status ' + status);
@@ -53,7 +50,6 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       console.log(fields);
       console.log(properties);
       store.dispatch(receivedTransactionRequestRefund(data));
-
       break;
     default:
       console.log('bad response ' + fields.routingKey);

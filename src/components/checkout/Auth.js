@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import Box from '@material-ui/core/Box';
+
 import { Loader } from '../common';
 import Login from '../Login';
 import SignupCheckout from '../SignUpCheckout';
@@ -22,6 +24,7 @@ const CheckoutAuth = ({
   const { account_jwt } = currentUser.data;
   const moveToNextStep = () => {
     if (account_jwt) {
+      // @TODO - This is where we should be setting email on the order document; if things were done properly
       handleNext();
     }
   };

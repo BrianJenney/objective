@@ -25,8 +25,7 @@ export const HomeVariantCard = ({ variant }) => {
     effectivePrice,
     slug,
     variantInfo,
-    assets,
-    cardColor
+    assets
   } = variant;
   const handleAddToCart = useCallback(() => {
     setATCAdded(true);
@@ -47,7 +46,7 @@ export const HomeVariantCard = ({ variant }) => {
 
   return (
     <Grid item xs={12} md={4}>
-      <Card className={`tile ${cardColor}`} ref={ref}>
+      <Card className="tile" ref={ref}>
         <NavLink to={`/products/${slug}`}>
           <CardMedia
             style={{ height: 430, width: '100%' }}

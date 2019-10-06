@@ -8,14 +8,13 @@ import {
   REQUEST_PATCH_CART,
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
-  REQUEST_FETCH_CART_BY_EMAIL,
   REQUEST_REMOVE_CART_BY_ID,
   UPDATE_CART_WITH_TAX_CALCULATION,
   RESET_TAX_CALCULATION_IN_CART,
-  RESET_CART,
   REQUEST_ADD_TO_CART,
   REQUEST_REMOVE_FROM_CART,
   REQUEST_UPDATE_QUANTITY,
+  REQUEST_MERGE_CARTS
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -130,9 +129,6 @@ export const requestCreateCart = () => async (dispatch, getState) => {
       catalogId: getState().storefront.catalogId
     }
   };
-  if(getState().account.data) {
-    params.data.email = getState().account.data.email;
-  }
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/cart/cart.request.create',
@@ -197,12 +193,9 @@ export const requestPatchCart = (cartId, patches) => async (
 ) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
-  const email = getState().account.data.email;
-  const realPatches = { ...patches, email };
-  console.log(cartId, email);
   const params = {
     id: cartId,
-    data: realPatches
+    data: patches
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -213,7 +206,7 @@ export const requestPatchCart = (cartId, patches) => async (
     },
     obj
   );
-  await dispatch({
+  dispatch({
     type: REQUEST_PATCH_CART,
     payload: {}
   });
@@ -231,35 +224,6 @@ export const setCartDrawerOpened = open => {
     type: SET_CART_DRAWER_OPENED,
     payload: open
   };
-};
-
-export const requestFetchCartByEmail = email => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
-  const params = {
-    params: {
-      createOnMiss: {
-        storeCode: getState().storefront.code,
-        catalogId: getState().storefront.catalogId
-      },
-      query: {
-        email
-      }
-    }
-  };
-  const obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
-    '/exchange/cart/cart.request.find',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    },
-    obj
-  );
-  dispatch({
-    type: REQUEST_FETCH_CART_BY_EMAIL,
-    payload: {}
-  });
 };
 
 export const requestRemoveCartById = id => async (dispatch, getState) => {
@@ -291,8 +255,26 @@ export const updateCartWithTaxCalculation = (tax, rate) => {
   };
 };
 
-export const resetCart = () => {
-  return {
-    type: RESET_CART,
+export const requestMergeCarts = (cartId, accountId) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cartId,
+    accountId
   };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.mergecarts',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_MERGE_CARTS,
+    payload: {}
+  });
 };
