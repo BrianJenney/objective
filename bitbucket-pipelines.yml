@@ -29,10 +29,6 @@ pipelines:
             - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
             # deploy to stagging site
             - curl -X POST ${UPDATE_WEBHOOK}
-        services:
-          - docker
-        caches:
-          - docker
     dev:
       - step:
           image: docker

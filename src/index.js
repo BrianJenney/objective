@@ -9,14 +9,18 @@ import Stomp from 'stompjs';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { SnackbarProvider } from 'notistack';
 import { IntlProvider } from 'react-intl';
+
+import { SnackbarProvider } from 'notistack';
+
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { makeStyles } from '@material-ui/core/styles';
+
 import App from './App';
-import { connectStomp } from './modules/stomp/actions';
 import store from './store';
 import handleResponse from './responses';
+import { connectStomp } from './modules/stomp/actions';
+
 import nxtTheme from './components/Theme/Theme';
 import './assets/styles/global.scss';
 

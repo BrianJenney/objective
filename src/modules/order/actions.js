@@ -8,6 +8,7 @@ import {
   REQUEST_REFUND_TRANSACTION,
   RECEIVED_TRANSACTION_REQUEST_REFUND
 } from './types';
+import EventEmitter from '../../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -95,6 +96,8 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 };
 
 export const receivedCreateOrder = order => {
+  EventEmitter.emit('order.created', order);
+
   return {
     type: RECEIVED_CREATE_ORDER,
     payload: order

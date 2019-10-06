@@ -17,7 +17,7 @@ COPY --from=build-stage /app/build/ /usr/share/nginx/html
 COPY --from=build-stage /app/_tstamp /usr/share/nginx/html/_tstamp
 
 # Copy our nginx.conf to image
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 RUN echo $GIT_COMMIT > /usr/share/nginx/html/git_sha.txt
 EXPOSE 80
 

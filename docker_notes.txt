@@ -1,0 +1,5 @@
+
+
+docker build -t frontend .
+
+docker run -p 8080:80 --add-host=nxt-ms-ship-tracking:127.0.0.1 -v $(pwd)/.env:/usr/share/nginx/html/.env frontend

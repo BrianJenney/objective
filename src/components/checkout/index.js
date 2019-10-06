@@ -22,7 +22,6 @@ import { getDefaultEntity } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestCalculateTax } from '../../modules/tax/actions';
-import { resetCart } from '../../modules/cart/actions';
 
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -156,7 +155,6 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    dispatch(resetCart());
     setPayload({});
     history.replace('/order');
 

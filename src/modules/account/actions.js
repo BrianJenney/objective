@@ -24,8 +24,7 @@ import {
   REQUEST_FORGOT_PASSWORD,
   REQUEST_SIGNUP_EMAIL
 } from './types';
-import store from '../../store';
-import { requestCreateCart, requestPatchCart } from '../cart/actions';
+import EventEmitter from '../../events';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -61,11 +60,11 @@ export const requestCreateAccount = account => (dispatch, getState) => {
   });
 };
 
-export const receivedCreateAccountSuccess = createReply => (dispatch, getState) => {
-  localStorageClient.set('token', createReply.jwt);
-  store.dispatch(requestPatchCart(getState().cart._id, {
-    email: createReply.email
-  }));
+export const receivedCreateAccountSuccess = createReply => dispatch => {
+  localStorageClient.set('token', createReply.account_jwt);
+
+  EventEmitter.emit('account.created', createReply);
+
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
     payload: createReply
@@ -155,10 +154,7 @@ export const requestPatchAccount = (authToken, patches) => (
   });
 };
 
-export const receivedPatchAccountSuccess = account => (dispatch, getState) => {
-  store.dispatch(requestPatchCart(getState().cart._id, {
-    email: account.email
-  }));
+export const receivedPatchAccountSuccess = account => dispatch => {
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT_SUCCESS,
     payload: account
@@ -260,16 +256,15 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
   });
 };
 
-export const receivedLoginSuccess = loginReply => (dispatch, getState) => {
+export const receivedLoginSuccess = loginReply => dispatch => {
   localStorageClient.set('token', loginReply.account_jwt);
-  store.dispatch(requestPatchCart(getState().cart._id, {
-    email: loginReply.email
-  }));
+
+  EventEmitter.emit('user.logged.in', loginReply);
+
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply
   });
-  //store.dispatch(requestFetchCartByEmail(loginReply.email));
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
@@ -287,7 +282,9 @@ export const clearLoginError = () => dispatch => {
 
 export const requestLogout = () => dispatch => {
   localStorageClient.remove('token');
-  store.dispatch(requestCreateCart());
+
+  EventEmitter.emit('user.logged.out', {});
+
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}
