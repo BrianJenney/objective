@@ -109,41 +109,20 @@ const OrderConfirmation = ({ history }) => {
 
    });
   });
+  
+  const orderDateSplit = order.createdAt.split("-");
 
   window.analytics.track("Order Completed", {
-    "email": order.email,
-    "billing_address1": order.billingAddress.line1,
-    "billing_address2": order.billingAddress.line2,
-    "billing_city": order.billingAddress.city,
-    "billing_country": "US",
-    "billing_first_name": order.billingAddress.firstName,
-    "billing_last_name": order.billingAddress.lastName,
-    //"billing_phone": "<<type: string, required: false>>",
-    "billing_state": order.billingAddress.state,
-    "billing_zip": order.billingAddress.postalCode,
-    "coupon": order.promo,
+    "coupon": order.promo ? order.promo : "",
     "currency": "USD",
     "discount": order.discount,
     "est_ship_date": order.shippingMethod.deliveryEstimate,
     "item_count": order.items.length,
-    "order_date": order.createdAt,
-    "order_id": order._id,
-    "order_link": "<<type: string, required: false>>",
-   // "payment_method": "<<type: string, required: false>>",
-    //"payment_method_detail": "<<type: string, required: false>>",
+    "order_date": `${orderDateSplit[1]}/${orderDateSplit[2].substr(0,2)}/${orderDateSplit[0]}`,
+    "order_id": order.orderId,
+    "order_link": "",
     "products": orderItemsTransformed,
-    "revenue": order.total,
-    "shipping": "<<type: number, required: false>>",
-    "shipping_address1": order.shippingAddress.line1,
-    "shipping_address2": order.shippingAddress.line2,
-    "shipping_city": order.shippingAddress.city,
-    "shipping_country": order.shippingAddress.countryCode,
-    "shipping_first_name": order.shippingAddress.firstName,
-    "shipping_last_name": order.shippingAddress.lastName,
-    "shipping_method": order.shippingMethod.displayName,
-    //"shipping_phone": "<<type: string, required: false>>",
-    "shipping_state": order.shippingAddress.state,
-    "shipping_zip": order.shippingAddress.postalCode,
+    "subtotal": order.subtotal,
     "tax": order.tax,
     "total": order.total
     });
