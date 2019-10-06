@@ -116,7 +116,6 @@ const OrderConfirmation = ({ history }) => {
    });
   });
   
-  const orderDateSplit = order.createdAt.split("-");
 
   window.analytics.track("Order Completed", {
     "coupon": order.promo ? order.promo : "",
@@ -124,7 +123,6 @@ const OrderConfirmation = ({ history }) => {
     "discount": order.discount,
     "est_ship_date": order.shippingMethod.deliveryEstimate,
     "item_count": order.items.length,
-    "order_date": `${orderDateSplit[1]}/${orderDateSplit[2].substr(0,2)}/${orderDateSplit[0]}`,
     "order_id": order.orderId,
     "order_link": "",
     "products": orderItemsTransformed,
