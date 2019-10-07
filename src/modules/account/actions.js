@@ -273,6 +273,11 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
     type: REQUEST_LOGIN,
     payload: {}
   });
+
+  window.analytics.track("Sign In Completed", {
+    "email": email,
+    "site_location": window.location
+  })
 };
 
 export const receivedLoginSuccess = loginReply => dispatch => {
@@ -282,6 +287,11 @@ export const receivedLoginSuccess = loginReply => dispatch => {
     payload: loginReply
   });
   //store.dispatch(requestFetchCartByEmail(loginReply.email));
+  window.analytics.track("Sign In Successful", {
+    "method": "email",
+    "site_location": window.location,
+    "username": loginReply.email
+  })
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
@@ -289,6 +299,11 @@ export const receivedLoginFailure = loginError => dispatch => {
     type: RECEIVED_LOGIN_FAILURE,
     payload: loginError
   });
+  window.analytics.track("Sign In Failed", {
+    "error_message": "Incorrect Email/Password",
+    "method": "email",
+    "site_location": window.location
+  })
 };
 
 export const clearLoginError = () => dispatch => {
