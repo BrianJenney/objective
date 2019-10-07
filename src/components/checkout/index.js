@@ -30,6 +30,8 @@ import { requestCalculateTax } from '../../modules/tax/actions';
 import { resetCart } from '../../modules/cart/actions';
 import TransactionMessage from './TransactionMessage';
 import { resetOrderState } from '../../modules/order/actions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -366,6 +368,18 @@ const Checkout = ({
               onClose={handleCheckoutDialogClose}
               closeAfterTransition
             >
+              <IconButton
+                aria-label="close"
+                style={{
+                  position: 'absolute',
+                  right: theme.spacing(1),
+                  top: theme.spacing(1),
+                  color: theme.palette.grey[500]
+                }}
+                onClick={handleCheckoutDialogClose}
+              >
+                <CloseIcon />
+              </IconButton>
               <MuiDialogContent>
                 <TransactionMessage orderError={orderError} />
               </MuiDialogContent>
