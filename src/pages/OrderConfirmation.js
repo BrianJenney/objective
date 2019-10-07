@@ -127,7 +127,7 @@ const OrderConfirmation = ({ history }) => {
     "order_link": "",
     "products": orderItemsTransformed,
     "subtotal": order.subtotal,
-    "tax": order.tax,
+    "tax": order.tax ? order.tax : 0,
     "total": order.total
     });
 
