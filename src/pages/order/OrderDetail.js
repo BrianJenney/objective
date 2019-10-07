@@ -14,14 +14,15 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 
-import { AdapterLink, Address } from '../../components/common';
-import { CartSummary } from '../../components/summaries';
 import {
-  StyledArrowIcon,
-  StyledSmallCaps
-} from '../../pages/cart/StyledComponents';
+  AdapterLink,
+  Address,
+  Button as CommonButton
+} from '../../components/common';
+import { CartSummary } from '../../components/summaries';
+import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import { formatDateTime } from '../../utils/misc';
-import { Button as CommonButton } from '../../components/common';
+
 import StatusStepper from './StatusStepper';
 
 import {
@@ -45,7 +46,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(3, 4),
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: 'rgba(252, 248, 244, 0.6)'
+      backgroundColor: 'rgba(252, 248, 244, 0.6)',
+      padding: 0
     }
   },
   title: {
@@ -54,15 +56,32 @@ const useStyles = makeStyles(theme => ({
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
     fontWeight: 'normal',
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 40
+    }
   },
   text: {
     fontSize: '20px',
     fontFamily: 'p22-underground, sans-serif',
-    lineHeight: '1.2'
+    lineHeight: '1.2',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 18
+    }
+  },
+  textFreight: {
+    fontSize: 18
   },
   button: {
     margin: theme.spacing(3, 0, 4)
+  },
+  containingBox: {
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
+  },
+  link: {
+    color: '#000'
   }
 }));
 
@@ -77,9 +96,10 @@ const getStatusStepperDate = order => {
   };
 };
 
-const TrackingInfo = ({ trackingId }, classes) => {
+const TrackingInfo = ({ trackingId }) => {
+  const classes = useStyles();
   return (
-    <Typography className={classes.text}>
+    <Typography className={classes.text} pt={2}>
       Tracking #: <Link to={`${trackingId}`}>{trackingId}</Link>
     </Typography>
   );
@@ -145,7 +165,7 @@ const OrderSummary = ({
         </Link>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
-      <Typography className={classes.text}>
+      <Typography className={classes.textFreight}>
         Your order number: <strong>{orderId}</strong>, placed on{' '}
         <strong>{createdAt}</strong>
       </Typography>
@@ -153,7 +173,11 @@ const OrderSummary = ({
       <StatusStepper statusStepperDate={statusStepperDate} />
       {orderStatus !== 'shipped' ? (
         <CommonButton
-          style={{ padding: '23px 23px', marginBottom: '25px', width: '210px' }}
+          style={{
+            padding: '23px 23px',
+            marginBottom: '25px',
+            minWidth: '210px'
+          }}
           onClick={() => {
             if (!orderRefunded) {
               refundTransaction(
@@ -199,7 +223,10 @@ const OrderSummary = ({
               Shipping Information
             </StyledSmallCaps>
             <Address address={shippingAddress} />
-            <TrackingInfo classes={classes} trackingId="123456789012345" />
+            <TrackingInfo
+              className={classes.text}
+              trackingId="123456789012345"
+            />
           </Box>
         </Grid>
       </Box>
@@ -242,7 +269,7 @@ const OrderDetail = () => {
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
         <CssBaseline />
-        <Box py={10}>
+        <Box py={10} className={classes.containingBox}>
           <Grid container spacing={xs ? 0 : 4}>
             <Grid item xs={mainWidth}>
               <OrderSummary
