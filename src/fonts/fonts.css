@@ -1,0 +1,250 @@
+/*
+        This font software is the property of Commercial Type.
+
+        You may not modify the font software, use it on another website, or install it on a computer.
+
+        License information is available at http://commercialtype.com/eula
+        For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
+
+        Copyright (C) 2019 Schwartzco Inc.
+        License: 1907-QCKQNX     
+*/
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-BlackItalic-Web.woff2') format('woff2'),
+       url('CanelaText-BlackItalic-Web.woff') format('woff');
+  font-weight:  900;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-BlackItalic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  900;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-Black-Web.woff2') format('woff2'),
+       url('CanelaText-Black-Web.woff') format('woff');
+  font-weight:  900;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-Black-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  900;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-BoldItalic-Web.woff2') format('woff2'),
+       url('CanelaText-BoldItalic-Web.woff') format('woff');
+  font-weight:  700;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-BoldItalic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  700;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-Bold-Web.woff2') format('woff2'),
+       url('CanelaText-Bold-Web.woff') format('woff');
+  font-weight:  700;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-Bold-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  700;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-MediumItalic-Web.woff2') format('woff2'),
+       url('CanelaText-MediumItalic-Web.woff') format('woff');
+  font-weight:  600;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-MediumItalic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  600;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-Medium-Web.woff2') format('woff2'),
+       url('CanelaText-Medium-Web.woff') format('woff');
+  font-weight:  600;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-Medium-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  600;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-RegularNo2Italic-Web.woff2') format('woff2'),
+       url('CanelaText-RegularNo2Italic-Web.woff') format('woff');
+  font-weight:  500;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-RegularNo2Italic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  500;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-RegularNo2-Web.woff2') format('woff2'),
+       url('CanelaText-RegularNo2-Web.woff') format('woff');
+  font-weight:  500;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-RegularNo2-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  500;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-RegularItalic-Web.woff2') format('woff2'),
+       url('CanelaText-RegularItalic-Web.woff') format('woff');
+  font-weight:  400;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-RegularItalic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  400;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-Regular-Web.woff2') format('woff2'),
+       url('CanelaText-Regular-Web.woff') format('woff');
+  font-weight:  400;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-Regular-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  400;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-LightItalic-Web.woff2') format('woff2'),
+       url('CanelaText-LightItalic-Web.woff') format('woff');
+  font-weight:  300;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-LightItalic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  300;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-Light-Web.woff2') format('woff2'),
+       url('CanelaText-Light-Web.woff') format('woff');
+  font-weight:  300;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-Light-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  300;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-ThinItalic-Web.woff2') format('woff2'),
+       url('CanelaText-ThinItalic-Web.woff') format('woff');
+  font-weight:  100;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+.CanelaText-ThinItalic-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  100;
+  font-style:   italic;
+  font-stretch: normal;
+}
+
+
+@font-face {
+  font-family: 'Canela Text Web';
+  src: url('CanelaText-Thin-Web.woff2') format('woff2'),
+       url('CanelaText-Thin-Web.woff') format('woff');
+  font-weight:  100;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+.CanelaText-Thin-Web {
+  font-family: 'Canela Text Web';
+  font-weight:  100;
+  font-style:   normal;
+  font-stretch: normal;
+}
+

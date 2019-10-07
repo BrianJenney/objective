@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '30px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     marginTop: '-13px',
     marginBottom: '20px',
     [theme.breakpoints.down('xs')]: {
@@ -159,11 +159,7 @@ const CartSummary = ({ order }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${
-                  totalSummary.discount
-                    ? totalSummary.discount
-                    : '0.00'
-                }`}
+                {`$${totalSummary.discount ? totalSummary.discount : '0.00'}`}
               </StyledSmallCaps>
             </Grid>
           </Grid>
@@ -175,11 +171,7 @@ const CartSummary = ({ order }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${
-                  totalSummary.tax
-                    ? totalSummary.tax
-                    : '0.00'
-                }`}
+                {`$${totalSummary.tax ? totalSummary.tax : '0.00'}`}
               </StyledSmallCaps>
             </Grid>
           </Grid>

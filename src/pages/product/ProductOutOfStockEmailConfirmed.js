@@ -14,7 +14,7 @@ import withDialog from '../../hoc/withDialog';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     paddingBottom: '10px',
     [theme.breakpoints.down('xs')]: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   name: {
     color: '#003732',
     fontSize: '30px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingBottom: '20px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '20px',
@@ -50,9 +50,7 @@ const useStyles = makeStyles(theme => ({
   },
   test: {
     border: 'red 2px solid',
-    [theme.breakpoints.down('xs')]: {
-
-    }
+    [theme.breakpoints.down('xs')]: {}
   }
 }));
 

@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     height: '48px',
     fontSize: '48px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
@@ -37,7 +37,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) => {
+const Login = ({
+  requestLogin,
+  clearLoginError,
+  switchToSignup,
+  loginTitle
+}) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -45,10 +50,13 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
       <Box component={Paper}>
         <Box textAlign="center">
           <Typography className={classes.title}>
-            { loginTitle ? loginTitle : 'Log in to your Account' }
+            {loginTitle ? loginTitle : 'Log in to your Account'}
           </Typography>
           <Box pt={4}>
-            <LoginForm onSubmit={requestLogin} clearLoginError={clearLoginError} />
+            <LoginForm
+              onSubmit={requestLogin}
+              clearLoginError={clearLoginError}
+            />
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>

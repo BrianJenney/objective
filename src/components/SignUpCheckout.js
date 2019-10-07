@@ -15,7 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '30px',
-    fontFamily: 'CanelaText'
+    fontFamily: 'Canela Text Web'
   },
   mobileTitle: {
     fontSize: 24,
@@ -37,13 +37,17 @@ const useStyles = makeStyles(theme => ({
   mobileBox: {}
 }));
 
-const SignupCheckout = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }) => {
+const SignupCheckout = ({
+  requestCreateAccount,
+  clearCreateAccountError,
+  switchToLogin
+}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <Container component="main" maxWidth="md" style={xs ? {padding: 0} : {}}>
+    <Container component="main" maxWidth="md" style={xs ? { padding: 0 } : {}}>
       <CssBaseline />
       <Box component={Paper} py={xs ? 0 : 3} px={xs ? 0 : 5}>
         <Box>
@@ -54,7 +58,10 @@ const SignupCheckout = ({ requestCreateAccount, clearCreateAccountError, switchT
             >
               Create your Account
             </Typography>
-            <Typography variant="body1" className={xs ? classes.mobileLogin : classes.subTitle}>
+            <Typography
+              variant="body1"
+              className={xs ? classes.mobileLogin : classes.subTitle}
+            >
               {switchToLogin ? (
                 <MenuLink
                   onClick={switchToLogin}
@@ -66,7 +73,10 @@ const SignupCheckout = ({ requestCreateAccount, clearCreateAccountError, switchT
               )}
             </Typography>
           </Box>
-          <SignupForm onSubmit={requestCreateAccount} clearCreateAccountError={clearCreateAccountError} />
+          <SignupForm
+            onSubmit={requestCreateAccount}
+            clearCreateAccountError={clearCreateAccountError}
+          />
         </Box>
       </Box>
     </Container>

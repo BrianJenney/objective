@@ -2,11 +2,11 @@ export const fonts = {
   body: 'freight-text-pro',
   body2: 'p22-underground, sans-serif',
   bodyWeight: '400',
-  header: 'Canela Text, serif',
-  $brandSerif: 'Canela Text, serif',
+  header: 'Canela Text Web',
+  $brandSerif: 'Canela Text Web',
   $brandSans: 'p22-underground, Helvetica, sans-serif',
   smallHeader: 'p22-underground',
-  variant: 'Canela Text, serif',
+  variant: 'Canela Text Web',
   captionBook: {
     header: 'p22-underground, Helvetica, sans-serif',
     weight: 400

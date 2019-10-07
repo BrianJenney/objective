@@ -23,6 +23,7 @@ import { connectStomp } from './modules/stomp/actions';
 
 import nxtTheme from './components/Theme/Theme';
 import './assets/styles/global.scss';
+import './fonts/fonts.css';
 
 const ObjectId = require('bson-objectid');
 

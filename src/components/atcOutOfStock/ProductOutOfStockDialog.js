@@ -22,7 +22,7 @@ const schema = object().shape({
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     paddingBottom: '10px',
     [theme.breakpoints.down('xs')]: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   name: {
     color: '#003732',
     fontSize: '30px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingBottom: '20px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '20px',
@@ -71,7 +71,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductOutOfStockForm = ({ closeDialog, product_img, product_name, handleOpenEmailConfirmation }) => {
+const ProductOutOfStockForm = ({
+  closeDialog,
+  product_img,
+  product_name,
+  handleOpenEmailConfirmation
+}) => {
   const classes = useStyles();
   const initialValues = {
     email: '',
