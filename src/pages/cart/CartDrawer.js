@@ -69,11 +69,21 @@ const Cart = ({
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
+    window.analytics.track("Cart Dismissed", {
+      "cart_id": cart._id,
+      "num_products": cartCount,
+      "products": cart.items
+    });
     history.push('/gallery');
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
+    window.analytics.track("Cart Dismissed", {
+      "cart_id": cart._id,
+      "num_products": cartCount,
+      "products": cart.items
+    });
   }, [dispatch]);
 
   const togglePromo = useCallback(() => {
@@ -82,8 +92,21 @@ const Cart = ({
 
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
+    window.analytics.track("Cart Dismissed", {
+      "cart_id": cart._id,
+      "num_products": cartCount,
+      "products": cart.items
+    });
     history.push('/checkout');
   }, [dispatch, history]);
+
+  const trackProductRemoveEvent = (cartId,item) => {
+    window.analytics.track("Product Removed", {
+      "cart_id": cartId,
+      ...item
+
+    });
+  }
 
   if (!cart) {
     return <AlertPanel type="info" text="No Cart" />;
@@ -273,7 +296,7 @@ const Cart = ({
                       <StyledFinePrint component="div" value={index}>
                         {!disableItemEditing && (
                           <Link
-                            onClick={e => removeFromCart(cart, index)}
+                            onClick={e => {removeFromCart(cart, index); trackProductRemoveEvent(cart._id,item);}}
                             style={{ color: '#9b9b9b' }}
                           >
                             <StyledRemoveLink>Remove</StyledRemoveLink>
