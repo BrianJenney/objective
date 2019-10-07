@@ -1,7 +1,7 @@
 export const roundTo2Decimal = (number) => Math.round(number * 100) / 100;
 
 export const getOrderTotalSummary = order => {
-  const { subtotal, tax, discount } = order;
+  let { subtotal, tax, discount } = order;
 
   if (tax === null || !isNaN(tax)) {
     tax = 0;
