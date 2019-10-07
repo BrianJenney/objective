@@ -138,6 +138,20 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const handleSubmit = (values, actions) => {
+    const payload = {
+      ...values,
+      billingAddress: {
+        ...values.billingAddress,
+        phone: values.billingAddress.phone
+          ? values.billingAddress.phone.trim()
+          : ''
+      }
+    };
+
+    onSubmit(payload, actions);
+  };
+
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (
     <Form>
@@ -342,7 +356,7 @@ const PaymentForm = ({
   return (
     <Formik
       initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       render={renderForm}
     />
   );

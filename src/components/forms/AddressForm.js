@@ -100,6 +100,15 @@ const AddressForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const handleSubmit = (values, actions) => {
+    const payload = {
+      ...values,
+      phone: values.phone ? values.phone.trim() : ''
+    };
+
+    onSubmit(payload, actions);
+  };
+
   const renderForm = () => (
     <Form>
       <Box
@@ -247,7 +256,7 @@ const AddressForm = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validationSchema={schema}
       render={renderForm}
       enableReinitialize
