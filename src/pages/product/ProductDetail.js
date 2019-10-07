@@ -115,9 +115,9 @@ const ProductDetail = () => {
       // enqueueSnackbar(message, { variant: 'success' });
       // setATCEnabled(false);
       setATCAdding(false);
-      setTimeout(()=>{
+      setTimeout(() => {
         setATCAdded(false);
-      },500)
+      }, 500)
     }, 500);
   }, [cart, selectedVariantSku, variantMap, quantity, dispatch]);
 

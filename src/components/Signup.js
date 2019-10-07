@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: '48px',
     fontSize: '48px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     margin: theme.spacing(2),
 
@@ -35,7 +35,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Signup = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }) => {
+const Signup = ({
+  requestCreateAccount,
+  clearCreateAccountError,
+  switchToLogin
+}) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -48,11 +52,19 @@ const Signup = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }
             {switchToLogin ? (
               <MenuLink onClick={switchToLogin} children="Log in!" />
             ) : (
-              <NavLink to="/login" children="Log in!" replace underline="always" />
+              <NavLink
+                to="/login"
+                children="Log in!"
+                replace
+                underline="always"
+              />
             )}
           </Typography>
 
-          <SignupForm onSubmit={requestCreateAccount} clearCreateAccountError={clearCreateAccountError} />
+          <SignupForm
+            onSubmit={requestCreateAccount}
+            clearCreateAccountError={clearCreateAccountError}
+          />
         </Box>
       </Box>
     </Container>

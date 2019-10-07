@@ -13,7 +13,7 @@ import withDialog from '../../hoc/withDialog';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '48px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
