@@ -185,10 +185,6 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 6855e8cdc9bfa678b39c155fc97108fd65f4bad6
 
     console.log(orderIsLoading, orderError);
     if (orderIsLoading === true || orderError === null) return null;
