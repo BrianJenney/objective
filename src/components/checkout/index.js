@@ -361,7 +361,7 @@ const Checkout = ({
                 )}
             </Grid>
             <Dialog
-              // className={classes.modal}
+              className="transaction-dialog-container"
               open={checkoutDialogOpen}
               onClose={handleCheckoutDialogClose}
               closeAfterTransition
