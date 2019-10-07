@@ -9,7 +9,9 @@ import { useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
 import Fade from '@material-ui/core/Fade';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Panel } from '../common';
@@ -107,14 +109,14 @@ const Checkout = ({
   const { account_jwt, email: currentUserEmail } = currentUser.data;
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
-  const [checkoutModalOpen, setCheckoutModalOpen] = React.useState(false);
+  const [checkoutDialogOpen, setCheckoutDialogOpen] = React.useState(false);
 
   useEffect(() => {
-    if(orderIsLoading || orderError) {
-      setCheckoutModalOpen(true);
+    if (orderIsLoading || orderError) {
+      setCheckoutDialogOpen(true);
     } else {
-      handleCheckoutModalClose();
-      if(orderError === false) {
+      handleCheckoutDialogClose();
+      if (orderError === false) {
         dispatch(resetCart());
         setPayload({});
         history.replace('/order');
@@ -133,15 +135,15 @@ const Checkout = ({
       dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
     }
   }, [
-    activeStep,
-    payload.shippingAddress,
-    subtotal,
-    dispatch,
-    requestCalculateTax
-  ]);
+      activeStep,
+      payload.shippingAddress,
+      subtotal,
+      dispatch,
+      requestCalculateTax
+    ]);
 
-  const handleCheckoutModalClose = () => {
-    setCheckoutModalOpen(false);
+  const handleCheckoutDialogClose = () => {
+    setCheckoutDialogOpen(false);
     dispatch(resetOrderState());
   };
 
@@ -190,7 +192,7 @@ const Checkout = ({
     if (orderIsLoading === true || orderError === null) return null;
 
     if (orderError === true) {
-      setCheckoutModalOpen(true);
+      setCheckoutDialogOpen(true);
     } else {
       console.log('in else block');
       dispatch(resetCart());
@@ -339,8 +341,8 @@ const Checkout = ({
                       xsBreakpoint={xs}
                     />
                   ) : (
-                    ''
-                  )}
+                      ''
+                    )}
                   <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
                 </Panel>
               </Grid>
@@ -355,19 +357,19 @@ const Checkout = ({
                   />
                 </Grid>
               ) : (
-                ''
-              )}
+                  ''
+                )}
             </Grid>
-            <Modal
+            <Dialog
               // className={classes.modal}
-              open={checkoutModalOpen}
-              onClose={handleCheckoutModalClose}
+              open={checkoutDialogOpen}
+              onClose={handleCheckoutDialogClose}
               closeAfterTransition
             >
-              <Fade in={checkoutModalOpen}>
-                <TransactionMessage orderError={orderError}/>
-              </Fade>
-            </Modal>
+              <MuiDialogContent>
+                <TransactionMessage orderError={orderError} />
+              </MuiDialogContent>
+            </Dialog>
           </Box>
         </Container>
       </Box>

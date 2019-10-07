@@ -13,11 +13,11 @@ const TransactionMessage = ({ orderError }) => (
         </div>
       </Box>
     ) : (
-      <>
-        <div>Your order is processing...</div>
-        <div>Please do not hit the back button while your order processes.</div>
-      </>
-    )}
+        <>
+          <div>Your order is processing...</div>
+          <div>Please do not hit the back button while your order processes.</div>
+        </>
+      )}
   </Box>
 );
 
