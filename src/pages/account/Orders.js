@@ -10,9 +10,7 @@ import { DataTable, AdapterLink } from '../../components/common';
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime } from '../../utils/misc';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme} from '@material-ui/core/styles';
-
-
+import { useTheme } from '@material-ui/core/styles';
 
 const columns = [
   {
@@ -120,7 +118,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
 
-  
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
@@ -133,59 +130,103 @@ const AccountOrders = ({ currentUser: { data } }) => {
   }, [dispatch, data.orders]);
 
   for (let key in data.orders) {
-    if(data.orders[key].status == 'cancelled') {
+    if (data.orders[key].status == 'cancelled') {
       data.orders[key].status = 'Order Cancelled';
     }
   }
-  
+
   return (
-
-        <Grid container direction="column" spacing={3} className={xs? "account-orders account-orders-mobile-table" : "account-orders"}>
+    <Grid
+      container
+      direction="column"
+      spacing={3}
+      className={
+        xs ? 'account-orders account-orders-mobile-table' : 'account-orders'
+      }
+    >
       <Grid item sm={12} md={12} lg={12}>
-       {xs ? <DataTable
-          title={xs ? '' : 'Your Orders'}
-          data={data.orders}
-          columns={columns}
-          isLoading={isLoading}
-          moreOptions={{customRowRender:(d,dataIndex,rowIndex) => { 
-          console.log("THIS_DATA",data.orders[dataIndex]); return (
-          <tr className='account-orders-mobile-row'>
-          <td>
-          <Grid container direction="row">
-          <Grid item xs>
-          <Typography className="order-meta-title-item">ORDER ID</Typography> 
-          <Typography className="order-meta-item-info"><Button color="primary" component={AdapterLink} to={`/orders/${data.orders[dataIndex]._id}`}>{data.orders[dataIndex]._id}</Button></Typography>
-          </Grid>
-          </Grid>
+        {xs ? (
+          <DataTable
+            title={xs ? '' : 'Your Orders'}
+            data={data.orders}
+            columns={columns}
+            isLoading={isLoading}
+            moreOptions={{
+              customRowRender: (d, dataIndex, rowIndex) => {
+                console.log('THIS_DATA', data.orders[dataIndex]);
+                return (
+                  <tr className="account-orders-mobile-row">
+                    <td>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">
+                            ORDER ID
+                          </Typography>
+                          <Typography className="order-meta-item-info">
+                            <Button
+                              color="primary"
+                              component={AdapterLink}
+                              to={`/orders/${data.orders[dataIndex]._id}`}
+                            >
+                              {data.orders[dataIndex]._id}
+                            </Button>
+                          </Typography>
+                        </Grid>
+                      </Grid>
 
-          <Grid container direction="row">
-          <Grid item xs>
-          <Typography className="order-meta-title-item">ORDER DATE</Typography> 
-          <Typography className="order-meta-item-info">{formatDateTime(data.orders[dataIndex].createdAt,false)}</Typography>
-          </Grid>
-          </Grid>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">
+                            ORDER DATE
+                          </Typography>
+                          <Typography className="order-meta-item-info">
+                            {formatDateTime(
+                              data.orders[dataIndex].createdAt,
+                              false
+                            )}
+                          </Typography>
+                        </Grid>
+                      </Grid>
 
-          <Grid container direction="row">
-          <Grid item xs>
-          <Typography className="order-meta-title-item">STATUS</Typography> 
-          <Typography className="order-meta-item-info">{data.orders[dataIndex].status}</Typography>
-          </Grid>
-          </Grid>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">
+                            STATUS
+                          </Typography>
+                          <Typography className="order-meta-item-info">
+                            {data.orders[dataIndex].status}
+                          </Typography>
+                        </Grid>
+                      </Grid>
 
-          <Grid container direction="row">
-          <Grid item xs>
-          <Typography className="order-meta-title-item">TRACKING INFORMATION</Typography> 
-          <Typography className="order-meta-item-info"><Button color="primary" component={AdapterLink} to={`/transactions/${data.orders[dataIndex]._id}`}></Button></Typography>
-          </Grid>
-          </Grid>  
-
-          </td>
-          </tr>)}}}
-       />  : (<DataTable
-        title={xs ? '' : 'Your Orders'}
-        data={data.orders}
-        columns={columns}
-        isLoading={isLoading}/>)}
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">
+                            TRACKING INFORMATION
+                          </Typography>
+                          <Typography className="order-meta-item-info">
+                            <Button
+                              color="primary"
+                              component={AdapterLink}
+                              to={`/transactions/${data.orders[dataIndex]._id}`}
+                            ></Button>
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </td>
+                  </tr>
+                );
+              }
+            }}
+          />
+        ) : (
+          <DataTable
+            title={xs ? '' : 'Your Orders'}
+            data={data.orders}
+            columns={columns}
+            isLoading={isLoading}
+          />
+        )}
       </Grid>
     </Grid>
   );
