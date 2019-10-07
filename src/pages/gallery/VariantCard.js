@@ -52,7 +52,7 @@ const VariantCard = ({ variant, styleMap }) => {
     setTimeout(() => {
       //Give effect of item being added
 
-      addToCart(cart, variant, 50);
+      addToCart(cart, variant, quantity);
 
       setATCAdding(false);
     }, 500);

@@ -14,7 +14,7 @@ const TransactionMessage = ({ orderError }) => (
         </Typography>
       </Box>
     ) : (
-        <Box className="transaction-message-container">
+        <Box className="transaction-message-container" style={{ ".MuiIconButton-root": "none" }}>
           <Typography className="title">Your order is processing...</Typography>
           <Typography className="processing-subheader">Please do not hit the back button while your order processes.</Typography>
         </Box>
