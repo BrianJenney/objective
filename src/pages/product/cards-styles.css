@@ -28,7 +28,7 @@ html,
 }
 
 .label-info-wrapper h2 {
-  font-family: CanelaText;
+  font-family: 'Canela Text Web';
   margin: 0 auto;
   width: 100%;
   text-align: center;
@@ -324,7 +324,7 @@ html,
 .how-it-works-wrapper h2:first-of-type {
   max-width: 700px;
   margin: 0 auto 50px auto;
-  font-family: CanelaText;
+  font-family: 'Canela Text Web';
   font-size: 44px !important;
   font-weight: 300;
   font-style: normal;
@@ -789,7 +789,7 @@ html,
 
 .how-it-works-wrapper .coreBenefits .topBlock .cardBottom ul li,
 .how-it-works-wrapper .coreBenefits .bottomBlock .cardBottom ul li {
-  font-family: Canela;
+  font-family: 'Canela Text Web';
   font-size: 25px;
   font-weight: normal;
   font-style: normal;
@@ -1289,7 +1289,7 @@ html,
   .how-it-works-wrapper h2:first-of-type {
     max-width: 700px;
     margin: 0 auto 40px auto;
-    font-family: CanelaText;
+    font-family: 'Canela Text Web';
     font-size: 24px !important;
     line-height: 1.33;
     letter-spacing: -1.09px;

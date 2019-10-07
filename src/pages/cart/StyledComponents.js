@@ -82,7 +82,7 @@ export const StyledSmallCaps = withStyles(theme => ({
 export const StyledSmallCapsEmptyCart = withStyles(theme => ({
   root: {
     fontSize: '32px',
-    fontFamily: 'Canela Text, serif',
+    fontFamily: 'Canela Text Web',
     fontWeight: 'normal',
     fontStyle: 'normal',
     fontStretch: 'normal',

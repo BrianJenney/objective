@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     padding: theme.spacing(3, 0, 2),
     [theme.breakpoints.down('xs')]: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { compose } from 'redux';
-import { withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '44px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     padding: theme.spacing(3, 0, 2),
     [theme.breakpoints.down('xs')]: {
@@ -98,9 +98,11 @@ const ForgotPassword = ({ history }) => {
 
 const ForgotPasswordDialog = compose(
   withRouter,
-  withDialog,
+  withDialog
 )(ForgotPassword);
 
-const ForgotPasswordPage = (props) => <ForgotPasswordDialog onExited={props.history.goBack} {...props} />;
+const ForgotPasswordPage = props => (
+  <ForgotPasswordDialog onExited={props.history.goBack} {...props} />
+);
 
 export default withRouter(ForgotPasswordPage);

@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '55px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingBottom: '0',
     marginBottom: '22px',
     [theme.breakpoints.down('xs')]: {
@@ -92,40 +92,40 @@ const OrderConfirmation = ({ history }) => {
   const addressesWidth = xs ? 12 : 6;
   console.log('OrderConfirmation', { order, account });
 
-
   if (!order) {
     return null;
   }
 
   let orderItemsTransformed = [];
   order.items.map(item => {
-   orderItemsTransformed.push({
-    image_url: item.variant_img,
-    quantity: item.quantity,
-    sku: item.sku,
-    price: item.unit_price,
-    product_id: item.variant_id,
-    name: item.variant_name,
-
-   });
-  });
-  
-  const orderDateSplit = order.createdAt.split("-");
-
-  window.analytics.track("Order Completed", {
-    "coupon": order.promo ? order.promo : "",
-    "currency": "USD",
-    "discount": order.discount,
-    "est_ship_date": order.shippingMethod.deliveryEstimate,
-    "item_count": order.items.length,
-    "order_date": `${orderDateSplit[1]}/${orderDateSplit[2].substr(0,2)}/${orderDateSplit[0]}`,
-    "order_id": order.orderId,
-    "order_link": "",
-    "products": orderItemsTransformed,
-    "subtotal": order.subtotal,
-    "tax": order.tax,
-    "total": order.total
+    orderItemsTransformed.push({
+      image_url: item.variant_img,
+      quantity: item.quantity,
+      sku: item.sku,
+      price: item.unit_price,
+      product_id: item.variant_id,
+      name: item.variant_name
     });
+  });
+
+  const orderDateSplit = order.createdAt.split('-');
+
+  window.analytics.track('Order Completed', {
+    coupon: order.promo ? order.promo : '',
+    currency: 'USD',
+    discount: order.discount,
+    est_ship_date: order.shippingMethod.deliveryEstimate,
+    item_count: order.items.length,
+    order_date: `${orderDateSplit[1]}/${orderDateSplit[2].substr(0, 2)}/${
+      orderDateSplit[0]
+    }`,
+    order_id: order.orderId,
+    order_link: '',
+    products: orderItemsTransformed,
+    subtotal: order.subtotal,
+    tax: order.tax,
+    total: order.total
+  });
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
@@ -163,26 +163,25 @@ const OrderConfirmation = ({ history }) => {
               order.orderId.substring(16)}
           </strong>
         </Typography>
-        { xs ? 
-
-        (<Grid container style={{overflow: 'hidden'}}>
-          <Grid item style={{overflow: 'hidden'}}>
-
-        <Button
-          type="button"
-          onClick={handleOrderDetail}
-          children="Check Order Status"
-          className={classes.button}
-        />
+        {xs ? (
+          <Grid container style={{ overflow: 'hidden' }}>
+            <Grid item style={{ overflow: 'hidden' }}>
+              <Button
+                type="button"
+                onClick={handleOrderDetail}
+                children="Check Order Status"
+                className={classes.button}
+              />
+            </Grid>
           </Grid>
-
-        </Grid>)
-         : (<Button
-          type="button"
-          onClick={handleOrderDetail}
-          children="Check Order Status"
-          className={classes.button}
-        />)}
+        ) : (
+          <Button
+            type="button"
+            onClick={handleOrderDetail}
+            children="Check Order Status"
+            className={classes.button}
+          />
+        )}
         <Box
           display="flex"
           flexDirection={xs ? 'column' : 'row'}
