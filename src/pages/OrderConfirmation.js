@@ -98,28 +98,30 @@ const OrderConfirmation = ({ history }) => {
 
   let orderItemsTransformed = [];
   order.items.map(item => {
-    orderItemsTransformed.push({
-      image_url: item.variant_img,
-      quantity: item.quantity,
-      sku: item.sku,
-      price: item.unit_price,
-      product_id: item.variant_id,
-      name: item.variant_name
-    });
+   orderItemsTransformed.push({
+    image_url: item.variant_img,
+    quantity: item.quantity,
+    sku: item.sku,
+    price: Number.parseFloat(item.unit_price).toFixed(2),
+    product_id: item.variant_id,
+    name: item.variant_name,
+
+   });
   });
 
   window.analytics.track("Order Completed", {
     "coupon": order.promo ? order.promo : "",
     "currency": "USD",
-    "discount": order.discount,
+    "discount": Number.parseFloat(order.discount).toFixed(2),
     "est_ship_date": order.shippingMethod.deliveryEstimate,
+    "shipping": Number.parseFloat(order.shipping.options[order.shipping.code].price).toFixed(2),
     "item_count": order.items.length,
     "order_id": order.orderId,
     "order_link": "",
     "products": orderItemsTransformed,
     "subtotal": order.subtotal,
-    "tax": order.tax ? order.tax : 0,
-    "total": order.total
+    "tax": order.tax ? Number.parseFloat(order.tax).toFixed(2) : 0,
+    "total": Number.parseFloat(order.total).toFixed(2)
     });
 
   const OrderCartSummary = () => {
