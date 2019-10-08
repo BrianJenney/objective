@@ -284,7 +284,7 @@ const Cart = ({
                     <StyledFinePrint component="div" value={index}>
                       {!disableItemEditing && (
                         <Link
-                          onClick={e => removeFromCart(cart, index)}
+                          onClick={e => { removeFromCart(cart, index); trackProductRemoveEvent(cart._id, item); }}
                           style={{ color: '#9b9b9b' }}
                         >
                           <StyledRemoveLink>Remove</StyledRemoveLink>
@@ -294,189 +294,176 @@ const Cart = ({
                     <StyledProductPrice
                       style={xsBreakpoint ? { fontSize: '16px' } : {}}
                     >
-                      <StyledFinePrint component="div" value={index}>
-                        {!disableItemEditing && (
-                          <Link
-                            onClick={e => { removeFromCart(cart, index); trackProductRemoveEvent(cart._id, item); }}
-                            style={{ color: '#9b9b9b' }}
-                          >
-                            <StyledRemoveLink>Remove</StyledRemoveLink>
-                          </Link>
-                        )}
-                      </StyledFinePrint>
-                      <StyledProductPrice
-                        style={xsBreakpoint ? { fontSize: '16px' } : {}}
-                      >
-                        {displayMoney(item.quantity * item.unit_price)}
-                      </StyledProductPrice>
-                    </StyledCardContent>
-                  </Card>
-                </Grid>
-              </StyledDrawerGrid>
-              ))
-            : null}
-        {cart.items.length > 0 ? (
-                <Grid item xs={12} style={{ textAlign: 'left' }}>
-                  <StyledTotalWrapper
-                    container
-                    direction="row"
-                    justify="space-between"
-                  >
-                    <Grid item xs={6}>
-                      <StyledSmallCaps style={{ fontSize: '14px' }}>
-                        Subtotal ({cartCount} Items)
-                </StyledSmallCaps>
-                    </Grid>
-                    <Grid item xs={3} style={{ textAlign: 'right' }}>
-                      <StyledProductTotal style={{ fontSize: '18px' }}>
-                        {displayMoney(cart.subtotal)}
-                      </StyledProductTotal>
-                    </Grid>
-                  </StyledTotalWrapper>
-                </Grid>
-              ) : null}
-              {cart.items.length > 0 ? (
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  style={{ margin: '20px 0px 0px' }}
-                >
-                  <Grid item xs={6}>
-                    <StyledSmallCaps style={{ fontSize: '14px' }}>
-                      Shipping
-              </StyledSmallCaps>
-                  </Grid>
-                  <Grid item xs={6} style={{ textAlign: 'right' }}>
-                    <StyledProductTotal style={{ fontSize: '18px' }}>
-                      {displayMoney(shippingData.price, true)}
-                    </StyledProductTotal>
-                  </Grid>
-                  <StyledFinePrint
-                    component="p"
-                    style={{ position: 'relative', top: '6px' }}
-                  >
-                    {shippingData.name}
-                  </StyledFinePrint>
-                </Grid>
-              ) : null}
-              {cart.items.length > 0 && cart.savings ? (
-                <Grid
-                  container
-                  direction="row"
-                  xs={12}
-                  justify="space-between"
-                  style={{ margin: '20px 0' }}
-                >
-                  <Grid item xs={6}>
-                    <StyledSmallCaps style={{ fontSize: '14px' }}>
-                      Savings
-              </StyledSmallCaps>
-                  </Grid>
-                  <Grid item xs={3} style={{ textAlign: 'right' }}>
-                    <StyledProductTotal style={{ fontSize: '18px' }}>
-                      {displayMoney(cart.savings)}
-                    </StyledProductTotal>
-                  </Grid>
-                </Grid>
-              ) : null}
-              {cart.items.length > 0 ? (
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  style={{ margin: '20px 0' }}
-                >
-                  <Grid item xs={6}>
-                    <StyledSmallCaps style={{ fontSize: '14px' }}>
-                      Tax
-              </StyledSmallCaps>
-                  </Grid>
-                  <Grid item xs={6} style={{ textAlign: 'right' }}>
-                    <StyledProductTotal style={{ fontSize: '18px' }}>
-                      {displayMoney(cart.tax)}
-                    </StyledProductTotal>
-                  </Grid>
-                </Grid>
-              ) : null}
-
-              {cart.items.length > 0 ? (
-                cart.promo ? (
-                  <PromoCodeView />
-                ) : (
-                    <>
-                      <StyledPromoLink align="left" onClick={togglePromo}>
-                        {!promoVisible ? 'Enter Promo Code' : null}
-                      </StyledPromoLink>
-                      {promoVisible && <PromoCodeForm />}
-                    </>
-                  )
-              ) : null}
-
-              {cart.items.length > 0 ? (
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  style={
-                    !xsBreakpoint
-                      ? {
-                        marginBottom: '0',
-                        borderTop: `solid 2px ${MEDIUM_GRAY}`,
-                        paddingTop: '29px',
-                        marginTop: '30px'
-                      }
-                      : {
-                        marginBottom: '0',
-                        borderTop: `solid 2px ${MEDIUM_GRAY}`,
-                        paddingTop: '21px',
-                        marginTop: '30px'
-                      }
-                  }
-                >
-                  <Grid item xs={6}>
-                    <StyledEstimatedTotal
-                      style={xsBreakpoint ? { fontSize: '20px' } : {}}
-                    >
-                      {xsBreakpoint ? 'Total' : 'Estimated Total'}
-                    </StyledEstimatedTotal>
-                  </Grid>
-                  <Grid item xs={6} style={{ textAlign: 'right' }}>
-                    <StyledProductPrice
-                      style={
-                        !xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }
-                      }
-                    >
-                      {displayMoney(cart.total)}
+                      {displayMoney(item.quantity * item.unit_price)}
                     </StyledProductPrice>
-                  </Grid>
-                </Grid>
-              ) : null}
-              {cart.items.length > 0 && !hideTaxLabel && (
-                <Grid container>
-                  <Grid item xs={12}>
-                    <StyledFinePrint component="div">
-                      Tax is calculated at checkout
+                  </StyledCardContent>
+                </Card>
+              </Grid>
+            </StyledDrawerGrid>
+          ))
+          : null}
+        {cart.items.length > 0 ? (
+          <Grid item xs={12} style={{ textAlign: 'left' }}>
+            <StyledTotalWrapper
+              container
+              direction="row"
+              justify="space-between"
+            >
+              <Grid item xs={6}>
+                <StyledSmallCaps style={{ fontSize: '14px' }}>
+                  Subtotal ({cartCount} Items)
+                </StyledSmallCaps>
+              </Grid>
+              <Grid item xs={3} style={{ textAlign: 'right' }}>
+                <StyledProductTotal style={{ fontSize: '18px' }}>
+                  {displayMoney(cart.subtotal)}
+                </StyledProductTotal>
+              </Grid>
+            </StyledTotalWrapper>
+          </Grid>
+        ) : null}
+        {cart.items.length > 0 ? (
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            style={{ margin: '20px 0px 0px' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Shipping
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {displayMoney(shippingData.price, true)}
+              </StyledProductTotal>
+            </Grid>
+            <StyledFinePrint
+              component="p"
+              style={{ position: 'relative', top: '6px' }}
+            >
+              {shippingData.name}
+            </StyledFinePrint>
+          </Grid>
+        ) : null}
+        {cart.items.length > 0 && cart.savings ? (
+          <Grid
+            container
+            direction="row"
+            xs={12}
+            justify="space-between"
+            style={{ margin: '20px 0' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Savings
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={3} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {displayMoney(cart.savings)}
+              </StyledProductTotal>
+            </Grid>
+          </Grid>
+        ) : null}
+        {cart.items.length > 0 ? (
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            style={{ margin: '20px 0' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Tax
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {displayMoney(cart.tax)}
+              </StyledProductTotal>
+            </Grid>
+          </Grid>
+        ) : null}
+
+        {cart.items.length > 0 ? (
+          cart.promo ? (
+            <PromoCodeView />
+          ) : (
+              <>
+                <StyledPromoLink align="left" onClick={togglePromo}>
+                  {!promoVisible ? 'Enter Promo Code' : null}
+                </StyledPromoLink>
+                {promoVisible && <PromoCodeForm />}
+              </>
+            )
+        ) : null}
+
+        {cart.items.length > 0 ? (
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            style={
+              !xsBreakpoint
+                ? {
+                  marginBottom: '0',
+                  borderTop: `solid 2px ${MEDIUM_GRAY}`,
+                  paddingTop: '29px',
+                  marginTop: '30px'
+                }
+                : {
+                  marginBottom: '0',
+                  borderTop: `solid 2px ${MEDIUM_GRAY}`,
+                  paddingTop: '21px',
+                  marginTop: '30px'
+                }
+            }
+          >
+            <Grid item xs={6}>
+              <StyledEstimatedTotal
+                style={xsBreakpoint ? { fontSize: '20px' } : {}}
+              >
+                {xsBreakpoint ? 'Total' : 'Estimated Total'}
+              </StyledEstimatedTotal>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductPrice
+                style={
+                  !xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }
+                }
+              >
+                {displayMoney(cart.total)}
+              </StyledProductPrice>
+            </Grid>
+          </Grid>
+        ) : null}
+        {cart.items.length > 0 && !hideTaxLabel && (
+          <Grid container>
+            <Grid item xs={12}>
+              <StyledFinePrint component="div">
+                Tax is calculated at checkout
               </StyledFinePrint>
-                  </Grid>
-                </Grid>
-              )}
+            </Grid>
+          </Grid>
+        )}
       </Grid>
     </Grid>
-      );
-    };
-    
+  );
+};
+
 Cart.propTypes = {
-          history: PropTypes.object.isRequired,
-        hideCheckoutProceedLink: PropTypes.bool,
-        disableItemEditing: PropTypes.bool,
-        hideTaxLabel: PropTypes.bool
-      };
-      
+  history: PropTypes.object.isRequired,
+  hideCheckoutProceedLink: PropTypes.bool,
+  disableItemEditing: PropTypes.bool,
+  hideTaxLabel: PropTypes.bool
+};
+
 Cart.defaultProps = {
-          hideCheckoutProceedLink: false,
-        disableItemEditing: false,
-        hideTaxLabel: false
-      };
-      
-      export default withRouter(Cart);
+  hideCheckoutProceedLink: false,
+  disableItemEditing: false,
+  hideTaxLabel: false
+};
+
+export default withRouter(Cart);
