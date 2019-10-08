@@ -26,6 +26,7 @@ import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
 
+let checkoutStartedTracked = false;
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS[step];
@@ -43,6 +44,7 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
       fontFamily="p22-underground, Helvetica, sans-serif"
       fontSize={xs ? 14 : 18}
       style={{ textTransform: 'uppercase' }}
+      className="checkoutPanel"
     >
       <Box mr={1} children={`STEP ${step + 1}`} />
       <Box children={stepTitle} style={{ fontWeight: 600 }} />
@@ -161,8 +163,39 @@ const Checkout = ({
 
     return true;
   };
+  
+  
+  const trackCheckoutStarted = () => {
+  if(!checkoutStartedTracked){
+   window.analytics.track("Checkout Started", {
+    "cart_id": cart._id,
+    "currency": "USD",
+    "discount": cart.discount ? Number.parseFloat(cart.discount).toFixed(2) : 0,
+    "products": cart.items,
+    "revenue": cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0,
+    "subtotal": cart.subtotal ? Number.parseFloat(cart.subtotal).toFixed(2) : 0,
+    "tax": cart.tax ? Number.parseFloat(cart.tax).toFixed(2) : 0,
+    "total": cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0
+  });
+    checkoutStartedTracked = true;
+  }
+  }
 
-  const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
+  const trackCheckoutStepViewed = (step) => {
+    window.analytics.track("Checkout Step Viewed", {
+      "cart_id": cart._id,
+      "step": step
+    })
+  }
+
+  const trackCheckoutStepCompleted = (step) => {
+    window.analytics.track("Checkout Step Completed", {
+      "cart_id": cart._id,
+      "step": step
+    })
+  }
+
+  const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1) && trackCheckoutStepViewed(activeStep - 1);
   const handleNext = async values => {
     let result = null;
 
@@ -175,9 +208,12 @@ const Checkout = ({
 
     if (result) {
       setActiveStep(activeStep + 1);
+      trackCheckoutStepViewed(activeStep + 1);
     }
     return true;
   };
+
+  
 
   const onPanelChange = (expanded, panelIndex) => {
     const shippingKey = STEP_KEYS[1];
@@ -191,11 +227,14 @@ const Checkout = ({
       return false;
     }
 
+    trackCheckoutStepCompleted(panelIndex);
+
     return setActiveStep(panelIndex);
   };
 
   return (
     <ScrollToTop>
+      {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
           <Box py={10} className="checkout-wrapper">
@@ -217,6 +256,7 @@ const Checkout = ({
                   hideExpandIcon
                   expanded={activeStep === 0}
                   onChange={() => null}
+                  className="firstPanel"
                 >
                   <CheckoutAuth
                     currentUser={currentUser}
@@ -227,6 +267,7 @@ const Checkout = ({
                     handleNext={() => {
                       if (activeStep === 0) {
                         setActiveStep(1);
+                        trackCheckoutStepCompleted(0)
                       }
                     }}
                   />
@@ -291,6 +332,7 @@ const Checkout = ({
                   hideExpandIcon
                   expanded={activeStep === 3}
                   onChange={e => onPanelChange(e, 3)}
+                  className="lastPanel"
                 >
                   {xs ? (
                     <CartDrawer

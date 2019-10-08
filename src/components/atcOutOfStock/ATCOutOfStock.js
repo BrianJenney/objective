@@ -102,6 +102,10 @@ export const OutOfStockPDP = ({
   onExited,
   product_img,
   product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
   openOutOfStockDialog,
   handleOpenEmailConfirmation
 }) => {
@@ -121,6 +125,10 @@ export const OutOfStockPDP = ({
           onExited={onExited}
           product_img={product_img}
           product_name={product_name}
+          product_category={product_category}
+          product_id={product_id}
+          product_sku={product_sku}
+          product_variant={product_variant}
           handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}
@@ -133,6 +141,10 @@ export const OutOfStock = ({
   onExited,
   product_img,
   product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
   openOutOfStockDialog,
   handleOpenEmailConfirmation
 }) => {
@@ -149,6 +161,10 @@ export const OutOfStock = ({
           onExited={onExited}
           product_img={product_img}
           product_name={product_name}
+          product_category={product_category}
+          product_id={product_id}
+          product_sku={product_sku}
+          product_variant={product_variant}
           handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}

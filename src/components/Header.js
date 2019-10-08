@@ -19,6 +19,7 @@ import LoginDropdown from './LoginDropdown';
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
+const jwt = require('jsonwebtoken');
 
 const StyledLink = withStyles(() => ({
   root: {
@@ -42,12 +43,30 @@ const StyledBox = withStyles(() => ({
   }
 }))(Box);
 
+let segmentIdentified = false;
+const segmentIdentify = (user) => {
+if(!segmentIdentified){
+
+ 
+ if(user["firstName"]){
+  window.analytics.identify(jwt.decode(user.account_jwt).account_id,{
+  name: `${user.firstName} ${user.lastName}`,
+  email: user.email
+  });
+ 
+  segmentIdentified = true;
+ }
+ 
+}
+}
+
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const { account_jwt, firstName } = currentUser.data;
+  segmentIdentify(currentUser.data);
   const accountMenuItemConf = account_jwt
     ? {
       key: 'third',

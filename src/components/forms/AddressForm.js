@@ -156,7 +156,6 @@ const AddressForm = ({
             name="address1"
             label="Street Address"
             component={InputField}
-            helperText="*No PO Boxes or APO/FPO addresses"
           />
         </Grid>
         <Grid item xs={12}>
@@ -181,12 +180,7 @@ const AddressForm = ({
           <Field name="zipcode" label="Zip Code" component={InputField} />
         </Grid>
         <Grid item xs={12}>
-          <Field
-            name="phone"
-            label="Phone #"
-            component={InputField}
-            helperText="*No PO Boxes or APO/FPO addresses"
-          />
+          <Field name="phone" label="Phone #" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -229,7 +223,7 @@ const AddressForm = ({
                 component={Typography}
                 color="#979797"
                 variant="body2"
-                children="FedEx Ground 3-5 days"
+                children="USPS Ground 3-5 days"
                 fontSize={16}
                 lineHeight={1.69}
               />
