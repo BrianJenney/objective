@@ -58,6 +58,11 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     type: REQUEST_CREATE_ACCOUNT,
     payload: {}
   });
+   
+  window.analytics.track("Sign Up Email Capture", {
+    "email": email
+  });
+
 };
 
 export const receivedCreateAccountSuccess = createReply => dispatch => {
@@ -69,6 +74,19 @@ export const receivedCreateAccountSuccess = createReply => dispatch => {
     type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
     payload: createReply
   });
+  window.analytics.track("Account Created", {
+    "email": createReply.email,
+    "first_name": createReply.firstName,
+    "last_name": createReply.lastName,
+    "phone": "",
+    "signup_type": "organic",
+    "title": "",
+    "username": createReply.email
+  });
+
+  window.analytics.track("Signed Up", {
+    "email": createReply.email
+  })
 };
 
 export const receivedCreateAccountFailure = error => dispatch => {
@@ -76,6 +94,10 @@ export const receivedCreateAccountFailure = error => dispatch => {
     type: RECEIVED_CREATE_ACCOUNT_FAILURE,
     payload: error
   });
+  
+  window.analytics.track("Sign Up Failed", {
+    "error_message": "Account with email already exists"
+  })
 };
 
 export const clearCreateAccountError = () => dispatch => {
@@ -254,6 +276,11 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
     type: REQUEST_LOGIN,
     payload: {}
   });
+
+  window.analytics.track("Sign In Completed", {
+    "email": email,
+    "site_location": window.location
+  })
 };
 
 export const receivedLoginSuccess = loginReply => dispatch => {
@@ -265,6 +292,12 @@ export const receivedLoginSuccess = loginReply => dispatch => {
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply
   });
+  //store.dispatch(requestFetchCartByEmail(loginReply.email));
+  window.analytics.track("Sign In Successful", {
+    "method": "email",
+    "site_location": window.location,
+    "username": loginReply.email
+  })
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
@@ -272,6 +305,11 @@ export const receivedLoginFailure = loginError => dispatch => {
     type: RECEIVED_LOGIN_FAILURE,
     payload: loginError
   });
+  window.analytics.track("Sign In Failed", {
+    "error_message": "Incorrect Email/Password",
+    "method": "email",
+    "site_location": window.location
+  })
 };
 
 export const clearLoginError = () => dispatch => {

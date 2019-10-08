@@ -92,40 +92,39 @@ const OrderConfirmation = ({ history }) => {
   const addressesWidth = xs ? 12 : 6;
   console.log('OrderConfirmation', { order, account });
 
+
   if (!order) {
     return null;
   }
 
   let orderItemsTransformed = [];
   order.items.map(item => {
-    orderItemsTransformed.push({
-      image_url: item.variant_img,
-      quantity: item.quantity,
-      sku: item.sku,
-      price: item.unit_price,
-      product_id: item.variant_id,
-      name: item.variant_name
+   orderItemsTransformed.push({
+    image_url: item.variant_img,
+    quantity: item.quantity,
+    sku: item.sku,
+    price: Number.parseFloat(item.unit_price).toFixed(2),
+    product_id: item.variant_id,
+    name: item.variant_name,
+
+   });
+  });
+  
+
+  window.analytics.track("Order Completed", {
+    "coupon": order.promo ? order.promo : "",
+    "currency": "USD",
+    "discount": Number.parseFloat(order.discount).toFixed(2),
+    "est_ship_date": order.shippingMethod.deliveryEstimate,
+    "shipping": Number.parseFloat(order.shippingMethod.price).toFixed(2),
+    "item_count": order.items.length,
+    "order_id": order.orderId,
+    "order_link": "",
+    "products": orderItemsTransformed,
+    "subtotal": order.subtotal,
+    "tax": order.tax ? Number.parseFloat(order.tax).toFixed(2) : 0,
+    "total": Number.parseFloat(order.total).toFixed(2)
     });
-  });
-
-  const orderDateSplit = order.createdAt.split('-');
-
-  window.analytics.track('Order Completed', {
-    coupon: order.promo ? order.promo : '',
-    currency: 'USD',
-    discount: order.discount,
-    est_ship_date: order.shippingMethod.deliveryEstimate,
-    item_count: order.items.length,
-    order_date: `${orderDateSplit[1]}/${orderDateSplit[2].substr(0, 2)}/${
-      orderDateSplit[0]
-    }`,
-    order_id: order.orderId,
-    order_link: '',
-    products: orderItemsTransformed,
-    subtotal: order.subtotal,
-    tax: order.tax,
-    total: order.total
-  });
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
