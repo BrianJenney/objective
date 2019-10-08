@@ -63,6 +63,14 @@ const CartSummary = ({ order }) => {
   const classes = useStyles();
   const { items } = order;
 
+  let shippingMethod = null;
+
+  if (order.shippingMethod) {
+    shippingMethod = order.shippingMethod;
+  } else {
+    shippingMethod = order.shipping.options[order.shipping.code];
+  }
+
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -140,12 +148,12 @@ const CartSummary = ({ order }) => {
                 component="p"
                 style={{ position: 'relative', top: '6px' }}
               >
-                {order.shipping.options[order.shipping.code].name}
+                {shippingMethod.name}
               </StyledFinePrint>
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {displayMoney(order.shipping.options[order.shipping.code].price, true)}
+                {displayMoney(shippingMethod.price, true)}
               </StyledSmallCaps>
             </Grid>
           </Grid>
