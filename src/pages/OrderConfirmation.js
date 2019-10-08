@@ -122,7 +122,7 @@ const OrderConfirmation = ({ history }) => {
     "currency": "USD",
     "discount": Number.parseFloat(order.discount).toFixed(2),
     "est_ship_date": order.shippingMethod.deliveryEstimate,
-    "shipping": Number.parseFloat(order.shipping.options[order.shipping.code].price).toFixed(2),
+    "shipping": Number.parseFloat(order.shippingMethod.price).toFixed(2),
     "item_count": order.items.length,
     "order_id": order.orderId,
     "order_link": "",
