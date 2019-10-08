@@ -13,14 +13,28 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       console.log(data);
       console.log(fields);
       console.log(properties);
+      if(status!=="success"){
+        window.analytics.track("Order Submitted", {
+          "cart_id": localStorage.cartId
+        });
+        window.analytics.track("Order Failed", {
+          "cart_id": localStorage.cartId,
+          "error_message": ""
+        });
+      }
       store.dispatch(receivedCreateOrder(data));
-
+      
       // status handling
       switch (status) {
         case 'success':
           // clear cart on success
           store.dispatch(requestRemoveCartById(data.cartId));
           store.dispatch(requestCreateCart());
+          window.analytics.track("Order Submitted", {
+            "cart_id": data.cartId,
+            "order_id": data._id
+          });
+
           break;
         default:
           console.log('unknown status ' + status);
