@@ -73,7 +73,8 @@ const SignupForm = ({
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <AlertPanel
         my={2}
-        p={2}
+        py={2}
+        px={4}
         type="error"
         bgcolor="#ffcdd2"
         text={errorMessage}
