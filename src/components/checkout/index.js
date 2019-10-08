@@ -43,6 +43,7 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
       fontFamily="p22-underground, Helvetica, sans-serif"
       fontSize={xs ? 14 : 18}
       style={{ textTransform: 'uppercase' }}
+      className="checkoutPanel"
     >
       <Box mr={1} children={`STEP ${step + 1}`} />
       <Box children={stepTitle} style={{ fontWeight: 600 }} />
@@ -217,6 +218,7 @@ const Checkout = ({
                   hideExpandIcon
                   expanded={activeStep === 0}
                   onChange={() => null}
+                  className="firstPanel"
                 >
                   <CheckoutAuth
                     currentUser={currentUser}
@@ -291,6 +293,7 @@ const Checkout = ({
                   hideExpandIcon
                   expanded={activeStep === 3}
                   onChange={e => onPanelChange(e, 3)}
+                  className="lastPanel"
                 >
                   {xs ? (
                     <CartDrawer

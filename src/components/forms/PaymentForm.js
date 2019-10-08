@@ -281,7 +281,6 @@ const PaymentForm = ({
                 label="Street Address"
                 component={InputField}
                 validate={validateTextField}
-                helperText="*No PO Boxes or APO/FPO addresses"
               />
             </Grid>
             <Grid item xs={12}>
