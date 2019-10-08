@@ -138,6 +138,20 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const handleSubmit = (values, actions) => {
+    const payload = {
+      ...values,
+      billingAddress: {
+        ...values.billingAddress,
+        phone: values.billingAddress.phone
+          ? values.billingAddress.phone.trim()
+          : ''
+      }
+    };
+
+    onSubmit(payload, actions);
+  };
+
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (
     <Form>
@@ -152,7 +166,8 @@ const PaymentForm = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <AlertPanel
-            p={2}
+            py={2}
+            px={4}
             type="error"
             bgcolor="#ffcdd2"
             text={errorMessage}
@@ -342,7 +357,7 @@ const PaymentForm = ({
   return (
     <Formik
       initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       render={renderForm}
     />
   );

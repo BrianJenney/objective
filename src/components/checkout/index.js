@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { get, isNil } from 'lodash';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
@@ -21,7 +24,7 @@ import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
 import { getDefaultEntity } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
-import { requestCalculateTax } from '../../modules/tax/actions';
+import { requestSetShippingAddress } from '../../modules/cart/actions';
 
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
@@ -92,7 +95,6 @@ const Checkout = ({
 }) => {
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
-  const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -106,14 +108,13 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2) {
-      dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
+      dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
     }
   }, [
     activeStep,
     payload.shippingAddress,
-    subtotal,
     dispatch,
-    requestCalculateTax
+    requestSetShippingAddress
   ]);
 
   const handleAddressesAndCardSteps = async values => {

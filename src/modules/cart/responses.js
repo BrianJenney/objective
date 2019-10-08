@@ -23,16 +23,36 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.removefromcart':
     case 'cart.request.updatequantity':
     case 'cart.request.mergecarts':
+    case 'cart.request.addcoupon':
+    case 'cart.request.removecoupon':
+    case 'cart.request.setshippingaddress':
     case 'cart.request.patch':
       console.log('****************** Cart Patch Response ******************');
       console.log(status);
       console.log(data);
       console.log(fields);
       console.log(properties);
+      
+
       store.dispatch(receivedPatchCart(data));
 
       if (fields.routingKey !== 'cart.request.patch') {
         store.dispatch(setCartDrawerOpened(true));
+
+        window.analytics.track("Cart Viewed", {
+          "cart_id": data._id,
+          "num_products": data.items.reduce((acc, item) => acc + item.quantity, 0),
+          "products": data.items
+        });
+
+        if(fields.routingKey==="cart.request.addtocart"){
+          window.analytics.track("Product Added", {
+            "cart_id": data._id,
+            ...data.items[data.items.length - 1]
+
+          });
+        }
+
       }
       break;
     case 'cart.request.update':

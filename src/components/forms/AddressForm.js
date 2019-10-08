@@ -100,6 +100,15 @@ const AddressForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const handleSubmit = (values, actions) => {
+    const payload = {
+      ...values,
+      phone: values.phone ? values.phone.trim() : ''
+    };
+
+    onSubmit(payload, actions);
+  };
+
   const renderForm = () => (
     <Form>
       <Box
@@ -113,7 +122,8 @@ const AddressForm = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <AlertPanel
-            p={2}
+            py={2}
+            px={4}
             type="error"
             bgcolor="#ffcdd2"
             text={errorMessage}
@@ -247,7 +257,7 @@ const AddressForm = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validationSchema={schema}
       render={renderForm}
       enableReinitialize
