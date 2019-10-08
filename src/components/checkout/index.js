@@ -31,6 +31,7 @@ import { resetCart } from '../../modules/cart/actions';
 import { resetOrderState } from '../../modules/order/actions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import TransactionMessage from './TransactionMessage';
 
 let checkoutStartedTracked = false;
 const getPanelTitleContent = (xs, step, activeStep, payload) => {
