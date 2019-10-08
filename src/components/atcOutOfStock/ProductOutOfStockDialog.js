@@ -75,6 +75,11 @@ const ProductOutOfStockForm = ({
   closeDialog,
   product_img,
   product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
+  product_url,
   handleOpenEmailConfirmation
 }) => {
   const classes = useStyles();
@@ -87,6 +92,25 @@ const ProductOutOfStockForm = ({
     const { email, subscribed } = values;
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
+    console.log(
+      '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    );
+    console.log(product_img);
+    console.log(product_sku);
+    window.analytics.track('Back In Stock Email Capture Successful', {
+      email: email
+    });
+    // no price or qty being pulled in as of yet
+    window.analytics.track('Back In Stock Signup Completed', {
+      brand: 'OBJ',
+      category: product_category,
+      image_url: product_img,
+      name: product_name,
+      product_id: product_id,
+      sku: product_sku,
+      url: product_url,
+      variant: product_variant
+    });
     handleOpenEmailConfirmation();
     closeDialog();
   };
