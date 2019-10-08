@@ -18,10 +18,10 @@ import PromoCodeView from './PromoCodeView';
 
 import {
   removeFromCart,
-  adjustQty,
-  calculateCartTotals
+  adjustQty
 } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
+import { displayMoney } from '../../utils/formatters';
 
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -63,8 +63,6 @@ const Cart = ({
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
-  const isTaxCalculationInProgress = useSelector(state => state.tax.isLoading);
-  //const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const onClickLogo = useCallback(() => {
@@ -96,7 +94,6 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const totalSummary = calculateCartTotals(cart);
   const mobileDrawerPadding = xsBreakpoint ? '0px' : '24px 20px';
   return (
     <Grid
@@ -271,7 +268,7 @@ const Cart = ({
                       <StyledProductPrice
                         style={xsBreakpoint ? { fontSize: '16px' } : {}}
                       >
-                        {`$${(item.quantity * item.unit_price).toFixed(2)}`}
+                        {displayMoney(item.quantity * item.unit_price)}
                       </StyledProductPrice>
                     </StyledCardContent>
                   </Card>
@@ -293,7 +290,7 @@ const Cart = ({
               </Grid>
               <Grid item xs={3} style={{ textAlign: 'right' }}>
                 <StyledProductTotal style={{ fontSize: '18px' }}>
-                  {`$${totalSummary.subtotal.toFixed(2)}`}
+                  {displayMoney(cart.subtotal)}
                 </StyledProductTotal>
               </Grid>
             </StyledTotalWrapper>
@@ -313,9 +310,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {`$${
-                  shippingData.price ? shippingData.price.toFixed(2) : '0.00'
-                }`}
+                {displayMoney(shippingData.price, true)}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint
@@ -341,7 +336,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={3} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {`$${cart.savings.toFixed(2)}`}
+                {displayMoney(cart.savings)}
               </StyledProductTotal>
             </Grid>
           </Grid>
@@ -360,9 +355,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.tax
-                  ? `$${totalSummary.tax.toFixed(2)}`
-                  : '$0.00'}
+                {displayMoney(cart.tax)}
               </StyledProductTotal>
             </Grid>
           </Grid>
@@ -415,7 +408,7 @@ const Cart = ({
                   !xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }
                 }
               >
-                {`$${totalSummary.total.toFixed(2)}`}
+                {displayMoney(cart.total)}
               </StyledProductPrice>
             </Grid>
           </Grid>

@@ -23,6 +23,9 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.removefromcart':
     case 'cart.request.updatequantity':
     case 'cart.request.mergecarts':
+    case 'cart.request.addcoupon':
+    case 'cart.request.removecoupon':
+    case 'cart.request.setshippingaddress':
     case 'cart.request.patch':
       console.log('****************** Cart Patch Response ******************');
       console.log(status);

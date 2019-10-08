@@ -7,8 +7,7 @@ import {
   RECEIVED_PATCH_CART,
   RECEIVED_UPDATE_CART,
   SET_CART_DRAWER_OPENED,
-  REQUEST_REMOVE_CART_BY_ID,
-  UPDATE_CART_WITH_TAX_CALCULATION
+  REQUEST_REMOVE_CART_BY_ID
 } from './types';
 
 const localStorageClient = require('store');
@@ -48,8 +47,6 @@ export default (state = INITIAL_STATE, action) => {
     return { ...state, cartDrawerOpened: action.payload };
   case REQUEST_REMOVE_CART_BY_ID:
     return { ...state };
-  case UPDATE_CART_WITH_TAX_CALCULATION:
-    return { ...state, tax: action.payload.tax, taxRate: action.payload.rate };
   default:
     return state;
   }
