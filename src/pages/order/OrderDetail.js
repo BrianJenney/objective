@@ -6,16 +6,12 @@ import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-// import IconButton from '@material-ui/core/IconButton';
-// import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 
 import {
-  AdapterLink,
   Address,
   Button as CommonButton
 } from '../../components/common';
@@ -26,11 +22,8 @@ import { formatDateTime } from '../../utils/misc';
 import StatusStepper from './StatusStepper';
 
 import {
-  requestRefundTransaction,
-  receivedTransactionRequestRefund
+  requestRefundTransaction
 } from '../../modules/order/actions';
-
-import { getOrderTotalSummary } from '../../utils/order/OrderUtils';
 
 const useStyles = makeStyles(theme => ({
   root: {

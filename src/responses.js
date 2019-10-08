@@ -4,7 +4,6 @@ import { handleBootstrapResponse } from './modules/bootstrap/responses';
 import { handleAccountResponse } from './modules/account/responses';
 import { handleCartResponse } from './modules/cart/responses';
 import { handleOrderResponse } from './modules/order/responses';
-import { handleTaxResponse } from './modules/tax/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -28,12 +27,9 @@ export default body => {
       handleAccountResponse(status, data, fields, properties);
       break;
 
-    case 'order': case 'transaction' :
+    case 'order':
+    case 'transaction' :
       handleOrderResponse(status, data, fields, properties);
-      break;
-
-    case 'tax':
-      handleTaxResponse(status, data, fields, properties);
       break;
 
     default:

@@ -9,12 +9,13 @@ import {
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
   REQUEST_REMOVE_CART_BY_ID,
-  UPDATE_CART_WITH_TAX_CALCULATION,
-  RESET_TAX_CALCULATION_IN_CART,
   REQUEST_ADD_TO_CART,
   REQUEST_REMOVE_FROM_CART,
   REQUEST_UPDATE_QUANTITY,
-  REQUEST_MERGE_CARTS
+  REQUEST_MERGE_CARTS,
+  REQUEST_ADD_COUPON,
+  REQUEST_REMOVE_COUPON,
+  REQUEST_SET_SHIPPING_ADDRESS
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -248,13 +249,6 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
   });
 };
 
-export const updateCartWithTaxCalculation = (tax, rate) => {
-  return {
-    type: UPDATE_CART_WITH_TAX_CALCULATION,
-    payload: {tax, rate}
-  };
-};
-
 export const requestMergeCarts = (cartId, accountId) => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const replyTo = getState().stomp.replyTo;
@@ -275,6 +269,77 @@ export const requestMergeCarts = (cartId, accountId) => async (dispatch, getStat
 
   dispatch({
     type: REQUEST_MERGE_CARTS,
+    payload: {}
+  });
+};
+
+export const requestAddCoupon = (cartId, promoCode) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cartId,
+    promoCode
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.addcoupon',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_ADD_COUPON,
+    payload: {}
+  });
+};
+
+export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cartId
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.removecoupon',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_REMOVE_COUPON,
+    payload: {}
+  });
+};
+
+export const requestSetShippingAddress = (cartId, address) => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const replyTo = getState().stomp.replyTo;
+  const params = {
+    cartId,
+    address
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.setshippingaddress',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_SET_SHIPPING_ADDRESS,
     payload: {}
   });
 };
