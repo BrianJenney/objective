@@ -66,7 +66,7 @@ const Cart = ({
   const isTaxCalculationInProgress = useSelector(state => state.tax.isLoading);
   //const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-
+  cart.items.map(item => {item.discount_price = Number.parseFloat(item.discount_price).toFixed(2); item.unit_price = Number.parseFloat(item.unit_price).toFixed(2); return item});
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     window.analytics.track("Cart Dismissed", {
@@ -92,6 +92,7 @@ const Cart = ({
 
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
+    
     window.analytics.track("Cart Dismissed", {
       "cart_id": cart._id,
       "num_products": cartCount,
@@ -101,6 +102,8 @@ const Cart = ({
   }, [dispatch, history]);
 
   const trackProductRemoveEvent = (cartId,item) => {
+    item.discount_price = Number.parseFloat(item.discount_price).toFixed(2); 
+    item.unit_price = Number.parseFloat(item.unit_price).toFixed(2);
     window.analytics.track("Product Removed", {
       "cart_id": cartId,
       ...item

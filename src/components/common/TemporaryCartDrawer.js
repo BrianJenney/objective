@@ -48,6 +48,7 @@ const TemporaryCartDrawer = ({
   const drawerOpened = useSelector(state => state.cart.cartDrawerOpened);
   const dispatch = useDispatch();
   const nCart = useSelector(state => state.cart);
+  nCart.items.map(item => {item.discount_price = Number.parseFloat(item.discount_price).toFixed(2); item.unit_price = Number.parseFloat(item.unit_price).toFixed(2); return item});
   const toggleDrawer = open => event => {
     if (
       event.type == 'keydown' &&
