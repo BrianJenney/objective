@@ -368,19 +368,22 @@ const Checkout = ({
               onClose={handleCheckoutDialogClose}
               closeAfterTransition
             >
-              <IconButton
-                aria-label="close"
-                style={{
-                  position: 'absolute',
-                  right: theme.spacing(1),
-                  top: theme.spacing(1),
-                  color: theme.palette.grey[500]
-                }}
-                onClick={handleCheckoutDialogClose}
-              >
-                <CloseIcon />
-              </IconButton>
-              <MuiDialogContent>
+              {orderError ? (
+                <IconButton
+                  aria-label="close"
+                  style={{
+                    position: 'absolute',
+                    right: theme.spacing(1),
+                    top: theme.spacing(1),
+                    color: theme.palette.grey[500]
+                  }}
+                  onClick={handleCheckoutDialogClose}
+                >
+                  <CloseIcon />
+                </IconButton>
+              ) : (null)
+              }
+              < MuiDialogContent >
                 <TransactionMessage orderError={orderError} />
               </MuiDialogContent>
             </Dialog>
