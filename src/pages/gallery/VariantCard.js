@@ -56,7 +56,7 @@ const VariantCard = ({ variant, styleMap }) => {
       setATCAdding(false);
       setTimeout(() => {
         setATCAdded(false);
-      },500)
+      }, 500);
     }, 500);
     /*
     ref.current.scrollIntoView({
@@ -127,6 +127,11 @@ const VariantCard = ({ variant, styleMap }) => {
               onExited={closeOutOfStockDialog}
               product_img={variant.assets.imgs}
               product_name={variant.name}
+              product_category={variant.category}
+              product_id={variant._id}
+              product_sku={variant.sku}
+              product_variant={variant.defaultVariantSku}
+              product_url={`/products/${variant.slug}`}
               openOutOfStockDialog={openOutOfStockDialog}
               handleOpenEmailConfirmation={handleOpenEmailConfirmation}
             />
@@ -136,6 +141,11 @@ const VariantCard = ({ variant, styleMap }) => {
                 onExited={closeEmailConfirmation}
                 product_img={variant.assets.imgs}
                 product_name={variant.name}
+                product_category={variant.category}
+                product_id={variant._id}
+                product_sku={variant.sku}
+                product_variant={variant.defaultVariantSku}
+                product_url={`/products/${variant.slug}`}
               />
             )}
           </>
