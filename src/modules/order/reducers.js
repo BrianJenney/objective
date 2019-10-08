@@ -7,7 +7,8 @@ import {
   RECEIVED_GET_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND
+  RECEIVED_TRANSACTION_REQUEST_REFUND,
+  RESET_ORDER_STATE
 } from './types';
 
 const INITIAL_STATE = {
@@ -35,6 +36,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, refunding: true };
     case RECEIVED_TRANSACTION_REQUEST_REFUND:
       return { ...state, order: action.payload, refunding: false };
+    case RESET_ORDER_STATE:
+      return { ...state, isLoading: false, transactionError: null };
     default:
       return state;
   }
