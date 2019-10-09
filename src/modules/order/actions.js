@@ -84,12 +84,11 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 
   const payload = JSON.stringify(msgpack.encode(params));
   client.send(
-    '/exchange/order/order.request.create',
+    '/exchange/order/order.request.createorder',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      jwt: account_jwt,
-      originalRequest: 'order.request.create'
+      jwt: account_jwt
     },
     payload
   );

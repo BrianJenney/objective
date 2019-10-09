@@ -5,7 +5,7 @@ import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
  
 export const handleOrderResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
-    case 'order.request.create':
+    case 'order.request.createorder':
       console.log(
         '****************** Order Create Response ******************'
       );
