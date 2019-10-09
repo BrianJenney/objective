@@ -125,21 +125,6 @@ const OrderConfirmation = ({ history }) => {
     "total": Number.parseFloat(order.total).toFixed(2)
     });
 
-    window.analytics.track("Listrak Order Completed", {
-      "coupon": order.promo ? order.promo : "",
-      "currency": "USD",
-      "discount": Number.parseFloat(order.discount).toFixed(2),
-      "est_ship_date": order.shippingMethod.deliveryEstimate,
-      "shipping": Number.parseFloat(order.shippingMethod.price).toFixed(2),
-      "item_count": order.items.length,
-      "order_id": order.orderId,
-      "order_link": "",
-      "products": orderItemsTransformed,
-      "subtotal": order.subtotal,
-      "tax": order.tax ? Number.parseFloat(order.tax).toFixed(2) : 0,
-      "total": Number.parseFloat(order.total).toFixed(2)
-      });
-
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
   };
