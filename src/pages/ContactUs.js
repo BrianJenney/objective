@@ -57,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 const ContactUs = () => {
   const classes = useStyles();
+  window.analytics.page("Contact");
   return (
     <ScrollToTop>
       <StyledBackground>

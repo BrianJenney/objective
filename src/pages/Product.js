@@ -13,7 +13,7 @@ import { ProductStore } from '../contexts/ProductContext';
 
 const Product = ({ match }) => {
   const { product_slug } = match.params;
-
+  window.analytics.page("PDP");
   return (
     <ScrollToTop>
       <ProductStore productSlug={product_slug}>

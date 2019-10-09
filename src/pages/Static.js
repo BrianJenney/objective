@@ -43,6 +43,8 @@ class Static extends Component {
       'reply-to': replyTo,
       'correlation-id': ObjectId()
     }, obj);
+
+    window.analytics.page(page);
   }
 
   renderContent() {

@@ -132,6 +132,7 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
+      {window.analytics.page("Account Payment Details") && (null)}
       {formModeEnabled ? (
         <PaymentForm
           currentUser={currentUser}

@@ -78,6 +78,7 @@ const AccountOverview = props => {
   };
   const RenderOverview = () => (
     <div className="account-overview">
+      {window.analytics.page("Account Overview") && (null)}
       <Typography className={classes.title} variant="h1" gutterBottom>
         Welcome, {currentUser.data.firstName}!
       </Typography>

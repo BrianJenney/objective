@@ -12,7 +12,7 @@ const Gallery = () => {
   const catalog = useSelector(state => state.catalog);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
-
+  window.analytics.page("Gallery");
   return (
     <Box className="gallery-page">
       <Box className="hero-holder">
