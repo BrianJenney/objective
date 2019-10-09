@@ -15,7 +15,8 @@ import {
   REQUEST_MERGE_CARTS,
   REQUEST_ADD_COUPON,
   REQUEST_REMOVE_COUPON,
-  REQUEST_SET_SHIPPING_ADDRESS
+  REQUEST_SET_SHIPPING_ADDRESS,
+  RESET_CART
 } from './types';
 
 const msgpack = require('msgpack-lite');
@@ -342,4 +343,10 @@ export const requestSetShippingAddress = (cartId, address) => async (dispatch, g
     type: REQUEST_SET_SHIPPING_ADDRESS,
     payload: {}
   });
+};
+
+export const resetCart = () => {
+  return {
+    type: RESET_CART,
+  };
 };

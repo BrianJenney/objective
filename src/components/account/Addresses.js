@@ -117,10 +117,10 @@ const AccountAddresses = ({
 
     return true;
   };
-
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      {window.analytics.page("Account Addresses") && (null)}
+      
+      {window.location.pathname.indexOf("/account/addresses")!==-1 ? (window.analytics.page("Account Addresses") && (null)) : null}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}

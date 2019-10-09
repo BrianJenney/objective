@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { get, isNil } from 'lodash';
@@ -10,6 +10,8 @@ import { useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { Panel } from '../common';
@@ -25,6 +27,11 @@ import { getDefaultEntity } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import ScrollToTop from '../common/ScrollToTop';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
+import { resetCart } from '../../modules/cart/actions';
+import { resetOrderState } from '../../modules/order/actions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import TransactionMessage from './TransactionMessage';
 
 let checkoutStartedTracked = false;
 const getPanelTitleContent = (
@@ -114,7 +121,23 @@ const Checkout = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+  const orderError = useSelector(state => state.order.transactionError);
+  const orderIsLoading = useSelector(state => state.order.isLoading);
+  const [checkoutDialogOpen, setCheckoutDialogOpen] = React.useState(false);
   const { signupError, signupSubmitting } = currentUser;
+
+  useEffect(() => {
+    if (orderIsLoading || orderError) {
+      setCheckoutDialogOpen(true);
+    } else {
+      handleCheckoutDialogClose();
+      if (orderError === false) {
+        dispatch(resetCart());
+        setPayload({});
+        history.replace('/order');
+      }
+    }
+  }, [orderError, orderIsLoading]);
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -132,6 +155,11 @@ const Checkout = ({
     dispatch,
     requestSetShippingAddress
   ]);
+
+  const handleCheckoutDialogClose = () => {
+    setCheckoutDialogOpen(false);
+    dispatch(resetOrderState());
+  };
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -172,9 +200,18 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    setPayload({});
-    history.replace('/order');
+    console.log(orderIsLoading, orderError);
+    if (orderIsLoading === true || orderError === null) return null;
 
+    if (orderError === true) {
+      console.log('TEEESSSTT');
+      setCheckoutDialogOpen(true);
+    } else {
+      console.log('in else block');
+      dispatch(resetCart());
+      setPayload({});
+      history.replace('/order');
+    }
     return true;
   };
 
@@ -388,6 +425,30 @@ const Checkout = ({
                 ''
               )}
             </Grid>
+            <Dialog
+              className="transaction-dialog-container"
+              open={checkoutDialogOpen}
+              onClose={handleCheckoutDialogClose}
+              closeAfterTransition
+            >
+              {orderError ? (
+                <IconButton
+                  aria-label="close"
+                  style={{
+                    position: 'absolute',
+                    right: theme.spacing(1),
+                    top: theme.spacing(1),
+                    color: theme.palette.grey[500]
+                  }}
+                  onClick={handleCheckoutDialogClose}
+                >
+                  <CloseIcon />
+                </IconButton>
+              ) : null}
+              <MuiDialogContent>
+                <TransactionMessage orderError={orderError} />
+              </MuiDialogContent>
+            </Dialog>
           </Box>
         </Container>
       </Box>
