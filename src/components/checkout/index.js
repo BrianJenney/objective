@@ -187,10 +187,11 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-
+    console.log(orderIsLoading, orderError)
     if (orderIsLoading === true || orderError === null) return null;
 
     if (orderError === true) {
+      console.log('TEEESSSTT')
       setCheckoutDialogOpen(true);
     } else {
       console.log('in else block');

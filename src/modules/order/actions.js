@@ -1,6 +1,7 @@
 import {
   REQUEST_CREATE_ORDER,
-  RECEIVED_CREATE_ORDER,
+  RECEIVED_CREATE_ORDER_SUCCESS,
+  RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
@@ -95,13 +96,18 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   );
 };
 
-export const receivedCreateOrder = order => {
-  EventEmitter.emit('order.created', order);
-
-  return {
-    type: RECEIVED_CREATE_ORDER,
+export const receivedCreateOrderSuccess = order => async (dispatch, getState) => {
+  dispatch({
+    type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
-  };
+  });
+};
+
+export const receivedCreateOrderFailure = order => async (dispatch, getState) => {
+  dispatch({
+    type: RECEIVED_CREATE_ORDER_FAILURE,
+    payload: order
+  });
 };
 
 export const requestFindOrdersByAccount = accountJwt => (
