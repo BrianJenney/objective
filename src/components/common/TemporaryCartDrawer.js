@@ -59,11 +59,13 @@ const TemporaryCartDrawer = ({
     dispatch(setCartDrawerOpened(open));
 
     if(open){
+      if(!drawerOpened){
       window.analytics.track("Cart Viewed", {
         "cart_id": nCart._id,
         "num_products": nCart.items.reduce((acc, item) => acc + item.quantity, 0),
         "products": nCart.items
       });
+    }
     }else{
       
       window.analytics.track("Cart Dismissed", {
