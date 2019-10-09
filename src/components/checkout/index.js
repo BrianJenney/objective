@@ -27,7 +27,14 @@ import ScrollToTop from '../common/ScrollToTop';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
 
 let checkoutStartedTracked = false;
-const getPanelTitleContent = (xs, step, activeStep, payload) => {
+const getPanelTitleContent = (
+  xs,
+  step,
+  activeStep,
+  signupError,
+  signupSubmitting,
+  payload
+) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -54,7 +61,13 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 
   if (!isNil(payload)) {
     if (step === 0) {
-      payloadSummary = <AccountSummary values={payload} />;
+      payloadSummary = (
+        <AccountSummary
+          values={payload}
+          msg={signupError}
+          signupSubmit={signupSubmitting}
+        />
+      );
     } else if (step === 1) {
       payloadSummary = <AddressSummary noDefault values={payload} />;
     } else if (step === 2) {
@@ -101,6 +114,7 @@ const Checkout = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+  const { signupError, signupSubmitting } = currentUser;
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -163,39 +177,45 @@ const Checkout = ({
 
     return true;
   };
-  
-  
+
   const trackCheckoutStarted = () => {
-  if(!checkoutStartedTracked){
-   window.analytics.track("Checkout Started", {
-    "cart_id": cart._id,
-    "currency": "USD",
-    "discount": cart.discount ? Number.parseFloat(cart.discount).toFixed(2) : 0,
-    "products": cart.items,
-    "revenue": cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0,
-    "subtotal": cart.subtotal ? Number.parseFloat(cart.subtotal).toFixed(2) : 0,
-    "tax": cart.tax ? Number.parseFloat(cart.tax).toFixed(2) : 0,
-    "total": cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0
-  });
-    checkoutStartedTracked = true;
-  }
-  }
+    if (!checkoutStartedTracked) {
+      window.analytics.track('Checkout Started', {
+        cart_id: cart._id,
+        currency: 'USD',
+        discount: cart.discount
+          ? Number.parseFloat(cart.discount).toFixed(2)
+          : 0,
+        products: cart.items,
+        revenue: cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0,
+        subtotal: cart.subtotal
+          ? Number.parseFloat(cart.subtotal).toFixed(2)
+          : 0,
+        tax: cart.tax ? Number.parseFloat(cart.tax).toFixed(2) : 0,
+        total: cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0
+      });
+      checkoutStartedTracked = true;
+    }
+  };
 
-  const trackCheckoutStepViewed = (step) => {
-    window.analytics.track("Checkout Step Viewed", {
-      "cart_id": cart._id,
-      "step": step
-    })
-  }
+  const trackCheckoutStepViewed = step => {
+    window.analytics.track('Checkout Step Viewed', {
+      cart_id: cart._id,
+      step: step
+    });
+  };
 
-  const trackCheckoutStepCompleted = (step) => {
-    window.analytics.track("Checkout Step Completed", {
-      "cart_id": cart._id,
-      "step": step
-    })
-  }
+  const trackCheckoutStepCompleted = step => {
+    window.analytics.track('Checkout Step Completed', {
+      cart_id: cart._id,
+      step: step
+    });
+  };
 
-  const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1) && trackCheckoutStepViewed(activeStep - 1);
+  const handleBack = () =>
+    activeStep > 0 &&
+    setActiveStep(activeStep - 1) &&
+    trackCheckoutStepViewed(activeStep - 1);
   const handleNext = async values => {
     let result = null;
 
@@ -212,8 +232,6 @@ const Checkout = ({
     }
     return true;
   };
-
-  
 
   const onPanelChange = (expanded, panelIndex) => {
     const shippingKey = STEP_KEYS[1];
@@ -234,7 +252,7 @@ const Checkout = ({
 
   return (
     <ScrollToTop>
-      {window.analytics.page("Checkout") && (null)}
+      {window.analytics.page('Checkout') && null}
       {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
@@ -250,9 +268,16 @@ const Checkout = ({
                 className="right-side"
               >
                 <Panel
-                  title={getPanelTitleContent(xs, 0, activeStep, {
-                    email: currentUserEmail
-                  })}
+                  title={getPanelTitleContent(
+                    xs,
+                    0,
+                    activeStep,
+                    signupError,
+                    signupSubmitting,
+                    {
+                      email: currentUserEmail
+                    }
+                  )}
                   collapsible
                   hideExpandIcon
                   expanded={activeStep === 0}
@@ -268,7 +293,7 @@ const Checkout = ({
                     handleNext={() => {
                       if (activeStep === 0) {
                         setActiveStep(1);
-                        trackCheckoutStepCompleted(0)
+                        trackCheckoutStepCompleted(0);
                       }
                     }}
                   />
