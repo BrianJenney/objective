@@ -85,7 +85,7 @@ const ProductOutOfStockForm = ({
   const classes = useStyles();
   const initialValues = {
     email: '',
-    subscribed: false
+    subscribed: true
   };
 
   const handleEmailNotification = values => {
