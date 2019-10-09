@@ -48,7 +48,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   password: '',
-  newsletter: false
+  newsletter: true,
 };
 
 const schema = object().shape({
