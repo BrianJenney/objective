@@ -4,7 +4,7 @@ import { receivedFindOrdersByAccount } from '../account/actions';
 
 export const handleOrderResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
-    case 'order.request.create':
+    case 'order.request.createorder':
       console.log(
         '****************** Order Create Response ******************'
       );
