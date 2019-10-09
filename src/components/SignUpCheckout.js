@@ -58,6 +58,7 @@ const SignupCheckout = ({
             >
               Create your Account
             </Typography>
+
             <Typography
               variant="body1"
               className={xs ? classes.mobileLogin : classes.subTitle}
@@ -73,6 +74,7 @@ const SignupCheckout = ({
               )}
             </Typography>
           </Box>
+
           <SignupForm
             onSubmit={requestCreateAccount}
             clearCreateAccountError={clearCreateAccountError}
