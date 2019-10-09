@@ -1,12 +1,14 @@
 import {
   REQUEST_CREATE_ORDER,
-  RECEIVED_CREATE_ORDER,
+  RECEIVED_CREATE_ORDER_SUCCESS,
+  RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
   RECEIVED_GET_ORDER,
   REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND
+  RECEIVED_TRANSACTION_REQUEST_REFUND,
+  RESET_ORDER_STATE
 } from './types';
 import EventEmitter from '../../events';
 
@@ -94,13 +96,18 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   );
 };
 
-export const receivedCreateOrder = order => {
-  EventEmitter.emit('order.created', order);
-
-  return {
-    type: RECEIVED_CREATE_ORDER,
+export const receivedCreateOrderSuccess = order => async (dispatch, getState) => {
+  dispatch({
+    type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
-  };
+  });
+};
+
+export const receivedCreateOrderFailure = order => async (dispatch, getState) => {
+  dispatch({
+    type: RECEIVED_CREATE_ORDER_FAILURE,
+    payload: order
+  });
 };
 
 export const requestFindOrdersByAccount = accountJwt => (
@@ -179,4 +186,10 @@ export const receivedTransactionRequestRefund = order => (
     type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order
   });
+};
+
+export const resetOrderState = () => {
+  return {
+    type: RESET_ORDER_STATE,
+  };
 };
