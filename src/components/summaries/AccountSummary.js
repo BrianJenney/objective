@@ -2,12 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { pick } from 'lodash';
 import { FormSummarySection } from '../common';
+import { Typography } from '@material-ui/core';
 
 const ACCOUNT_FIELDS = ['email'];
 const labelsMap = { email: 'Email' };
 const getValuesWithoutLabels = ({ email }) => [email];
 
-const AccountSummary = ({ withLabels, values, children }) => {
+const AccountSummary = ({
+  withLabels,
+  values,
+  children,
+  msg,
+  signupSubmit
+}) => {
   const neededValues = pick(values, ACCOUNT_FIELDS);
   let pairs = null;
 
@@ -22,6 +29,12 @@ const AccountSummary = ({ withLabels, values, children }) => {
 
   return (
     <>
+      {!msg && signupSubmit !== null && (
+        <Typography style={{ fontSize: '20px', marginBottom: '10px' }}>
+          Your account was successfully created!
+        </Typography>
+      )}
+
       <FormSummarySection title="" pairs={pairs} />
       {children}
     </>
