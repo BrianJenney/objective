@@ -74,6 +74,15 @@ const DialogContent = withStyles(theme => ({
   }
 }))(MuiDialogContent);
 
+const trackEmailSubmitFailure = (email,error_message) => {
+    
+  window.analytics.track("Email Capture Failed", {
+    "email": email,
+    "error_message": error_message,
+    "site_location": "footer"
+  })
+}
+
 const NeedHelpDialog = () => {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -147,7 +156,7 @@ const NeedHelpDialog = () => {
 const schema = object().shape({
   email: string()
     .required('Email is required')
-    .email('Input valid email address')
+    .email((props)=>  { return 'Input valid email address'})
 });
 
 const StyledBox = withStyles(() => ({
@@ -201,11 +210,22 @@ const Footer = ({ location, currentUser }) => {
   const handleSubmit = useCallback(
     ({ email }) => {
       console.log('SUBMIT SUCCEED!!!', email);
+      window.analytics.track("Email Capture Completed", {
+        "email": email,
+        "site_location": "footer"
+      });
+
+      window.analytics.track("Email Capture Successful", {
+        "email": email,
+        "site_location": "footer"
+      })
       dispatch(requestSignupEmail(email));
       setConfirmationVisibility(!confirmationVisibility);
     },
     [confirmationVisibility, setConfirmationVisibility]
   );
+
+  
 
   return (
     <>
@@ -332,8 +352,10 @@ const Footer = ({ location, currentUser }) => {
                           initialValues={{ email: '' }}
                           onSubmit={handleSubmit}
                           validationSchema={schema}
-                          render={() => (
+                          render={({errors}) => (
+                            
                             <Form>
+                              
                               <Field
                                 name="email"
                                 label=""
@@ -347,6 +369,7 @@ const Footer = ({ location, currentUser }) => {
                                   alt="arrow"
                                 />
                               </Button>
+                              
                             </Form>
                           )}
                         />
