@@ -108,7 +108,8 @@ const OrderConfirmation = ({ history }) => {
 
    });
   });
-
+  
+  window.analytics.page("Order Confirmation");
   window.analytics.track("Order Completed", {
     "coupon": order.promo ? order.promo : "",
     "currency": "USD",

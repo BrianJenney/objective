@@ -234,6 +234,7 @@ const Checkout = ({
 
   return (
     <ScrollToTop>
+      {window.analytics.page("Checkout") && (null)}
       {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>

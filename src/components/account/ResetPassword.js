@@ -84,6 +84,7 @@ class ResetPassword extends React.Component {
 
     return (
       <Container>
+        {window.analytics.page("Account Reset Password") && (null)}
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={this.handleSubmit}

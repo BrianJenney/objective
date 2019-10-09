@@ -180,6 +180,7 @@ const ProfileDetails = ({
 
   return (
     <div className="account-profile">
+      {window.analytics.page("Account Profile") && (null)}
       {xs ? (
         ''
       ) : (

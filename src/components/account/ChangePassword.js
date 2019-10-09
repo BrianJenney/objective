@@ -234,6 +234,7 @@ const ChangePassword = ({
   );
   return (
     <Grid container className="account-change-password">
+      {window.analytics.page("Account Change Password") && (null)}
       <Grid item xs={12} md={12}>
         <Formik
           initialValues={getInitialValues(INITIAL_VALUES, {})}

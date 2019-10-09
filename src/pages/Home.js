@@ -189,6 +189,7 @@ class Home extends Component {
   }
 
   render() {
+    window.analytics.page("Home");
     return this.renderContent();
   }
 }
