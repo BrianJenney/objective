@@ -120,6 +120,7 @@ const AccountAddresses = ({
 
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
+      {window.analytics.page("Account Addresses") && (null)}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}

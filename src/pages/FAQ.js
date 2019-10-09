@@ -18,6 +18,7 @@ import {
 
 
 const FAQ = () => {
+  window.analytics.page("FAQ");
   return (
     <ScrollToTop>
       <StyledBackground>

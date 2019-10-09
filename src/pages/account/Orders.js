@@ -134,8 +134,11 @@ const AccountOrders = ({ currentUser: { data } }) => {
       data.orders[key].status = 'Order Cancelled';
     }
   }
+  
+  window.analytics.page("Account Orders");
 
   return (
+    
     <Grid
       container
       direction="column"
