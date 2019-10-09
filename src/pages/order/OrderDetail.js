@@ -11,19 +11,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 
-import {
-  Address,
-  Button as CommonButton
-} from '../../components/common';
+import { Address, Button as CommonButton } from '../../components/common';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import { formatDateTime } from '../../utils/misc';
 
 import StatusStepper from './StatusStepper';
 
-import {
-  requestRefundTransaction
-} from '../../modules/order/actions';
+import { requestRefundTransaction } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -134,6 +129,7 @@ const OrderSummary = ({
   statusStepperDate,
   orderStatus
 }) => {
+  console.log('==ORDER STATUS==', orderStatus);
   const { cardType, last4 } = paymentData;
   const { email, phoneBook, account_jwt } = account.data;
   const dispatch = useDispatch();
@@ -158,13 +154,22 @@ const OrderSummary = ({
         </Link>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
-      <Typography className={classes.textFreight}>
-        Your order number: <strong>{orderId}</strong>, placed on{' '}
-        <strong>{createdAt}</strong>
-      </Typography>
+      {orderRefunded ? (
+        <Typography className={classes.textFreight}>
+          Your order number: <strong>{orderId}</strong>, placed on{' '}
+          <strong>{createdAt}</strong> was cancelled and did not ship. A refund
+          was issued back to the payment used for the order.
+        </Typography>
+      ) : (
+        <Typography className={classes.textFreight}>
+          Your order number: <strong>{orderId}</strong>, placed on{' '}
+          <strong>{createdAt}</strong>
+        </Typography>
+      )}
       <br />
       <StatusStepper statusStepperDate={statusStepperDate} />
-      {orderStatus !== 'shipped' ? (
+
+      {orderStatus !== 'shipped' && !orderRefunded ? (
         <CommonButton
           style={{
             padding: '23px 23px',
@@ -183,11 +188,12 @@ const OrderSummary = ({
             }
           }}
         >
-          {orderRefunded ? 'Order Refunded' : 'Cancel Order'}
+          {'Cancel Order'}
         </CommonButton>
       ) : (
         ''
       )}
+
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
