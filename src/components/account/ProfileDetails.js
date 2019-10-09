@@ -180,7 +180,7 @@ const ProfileDetails = ({
 
   return (
     <div className="account-profile">
-      {window.analytics.page("Account Profile") && (null)}
+      {window.location.pathname.indexOf("/account/profile")!==-1 ? (window.analytics.page("Account Profile") && (null)) : null}
       {xs ? (
         ''
       ) : (
