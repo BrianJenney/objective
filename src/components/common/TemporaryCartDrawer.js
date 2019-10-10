@@ -48,7 +48,20 @@ const TemporaryCartDrawer = ({
   const drawerOpened = useSelector(state => state.cart.cartDrawerOpened);
   const dispatch = useDispatch();
   const nCart = useSelector(state => state.cart);
-  nCart.items.map(item => {item.discount_price = Number.parseFloat(item.discount_price).toFixed(2); item.unit_price = Number.parseFloat(item.unit_price).toFixed(2); return item});
+
+  let orderItemsTransformed = [];
+  nCart.items.forEach(item => {
+    orderItemsTransformed.push({
+      image_url: item.variant_img,
+      quantity: item.quantity,
+      sku: item.sku,
+      price: Number.parseFloat(item.unit_price),
+      product_id: item.variant_id,
+      variant: item.variant_id,
+      name: item.variant_name,
+      brand: nCart.storeCode
+    });
+  });
   const toggleDrawer = open => event => {
     if (
       event.type == 'keydown' &&
@@ -63,7 +76,7 @@ const TemporaryCartDrawer = ({
       window.analytics.track("Cart Viewed", {
         "cart_id": nCart._id,
         "num_products": nCart.items.reduce((acc, item) => acc + item.quantity, 0),
-        "products": nCart.items
+        "products": orderItemsTransformed
       });
     }
     }else{
@@ -71,7 +84,7 @@ const TemporaryCartDrawer = ({
       window.analytics.track("Cart Dismissed", {
         "cart_id": nCart._id,
         "num_products": nCart.items.reduce((acc, item) => acc + item.quantity, 0),
-        "products": nCart.items
+        "products": orderItemsTransformed
       });
     }
   };

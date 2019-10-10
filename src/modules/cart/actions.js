@@ -44,10 +44,21 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     payload: {}
   });
   // @segment Product Added
-  window.analytics.track('Product Added', {
-    'cart_id': cart._id,
-    ...product
-  });
+  
+  let item = product;
+    let productTransformed = {
+      image_url: item.variant_img,
+      quantity: item.quantity,
+      sku: item.sku,
+      price: Number.parseFloat(item.unit_price),
+      product_id: item.variant_id,
+      variant: item.variant_id,
+      name: item.variant_name,
+      brand: cart.storeCode,
+      cart_id : cart._id
+    };
+
+  window.analytics.track('Product Added', productTransformed);
 };
 
 export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
@@ -229,12 +240,25 @@ export const receivedPatchCart = cart => {
 export const setCartDrawerOpened = open => (dispatch, getState) => {
   if (open) {
     let cart = getState().cart;
-
+     
     // @segment Cart Viewed
+    let orderItemsTransformed = [];
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: item.variant_img,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      });
+    });
     window.analytics.track('Cart Viewed', {
       'cart_id': cart._id,
       'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
-      'products': cart.items
+      'products': orderItemsTransformed
     });
   }
 

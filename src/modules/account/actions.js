@@ -279,7 +279,7 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
 
   window.analytics.track("Sign In Completed", {
     "email": email,
-    "site_location": window.location
+    "site_location": ""
   })
 };
 
@@ -295,7 +295,7 @@ export const receivedLoginSuccess = loginReply => dispatch => {
   //store.dispatch(requestFetchCartByEmail(loginReply.email));
   window.analytics.track("Sign In Successful", {
     "method": "email",
-    "site_location": window.location,
+    "site_location": "",
     "username": loginReply.email
   })
 };
@@ -308,7 +308,7 @@ export const receivedLoginFailure = loginError => dispatch => {
   window.analytics.track("Sign In Failed", {
     "error_message": "Incorrect Email/Password",
     "method": "email",
-    "site_location": window.location
+    "site_location": ""
   })
 };
 
