@@ -231,10 +231,24 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
     let cart = getState().cart;
 
     // @segment Cart Viewed
+    let cartItemsTransformed = [];
+    cart.items.map(item => {
+      cartItemsTransformed.push({
+        "brand": cart.storeCode,
+        "category": cart.catalogId,
+        "image_url": item.variant_img,
+        "name": item.variant_name,
+        "price": item.unit_price,
+        "product_id": item.variant_id,
+        "quantity": item.quantity,
+        "sku": item.sku,
+        "variant": item.variant_name
+      });
+    });
     window.analytics.track('Cart Viewed', {
-      'cart_id': cart._id,
-      'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
-      'products': cart.items
+      "cart_id": cart._id,
+      "num_products": cart.items.reduce((acc, item) => acc + item.quantity, 0),
+      "products": cartItemsTransformed
     });
   }
 
