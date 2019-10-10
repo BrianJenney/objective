@@ -63,11 +63,11 @@ const ProductVariant = ({ productVariant }) => {
       "cart_id": localStorage.cartId,
       "image_url": productVariant.assets.imgs,
       "name": productVariant.name,
-      "price": Number.parseFloat(productVariant.effectivePrice).toFixed(2),
+      "price": Number.parseFloat(productVariant.effectivePrice),
       "product_id": productVariant.product_id,
       "quantity": 1,
       "sku": productVariant.sku,
-      "url": window.location,
+      "url": window.location.href,
       "variant": productVariant.id
     });
     analyticsTracked = true;

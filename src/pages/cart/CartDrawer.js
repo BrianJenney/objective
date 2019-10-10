@@ -64,13 +64,25 @@ const Cart = ({
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  cart.items.map(item => { item.discount_price = Number.parseFloat(item.discount_price).toFixed(2); item.unit_price = Number.parseFloat(item.unit_price).toFixed(2); return item });
+  let orderItemsTransformed = [];
+  cart.items.forEach(item => {
+    orderItemsTransformed.push({
+      image_url: item.variant_img,
+      quantity: item.quantity,
+      sku: item.sku,
+      price: Number.parseFloat(item.unit_price),
+      product_id: item.variant_id,
+      variant: item.variant_id,
+      name: item.variant_name,
+      brand: cart.storeCode
+    });
+  });
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
     window.analytics.track("Cart Dismissed", {
       "cart_id": cart._id,
       "num_products": cartCount,
-      "products": cart.items
+      "products": orderItemsTransformed
     });
     history.push('/gallery');
   }, [dispatch, history]);
@@ -80,7 +92,7 @@ const Cart = ({
     window.analytics.track("Cart Dismissed", {
       "cart_id": cart._id,
       "num_products": cartCount,
-      "products": cart.items
+      "products": orderItemsTransformed
     });
   }, [dispatch]);
 
@@ -94,17 +106,26 @@ const Cart = ({
     window.analytics.track("Cart Dismissed", {
       "cart_id": cart._id,
       "num_products": cartCount,
-      "products": cart.items
+      "products": orderItemsTransformed
     });
     history.push('/checkout');
   }, [dispatch, history]);
 
-  const trackProductRemoveEvent = (cartId, item) => {
-    item.discount_price = Number.parseFloat(item.discount_price).toFixed(2);
-    item.unit_price = Number.parseFloat(item.unit_price).toFixed(2);
+  const trackProductRemoveEvent = (cartId,item) => {    
+      let productTransformed = {
+        image_url: item.variant_img,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      };
+    
     window.analytics.track("Product Removed", {
       "cart_id": cartId,
-      ...item
+      ...productTransformed
 
     });
   }
