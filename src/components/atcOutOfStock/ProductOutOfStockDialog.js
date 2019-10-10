@@ -106,6 +106,8 @@ const ProductOutOfStockForm = ({
       "url": product_url,
       "variant": product_variant
     });
+    // Listrak event
+    window._ltk.Alerts.AddAlert(email, sku, 'BIS'); window._ltk.Alerts.Submit();
     handleOpenEmailConfirmation();
     closeDialog();
   };
