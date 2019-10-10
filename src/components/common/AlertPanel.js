@@ -45,7 +45,10 @@ const AlertPanel = ({ type, text, style, onClose, notClosable, ...rest }) => {
     <Box
       display="flex"
       position="relative"
-      p={2}
+      py={2}
+      pr={4}
+      pl={2}
+      my={2}
       color={color}
       bgcolor={bgColor}
       alignItems="center"
