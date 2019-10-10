@@ -97,6 +97,8 @@ const OrderConfirmation = ({ history }) => {
   }
 
   let orderItemsTransformed = [];
+  let orderItemsTransformedGA = [];
+
   order.items.map(item => {
    orderItemsTransformed.push({
      "brand": order.storeCode,
@@ -108,20 +110,19 @@ const OrderConfirmation = ({ history }) => {
     "sku": item.sku,
     "variant": item.variant_name
    });
+   orderItemsTransformedGA.push({
+      id: item.variant_id,
+      name: item.variant_name,
+      brand: order.storeCode,
+      variant: item.sku,
+      quantity: item.quantity,
+      price: item.unit_price
+   });
   });
   
   window.analytics.page("Order Confirmation");
   window.analytics.track('Order Completed', {
     "affiliation": order.storeCode,
-    "billing_address1": order.billingAddress.address1,
-    "billing_address2": order.billingAddress.address2,
-    "billing_city": order.billingAddress.city,
-    "billing_country": order.billingAddress.country,
-    "billing_first_name": order.billingAddress.firstName,
-    "billing_last_name": order.billingAddress.lastName,
-    "billing_phone": order.billingAddress.phone,
-    "billing_state": order.billingAddress.state,
-    "billing_zip": order.billingAddress.zipcode,
     "coupon": order.promo ? order.promo : '',
     "currency": 'USD',
     "discount": Number.parseFloat(order.discount).toFixed(2),
@@ -136,19 +137,18 @@ const OrderConfirmation = ({ history }) => {
     "products": orderItemsTransformed,
     "revenue": order.subtotal,
     "shipping": order.shippingMethod.price,
-    "shipping_address1": order.shippingAddress.address1,
-    "shipping_address2": order.shippingAddress.address2,
-    "shipping_city": order.shippingAddress.city,
-    "shipping_country": order.shippingAddress.country,
-    "shipping_first_name": order.shippingAddress.firstName,
-    "shipping_last_name": order.shippingAddress.lastName,
-    "shipping_method": order.shippingMethod.displayName,
-    "shipping_phone": order.shippingAddress.phone,
-    "shipping_state": order.shippingAddress.state,
-    "shipping_zip": order.shippingAddress.zipcode,
     "subtotal": order.subtotal,
     "tax": order.tax,
     "total": order.total
+  });
+  window.gtag('event', 'purchase', {
+    transaction_id: order.orderId,
+    affiliation: order.storeCode,
+    value: order.total,
+    currency: 'USD',
+    tax: order.tax,
+    shipping: order.shippingMethod.price,
+    items: orderItemsTransformedGA
   });
 
   const OrderCartSummary = () => {
