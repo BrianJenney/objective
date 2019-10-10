@@ -336,12 +336,13 @@ export const receivedFindOrdersByAccount = orders => dispatch => {
   });
 };
 
-export const requestForgotPassword = email => (dispatch, getState) => {
+export const requestForgotPassword = (email, url) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
-        email
+        email,
+        url
       }
     }
   };
