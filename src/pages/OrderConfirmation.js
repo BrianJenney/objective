@@ -90,6 +90,7 @@ const OrderConfirmation = ({ history }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
+  console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
   console.log('OrderConfirmation', { order, account });
 
   if (!order) {
@@ -99,31 +100,57 @@ const OrderConfirmation = ({ history }) => {
   let orderItemsTransformed = [];
   order.items.map(item => {
    orderItemsTransformed.push({
-    image_url: item.variant_img,
-    quantity: item.quantity,
-    sku: item.sku,
-    price: Number.parseFloat(item.unit_price).toFixed(2),
-    product_id: item.variant_id,
-    name: item.variant_name,
-
+     "brand": order.storeCode,
+     "image_url": item.variant_img,
+     "name": item.variant_name,
+     "price": Number.parseFloat(item.unit_price).toFixed(2),
+     "product_id": item.variant_id,
+     "quantity": item.quantity,
+    "sku": item.sku,
+    "variant": item.variant_name
    });
   });
   
   window.analytics.page("Order Confirmation");
-  window.analytics.track("Order Completed", {
-    "coupon": order.promo ? order.promo : "",
-    "currency": "USD",
+  window.analytics.track('Order Completed', {
+    "affiliation": order.storeCode,
+    "billing_address1": account.billingAddress.address1,
+    "billing_address2": account.billingAddress.address2,
+    "billing_city": account.billingAddress.city,
+    "billing_country": account.billingAddress.country,
+    "billing_first_name": account.billingAddress.firstName,
+    "billing_last_name": account.billingAddress.lastName,
+    "billing_phone": account.billingAddress.phone,
+    "billing_state": account.billingAddress.state,
+    "billing_zip": account.billingAddress.zipcode,
+    "coupon": order.promo ? order.promo : '',
+    "currency": 'USD',
     "discount": Number.parseFloat(order.discount).toFixed(2),
+    "email": account.data.email,
     "est_ship_date": order.shippingMethod.deliveryEstimate,
-    "shipping": Number.parseFloat(order.shippingMethod.price).toFixed(2),
     "item_count": order.items.length,
+    "order_date": order.transactions.transactionDate,
     "order_id": order.orderId,
-    "order_link": "",
+    "order_link": order.orderId,
+    "payment_method": order.paymentData.cardType,
+    "payment_method_detail": order.paymentData.cardType,
     "products": orderItemsTransformed,
+    "revenue": order.subtotal,
+    "shipping": order.shippingMethod.price,
+    "shipping_address1": order.shippingAddress.address1,
+    "shipping_address2": order.shippingAddress.address2,
+    "shipping_city": order.shippingAddress.city,
+    "shipping_country": order.shippingAddress.country,
+    "shipping_first_name": order.shippingAddress.firstName,
+    "shipping_last_name": order.shippingAddress.lastName,
+    "shipping_method": order.shippingMethod.displayName,
+    "shipping_phone": order.shippingAddress.phone,
+    "shipping_state": order.shippingAddress.state,
+    "shipping_zip": order.shippingAddress.zipcode,
     "subtotal": order.subtotal,
-    "tax": order.tax ? Number.parseFloat(order.tax).toFixed(2) : 0,
-    "total": Number.parseFloat(order.total).toFixed(2)
-    });
+    "tax": order.tax,
+    "total": order.total
+  });
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
