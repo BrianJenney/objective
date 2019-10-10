@@ -90,7 +90,6 @@ const OrderConfirmation = ({ history }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
-  console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
   console.log('OrderConfirmation', { order, account });
 
   if (!order) {
@@ -114,15 +113,15 @@ const OrderConfirmation = ({ history }) => {
   window.analytics.page("Order Confirmation");
   window.analytics.track('Order Completed', {
     "affiliation": order.storeCode,
-    "billing_address1": account.billingAddress.address1,
-    "billing_address2": account.billingAddress.address2,
-    "billing_city": account.billingAddress.city,
-    "billing_country": account.billingAddress.country,
-    "billing_first_name": account.billingAddress.firstName,
-    "billing_last_name": account.billingAddress.lastName,
-    "billing_phone": account.billingAddress.phone,
-    "billing_state": account.billingAddress.state,
-    "billing_zip": account.billingAddress.zipcode,
+    "billing_address1": order.billingAddress.address1,
+    "billing_address2": order.billingAddress.address2,
+    "billing_city": order.billingAddress.city,
+    "billing_country": order.billingAddress.country,
+    "billing_first_name": order.billingAddress.firstName,
+    "billing_last_name": order.billingAddress.lastName,
+    "billing_phone": order.billingAddress.phone,
+    "billing_state": order.billingAddress.state,
+    "billing_zip": order.billingAddress.zipcode,
     "coupon": order.promo ? order.promo : '',
     "currency": 'USD',
     "discount": Number.parseFloat(order.discount).toFixed(2),
