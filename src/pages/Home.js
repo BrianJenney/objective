@@ -61,6 +61,7 @@ class Home extends Component {
       .catch(err => {
         console.log(err);
       });
+      window.analytics.page("Home");
   }
 
   renderHeroSlider() {
@@ -189,7 +190,6 @@ class Home extends Component {
   }
 
   render() {
-    window.analytics.page("Home");
     return this.renderContent();
   }
 }
