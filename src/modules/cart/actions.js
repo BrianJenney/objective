@@ -51,7 +51,7 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
       quantity: 1,
       sku: item.sku,
       price: Number.parseFloat(item.effectivePrice),
-      product_id: item.product_id,
+      product_id: item.id,
       variant: item.id,
       name: item.name,
       brand: cart.storeCode,
