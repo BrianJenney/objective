@@ -47,13 +47,13 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
   
   let item = product;
     let productTransformed = {
-      image_url: item.variant_img,
-      quantity: item.quantity,
+      image_url: item.assets.imgs,
+      quantity: 1,
       sku: item.sku,
-      price: Number.parseFloat(item.unit_price),
-      product_id: item.variant_id,
-      variant: item.variant_id,
-      name: item.variant_name,
+      price: Number.parseFloat(item.effectivePrice),
+      product_id: item.product_id,
+      variant: item.id,
+      name: item.name,
       brand: cart.storeCode,
       cart_id : cart._id
     };
