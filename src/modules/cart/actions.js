@@ -43,6 +43,11 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     type: REQUEST_ADD_TO_CART,
     payload: {}
   });
+  // @segment Product Added
+  window.analytics.track('Product Added', {
+    'cart_id': cart._id,
+    ...product
+  });
 };
 
 export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
@@ -221,11 +226,22 @@ export const receivedPatchCart = cart => {
   };
 };
 
-export const setCartDrawerOpened = open => {
-  return {
+export const setCartDrawerOpened = open => (dispatch, getState) => {
+  if (open) {
+    let cart = getState().cart;
+
+    // @segment Cart Viewed
+    window.analytics.track('Cart Viewed', {
+      'cart_id': cart._id,
+      'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
+      'products': cart.items
+    });
+  }
+
+  dispatch({
     type: SET_CART_DRAWER_OPENED,
     payload: open
-  };
+  });
 };
 
 export const requestRemoveCartById = id => async (dispatch, getState) => {
