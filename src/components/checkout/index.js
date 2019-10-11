@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -23,9 +23,8 @@ import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
 import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
-import { getDefaultEntity } from '../../utils/misc';
+import { getDefaultEntity, scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
-import ScrollToTop from '../common/ScrollToTop';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
 import { resetCart } from '../../modules/cart/actions';
 import { resetOrderState } from '../../modules/order/actions';
@@ -125,6 +124,7 @@ const Checkout = ({
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = React.useState(false);
   const { signupError, signupSubmitting } = currentUser;
+  const stepRefs = [useRef(null), useRef(null), useRef(null)];
 
   useEffect(() => {
     if (orderIsLoading || orderError) {
@@ -216,7 +216,6 @@ const Checkout = ({
   };
 
   const trackCheckoutStarted = () => {
-    
     if (!checkoutStartedTracked) {
       let orderItemsTransformed = [];
       cart.items.forEach(item => {
@@ -235,14 +234,10 @@ const Checkout = ({
       window.analytics.track('Checkout Started', {
         cart_id: cart._id,
         currency: 'USD',
-        discount: cart.discount
-          ? Number.parseFloat(cart.discount)
-          : 0,
+        discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
         products: orderItemsTransformed,
         revenue: cart.total ? Number.parseFloat(cart.total) : 0,
-        subtotal: cart.subtotal
-          ? Number.parseFloat(cart.subtotal)
-          : 0,
+        subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
         tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
         total: cart.total ? Number.parseFloat(cart.total) : 0
       });
@@ -260,13 +255,18 @@ const Checkout = ({
   const trackCheckoutStepCompleted = step => {
     window.analytics.track('Checkout Step Completed', {
       cart_id: cart._id,
-      step: step
+      step
     });
+  };
+
+  const setCurrentStep = stepIndex => {
+    setActiveStep(stepIndex);
+    scrollToRef(stepRefs[stepIndex - 1]);
   };
 
   const handleBack = () =>
     activeStep > 0 &&
-    setActiveStep(activeStep - 1) &&
+    setCurrentStep(activeStep - 1) &&
     trackCheckoutStepViewed(activeStep - 1);
   const handleNext = async values => {
     let result = null;
@@ -279,7 +279,7 @@ const Checkout = ({
     }
 
     if (result) {
-      setActiveStep(activeStep + 1);
+      setCurrentStep(activeStep + 1);
       trackCheckoutStepViewed(activeStep + 1);
     }
     return true;
@@ -299,11 +299,11 @@ const Checkout = ({
 
     trackCheckoutStepCompleted(panelIndex);
 
-    return setActiveStep(panelIndex);
+    return setCurrentStep(panelIndex);
   };
 
   return (
-    <ScrollToTop>
+    <>
       {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
@@ -343,7 +343,7 @@ const Checkout = ({
                     clearLoginError={clearLoginError}
                     handleNext={() => {
                       if (activeStep === 0) {
-                        setActiveStep(1);
+                        setCurrentStep(1);
                         trackCheckoutStepCompleted(0);
                       }
                     }}
@@ -371,6 +371,7 @@ const Checkout = ({
                     mt={4}
                     mx={10}
                     mb={5}
+                    ref={stepRefs[0]}
                   />
                 </Panel>
                 <Panel
@@ -401,6 +402,7 @@ const Checkout = ({
                     mb={5}
                     backLabel="Cancel"
                     submitLabel="Review Order"
+                    ref={stepRefs[1]}
                   />
                 </Panel>
                 <Panel
@@ -411,18 +413,21 @@ const Checkout = ({
                   onChange={e => onPanelChange(e, 3)}
                   className="lastPanel"
                 >
-                  {xs ? (
-                    <CartDrawer
-                      disableItemEditing
-                      hideCheckoutProceedLink
-                      hideTaxLabel
-                      showOrderSummaryText
+                  <Box ref={stepRefs[2]}>
+                    {xs && (
+                      <CartDrawer
+                        disableItemEditing
+                        hideCheckoutProceedLink
+                        hideTaxLabel
+                        showOrderSummaryText
+                        xsBreakpoint={xs}
+                      />
+                    )}
+                    <CheckoutReviewForm
                       xsBreakpoint={xs}
+                      onSubmit={handleNext}
                     />
-                  ) : (
-                    ''
-                  )}
-                  <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
+                  </Box>
                 </Panel>
               </Grid>
               {!xs ? (
@@ -466,7 +471,7 @@ const Checkout = ({
           </Box>
         </Container>
       </Box>
-    </ScrollToTop>
+    </>
   );
 };
 

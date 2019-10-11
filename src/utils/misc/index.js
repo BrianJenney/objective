@@ -73,3 +73,13 @@ export const debugRabbitResponse = (name, status, data, fields, properties) => {
     console.log('****************** END ' + name + ' ******************');
   }
 };
+
+export const scrollToRef = ref => {
+  if (!ref.current) {
+    return null;
+  }
+
+  window.scrollTo(0, ref.current.offsetTop);
+
+  return true;
+};
