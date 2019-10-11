@@ -21,9 +21,16 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.setshippingaddress':
     case 'cart.request.patch':
       debugRabbitResponse('Cart Patch Response (' + fields.routingKey + ')', status, data, fields, properties);
+      let oldCart = store.getState().cart;
+      let openCartDrawer = true;
+
+      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
+        openCartDrawer = false;
+      }
+
       store.dispatch(receivedPatchCart(data));
 
-      if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress') {
+      if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress' && openCartDrawer) {
         store.dispatch(setCartDrawerOpened(true));
       }
       break;
