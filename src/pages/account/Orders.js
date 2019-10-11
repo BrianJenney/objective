@@ -112,7 +112,7 @@ const columns = [
   },
   */
 ];
-
+let ordersPageTracked = false;
 const AccountOrders = ({ currentUser: { data } }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -134,9 +134,10 @@ const AccountOrders = ({ currentUser: { data } }) => {
       data.orders[key].status = 'Order Cancelled';
     }
   }
-  
+  if(!ordersPageTracked){
   window.analytics.page("Account Orders");
-
+  ordersPageTracked = true;
+  }
   return (
     
     <Grid
