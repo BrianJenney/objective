@@ -38,7 +38,7 @@ const contentfulOptions = {
     }
   }
 };
-
+let homePageTracked = false;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +61,9 @@ class Home extends Component {
       .catch(err => {
         console.log(err);
       });
+      if(!homePageTracked){
       window.analytics.page("Home");
+      }
   }
 
   renderHeroSlider() {
