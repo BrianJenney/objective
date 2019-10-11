@@ -21,6 +21,7 @@ import {
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+const localStorageClient = require('store');
 
 export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -28,7 +29,8 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
   const params = {
     cart,
     product,
-    quantity
+    quantity,
+    segmentAnonymousId: localStorageClient.get('ajs_anonymous_id')
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
