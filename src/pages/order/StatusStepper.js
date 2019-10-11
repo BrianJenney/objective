@@ -85,9 +85,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getSteps = (statusStepper) => {
+const getSteps = (status, statusStepper) => {
   let step = 1;
-  if (["cancelled", "refunded"].includes(statusStepper.status)) {
+  if (["cancelled", "refunded"].includes(status)) {
     step = 2;
   } else {
     if (statusStepper['Delivered'])
@@ -95,17 +95,18 @@ const getSteps = (statusStepper) => {
     else if (statusStepper['Shipped'])
       step = 2;
   }
-  const steps = ["cancelled", "refunded"].includes(statusStepper.status)
+  const steps = ["cancelled", "refunded"].includes(status)
     ? ['Processed', 'Cancelled']
     : ['Processed', 'Shipped', 'Delivered'];
+  // console.log('status steppers', {statusStepper, step, steps} )
   return { step, steps };
 };
 
-const StatusStepper = ({statusStepper}) => {
+const StatusStepper = ({status, statusStepper}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { step, steps } = getSteps(statusStepper);
+  const { step, steps } = getSteps(status, statusStepper);
   const [activeStep, setActiveStep] = React.useState(step);
 
   const DesktopStatusStepper = () => {
