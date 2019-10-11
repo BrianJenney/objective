@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { Link } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
+
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
@@ -73,14 +73,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getStatusStepperDate = order => {
-  const processedDate = formatDateTime(order.createdAt, false);
-  const shippedDate = '';
-  const deliveredDate = '';
+const getStatusStepper = statusStepper => {
+  const processedDate = formatDateTime(statusStepper.processedDate, false);
+  const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
+  const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
+  const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
   return {
     Processed: processedDate,
     Shipped: shippedDate,
-    Delivered: deliveredDate
+    Delivered: deliveredDate,
+    Cancelled: cancelledDate,
   };
 };
 
@@ -88,7 +90,7 @@ const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.text} pt={2}>
-      Tracking #: <Link href={tracking.url} color="inherited" target="_blank" rel="noreferrer">{tracking.number}</Link>
+      Tracking #: {tracking && <Link href={tracking.url} style={{color: 'black'}} target="_blank" rel="noreferrer">{tracking.number}</Link>}
     </Typography>
   );
 };
@@ -126,7 +128,7 @@ const OrderSummary = ({
   createdAt,
   addressesWidth,
   xs,
-  statusStepperDate,
+  statusStepper,
   tracking,
   orderStatus
 }) => {
@@ -168,7 +170,9 @@ const OrderSummary = ({
         </Typography>
       )}
       <br />
-      <StatusStepper statusStepperDate={statusStepperDate} status={orderStatus}/>
+      { orderStatus !== "declined" &&
+        <StatusStepper statusStepper={statusStepper} status={orderStatus}/>
+      }
 
       {orderStatus !== 'shipped' && !orderRefunded ? (
         <CommonButton
@@ -223,10 +227,12 @@ const OrderSummary = ({
               Shipping Information
             </StyledSmallCaps>
             <Address address={shippingAddress} />
-            <TrackingInfo
-              className={classes.text}
-              tracking={tracking}
-            />
+            { tracking &&
+              <TrackingInfo
+                className={classes.text}
+                tracking={tracking}
+              />
+            }
           </Box>
         </Grid>
       </Box>
@@ -253,8 +259,8 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
-  const { tracking, statusStepperDate } = getShippingAndTracking(order);
-  // const statusStepperDate = getStatusStepperDate(order);
+  const { tracking, statusStepper } = getShippingAndTracking(order);
+  const status = getStatusStepper(statusStepper);
   const orderId =
     order.orderId.substring(0, 3) +
     '-' +
@@ -287,7 +293,7 @@ const OrderDetail = () => {
                 addressesWidth={addressesWidth}
                 xs={xs}
                 tracking={tracking}
-                statusStepperDate={statusStepperDate}
+                statusStepper={status}
               />
             </Grid>
             <Grid item xs={cartWidth}>
