@@ -4,11 +4,12 @@ import { useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 
 import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
-import { formatCurrency, formatDateTime } from '../../utils/misc';
+import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -81,21 +82,17 @@ const columns = [
     }
   },
   {
-    name: '_id',
+    name: 'items',
     label: 'TRACKING INFORMATION',
     options: {
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        return (
-          <Button
-            color="primary"
-            component={AdapterLink}
-            to={`/transactions/${value}`}
-          >
-            {' '}
-          </Button>
-        );
+        const rowData = tableMeta.rowData;
+        const tracking = getTracking(rowData[3], rowData[2])
+        return tracking ? (
+          <Link href={tracking.url} color="inherited" target="_blank" rel="noreferrer">{tracking.number}</Link>
+        ) : null;
       }
     }
   }
@@ -134,12 +131,12 @@ const AccountOrders = ({ currentUser: { data } }) => {
       data.orders[key].status = 'Order Cancelled';
     }
   }
-  if(!ordersPageTracked){
-  window.analytics.page("Account Orders");
-  ordersPageTracked = true;
+  if (!ordersPageTracked){
+    window.analytics.page("Account Orders");
+    ordersPageTracked = true;
   }
   return (
-    
+
     <Grid
       container
       direction="column"
@@ -213,7 +210,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                               color="primary"
                               component={AdapterLink}
                               to={`/transactions/${data.orders[dataIndex]._id}`}
-                            ></Button>
+                            />
                           </Typography>
                         </Grid>
                       </Grid>
