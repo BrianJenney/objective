@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -38,8 +38,8 @@ const getPanelTitleContent = (
   xs,
   step,
   activeStep,
-  signupError,
-  signupSubmitting,
+
+  signupConfirmation,
   payload
 ) => {
   const isActiveStep = step === activeStep;
@@ -71,8 +71,7 @@ const getPanelTitleContent = (
       payloadSummary = (
         <AccountSummary
           values={payload}
-          msg={signupError}
-          signupSubmit={signupSubmitting}
+          signupConfirmation={signupConfirmation}
         />
       );
     } else if (step === 1) {
@@ -115,6 +114,8 @@ const Checkout = ({
   clearPatchAccountError,
   requestCreateOrder
 }) => {
+  console.log('==CURRENT USER==', currentUser);
+
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
@@ -123,8 +124,8 @@ const Checkout = ({
   const { account_jwt, email: currentUserEmail } = currentUser.data;
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
-  const [checkoutDialogOpen, setCheckoutDialogOpen] = React.useState(false);
-  const { signupError, signupSubmitting } = currentUser;
+  const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
+  const { signupConfirmation } = currentUser;
 
   useEffect(() => {
     if (orderIsLoading || orderError) {
@@ -323,8 +324,8 @@ const Checkout = ({
                     xs,
                     0,
                     activeStep,
-                    signupError,
-                    signupSubmitting,
+
+                    signupConfirmation,
                     {
                       email: currentUserEmail
                     }
