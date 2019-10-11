@@ -91,7 +91,7 @@ const columns = [
         const rowData = tableMeta.rowData;
         const tracking = getTracking(rowData[3], rowData[2])
         return tracking ? (
-          <Link href={tracking.url} color="inherited" target="_blank" rel="noreferrer">{tracking.number}</Link>
+          <Link href={tracking.url} style={{color: 'black'}}  target="_blank" rel="noreferrer">{tracking.number}</Link>
         ) : null;
       }
     }
