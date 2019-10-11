@@ -85,17 +85,28 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getSteps = () => {
-  return ['Processed', 'Shipped', 'Delivered'];
+const getSteps = (statusStepper) => {
+  let step = 1;
+  if (["cancelled", "refunded"].includes(statusStepper.status)) {
+    step = 2;
+  } else {
+    if (statusStepper['Delivered'])
+      step = 3;
+    else if (statusStepper['Shipped'])
+      step = 2;
+  }
+  const steps = ["cancelled", "refunded"].includes(statusStepper.status)
+    ? ['Processed', 'Cancelled']
+    : ['Processed', 'Shipped', 'Delivered'];
+  return { step, steps };
 };
 
-const StatusStepper = ({statusStepperDate}) => {
+const StatusStepper = ({statusStepper}) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-
-  const [activeStep, setActiveStep] = React.useState(3);
-  const steps = getSteps();
+  const { step, steps } = getSteps(statusStepper);
+  const [activeStep, setActiveStep] = React.useState(step);
 
   const DesktopStatusStepper = () => {
     return (
@@ -103,7 +114,7 @@ const StatusStepper = ({statusStepperDate}) => {
         {steps.map(label => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>
-              {label} {statusStepperDate[label]}
+              {label} {statusStepper[label]}
             </StepLabel>
           </Step>
         ))}
@@ -118,7 +129,7 @@ const StatusStepper = ({statusStepperDate}) => {
           {steps.map(label => (
             <Step key={label}>
               <StepLabel>
-                {label} {statusStepperDate[label]}
+                {label} {statusStepper[label]}
               </StepLabel>
             </Step>
           ))}
