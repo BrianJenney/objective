@@ -240,11 +240,11 @@ export const receivedPatchCart = cart => {
 };
 
 export const setCartDrawerOpened = open => (dispatch, getState) => {
-  if (open) {
-    let cart = getState().cart;
-     
-    // @segment Cart Viewed
+  let cart = getState().cart;
+
+  if (cart.setCartDrawerOpened != open) {
     let orderItemsTransformed = [];
+
     cart.items.forEach(item => {
       orderItemsTransformed.push({
         image_url: item.variant_img,
@@ -257,11 +257,22 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
         brand: cart.storeCode
       });
     });
-    window.analytics.track('Cart Viewed', {
-      'cart_id': cart._id,
-      'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
-      'products': orderItemsTransformed
-    });
+  
+    if (open) {
+      // @segment Cart Viewed
+      window.analytics.track('Cart Viewed', {
+        'cart_id': cart._id,
+        'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        'products': orderItemsTransformed
+      });
+    } else {
+      // @segment Cart Dismissed
+      window.analytics.track('Cart Dismissed', {
+        'cart_id': cart._id,
+        'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        'products': orderItemsTransformed
+      });
+    }  
   }
 
   dispatch({

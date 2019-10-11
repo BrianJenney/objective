@@ -47,21 +47,7 @@ const TemporaryCartDrawer = ({
 }) => {
   const drawerOpened = useSelector(state => state.cart.cartDrawerOpened);
   const dispatch = useDispatch();
-  const nCart = useSelector(state => state.cart);
 
-  let orderItemsTransformed = [];
-  nCart.items.forEach(item => {
-    orderItemsTransformed.push({
-      image_url: item.variant_img,
-      quantity: item.quantity,
-      sku: item.sku,
-      price: Number.parseFloat(item.unit_price),
-      product_id: item.variant_id,
-      variant: item.variant_id,
-      name: item.variant_name,
-      brand: nCart.storeCode
-    });
-  });
   const toggleDrawer = open => event => {
     if (
       event.type == 'keydown' &&
@@ -70,28 +56,10 @@ const TemporaryCartDrawer = ({
       return;
     }
     dispatch(setCartDrawerOpened(open));
-
-    if(open){
-      if(!drawerOpened){
-      window.analytics.track("Cart Viewed", {
-        "cart_id": nCart._id,
-        "num_products": nCart.items.reduce((acc, item) => acc + item.quantity, 0),
-        "products": orderItemsTransformed
-      });
-    }
-    }else{
-      
-      window.analytics.track("Cart Dismissed", {
-        "cart_id": nCart._id,
-        "num_products": nCart.items.reduce((acc, item) => acc + item.quantity, 0),
-        "products": orderItemsTransformed
-      });
-    }
   };
 
   const windowSize = useWindowSize();
   const isMobile = windowSize.width < 415;
-  const isNonMobile = windowSize.width > 415;
 
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1
