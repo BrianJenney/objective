@@ -77,9 +77,11 @@
             };
             analytics.SNIPPET_VERSION = '4.1.0';
             let node_env = "%NODE_ENV%";
-            let segment_write_key = "Fl1QTP8nOmlIdGpAsZi5qP1ZccOcN5Jz";
-            if(node_env!=="development"){
-              let segment_write_key = "zMiLWa7ZlGJmdtzDHckdOLzlCmRXEIB0";
+            
+            if(node_env==="production"){
+             let segment_write_key = "zMiLWa7ZlGJmdtzDHckdOLzlCmRXEIB0";
+            }else{
+              let segment_write_key = "Fl1QTP8nOmlIdGpAsZi5qP1ZccOcN5Jz";
             }
             analytics.load(segment_write_key);
 
