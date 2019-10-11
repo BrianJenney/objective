@@ -218,7 +218,11 @@ const Footer = ({ location, currentUser }) => {
       window.analytics.track("Email Capture Successful", {
         "email": email,
         "site_location": "footer"
-      })
+      });
+
+      window.analytics.track("Signed Up", {
+        "email": email
+      });
       dispatch(requestSignupEmail(email));
       setConfirmationVisibility(!confirmationVisibility);
     },
