@@ -231,6 +231,7 @@ const Checkout = ({
           brand: cart.storeCode
         });
       });
+      window.analytics.page('Checkout');
       window.analytics.track('Checkout Started', {
         cart_id: cart._id,
         currency: 'USD',
@@ -303,7 +304,6 @@ const Checkout = ({
 
   return (
     <ScrollToTop>
-      {window.analytics.page('Checkout') && null}
       {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
