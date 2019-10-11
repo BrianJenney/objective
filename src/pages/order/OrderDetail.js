@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-
+// import { Link } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +14,7 @@ import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 import { Address, Button as CommonButton } from '../../components/common';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
-import { formatDateTime } from '../../utils/misc';
+import { formatDateTime, getShippingAndTracking } from '../../utils/misc';
 
 import StatusStepper from './StatusStepper';
 
@@ -84,11 +84,11 @@ const getStatusStepperDate = order => {
   };
 };
 
-const TrackingInfo = ({ trackingId }) => {
+const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.text} pt={2}>
-      Tracking #: <Link to={`${trackingId}`}>{trackingId}</Link>
+      Tracking #: <Link href={tracking.url} color="inherited" target="_blank" rel="noreferrer">{tracking.number}</Link>
     </Typography>
   );
 };
@@ -127,6 +127,7 @@ const OrderSummary = ({
   addressesWidth,
   xs,
   statusStepperDate,
+  tracking,
   orderStatus
 }) => {
   console.log('==ORDER STATUS==', orderStatus);
@@ -167,7 +168,7 @@ const OrderSummary = ({
         </Typography>
       )}
       <br />
-      <StatusStepper statusStepperDate={statusStepperDate} />
+      <StatusStepper statusStepperDate={statusStepperDate} status={orderStatus}/>
 
       {orderStatus !== 'shipped' && !orderRefunded ? (
         <CommonButton
@@ -224,7 +225,7 @@ const OrderSummary = ({
             <Address address={shippingAddress} />
             <TrackingInfo
               className={classes.text}
-              trackingId="123456789012345"
+              tracking={tracking}
             />
           </Box>
         </Grid>
@@ -252,7 +253,8 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
-  const statusStepperDate = getStatusStepperDate(order);
+  const { tracking, statusStepperDate } = getShippingAndTracking(order);
+  // const statusStepperDate = getStatusStepperDate(order);
   const orderId =
     order.orderId.substring(0, 3) +
     '-' +
@@ -284,6 +286,7 @@ const OrderDetail = () => {
                 classes={classes}
                 addressesWidth={addressesWidth}
                 xs={xs}
+                tracking={tracking}
                 statusStepperDate={statusStepperDate}
               />
             </Grid>
