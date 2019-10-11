@@ -76,14 +76,7 @@
               analytics._loadOptions = e;
             };
             analytics.SNIPPET_VERSION = '4.1.0';
-            let node_env = "%NODE_ENV%";
-            
-            if(node_env==="production"){
-            var segment_write_key = "zMiLWa7ZlGJmdtzDHckdOLzlCmRXEIB0";
-            }else{
-             var segment_write_key = "Fl1QTP8nOmlIdGpAsZi5qP1ZccOcN5Jz";
-            }
-            analytics.load(segment_write_key);
+            analytics.load("%REACT_APP_SEGMENT_KEY%");
 
             //analytics.page();
           }
