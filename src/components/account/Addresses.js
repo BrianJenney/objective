@@ -25,7 +25,9 @@ const AccountAddresses = ({
   allowFlyMode,
   ...rest
 }) => {
-  const [formModeEnabled, setFormModeEnabled] = useState(false);
+  const [formModeEnabled, setFormModeEnabled] = useState(
+    !currentUser.data.addressBook || currentUser.data.addressBook.length === 0
+  );
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [editedIndex, setEditedIndex] = useState(-1);
   const theme = useTheme();
@@ -119,8 +121,9 @@ const AccountAddresses = ({
   };
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      
-      {window.location.pathname.indexOf("/account/addresses")!==-1 ? (window.analytics.page("Account Addresses") && (null)) : null}
+      {window.location.pathname.indexOf('/account/addresses') !== -1
+        ? window.analytics.page('Account Addresses') && null
+        : null}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}

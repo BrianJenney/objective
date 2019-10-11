@@ -36,7 +36,10 @@ const AccountPaymentDetails = ({
   submitLabel,
   ...rest
 }) => {
-  const [formModeEnabled, setFormModeEnabled] = useState(false);
+  const [formModeEnabled, setFormModeEnabled] = useState(
+    !currentUser.data.paymentMethods ||
+      currentUser.data.paymentMethods.length === 0
+  );
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
@@ -132,7 +135,9 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
-      {window.location.pathname.indexOf("/account/payment-details")!==-1 ? (window.analytics.page("Account Payment Details") && (null)) : null}
+      {window.location.pathname.indexOf('/account/payment-details') !== -1
+        ? window.analytics.page('Account Payment Details') && null
+        : null}
       {formModeEnabled ? (
         <PaymentForm
           currentUser={currentUser}
