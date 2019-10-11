@@ -352,10 +352,8 @@ const Footer = ({ location, currentUser }) => {
                           initialValues={{ email: '' }}
                           onSubmit={handleSubmit}
                           validationSchema={schema}
-                          render={({errors}) => (
-                            
+                          render={({ errors }) => (
                             <Form>
-                              
                               <Field
                                 name="email"
                                 label=""
@@ -369,7 +367,6 @@ const Footer = ({ location, currentUser }) => {
                                   alt="arrow"
                                 />
                               </Button>
-                              
                             </Form>
                           )}
                         />
@@ -387,7 +384,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
                     <Link
-                      href="https://www.facebook.com/Objective_Wellness"
+                      href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
                       target="_blank"
                       rel="noopener"
                     >
@@ -609,7 +606,7 @@ const Footer = ({ location, currentUser }) => {
                         className="border-left icon border-right"
                       >
                         <Link
-                          href="https://www.facebook.com/Objective_Wellness"
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
                           target="_blank"
                           rel="noopener"
                         >

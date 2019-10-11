@@ -1,22 +1,15 @@
 import store from '../../store';
 import { receivedCreateCart, receivedFetchCart, receivedPatchCart, receivedUpdateCart, setCartDrawerOpened } from './actions';
+import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleCartResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'cart.request.create':
-      console.log('****************** Cart Create Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Create Response', status, data, fields, properties);
       store.dispatch(receivedCreateCart(data));
       break;
     case 'cart.request.find':
-      console.log('****************** Cart Fetch Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Fetch Response', status, data, fields, properties);
       store.dispatch(receivedFetchCart(data.data[0]));
       break;
     case 'cart.request.addtocart':
@@ -27,41 +20,22 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.removecoupon':
     case 'cart.request.setshippingaddress':
     case 'cart.request.patch':
-      console.log('****************** Cart Patch Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
-      
+      debugRabbitResponse('Cart Patch Response (' + fields.routingKey + ')', status, data, fields, properties);
+      let oldCart = store.getState().cart;
+      let openCartDrawer = true;
 
-      store.dispatch(receivedPatchCart(data));
-      const cartDrawerOpened = store.getState().cart.cartDrawerOpened;
-      if (fields.routingKey !== 'cart.request.patch') {
-        store.dispatch(setCartDrawerOpened(true));
-        if(!cartDrawerOpened){
-        window.analytics.track("Cart Viewed", {
-          "cart_id": data._id,
-          "num_products": data.items.reduce((acc, item) => acc + item.quantity, 0),
-          "products": data.items
-        });
+      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
+        openCartDrawer = false;
       }
 
-        if(fields.routingKey==="cart.request.addtocart"){
-          window.analytics.track("Product Added", {
-            "cart_id": data._id,
-            ...data.items[data.items.length - 1]
+      store.dispatch(receivedPatchCart(data));
 
-          });
-        }
-
+      if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress' && openCartDrawer) {
+        store.dispatch(setCartDrawerOpened(true));
       }
       break;
     case 'cart.request.update':
-      console.log('****************** Cart Update Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Update Response', status, data, fields, properties);
       store.dispatch(receivedUpdateCart(data));
       break;
     default:

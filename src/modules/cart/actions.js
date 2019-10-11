@@ -21,6 +21,7 @@ import {
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+const localStorageClient = require('store');
 
 export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
@@ -28,7 +29,8 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
   const params = {
     cart,
     product,
-    quantity
+    quantity,
+    segmentAnonymousId: localStorageClient.get('ajs_anonymous_id')
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -43,6 +45,22 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     type: REQUEST_ADD_TO_CART,
     payload: {}
   });
+  // @segment Product Added
+  
+  let item = product;
+    let productTransformed = {
+      image_url: item.assets.imgs,
+      quantity: 1,
+      sku: item.sku,
+      price: Number.parseFloat(item.effectivePrice),
+      product_id: item.id,
+      variant: item.id,
+      name: item.name,
+      brand: cart.storeCode,
+      cart_id : cart._id
+    };
+
+  window.analytics.track('Product Added', productTransformed);
 };
 
 export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
@@ -221,11 +239,46 @@ export const receivedPatchCart = cart => {
   };
 };
 
-export const setCartDrawerOpened = open => {
-  return {
+export const setCartDrawerOpened = open => (dispatch, getState) => {
+  let cart = getState().cart;
+
+  if (cart.setCartDrawerOpened != open) {
+    let orderItemsTransformed = [];
+
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: item.variant_img,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      });
+    });
+  
+    if (open) {
+      // @segment Cart Viewed
+      window.analytics.track('Cart Viewed', {
+        'cart_id': cart._id,
+        'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        'products': orderItemsTransformed
+      });
+    } else {
+      // @segment Cart Dismissed
+      window.analytics.track('Cart Dismissed', {
+        'cart_id': cart._id,
+        'num_products': cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        'products': orderItemsTransformed
+      });
+    }  
+  }
+
+  dispatch({
     type: SET_CART_DRAWER_OPENED,
     payload: open
-  };
+  });
 };
 
 export const requestRemoveCartById = id => async (dispatch, getState) => {

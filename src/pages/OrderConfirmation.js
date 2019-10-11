@@ -92,54 +92,64 @@ const OrderConfirmation = ({ history }) => {
   const addressesWidth = xs ? 12 : 6;
   console.log('OrderConfirmation', { order, account });
 
-
   if (!order) {
     return null;
   }
 
   let orderItemsTransformed = [];
+  let orderItemsTransformedGA = [];
+
   order.items.map(item => {
    orderItemsTransformed.push({
-    image_url: item.variant_img,
-    quantity: item.quantity,
-    sku: item.sku,
-    price: Number.parseFloat(item.unit_price).toFixed(2),
-    product_id: item.variant_id,
-    name: item.variant_name,
-
+     "brand": order.storeCode,
+     "image_url": item.variant_img,
+     "name": item.variant_name,
+     "price": Number.parseFloat(item.unit_price).toFixed(2),
+     "product_id": item.variant_id,
+     "quantity": item.quantity,
+    "sku": item.sku,
+    "variant": item.variant_name
+   });
+   orderItemsTransformedGA.push({
+      id: item.variant_id,
+      name: item.variant_name,
+      brand: order.storeCode,
+      variant: item.sku,
+      quantity: item.quantity,
+      price: item.unit_price
    });
   });
   
   window.analytics.page("Order Confirmation");
-  window.analytics.track("Order Completed", {
-    "coupon": order.promo ? order.promo : "",
-    "currency": "USD",
+  window.analytics.track('Order Completed', {
+    "affiliation": order.storeCode,
+    "coupon": order.promo ? order.promo : '',
+    "currency": 'USD',
     "discount": Number.parseFloat(order.discount).toFixed(2),
+    "email": account.data.email,
     "est_ship_date": order.shippingMethod.deliveryEstimate,
-    "shipping": Number.parseFloat(order.shippingMethod.price).toFixed(2),
     "item_count": order.items.length,
+    "order_date": order.transactions.transactionDate,
     "order_id": order.orderId,
-    "order_link": "",
+    "order_link": order.orderId,
+    "payment_method": order.paymentData.cardType,
+    "payment_method_detail": order.paymentData.cardType,
     "products": orderItemsTransformed,
+    "revenue": order.subtotal,
+    "shipping": order.shippingMethod.price,
     "subtotal": order.subtotal,
-    "tax": order.tax ? Number.parseFloat(order.tax).toFixed(2) : 0,
-    "total": Number.parseFloat(order.total).toFixed(2)
-    });
-
-    window.analytics.track("Listrak Order Completed", {
-      "coupon": order.promo ? order.promo : "",
-      "currency": "USD",
-      "discount": Number.parseFloat(order.discount).toFixed(2),
-      "est_ship_date": order.shippingMethod.deliveryEstimate,
-      "shipping": Number.parseFloat(order.shippingMethod.price).toFixed(2),
-      "item_count": order.items.length,
-      "order_id": order.orderId,
-      "order_link": "",
-      "products": orderItemsTransformed,
-      "subtotal": order.subtotal,
-      "tax": order.tax ? Number.parseFloat(order.tax).toFixed(2) : 0,
-      "total": Number.parseFloat(order.total).toFixed(2)
-      });
+    "tax": order.tax,
+    "total": order.total
+  });
+  window.gtag('event', 'purchase', {
+    transaction_id: order.orderId,
+    affiliation: order.storeCode,
+    value: order.total,
+    currency: 'USD',
+    tax: order.tax,
+    shipping: order.shippingMethod.price,
+    items: orderItemsTransformedGA
+  });
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;

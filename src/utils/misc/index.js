@@ -62,3 +62,14 @@ const convertFormattedDateTime = (parseDate, isTimeFormatIncluded = false) => (
 
 export const formatDateTime = (date, isTimeFormatIncluded) =>
   convertFormattedDateTime(date, isTimeFormatIncluded);
+
+export const debugRabbitResponse = (name, status, data, fields, properties) => {
+  if (process.env.REACT_APP_ENVIRONMENT === 'development') {
+    console.log('****************** START ' + name + ' ******************');
+    console.log(status);
+    console.log(data);
+    console.log(fields);
+    console.log(properties);
+    console.log('****************** END ' + name + ' ******************');
+  }
+};

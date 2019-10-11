@@ -94,6 +94,10 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     },
     payload
   );
+  // @segment - Order Submitted Event
+  window.analytics.track('Order Submitted', {
+    'cart_id': cart._id
+  });
 };
 
 export const receivedCreateOrderSuccess = order => async (dispatch, getState) => {
@@ -107,6 +111,11 @@ export const receivedCreateOrderFailure = order => async (dispatch, getState) =>
   dispatch({
     type: RECEIVED_CREATE_ORDER_FAILURE,
     payload: order
+  });
+  // @segment - Order Failed Event
+  window.analytics.track('Order Failed', {
+    'cart_id': localStorage.cartId,
+    'error_message': order
   });
 };
 

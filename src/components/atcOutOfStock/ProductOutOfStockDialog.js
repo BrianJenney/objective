@@ -85,7 +85,7 @@ const ProductOutOfStockForm = ({
   const classes = useStyles();
   const initialValues = {
     email: '',
-    subscribed: false
+    subscribed: true
   };
 
   const handleEmailNotification = values => {
@@ -106,6 +106,8 @@ const ProductOutOfStockForm = ({
       "url": product_url,
       "variant": product_variant
     });
+    // Listrak event
+    window._ltk.Alerts.AddAlert(email, product_sku, 'BIS'); window._ltk.Alerts.Submit();
     handleOpenEmailConfirmation();
     closeDialog();
   };

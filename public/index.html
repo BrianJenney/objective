@@ -76,10 +76,19 @@
               analytics._loadOptions = e;
             };
             analytics.SNIPPET_VERSION = '4.1.0';
-            analytics.load('Fl1QTP8nOmlIdGpAsZi5qP1ZccOcN5Jz');
+            analytics.load("%REACT_APP_SEGMENT_KEY%");
+
             //analytics.page();
           }
       })();
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148808963-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-148808963-1');
     </script>
   </head>
 

@@ -7,12 +7,15 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { GalleryStore } from '../contexts/GalleryContext';
 import Products from './gallery/Products';
-
+let galleryPageTracked = false;
 const Gallery = () => {
   const catalog = useSelector(state => state.catalog);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+  if(!galleryPageTracked){
   window.analytics.page("Gallery");
+  galleryPageTracked = true;
+  }
   return (
     <Box className="gallery-page">
       <Box className="hero-holder">

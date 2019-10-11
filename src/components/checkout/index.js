@@ -217,20 +217,35 @@ const Checkout = ({
   };
 
   const trackCheckoutStarted = () => {
+    
     if (!checkoutStartedTracked) {
+      let orderItemsTransformed = [];
+      cart.items.forEach(item => {
+        orderItemsTransformed.push({
+          image_url: item.variant_img,
+          quantity: item.quantity,
+          sku: item.sku,
+          price: Number.parseFloat(item.unit_price),
+          product_id: item.variant_id,
+          variant: item.variant_id,
+          name: item.variant_name,
+          brand: cart.storeCode
+        });
+      });
+      window.analytics.page('Checkout');
       window.analytics.track('Checkout Started', {
         cart_id: cart._id,
         currency: 'USD',
         discount: cart.discount
-          ? Number.parseFloat(cart.discount).toFixed(2)
+          ? Number.parseFloat(cart.discount)
           : 0,
-        products: cart.items,
-        revenue: cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0,
+        products: orderItemsTransformed,
+        revenue: cart.total ? Number.parseFloat(cart.total) : 0,
         subtotal: cart.subtotal
-          ? Number.parseFloat(cart.subtotal).toFixed(2)
+          ? Number.parseFloat(cart.subtotal)
           : 0,
-        tax: cart.tax ? Number.parseFloat(cart.tax).toFixed(2) : 0,
-        total: cart.total ? Number.parseFloat(cart.total).toFixed(2) : 0
+        tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
+        total: cart.total ? Number.parseFloat(cart.total) : 0
       });
       checkoutStartedTracked = true;
     }
@@ -290,7 +305,6 @@ const Checkout = ({
 
   return (
     <ScrollToTop>
-      {window.analytics.page('Checkout') && null}
       {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
