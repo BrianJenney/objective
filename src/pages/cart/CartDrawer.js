@@ -141,7 +141,7 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const mobileDrawerPadding = xsBreakpoint ? '0px' : '24px 20px';
+  const mobileDrawerPadding = window.screen.width < 768 ? '24px 20px' : '0';
   return (
     <Grid
       container

@@ -155,7 +155,15 @@
       position: absolute;
       width: 60%;
     }
-    @-moz-document url-prefix() {
+    @supports (-ms-ime-align:auto) {
+      .signup-arrow {
+        margin-top: 18px;
+        margin-left: -125px;
+        position: absolute;
+        width: 60%;
+      }
+    }
+      @-moz-document url-prefix() {
       .signup-arrow {
         margin-top: 25px;
         margin-left: -130px;

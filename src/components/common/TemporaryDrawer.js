@@ -27,7 +27,7 @@ const StyledFab = withStyles(theme => ({
 
 const StyledDrawerWrapper = withStyles(theme => ({
   root: {
-    padding: '36px 34px'
+    padding: '0'
   }
 }))(Box);
 
