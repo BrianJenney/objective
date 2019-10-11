@@ -12,8 +12,7 @@ const AccountSummary = ({
   withLabels,
   values,
   children,
-  msg,
-  signupSubmit
+  signupConfirmation
 }) => {
   const neededValues = pick(values, ACCOUNT_FIELDS);
   let pairs = null;
@@ -29,7 +28,7 @@ const AccountSummary = ({
 
   return (
     <>
-      {!msg && signupSubmit !== null && (
+      {signupConfirmation && (
         <Typography style={{ fontSize: '20px', marginBottom: '10px' }}>
           Your account was successfully created!
         </Typography>
