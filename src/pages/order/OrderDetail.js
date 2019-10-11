@@ -90,7 +90,7 @@ const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.text} pt={2}>
-      Tracking #: {tracking && <Link href={tracking.url} style={{color: 'black'}} target="_blank" rel="noreferrer">{tracking.number}</Link>}
+      Tracking #: {tracking && <Link href={tracking.url} style={{color: 'black'}} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
     </Typography>
   );
 };
@@ -261,6 +261,7 @@ const OrderDetail = () => {
   if (!order) return null;
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
+
   const orderId =
     order.orderId.substring(0, 3) +
     '-' +
