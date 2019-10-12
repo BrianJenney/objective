@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
+import Link from '@material-ui/core/Link';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +15,7 @@ import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 import { Address, Button as CommonButton } from '../../components/common';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
-import { formatDateTime } from '../../utils/misc';
+import { formatDateTime, getShippingAndTracking } from '../../utils/misc';
 
 import StatusStepper from './StatusStepper';
 
@@ -73,22 +74,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getStatusStepperDate = order => {
-  const processedDate = formatDateTime(order.createdAt, false);
-  const shippedDate = '';
-  const deliveredDate = '';
+const getStatusStepper = statusStepper => {
+  const processedDate = formatDateTime(statusStepper.processedDate, false);
+  const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
+  const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
+  const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
   return {
     Processed: processedDate,
     Shipped: shippedDate,
-    Delivered: deliveredDate
+    Delivered: deliveredDate,
+    Cancelled: cancelledDate,
   };
 };
 
-const TrackingInfo = ({ trackingId }) => {
+const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.text} pt={2}>
-      Tracking #: <Link to={`${trackingId}`}>{trackingId}</Link>
+      Tracking #: {tracking && <Link href={tracking.url} style={{color: 'black'}} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
     </Typography>
   );
 };
@@ -126,7 +129,8 @@ const OrderSummary = ({
   createdAt,
   addressesWidth,
   xs,
-  statusStepperDate,
+  statusStepper,
+  tracking,
   orderStatus
 }) => {
   console.log('==ORDER STATUS==', orderStatus);
@@ -146,12 +150,12 @@ const OrderSummary = ({
   return (
     <Box className={classes.paper}>
       <Box>
-        <Link to="/account/orders" className="account-history-return">
+        <RouterLink to="/account/orders" className="account-history-return">
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
           <span>{'Return to order history'}</span>
-        </Link>
+        </RouterLink>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
       {orderRefunded ? (
@@ -167,7 +171,9 @@ const OrderSummary = ({
         </Typography>
       )}
       <br />
-      <StatusStepper statusStepperDate={statusStepperDate} />
+      { orderStatus !== "declined" &&
+        <StatusStepper statusStepper={statusStepper} status={orderStatus}/>
+      }
 
       {orderStatus !== 'shipped' && !orderRefunded ? (
         <CommonButton
@@ -222,10 +228,12 @@ const OrderSummary = ({
               Shipping Information
             </StyledSmallCaps>
             <Address address={shippingAddress} />
-            <TrackingInfo
-              className={classes.text}
-              trackingId="123456789012345"
-            />
+            { tracking &&
+              <TrackingInfo
+                className={classes.text}
+                tracking={tracking}
+              />
+            }
           </Box>
         </Grid>
       </Box>
@@ -252,7 +260,9 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
-  const statusStepperDate = getStatusStepperDate(order);
+  const { tracking, statusStepper } = getShippingAndTracking(order);
+  const status = getStatusStepper(statusStepper);
+
   const orderId =
     order.orderId.substring(0, 3) +
     '-' +
@@ -284,7 +294,8 @@ const OrderDetail = () => {
                 classes={classes}
                 addressesWidth={addressesWidth}
                 xs={xs}
-                statusStepperDate={statusStepperDate}
+                tracking={tracking}
+                statusStepper={status}
               />
             </Grid>
             <Grid item xs={cartWidth}>
