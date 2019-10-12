@@ -14,26 +14,6 @@ import {
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestCancelOrder = orderId => async (dispatch, getState) => {
-  dispatch({
-    type: REQUEST_CANCEL_ORDER,
-    payload: { isLoading: true }
-  });
-
-  const { client, replyTo } = getState().stomp;
-  const account_jwt = getState().account.data.account_jwt;
-  const params = {
-    data: { orderId },
-    params: { account_jwt }
-  };
-  const payload = JSON.stringify(msgpack.encode(params));
-  client.send('/exchange/order/order.request.cancelorder', {
-    'reply-to': replyTo,
-    'correlation-id': ObjectId(),
-    jwt: account_jwt
-  }, payload);
-};
-
 export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
@@ -46,6 +26,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
+  const { merchantAccountId } = getState().store;
 
   /**
    * Total hack here, but if you refresh the page, you don't get a these fields
@@ -60,7 +41,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 
   const params = {
     data: { cart },
-    params: { account_jwt, nonceOrToken }
+    params: { account_jwt, nonceOrToken, merchantAccountId }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
@@ -96,6 +77,26 @@ export const receivedCreateOrderFailure = order => async (dispatch, getState) =>
     'cart_id': localStorage.cartId,
     'error_message': order
   });
+};
+
+export const requestCancelOrder = orderId => async (dispatch, getState) => {
+  dispatch({
+    type: REQUEST_CANCEL_ORDER,
+    payload: { isLoading: true }
+  });
+
+  const { client, replyTo } = getState().stomp;
+  const account_jwt = getState().account.data.account_jwt;
+  const params = {
+    data: { orderId },
+    params: { account_jwt }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+  client.send('/exchange/order/order.request.cancelorder', {
+    'reply-to': replyTo,
+    'correlation-id': ObjectId(),
+    jwt: account_jwt
+  }, payload);
 };
 
 export const requestFindOrdersByAccount = accountJwt => (
