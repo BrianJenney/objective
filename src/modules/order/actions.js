@@ -26,7 +26,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
-  const { merchantAccountId } = getState().store;
+  const { merchantAccountId } = getState().storefront;
 
   /**
    * Total hack here, but if you refresh the page, you don't get a these fields
