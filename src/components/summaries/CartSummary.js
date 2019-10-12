@@ -70,7 +70,7 @@ const CartSummary = ({ order }) => {
   } else {
     shippingMethod = order.shipping.options[order.shipping.code];
   }
-
+  const promoCode = order.promo ?  ` (${order.promo.code})` : '';
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -160,7 +160,7 @@ const CartSummary = ({ order }) => {
           <Grid container xs={12}>
             <Grid item xs>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Savings
+                Savings{promoCode}
               </StyledSmallCaps>
             </Grid>
             <Grid item>
