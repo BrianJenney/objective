@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
+import Link from '@material-ui/core/Link';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
@@ -149,12 +150,12 @@ const OrderSummary = ({
   return (
     <Box className={classes.paper}>
       <Box>
-        <Link to="/account/orders" className="account-history-return">
+        <RouterLink to="/account/orders" className="account-history-return">
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
           <span>{'Return to order history'}</span>
-        </Link>
+        </RouterLink>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
       {orderRefunded ? (
