@@ -49,7 +49,7 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
   
   let item = product;
     let productTransformed = {
-      image_url: item.assets.imgs,
+      image_url: "https:"+item.assets.imgs,
       quantity: 1,
       sku: item.sku,
       price: Number.parseFloat(item.effectivePrice),
@@ -247,7 +247,7 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
 
     cart.items.forEach(item => {
       orderItemsTransformed.push({
-        image_url: item.variant_img,
+        image_url: "https:"+item.variant_img,
         quantity: item.quantity,
         sku: item.sku,
         price: Number.parseFloat(item.unit_price),

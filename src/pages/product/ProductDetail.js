@@ -61,7 +61,7 @@ const ProductVariant = ({ productVariant }) => {
   if (!analyticsTracked) {
     window.analytics.track("Product Viewed", {
       "cart_id": localStorage.cartId,
-      "image_url": productVariant.assets.imgs,
+      "image_url": "https:"+productVariant.assets.imgs,
       "name": productVariant.name,
       "price": Number.parseFloat(productVariant.effectivePrice),
       "product_id": productVariant.product_id,
