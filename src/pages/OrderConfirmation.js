@@ -103,7 +103,7 @@ const OrderConfirmation = ({ history }) => {
   order.items.map(item => {
    orderItemsTransformed.push({
      "brand": order.storeCode,
-     "image_url": item.variant_img,
+     "image_url": "https:"+item.variant_img,
      "name": item.variant_name,
      "price": Number.parseFloat(item.unit_price).toFixed(2),
      "product_id": item.variant_id,

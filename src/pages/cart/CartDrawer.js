@@ -67,7 +67,7 @@ const Cart = ({
   let orderItemsTransformed = [];
   cart.items.forEach(item => {
     orderItemsTransformed.push({
-      image_url: item.variant_img,
+      image_url: "https:"+item.variant_img,
       quantity: item.quantity,
       sku: item.sku,
       price: Number.parseFloat(item.unit_price),
@@ -113,7 +113,7 @@ const Cart = ({
 
   const trackProductRemoveEvent = (cartId,item) => {    
       let productTransformed = {
-        image_url: item.variant_img,
+        image_url: "https:"+item.variant_img,
         quantity: item.quantity,
         sku: item.sku,
         price: Number.parseFloat(item.unit_price),
