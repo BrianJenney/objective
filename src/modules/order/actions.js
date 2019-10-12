@@ -2,57 +2,36 @@ import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
+  REQUEST_CANCEL_ORDER,
+  RECEIVED_CANCEL_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
   RECEIVED_GET_ORDER,
-  REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND,
   RESET_ORDER_STATE
 } from './types';
-import EventEmitter from '../../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestRefundTransaction = (authToken, transaction) => (
-  dispatch,
-  getState
-) => {
-  console.log(transaction);
-  const { client, replyTo } = getState().stomp;
-  const params = {
-    id: transaction.orderId,
-    data: {
-      amount: transaction.amount,
-      braintreeId: transaction.braintreeId,
-      orderId: transaction.orderId,
-      orderReference: transaction.orderReference
-    },
-    params: {
-      account_jwt: authToken,
-      jwt: authToken,
-      originalRequest: 'transaction.request.void'
-    }
-  };
-  console.log(params);
-  const payload = JSON.stringify(msgpack.encode(params));
-  console.log('SENDING PAYLOAD', payload);
-  client.send(
-    '/exchange/transaction/transaction.request.refund',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      jwt: authToken,
-      originalRequest: 'transaction.request.refund'
-    },
-    payload
-  );
-
+export const requestCancelOrder = orderId => async (dispatch, getState) => {
   dispatch({
-    type: REQUEST_REFUND_TRANSACTION,
-    payload: {}
+    type: REQUEST_CANCEL_ORDER,
+    payload: { isLoading: true }
   });
+
+  const { client, replyTo } = getState().stomp;
+  const account_jwt = getState().account.data.account_jwt;
+  const params = {
+    data: { orderId },
+    params: { account_jwt }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+  client.send('/exchange/order/order.request.cancelorder', {
+    'reply-to': replyTo,
+    'correlation-id': ObjectId(),
+    jwt: account_jwt
+  }, payload);
 };
 
 export const requestCreateOrder = (cart, nonceOrToken) => async (
@@ -177,22 +156,6 @@ export const requestGetOrder = (accountJwt, orderId) => (
 export const receivedGetOrder = order => (dispatch, getState) => {
   dispatch({
     type: RECEIVED_GET_ORDER,
-    payload: order
-  });
-};
-
-export const receivedTransactionRequestRefund = order => (
-  dispatch,
-  getState
-) => {
-  dispatch(
-    requestFindOrdersByAccount(
-      getState().account.data.account_jwt,
-      order.accountId
-    )
-  );
-  dispatch({
-    type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order
   });
 };

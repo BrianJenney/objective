@@ -18,7 +18,7 @@ import { formatDateTime } from '../../utils/misc';
 
 import StatusStepper from './StatusStepper';
 
-import { requestRefundTransaction } from '../../modules/order/actions';
+import { requestCancelOrder } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -97,21 +97,8 @@ const OrderCartSummary = ({ order }) => {
   return order ? <CartSummary order={order} /> : null;
 };
 
-const refundTransaction = (
-  accountJwt,
-  orderId,
-  transaction,
-  dispatch,
-  orderRef
-) => {
-  const refundedTransaction = {
-    braintreeId: transaction.braintreeId,
-    amount: transaction.amount,
-    orderId: orderId,
-    orderReference: orderRef
-  };
-
-  dispatch(requestRefundTransaction(accountJwt, refundedTransaction));
+const cancelOrder = (orderRef, dispatch) => {
+  dispatch(requestCancelOrder(orderRef));
 };
 
 const OrderSummary = ({
@@ -119,7 +106,6 @@ const OrderSummary = ({
   billingAddress,
   shippingAddress,
   paymentData,
-  transactions,
   classes,
   orderId,
   orderRef,
@@ -131,17 +117,8 @@ const OrderSummary = ({
 }) => {
   console.log('==ORDER STATUS==', orderStatus);
   const { cardType, last4 } = paymentData;
-  const { email, phoneBook, account_jwt } = account.data;
+  const { email, phoneBook } = account.data;
   const dispatch = useDispatch();
-
-  let orderRefunded = false;
-
-  transactions.map(transaction => {
-    console.log(transaction.status);
-    if (transaction.transactionStatus === 'voided') {
-      orderRefunded = true;
-    }
-  });
 
   return (
     <Box className={classes.paper}>
@@ -154,7 +131,7 @@ const OrderSummary = ({
         </Link>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
-      {orderRefunded ? (
+      {orderStatus === 'canceled' ? (
         <Typography className={classes.textFreight}>
           Your order number: <strong>{orderId}</strong>, placed on{' '}
           <strong>{createdAt}</strong> was cancelled and did not ship. A refund
@@ -169,7 +146,7 @@ const OrderSummary = ({
       <br />
       <StatusStepper statusStepperDate={statusStepperDate} />
 
-      {orderStatus !== 'shipped' && !orderRefunded ? (
+      {orderStatus !== 'shipped' && orderStatus !== 'canceled' ? (
         <CommonButton
           style={{
             padding: '23px 23px',
@@ -177,14 +154,8 @@ const OrderSummary = ({
             minWidth: '210px'
           }}
           onClick={() => {
-            if (!orderRefunded) {
-              refundTransaction(
-                account_jwt,
-                orderId,
-                transactions[0],
-                dispatch,
-                orderRef
-              );
+            if (orderStatus !== 'shipped' && orderStatus !== 'canceled') {
+              cancelOrder(orderRef, dispatch);
             }
           }}
         >
@@ -193,7 +164,6 @@ const OrderSummary = ({
       ) : (
         ''
       )}
-
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
@@ -279,7 +249,6 @@ const OrderDetail = () => {
                 shippingAddress={order.shippingAddress}
                 billingAddress={order.billingAddress}
                 paymentData={order.paymentData}
-                transactions={order.transactions}
                 orderStatus={order.status}
                 classes={classes}
                 addressesWidth={addressesWidth}
