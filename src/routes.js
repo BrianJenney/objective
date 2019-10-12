@@ -19,7 +19,8 @@ import {
   ResetSuccess,
   OrderConfirmationPage,
   ContactUsPage,
-  FAQPage
+  FAQPage,
+  Journal
 } from './pages';
 
 import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pages/Login';
@@ -27,13 +28,29 @@ import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pag
 export default [
   { path: '/', exact: true, component: HomePage },
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
-  { path: '/login/account', exact: true, nonAuth: true, component: LoginToAccountPage },
-  { path: '/login/order', exact: true, nonAuth: true, component: LoginToOrderPage },
-  { path: '/login/shipping', exact: true, nonAuth: true, component: LoginToShippingPage },
+  {
+    path: '/login/account',
+    exact: true,
+    nonAuth: true,
+    component: LoginToAccountPage
+  },
+  {
+    path: '/login/order',
+    exact: true,
+    nonAuth: true,
+    component: LoginToOrderPage
+  },
+  {
+    path: '/login/shipping',
+    exact: true,
+    nonAuth: true,
+    component: LoginToShippingPage
+  },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
+  { path: '/journal', exact: true, component: Journal },
   {
     path: '/order',
     auth: true,
