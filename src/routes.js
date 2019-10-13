@@ -20,7 +20,7 @@ import {
   OrderConfirmationPage,
   ContactUsPage,
   FAQPage,
-  Journal,
+  Blog,
   BlogPost
 } from './pages';
 
@@ -120,7 +120,7 @@ export default [
   { path: '/password/confirm', exact: true, component: ConfirmPassword },
   { path: '/password/reset', exact: true, component: ResetPassword },
   { path: '/password/success', exact: true, component: ResetSuccess },
-  { path: '/journal', exact: true, component: Journal },
   { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
+  { path: '/journal', exact: true, component: Blog },
   { path: '/:page', exact: true, component: StaticPage }
 ];
