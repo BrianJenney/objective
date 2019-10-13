@@ -8,6 +8,8 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { Button } from '../components/common';
+import ScrollToTop from '../components/common/ScrollToTop';
+
 import './blog/blog-styles.scss';
 import { fetchBlogHome } from '../utils/blog';
 import PostItem from './blog/PostItem';
@@ -56,39 +58,41 @@ const Blog = () => {
   };
 
   return (
-    <div className="journal-gallery">
-      <Box className="header" py={8}>
-        <Container className="container">
-          <h1>The Journal</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            <br />
-            elit, sed do eiusmod tempor
-          </p>
-        </Container>
-      </Box>
-      <Box className="content" py={8}>
-        <Container>
-          <Divider />
-          <h1>Featured Posts</h1>
-          { renderFeaturedPosts(featuredPosts) }
-          { renderFeaturedMain(featuredMain) }
-          <Grid container spacing={4} className="calloutSmall">
+    <ScrollToTop>
+      <div className="journal-gallery">
+        <Box className="header" py={8}>
+          <Container className="container">
+            <h1>The Journal</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing
+              <br />
+              elit, sed do eiusmod tempor
+            </p>
+          </Container>
+        </Box>
+        <Box className="content" py={8}>
+          <Container>
+            <Divider />
+            <h1>Featured Posts</h1>
             { renderFeaturedPosts(featuredPosts) }
-          </Grid>
-          <Divider />
-          <h1>All Posts</h1>
-          <div className="list">
-            { renderPosts(posts) }
-            <div className="load">
-              <Button variant="contained" color="primary">
-                Load More
-              </Button>
+            { renderFeaturedMain(featuredMain) }
+            <Grid container spacing={4} className="calloutSmall">
+              { renderFeaturedPosts(featuredPosts) }
+            </Grid>
+            <Divider />
+            <h1>All Posts</h1>
+            <div className="list">
+              { renderPosts(posts) }
+              <div className="load">
+                <Button variant="contained" color="primary">
+                  Load More
+                </Button>
+              </div>
             </div>
-          </div>
-        </Container>
-      </Box>
-    </div>
+          </Container>
+        </Box>
+      </div>
+    </ScrollToTop>
   );
 };
 
