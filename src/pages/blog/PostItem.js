@@ -6,10 +6,16 @@ import Grid from '@material-ui/core/Grid';
 const PostItem = post => {
   let p = post.post;
 
+  let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
+
+  if (p.fields.featuredImage) {
+    imageUrl = `${p.fields.featuredImage.fields.file.url}?w=529&fm=jpg&q=90`;
+  }
+
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} md={5}>
-        <img src="http://cdn1.stopagingnow.com/objective/fakeimg.png" />
+        <img src={ imageUrl } />
       </Grid>
       <Grid item xs={12} md={5}>
         <div className="flex">
