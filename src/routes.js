@@ -20,10 +20,15 @@ import {
   OrderConfirmationPage,
   ContactUsPage,
   FAQPage,
-  Journal
+  Journal,
+  BlogPost
 } from './pages';
 
-import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pages/Login';
+import {
+  LoginToOrderPage,
+  LoginToShippingPage,
+  LoginToAccountPage
+} from './pages/Login';
 
 export default [
   { path: '/', exact: true, component: HomePage },
@@ -50,7 +55,6 @@ export default [
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
-  { path: '/journal', exact: true, component: Journal },
   {
     path: '/order',
     auth: true,
@@ -116,5 +120,7 @@ export default [
   { path: '/password/confirm', exact: true, component: ConfirmPassword },
   { path: '/password/reset', exact: true, component: ResetPassword },
   { path: '/password/success', exact: true, component: ResetSuccess },
+  { path: '/journal', exact: true, component: Journal },
+  { path: '/journal/posts', exact: true, component: BlogPost },
   { path: '/:page', exact: true, component: StaticPage }
 ];
