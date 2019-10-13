@@ -65,6 +65,43 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
   });
+
+  // @segment Order Completed Event
+  // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
+  let orderItemsTransformed = [];
+  order.items.map(item => {
+    orderItemsTransformed.push({
+      'brand': order.storeCode,
+      'image_url': 'https:' + item.variant_img,
+      'name': item.variant_name,
+      'price': Number.parseFloat(item.unit_price).toFixed(2),
+      'product_id': item.variant_id,
+      'quantity': item.quantity,
+      'sku': item.sku,
+      'variant': item.variant_name
+    });
+  });
+
+  window.analytics.track('Order Completed', {
+    'affiliation': order.storeCode,
+    'coupon': order.promo ? order.promo : '',
+    'currency': 'USD',
+    'discount': Number.parseFloat(order.discount).toFixed(2),
+    'email': order.email,
+    'est_ship_date': order.shippingMethod.deliveryEstimate,
+    'item_count': order.items.length,
+    'order_date': order.transactions.transactionDate,
+    'order_id': order.orderId,
+    'order_link': 'https://objectivewellness.com/orders/' + order._id,
+    'payment_method': 'Credit Card',
+    'payment_method_detail': order.paymentData.cardType,
+    'products': orderItemsTransformed,
+    'revenue': order.subtotal,
+    'shipping': order.shippingMethod.price,
+    'subtotal': order.subtotal,
+    'tax': order.tax,
+    'total': order.total
+  });
 };
 
 export const receivedCreateOrderFailure = order => async (dispatch, getState) => {
