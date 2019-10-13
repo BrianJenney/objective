@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Button } from '../components/common';
-import './journal/journal-styles.scss';
+import './blog/blog-styles.scss';
 
 const Journal = () => {
   const theme = useTheme();
@@ -192,9 +192,7 @@ const Journal = () => {
               </Grid>
             </Grid>
             <div className="load">
-              <Button
-                variant="contained"
-                color="primary">
+              <Button variant="contained" color="primary">
                 Load More
               </Button>
             </div>
