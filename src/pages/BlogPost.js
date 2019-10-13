@@ -8,10 +8,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { Button } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
 
 import './blog/blog-styles.scss';
@@ -21,7 +18,7 @@ import FeaturedItem from './blog/FeaturedItem';
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-        let params = '?w=555&fm=jpg&q=90';
+        let params = '?w=1002&fm=jpg&q=90';
 
         if (window.screen.width < 768) {
           params = '?w=450&fm=jpg&q=90';
@@ -39,8 +36,6 @@ const contentfulOptions = {
 
 const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
-  const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const [post, setPost] = useState({});
   useEffect(() => {
@@ -72,6 +67,14 @@ const BlogPost = ({ computedMatch }) => {
       imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`;
     }
 
+    let category = 'General';
+    let slug = null;
+
+    if (post.fields.categories && post.fields.categories.length > 0) {
+      category = post.fields.categories[0].fields.title;
+      slug = post.fields.categories[0].fields.slug;
+    }
+  
     return (
       <ScrollToTop>
         <div className="journal-gallery post">
@@ -79,7 +82,7 @@ const BlogPost = ({ computedMatch }) => {
             <Container>
               <Box className="center">
                 <div className="flex">
-                  <span className="categoryName">{ post.fields.categories[0].fields.title}</span>|
+                  <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>|
                   <span className="minRead">{ post.fields.minuteRead } Min Read</span>
                 </div>
                 <h1>{ post.fields.title }</h1>
@@ -109,15 +112,19 @@ const BlogPost = ({ computedMatch }) => {
               </Grid>
             </Container>
           </Box>
+          {post.fields.relatedPosts && post.fields.relatedPosts.length > 0
+          ?
           <Box className="content related" py={8}>
             <Container>
               <Divider />
               <h1>Related Posts</h1>
               <Grid container spacing={4} className="calloutSmall">
-                {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? renderRelatedPosts(post.fields.relatedPosts) : <></> }
+                {renderRelatedPosts(post.fields.relatedPosts)}
               </Grid>
             </Container>
           </Box>
+          :
+          <></>}
         </div>
       </ScrollToTop>
     );

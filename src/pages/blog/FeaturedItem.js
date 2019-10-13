@@ -24,7 +24,7 @@ const FeaturedItem = post => {
     <Grid item xs={12} md={4}>
       <img src={ imageUrl } alt={ p.fields.title } />
       <div className="flex">
-        <span className="categoryName">{ category }</span>&mdash;
+        <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>&mdash;
         <span className="minRead">{ p.fields.minuteRead } Min Read</span>
       </div>
       <h2>{ p.fields.title }</h2>

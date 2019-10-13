@@ -48,3 +48,57 @@ export const fetchPost = async slug => {
     return response.items[0];
   }
 }
+
+export const fetchPostsByCategory = async slug => {
+  let response = await contentfulClient.getEntries({
+    content_type: 'blogCategory',
+    'fields.slug': slug
+  });
+
+  if (response.total < 1) {
+    // @TODO need to throw a 404 here
+  }
+
+  let title = response.items[0].fields.title;
+
+  response = await contentfulClient.getEntries({
+    content_type: 'blogPost',
+    'fields.categories.sys.id': response.items[0].sys.id
+  });
+
+  if (response.total < 1) {
+    // @TODO Need to redirect to a 404 page
+  } else {
+    return {
+      title,
+      posts: response.items
+    }
+  }
+}
+
+export const fetchPostsByTag = async slug => {
+  let response = await contentfulClient.getEntries({
+    content_type: 'blogTag',
+    'fields.slug': slug
+  });
+
+  if (response.total < 1) {
+    // @TODO need to throw a 404 here
+  }
+
+  let tag = response.items[0].fields.tag;
+
+  response = await contentfulClient.getEntries({
+    content_type: 'blogPost',
+    'fields.tags.sys.id': response.items[0].sys.id
+  });
+
+  if (response.total < 1) {
+    // @TODO Need to redirect to a 404 page
+  } else {
+    return {
+      tag,
+      posts: response.items
+    }
+  }
+}
