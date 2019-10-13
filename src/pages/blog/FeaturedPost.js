@@ -4,14 +4,20 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 const FeaturedPost = post => {
-  if (!post.title) {
+  if (!post.fields || !post.fields.title) {
     return <></>;
+  }
+
+  let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
+
+  if (post.fields.featuredImage) {
+    imageUrl = `${post.fields.featuredImage.fields.file.url}?w=880&fm=jpg&q=90`;
   }
 
   return (
     <Grid container spacing={4} className="callout">
       <Grid item xs={12} md={8}>
-        <img src="http://cdn1.stopagingnow.com/objective/fakeimg.png" />
+        <img src={ imageUrl } alt={ post.fields.title } />
       </Grid>
       <Grid item xs={12} md={4}>
         <div className="flex">

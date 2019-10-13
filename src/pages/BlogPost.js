@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -7,13 +8,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-import { Link } from 'react-router-dom';
-
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import { Button } from '../components/common';
+
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
+import FeaturedItem from './blog/FeaturedItem';
 
 const contentfulOptions = {
   renderNode: {
@@ -36,7 +38,7 @@ const contentfulOptions = {
 
 const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
-
+  console.log(post_slug);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -47,12 +49,27 @@ const BlogPost = ({ computedMatch }) => {
       setPost(postData);
     }
     fetchData();
-  }, []);
+  }, [post_slug]);
+
+  const renderRelatedPosts = posts => {
+    if (posts.length > 0) {
+      return posts.map((item, key) => {
+        return <FeaturedItem post={item} key={ item.sys.id } />;
+      });
+    } else {
+      return <></>;
+    }
+  }
 
   const renderPost = post => {
-    console.log(post);
     if (!post.fields || !post.fields.title) {
       return <div>Loading...</div>;
+    }
+
+    let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
+
+    if (post.fields.featuredImage) {
+      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`;
     }
 
     return (
@@ -65,7 +82,7 @@ const BlogPost = ({ computedMatch }) => {
               <span className="minRead">{ post.fields.minuteRead } Min Read</span>
             </div>
             <h1>{ post.fields.title }</h1>
-            <img src={`${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`} />
+            <img src={ imageUrl } />
           </Box>
           <Grid container>
             <Grid item xs={12} md={3}>
@@ -96,57 +113,7 @@ const BlogPost = ({ computedMatch }) => {
           <Divider />
           <h1>Related Posts</h1>
           <Grid container spacing={4} className="calloutSmall">
-            <Grid item xs={12} md={4}>
-              <img src="http://cdn1.stopagingnow.com/objective/fakeimg.png" />
-              <div className="flex">
-                <span className="categoryName">Category</span>&mdash;
-                <span className="minRead">X Min Read</span>
-              </div>
-              <h2>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-                eiusmod
-              </h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor. Pro id veritus corpora interesset, ex cum quas
-                simul.
-              </p>
-              <Link to="/">Read More</Link>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <img src="http://cdn1.stopagingnow.com/objective/fakeimg.png" />
-              <div className="flex">
-                <span className="categoryName">Category</span>&mdash;
-                <span className="minRead">X Min Read</span>
-              </div>
-              <h2>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-                eiusmod
-              </h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor. Pro id veritus corpora interesset, ex cum quas
-                simul.
-              </p>
-              <Link to="/">Read More</Link>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <img src="http://cdn1.stopagingnow.com/objective/fakeimg.png" />
-              <div className="flex">
-                <span className="categoryName">Category</span>&mdash;
-                <span className="minRead">X Min Read</span>
-              </div>
-              <h2>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-                eiusmod
-              </h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor. Pro id veritus corpora interesset, ex cum quas
-                simul.
-              </p>
-              <Link to="/">Read More</Link>
-            </Grid>
+            {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? renderRelatedPosts(post.fields.relatedPosts) : <></> }
           </Grid>
         </Container>
       </Box>
