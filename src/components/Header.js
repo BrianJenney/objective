@@ -82,7 +82,7 @@ const Header = ({ currentUser, location }) => {
       };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', link: '/gallery', children: 'Shop' },
-    { key: 'second', to: '/', link: '/journal', children: 'Journal' },
+    { key: 'second', to: '/journal', link: '/journal', children: 'Journal' },
     accountMenuItemConf,
     { key: 'fourth', to: '/faq', link: '/faq', children: 'Help' }
   ];
