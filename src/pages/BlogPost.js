@@ -12,6 +12,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { Button } from '../components/common';
+import ScrollToTop from '../components/common/ScrollToTop';
 
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
@@ -38,7 +39,6 @@ const contentfulOptions = {
 
 const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
-  console.log(post_slug);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -73,51 +73,53 @@ const BlogPost = ({ computedMatch }) => {
     }
 
     return (
-      <div className="journal-gallery post">
-      <Box className="content" py={8}>
-        <Container>
-          <Box className="center">
-            <div className="flex">
-              <span className="categoryName">{ post.fields.categories[0].fields.title}</span>|
-              <span className="minRead">{ post.fields.minuteRead } Min Read</span>
-            </div>
-            <h1>{ post.fields.title }</h1>
-            <img src={ imageUrl } />
+      <ScrollToTop>
+        <div className="journal-gallery post">
+          <Box className="content" py={8}>
+            <Container>
+              <Box className="center">
+                <div className="flex">
+                  <span className="categoryName">{ post.fields.categories[0].fields.title}</span>|
+                  <span className="minRead">{ post.fields.minuteRead } Min Read</span>
+                </div>
+                <h1>{ post.fields.title }</h1>
+                <img src={ imageUrl } />
+              </Box>
+              <Grid container>
+                <Grid item xs={12} md={3}>
+                  hello
+                </Grid>
+                <Grid item xs={12} md={9}>
+                  {documentToReactComponents(
+                    post.fields.body,
+                    contentfulOptions
+                  )}
+                  {/* Quote Block
+                  <Divider className="gray" />
+                  <h2>
+                    And that’s a one-two punch
+                    <br />
+                    against aging that your skin will
+                    <br />
+                    love at any age.
+                  </h2>
+                  <Divider className="gray" />
+                  */}
+                </Grid>
+              </Grid>
+            </Container>
           </Box>
-          <Grid container>
-            <Grid item xs={12} md={3}>
-              hello
-            </Grid>
-            <Grid item xs={12} md={9}>
-              {documentToReactComponents(
-                post.fields.body,
-                contentfulOptions
-              )}
-              {/* Quote Block
-              <Divider className="gray" />
-              <h2>
-                And that’s a one-two punch
-                <br />
-                against aging that your skin will
-                <br />
-                love at any age.
-              </h2>
-              <Divider className="gray" />
-              */}
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-      <Box className="content related" py={8}>
-        <Container>
-          <Divider />
-          <h1>Related Posts</h1>
-          <Grid container spacing={4} className="calloutSmall">
-            {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? renderRelatedPosts(post.fields.relatedPosts) : <></> }
-          </Grid>
-        </Container>
-      </Box>
-    </div>
+          <Box className="content related" py={8}>
+            <Container>
+              <Divider />
+              <h1>Related Posts</h1>
+              <Grid container spacing={4} className="calloutSmall">
+                {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? renderRelatedPosts(post.fields.relatedPosts) : <></> }
+              </Grid>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
     );
   }
 
