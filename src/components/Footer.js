@@ -223,6 +223,9 @@ const Footer = ({ location, currentUser }) => {
       window.analytics.track("Signed Up", {
         "email": email
       });
+      window.analytics.identify({
+        email: email
+      });
       dispatch(requestSignupEmail(email));
       setConfirmationVisibility(!confirmationVisibility);
     },
