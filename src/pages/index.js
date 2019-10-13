@@ -16,3 +16,5 @@ export { default as ContactUsPage } from './ContactUs';
 export { default as FAQPage } from './FAQ';
 export { default as Blog } from './Blog';
 export { default as BlogPost } from './BlogPost';
+export { default as BlogCategory } from './BlogCategory';
+export { default as BlogTag} from './BlogTag';
