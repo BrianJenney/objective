@@ -121,6 +121,6 @@ export default [
   { path: '/password/reset', exact: true, component: ResetPassword },
   { path: '/password/success', exact: true, component: ResetSuccess },
   { path: '/journal', exact: true, component: Journal },
-  { path: '/journal/posts', exact: true, component: BlogPost },
+  { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
   { path: '/:page', exact: true, component: StaticPage }
 ];
