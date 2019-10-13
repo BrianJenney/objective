@@ -82,11 +82,13 @@ const Blog = () => {
             <h1>All Posts</h1>
             <div className="list">
               { renderPosts(posts) }
+              {/*
               <div className="load">
                 <Button variant="contained" color="primary">
                   Load More
                 </Button>
               </div>
+              */}
             </div>
           </Container>
         </Box>

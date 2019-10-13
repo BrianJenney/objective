@@ -27,7 +27,7 @@ export const fetchBlogHome = async () => {
     content_type: 'blogPost',
     'sys.id[nin]': featuredIds.toString(),
     select: 'fields.title,fields.featuredImage,fields.teaser,fields.minuteRead,fields.categories,fields.slug',
-    limit: 8 - featuredIds.length,
+    limit: 15 - featuredIds.length,
     order: '-sys.updatedAt'
   });
 

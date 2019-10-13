@@ -32,7 +32,7 @@ const FeaturedPost = post => {
           <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>&mdash;
           <span className="minRead">{ post.fields.minuteRead } Min Read</span>
         </div>
-        <h2>{ post.fields.title }</h2>
+        <h2><Link to={`/journal/posts/${ post.fields.slug }`}>{ post.fields.title }</Link></h2>
         <p>{ post.fields.teaser }</p>
         <Link to={`/journal/posts/${ post.fields.slug }`}>Read More</Link>
       </Grid>
