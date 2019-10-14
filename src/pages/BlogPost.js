@@ -37,11 +37,6 @@ const contentfulOptions = {
 };
 
 const BlogPost = ({ computedMatch }) => {
-  let blogPostTracked = false;
-  if (!blogPostTracked) {
-    window.analytics.page('Journal Post');
-  }
-  blogPostTracked = true;
   const { post_slug } = computedMatch.params;
 
   const [post, setPost] = useState({});
@@ -51,6 +46,7 @@ const BlogPost = ({ computedMatch }) => {
       setPost(postData);
     }
     fetchData();
+    window.analytics.page('Journal Post');
   }, [post_slug]);
 
   const renderRelatedPosts = posts => {
