@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Box from '@material-ui/core/Box';
@@ -16,10 +16,7 @@ import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/Shopp
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
 
-import {
-  removeFromCart,
-  adjustQty
-} from '../../modules/cart/functions';
+import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
 
@@ -58,7 +55,8 @@ const Cart = ({
   disableItemEditing,
   hideTaxLabel,
   showOrderSummaryText,
-  xsBreakpoint
+  xsBreakpoint,
+  location
 }) => {
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
@@ -95,6 +93,7 @@ const Cart = ({
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
   const mobileDrawerPadding = window.screen.width < 768 ? '24px 20px' : '0';
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   return (
     <Grid
       container
@@ -110,9 +109,26 @@ const Cart = ({
         {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader align="center" style={xsBreakpoint ? { fontSize: "24px", fontWeight: "normal", paddingTop: "0px" } : {}}>{showOrderSummaryText ? 'Order Summary' : 'Your Cart'} </StyledCartHeader>
-              <StyledCartCountHeader component="span" style={xsBreakpoint ? { fontSize: "11px", fontWeight: "600" } : {}}>
-                {' '}
+              <StyledCartHeader
+                align="center"
+                style={
+                  xsBreakpoint
+                    ? {
+                      fontSize: '24px',
+                      fontWeight: 'normal',
+                      paddingTop: '0px'
+                    }
+                    : {}
+                }
+              >
+                {showOrderSummaryText ? 'Order Summary' : 'Your Cart'}{' '}
+              </StyledCartHeader>
+              <StyledCartCountHeader
+                component="span"
+                style={
+                  xsBreakpoint ? { fontSize: '11px', fontWeight: '600' } : {}
+                }
+              >
                 ({cartCount} Items)
               </StyledCartCountHeader>
             </Grid>
@@ -122,7 +138,7 @@ const Cart = ({
                   component="span"
                   onClick={handleCheckout}
                 >
-                  proceed to checkout{' '}
+                  proceed to checkout
                   <StyledArrowIcon>
                     <RightArrow />
                   </StyledArrowIcon>
@@ -131,21 +147,20 @@ const Cart = ({
             )}
           </StyledHeaderWrapper>
         ) : (
-            <StyledHeaderWrapperEmptyCart container direction="column">
-              <Grid container direction="row" alignItems="baseline">
-                <StyledCartHeader
-                  align="center"
-                  style={{ paddingBottom: '25px' }}
-                >
-                  Your Cart{' '}
-                </StyledCartHeader>
-                <StyledCartCountHeader component="span">
-                  {' '}
-                  ({cartCount} Items)
+          <StyledHeaderWrapperEmptyCart container direction="column">
+            <Grid container direction="row" alignItems="baseline">
+              <StyledCartHeader
+                align="center"
+                style={{ paddingBottom: '25px' }}
+              >
+                Your Cart
+              </StyledCartHeader>
+              <StyledCartCountHeader component="span">
+                ({cartCount} Items)
               </StyledCartCountHeader>
-              </Grid>
-            </StyledHeaderWrapperEmptyCart>
-          )}
+            </Grid>
+          </StyledHeaderWrapperEmptyCart>
+        )}
       </div>
       <Grid container>
         {cart.items.length === 0 ? (
@@ -258,7 +273,9 @@ const Cart = ({
                     <StyledFinePrint component="div" value={index}>
                       {!disableItemEditing && (
                         <Link
-                          onClick={e => { removeFromCart(cart, index); }}
+                          onClick={e => {
+                            removeFromCart(cart, index);
+                          }}
                           style={{ color: '#9b9b9b' }}
                         >
                           <StyledRemoveLink>Remove</StyledRemoveLink>
@@ -341,7 +358,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && isCheckoutPage ? (
           <Grid
             container
             direction="row"
@@ -365,13 +382,13 @@ const Cart = ({
           cart.promo ? (
             <PromoCodeView />
           ) : (
-              <>
-                <StyledPromoLink align="left" onClick={togglePromo}>
-                  {!promoVisible ? 'Enter Promo Code' : null}
-                </StyledPromoLink>
-                {promoVisible && <PromoCodeForm />}
-              </>
-            )
+            <>
+              <StyledPromoLink align="left" onClick={togglePromo}>
+                {!promoVisible ? 'Enter Promo Code' : null}
+              </StyledPromoLink>
+              {promoVisible && <PromoCodeForm />}
+            </>
+          )
         ) : null}
 
         {cart.items.length > 0 ? (
