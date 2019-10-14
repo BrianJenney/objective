@@ -388,7 +388,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
                     <Link
-                      href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                      href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                       target="_blank"
                       rel="noopener"
                     >
@@ -610,7 +610,7 @@ const Footer = ({ location, currentUser }) => {
                         className="border-left icon border-right"
                       >
                         <Link
-                          href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                           target="_blank"
                           rel="noopener"
                         >

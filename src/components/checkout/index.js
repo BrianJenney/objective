@@ -261,9 +261,8 @@ const Checkout = ({
     scrollToRef(stepRefs[stepIndex - 1]);
   };
 
-  const handleBack = () =>
-    activeStep > 0 &&
-    setActiveStep(activeStep - 1)
+  const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
+
   const handleNext = async values => {
     let result = null;
 
@@ -275,7 +274,7 @@ const Checkout = ({
     }
 
     if (result) {
-      setActiveStep(activeStep + 1);
+      setCurrentStep(activeStep + 1);
       trackCheckoutStepCompleted(activeStep);
     }
     return true;
