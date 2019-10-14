@@ -92,28 +92,29 @@ const ProductOutOfStockForm = ({
     const { email, subscribed } = values;
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
-    window.analytics.track("Back In Stock Email Capture Successful", {
-      "email": email
+    window.analytics.track('Back In Stock Email Capture Successful', {
+      email: email
     });
     // no price or qty being pulled in as of yet
     window.analytics.track('Back In Stock Signup Completed', {
-      "brand": "OBJ",
-      "category": product_category,
-      "image_url": product_img,
-      "name": product_name,
-      "product_id": product_id,
-      "sku": product_sku,
-      "url": product_url,
-      "variant": product_variant
+      brand: 'OBJ',
+      category: product_category,
+      image_url: product_img,
+      name: product_name,
+      product_id: product_id,
+      sku: product_sku,
+      url: product_url,
+      variant: product_variant
     });
 
-    if(subscribed){
-      window.analytics.track("Signed Up", {
-        "email": email
+    if (subscribed) {
+      window.analytics.track('Signed Up', {
+        email: email
       });
     }
     // Listrak event
-    window._ltk.Alerts.AddAlert(email, product_sku, 'BIS'); window._ltk.Alerts.Submit();
+    window._ltk.Alerts.AddAlert(email, product_sku, 'BIS');
+    window._ltk.Alerts.Submit();
     handleOpenEmailConfirmation();
     closeDialog();
   };
@@ -147,7 +148,7 @@ const ProductOutOfStockForm = ({
               <Field
                 style={{ padding: '20px 7px 20px 0' }}
                 name="subscribed"
-                label="Subscribe to Objective news"
+                label="Subscribe for tips and new product launches"
                 color="primary"
                 component={CheckboxField}
                 value={values.subscribed}
