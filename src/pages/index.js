@@ -14,6 +14,7 @@ export { default as ResetSuccess } from './password/ResetSuccess';
 export { default as OrderPage } from './order/Order';
 export { default as ContactUsPage } from './ContactUs';
 export { default as FAQPage } from './FAQ';
+export { default as AboutUs } from './AboutUs';
 export { default as Blog } from './Blog';
 export { default as BlogPost } from './BlogPost';
 export { default as BlogCategory } from './BlogCategory';
