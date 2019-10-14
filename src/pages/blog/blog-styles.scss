@@ -114,7 +114,7 @@
       text-transform: uppercase;
       margin: 20px 0 40px;
     }
-    h2 {
+    h2, h2 a {
       font-family: 'Canela Text Web';
       font-size: 32px !important;
       font-weight: normal;
@@ -124,6 +124,8 @@
       letter-spacing: 0.5px;
       color: #000000;
       margin: 25px 0 15px;
+      text-decoration: none;
+      text-transform: none;
     }
     p {
       font-family: FreightTextProBook;
@@ -285,6 +287,28 @@
 /* Mobile */
 @media(max-width: 768px) {
   .journal-gallery {
+    .mobile-flex {
+      display: flex;
+      margin-bottom: 35px;
+      .tagholder, .icon-holder {
+        width: 50%;
+        padding-top: 25px;
+      }
+      .tags {
+        min-height: 117px;
+      }
+      .icon-holder {
+        padding-bottom: 25px;
+        padding-left: 25px;
+        border-bottom: 2px solid;
+        border-left: 2px solid;
+        
+        min-height: 117px;
+        .share {
+          padding: 0 0 10px;
+        }
+      }
+    }
     .header {
       .container {
         padding-left: 16px;
@@ -340,6 +364,7 @@
       .date {
         text-align: center;
         font-size: 14px;
+        margin-bottom: 0;
       }
      }
      .border-left {
