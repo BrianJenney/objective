@@ -58,11 +58,7 @@ const Blog = () => {
         <Box className="header" py={8}>
           <Container className="container">
             <h1>The Journal</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing
-              <br />
-              elit, sed do eiusmod tempor
-            </p>
+            <p>Lifestyle tips, recipes, deep dives into study results and more...to make good health easy</p>
           </Container>
         </Box>
         <Box className="content" py={8}>
