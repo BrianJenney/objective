@@ -217,7 +217,7 @@ const ProductDetail = () => {
                     {!ATCEnabled && <Quantity />}
                   </CardContent>
                   {/* ATC component */}
-                  {ATCEnabled && variant.inventory.quantityInStock > 0 && (
+                  {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
                     <Grid className="mobile-padding-small">
                       <CardActions className={classes.maxWidth}>
                         <ATC
@@ -231,7 +231,7 @@ const ProductDetail = () => {
                     </Grid>
                   )}
                   {/* Out of stock component */}
-                  {variant.inventory.quantityInStock < 1 && (
+                  {variant.inventory.quantityInStock < 200 && (
                     <Grid>
                       <OutOfStockPDP
                         maxWidth={classes.maxWidth}
@@ -302,7 +302,7 @@ const ProductDetail = () => {
                 /> */}
                       {!ATCEnabled && <Quantity />}
                     </CardContent>
-                    {ATCEnabled && variant.inventory.quantityInStock > 0 && (
+                    {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
                       <Grid>
                         <CardActions className={classes.maxWidth}>
                           <ATC
@@ -315,7 +315,7 @@ const ProductDetail = () => {
                         </CardActions>
                       </Grid>
                     )}
-                    {variant.inventory.quantityInStock < 1 && (
+                    {variant.inventory.quantityInStock < 200 && (
                       <Grid>
                         <OutOfStockPDP
                           maxWidth={classes.maxWidth}

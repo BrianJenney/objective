@@ -108,7 +108,7 @@ const VariantCard = ({ variant, styleMap }) => {
       </CardContent>
 
       <div className="cta-area">
-        {ATCEnabled && variant.inStock > 0 && (
+        {ATCEnabled && variant.inStock >= 200 && (
           <CardActions className="gallery-atc">
             <ATC
               onClick={handleAddToCart}
@@ -120,7 +120,7 @@ const VariantCard = ({ variant, styleMap }) => {
           </CardActions>
         )}
 
-        {variant.inStock < 1 && (
+        {variant.inStock < 200 && (
           <>
             <OutOfStock
               onClick={handleOpenOutOfStockDialog}
