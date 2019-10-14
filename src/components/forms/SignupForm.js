@@ -48,7 +48,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   password: '',
-  newsletter: true,
+  newsletter: true
 };
 
 const schema = object().shape({
@@ -145,7 +145,7 @@ const SignupForm = ({
           <Field
             name="newsletter"
             color="primary"
-            label="Subscribe to Objective news"
+            label="Subscribe for tips and new product launches"
             component={CheckboxField}
           />
         </Grid>
