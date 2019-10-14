@@ -144,7 +144,7 @@ const BlogPost = ({ computedMatch }) => {
                           />
                         </a>
                         <a
-                          href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                           target="_blank"
                           rel="noopener"
                         >
