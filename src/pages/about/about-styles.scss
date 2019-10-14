@@ -1,4 +1,7 @@
 .aboutus {
+  .mobile-only {
+    display: none;
+  }
   .hero {
     width: 100%;
   }
@@ -74,6 +77,9 @@
     .text {
       max-width: 485px;
       margin: 200px 0;
+    }
+    .mobile-img {
+      display: none;
     }
   }
   .section3 {
@@ -154,7 +160,6 @@
     background-color: #fcf8f4;
     text-align: center;
     h3 {
-      height: 20px;
       font-family:  p22-underground, sans-serif;
       font-size: 20px;
       font-weight: 600;
@@ -168,6 +173,103 @@
     }
     h1 {
       margin: 30px 0 0;
+    }
+  }
+  @media(max-width: 768px) {
+    .xs-hidden {
+      display: none !important;
+    }
+    br {
+      display: none;
+    }
+    .mobile-only {
+      display: block;
+    }
+    .buttonlink {
+      width: 100%;
+    }
+    .mobile-padding {
+      padding: 25px 0;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    .title .slash {
+      width: 195px;
+      margin-bottom: 30px;
+    }
+    p {
+      font-size: 16px;
+      &.tagline {
+        font-size: 26px;
+      }
+    }
+    .section1 {
+      .tagline {
+        margin-bottom: 0;
+      }
+    }
+    .section2 {
+      background-image: none;
+      background-size: none;
+      background-repeat: none;
+      position: relative;
+      height: auto;
+      .text {
+        max-width: 100%;
+        margin: 0;
+      }
+      .mobile-img {
+        display: block;
+        width: 100%;
+      }
+    }
+    .section3 {
+      h1 {
+        margin-bottom: 45px;
+      }
+      h2 {
+        font-size: 16px;
+      }
+      .MuiGrid-item {
+        padding: 25px 0;
+      }
+      .border {
+        padding: 60px 16px;
+      }
+      p {
+        widows: 100%;
+      }
+      .MuiGrid-spacing-xs-10 {
+        width: 100%;
+        margin: 0;
+      }
+    }
+    .section4 {
+      img{
+        width: 100%;
+      }
+      p, h1, h3 {
+        padding: 0 16px; 
+      }
+      .buttonlink {
+        margin-left: 16px;
+        margin-right: 16px;
+        width: 100%;
+        max-width: 330px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+    }
+    .section5 {
+      h3 {
+        font-size: 18px;
+      }
+      h1 {
+        font-size: 24px;
+        margin: 10px 0 0;
+      }
     }
   }
 }
