@@ -67,7 +67,7 @@ export const StyledSubheaders = withStyles(theme => ({
     marginBottom: 10,
     [theme.breakpoints.down('xs')]: {
       fontFamily: $brandSans,
-      fontSize: '18px',
+      fontSize: '24px',
       fontStyle: 'normal',
       fontStretch: 'normal,',
       lineHeight: 'normal',
@@ -82,7 +82,9 @@ export const ParagraphContainer = withStyles(theme => ({
   root: {
     borderBottom: '1px solid',
     padding: '40px 0px 30px 0px',
-    [theme.breakpoints.down('xs')]: {}
+    [theme.breakpoints.down('xs')]: {
+      padding: '50px 0px 30px 0px'
+    }
   }
 }))(Box);
 

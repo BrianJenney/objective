@@ -997,7 +997,7 @@ const PrivacyPolicy = () => {
             </ParagraphContainer>
           </Grid>
           <Grid>
-            <ParagraphContainer style={{ border: 'none' }}>
+            <ParagraphContainer style={{ border: 'none', paddingBottom: 0 }}>
               <StyledSubheaders>
                 Changes to this Privacy Statement
               </StyledSubheaders>
