@@ -138,6 +138,7 @@ const NeedHelpDialog = () => {
                         paddingBottom: '1px',
                         textDecoration: 'none'
                       }}
+                      href="mailto:Help@objectivewellness.com"
                     >
                       help@objectivewellness.com
                     </Link>
@@ -204,7 +205,7 @@ const Footer = ({ location, currentUser }) => {
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
 
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
-  const gotoUrl = (url, login) => currentUser.data.account_jwt ? url : login;
+  const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
 
   const handleSubmit = useCallback(
     ({ email }) => {
@@ -340,12 +341,12 @@ const Footer = ({ location, currentUser }) => {
                             letterSpacing: 'normal'
                           }}
                         >
-                          Be a step ahead and 
+                          Be a step ahead and{' '}
                           <NavLink
                             to="/signup"
                             underline="always"
                             children="create an account"
-                          ></NavLink> 
+                          ></NavLink>{' '}
                           in seconds.
                         </Typography>
                       </>
@@ -431,15 +432,16 @@ const Footer = ({ location, currentUser }) => {
                   >
                     If you have difficulty accessing any content, feature or
                     functionality on our website or on our other electronic
-                    platforms, please email us at 
+                    platforms, please email us at{' '}
                     <Link
                       style={{
                         borderBottom: '1px solid #fff',
                         textDecoration: 'none'
                       }}
+                      href="mailto:Help@objectivewellness.com"
                     >
                       Help@objectivewellness.com
-                    </Link> 
+                    </Link>{' '}
                     or call us at 800-270-5771 so that we can provide you access
                     through an alternative method.
                   </Typography>
@@ -555,12 +557,12 @@ const Footer = ({ location, currentUser }) => {
                             letterSpacing: 'normal'
                           }}
                         >
-                          Be a step ahead and 
+                          Be a step ahead and{' '}
                           <NavLink
                             to="/signup"
                             underline="always"
                             children="create an account"
-                          ></NavLink> 
+                          ></NavLink>{' '}
                           in seconds.
                         </Typography>
                       </>
@@ -649,16 +651,17 @@ const Footer = ({ location, currentUser }) => {
                   >
                     If you have difficulty accessing any content, feature or
                     functionality on our website or on our other electronic
-                    platforms, please email us at 
+                    platforms, please email us at{' '}
                     <Link
                       style={{
                         cursor: 'pointer',
                         borderBottom: '1px solid #fff',
                         textDecoration: 'none'
                       }}
+                      href="mailto:help@objectivewellness.com"
                     >
                       Help@objectivewellness.com
-                    </Link> 
+                    </Link>{' '}
                     or call us at 800-270-5771 so that we can provide you access
                     through an alternative method.
                   </Typography>
