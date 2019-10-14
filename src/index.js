@@ -27,14 +27,6 @@ import './fonts/fonts.css';
 
 const ObjectId = require('bson-objectid');
 
-const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
-const stompClient = Stomp.over(wss);
-const replyTo = ObjectId();
-
-if (process.env.REACT_APP_ENVIRONMENT !== 'development') {
-  stompClient.debug = null;
-}
-
 const useStyles = makeStyles(() => ({
   success: { backgroundColor: 'green' },
   error: { backgroundColor: '#fad9dd', color: '#231f20' },
@@ -70,24 +62,40 @@ const Main = () => {
   );
 };
 
+const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
+const stompClient = Stomp.over(wss);
+
+if (process.env.REACT_APP_ENVIRONMENT !== 'development') {
+  stompClient.debug = null;
+}
+
+const connectWebsocket = () => {
+  console.log('Trying to connect to Websocket Server...');
+  stompClient.connect(
+    process.env.REACT_APP_CLOUDAMQP_USERNAME,
+    process.env.REACT_APP_CLOUDAMQP_PASSWORD,
+    onStompConnectSuccess,
+    onStompConnectError,
+    process.env.REACT_APP_CLOUDAMQP_USERNAME
+  );
+}
+
 /**
  * STOMP connect success callback handler
  *
  * @return none
  */
-
 const onStompConnectSuccess = () => {
   console.log('Successfully Connected');
+  let replyTo = ObjectId();
+
   store.dispatch(connectStomp(stompClient, replyTo));
-  stompClient.subscribe(
-    '/queue/' + replyTo,
-    body => {
-      handleResponse(body);
-    },
-    {
-      'auto-delete': true
-    }
-  );
+
+  stompClient.subscribe('/queue/' + replyTo, body => {
+    handleResponse(body);
+  }, {
+    'auto-delete': true
+  });
 
   ReactDOM.render(<Main />, document.querySelector('#root'));
 };
@@ -98,21 +106,19 @@ const onStompConnectSuccess = () => {
  * @param  object e
  */
 const onStompConnectError = e => {
-  console.log('******************** Error: ' + e);
-  // Render a "Site down" page
+  triggerReconnect();
 };
 
-/**
- * @todo
- *
- * Need to handle disconnections
- * - Reconnect
- * - Make sure we didn't lose any messages
- */
-stompClient.connect(
-  process.env.REACT_APP_CLOUDAMQP_USERNAME,
-  process.env.REACT_APP_CLOUDAMQP_PASSWORD,
-  onStompConnectSuccess,
-  onStompConnectError,
-  process.env.REACT_APP_CLOUDAMQP_USERNAME
-);
+connectWebsocket();
+
+const triggerReconnect = () => {
+  // @TODO I'm sure we can do better than this --- but, for now, we'll leave it like this
+  window.location.reload();
+};
+
+window.addEventListener('offline', () => {
+  triggerReconnect();
+});
+window.addEventListener('online', () => {
+  triggerReconnect();
+});
