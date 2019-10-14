@@ -15,42 +15,37 @@ import FeaturedPost from './blog/FeaturedPost';
 import FeaturedItem from './blog/FeaturedItem';
 
 const Blog = () => {
+  window.analytics.page('Journal Home');
   const [featuredMain, setFeaturedMain] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      let results = await fetchBlogHome();
+      const results = await fetchBlogHome();
 
       if (results.featured.length > 0) {
         setFeaturedMain(results.featured.shift());
         setFeaturedPosts(results.featured);
       }
-  
+
       setPosts(results.posts);
     }
     fetchData();
   }, []);
 
-  const renderFeaturedMain = post => {
-    return FeaturedPost(post);
-  };
+  const renderFeaturedMain = post => FeaturedPost(post);
 
   const renderFeaturedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => {
-        return <FeaturedItem post={item} key={ item.sys.id } />;
-      });
-    } else {
-      return <></>;
+      return posts.map((item, key) => (
+        <FeaturedItem post={item} key={item.sys.id} />
+      ));
     }
+    return <></>;
   };
 
-  const renderPosts = posts => {
-    return posts.map((item, key) => {
-      return <PostItem post={item} key={ item.sys.id } />;
-    });
-  };
+  const renderPosts = posts =>
+    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
     <ScrollToTop>
@@ -58,26 +53,28 @@ const Blog = () => {
         <Box className="header" py={8}>
           <Container className="container">
             <h1>The Journal</h1>
-            <p>Lifestyle tips, recipes, deep dives into study results and more...to make good health easy</p>
+            <p>
+              Lifestyle tips, recipes, deep dives into study results and
+              more...to make good health easy
+            </p>
           </Container>
         </Box>
         <Box className="content" py={8}>
           <Container>
             <Divider />
             <h1>Featured Posts</h1>
-            { renderFeaturedMain(featuredMain) }
-            {featuredPosts.length > 0
-            ?
-            <Grid container spacing={4} className="calloutSmall">
-              { renderFeaturedPosts(featuredPosts) }
-            </Grid>
-            :
-            <></>
-            }
+            {renderFeaturedMain(featuredMain)}
+            {featuredPosts.length > 0 ? (
+              <Grid container spacing={4} className="calloutSmall">
+                {renderFeaturedPosts(featuredPosts)}
+              </Grid>
+            ) : (
+              <></>
+            )}
             <Divider />
             <h1>All Posts</h1>
             <div className="list">
-              { renderPosts(posts) }
+              {renderPosts(posts)}
               {/*
               <div className="load">
                 <Button variant="contained" color="primary">

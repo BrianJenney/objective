@@ -99,7 +99,7 @@ const AboutUs = () => {
               </p>
             </div>
             <Link to="/gallery" className="buttonlink mobile-only">
-              Shop Better Health (FPO)
+              Shop Better Health
             </Link>
           </Container>
         </Box>
@@ -147,7 +147,7 @@ const AboutUs = () => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <img
-                    src="https://cdn1.stopagingnow.com/objective/svg/balance.svg"
+                    src="https://cdn1.stopagingnow.com/objective/svg/journal.svg"
                     alt=""
                     className="svg"
                   />
@@ -164,7 +164,7 @@ const AboutUs = () => {
                 </Grid>
               </Grid>
               <Link to="/gallery" className="buttonlink">
-                Shop Better Health (FPO)
+                Shop Better Health
               </Link>
             </div>
           </Container>
@@ -189,10 +189,10 @@ const AboutUs = () => {
                   the package.
                 </p>
               </Container>
-              <img src="https://cdn1.stopagingnow.com/objective/aboutus/ingredients-mobile.png" />
+              <img src="https://cdn1.stopagingnow.com/objective/aboutus/ingredients-desktop.png" />
             </div>
             <div className="right fifty">
-              <img src="https://cdn1.stopagingnow.com/objective/aboutus/bottle-mobile2.png" />
+              <img src="https://cdn1.stopagingnow.com/objective/aboutus/bottle-desktop.png" />
               <Container className="container-right">
                 <p className="tagline">We play it safe and by the rules</p>
                 <p>
@@ -214,7 +214,7 @@ const AboutUs = () => {
             </div>
           </div>
           <div className="mobile-only">
-            <img src="https://cdn1.stopagingnow.com/objective/aboutus/bottle-mobile2.png" />
+            <img src="https://cdn1.stopagingnow.com/objective/aboutus/bottle-mobile.png" />
             <p className="tagline">What you see is what you get</p>
             <p>
               The ingredients, amounts and forms you find in the supplement
@@ -241,7 +241,7 @@ const AboutUs = () => {
             </p>
           </div>
           <Link to="/gallery" className="buttonlink">
-            Shop Better Health (FPO)
+            Shop Better Health
           </Link>
         </Box>
         <Box py={8} className="section5 mobile-padding">
