@@ -18,13 +18,13 @@ import FeaturedItem from './blog/FeaturedItem';
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-        let params = '?w=1002&fm=jpg&q=90';
+      let params = '?w=1002&fm=jpg&q=90';
 
-        if (window.screen.width < 768) {
-          params = '?w=450&fm=jpg&q=90';
-        }
+      if (window.screen.width < 768) {
+        params = '?w=450&fm=jpg&q=90';
+      }
 
-        return (
+      return (
         <img
           src={node.data.target.fields.file.url + params}
           alt={node.data.target.fields.title}
@@ -40,7 +40,7 @@ const BlogPost = ({ computedMatch }) => {
   const [post, setPost] = useState({});
   useEffect(() => {
     async function fetchData() {
-      let postData = await fetchPost(post_slug);
+      const postData = await fetchPost(post_slug);
       setPost(postData);
     }
     fetchData();
@@ -48,13 +48,12 @@ const BlogPost = ({ computedMatch }) => {
 
   const renderRelatedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => {
-        return <FeaturedItem post={item} key={ item.sys.id } />;
-      });
-    } else {
-      return <></>;
+      return posts.map((item, key) => (
+        <FeaturedItem post={item} key={item.sys.id} />
+      ));
     }
-  }
+    return <></>;
+  };
 
   const renderPost = post => {
     if (!post.fields || !post.fields.title) {
@@ -74,7 +73,7 @@ const BlogPost = ({ computedMatch }) => {
       category = post.fields.categories[0].fields.title;
       slug = post.fields.categories[0].fields.slug;
     }
-  
+
     return (
       <ScrollToTop>
         <div className="journal-gallery post">
@@ -82,17 +81,51 @@ const BlogPost = ({ computedMatch }) => {
             <Container>
               <Box className="center">
                 <div className="flex">
-                  <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>|
-                  <span className="minRead">{ post.fields.minuteRead } Min Read</span>
+                  <span className="categoryName">
+                    <Link to={`/journal/category/${slug}`}>{category}</Link>
+                  </span>
+                  |
+                  <span className="minRead">
+                    {post.fields.minuteRead} Min Read
+                  </span>
                 </div>
-                <h1>{ post.fields.title }</h1>
-                <img src={ imageUrl } />
+                <h1>{post.fields.title}</h1>
+                <img src={imageUrl} />
               </Box>
               <Grid container>
-                <Grid item xs={12} md={3}>
-                  hello
+                <Grid item xs={12} md={2} className="left">
+                  <p className="date">September XX, 2019</p>
+                  <div className="tags">
+                    <Link to="/">Tag 1</Link>
+                    <Link to="/">Tag 2</Link>
+                    <Link to="/">Tag 3</Link>
+                    <Link to="/">Tag 4</Link>
+                  </div>
+                  <p className="share">SHARE</p>
+                  <div className="social">
+                    <Link
+                      href="https://www.instagram.com/objective_wellness"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <img
+                        src="https://cdn1.stopagingnow.com/objective/aboutus/ig.png"
+                        alt="instagram"
+                      />
+                    </Link>
+                    <Link
+                      href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <img
+                        src="https://cdn1.stopagingnow.com/objective/aboutus/fb.png"
+                        alt="facebook"
+                      />
+                    </Link>
+                  </div>
                 </Grid>
-                <Grid item xs={12} md={9}>
+                <Grid item xs={12} md={10} className="border-left">
                   {documentToReactComponents(
                     post.fields.body,
                     contentfulOptions
@@ -112,23 +145,23 @@ const BlogPost = ({ computedMatch }) => {
               </Grid>
             </Container>
           </Box>
-          {post.fields.relatedPosts && post.fields.relatedPosts.length > 0
-          ?
-          <Box className="content related" py={8}>
-            <Container>
-              <Divider />
-              <h1>Related Posts</h1>
-              <Grid container spacing={4} className="calloutSmall">
-                {renderRelatedPosts(post.fields.relatedPosts)}
-              </Grid>
-            </Container>
-          </Box>
-          :
-          <></>}
+          {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
+            <Box className="content related" py={8}>
+              <Container>
+                <Divider />
+                <h1>Related Posts</h1>
+                <Grid container spacing={4} className="calloutSmall">
+                  {renderRelatedPosts(post.fields.relatedPosts)}
+                </Grid>
+              </Container>
+            </Box>
+          ) : (
+            <></>
+          )}
         </div>
       </ScrollToTop>
     );
-  }
+  };
 
   return renderPost(post);
 };
