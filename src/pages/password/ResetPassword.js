@@ -164,7 +164,10 @@ const ResetPassword = ({ history, location }) => {
   const handleSubmit = values => {
     const urlParams = new URLSearchParams(location.search);
     const token = urlParams.getAll('tk').toString();
+
     dispatch(requestPatchAccount(token, values));
+    const localStorageClient = require('store');
+    localStorageClient.remove('token');
     history.replace('/password/success');
   };
 
