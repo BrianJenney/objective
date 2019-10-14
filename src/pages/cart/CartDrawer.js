@@ -229,39 +229,39 @@ const Cart = ({
                         children={`QTY: ${item.quantity}`}
                       />
                     ) : (
-                        <StyledCardActions>
-                          <StyledCounterButton
-                            color="primary"
-                            onClick={e =>
-                              adjustQty(cart, e.currentTarget.value, -1)
-                            }
-                            style={{
-                              fontSize: '20pt',
-                              paddingBottom: '4px'
-                            }}
-                            value={index}
-                            disabled={item.quantity < 2}
-                          >
+                      <StyledCardActions>
+                        <StyledCounterButton
+                          color="primary"
+                          onClick={e =>
+                            adjustQty(cart, e.currentTarget.value, -1)
+                          }
+                          style={{
+                            fontSize: '20pt',
+                            paddingBottom: '4px'
+                          }}
+                          value={index}
+                          disabled={item.quantity < 2}
+                        >
                             -
-                          </StyledCounterButton>
-                          <StyledSmallCaps style={{ fontSize: '18px' }}>
-                            {item.quantity}
-                          </StyledSmallCaps>
-                          <StyledCounterButton
-                            color="primary"
-                            onClick={e =>
-                              adjustQty(cart, e.currentTarget.value, 1)
-                            }
-                            style={{
-                              fontSize: '13pt',
-                              paddingBottom: '2.5px'
-                            }}
-                            value={index}
-                          >
+                        </StyledCounterButton>
+                        <StyledSmallCaps style={{ fontSize: '18px' }}>
+                          {item.quantity}
+                        </StyledSmallCaps>
+                        <StyledCounterButton
+                          color="primary"
+                          onClick={e =>
+                            adjustQty(cart, e.currentTarget.value, 1)
+                          }
+                          style={{
+                            fontSize: '13pt',
+                            paddingBottom: '2.5px'
+                          }}
+                          value={index}
+                        >
                             +
-                          </StyledCounterButton>
-                        </StyledCardActions>
-                      )}
+                        </StyledCounterButton>
+                      </StyledCardActions>
+                    )}
                   </Grid>
                   <StyledCardContent
                     style={
@@ -313,7 +313,7 @@ const Cart = ({
             </StyledTotalWrapper>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && isCheckoutPage ? (
           <Grid
             container
             direction="row"
@@ -333,6 +333,31 @@ const Cart = ({
             <StyledFinePrint
               component="p"
               style={{ position: 'relative', top: '6px' }}
+            >
+              {shippingData.name}
+            </StyledFinePrint>
+          </Grid>
+        ) : null}
+        {cart.items.length > 0 && !isCheckoutPage ? (
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            style={{ margin: '20px 0px 0px' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Shipping
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {displayMoney(shippingData.price, true)}
+              </StyledProductTotal>
+            </Grid>
+            <StyledFinePrint
+              component="p"
+              style={{ position: 'relative', top: '6px', marginBottom: '25px' }}
             >
               {shippingData.name}
             </StyledFinePrint>
