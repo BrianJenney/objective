@@ -15,7 +15,11 @@ import { fetchPostsByTag } from '../utils/blog';
 import PostItem from './blog/PostItem';
 
 const BlogTag = ({ computedMatch }) => {
-  window.analytics.page('Journal Tag');
+  let blogTagTracked = false;
+  if (!blogTagTracked) {
+    window.analytics.page('Journal Tag');
+  }
+  blogTagTracked = true;
   const { tag_slug } = computedMatch.params;
 
   const theme = useTheme();

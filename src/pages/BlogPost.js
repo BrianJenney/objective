@@ -37,7 +37,11 @@ const contentfulOptions = {
 };
 
 const BlogPost = ({ computedMatch }) => {
-  window.analytics.page('Journal Post');
+  let blogPostTracked = false;
+  if (!blogPostTracked) {
+    window.analytics.page('Journal Post');
+  }
+  blogPostTracked = true;
   const { post_slug } = computedMatch.params;
 
   const [post, setPost] = useState({});
@@ -133,8 +137,8 @@ const BlogPost = ({ computedMatch }) => {
                     <div className="icon-holder">
                       <p className="share">SHARE</p>
                       <div className="social">
-                        <Link
-                          to="https://www.instagram.com/objective_wellness"
+                        <a
+                          href="https://www.instagram.com/objective_wellness"
                           target="_blank"
                           rel="noopener"
                         >
@@ -142,9 +146,9 @@ const BlogPost = ({ computedMatch }) => {
                             src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
                             alt="instagram"
                           />
-                        </Link>
-                        <Link
-                          to="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                        </a>
+                        <a
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
                           target="_blank"
                           rel="noopener"
                         >
@@ -152,7 +156,7 @@ const BlogPost = ({ computedMatch }) => {
                             src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
                             alt="facebook"
                           />
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
