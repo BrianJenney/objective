@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
 const SignupCheckout = ({
   requestCreateAccount,
   clearCreateAccountError,
-  switchToLogin
+  switchToLogin,
+  handleSignupVisible
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -78,6 +79,7 @@ const SignupCheckout = ({
           <SignupForm
             onSubmit={requestCreateAccount}
             clearCreateAccountError={clearCreateAccountError}
+            handleSignupVisible={handleSignupVisible}
           />
         </Box>
       </Box>

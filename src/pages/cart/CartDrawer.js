@@ -64,36 +64,14 @@ const Cart = ({
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  let orderItemsTransformed = [];
-  cart.items.forEach(item => {
-    orderItemsTransformed.push({
-      image_url: item.variant_img,
-      quantity: item.quantity,
-      sku: item.sku,
-      price: Number.parseFloat(item.unit_price),
-      product_id: item.variant_id,
-      variant: item.variant_id,
-      name: item.variant_name,
-      brand: cart.storeCode
-    });
-  });
+
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
-    window.analytics.track("Cart Dismissed", {
-      "cart_id": cart._id,
-      "num_products": cartCount,
-      "products": orderItemsTransformed
-    });
     history.push('/gallery');
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
-    window.analytics.track("Cart Dismissed", {
-      "cart_id": cart._id,
-      "num_products": cartCount,
-      "products": orderItemsTransformed
-    });
   }, [dispatch]);
 
   const togglePromo = useCallback(() => {
@@ -102,33 +80,8 @@ const Cart = ({
 
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
-
-    window.analytics.track("Cart Dismissed", {
-      "cart_id": cart._id,
-      "num_products": cartCount,
-      "products": orderItemsTransformed
-    });
     history.push('/checkout');
   }, [dispatch, history]);
-
-  const trackProductRemoveEvent = (cartId,item) => {    
-      let productTransformed = {
-        image_url: item.variant_img,
-        quantity: item.quantity,
-        sku: item.sku,
-        price: Number.parseFloat(item.unit_price),
-        product_id: item.variant_id,
-        variant: item.variant_id,
-        name: item.variant_name,
-        brand: cart.storeCode
-      };
-    
-    window.analytics.track("Product Removed", {
-      "cart_id": cartId,
-      ...productTransformed
-
-    });
-  }
 
   if (!cart) {
     return <AlertPanel type="info" text="No Cart" />;
@@ -305,7 +258,7 @@ const Cart = ({
                     <StyledFinePrint component="div" value={index}>
                       {!disableItemEditing && (
                         <Link
-                          onClick={e => { removeFromCart(cart, index); trackProductRemoveEvent(cart._id, item); }}
+                          onClick={e => { removeFromCart(cart, index); }}
                           style={{ color: '#9b9b9b' }}
                         >
                           <StyledRemoveLink>Remove</StyledRemoveLink>

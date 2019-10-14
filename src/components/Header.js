@@ -82,7 +82,7 @@ const Header = ({ currentUser, location }) => {
       };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', link: '/gallery', children: 'Shop' },
-    { key: 'second', to: '/', link: '/', children: 'Journal' },
+    { key: 'second', to: '/journal', link: '/journal', children: 'Journal' },
     accountMenuItemConf,
     { key: 'fourth', to: '/faq', link: '/faq', children: 'Help' }
   ];
@@ -158,7 +158,7 @@ const Header = ({ currentUser, location }) => {
                             </StyledLink>
                           </Grid>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink component={RouterLink} to="/">
+                            <StyledLink component={RouterLink} to="/journal">
                               Journal
                             </StyledLink>
                           </Grid>

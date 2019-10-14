@@ -1,5 +1,5 @@
 import store from '../../store';
-import { receivedCreateOrderSuccess, receivedCreateOrderFailure, receivedGetOrder, receivedTransactionRequestRefund } from './actions';
+import { receivedCreateOrderSuccess, receivedCreateOrderFailure, receivedGetOrder } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 import { debugRabbitResponse } from '../../utils/misc';
@@ -18,6 +18,10 @@ export const handleOrderResponse = (status, data, fields, properties) => {
         store.dispatch(receivedCreateOrderFailure(data));
       }
       break;
+    case 'order.request.cancelorder':
+      debugRabbitResponse('Order Cancel Response', status, data, fields, properties);
+      store.dispatch(receivedGetOrder(data));
+      break;
     case 'order.request.find':
       debugRabbitResponse('Find Order by Account Response', status, data, fields, properties);
       // This is in the *account* module, so state updates are made in that reducer.
@@ -27,10 +31,6 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       debugRabbitResponse('Get Order Response', status, data, fields, properties);
       // This is in the *account* module, so state updates are made in that reducer.
       store.dispatch(receivedGetOrder(data));
-      break;
-    case 'transaction.request.refund':
-      debugRabbitResponse('Transaction Request Refund', status, data, fields, properties);
-      store.dispatch(receivedTransactionRequestRefund(data));
       break;
     default:
       console.log('bad response ' + fields.routingKey);

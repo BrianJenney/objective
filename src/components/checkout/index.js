@@ -37,8 +37,8 @@ const getPanelTitleContent = (
   xs,
   step,
   activeStep,
-  signupError,
-  signupSubmitting,
+
+  signupConfirmation,
   payload
 ) => {
   const isActiveStep = step === activeStep;
@@ -70,8 +70,7 @@ const getPanelTitleContent = (
       payloadSummary = (
         <AccountSummary
           values={payload}
-          msg={signupError}
-          signupSubmit={signupSubmitting}
+          signupConfirmation={signupConfirmation}
         />
       );
     } else if (step === 1) {
@@ -114,6 +113,8 @@ const Checkout = ({
   clearPatchAccountError,
   requestCreateOrder
 }) => {
+  console.log('==CURRENT USER==', currentUser);
+
   const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
@@ -122,8 +123,8 @@ const Checkout = ({
   const { account_jwt, email: currentUserEmail } = currentUser.data;
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
-  const [checkoutDialogOpen, setCheckoutDialogOpen] = React.useState(false);
-  const { signupError, signupSubmitting } = currentUser;
+  const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
+  const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null)];
 
   useEffect(() => {
@@ -245,17 +246,13 @@ const Checkout = ({
     }
   };
 
-  const trackCheckoutStepViewed = step => {
-    window.analytics.track('Checkout Step Viewed', {
-      cart_id: cart._id,
-      step: step
-    });
-  };
-
+  /*
+  @description - Tracks Segment Analytics 'Checkout Step Completed' event
+  */
   const trackCheckoutStepCompleted = step => {
     window.analytics.track('Checkout Step Completed', {
       cart_id: cart._id,
-      step
+      step: step + 1
     });
   };
 
@@ -264,10 +261,8 @@ const Checkout = ({
     scrollToRef(stepRefs[stepIndex - 1]);
   };
 
-  const handleBack = () =>
-    activeStep > 0 &&
-    setCurrentStep(activeStep - 1) &&
-    trackCheckoutStepViewed(activeStep - 1);
+  const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
+
   const handleNext = async values => {
     let result = null;
 
@@ -280,7 +275,7 @@ const Checkout = ({
 
     if (result) {
       setCurrentStep(activeStep + 1);
-      trackCheckoutStepViewed(activeStep + 1);
+      trackCheckoutStepCompleted(activeStep);
     }
     return true;
   };
@@ -323,8 +318,8 @@ const Checkout = ({
                     xs,
                     0,
                     activeStep,
-                    signupError,
-                    signupSubmitting,
+
+                    signupConfirmation,
                     {
                       email: currentUserEmail
                     }

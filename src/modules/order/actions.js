@@ -2,58 +2,17 @@ import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
+  REQUEST_CANCEL_ORDER,
+  RECEIVED_CANCEL_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
   RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
   RECEIVED_GET_ORDER,
-  REQUEST_REFUND_TRANSACTION,
-  RECEIVED_TRANSACTION_REQUEST_REFUND,
   RESET_ORDER_STATE
 } from './types';
-import EventEmitter from '../../events';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
-
-export const requestRefundTransaction = (authToken, transaction) => (
-  dispatch,
-  getState
-) => {
-  console.log(transaction);
-  const { client, replyTo } = getState().stomp;
-  const params = {
-    id: transaction.orderId,
-    data: {
-      amount: transaction.amount,
-      braintreeId: transaction.braintreeId,
-      orderId: transaction.orderId,
-      orderReference: transaction.orderReference
-    },
-    params: {
-      account_jwt: authToken,
-      jwt: authToken,
-      originalRequest: 'transaction.request.void'
-    }
-  };
-  console.log(params);
-  const payload = JSON.stringify(msgpack.encode(params));
-  console.log('SENDING PAYLOAD', payload);
-  client.send(
-    '/exchange/transaction/transaction.request.refund',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      jwt: authToken,
-      originalRequest: 'transaction.request.refund'
-    },
-    payload
-  );
-
-  dispatch({
-    type: REQUEST_REFUND_TRANSACTION,
-    payload: {}
-  });
-};
 
 export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
@@ -67,6 +26,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
   const { client, replyTo } = getState().stomp;
+  const { merchantAccountId } = getState().storefront;
 
   /**
    * Total hack here, but if you refresh the page, you don't get a these fields
@@ -81,7 +41,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 
   const params = {
     data: { cart },
-    params: { account_jwt, nonceOrToken }
+    params: { account_jwt, nonceOrToken, merchantAccountId }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
@@ -105,6 +65,43 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
   });
+
+  // @segment Order Completed Event
+  // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
+  let orderItemsTransformed = [];
+  order.items.map(item => {
+    orderItemsTransformed.push({
+      'brand': order.storeCode,
+      'image_url': 'https:' + item.variant_img,
+      'name': item.variant_name,
+      'price': Number.parseFloat(item.unit_price).toFixed(2),
+      'product_id': item.variant_id,
+      'quantity': item.quantity,
+      'sku': item.sku,
+      'variant': item.variant_name
+    });
+  });
+
+  window.analytics.track('Order Completed', {
+    'affiliation': order.storeCode,
+    'coupon': order.promo ? order.promo : '',
+    'currency': 'USD',
+    'discount': Number.parseFloat(order.discount).toFixed(2),
+    'email': order.email,
+    'est_ship_date': order.shippingMethod.deliveryEstimate,
+    'item_count': order.items.length,
+    'order_date': order.transactions.transactionDate,
+    'order_id': order.orderId,
+    'order_link': 'https://objectivewellness.com/orders/' + order._id,
+    'payment_method': 'Credit Card',
+    'payment_method_detail': order.paymentData.cardType,
+    'products': orderItemsTransformed,
+    'revenue': order.subtotal,
+    'shipping': order.shippingMethod.price,
+    'subtotal': order.subtotal,
+    'tax': order.tax,
+    'total': order.total
+  });
 };
 
 export const receivedCreateOrderFailure = order => async (dispatch, getState) => {
@@ -117,6 +114,26 @@ export const receivedCreateOrderFailure = order => async (dispatch, getState) =>
     'cart_id': localStorage.cartId,
     'error_message': order
   });
+};
+
+export const requestCancelOrder = orderId => async (dispatch, getState) => {
+  dispatch({
+    type: REQUEST_CANCEL_ORDER,
+    payload: { isLoading: true }
+  });
+
+  const { client, replyTo } = getState().stomp;
+  const account_jwt = getState().account.data.account_jwt;
+  const params = {
+    data: { orderId },
+    params: { account_jwt }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+  client.send('/exchange/order/order.request.cancelorder', {
+    'reply-to': replyTo,
+    'correlation-id': ObjectId(),
+    jwt: account_jwt
+  }, payload);
 };
 
 export const requestFindOrdersByAccount = accountJwt => (
@@ -177,22 +194,6 @@ export const requestGetOrder = (accountJwt, orderId) => (
 export const receivedGetOrder = order => (dispatch, getState) => {
   dispatch({
     type: RECEIVED_GET_ORDER,
-    payload: order
-  });
-};
-
-export const receivedTransactionRequestRefund = order => (
-  dispatch,
-  getState
-) => {
-  dispatch(
-    requestFindOrdersByAccount(
-      getState().account.data.account_jwt,
-      order.accountId
-    )
-  );
-  dispatch({
-    type: RECEIVED_TRANSACTION_REQUEST_REFUND,
     payload: order
   });
 };
