@@ -183,6 +183,7 @@
     .calloutSmall {
       img {
         margin-bottom: 15px;
+        max-height: 240px;
       }
       h2 {
         margin: 17px 0 8px;
@@ -277,6 +278,7 @@
         font-size: 32px;
       }
     }
+
   }
 }
 
@@ -318,6 +320,34 @@
         width: 100%;
         min-width: 300px;
       }
+    }
+   }
+   &.post {
+     .flex .categoryName, .flex .minRead {
+       font-size: 18px;
+       a {
+         font-size: 18px;
+       }
+     }
+     .center {
+       h1 {
+         font-size: 36px;
+         margin-bottom: 25px;
+       }
+       margin-bottom: 20px;
+     }
+     .left {
+      .date {
+        text-align: center;
+        font-size: 14px;
+      }
+     }
+     .border-left {
+      padding-left: 0;
+      border-left: none;
+    }
+    p > b {
+      font-size: 16px;
     }
    }
   }
