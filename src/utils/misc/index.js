@@ -74,71 +74,12 @@ export const debugRabbitResponse = (name, status, data, fields, properties) => {
   }
 };
 
-<<<<<<< HEAD
-export const scrollToRef = ref => {
-  if (!ref.current) {
-    return null;
-  }
-
-  window.scrollTo(0, ref.current.offsetTop);
-
-  return true;
-};
-=======
-/*
-public static function getTrackLink($carrier, $track_no)
-{
-  $link = '';
-  switch ($carrier) {
-    case 'UPS Innovations':
-      $link = 'http://www.ups-mi.net/packageID/PackageID.aspx?PID=' . $track_no;
-      break;
-    case 'USPS':
-    case 'USPS Priority Mail':
-    case 'USPS First Class':
-    case 'USPS International':
-    case 'USPS Intl Priority':
-    case 'FirstInternational':
-      $link = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' . $track_no;
-      break;
-    case 'Airborne':
-      $link = 'http://track.dhl-usa.com//TrackByNbr.asp?ShipmentNumber=' . $track_no;
-      break;
-    case 'DHL Parcels Ground':
-      $link = "https://tools.usps.com/go/TrackConfirmAction?tLabels=" . $track_no;
-      $link = 'https://www.logistics.dhl/us-en/home/tracking/tracking-ecommerce.html?tracking-id=' . $track_no;
-      $link = 'https://webtrack.dhlglobalmail.com/?trackingnumber=' . $track_no;
-      break;
-    case 'FedEx Smart Post':
-    case 'FedEx 2 Day':
-    case 'FedEx Smart':
-    case 'FedEx International Economy':
-      $link = 'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' . $track_no;
-      break;
-    default:
-      if (preg_match("/^USPS/i", $carrier)) {
-        $link = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' . $track_no;
-      }
-      if (preg_match("/^UPS/i", $carrier)) {
-        $link = 'http://wwwapps.ups.com/WebTracking/processInputRequest?sort_by=status&tracknums_displayed=1&TypeOfInquiryNumber=T&loc=en_US&InquiryNumber1=' . $track_no . '&track.x=0&track.y=0';
-      }
-      if (preg_match("/^FedEx/i", $carrier)) {
-        $link = 'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' . $track_no;
-      }
-      if (preg_match("/^DHL/i", $carrier)) {
-        $link = 'https://webtrack.dhlglobalmail.com/?trackingnumber=' . $track_no;
-      }
-      break;
-  }
-  return $link;
-}
- */
-
 export const getTrackingUrl = (carrier, trackingNo) => {
   let trackingUrl = '';
   switch (carrier) {
     case 'UPS Innovations':
-      trackingUrl = 'http://www.ups-mi.net/packageID/PackageID.aspx?PID=' + trackingNo;
+      trackingUrl =
+        'http://www.ups-mi.net/packageID/PackageID.aspx?PID=' + trackingNo;
       break;
     case 'USPS':
     case 'USPS Priority Mail':
@@ -146,34 +87,49 @@ export const getTrackingUrl = (carrier, trackingNo) => {
     case 'USPS International':
     case 'USPS Intl Priority':
     case 'FirstInternational':
-      trackingUrl = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
+      trackingUrl =
+        'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
       break;
     case 'Airborne':
-      trackingUrl = 'http://track.dhl-usa.com//TrackByNbr.asp?ShipmentNumber=' + trackingNo;
+      trackingUrl =
+        'http://track.dhl-usa.com//TrackByNbr.asp?ShipmentNumber=' + trackingNo;
       break;
     case 'DHL Parcels Ground':
-      trackingUrl = "https://tools.usps.com/go/TrackConfirmAction?tLabels=" + trackingNo;
-      trackingUrl = 'https://www.logistics.dhl/us-en/home/tracking/tracking-ecommerce.html?tracking-id=' + trackingNo;
-      trackingUrl = 'https://webtrack.dhlglobalmail.com/?trackingnumber=' + trackingNo;
+      trackingUrl =
+        'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
+      trackingUrl =
+        'https://www.logistics.dhl/us-en/home/tracking/tracking-ecommerce.html?tracking-id=' +
+        trackingNo;
+      trackingUrl =
+        'https://webtrack.dhlglobalmail.com/?trackingnumber=' + trackingNo;
       break;
     case 'FedEx Smart Post':
     case 'FedEx 2 Day':
     case 'FedEx Smart':
     case 'FedEx International Economy':
-      trackingUrl = 'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' + trackingNo;
+      trackingUrl =
+        'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' +
+        trackingNo;
       break;
     default:
       if (carrier.match(/^USPS/i)) {
-        trackingUrl = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
+        trackingUrl =
+          'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
       }
       if (carrier.match(/^UPS/i)) {
-        trackingUrl = 'http://wwwapps.ups.com/WebTracking/processInputRequest?sort_by=status&tracknums_displayed=1&TypeOfInquiryNumber=T&loc=en_US&InquiryNumber1=' + trackingNo + '&track.x=0&track.y=0';
+        trackingUrl =
+          'http://wwwapps.ups.com/WebTracking/processInputRequest?sort_by=status&tracknums_displayed=1&TypeOfInquiryNumber=T&loc=en_US&InquiryNumber1=' +
+          trackingNo +
+          '&track.x=0&track.y=0';
       }
       if (carrier.match(/^FedEx/i)) {
-        trackingUrl = 'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' + trackingNo;
+        trackingUrl =
+          'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' +
+          trackingNo;
       }
       if (carrier.match(/^DHL/i)) {
-        trackingUrl = 'https://webtrack.dhlglobalmail.com/?trackingnumber=' + trackingNo;
+        trackingUrl =
+          'https://webtrack.dhlglobalmail.com/?trackingnumber=' + trackingNo;
       }
       break;
   }
@@ -185,7 +141,7 @@ export const getTracking = (items, status) => {
   let trackingUrl = '';
   const item = items[0];
   if (!item.tracking) return null;
-  if (["shipped", "delivered"].includes(status) && item.tracking) {
+  if (['shipped', 'delivered'].includes(status) && item.tracking) {
     const { number, carrier } = item.tracking;
     trackingNo = number;
     trackingUrl = getTrackingUrl(carrier, number);
@@ -196,8 +152,8 @@ export const getTracking = (items, status) => {
   };
 };
 
-export const getShippingAndTracking = (order) => {
-  const {status, items, shipTracking, createdAt, updatedAt } = order;
+export const getShippingAndTracking = order => {
+  const { status, items, shipTracking, createdAt, updatedAt } = order;
   let tracking = null;
   const processedDate = createdAt;
   let shippedDate = '';
@@ -208,7 +164,7 @@ export const getShippingAndTracking = (order) => {
     const trackingNo = item.tracking.number;
     if (shipTracking[trackingNo] && shipTracking[trackingNo].tracking_status) {
       shippedDate = shipTracking[trackingNo].tracking_status.object_created;
-      if (shipTracking[trackingNo].tracking_status.status === "DELIVERED") {
+      if (shipTracking[trackingNo].tracking_status.status === 'DELIVERED') {
         deliveredDate = shipTracking[trackingNo].tracking_status.status_date;
       }
     }
@@ -218,7 +174,7 @@ export const getShippingAndTracking = (order) => {
     processedDate,
     shippedDate,
     deliveredDate,
-    updatedAt,
+    updatedAt
   };
   return {
     tracking,
@@ -226,4 +182,12 @@ export const getShippingAndTracking = (order) => {
   };
 };
 
->>>>>>> master
+export const scrollToRef = ref => {
+  if (!ref.current) {
+    return null;
+  }
+
+  window.scrollTo(0, ref.current.offsetTop);
+
+  return true;
+};
