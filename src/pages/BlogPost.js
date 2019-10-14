@@ -61,7 +61,7 @@ const BlogPost = ({ computedMatch }) => {
   const renderTags = tags => {
     if (tags.length > 0) {
       return tags.map(tag => (
-        <Link to={`/journal/tag/${tag.fields.slug}`}>{tag.fields.tag}</Link>
+        <Link to={`/journal/tag/${tag.fields.slug}`} key={`tag-key-${tag.fields.slug}`}>{tag.fields.tag}</Link>
       ));
     }
 
@@ -75,14 +75,14 @@ const BlogPost = ({ computedMatch }) => {
 
     let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
-    if (post.fields.featuredImage) {
+    if (post.fields.featuredImage && post.fields.featuredImage.fields) {
       imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`;
     }
 
     let category = 'General';
     let slug = null;
 
-    if (post.fields.categories && post.fields.categories.length > 0) {
+    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
       category = post.fields.categories[0].fields.title;
       slug = post.fields.categories[0].fields.slug;
     }

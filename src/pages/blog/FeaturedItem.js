@@ -5,17 +5,16 @@ import Grid from '@material-ui/core/Grid';
 
 const FeaturedItem = post => {
   let p = post.post;
-
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
-  if (p.fields.featuredImage) {
+  if (p.fields.featuredImage && p.fields.featuredImage.fields) {
     imageUrl = `${p.fields.featuredImage.fields.file.url}?w=424&fm=jpg&q=90`;
   }
 
   let category = 'General';
   let slug = null;
 
-  if (p.fields.categories && p.fields.categories.length > 0) {
+  if (p.fields.categories && p.fields.categories.length > 0 && p.fields.categories[0].fields) {
     category = p.fields.categories[0].fields.title;
     slug = p.fields.categories[0].fields.slug;
   }
