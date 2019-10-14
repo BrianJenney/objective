@@ -15,7 +15,7 @@ const FeaturedItem = post => {
   let category = 'General';
   let slug = null;
 
-  if (p.fields.categories && p.fields.categories.length > 1) {
+  if (p.fields.categories && p.fields.categories.length > 0) {
     category = p.fields.categories[0].fields.title;
     slug = p.fields.categories[0].fields.slug;
   }
