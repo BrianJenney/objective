@@ -1,7 +1,65 @@
 .journal-gallery {
+  .border-left {
+    padding-left: 20px;
+    border-left: 2px solid;
+  }
   .flex {
     display: flex;
     margin-top: 25px;
+  }
+  .left {
+    .date {
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      color: #000000;
+      border-bottom: 2px solid;
+      padding-bottom: 25px;
+    }
+    .tags {
+      display: grid;
+      border-bottom: 2px solid;
+      padding-bottom: 25px;
+      a {
+        font-family: p22-underground, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: #000000;
+        margin-bottom: 10px;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .share {
+      padding: 25px 0;
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: 1.23px;
+      color: #000000;
+      margin-bottom: 0;
+    }
+    .social {
+      display: flex;
+      img {
+        width: 40px;
+        &:first-of-type {
+          margin-right: 20px;
+        }
+      }
+    }
   }
   .header {
     background-color: #fdfbf9;
@@ -182,9 +240,13 @@
       margin: 0;
       .categoryName, .minRead {
         font-size: 24px;
+        a {
+          font-size: 24px;
+          text-decoration: none;
+        }
       }
     }
-    h3 {
+    h3, p > b {
       font-family: p22-underground, sans-serif;
       font-size: 26px;
       font-weight: 600;
