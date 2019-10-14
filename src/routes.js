@@ -22,12 +22,9 @@ import {
   FAQPage,
   Blog,
   BlogPost,
-<<<<<<< HEAD
   BlogCategory,
-  BlogTag
-=======
+  BlogTag,
   AboutUs
->>>>>>> aboutus-page
 } from './pages';
 
 import {
@@ -127,7 +124,11 @@ export default [
   { path: '/password/confirm', exact: true, component: ConfirmPassword },
   { path: '/password/reset', exact: true, component: ResetPassword },
   { path: '/password/success', exact: true, component: ResetSuccess },
-  { path: '/journal/category/:category_slug', exact: true, component: BlogCategory },
+  {
+    path: '/journal/category/:category_slug',
+    exact: true,
+    component: BlogCategory
+  },
   { path: '/journal/tag/:tag_slug', exact: true, component: BlogTag },
   { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
   { path: '/journal', exact: true, component: Blog },
