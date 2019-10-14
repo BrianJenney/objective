@@ -69,78 +69,78 @@ const Terms = () => {
                   <ul>
                     <StyledParagraph>
                       <li>
-                        <StyledLink>Highlights of the Agreement</StyledLink>
+                        <StyledLink href="#highlights">Highlights of the Agreement</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>
+                        <StyledLink href="#our-rights">
                           Our Intellectual Property Rights
                         </StyledLink>
                       </li>
                       <li>
-                        <StyledLink>
+                        <StyledLink href="#your-use">
                           Your Authorized Use of Our Sites
                         </StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Content Submitted by You</StyledLink>
+                        <StyledLink href="#content-submitted">Content Submitted by You</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Interactive Features</StyledLink>
+                        <StyledLink href="#interactive">Interactive Features</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Accounts</StyledLink>
+                        <StyledLink href="#accounts">Accounts</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Descriptions and Orders</StyledLink>
+                        <StyledLink href="#descriptions">Descriptions and Orders</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Third-Party Content and Links</StyledLink>
+                        <StyledLink href="#third-party">Third-Party Content and Links</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Copyright Infringement Notices</StyledLink>
+                        <StyledLink href="#copyright">Copyright Infringement Notices</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Updates to this Agreement</StyledLink>
+                        <StyledLink href="#updates">Updates to this Agreement</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Other Policies</StyledLink>
+                        <StyledLink href="#other-policies">Other Policies</StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Additional Terms</StyledLink>
+                        <StyledLink href="#additional">Additional Terms</StyledLink>
                       </li>
                       <ul>
                         <li>
-                          <StyledLink>Termination</StyledLink>
+                          <StyledLink href="#termination">Termination</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>Children</StyledLink>
+                          <StyledLink href="#children">Children</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>Disclaimer of Medical Advice</StyledLink>
+                          <StyledLink href="#medical">Disclaimer of Medical Advice</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>Disclaimer of Warranty</StyledLink>
+                          <StyledLink href="#warranty">Disclaimer of Warranty</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>Limitation of Liability</StyledLink>
+                          <StyledLink href="#liability">Limitation of Liability</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>Indemnity</StyledLink>
+                          <StyledLink href="#indemnity">Indemnity</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>Consent to Communication</StyledLink>
+                          <StyledLink href="#consent">Consent to Communication</StyledLink>
                         </li>
                         <li>
-                          <StyledLink>International Users</StyledLink>
+                          <StyledLink href="#international">International Users</StyledLink>
                         </li>
                       </ul>
                       <li>
-                        <StyledLink>
+                        <StyledLink href="#disputes">
                           Disputes, Arbitration and Class Action Waiver
                         </StyledLink>
                       </li>
                       <li>
-                        <StyledLink>Contacting Us</StyledLink>
+                        <StyledLink href="#contact">Contacting Us</StyledLink>
                       </li>
                     </StyledParagraph>
                   </ul>
@@ -149,7 +149,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Highlights of the Agreement</StyledSubheaders>
+                <StyledSubheaders id="highlights">Highlights of the Agreement</StyledSubheaders>
                 <StyledParagraph>
                   This Terms of Use Agreement (the “Agreement”) is a legal
                   agreement between you and us governing your use of our
@@ -185,7 +185,7 @@ const Terms = () => {
                       </li>
                     </StyledParagraph>
                   </ul>
-                  <StyledLink>
+                  <StyledLink href="#our-rights">
                     Read more about our rights and control of our Sites and
                     Content
                   </StyledLink>
@@ -223,7 +223,7 @@ const Terms = () => {
                       </li>
                     </StyledParagraph>
                   </ul>
-                  <StyledLink>
+                  <StyledLink href="#your-use">
                     Read more about what you can and cannot do on our Sites
                   </StyledLink>
                 </Box>
@@ -250,7 +250,7 @@ const Terms = () => {
                       </li>
                     </StyledParagraph>
                   </ul>
-                  <StyledLink>
+                  <StyledLink href="#content-submitted">
                     Read more about the Content you transmit to us or through
                     our Sites
                   </StyledLink>
@@ -295,13 +295,13 @@ const Terms = () => {
                       </li>
                     </StyledParagraph>
                   </ul>
-                  <StyledLink>Read the complete Agreement below</StyledLink>
+                  <StyledLink href="#our-rights">Read the complete Agreement below</StyledLink>
                 </Box>
               </ParagraphContainer>
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>
+                <StyledSubheaders id="our-rights">
                   Our Intellectual Property Rights
                 </StyledSubheaders>
                 <StyledParagraph>
@@ -349,7 +349,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>
+                <StyledSubheaders id="your-use">
                   Your Authorized Use of Our Sites
                 </StyledSubheaders>
                 <StyledParagraph>
@@ -442,7 +442,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Content Submitted by You</StyledSubheaders>
+                <StyledSubheaders id="content-submitted">Content Submitted by You</StyledSubheaders>
                 <StyledParagraph>
                   You are responsible for any information, text, images, videos
                   or other materials or content that you post on a Site or
@@ -518,7 +518,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Interactive Features</StyledSubheaders>
+                <StyledSubheaders id="interactive">Interactive Features</StyledSubheaders>
                 <StyledParagraph>
                   We may host message boards, user-generated content,
                   promotions, product reviews, blogs, and other interactive
@@ -575,7 +575,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Accounts</StyledSubheaders>
+                <StyledSubheaders id="accounts">Accounts</StyledSubheaders>
                 <StyledParagraph>
                   In general, you are not obligated to register in order to
                   access the Sites. However, certain sections and features of
@@ -624,7 +624,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Descriptions and Orders</StyledSubheaders>
+                <StyledSubheaders id="descriptions">Descriptions and Orders</StyledSubheaders>
                 <StyledParagraph>
                   We may make improvements and/or changes in products or
                   services described on the Sites, add new features, or
@@ -665,7 +665,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Third-Party Content and Links</StyledSubheaders>
+                <StyledSubheaders id="third-party">Third-Party Content and Links</StyledSubheaders>
                 <StyledParagraph>
                   Any information, statements, opinions or other information provided by third parties and made available on our Sites are those of the respective author(s) and not us. We do not guarantee the validity, accuracy, completeness or reliability of any opinion, advice, service, offer, statement or other Content on our Sites other than those from our authorized representatives acting in an official capacity. Under no circumstance will we be liable for or in connection with any loss or damage caused by your reliance on any Content.
                 </StyledParagraph>
@@ -682,7 +682,7 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Copyright Infringement Notices</StyledSubheaders>
+                <StyledSubheaders id="copyright">Copyright Infringement Notices</StyledSubheaders>
                 <StyledParagraph>If you believe that any Content on a Site infringes upon any copyright which you own or control, you may send a written notification to our designated copyright agent (the “Designated Agent”), identified below, with the following information:</StyledParagraph>
                 <StyledParagraph>(a) A description of the copyrighted work or other intellectual property that you claim has been infringed, with sufficient detail so that we can identify the alleged infringing material;
                 (b) The URL or other specific location on the Site that contains the alleged infringing material described in (a) above, with reasonably sufficient information to enable us to locate the alleged infringing material;
@@ -702,14 +702,14 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Updates to this Agreement</StyledSubheaders>
+                <StyledSubheaders id="updates">Updates to this Agreement</StyledSubheaders>
                 <StyledParagraph>We may revise or otherwise change or update this Agreement from time to time. Please check the “Last Updated” legend at the top of this page to see when this Agreement was last revised. When changes are made to this Agreement they will become immediately effective when published on this page unless otherwise noted. We encourage you to periodically review this Agreement―there may have been changes to our policies that may affect you. If you do not agree to the Agreement as modified, then you must discontinue your use of our Sites. Your continued use of a Site will signify your continued agreement to this Agreement as it may be revised.</StyledParagraph>
                 <StyledParagraph>We may assign this Agreement at any time with or without notice to you. You may not assign or sublicense this Agreement or any of your rights or obligations under this Agreement without our prior written consent.</StyledParagraph>
               </ParagraphContainer>
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Other Policies</StyledSubheaders>
+                <StyledSubheaders id="other-policies">Other Policies</StyledSubheaders>
                 <StyledParagraph>This Agreement applies exclusively to your access to, and use of, the Sites and does not alter in any way the terms or conditions of any other agreement you may have with us for products, services, programs or otherwise. Additional policies and terms may apply to use of specific portions of a Site (such as our Ratings and Review features) and to the purchase of certain merchandise or services and are included as part of this Agreement.</StyledParagraph>
                 <StyledParagraph>Any sweepstakes, contests, coupons, rebates or other promotions made available through a Site will be governed by specific rules that are separate from this Agreement. By participating in any such promotion, you will become subject to those rules, which may vary from the terms set forth herein and which, in addition to describing such promotion, may have eligibility requirements, such as certain age or geographic restrictions. It is your responsibility to read the applicable rules to determine whether or not your participation, registration, submission and/or entry are valid; you agree to read and abide by the applicable rules.</StyledParagraph>
                 <StyledParagraph>We have also adopted a <StyledLink href="https://objectivewellness.com/privacypolicy">Privacy Statement</StyledLink> that you should refer to in order to fully understand how we use and collect information. To learn about our privacy practices, please refer to our <StyledLink href="https://objectivewellness.com/privacypolicy">Privacy Statement</StyledLink>.</StyledParagraph>
@@ -717,49 +717,49 @@ const Terms = () => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Additional Terms</StyledSubheaders>
+                <StyledSubheaders id="additional">Additional Terms</StyledSubheaders>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader>Termination</StyledParagraphHeader>
+                  <StyledParagraphHeader id="termination">Termination</StyledParagraphHeader>
                   <StyledParagraph>The Sites and this Agreement are in effect until terminated by us. In addition to any right or remedy that may be available to us under applicable law, we may suspend, limit, or terminate all or a portion of your access to a Site or any of its features at any time with or without notice and with or without cause, including without limitation, if we believe that you have violated or acted inconsistently with the letter or spirit of this Agreement. The provisions of this Agreement concerning protection of intellectual property rights, authorized use, user submitted content, disclaimers, limitations of liability, indemnity, and disputes, as well as any other provisions that by their nature should survive, shall survive any such termination.</StyledParagraph>
                   <StyledParagraph>Upon any such termination, you must destroy all Content obtained from the Sites and all copies thereof. You agree that if your use of a Site is terminated pursuant to this Agreement, you will not attempt to use that Site under any name, real or assumed, and further agree that if you violate this restriction after being terminated, you indemnify and hold us harmless from any and all liability that we may incur therefore. We reserve the right to have all violators prosecuted to the fullest extent of the law.</StyledParagraph>
                   <StyledParagraph>Even after the termination of this Agreement or of your account or access to a Site, any User Content you have posted or submitted may remain on a Site indefinitely.</StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader>Children</StyledParagraphHeader>
+                  <StyledParagraphHeader id="children">Children</StyledParagraphHeader>
                   <StyledParagraph>Our Sites are not designed to appeal to minors, and we do not knowingly attempt to solicit or receive any information from children under 13. YOU MUST BE AT LEAST 13 TO ACCESS AND USE OUR SITES. If you are under the age of majority in your home state, which is 18 in most states, you may not establish a registered account with us, and you should use our Sites only with the supervision of a parent or guardian who agrees to be bound by this Agreement. Additionally, certain Sites or sections of our Sites, as well as promotions, programs and commerce we may offer on a Site, may be explicitly limited to people over the age of majority. If you are not old enough to access our Sites or certain sections or features of our Sites, you should not attempt to do so.
                   </StyledParagraph>
                   <StyledParagraph>Pursuant to 47 U.S.C. Section 230(d) as amended, we hereby notify you that parental control protections (such as computer hardware, software or filtering services) are commercially available that may assist you in limiting access to material that is harmful to minors. Information identifying current providers of such protections is available at <StyledLink href="https://www.consumer.ftc.gov/features/feature-0038-onguardonline">OnGuard Online</StyledLink>. Please note that we do not endorse any of the products or services listed at such sites.</StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader>Disclaimer of Medical Advice</StyledParagraphHeader>
+                  <StyledParagraphHeader id="medical">Disclaimer of Medical Advice</StyledParagraphHeader>
                   <StyledParagraph>THE CONTENT CONTAINED ON SOME OF OUR SITES MAY CONTAIN INFORMATION ABOUT NATURAL INGREDIENTS, NATURAL PROCESSES, AND/OR NATURAL THERAPIES THAT ARE NOT EVALUATED OR REGULATED BY THE UNITED STATES FOOD AND DRUG ADMINISTRATION. OUR SITES MAY ALSO CONTAIN INFORMATION ABOUT MEDICAL CONDITIONS AND MEDICAL TREATMENTS. SUCH INFORMATION IS INTENDED AS AN EDUCATIONAL AID ONLY. IT IS NOT INTENDED AS MEDICAL ADVICE FOR INDIVIDUAL CONDITIONS OR TREATMENT. IT IS NOT A SUBSTITUTE FOR A PROFESSIONAL MEDICAL DIAGNOSIS, NOR DOES IT REPLACE THE NEED FOR SERVICES PROVIDED BY MEDICAL PROFESSIONALS.</StyledParagraph>
                   <StyledParagraph>ALWAYS SEEK THE ADVICE OF YOUR PHYSICIAN, PHARMACIST OR OTHER QUALIFIED HEALTH CARE PROVIDER WITH ANY QUESTIONS YOU MAY HAVE REGARDING A MEDICAL CONDITION OR TREATMENT OR A CHANGE IN YOUR PERSONAL CARE OR HEALTH CARE REGIME. NEVER DISREGARD PROFESSIONAL MEDICAL ADVICE OR DELAY IN SEEKING IT BECAUSE OF SOMETHING YOU HAVE READ ON A SITE. WE ARE NOT RESPONSIBLE FOR THE RESULTS OF YOUR USE OF THE CONTENT, INCLUDING, BUT NOT LIMITED TO, USERS’ CHOOSING TO SEEK OR NOT TO SEEK PROFESSIONAL MEDICAL CARE, OR USERS’ CHOOSING OR NOT CHOOSING SPECIFIC TREATMENT BASED ON THE CONTENT.</StyledParagraph>
                 </Box>
                  <Box style={{ paddingTop: '25px' }}>
-                   <StyledParagraphHeader>Disclaimer of Warranty</StyledParagraphHeader>
+                   <StyledParagraphHeader id="warranty">Disclaimer of Warranty</StyledParagraphHeader>
                    <StyledParagraph>WE DO NOT WARRANT OR MAKE ANY REPRESENTATIONS REGARDING THE USE, VALIDITY, ACCURACY OR RELIABILITY OF THE CONTENT AVAILABLE ON A SITE OR ANY OTHER SITES LINKED TO OR FROM A SITE. DOWNLOADING OR OTHERWISE OBTAINING ANY CONTENT THROUGH A SITE IS DONE AT YOUR OWN RISK. THE CONTENT OF A SITE IS PROVIDED “AS IS” AND ON AN “AS AVAILABLE” BASIS, WITHOUT WARRANTIES OF ANY KIND EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT POSSIBLE UNDER APPLICABLE LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.</StyledParagraph>
                  </Box>
                  <Box style={{ paddingTop: '25px' }}>
-                   <StyledParagraphHeader>Limitation of Liability</StyledParagraphHeader>
+                   <StyledParagraphHeader id="liability">Limitation of Liability</StyledParagraphHeader>
                    <StyledParagraph>WE AND OUR AFFILIATES, SUBSIDIARIES, DIVISIONS AND RELATED COMPANIES AS WELL AS OUR AGENTS, SUPPLIERS, SERVICE PROVIDERS AND RETAILERS (COLLECTIVELY, THE “RELEASEES”) WILL NOT BE LIABLE FOR ANY DAMAGES OF ANY KIND ARISING OUT OF OR RELATING TO THE USE OR THE INABILITY TO USE A SITE, A SITE’S CONTENT OR EXTERNAL LINKS, INCLUDING BUT NOT LIMITED TO DAMAGES CAUSED BY OR RELATED TO ERRORS, OMISSIONS, INTERRUPTIONS, DEFECTS, DELAY IN OPERATION OR TRANSMISSION, OR ANY COMPUTER VIRUS OR FAILURE. RELEASEES WILL ALSO NOT BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OR ANY LOSS OF DATA OR PROFITS, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES, SO THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU. RELEASEES ALSO SHALL NOT HAVE ANY LIABILITY OR RESPONSIBILITY FOR ANY ACTS, OMISSIONS OR CONDUCT OF ANY USER OR OTHER THIRD PARTY. REGARDLESS OF THE PREVIOUS SENTENCES, IF WE ARE FOUND TO BE LIABLE, OUR LIABILITY TO YOU OR TO ANY THIRD PARTY IS LIMITED TO THE GREATER OF THE ACTUAL TOTAL AMOUNT RECEIVED BY US FROM YOU OR $100.</StyledParagraph>
                  </Box>
                  <Box style={{ paddingTop: '25px' }}>
-                   <StyledParagraphHeader>Indemnity</StyledParagraphHeader>
+                  <StyledParagraphHeader id="indemnity">Indemnity</StyledParagraphHeader>
                    <StyledParagraph>You agree to indemnify, defend and hold us and the Releasees and all of our directors, officers, employees, agents and contractors harmless from and against any and all claims, damages, losses, costs (including without limitation reasonable attorneys’ fees) or other expenses that arise directly or indirectly out of or from (i) your breach of any provision of this Agreement; (ii) your activities in connection with a Site; or (iii) the Content or other information you provide to us through a Site.</StyledParagraph>
                  </Box>
                  <Box style={{ paddingTop: '25px' }}>
-                   <StyledParagraphHeader>Consent to Communication</StyledParagraphHeader>
+                   <StyledParagraphHeader id="consent">Consent to Communication</StyledParagraphHeader>
                    <StyledParagraph>When you use a Site or send communications to us through a Site, you are communicating with us electronically. You consent to receive electronically any communications related to your use of a Site. We may communicate with you by email or by posting notices on the Site. You agree that all agreements, notices, disclosures and other communications that are provided to you electronically satisfy any legal requirement that such communications be in writing. All notices from us intended for receipt by you shall be deemed delivered and effective when sent to the email address you provide to us. Please note that by submitting User Content, creating a Registered User account or otherwise providing us with your email address, postal address or phone number, you are agreeing that we or our agents may contact you at that address or number in a manner consistent with our <StyledLink href="https://objectivewellness.com/privacypolicy">Privacy Statement</StyledLink>.</StyledParagraph>
                  </Box>
                  <Box style={{ paddingTop: '25px' }}>
-                   <StyledParagraphHeader>International Users</StyledParagraphHeader>
+                   <StyledParagraphHeader id="international">International Users</StyledParagraphHeader>
                    <StyledParagraph>Each Site is controlled, operated and administered by us (or our licensees or agents) from our offices within the United States of America and is not intended to subject us to the laws or jurisdiction of any state, country or territory other than that of the United States. Each claim or statement about the effectiveness of our products or comparing the effectiveness of our products is expressly limited to the United States, unless otherwise disclosed. WE DO NOT REPRESENT OR WARRANT THAT A SITE OR ANY PART THEREOF IS APPROPRIATE OR AVAILABLE FOR USE IN ANY PARTICULAR JURISDICTION OTHER THAN THE UNITED STATES. Those who choose to access a Site do so on their own initiative and at their own risk, and are responsible for complying with all local statutes, orders, regulations, rules, and other laws. You are also subject to United States export controls and are responsible for any violations of such controls, including without limitation any United States embargoes or other federal rules and regulations restricting exports. We may limit a Site’s availability, in whole or in part, to any person, geographic area or jurisdiction we choose, at any time and in our sole discretion.</StyledParagraph>
                  </Box>
               </ParagraphContainer>
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders>Disputes, Arbitration and Class Action Waiver</StyledSubheaders>
+                <StyledSubheaders id="disputes">Disputes, Arbitration and Class Action Waiver</StyledSubheaders>
                 <StyledParagraph>PLEASE READ THIS SECTION CAREFULLY – IT MAY SIGNIFICANTLY AFFECT YOUR LEGAL RIGHTS, INCLUDING YOUR RIGHT TO FILE A LAWSUIT IN COURT. You and we agree that any dispute, claim or controversy arising out of or relating in any way to this Agreement, a Site or the <StyledLink href="https://objectivewellness.com/privacypolicy">Privacy Statement</StyledLink> shall be determined by binding arbitration or in small claims court. Arbitration is more informal than a lawsuit in court. Arbitration uses a neutral arbitrator instead of a judge or jury, allows for more limited discovery than in court, and is subject to very limited review by courts. You may choose to be represented by a lawyer in arbitration or proceed without one. You acknowledge that, by agreeing to this Agreement, the U.S. Federal Arbitration Act governs the interpretation and enforcement of this provision, and that you and we are each waiving the right to a trial by jury or to participate in a class action. You also agree that any dispute in connection with a Site, this Agreement or the <StyledLink href="https://objectivewellness.com/privacypolicy">Privacy Statement</StyledLink> will be governed by the laws of the State of California and the United States of America. This provision shall survive termination of this Agreement.</StyledParagraph>
                 <StyledParagraph>If you elect to seek arbitration or file a small claim court action, you must first send to us, by certified mail, a written notice of your claim (“Notice”). The Notice to us must be addressed to: General Counsel, The Clorox Company, 1221 Broadway, Oakland, CA 94612. If we initiate arbitration, we will send a written Notice to an email address you have previously provided to us, if available. A Notice, whether sent by you or by us, must (a) describe the nature and basis of the claim or dispute; and (b) set forth the specific relief sought (“Demand”). If you and we do not reach an agreement to resolve the claim within 30 days after the Notice is received, you or us may commence an arbitration proceeding or file a claim in small claims court. Arbitration forms can be downloaded from <StyledLink href="www.jamsadr.com">www.jamsadr.com</StyledLink>. If you are required to pay a filing fee, after we receive Notice that you have commenced arbitration, we will promptly reimburse you for your payment of the filing fee, unless your claim is for greater than US$10,000 or the arbitrator determines the claims are frivolous, in which event you will be responsible for filing fees.</StyledParagraph>
                 <StyledParagraph>The arbitration shall be administered by JAMS or its successor (“JAMS”) and conducted in accordance with the JAMS Streamlined Arbitration Rules And Procedures in effect at the time the Arbitration is initiated or, if the amount in controversy exceeds $100,000, in accordance with the JAMS Comprehensive Arbitration Rules And Procedures then in effect (respectively, the “JAMS Rules”), except to the extent that the JAMS Rules are inconsistent with this Agreement or the class action waiver described below. The arbitrator shall be selected in accordance with the JAMS Rules or the mutual agreement of the parties, and shall follow California law in adjudicating the Dispute. The arbitrator, and not any federal, state or local court or agency, shall have exclusive authority to resolve all Disputes arising out of or relating to the interpretation, applicability, enforceability or formation of this Agreement, including, but not limited to any claim that all or any part of this Agreement is void or voidable, or whether a claim is subject to arbitration. The arbitrator shall be empowered to grant whatever relief would be available in a court under law or in equity, subject to the limitations set forth herein. The arbitrator shall issue a reasoned written decision setting forth the Arbitrator’s complete determination of the Dispute and the factual findings and legal conclusions relevant to it. The arbitrator’s award shall be binding on the parties, and may be entered as a judgment in any court of competent jurisdiction.</StyledParagraph>
@@ -770,7 +770,7 @@ const Terms = () => {
             </Grid>
             <Grid>
             <ParagraphContainer style={{ border: 'none', paddingBottom: 0 }}>
-              <StyledSubheaders>Contacting Us</StyledSubheaders>
+              <StyledSubheaders id="contact">Contacting Us</StyledSubheaders>
               <StyledParagraph>
                 If you have questions about this Agreement, or if you have technical questions about the operation of a Site, please contact us through this <StyledLink href="https://cloroxconnections.custhelp.com/app/ask/cws/thecloroxcompany.com">
                   online form
