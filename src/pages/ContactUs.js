@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 const ContactUs = () => {
   const classes = useStyles();
-  window.analytics.page("Contact");
+  window.analytics.page('Contact');
   return (
     <ScrollToTop>
       <StyledBackground>
@@ -84,7 +84,14 @@ const ContactUs = () => {
                     Give us a call for immediate assistance and chat with one of
                     our customer care specialists.
                   </StyledParagraph1>
-                  <StyledPhoneNumber>(800) 270-5771</StyledPhoneNumber>
+                  <StyledPhoneNumber>
+                    <Link
+                      href="tel:800-270-5771"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      (800) 270-5771
+                    </Link>
+                  </StyledPhoneNumber>
                 </Box>
               </Grid>
               <Grid className={classes.mailGrid}>
@@ -104,6 +111,7 @@ const ContactUs = () => {
                         paddingBottom: '1.5px',
                         textDecoration: 'none'
                       }}
+                      href="mailto:help@objectivewellness.com"
                     >
                       help@objectivewellness.com
                     </Link>
