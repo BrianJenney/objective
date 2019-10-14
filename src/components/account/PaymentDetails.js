@@ -48,8 +48,17 @@ const AccountPaymentDetails = ({
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
-    const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-    setSelectedIndex(defaultIndex);
+
+    if (paymentMethods.length === 0) {
+      setFormModeEnabled(true);
+    } else {
+      setFormModeEnabled(false);
+    }
+
+    if (selectedIndex < 0) {
+      const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+      setSelectedIndex(defaultIndex);
+    }
   }, [currentUser.data.paymentMethods]);
 
   const handleSelect = evt => {
@@ -106,6 +115,14 @@ const AccountPaymentDetails = ({
       }
 
       requestPatchAccount(account_jwt, payload);
+      setFormModeEnabled(false);
+      setSelectedIndex((currentUser.data.paymentMethods || []).length);
+      if (onSubmit) {
+        onSubmit({
+          ...payload.newCreditCard,
+          nonce: payload.nonce
+        });
+      }
     } catch (err) {
       enqueueSnackbar(err.message, { variant: 'error' });
     }
@@ -132,7 +149,9 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
-      {window.location.pathname.indexOf("/account/payment-details")!==-1 ? (window.analytics.page("Account Payment Details") && (null)) : null}
+      {window.location.pathname.indexOf('/account/payment-details') !== -1
+        ? window.analytics.page('Account Payment Details') && null
+        : null}
       {formModeEnabled ? (
         <PaymentForm
           currentUser={currentUser}

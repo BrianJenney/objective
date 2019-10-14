@@ -46,6 +46,7 @@ const BlogPost = ({ computedMatch }) => {
       setPost(postData);
     }
     fetchData();
+    window.analytics.page('Journal Post');
   }, [post_slug]);
 
   const renderRelatedPosts = posts => {
@@ -61,7 +62,12 @@ const BlogPost = ({ computedMatch }) => {
   const renderTags = tags => {
     if (tags.length > 0) {
       return tags.map(tag => (
-        <Link to={`/journal/tag/${tag.fields.slug}`} key={`tag-key-${tag.fields.slug}`}>{tag.fields.tag}</Link>
+        <Link
+          to={`/journal/tag/${tag.fields.slug}`}
+          key={`tag-key-${tag.fields.slug}`}
+        >
+          {tag.fields.tag}
+        </Link>
       ));
     }
 
@@ -82,7 +88,11 @@ const BlogPost = ({ computedMatch }) => {
     let category = 'General';
     let slug = null;
 
-    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
+    if (
+      post.fields.categories &&
+      post.fields.categories.length > 0 &&
+      post.fields.categories[0].fields
+    ) {
       category = post.fields.categories[0].fields.title;
       slug = post.fields.categories[0].fields.slug;
     }
@@ -107,37 +117,44 @@ const BlogPost = ({ computedMatch }) => {
               </Box>
               <Grid container>
                 <Grid item xs={12} md={2} className="left">
-                  <p className="date">{dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}</p>
-                  {post.fields.tags && post.fields.tags.length > 0
-                  ?
-                  <div className="tags">
-                    {renderTags(post.fields.tags)}
-                  </div>
-                  :
-                  <></>
-                  }
-                  <p className="share">SHARE</p>
-                  <div className="social">
-                    <Link
-                      href="https://www.instagram.com/objective_wellness"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <img
-                        src="https://cdn1.stopagingnow.com/objective/aboutus/ig.png"
-                        alt="instagram"
-                      />
-                    </Link>
-                    <Link
-                      href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <img
-                        src="https://cdn1.stopagingnow.com/objective/aboutus/fb.png"
-                        alt="facebook"
-                      />
-                    </Link>
+                  <p className="date">
+                    {dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}
+                  </p>
+                  <div className="mobile-flex">
+                    <div className="tagholder">
+                      {post.fields.tags && post.fields.tags.length > 0 ? (
+                        <div className="tags">
+                          {renderTags(post.fields.tags)}
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className="icon-holder">
+                      <p className="share">SHARE</p>
+                      <div className="social">
+                        <a
+                          href="https://www.instagram.com/objective_wellness"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <img
+                            src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
+                            alt="instagram"
+                          />
+                        </a>
+                        <a
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <img
+                            src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
+                            alt="facebook"
+                          />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </Grid>
                 <Grid item xs={12} md={10} className="border-left">

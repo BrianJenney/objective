@@ -16,33 +16,29 @@ const BlogCategory = ({ computedMatch }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      let results = await fetchPostsByCategory(category_slug);
+      const results = await fetchPostsByCategory(category_slug);
 
       setTitle(results.title);
       setPosts(results.posts);
     }
     fetchData();
+    window.analytics.page('Journal Category');
   }, []);
 
-  const renderPosts = posts => {
-    return posts.map((item, key) => {
-      return <PostItem post={item} key={ item.sys.id } />;
-    });
-  };
+  const renderPosts = posts =>
+    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
     <ScrollToTop>
       <div className="journal-gallery">
         <Box className="header" py={8}>
           <Container className="container">
-            <h1>{ title }</h1>
+            <h1>{title}</h1>
           </Container>
         </Box>
         <Box className="content" py={8}>
           <Container>
-            <div className="list">
-              { renderPosts(posts) }
-            </div>
+            <div className="list">{renderPosts(posts)}</div>
           </Container>
         </Box>
       </div>
