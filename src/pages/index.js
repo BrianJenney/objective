@@ -18,4 +18,6 @@ export { default as AboutUs } from './AboutUs';
 export { default as Blog } from './Blog';
 export { default as BlogPost } from './BlogPost';
 export { default as BlogCategory } from './BlogCategory';
-export { default as BlogTag} from './BlogTag';
+export { default as BlogTag } from './BlogTag';
+export { default as PrivacyPolicyPage } from './PrivacyPolicy';
+export { default as TermsPage } from './Terms';

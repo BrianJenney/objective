@@ -24,7 +24,9 @@ import {
   BlogPost,
   BlogCategory,
   BlogTag,
-  AboutUs
+  AboutUs,
+  PrivacyPolicyPage,
+  TermsPage
 } from './pages';
 
 import {
@@ -59,6 +61,8 @@ export default [
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
   { path: '/about_us', exact: true, component: AboutUs },
+  { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
+  { path: '/terms', exact: true, component: TermsPage },
   {
     path: '/order',
     auth: true,
