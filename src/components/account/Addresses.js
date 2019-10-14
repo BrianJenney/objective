@@ -25,9 +25,7 @@ const AccountAddresses = ({
   allowFlyMode,
   ...rest
 }) => {
-  const [formModeEnabled, setFormModeEnabled] = useState(
-    !currentUser.data.addressBook || currentUser.data.addressBook.length === 0
-  );
+  const [formModeEnabled, setFormModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [editedIndex, setEditedIndex] = useState(-1);
   const theme = useTheme();
@@ -38,8 +36,19 @@ const AccountAddresses = ({
 
   useEffect(() => {
     const addressesData = currentUser.data.addressBook || [];
-    const defaultIndex = addressesData.findIndex(address => address.isDefault);
-    setSelectedIndex(defaultIndex);
+
+    if (addressesData.length === 0) {
+      setFormModeEnabled(true);
+    } else {
+      setFormModeEnabled(false);
+    }
+
+    if (selectedIndex < 0) {
+      const defaultIndex = addressesData.findIndex(
+        address => address.isDefault
+      );
+      setSelectedIndex(defaultIndex);
+    }
   }, [currentUser.data.addressBook]);
 
   const handleSelect = evt => {
@@ -104,7 +113,15 @@ const AccountAddresses = ({
     const payload = { addressBook: newAddressBook };
 
     requestPatchAccount(account_jwt, payload);
+
     actions.setSubmitting(false);
+    setFormModeEnabled(false);
+    setSelectedIndex(editedIndex);
+    setEditedIndex(-1);
+
+    if (onSubmit) {
+      onSubmit(pureValues);
+    }
 
     return true;
   };
@@ -219,7 +236,11 @@ const AccountAddresses = ({
             style={{ textTransform: 'uppercase' }}
           >
             <MenuLink
-              onClick={() => setFormModeEnabled(true)}
+              onClick={() => {
+                const addressesData = currentUser.data.addressBook || [];
+                setFormModeEnabled(true);
+                setEditedIndex(addressesData.length);
+              }}
               children="Add New Address"
               underline="always"
             />

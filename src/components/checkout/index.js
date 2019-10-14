@@ -246,17 +246,13 @@ const Checkout = ({
     }
   };
 
-  const trackCheckoutStepViewed = step => {
-    window.analytics.track('Checkout Step Viewed', {
-      cart_id: cart._id,
-      step: step
-    });
-  };
-
+  /*
+  @description - Tracks Segment Analytics 'Checkout Step Completed' event
+  */
   const trackCheckoutStepCompleted = step => {
     window.analytics.track('Checkout Step Completed', {
       cart_id: cart._id,
-      step
+      step: step + 1
     });
   };
 
@@ -265,10 +261,8 @@ const Checkout = ({
     scrollToRef(stepRefs[stepIndex - 1]);
   };
 
-  const handleBack = () =>
-    activeStep > 0 &&
-    setCurrentStep(activeStep - 1) &&
-    trackCheckoutStepViewed(activeStep - 1);
+  const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
+
   const handleNext = async values => {
     let result = null;
 
@@ -281,7 +275,7 @@ const Checkout = ({
 
     if (result) {
       setCurrentStep(activeStep + 1);
-      trackCheckoutStepViewed(activeStep + 1);
+      trackCheckoutStepCompleted(activeStep);
     }
     return true;
   };

@@ -83,10 +83,12 @@ export const receivedCreateAccountSuccess = createReply => dispatch => {
     "title": "",
     "username": createReply.email
   });
-
+if(createReply.newsletter){
   window.analytics.track("Signed Up", {
     "email": createReply.email
-  })
+  });
+
+}
 };
 
 export const receivedCreateAccountFailure = error => dispatch => {

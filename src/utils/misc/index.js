@@ -74,55 +74,6 @@ export const debugRabbitResponse = (name, status, data, fields, properties) => {
   }
 };
 
-/*
-public static function getTrackLink($carrier, $track_no)
-{
-  $link = '';
-  switch ($carrier) {
-    case 'UPS Innovations':
-      $link = 'http://www.ups-mi.net/packageID/PackageID.aspx?PID=' . $track_no;
-      break;
-    case 'USPS':
-    case 'USPS Priority Mail':
-    case 'USPS First Class':
-    case 'USPS International':
-    case 'USPS Intl Priority':
-    case 'FirstInternational':
-      $link = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' . $track_no;
-      break;
-    case 'Airborne':
-      $link = 'http://track.dhl-usa.com//TrackByNbr.asp?ShipmentNumber=' . $track_no;
-      break;
-    case 'DHL Parcels Ground':
-      $link = "https://tools.usps.com/go/TrackConfirmAction?tLabels=" . $track_no;
-      $link = 'https://www.logistics.dhl/us-en/home/tracking/tracking-ecommerce.html?tracking-id=' . $track_no;
-      $link = 'https://webtrack.dhlglobalmail.com/?trackingnumber=' . $track_no;
-      break;
-    case 'FedEx Smart Post':
-    case 'FedEx 2 Day':
-    case 'FedEx Smart':
-    case 'FedEx International Economy':
-      $link = 'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' . $track_no;
-      break;
-    default:
-      if (preg_match("/^USPS/i", $carrier)) {
-        $link = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' . $track_no;
-      }
-      if (preg_match("/^UPS/i", $carrier)) {
-        $link = 'http://wwwapps.ups.com/WebTracking/processInputRequest?sort_by=status&tracknums_displayed=1&TypeOfInquiryNumber=T&loc=en_US&InquiryNumber1=' . $track_no . '&track.x=0&track.y=0';
-      }
-      if (preg_match("/^FedEx/i", $carrier)) {
-        $link = 'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' . $track_no;
-      }
-      if (preg_match("/^DHL/i", $carrier)) {
-        $link = 'https://webtrack.dhlglobalmail.com/?trackingnumber=' . $track_no;
-      }
-      break;
-  }
-  return $link;
-}
- */
-
 export const getTrackingUrl = (carrier, trackingNo) => {
   let trackingUrl = '';
   switch (carrier) {

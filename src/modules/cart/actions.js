@@ -33,6 +33,7 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     segmentAnonymousId: localStorageClient.get('ajs_anonymous_id')
   };
   const obj = JSON.stringify(msgpack.encode(params));
+
   stompClient.send(
     '/exchange/cart/cart.request.addtocart',
     {
@@ -41,26 +42,24 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     },
     obj
   );
+
   dispatch({
     type: REQUEST_ADD_TO_CART,
     payload: {}
   });
-  // @segment Product Added
-  
-  let item = product;
-    let productTransformed = {
-      image_url: item.assets.imgs,
-      quantity: 1,
-      sku: item.sku,
-      price: Number.parseFloat(item.effectivePrice),
-      product_id: item.id,
-      variant: item.id,
-      name: item.name,
-      brand: cart.storeCode,
-      cart_id : cart._id
-    };
 
-  window.analytics.track('Product Added', productTransformed);
+  // @segment Product Added
+  window.analytics.track('Product Added', {
+    image_url: 'https:' + product.variant_img,
+    quantity: 1,
+    sku: product.sku,
+    price: Number.parseFloat(product.unit_price),
+    product_id: product.variant_id,
+    variant: product.variant_id,
+    name: product.variant_name,
+    brand: cart.storeCode,
+    cart_id : cart._id
+  });
 };
 
 export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
@@ -82,6 +81,21 @@ export const requestRemoveFromCart = (cart, product) => async (dispatch, getStat
   dispatch({
     type: REQUEST_REMOVE_FROM_CART,
     payload: {}
+  });
+
+  let item = cart.items[product];
+
+  // @segment Product Removed
+  window.analytics.track('Product Removed', {
+    image_url: 'https:' + item.variant_img,
+    quantity: item.quantity,
+    sku: item.sku,
+    price: Number.parseFloat(item.unit_price),
+    product_id: item.variant_id,
+    variant: item.variant_id,
+    name: item.variant_name,
+    brand: cart.storeCode,
+    cart_id: cart._id
   });
 };
 
@@ -247,7 +261,7 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
 
     cart.items.forEach(item => {
       orderItemsTransformed.push({
-        image_url: item.variant_img,
+        image_url: 'https:' + item.variant_img,
         quantity: item.quantity,
         sku: item.sku,
         price: Number.parseFloat(item.unit_price),
