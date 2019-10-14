@@ -63,28 +63,28 @@ const PrivacyPolicy = () => {
               <Box>
                 <ul>
                   <StyledParagraph>
-                    <li><StyledLink>Highlights of Our Practices</StyledLink></li>
-                    <li><StyledLink>What Information We Collect</StyledLink></li>
+                    <li><StyledLink href="#highlights">Highlights of Our Practices</StyledLink></li>
+                    <li><StyledLink href="#info">What Information We Collect</StyledLink></li>
                   <ul>
-                      <li><StyledLink>Personal Information</StyledLink></li>
-                      <li><StyledLink>Device Information</StyledLink></li>
-                      <li><StyledLink>Aggregate and Statistical Information</StyledLink></li>
+                    <li><StyledLink href="#info-personal">Personal Information</StyledLink></li>
+                    <li><StyledLink href="#info-device">Device Information</StyledLink></li>
+                    <li><StyledLink href="#info-aggregate">Aggregate and Statistical Information</StyledLink></li>
                   </ul>
-                    <li><StyledLink>How We Use the Information We Collect</StyledLink></li>
-                    <li><StyledLink>Information Sharing and Disclosure</StyledLink></li>
+                    <li><StyledLink href="#how">How We Use the Information We Collect</StyledLink></li>
+                    <li><StyledLink href="#sharing">Information Sharing and Disclosure</StyledLink></li>
                   <ul>
-                      <li><StyledLink>Your California Privacy Rights</StyledLink></li>
+                    <li><StyledLink href="#california-privacy">Your California Privacy Rights</StyledLink></li>
                   </ul>
-                    <li><StyledLink>Interest Based Advertising</StyledLink></li>
-                    <li><StyledLink>Retention and Storage of Personal Information</StyledLink></li>
-                    <li><StyledLink>Accessing and Updating Your Personal Information</StyledLink></li>
-                    <li><StyledLink>Opting Out of Communications</StyledLink></li>
-                    <li><StyledLink>Securi</StyledLink></li>
-                    <li><StyledLink>Websites Not Covered by this Statement</StyledLink></li>
-                    <li><StyledLink>Children Under the Age of 13</StyledLink></li>
-                    <li><StyledLink>Cross-Border Data Transfers</StyledLink></li>
-                    <li><StyledLink>Contacting Us</StyledLink></li>
-                    <li><StyledLink>Changes to this Privacy Statement</StyledLink></li>
+                    <li><StyledLink href="#interest">Interest Based Advertising</StyledLink></li>
+                    <li><StyledLink href="#retention">Retention and Storage of Personal Information</StyledLink></li>
+                    <li><StyledLink href="#access">Accessing and Updating Your Personal Information</StyledLink></li>
+                    <li><StyledLink href="#optout">Opting Out of Communications</StyledLink></li>
+                    <li><StyledLink href="#security">Security</StyledLink></li>
+                    <li><StyledLink href="#coverage">Websites Not Covered by this Statement</StyledLink></li>
+                    <li><StyledLink href="#age">Children Under the Age of 13</StyledLink></li>
+                    <li><StyledLink href="#border">Cross-Border Data Transfers</StyledLink></li>
+                    <li><StyledLink href="#contact">Contacting Us</StyledLink></li>
+                    <li><StyledLink href="#changes">Changes to this Privacy Statement</StyledLink></li>
                   </StyledParagraph>
                 </ul>
               </Box>
@@ -92,7 +92,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Highlights of Our Practices</StyledSubheaders>
+              <StyledSubheaders id="highlights">Highlights of Our Practices</StyledSubheaders>
               <StyledParagraph style={{ paddingBottom: '25px' }}>
                 This section is intended to provide you with a basic overview of
                 the privacy practices described in this Privacy Statement. For
@@ -125,7 +125,7 @@ const PrivacyPolicy = () => {
                     </li>
                   </StyledParagraph>
                 </ul>
-                <StyledLink>
+                <StyledLink href="#info">
                   Read more about what information we collect
                 </StyledLink>
               </Box>
@@ -155,7 +155,7 @@ const PrivacyPolicy = () => {
                     </li>
                   </StyledParagraph>
                 </ul>
-                <StyledLink>
+                <StyledLink href="#how">
                   Read more about how we use your information
                 </StyledLink>
               </Box>
@@ -191,7 +191,7 @@ const PrivacyPolicy = () => {
                     <li>When required by law and/or government authorities.</li>
                   </StyledParagraph>
                 </ul>
-                <StyledLink>
+                <StyledLink href="#sharing">
                   Read more about how we share your information
                 </StyledLink>
               </Box>
@@ -230,7 +230,7 @@ const PrivacyPolicy = () => {
                     </li>
                   </StyledParagraph>
                 </ul>
-                <StyledLink>
+                <StyledLink href="#access">
                   Read more about updating your information and opting out of
                   communications
                 </StyledLink>
@@ -239,13 +239,13 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>What Information We Collect</StyledSubheaders>
+              <StyledSubheaders id="info">What Information We Collect</StyledSubheaders>
               <StyledParagraph>
                 We may collect several types of information about you,
                 including:
               </StyledParagraph>
               <Box style={{ paddingTop: '25px' }}>
-                <StyledParagraphHeader>
+                <StyledParagraphHeader id="info-personal">
                   Personal information:
                 </StyledParagraphHeader>
                 <ul>
@@ -321,7 +321,7 @@ const PrivacyPolicy = () => {
                 </ul>
               </Box>
               <Box style={{ paddingTop: '25px' }}>
-                <StyledParagraphHeader>
+                <StyledParagraphHeader id="info-device">
                   Device information we collect through our Properties:
                 </StyledParagraphHeader>
                 <ul>
@@ -353,16 +353,16 @@ const PrivacyPolicy = () => {
                     </li>
                     <li>
                       Cookies and similar technologies: A “Cookie” is a small
-                      text file containing a random and unique alphanumeric
-                      identifier that our Properties may transfer to your
-                      computer’s hard drive through your web browser that
-                      enables our systems to recognize your browser. We employ
-                      technologies like Cookies, web beacons, clear GIF, pixel
-                      or Internet tag technologies to uniquely identify your
-                      account, or the IP address associated with your Internet
-                      device. We also permit third parties to gather information
-                      on our websites, including for advertising purposes,
-                      through these technologies, as described below. Cookies
+                        text file containing a random and unique alphanumeric
+                        identifier that our Properties may transfer to your
+                        computer’s hard drive through your web browser that
+                        enables our systems to recognize your browser. We employ
+                        technologies like Cookies, web beacons, clear GIF, pixel
+                        or Internet tag technologies to uniquely identify your
+                        account, or the IP address associated with your Internet
+                        device. We also permit third parties to gather information
+                        on our websites, including for advertising purposes,
+                      through these technologies, as described <StyledLink href="#interest">below</StyledLink>. Cookies
                       and the other technologies mentioned above provide
                       information related to the ways consumers interact with
                       our advertising or our Properties, like browser type,
@@ -444,7 +444,7 @@ const PrivacyPolicy = () => {
                     </li>
                   </StyledParagraph>
                 </ul>
-                <StyledParagraphHeader>
+                <StyledParagraphHeader id="info-aggregate">
                   Analytical and statistical information we collect through our
                   Properties:
                 </StyledParagraphHeader>
@@ -466,17 +466,17 @@ const PrivacyPolicy = () => {
                     <li>
                       Website analytics: We may work with third-party service
                       providers who use the technologies described in this
-                      Privacy Statement <StyledLink>above</StyledLink> to
-                      conduct website analytics to help us track and understand
-                      how visitors use our Properties. For example, we use
-                      Google Analytics, which uses cookies and similar
-                      technologies to collect and analyze information about use
-                      of the Properties and report on activities and trends.
-                      This service may also collect information regarding the
-                      use of other websites, apps and online resources. You can
-                      learn about Google’s practices by going to
-                      www.google.com/policies/privacy/partners/, and opt out of
-                      them by downloading the Google Analytics opt-out browser
+                      Privacy Statement <StyledLink href="#info-device">above</StyledLink> to
+                              conduct website analytics to help us track and understand
+                              how visitors use our Properties. For example, we use
+                              Google Analytics, which uses cookies and similar
+                              technologies to collect and analyze information about use
+                              of the Properties and report on activities and trends.
+                              This service may also collect information regarding the
+                              use of other websites, apps and online resources. You can
+                              learn about Google’s practices by going to{' '}
+                      <StyledLink href="https://policies.google.com/technologies/partner-sites">www.google.com/policies/privacy/partners/</StyledLink>, and opt out of
+                        them by downloading the Google Analytics opt-out browser
                       add-on, available at{' '}
                       <StyledLink href="https://tools.google.com/dlpage/gaoptout">
                         https://tools.google.com/dlpage/gaoptout
@@ -498,7 +498,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>
+              <StyledSubheaders id="how">
                 How We Use the Information We Collect:
               </StyledSubheaders>
               <StyledParagraph>
@@ -558,7 +558,7 @@ const PrivacyPolicy = () => {
                       be of interest to you. If you no longer want to receive
                       these direct marketing communications, you may opt-out of
                       such communications by the methods describe in the{' '}
-                      <StyledLink>“Opting Out of Communications”</StyledLink>{' '}
+                      <StyledLink href="#optout">“Opting Out of Communications”</StyledLink>{' '}
                       section below.
                     </li>
                   </StyledParagraph>
@@ -568,7 +568,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>
+              <StyledSubheaders id="sharing">
                 Information Sharing and Disclosure
               </StyledSubheaders>
               <StyledParagraph>
@@ -691,7 +691,7 @@ const PrivacyPolicy = () => {
                   such party’s own privacy policy.
                 </StyledParagraph>
                 <Box style={{ paddingTop: '20px' }}>
-                  <StyledParagraphHeader>
+                  <StyledParagraphHeader id="california-privacy">
                     Your California Privacy Rights
                   </StyledParagraphHeader>
                   <StyledParagraph>
@@ -705,7 +705,7 @@ const PrivacyPolicy = () => {
                     opt-in or out, we are exempt from this requirement. If you
                     still wish to learn more about our compliance with this
                     requirement, please contact us using the methods listed
-                    below under <StyledLink>“Contacting Us.”</StyledLink>
+                    below under <StyledLink href="#contact">“Contacting Us.”</StyledLink>
                   </StyledParagraph>
                 </Box>
               </Box>
@@ -713,7 +713,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Interest-based Advertising</StyledSubheaders>
+              <StyledSubheaders id="interest">Interest-based Advertising</StyledSubheaders>
               <StyledParagraph>
                 We may place or recognize a unique Cookie on your browser when
                 you visit our Properties for purposes of serving you targeted
@@ -789,7 +789,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>
+              <StyledSubheaders id="retention">
                 Retention and Storage of Personal Information
               </StyledSubheaders>
               <StyledParagraph>
@@ -811,7 +811,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>
+              <StyledSubheaders id="access">
                 Accessing and Updating Your Personal Information
               </StyledSubheaders>
               <StyledParagraph>
@@ -820,7 +820,7 @@ const PrivacyPolicy = () => {
                 to us, you can access your account on the applicable website to
                 view and make changes or corrections to your personal
                 information. You may also contact us using the methods described
-                below under <StyledLink>“Contacting Us”</StyledLink> to request
+                below under <StyledLink href="#contact">“Contacting Us”</StyledLink> to request
                 access or updates to your information. We will try to comply
                 with your request as soon as reasonably practicable.
               </StyledParagraph>
@@ -828,7 +828,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Opting Out of Communications</StyledSubheaders>
+              <StyledSubheaders id="optout">Opting Out of Communications</StyledSubheaders>
               <StyledParagraph>
                 If you no longer want to receive marketing-related emails from
                 one of our brands on a going-forward basis, you may opt-out of
@@ -843,7 +843,7 @@ const PrivacyPolicy = () => {
                 sent by that brand. If you are having difficulty unsubscribing
                 from our marketing communications using the above methods,
                 please contact us directly using the methods listed below under{' '}
-                <StyledLink>Contacting Us</StyledLink>.
+                <StyledLink href="#contact">Contacting Us</StyledLink>.
               </StyledParagraph>
               <StyledParagraph>
                 Please allow ample time for us to process your request. However,
@@ -864,7 +864,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Security</StyledSubheaders>
+              <StyledSubheaders id="security">Security</StyledSubheaders>
               <StyledParagraph>
                 We use commercially reasonable organizational, technical and
                 administrative means intended to protect stored and transmitted
@@ -878,13 +878,13 @@ const PrivacyPolicy = () => {
                 have reason to believe that your interaction with us is no
                 longer secure (for example, if you feel that the security of any
                 account you might have with us has been compromised), please{' '}
-                <StyledLink>“Contact Us”</StyledLink> immediately.
+                <StyledLink href="#contact">“Contact Us”</StyledLink> immediately.
               </StyledParagraph>
             </ParagraphContainer>
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>
+              <StyledSubheaders id="coverage">
                 Websites Not Covered by this Privacy Policy
               </StyledSubheaders>
               <StyledParagraph>
@@ -947,7 +947,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Children</StyledSubheaders>
+              <StyledSubheaders id="age">Children</StyledSubheaders>
               <StyledParagraph>
                 Our Properties are not intended for children under the age of 18
                 and we do not knowingly collect personal information from
@@ -959,7 +959,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Cross-Border Transfers</StyledSubheaders>
+              <StyledSubheaders id="border">Cross-Border Transfers</StyledSubheaders>
               <StyledParagraph>
                 Because we operate globally, your personal information may be
                 stored and processed in any country where we have facilities or
@@ -972,7 +972,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer>
-              <StyledSubheaders>Contacting Us</StyledSubheaders>
+              <StyledSubheaders id="contact">Contacting Us</StyledSubheaders>
               <StyledParagraph>
                 Please direct any inquiries related to this Privacy Statement or
                 personal information we have collected about you to our Privacy
@@ -993,7 +993,7 @@ const PrivacyPolicy = () => {
           </Grid>
           <Grid>
             <ParagraphContainer style={{ border: 'none', paddingBottom: 0 }}>
-              <StyledSubheaders>
+              <StyledSubheaders id="changes">
                 Changes to this Privacy Statement
               </StyledSubheaders>
               <StyledParagraph>
