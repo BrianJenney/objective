@@ -10,11 +10,6 @@ import { fetchPostsByCategory } from '../utils/blog';
 import PostItem from './blog/PostItem';
 
 const BlogCategory = ({ computedMatch }) => {
-  let blogCategoryTracked = false;
-  if (!blogCategoryTracked) {
-    window.analytics.page('Journal Category');
-  }
-  blogCategoryTracked = true;
   const { category_slug } = computedMatch.params;
 
   const [title, setTitle] = useState('General');
@@ -27,6 +22,7 @@ const BlogCategory = ({ computedMatch }) => {
       setPosts(results.posts);
     }
     fetchData();
+    window.analytics.page('Journal Category');
   }, []);
 
   const renderPosts = posts =>
