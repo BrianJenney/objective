@@ -15,6 +15,7 @@ import { fetchPostsByTag } from '../utils/blog';
 import PostItem from './blog/PostItem';
 
 const BlogTag = ({ computedMatch }) => {
+  window.analytics.page('Journal Tag');
   const { tag_slug } = computedMatch.params;
 
   const theme = useTheme();
@@ -24,7 +25,7 @@ const BlogTag = ({ computedMatch }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      let results = await fetchPostsByTag(tag_slug);
+      const results = await fetchPostsByTag(tag_slug);
 
       setTag(results.tag);
       setPosts(results.posts);
@@ -32,25 +33,20 @@ const BlogTag = ({ computedMatch }) => {
     fetchData();
   }, []);
 
-  const renderPosts = posts => {
-    return posts.map((item, key) => {
-      return <PostItem post={item} key={ item.sys.id } />;
-    });
-  };
+  const renderPosts = posts =>
+    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
     <ScrollToTop>
       <div className="journal-gallery">
         <Box className="header" py={8}>
           <Container className="container">
-            <h1>{ tag }</h1>
+            <h1>{tag}</h1>
           </Container>
         </Box>
         <Box className="content" py={8}>
           <Container>
-            <div className="list">
-              { renderPosts(posts) }
-            </div>
+            <div className="list">{renderPosts(posts)}</div>
           </Container>
         </Box>
       </div>
