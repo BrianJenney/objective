@@ -276,6 +276,7 @@ const Checkout = ({
 
     if (result) {
       setActiveStep(activeStep + 1);
+      trackCheckoutStepCompleted(activeStep);
     }
     return true;
   };
