@@ -984,7 +984,7 @@ const PrivacyPolicy = () => {
                 . If you have any questions or comments about our company or our
                 products or have other customer service needs, please{' '}
                 <StyledLink href="https://www.thecloroxcompany.com/contact-us/">
-                 click here
+                 click here{' '}
                 </StyledLink>
                 for information on contacting our consumer service
                 representatives.
