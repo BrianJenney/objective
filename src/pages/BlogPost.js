@@ -15,6 +15,8 @@ import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
 import FeaturedItem from './blog/FeaturedItem';
 
+const dateFormat = require('dateformat');
+
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
@@ -52,6 +54,17 @@ const BlogPost = ({ computedMatch }) => {
         <FeaturedItem post={item} key={item.sys.id} />
       ));
     }
+
+    return <></>;
+  };
+
+  const renderTags = tags => {
+    if (tags.length > 0) {
+      return tags.map(tag => (
+        <Link to={`/journal/tag/${tag.fields.slug}`}>{tag.fields.tag}</Link>
+      ));
+    }
+
     return <></>;
   };
 
@@ -94,13 +107,15 @@ const BlogPost = ({ computedMatch }) => {
               </Box>
               <Grid container>
                 <Grid item xs={12} md={2} className="left">
-                  <p className="date">September XX, 2019</p>
+                  <p className="date">{dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}</p>
+                  {post.fields.tags && post.fields.tags.length > 0
+                  ?
                   <div className="tags">
-                    <Link to="/">Tag 1</Link>
-                    <Link to="/">Tag 2</Link>
-                    <Link to="/">Tag 3</Link>
-                    <Link to="/">Tag 4</Link>
+                    {renderTags(post.fields.tags)}
                   </div>
+                  :
+                  <></>
+                  }
                   <p className="share">SHARE</p>
                   <div className="social">
                     <Link
