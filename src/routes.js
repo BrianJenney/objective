@@ -23,7 +23,8 @@ import {
   Blog,
   BlogPost,
   BlogCategory,
-  BlogTag
+  BlogTag,
+  AboutUs
 } from './pages';
 
 import {
@@ -57,6 +58,7 @@ export default [
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
+  { path: '/about_us', exact: true, component: AboutUs },
   {
     path: '/order',
     auth: true,
@@ -122,7 +124,11 @@ export default [
   { path: '/password/confirm', exact: true, component: ConfirmPassword },
   { path: '/password/reset', exact: true, component: ResetPassword },
   { path: '/password/success', exact: true, component: ResetSuccess },
-  { path: '/journal/category/:category_slug', exact: true, component: BlogCategory },
+  {
+    path: '/journal/category/:category_slug',
+    exact: true,
+    component: BlogCategory
+  },
   { path: '/journal/tag/:tag_slug', exact: true, component: BlogTag },
   { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
   { path: '/journal', exact: true, component: Blog },
