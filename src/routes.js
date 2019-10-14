@@ -21,7 +21,8 @@ import {
   ContactUsPage,
   FAQPage,
   Blog,
-  BlogPost
+  BlogPost,
+  AboutUs
 } from './pages';
 
 import {
@@ -55,6 +56,7 @@ export default [
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
+  { path: '/about_us', exact: true, component: AboutUs },
   {
     path: '/order',
     auth: true,
