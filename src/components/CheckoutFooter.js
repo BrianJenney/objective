@@ -93,7 +93,14 @@ const NeedHelpDialog = () => {
                   <Typography variant="h2">
                     Need help? Give us a call for immediate assistance:
                   </Typography>
-                  <Typography>(800) 270-5771</Typography>
+                  <Typography>
+                    <Link
+                      href="tel:800-270-5771"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      (800) 270-5771
+                    </Link>
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -112,6 +119,7 @@ const NeedHelpDialog = () => {
                         paddingBottom: '1px',
                         textDecoration: 'none'
                       }}
+                      href="mailto:help@objectivewellness.com"
                     >
                       help@objectivewellness.com
                     </Link>

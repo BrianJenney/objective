@@ -204,7 +204,7 @@ const Footer = ({ location, currentUser }) => {
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
 
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
-  const gotoUrl = (url, login) => currentUser.data.account_jwt ? url : login;
+  const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
 
   const handleSubmit = useCallback(
     ({ email }) => {
@@ -340,12 +340,12 @@ const Footer = ({ location, currentUser }) => {
                             letterSpacing: 'normal'
                           }}
                         >
-                          Be a step ahead and 
+                          Be a step ahead and{' '}
                           <NavLink
                             to="/signup"
                             underline="always"
                             children="create an account"
-                          ></NavLink> 
+                          ></NavLink>{' '}
                           in seconds.
                         </Typography>
                       </>
@@ -388,7 +388,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
                     <Link
-                      href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                      href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                       target="_blank"
                       rel="noopener"
                     >
@@ -431,7 +431,7 @@ const Footer = ({ location, currentUser }) => {
                   >
                     If you have difficulty accessing any content, feature or
                     functionality on our website or on our other electronic
-                    platforms, please email us at 
+                    platforms, please email us at
                     <Link
                       style={{
                         borderBottom: '1px solid #fff',
@@ -439,7 +439,7 @@ const Footer = ({ location, currentUser }) => {
                       }}
                     >
                       Help@objectivewellness.com
-                    </Link> 
+                    </Link>
                     or call us at 800-270-5771 so that we can provide you access
                     through an alternative method.
                   </Typography>
@@ -555,12 +555,12 @@ const Footer = ({ location, currentUser }) => {
                             letterSpacing: 'normal'
                           }}
                         >
-                          Be a step ahead and 
+                          Be a step ahead and{' '}
                           <NavLink
                             to="/signup"
                             underline="always"
                             children="create an account"
-                          ></NavLink> 
+                          ></NavLink>{' '}
                           in seconds.
                         </Typography>
                       </>
@@ -610,7 +610,7 @@ const Footer = ({ location, currentUser }) => {
                         className="border-left icon border-right"
                       >
                         <Link
-                          href="https://www.facebook.com/Objective_Wellness-114299813287253/?modal=admin_todo_tour"
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                           target="_blank"
                           rel="noopener"
                         >
@@ -649,16 +649,17 @@ const Footer = ({ location, currentUser }) => {
                   >
                     If you have difficulty accessing any content, feature or
                     functionality on our website or on our other electronic
-                    platforms, please email us at 
+                    platforms, please email us at{' '}
                     <Link
                       style={{
                         cursor: 'pointer',
                         borderBottom: '1px solid #fff',
                         textDecoration: 'none'
                       }}
+                      href="mailto:help@objectivewellness.com"
                     >
                       Help@objectivewellness.com
-                    </Link> 
+                    </Link>{' '}
                     or call us at 800-270-5771 so that we can provide you access
                     through an alternative method.
                   </Typography>
