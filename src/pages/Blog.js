@@ -15,7 +15,11 @@ import FeaturedPost from './blog/FeaturedPost';
 import FeaturedItem from './blog/FeaturedItem';
 
 const Blog = () => {
-  window.analytics.page('Journal Home');
+  let blogTracked = false;
+  if (!blogTracked) {
+    window.analytics.page('Journal Home');
+  }
+  blogTracked = true;
   const [featuredMain, setFeaturedMain] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
