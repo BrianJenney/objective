@@ -190,7 +190,7 @@ export const StyledText = withStyles(theme => ({
   }
 }))(Typography);
 
-export const MoreInfoLink = withStyles(theme => ({
+export const StyledLink = withStyles(theme => ({
   root: {
     fontFamily: 'FreightTextProMedium-Regular',
     fontSize: '24px',
