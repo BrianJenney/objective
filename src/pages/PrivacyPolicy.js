@@ -11,8 +11,8 @@ import {
   StyledSubheaders,
   StyledParagraphHeader,
   StyledLink
-} from './privacyPolicy/StyledComponents';
-import './privacyPolicy/style.scss';
+} from './privacyPolicyAndTerms/StyledComponents';
+import './privacyPolicyAndTerms/style.scss';
 
 const PrivacyPolicy = () => {
   return (
@@ -21,6 +21,9 @@ const PrivacyPolicy = () => {
       <StyledContainer className="privacypolicy-container">
         <Box>
           <Grid>
+            <Box style={{paddingBottom: 35}}>
+              <StyledParagraph>Objective is a part of the The Clorox Company’s family of brands supporting the overall corporate mission to make everyday life better, every day. Please read the Privacy Policy below for further details.</StyledParagraph>  
+            </Box>  
             <Box textAlign="center">
               <StyledTitle>Privacy Policy Statement</StyledTitle>
             </Box>
@@ -62,24 +65,16 @@ const PrivacyPolicy = () => {
                   <StyledParagraph>
                     <li><StyledLink>Highlights of Our Practices</StyledLink></li>
                     <li><StyledLink>What Information We Collect</StyledLink></li>
-                  </StyledParagraph>
                   <ul>
-                    <StyledParagraph>
                       <li><StyledLink>Personal Information</StyledLink></li>
                       <li><StyledLink>Device Information</StyledLink></li>
                       <li><StyledLink>Aggregate and Statistical Information</StyledLink></li>
-                    </StyledParagraph>
                   </ul>
-                  <StyledParagraph>
                     <li><StyledLink>How We Use the Information We Collect</StyledLink></li>
                     <li><StyledLink>Information Sharing and Disclosure</StyledLink></li>
-                  </StyledParagraph>
                   <ul>
-                    <StyledParagraph>
                       <li><StyledLink>Your California Privacy Rights</StyledLink></li>
-                    </StyledParagraph>
                   </ul>
-                  <StyledParagraph>
                     <li><StyledLink>Interest Based Advertising</StyledLink></li>
                     <li><StyledLink>Retention and Storage of Personal Information</StyledLink></li>
                     <li><StyledLink>Accessing and Updating Your Personal Information</StyledLink></li>
@@ -987,11 +982,11 @@ const PrivacyPolicy = () => {
                   online form
                 </StyledLink>
                 . If you have any questions or comments about our company or our
-                products or have other customer service needs,{' '}
+                products or have other customer service needs, please{' '}
                 <StyledLink href="https://www.thecloroxcompany.com/contact-us/">
-                  please click
+                 click here
                 </StyledLink>
-                here for information on contacting our consumer service
+                for information on contacting our consumer service
                 representatives.
               </StyledParagraph>
             </ParagraphContainer>
