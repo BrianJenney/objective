@@ -49,10 +49,14 @@ const AccountAddresses = ({
       );
       setSelectedIndex(defaultIndex);
     }
-    if(window.location.pathname.indexOf("/account/addresses")!==-1){
-    window.analytics.page("Account Addresses");
-    }
+
   }, [currentUser.data.addressBook]);
+
+  useEffect(()=>{
+    if(window.location.pathname.indexOf("/account/addresses")!==-1){
+      window.analytics.page("Account Addresses");
+      }
+  },[])
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);

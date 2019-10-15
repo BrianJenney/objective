@@ -10,7 +10,6 @@ import ResearchSources from './product/ResearchSources';
 import ScrollToTop from '../components/common/ScrollToTop';
 
 import { ProductStore } from '../contexts/ProductContext';
-let pdpTracked = false;
 const Product = ({ match }) => {
   const { product_slug } = match.params;
 
