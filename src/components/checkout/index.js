@@ -304,7 +304,6 @@ const Checkout = ({
 
   return (
     <>
-      {trackCheckoutStarted()}
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
           <Box py={10} className="checkout-wrapper">
