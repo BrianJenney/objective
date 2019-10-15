@@ -20,6 +20,7 @@ export const FORM_TYPES = {
   CHECKOUT: 'checkout'
 };
 
+let accountPaymentDetailsTracked = false;
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
@@ -48,9 +49,24 @@ const AccountPaymentDetails = ({
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
-    const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-    setSelectedIndex(defaultIndex);
+
+    if (paymentMethods.length === 0) {
+      setFormModeEnabled(true);
+    } else {
+      setFormModeEnabled(false);
+    }
+
+    if (selectedIndex < 0) {
+      const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+      setSelectedIndex(defaultIndex);
+    }
   }, [currentUser.data.paymentMethods]);
+
+  useEffect(() =>{
+    if(window.location.pathname.indexOf("/account/payment-details")!==-1){
+    window.analytics.page("Account Payment Details");
+    }
+  },[])
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
@@ -106,6 +122,14 @@ const AccountPaymentDetails = ({
       }
 
       requestPatchAccount(account_jwt, payload);
+      setFormModeEnabled(false);
+      setSelectedIndex((currentUser.data.paymentMethods || []).length);
+      if (onSubmit) {
+        onSubmit({
+          ...payload.newCreditCard,
+          nonce: payload.nonce
+        });
+      }
     } catch (err) {
       enqueueSnackbar(err.message, { variant: 'error' });
     }
@@ -125,6 +149,8 @@ const AccountPaymentDetails = ({
     return true;
   };
 
+
+
   let addressSeedData = addressSeed;
   if (seedEnabled && isEmpty(addressSeed)) {
     addressSeedData = getDefaultEntity(addressBook);
@@ -132,7 +158,6 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
-      {window.location.pathname.indexOf("/account/payment-details")!==-1 ? (window.analytics.page("Account Payment Details") && (null)) : null}
       {formModeEnabled ? (
         <PaymentForm
           currentUser={currentUser}

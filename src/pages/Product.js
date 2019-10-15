@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -10,13 +10,13 @@ import ResearchSources from './product/ResearchSources';
 import ScrollToTop from '../components/common/ScrollToTop';
 
 import { ProductStore } from '../contexts/ProductContext';
-let pdpTracked = false;
 const Product = ({ match }) => {
   const { product_slug } = match.params;
-  if(!pdpTracked){
-  window.analytics.page("PDP");
-  pdpTracked = true;
-  }
+
+  useEffect(()=>{
+    window.analytics.page("PDP");
+  },[])
+
   return (
     <ScrollToTop>
       <ProductStore productSlug={product_slug}>

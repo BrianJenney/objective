@@ -36,9 +36,27 @@ const AccountAddresses = ({
 
   useEffect(() => {
     const addressesData = currentUser.data.addressBook || [];
-    const defaultIndex = addressesData.findIndex(address => address.isDefault);
-    setSelectedIndex(defaultIndex);
+
+    if (addressesData.length === 0) {
+      setFormModeEnabled(true);
+    } else {
+      setFormModeEnabled(false);
+    }
+
+    if (selectedIndex < 0) {
+      const defaultIndex = addressesData.findIndex(
+        address => address.isDefault
+      );
+      setSelectedIndex(defaultIndex);
+    }
+
   }, [currentUser.data.addressBook]);
+
+  useEffect(()=>{
+    if(window.location.pathname.indexOf("/account/addresses")!==-1){
+      window.analytics.page("Account Addresses");
+      }
+  },[])
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
@@ -102,7 +120,15 @@ const AccountAddresses = ({
     const payload = { addressBook: newAddressBook };
 
     requestPatchAccount(account_jwt, payload);
+
     actions.setSubmitting(false);
+    setFormModeEnabled(false);
+    setSelectedIndex(editedIndex);
+    setEditedIndex(-1);
+
+    if (onSubmit) {
+      onSubmit(pureValues);
+    }
 
     return true;
   };
@@ -117,10 +143,9 @@ const AccountAddresses = ({
 
     return true;
   };
+
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      
-      {window.location.pathname.indexOf("/account/addresses")!==-1 ? (window.analytics.page("Account Addresses") && (null)) : null}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}
@@ -216,7 +241,11 @@ const AccountAddresses = ({
             style={{ textTransform: 'uppercase' }}
           >
             <MenuLink
-              onClick={() => setFormModeEnabled(true)}
+              onClick={() => {
+                const addressesData = currentUser.data.addressBook || [];
+                setFormModeEnabled(true);
+                setEditedIndex(addressesData.length);
+              }}
               children="Add New Address"
               underline="always"
             />

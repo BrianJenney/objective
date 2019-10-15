@@ -223,7 +223,7 @@ const AddressForm = ({
                 component={Typography}
                 color="#979797"
                 variant="body2"
-                children="USPS Ground 3-5 days"
+                children="USPS Priority 3-5 days"
                 fontSize={16}
                 lineHeight={1.69}
               />

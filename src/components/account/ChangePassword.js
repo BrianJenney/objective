@@ -77,7 +77,14 @@ const ChangePassword = ({
         setResultVisible(false);
       }
     }
+
   }, [currentUser.changePasswordSubmitting]);
+
+  useEffect(() => {
+    if(window.location.pathname.indexOf("/account/profile")!==-1){
+    window.analytics.page("Account Change Password")
+    }
+  },[])
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
@@ -234,7 +241,6 @@ const ChangePassword = ({
   );
   return (
     <Grid container className="account-change-password">
-      {window.location.pathname.indexOf("/account/profile")!==-1 ? (window.analytics.page("Account Change Password") && (null)) : null}
       <Grid item xs={12} md={12}>
         <Formik
           initialValues={getInitialValues(INITIAL_VALUES, {})}

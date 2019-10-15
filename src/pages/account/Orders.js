@@ -109,7 +109,7 @@ const columns = [
   },
   */
 ];
-let ordersPageTracked = false;
+
 const AccountOrders = ({ currentUser: { data } }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -126,15 +126,16 @@ const AccountOrders = ({ currentUser: { data } }) => {
     }
   }, [dispatch, data.orders]);
 
+  useEffect(()=>{
+    window.analytics.page("Account Orders");
+  },[]);
+
   for (let key in data.orders) {
     if (data.orders[key].status == 'cancelled') {
       data.orders[key].status = 'Order Cancelled';
     }
   }
-  if (!ordersPageTracked){
-    window.analytics.page("Account Orders");
-    ordersPageTracked = true;
-  }
+
   return (
 
     <Grid
