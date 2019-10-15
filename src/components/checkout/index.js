@@ -127,6 +127,35 @@ const Checkout = ({
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null)];
 
+  const trackCheckoutStarted = () => {
+      let orderItemsTransformed = [];
+      cart.items.forEach(item => {
+        orderItemsTransformed.push({
+          image_url: item.variant_img,
+          quantity: item.quantity,
+          sku: item.sku,
+          price: Number.parseFloat(item.unit_price),
+          product_id: item.variant_id,
+          variant: item.variant_id,
+          name: item.variant_name,
+          brand: cart.storeCode
+        });
+      });
+      window.analytics.page('Checkout');
+      window.analytics.track('Checkout Started', {
+        cart_id: cart._id,
+        currency: 'USD',
+        discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
+        products: orderItemsTransformed,
+        revenue: cart.total ? Number.parseFloat(cart.total) : 0,
+        subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
+        tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
+        total: cart.total ? Number.parseFloat(cart.total) : 0
+      });
+      
+    
+  };
+
   useEffect(() => {
     if (orderIsLoading || orderError) {
       setCheckoutDialogOpen(true);
@@ -156,6 +185,10 @@ const Checkout = ({
     dispatch,
     requestSetShippingAddress
   ]);
+
+  useEffect(()=>{
+    trackCheckoutStarted();
+  },[]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
@@ -216,35 +249,7 @@ const Checkout = ({
     return true;
   };
 
-  const trackCheckoutStarted = () => {
-    if (!checkoutStartedTracked) {
-      let orderItemsTransformed = [];
-      cart.items.forEach(item => {
-        orderItemsTransformed.push({
-          image_url: item.variant_img,
-          quantity: item.quantity,
-          sku: item.sku,
-          price: Number.parseFloat(item.unit_price),
-          product_id: item.variant_id,
-          variant: item.variant_id,
-          name: item.variant_name,
-          brand: cart.storeCode
-        });
-      });
-      window.analytics.page('Checkout');
-      window.analytics.track('Checkout Started', {
-        cart_id: cart._id,
-        currency: 'USD',
-        discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
-        products: orderItemsTransformed,
-        revenue: cart.total ? Number.parseFloat(cart.total) : 0,
-        subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
-        tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
-        total: cart.total ? Number.parseFloat(cart.total) : 0
-      });
-      checkoutStartedTracked = true;
-    }
-  };
+
 
   /*
   @description - Tracks Segment Analytics 'Checkout Step Completed' event

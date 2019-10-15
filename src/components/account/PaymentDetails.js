@@ -62,6 +62,10 @@ const AccountPaymentDetails = ({
     }
   }, [currentUser.data.paymentMethods]);
 
+  useEffect(() =>{
+    window.analytics.page("Account Payment Details");
+  },[])
+
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
     setSelectedIndex(index);
@@ -143,9 +147,7 @@ const AccountPaymentDetails = ({
     return true;
   };
 
-  const setAccountPaymentDetailsTracked = () => {
-    accountPaymentDetailsTracked = true;
-  }
+
 
   let addressSeedData = addressSeed;
   if (seedEnabled && isEmpty(addressSeed)) {
@@ -154,7 +156,6 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
-      {!accountPaymentDetailsTracked && window.location.pathname.indexOf("/account/payment-details")!==-1 ? (window.analytics.page("Account Payment Details") && setAccountPaymentDetailsTracked() && (null)) : null}
       {formModeEnabled ? (
         <PaymentForm
           currentUser={currentUser}
