@@ -49,7 +49,9 @@ const AccountAddresses = ({
       );
       setSelectedIndex(defaultIndex);
     }
+    if(window.location.pathname.indexOf("/account/addresses")!==-1){
     window.analytics.page("Account Addresses");
+    }
   }, [currentUser.data.addressBook]);
 
   const handleSelect = evt => {

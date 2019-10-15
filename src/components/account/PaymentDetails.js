@@ -63,7 +63,9 @@ const AccountPaymentDetails = ({
   }, [currentUser.data.paymentMethods]);
 
   useEffect(() =>{
+    if(window.location.pathname.indexOf("/account/payment-details")!==-1){
     window.analytics.page("Account Payment Details");
+    }
   },[])
 
   const handleSelect = evt => {
