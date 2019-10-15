@@ -247,7 +247,11 @@ const AboutUs = () => {
         <Box py={8} className="section5 mobile-padding">
           <Container>
             <h3>Press & Media Inquires?</h3>
-            <h1>press@objectivewellness.com</h1>
+            <h1>
+              <a href="mailto:press@objectivewellness.com">
+                press@objectivewellness.com
+              </a>
+            </h1>
           </Container>
         </Box>
       </div>
