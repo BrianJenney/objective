@@ -81,6 +81,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+let orderConfirmationPageTracked = false;
+
 const OrderConfirmation = ({ history }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
@@ -106,7 +108,8 @@ const OrderConfirmation = ({ history }) => {
       price: item.unit_price
     });
   });
-
+  
+  if(!orderConfirmationPageTracked){
   window.analytics.page("Order Confirmation");
   window.gtag('event', 'purchase', {
     transaction_id: order.orderId,
@@ -117,6 +120,8 @@ const OrderConfirmation = ({ history }) => {
     shipping: order.shippingMethod.price,
     items: orderItemsTransformedGA
   });
+  orderConfirmationPageTracked = true;
+}
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;

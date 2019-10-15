@@ -20,6 +20,7 @@ export const FORM_TYPES = {
   CHECKOUT: 'checkout'
 };
 
+let accountPaymentDetailsTracked = false;
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
@@ -125,6 +126,10 @@ const AccountPaymentDetails = ({
     return true;
   };
 
+  const setAccountPaymentDetailsTracked = () => {
+    accountPaymentDetailsTracked = true;
+  }
+
   let addressSeedData = addressSeed;
   if (seedEnabled && isEmpty(addressSeed)) {
     addressSeedData = getDefaultEntity(addressBook);
@@ -132,7 +137,7 @@ const AccountPaymentDetails = ({
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
-      {window.location.pathname.indexOf("/account/payment-details")!==-1 ? (window.analytics.page("Account Payment Details") && (null)) : null}
+      {!accountPaymentDetailsTracked && window.location.pathname.indexOf("/account/payment-details")!==-1 ? (window.analytics.page("Account Payment Details") && setAccountPaymentDetailsTracked() && (null)) : null}
       {formModeEnabled ? (
         <PaymentForm
           currentUser={currentUser}
