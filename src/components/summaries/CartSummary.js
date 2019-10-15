@@ -70,7 +70,7 @@ const CartSummary = ({ order }) => {
   } else {
     shippingMethod = order.shipping.options[order.shipping.code];
   }
-  const promoCode = order.promo ?  ` (${order.promo.code})` : '';
+  const promoCode = order.promo ? ` (${order.promo.code})` : '';
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -148,7 +148,7 @@ const CartSummary = ({ order }) => {
                 component="p"
                 style={{ position: 'relative', top: '6px' }}
               >
-                {shippingMethod.name}
+                3-5 Days
               </StyledFinePrint>
             </Grid>
             <Grid item>
