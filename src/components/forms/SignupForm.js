@@ -15,24 +15,22 @@ const useStyles = makeStyles(theme => ({
   text: {
     fontFamily: 'p22-underground',
     fontSize: '14px',
-    display: 'flex',
+    display: 'block',
     lineHeight: 'normal',
     padding: '0 30px',
+    textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
-      display: 'block',
-      fontSize: '10px',
-      textAlign: 'center'
+      fontSize: '10px'
     }
   },
   text2: {
     fontFamily: 'p22-underground',
     fontSize: '14px',
-    display: 'flex',
+    display: 'block',
     lineHeight: 'normal',
+    textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '10px',
-      display: 'block',
-      textAlign: 'center'
+      fontSize: '10px'
     }
   },
   subText: {
@@ -161,9 +159,9 @@ const SignupForm = ({
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography className={classes.text}>
+          <div className={classes.text}>
             By creating an account you agree to the Objective Wellness&nbsp;
-            <Typography className={classes.text2}>
+            <div className={classes.text2}>
               <NavLink to="/termsandconditions" underline="always">
                 Terms &amp; Conditions&nbsp;
               </NavLink>
@@ -171,8 +169,8 @@ const SignupForm = ({
               <NavLink to="/privacypolicy" underline="always">
                 Privacy Policy
               </NavLink>
-            </Typography>
-          </Typography>
+            </div>
+          </div>
         </Grid>
       </Grid>
     </Form>
