@@ -12,6 +12,7 @@ import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
 import { FORM_TYPES } from '../forms/AddressForm';
 
+let accountAddressesTracked = false;
 const AccountAddresses = ({
   currentUser,
   requestPatchAccount,
@@ -136,11 +137,15 @@ const AccountAddresses = ({
 
     return true;
   };
+
+  const setAccountAddressesTracked = () => {
+    accountAddressesTracked = true;
+    console.log("Account_Addresses_Tracked",accountAddressesTracked)
+  }
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      {window.location.pathname.indexOf('/account/addresses') !== -1
-        ? window.analytics.page('Account Addresses') && null
-        : null}
+      
+      {!accountAddressesTracked && window.location.pathname.indexOf("/account/addresses")!==-1 ? (window.analytics.page("Account Addresses") && setAccountAddressesTracked() && (null)) : null}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}
