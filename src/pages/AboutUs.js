@@ -42,17 +42,17 @@ const AboutUs = () => {
               />
             </div>
             <p>
-              Here we are, right with you. In the middle of our circles--family,
-              friends, neighbors, colleagues and our community. We’re worrying
-              about our parents’ health, constantly concerned about the kids
-              we’re raising. Feeling our own bodies starting to betray us. And
-              we’re not going to take it.
+              Here we are, right with you. In the middle of our
+              circles&mdash;family, friends, neighbors, colleagues and our
+              community. We’re worrying about our parents’ health, constantly
+              concerned about the kids we’re raising. Feeling our own bodies
+              starting to betray us. And we’re not going to take it.
             </p>
             <p>
               Like you, we are parents, sons and daughters, brothers and
-              sisters--but we are also nutritionists, researchers and innovators
-              who have been formulating and marketing vitamins and minerals for
-              decades for everyone but ourselves, our generation.
+              sisters&mdash;but we are also nutritionists, researchers and
+              innovators who have been formulating and marketing vitamins and
+              minerals for decades for everyone but ourselves, our generation.
             </p>
             <p>
               Until now. We’re taking everything we know and developing
@@ -80,8 +80,8 @@ const AboutUs = () => {
             <div className="text">
               <p className="tagline">You see, it starts with you.</p>
               <p>
-                It is why flight attendants ask caretakers to put their oxygen
-                mask on first before helping the child. Simple right? The
+                It is why flight attendants ask the caretaker to put their
+                oxygen mask on first before helping the child. Simple right? The
                 healthier you are, the better and longer you can care for those
                 you love.
               </p>
@@ -94,8 +94,8 @@ const AboutUs = () => {
               <p>
                 So, we will give you the facts, what we can do but also what we
                 can’t do. We will cut through all the clutter so you don’t have
-                to – whether you are an expert label-reader or find supplements
-                and health products daunting.
+                to&mdash;whether you are an expert label-reader or find
+                supplements and health products daunting.
               </p>
             </div>
             <Link to="/gallery" className="buttonlink mobile-only">
