@@ -143,7 +143,7 @@
           img {
             left: 0;
             margin-top: 120px;
-            width: inherit;
+            width: 620px;
           }
         }
         &.right {
@@ -166,6 +166,13 @@
       .container-right {
         padding-right: 285px;
         margin-top: 815px;
+      }
+      .fifty {
+        &.left {
+          img {
+            width: 800px;
+          }
+        }
       }
     }
     h3 {
