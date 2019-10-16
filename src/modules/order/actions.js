@@ -84,7 +84,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
 
   window.analytics.track('Order Completed', {
     'affiliation': order.storeCode,
-    'coupon': order.promo ? order.promo.code : '',
+    'coupon': order.promo && order.promo.code ? order.promo.code : '',
     'currency': 'USD',
     'discount': Number.parseFloat(order.discount).toFixed(2),
     'email': order.email,
