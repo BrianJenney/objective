@@ -1,5 +1,6 @@
 import React from 'react';
 import CardActions from '@material-ui/core/CardActions';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Button } from '../../components/common';
@@ -146,16 +147,22 @@ export const OutOfStock = ({
   product_sku,
   product_variant,
   openOutOfStockDialog,
-  handleOpenEmailConfirmation
+  handleOpenEmailConfirmation,
+  ...rest
 }) => {
   const classes = useStyles();
   return (
     <>
-      <div className="gallery-atc">
-        <Button className={classes.btnOOS} fullWidth onClick={onClick}>
-          TELL ME WHEN IT'S AVAILABLE
+      <Box width={1} className="gallery-atc">
+        <Button
+          className={classes.btnOOS}
+          fullWidth
+          onClick={onClick}
+          {...rest}
+        >
+          TELL ME WHEN IT IS AVAILABLE
         </Button>
-      </div>
+      </Box>
       {openOutOfStockDialog && (
         <ProductOutOfStockDialog
           onExited={onExited}
