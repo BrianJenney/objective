@@ -102,7 +102,7 @@ const ProductOutOfStockForm = ({
       image_url: 'https://'+product_img,
       name: product_name,
       product_id: product_id,
-      sku: product_sku ? product_sku : product_variant, //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
+      sku: product_variant ? product_variant : product_sku, //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
       url: product_url,
       variant: product_variant
     });
@@ -113,7 +113,7 @@ const ProductOutOfStockForm = ({
       });
     }
     // Listrak event
-    let listrakProductSku = product_sku ? product_sku : product_variant; //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
+    let listrakProductSku = product_variant ? product_variant : product_sku; //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
     //This try-catch block prevents the ProductOutOfStockForm from breaking if Listrak as a destination isn't enabled in Segment
     try{
     window._ltk.Alerts.AddAlert(email, listrakProductSku, 'BIS');
