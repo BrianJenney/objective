@@ -271,7 +271,8 @@
       text-align: left;
       .flex {
         text-align: left;
-        .categoryName, .minRead {
+        .categoryName, .minRead, 
+        .categoryName a, .minRead a {
           font-size: 14px;
         }
       }

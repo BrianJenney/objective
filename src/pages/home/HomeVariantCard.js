@@ -27,7 +27,7 @@ export const HomeVariantCard = ({ variant }) => {
     setATCAdded(true);
     setATCAdding(true);
     setTimeout(() => {
-      //Give effect of item being added
+      // Give effect of item being added
       addToCart(cart, variant, 1);
       setATCAdding(false);
       setTimeout(() => {
@@ -84,7 +84,7 @@ export const HomeVariantCard = ({ variant }) => {
         </NavLink>
         <div className="cta-area">
           {variant.inStock >= 200 && (
-            <CardActions className="gallery-atc">
+            <CardActions className="home-atc">
               <ATC
                 onClick={handleAddToCart}
                 variantSku={variant.sku}
