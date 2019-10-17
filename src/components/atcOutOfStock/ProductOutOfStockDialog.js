@@ -99,10 +99,10 @@ const ProductOutOfStockForm = ({
     window.analytics.track('Back In Stock Signup Completed', {
       brand: 'OBJ',
       category: product_category,
-      image_url: product_img,
+      image_url: 'https://'+product_img,
       name: product_name,
       product_id: product_id,
-      sku: product_sku,
+      sku: product_variant ? product_variant : product_sku, //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
       url: product_url,
       variant: product_variant
     });
@@ -113,9 +113,16 @@ const ProductOutOfStockForm = ({
       });
     }
     // Listrak event
-    window._ltk.Alerts.AddAlert(email, product_sku, 'BIS');
+    let listrakProductSku = product_variant ? product_variant : product_sku; //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
+    //This try-catch block prevents the ProductOutOfStockForm from breaking if Listrak as a destination isn't enabled in Segment
+    try{
+    window._ltk.Alerts.AddAlert(email, listrakProductSku, 'BIS');
     window._ltk.Alerts.Submit();
+  } catch(e){
+    console.log(e.message);
+  }
     handleOpenEmailConfirmation();
+    
     closeDialog();
   };
 
