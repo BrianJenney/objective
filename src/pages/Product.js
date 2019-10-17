@@ -1,21 +1,19 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import TabSection from './product/TabSection';
 import Instruction from './product/Instruction';
 import ProductDetail from './product/ProductDetail';
 import ResearchSources from './product/ResearchSources';
-
 import ScrollToTop from '../components/common/ScrollToTop';
-
 import { ProductStore } from '../contexts/ProductContext';
+
 const Product = ({ match }) => {
   const { product_slug } = match.params;
 
-  useEffect(()=>{
-    window.analytics.page("PDP");
-  },[])
+  useEffect(() => {
+    window.analytics.page('PDP');
+  }, []);
 
   return (
     <ScrollToTop>
