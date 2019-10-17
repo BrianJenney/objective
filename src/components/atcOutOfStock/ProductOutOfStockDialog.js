@@ -99,7 +99,7 @@ const ProductOutOfStockForm = ({
     window.analytics.track('Back In Stock Signup Completed', {
       brand: 'OBJ',
       category: product_category,
-      image_url: product_img,
+      image_url: 'https://'+product_img,
       name: product_name,
       product_id: product_id,
       sku: product_sku ? product_sku : product_variant, //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
