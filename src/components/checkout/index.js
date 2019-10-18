@@ -354,6 +354,7 @@ const Checkout = ({
                     xs,
                     1,
                     activeStep,
+                    null,
                     payload.shippingAddress
                   )}
                   collapsible
@@ -380,6 +381,7 @@ const Checkout = ({
                     xs,
                     2,
                     activeStep,
+                    null,
                     payload.paymentDetails
                   )}
                   collapsible
@@ -408,7 +410,7 @@ const Checkout = ({
                   </div>
                 </Panel>
                 <Panel
-                  title={getPanelTitleContent(xs, 3, activeStep, {})}
+                  title={getPanelTitleContent(xs, 3, activeStep, null, {})}
                   collapsible
                   hideExpandIcon
                   expanded={activeStep === 3}
