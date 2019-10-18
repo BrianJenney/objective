@@ -334,7 +334,7 @@ const Cart = ({
               component="p"
               style={{ position: 'relative', top: '6px' }}
             >
-              3-5 Days
+              {shippingData.deliveryEstimate}
             </StyledFinePrint>
           </Grid>
         ) : null}
@@ -359,7 +359,7 @@ const Cart = ({
               component="p"
               style={{ position: 'relative', top: '6px', marginBottom: '25px' }}
             >
-              3-5 Days
+              {shippingData.deliveryEstimate}
             </StyledFinePrint>
           </Grid>
         ) : null}

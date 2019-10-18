@@ -148,7 +148,7 @@ const CartSummary = ({ order }) => {
                 component="p"
                 style={{ position: 'relative', top: '6px' }}
               >
-                3-5 Days
+                {shippingMethod.deliveryEstimate}
               </StyledFinePrint>
             </Grid>
             <Grid item>

@@ -15,13 +15,13 @@ import {
   REQUEST_MERGE_CARTS,
   REQUEST_ADD_COUPON,
   REQUEST_REMOVE_COUPON,
-  REQUEST_SET_SHIPPING_ADDRESS,
-  RESET_CART
+  REQUEST_SET_SHIPPING_ADDRESS
 } from './types';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 const localStorageClient = require('store');
+const jwt = require('jsonwebtoken');
 
 export const requestAddToCart = (cart, product, quantity) => async (
   dispatch,
@@ -164,12 +164,20 @@ export const receivedFetchCart = cart => ({
 export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
   const { replyTo } = getState().stomp;
-  const params = {
+  let params = {
     data: {
       storeCode: getState().storefront.code,
       catalogId: getState().storefront.catalogId
     }
   };
+
+  const account = getState().account;
+
+  if (account.data && account.data.account_jwt) {
+    const accountId = jwt.decode(account.data.account_jwt).account_id;
+    params.data.accountId = accountId;
+  }
+
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/cart/cart.request.create',
@@ -421,7 +429,3 @@ export const requestSetShippingAddress = (cartId, address) => async (
     payload: {}
   });
 };
-
-export const resetCart = () => ({
-  type: RESET_CART,
-});

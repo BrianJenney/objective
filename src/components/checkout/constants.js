@@ -16,9 +16,3 @@ export const DATA_KEYS = [
   'paymentMethods',
   'reviewAndOrder'
 ];
-export const SHIPPING_METHOD = {
-  displayName: 'Ground',
-  name: 'ground',
-  price: 0.0,
-  deliveryEstimate: '3-7 Business Days'
-};
