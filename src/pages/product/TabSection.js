@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -10,9 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import ProductContext from '../../contexts/ProductContext';
-
+import { scrollToRef } from '../../utils/misc';
 import './cards-styles.css';
-
 import HowItWorksTab from './HowItWorksTab';
 import SupplementFactsTab from './SupplementFactsTab';
 
@@ -46,7 +44,7 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   indicator: {
     backgroundColor: '#fff'
   },
@@ -74,11 +72,20 @@ const useStyles = makeStyles( theme => ({
 }));
 
 export default function PdpTabs() {
-  const { product } = useContext(ProductContext);
+  const { product, variants, prices, content } = useContext(ProductContext);
   const boxBorder = `solid 2px ${product ? product.color : ''}`;
-  const classes = useStyles({border: boxBorder});
+  const classes = useStyles({ border: boxBorder });
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const tabsRef = useRef(null);
+
+  useEffect(() => {
+    if (product && variants.length && content) {
+      if (window.location.href.includes('#')) {
+        scrollToRef(tabsRef);
+      }
+    }
+  }, [product, variants, prices, content]);
 
   function handleChange(event, newValue) {
     setValue(newValue);
@@ -86,12 +93,11 @@ export default function PdpTabs() {
 
   if (!product) return null;
 
-
   return (
-    <Container>
+    <Container className="tabSection">
       <Grid spacing={0} xs={12}>
-        <Box className={classes.wrapper} >
-          <div className={classes.root}>
+        <Box className={classes.wrapper}>
+          <div ref={tabsRef} className={classes.root}>
             <AppBar position="static" color="white" elevation={0}>
               <Tabs
                 value={value}
