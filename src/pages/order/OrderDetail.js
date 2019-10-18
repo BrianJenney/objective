@@ -148,11 +148,11 @@ const OrderSummary = ({
         </Typography>
       )}
       <br />
-      { orderStatus !== "declined" &&
-        <StatusStepper statusStepper={statusStepper} status={orderStatus}/>
+      { orderStatus !== 'declined' && orderStatus !== 'created' &&
+        <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       }
 
-      {orderStatus !== 'shipped' && orderStatus !== 'canceled' ? (
+      {orderStatus === 'placed' ? (
         <CommonButton
           style={{
             padding: '23px 23px',
@@ -160,7 +160,7 @@ const OrderSummary = ({
             minWidth: '210px'
           }}
           onClick={() => {
-            if (orderStatus !== 'shipped' && orderStatus !== 'canceled') {
+            if (orderStatus === 'placed') {
               cancelOrder(orderRef, dispatch);
             }
           }}
