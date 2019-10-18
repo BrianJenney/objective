@@ -22,7 +22,7 @@ import { CheckoutReviewForm } from '../forms';
 import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
-import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
+import { STEPS, STEP_KEYS, DATA_KEYS } from './constants';
 import { getDefaultEntity, scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
@@ -32,12 +32,10 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 
-let checkoutStartedTracked = false;
 const getPanelTitleContent = (
   xs,
   step,
   activeStep,
-
   signupConfirmation,
   payload
 ) => {
@@ -113,9 +111,7 @@ const Checkout = ({
   clearPatchAccountError,
   requestCreateOrder
 }) => {
-  console.log('==CURRENT USER==', currentUser);
-
-  const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
+  const [payload, setPayload] = useState({});
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -128,32 +124,30 @@ const Checkout = ({
   const stepRefs = [useRef(null), useRef(null), useRef(null)];
 
   const trackCheckoutStarted = () => {
-      let orderItemsTransformed = [];
-      cart.items.forEach(item => {
-        orderItemsTransformed.push({
-          image_url: item.variant_img,
-          quantity: item.quantity,
-          sku: item.sku,
-          price: Number.parseFloat(item.unit_price),
-          product_id: item.variant_id,
-          variant: item.variant_id,
-          name: item.variant_name,
-          brand: cart.storeCode
-        });
+    let orderItemsTransformed = [];
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: item.variant_img,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
       });
-      window.analytics.page('Checkout');
-      window.analytics.track('Checkout Started', {
-        cart_id: cart._id,
-        currency: 'USD',
-        discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
-        products: orderItemsTransformed,
-        revenue: cart.total ? Number.parseFloat(cart.total) : 0,
-        subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
-        tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
-        total: cart.total ? Number.parseFloat(cart.total) : 0
-      });
-      
-    
+    });
+    window.analytics.page('Checkout');
+    window.analytics.track('Checkout Started', {
+      cart_id: cart._id,
+      currency: 'USD',
+      discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
+      products: orderItemsTransformed,
+      revenue: cart.total ? Number.parseFloat(cart.total) : 0,
+      subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
+      tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
+      total: cart.total ? Number.parseFloat(cart.total) : 0
+    });
   };
 
   useEffect(() => {
@@ -186,9 +180,15 @@ const Checkout = ({
     requestSetShippingAddress
   ]);
 
-  useEffect(()=>{
+  useEffect(() => {
     trackCheckoutStarted();
-  },[]);
+  }, []);
+
+  useEffect(() => {
+    if (cart.shipping) {
+      setPayload({ ...payload, shippingMethod: cart.shipping.options[cart.shipping.code] });
+    }
+  }, [cart.shipping]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
@@ -238,18 +238,14 @@ const Checkout = ({
     if (orderIsLoading === true || orderError === null) return null;
 
     if (orderError === true) {
-      console.log('TEEESSSTT');
       setCheckoutDialogOpen(true);
     } else {
-      console.log('in else block');
       dispatch(resetCart());
       setPayload({});
       history.replace('/order');
     }
     return true;
   };
-
-
 
   /*
   @description - Tracks Segment Analytics 'Checkout Step Completed' event
