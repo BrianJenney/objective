@@ -16,10 +16,7 @@ const Product = ({ match }) => {
     window.analytics.page('PDP');
     if (window.location.href.includes('#')) {
       scrollToTabs = true;
-      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
     }
-    console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-    console.log(scrollToTabs);
   }, []);
 
   return (
