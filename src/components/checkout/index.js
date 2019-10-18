@@ -121,7 +121,7 @@ const Checkout = ({
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
   const { signupConfirmation } = currentUser;
-  const stepRefs = [useRef(null), useRef(null), useRef(null)];
+  const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const trackCheckoutStarted = () => {
     let orderItemsTransformed = [];
@@ -182,11 +182,15 @@ const Checkout = ({
 
   useEffect(() => {
     trackCheckoutStarted();
+    scrollToRef(stepRefs[0]);
   }, []);
 
   useEffect(() => {
     if (cart.shipping) {
-      setPayload({ ...payload, shippingMethod: cart.shipping.options[cart.shipping.code] });
+      setPayload({
+        ...payload,
+        shippingMethod: cart.shipping.options[cart.shipping.code]
+      });
     }
   }, [cart.shipping]);
 
@@ -259,7 +263,7 @@ const Checkout = ({
 
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
-    scrollToRef(stepRefs[stepIndex - 1]);
+    scrollToRef(stepRefs[stepIndex]);
   };
 
   const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
@@ -318,7 +322,6 @@ const Checkout = ({
                     xs,
                     0,
                     activeStep,
-
                     signupConfirmation,
                     {
                       email: currentUserEmail
@@ -330,19 +333,21 @@ const Checkout = ({
                   onChange={() => null}
                   className="firstPanel"
                 >
-                  <CheckoutAuth
-                    currentUser={currentUser}
-                    requestCreateAccount={requestCreateAccount}
-                    clearCreateAccountError={clearCreateAccountError}
-                    requestLogin={requestLogin}
-                    clearLoginError={clearLoginError}
-                    handleNext={() => {
-                      if (activeStep === 0) {
-                        setCurrentStep(1);
-                        trackCheckoutStepCompleted(0);
-                      }
-                    }}
-                  />
+                  <div ref={stepRefs[0]}>
+                    <CheckoutAuth
+                      currentUser={currentUser}
+                      requestCreateAccount={requestCreateAccount}
+                      clearCreateAccountError={clearCreateAccountError}
+                      requestLogin={requestLogin}
+                      clearLoginError={clearLoginError}
+                      handleNext={() => {
+                        if (activeStep === 0) {
+                          setCurrentStep(1);
+                          trackCheckoutStepCompleted(0);
+                        }
+                      }}
+                    />
+                  </div>
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(
@@ -355,19 +360,20 @@ const Checkout = ({
                   expanded={activeStep === 1}
                   onChange={e => onPanelChange(e, 1)}
                 >
-                  <AccountAddresses
-                    currentUser={currentUser}
-                    requestPatchAccount={requestPatchAccount}
-                    clearPatchAccountError={clearPatchAccountError}
-                    formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                    onSubmit={handleNext}
-                    selectionEnabled
-                    allowFlyMode
-                    mt={4}
-                    mx={10}
-                    mb={5}
-                    ref={stepRefs[0]}
-                  />
+                  <div ref={stepRefs[1]}>
+                    <AccountAddresses
+                      currentUser={currentUser}
+                      requestPatchAccount={requestPatchAccount}
+                      clearPatchAccountError={clearPatchAccountError}
+                      formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                      onSubmit={handleNext}
+                      selectionEnabled
+                      allowFlyMode
+                      mt={4}
+                      mx={10}
+                      mb={5}
+                    />
+                  </div>
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(
@@ -380,25 +386,26 @@ const Checkout = ({
                   expanded={activeStep === 2}
                   onChange={e => onPanelChange(e, 2)}
                 >
-                  <AccountPaymentDetails
-                    currentUser={currentUser}
-                    requestPatchAccount={requestPatchAccount}
-                    clearPatchAccountError={clearPatchAccountError}
-                    formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                    onBack={handleBack}
-                    onSubmit={handleNext}
-                    selectionEnabled
-                    seedEnabled
-                    addressSeed={payload.shippingAddress}
-                    useSeedLabel="Use shipping address"
-                    allowFlyMode
-                    mt={4}
-                    mx={10}
-                    mb={5}
-                    backLabel="Cancel"
-                    submitLabel="Review Order"
-                    ref={stepRefs[1]}
-                  />
+                  <div ref={stepRefs[2]}>
+                    <AccountPaymentDetails
+                      currentUser={currentUser}
+                      requestPatchAccount={requestPatchAccount}
+                      clearPatchAccountError={clearPatchAccountError}
+                      formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                      onBack={handleBack}
+                      onSubmit={handleNext}
+                      selectionEnabled
+                      seedEnabled
+                      addressSeed={payload.shippingAddress}
+                      useSeedLabel="Use shipping address"
+                      allowFlyMode
+                      mt={4}
+                      mx={10}
+                      mb={5}
+                      backLabel="Cancel"
+                      submitLabel="Review Order"
+                    />
+                  </div>
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(xs, 3, activeStep, {})}
@@ -408,7 +415,7 @@ const Checkout = ({
                   onChange={e => onPanelChange(e, 3)}
                   className="lastPanel"
                 >
-                  <Box ref={stepRefs[2]}>
+                  <div ref={stepRefs[3]}>
                     {xs && (
                       <CartDrawer
                         disableItemEditing
@@ -422,7 +429,7 @@ const Checkout = ({
                       xsBreakpoint={xs}
                       onSubmit={handleNext}
                     />
-                  </Box>
+                  </div>
                 </Panel>
               </Grid>
               {!xs ? (
