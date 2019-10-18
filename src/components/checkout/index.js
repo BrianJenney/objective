@@ -26,7 +26,6 @@ import { STEPS, STEP_KEYS, DATA_KEYS } from './constants';
 import { getDefaultEntity, scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
-import { resetCart } from '../../modules/cart/actions';
 import { resetOrderState } from '../../modules/order/actions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -156,7 +155,6 @@ const Checkout = ({
     } else {
       handleCheckoutDialogClose();
       if (orderError === false) {
-        dispatch(resetCart());
         setPayload({});
         history.replace('/order');
       }
@@ -244,7 +242,6 @@ const Checkout = ({
     if (orderError === true) {
       setCheckoutDialogOpen(true);
     } else {
-      dispatch(resetCart());
       setPayload({});
       history.replace('/order');
     }

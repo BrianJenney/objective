@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
     return { ...state };
   case RECEIVED_CREATE_CART:
     localStorageClient.set('cartId', action.payload._id);
-    return { ...state, ...action.payload };
+    return { ...INITIAL_STATE, ...action.payload };
   case REQUEST_FETCH_CART:
     return { ...state };
   case RECEIVED_FETCH_CART:
