@@ -92,8 +92,10 @@ const ProductOutOfStockForm = ({
     const { email, subscribed } = values;
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
-    window.analytics.track('Back In Stock Email Capture Successful', {
-      email: email
+
+    window.analytics.track('Email Capture Successful', {
+      email: email,
+      site_location: "back in stock"
     });
     // no price or qty being pulled in as of yet
     window.analytics.track('Back In Stock Signup Completed', {
