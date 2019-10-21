@@ -30,7 +30,7 @@ do
   [[ -z $value ]] && value=${varvalue}
 
   # Append configuration property to JS file
-  echo "  $varname: \"$value\"," >> ${ENV_JS}
+  echo "  $varname: \"${value//[$'\r\n']}\"," >> ${ENV_JS}
 done < .env
 
 echo "}" >> ${ENV_JS}
