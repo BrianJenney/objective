@@ -97,17 +97,12 @@ const ProductOutOfStockForm = ({
       email: email,
       site_location: "back in stock"
     });
-    // no price or qty being pulled in as of yet
-    window.analytics.track('Back In Stock Signup Completed', {
-      brand: 'OBJ',
-      category: product_category,
-      image_url: product_img, //Seems like there are different values for product_img on PDP vs on the Gallery.
-      name: product_name,
-      product_id: product_id,
-      sku: product_variant ? product_variant : product_sku, //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
-      url: product_url,
-      variant: product_variant
+
+    window.analytics.track('Email Capture Completed', {
+      email: email,
+      site_location: "back in stock"
     });
+
 
     if (subscribed) {
 
