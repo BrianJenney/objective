@@ -110,8 +110,15 @@ const ProductOutOfStockForm = ({
     });
 
     if (subscribed) {
-      window.analytics.track('Signed Up', {
-        email: email
+
+      window.analytics.track("Subscribed", {
+        "email": email,
+        "site_location": "back in stock"
+      });
+    
+      window.analytics.track("Subscribed Listrak Auto", {
+        "email": email,
+        "site_location": "back in stock"
       });
     }
     // Listrak event
