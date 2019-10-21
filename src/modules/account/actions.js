@@ -82,17 +82,17 @@ export const receivedCreateAccountSuccess = createReply => dispatch => {
     "signup_type": "organic",
     "title": "",
     "username": createReply.email,
-    "site_location": "header"
+    "site_location": "account creation"
   });
 if(createReply.newsletter){
   window.analytics.track("Subscribed", {
     "email": createReply.email,
-    "site_location": "header"
+    "site_location": "account creation"
   });
 
   window.analytics.track("Subscribed Listrak Auto", {
     "email": createReply.email,
-    "site_location": "header"
+    "site_location": "account creation"
   });
 
 }
