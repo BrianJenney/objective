@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
@@ -20,7 +20,14 @@ export const FORM_TYPES = {
   CHECKOUT: 'checkout'
 };
 
-let accountPaymentDetailsTracked = false;
+const usePrevious = value => {
+  const useRefObj = useRef();
+  useEffect(() => {
+    useRefObj.current = value;
+  }, [value]);
+  return useRefObj.current;
+};
+
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
@@ -39,6 +46,9 @@ const AccountPaymentDetails = ({
 }) => {
   const [formModeEnabled, setFormModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const prevPatchAccountSubmitting = usePrevious(
+    currentUser.patchAccountSubmitting
+  );
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -48,25 +58,38 @@ const AccountPaymentDetails = ({
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
 
   useEffect(() => {
+    if (window.location.pathname.indexOf('/account/payment-details') !== -1) {
+      window.analytics.page('Account Payment Details');
+    }
+  }, []);
+
+  useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
+
+    if (selectedIndex < 0) {
+      const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+      setSelectedIndex(defaultIndex);
+    }
+
+    if (
+      prevPatchAccountSubmitting &&
+      !currentUser.patchAccountSubmitting &&
+      formModeEnabled
+    ) {
+      if (!currentUser.patchAccountError && paymentMethods.length > 0) {
+        setSelectedIndex(paymentMethods.length - 1);
+        if (onSubmit) {
+          onSubmit(paymentMethods[paymentMethods.length - 1]);
+        }
+      }
+    }
 
     if (paymentMethods.length === 0) {
       setFormModeEnabled(true);
     } else {
       setFormModeEnabled(false);
     }
-
-    if (selectedIndex < 0) {
-      const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-      setSelectedIndex(defaultIndex);
-    }
   }, [currentUser.data.paymentMethods]);
-
-  useEffect(() =>{
-    if(window.location.pathname.indexOf("/account/payment-details")!==-1){
-    window.analytics.page("Account Payment Details");
-    }
-  },[])
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
@@ -122,14 +145,6 @@ const AccountPaymentDetails = ({
       }
 
       requestPatchAccount(account_jwt, payload);
-      setFormModeEnabled(false);
-      setSelectedIndex((currentUser.data.paymentMethods || []).length);
-      if (onSubmit) {
-        onSubmit({
-          ...payload.newCreditCard,
-          nonce: payload.nonce
-        });
-      }
     } catch (err) {
       enqueueSnackbar(err.message, { variant: 'error' });
     }
@@ -148,8 +163,6 @@ const AccountPaymentDetails = ({
 
     return true;
   };
-
-
 
   let addressSeedData = addressSeed;
   if (seedEnabled && isEmpty(addressSeed)) {
