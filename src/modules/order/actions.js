@@ -96,7 +96,6 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     'payment_method': 'Credit Card',
     'payment_method_detail': order.paymentData.cardType,
     'products': orderItemsTransformed,
-    'revenue': order.subtotal,
     'shipping': order.shippingMethod.price,
     'subtotal': order.subtotal,
     'tax': order.tax,

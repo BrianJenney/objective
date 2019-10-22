@@ -142,7 +142,6 @@ const Checkout = ({
       currency: 'USD',
       discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
       products: orderItemsTransformed,
-      revenue: cart.total ? Number.parseFloat(cart.total) : 0,
       subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
       tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
       total: cart.total ? Number.parseFloat(cart.total) : 0
@@ -258,9 +257,17 @@ const Checkout = ({
     });
   };
 
+  const trackCheckoutStepStarted = step => {
+    window.analytics.track('Checkout Step Started', {
+      cart_id: cart._id,
+      step: step + 1
+    });
+  }
+
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
     scrollToRef(stepRefs[stepIndex]);
+    trackCheckoutStepStarted(stepIndex);
   };
 
   const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);

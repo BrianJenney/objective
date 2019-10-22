@@ -220,9 +220,17 @@ const Footer = ({ location, currentUser }) => {
         site_location: 'footer'
       });
 
-      window.analytics.track('Signed Up', {
-        email: email
+      window.analytics.track("Subscribed", {
+        "email": email,
+        "site_location": "footer"
       });
+    
+      window.analytics.track("Subscribed Listrak Auto", {
+        "email": email,
+        "site_location": "footer"
+      });
+
+
       window.analytics.identify({
         email
       });
