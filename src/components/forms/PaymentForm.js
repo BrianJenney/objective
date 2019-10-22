@@ -133,38 +133,44 @@ const PaymentForm = ({
 
   useEffect(() => {
     try {
-      braintreeClient.create({
-        authorization: process.env.REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION
-      }, (clientErr, clientInstance) => {
-        if (clientErr) {
-          console.log(clientErr);
-          //@TODO need to handle this gracefully
-        }
+      braintreeClient.create(
+        {
+          authorization: process.env.REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION
+        },
+        (clientErr, clientInstance) => {
+          if (clientErr) {
+            console.log(clientErr);
+            // @TODO need to handle this gracefully
+          }
 
-        HostedFields.create({
-          client: clientInstance,
-          styles: {},
-          fields: {
-            number: {
-              container: '#bt-cardNumber'
+          HostedFields.create(
+            {
+              client: clientInstance,
+              styles: {},
+              fields: {
+                number: {
+                  container: '#bt-cardNumber'
+                },
+                expirationDate: {
+                  container: '#bt-cardExpiration'
+                },
+                cvv: {
+                  container: '#bt-cardCvv'
+                }
+              }
             },
-            expirationDate: {
-              container: '#bt-cardExpiration'
-            },
-            cvv: {
-              container: '#bt-cardCvv'
+            (hostedFieldsErr, hostedFieldsInstance) => {
+              if (hostedFieldsErr) {
+                console.log(hostedFieldsErr);
+                // @TODO need to handle this gracefully
+              }
+
+              setHostedFieldsClient(hostedFieldsInstance);
+              return null;
             }
-          }
-        }, (hostedFieldsErr, hostedFieldsInstance) => {
-          if (hostedFieldsErr) {
-            console.log(hostedFieldsErr);
-            //@TODO need to handle this gracefully
-          }
-
-          setHostedFieldsClient(hostedFieldsInstance);
-          return null;
-        });  
-      });
+          );
+        }
+      );
     } catch (err) {
       throw err;
     }
@@ -191,7 +197,9 @@ const PaymentForm = ({
       cardData,
       billingAddress: {
         ...values.billingAddress,
-        phone: values.billingAddress.phone ? values.billingAddress.phone.trim() : ''
+        phone: values.billingAddress.phone
+          ? values.billingAddress.phone.trim()
+          : ''
       }
     };
 
@@ -243,57 +251,36 @@ const PaymentForm = ({
               />
             </Grid>
 
-            <Grid item xs={6}>
-              <label class="hosted-field--label" for="card-number">
-                <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></span>
-                Card Number
-              </label>
-              <div id="bt-cardNumber" style={{border: '1px solid #000000'}}></div>
-            </Grid>
-            <Grid item xs={3}>
-              <label class="hosted-field--label" for="expiration-date">
-                <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg></span>
-                Expiration Date
-              </label>
-              <div id="bt-cardExpiration" style={{border: '1px solid #000000'}}></div>
-            </Grid>
-            <Grid item xs={3}>
-              <label class="hosted-field--label" for="cvv">
-                <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></span>
-                CVV
-              </label>
-              <div id="bt-cardCvv" style={{border: '1px solid #000000'}}></div>
-            </Grid>
-
-            {/*
             <Grid item xs={12}>
               <Box position="relative">
                 <Field
-                  name="paymentDetails.number"
+                  name="bt-cardNumber"
                   label="Card Number"
+                  id="bt-cardNumber"
                   component={InputField}
-                  validate={() => validateCardNumberField(values)}
                   inputProps={{ style: { paddingRight: 214 } }}
                 />
                 <Box position="absolute" width={100} top={0} right={100}>
                   <Field
                     className={classes.noBorderField}
-                    name="paymentDetails.expirationDate"
+                    name="bt-cardExpiration"
                     label="MM/YYYY"
                     component={InputField}
+                    id="bt-cardExpiration"
                   />
                 </Box>
                 <Box position="absolute" width={66} top={0} right={14}>
                   <Field
                     className={classes.noBorderField}
-                    name="paymentDetails.cvv"
+                    name="bt-cardCvv"
                     label="CVV"
                     component={InputField}
+                    id="bt-cardCvv"
                   />
                 </Box>
               </Box>
             </Grid>
-            */}
+
             {allowFlyMode && (
               <Grid item xs={12}>
                 <Field
