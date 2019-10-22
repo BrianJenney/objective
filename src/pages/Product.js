@@ -10,36 +10,27 @@ import { ProductStore } from '../contexts/ProductContext';
 
 const Product = ({ match }) => {
   const { product_slug } = match.params;
-  let scrollToTabs = false;
+  const { href: url } = window.location;
+  const scrollToTabs = url[url.length - 1] === '#';
 
   useEffect(() => {
     window.analytics.page('PDP');
-    if (window.location.href.includes('#')) {
-      scrollToTabs = true;
-    }
   }, []);
 
-  return (
-    <>
-      {scrollToTabs ? (
-        <ProductStore productSlug={product_slug}>
-          <ProductDetail />
-          <TabSection />
-          <Instruction />
-          <ResearchSources />
-        </ProductStore>
-      ) : (
-        <ScrollToTop>
-          <ProductStore productSlug={product_slug}>
-            <ProductDetail />
-            <TabSection />
-            <Instruction />
-            <ResearchSources />
-          </ProductStore>
-        </ScrollToTop>
-      )}
-    </>
+  const content = (
+    <ProductStore productSlug={product_slug}>
+      <ProductDetail />
+      <TabSection scrollToTabs={scrollToTabs} />
+      <Instruction />
+      <ResearchSources />
+    </ProductStore>
   );
+
+  if (scrollToTabs) {
+    return content;
+  }
+
+  return <ScrollToTop>{content}</ScrollToTop>;
 };
 
 Product.propTypes = {
