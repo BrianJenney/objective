@@ -282,19 +282,24 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
     });
 
     if (open) {
+
       // @segment Cart Viewed
+      if(!cart.cartDrawerOpened){
       window.analytics.track('Cart Viewed', {
         cart_id: cart._id,
         num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
         products: orderItemsTransformed
       });
+    }
     } else {
       // @segment Cart Dismissed
+      if(cart.cartDrawerOpened){
       window.analytics.track('Cart Dismissed', {
         cart_id: cart._id,
         num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
         products: orderItemsTransformed
       });
+    }
     }
   }
 
@@ -379,6 +384,18 @@ export const requestAddCoupon = (cartId, promoCode) => async (
     payload: {}
   });
 };
+
+export const segmentAddCouponReceived = (cart) => {
+
+  window.analytics.track("Coupon Applied",{
+    "cart_id": cart._id,
+    "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
+    "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
+    "discount": cart.discount,
+    "order_id": cart.accountId
+  });
+  
+}
 
 export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;

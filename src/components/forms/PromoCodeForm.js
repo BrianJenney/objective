@@ -34,13 +34,7 @@ const PromoCodeForm = () => {
       });
       if (response.valid) {
         addCoupon(cart._id, response.code);
-        window.analytics.track("Coupon Applied", {
-          "cart_id": cart._id,
-          "coupon_id": e.promoCode,
-          "coupon_name": e.promoCode,
-          "discount": cart.discount,
-          "order_id": cart.accountId
-        });
+
       } else {
         setPromoCodeErr(response.reason);
         window.analytics.track("Coupon Denied", {
