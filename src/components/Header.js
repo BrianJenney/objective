@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link as RouterLink, withRouter, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
@@ -10,6 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
@@ -19,6 +21,7 @@ import LoginDropdown from './LoginDropdown';
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
+import { height } from '@material-ui/system';
 const jwt = require('jsonwebtoken');
 
 const StyledLink = withStyles(() => ({
@@ -44,21 +47,18 @@ const StyledBox = withStyles(() => ({
 }))(Box);
 
 let segmentIdentified = false;
-const segmentIdentify = (user) => {
-if(!segmentIdentified){
+const segmentIdentify = user => {
+  if (!segmentIdentified) {
+    if (user['firstName']) {
+      window.analytics.identify(jwt.decode(user.account_jwt).account_id, {
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email
+      });
 
- 
- if(user["firstName"]){
-  window.analytics.identify(jwt.decode(user.account_jwt).account_id,{
-  name: `${user.firstName} ${user.lastName}`,
-  email: user.email
-  });
- 
-  segmentIdentified = true;
- }
- 
-}
-}
+      segmentIdentified = true;
+    }
+  }
+};
 
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
@@ -66,16 +66,17 @@ const Header = ({ currentUser, location }) => {
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const { account_jwt, firstName } = currentUser.data;
+  const [promoVisible, setPromoVisible] = useState(true);
   segmentIdentify(currentUser.data);
   const accountMenuItemConf = account_jwt
     ? {
-      key: 'third',
-      children: <LoggedInUser name={firstName} />,
-      link: '/account/overview'
-    }
+        key: 'third',
+        children: <LoggedInUser name={firstName} />,
+        link: '/account/overview'
+      }
     : burger
-      ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
-      : {
+    ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
+    : {
         key: 'third',
         children: <LoginDropdown />,
         link: '/login'
@@ -98,6 +99,10 @@ const Header = ({ currentUser, location }) => {
       menuItems={burgerMenuItems}
     />
   );
+
+  const handlePromoClose = useCallback(() => {
+    setPromoVisible(!promoVisible);
+  }, [promoVisible, setPromoVisible]);
 
   return (
     <>
@@ -122,31 +127,53 @@ const Header = ({ currentUser, location }) => {
                     {!isCheckoutPage && <ShoppingCart />}
                   </Grid>
                 </Grid>
-                <Grid container item={true} xs={12} className="headerBar">
-                  <Grid item xs={12}>
-                    <StyledBox fontSize={9}>
-                      <NavLink to="/gallery">
-                        Limited Time: Free Shipping for All New Customers
-                      </NavLink>
-                    </StyledBox>
+                {promoVisible ? (
+                  <Grid container item={true} xs={12} className="headerBar">
+                    <Grid item xs={12}>
+                      <StyledBox fontSize={9}>
+                        <NavLink to="/gallery">
+                          Limited Time: Free Shipping for All New Customers
+                        </NavLink>
+                        <CloseIcon
+                          className="closeIconMobile"
+                          onClick={handlePromoClose}
+                        />
+                      </StyledBox>
+                    </Grid>
                   </Grid>
-                </Grid>
+                ) : null}
               </>
             ) : (
               <>
-                <div className="headerBar">
-                  <Container>
-                    <Grid container item={true} xs={12}>
-                      <Grid item xs={12}>
-                        <StyledBox fontSize={12}>
-                          <NavLink to="/gallery">
-                            Limited Time: Free Shipping for All New Customers
-                          </NavLink>
-                        </StyledBox>
+                {promoVisible ? (
+                  <div className="headerBar">
+                    <Container>
+                      <Grid container item={true} xs={12}>
+                        <Grid item xs={12}>
+                          <StyledBox fontSize={12}>
+                            <NavLink to="/gallery">
+                              Limited Time: Free Shipping for All New Customers
+                            </NavLink>
+                            <div
+                              className="closeIcon"
+                              onClick={handlePromoClose}
+                            >
+                              Close
+                              <CloseIcon
+                                onClick={handlePromoClose}
+                                style={{
+                                  position: 'relative',
+                                  top: 9,
+                                  paddingLeft: 5
+                                }}
+                              />
+                            </div>
+                          </StyledBox>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Container>
-                </div>
+                    </Container>
+                  </div>
+                ) : null}
                 <div className="holder">
                   <Container>
                     <Grid container>
