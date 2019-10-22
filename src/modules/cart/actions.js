@@ -387,7 +387,7 @@ export const requestAddCoupon = (cartId, promoCode) => async (
 
 export const segmentAddCouponReceived = (cart) => {
 
-  window.analytics.track({
+  window.analytics.track("Coupon Applied",{
     "cart_id": cart._id,
     "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
     "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
