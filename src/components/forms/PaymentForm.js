@@ -1,7 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
+
+import braintreeClient from 'braintree-web/client';
+import HostedFields from 'braintree-web/hosted-fields';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
+
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -123,6 +129,52 @@ const PaymentForm = ({
   };
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  const [HostedFieldsClient, setHostedFieldsClient] = useState();
+
+  useEffect(() => {
+    try {
+      braintreeClient.create(
+        {
+          authorization: process.env.REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION
+        },
+        (clientErr, clientInstance) => {
+          if (clientErr) {
+            console.log(clientErr);
+            // @TODO need to handle this gracefully
+          }
+
+          HostedFields.create(
+            {
+              client: clientInstance,
+              styles: {},
+              fields: {
+                number: {
+                  container: '#bt-cardNumber'
+                },
+                expirationDate: {
+                  container: '#bt-cardExpiration'
+                },
+                cvv: {
+                  container: '#bt-cardCvv'
+                }
+              }
+            },
+            (hostedFieldsErr, hostedFieldsInstance) => {
+              if (hostedFieldsErr) {
+                console.log(hostedFieldsErr);
+                // @TODO need to handle this gracefully
+              }
+
+              setHostedFieldsClient(hostedFieldsInstance);
+              return null;
+            }
+          );
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  }, []);
 
   useEffect(() => {
     clearPatchAccountError();
@@ -138,9 +190,11 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
+    const cardData = await HostedFieldsClient.tokenize();
     const payload = {
       ...values,
+      cardData,
       billingAddress: {
         ...values.billingAddress,
         phone: values.billingAddress.phone
@@ -196,33 +250,37 @@ const PaymentForm = ({
                 validate={validateTextField}
               />
             </Grid>
+
             <Grid item xs={12}>
               <Box position="relative">
                 <Field
-                  name="paymentDetails.number"
+                  name="bt-cardNumber"
                   label="Card Number"
+                  id="bt-cardNumber"
                   component={InputField}
-                  validate={() => validateCardNumberField(values)}
                   inputProps={{ style: { paddingRight: 214 } }}
                 />
                 <Box position="absolute" width={100} top={0} right={100}>
                   <Field
                     className={classes.noBorderField}
-                    name="paymentDetails.expirationDate"
+                    name="bt-cardExpiration"
                     label="MM/YYYY"
                     component={InputField}
+                    id="bt-cardExpiration"
                   />
                 </Box>
                 <Box position="absolute" width={66} top={0} right={14}>
                   <Field
                     className={classes.noBorderField}
-                    name="paymentDetails.cvv"
+                    name="bt-cardCvv"
                     label="CVV"
                     component={InputField}
+                    id="bt-cardCvv"
                   />
                 </Box>
               </Box>
             </Grid>
+
             {allowFlyMode && (
               <Grid item xs={12}>
                 <Field
