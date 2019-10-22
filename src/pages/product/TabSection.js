@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PdpTabs() {
+export default function PdpTabs({ scrollToTabs }) {
   const { product, variants, prices, content } = useContext(ProductContext);
   const boxBorder = `solid 2px ${product ? product.color : ''}`;
   const classes = useStyles({ border: boxBorder });
@@ -81,7 +81,7 @@ export default function PdpTabs() {
 
   useEffect(() => {
     if (product && variants.length && content) {
-      if (window.location.href.includes('#')) {
+      if (scrollToTabs) {
         scrollToRef(tabsRef);
       }
     }
@@ -143,3 +143,11 @@ export default function PdpTabs() {
     </Container>
   );
 }
+
+PdpTabs.propTypes = {
+  scrollToTabs: PropTypes.bool
+};
+
+PdpTabs.defaultProps = {
+  scrollToTabs: false
+};
