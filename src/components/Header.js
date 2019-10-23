@@ -173,11 +173,7 @@ const Header = ({ currentUser, location }) => {
                       </Grid>
                     </Container>
                   </div>
-                ) : (
-                  <div>
-                    <Container></Container>
-                  </div>
-                )}
+                ) : null}
                 <div className="holder">
                   <Container>
                     <Grid container>

@@ -8,7 +8,7 @@
   letter-spacing: 1px;
   font-size: 16px;
   display: flex;
-  height: 160px;
+
   .align-right {
     text-align: right;
   }
@@ -22,7 +22,6 @@
     padding-top: 11px;
   }
   @media (min-width: 1200px) {
-    height: 161px;
     border-bottom: 1px solid #000000;
   }
 
@@ -32,6 +31,7 @@
 
   .holder {
     width: 100%;
+    padding: 30px 0;
     button {
       .MuiButton-label {
         align-items: initial;
@@ -126,7 +126,6 @@
 
 @media (max-width: 450px) {
   .headerContainer {
-    min-height: 117px;
     height: auto;
   }
 }
