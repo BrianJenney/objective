@@ -146,16 +146,48 @@ const PaymentForm = ({
           HostedFields.create(
             {
               client: clientInstance,
-              styles: {},
+              styles: {
+                'input': {
+                  'font-size': '18px',
+                  'font-family': 'p22-underground, sans-serif',
+                  'font-weight': 'lighter',
+                  'color': '#585858',
+                  'padding': '18.5px 14px'
+                },
+                ':focus': {
+                  'color': '#000'
+                },
+                '.valid': {
+                  'color': '#000'
+                },
+                '.invalid': {
+                  'color': '#000'
+                },
+                '::-webkit-input-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                ':-moz-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                '::-moz-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },       
+                ':-ms-input-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                }
+              },
               fields: {
                 number: {
-                  container: '#bt-cardNumber'
+                  container: '#bt-cardNumber',
+                  placeholder: 'Card Number'
                 },
                 expirationDate: {
-                  container: '#bt-cardExpiration'
+                  container: '#bt-cardExpiration',
+                  placeholder: 'MM/YYYY'
                 },
                 cvv: {
-                  container: '#bt-cardCvv'
+                  container: '#bt-cardCvv',
+                  placeholder: 'CVV'
                 }
               }
             },
@@ -250,37 +282,48 @@ const PaymentForm = ({
                 validate={validateTextField}
               />
             </Grid>
-
+            <Grid item xs={12}>
+              <Box position="relative" className="bt-payment-holder">
+                <Grid item xs={6}>
+                  <div id="bt-cardNumber"></div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardExpiration"></div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardCvv"></div>
+                </Grid>
+              </Box>
+            </Grid>
+            {/*
             <Grid item xs={12}>
               <Box position="relative">
                 <Field
-                  name="bt-cardNumber"
+                  name="paymentDetails.number"
                   label="Card Number"
-                  id="bt-cardNumber"
                   component={InputField}
+                  validate={() => validateCardNumberField(values)}
                   inputProps={{ style: { paddingRight: 214 } }}
                 />
                 <Box position="absolute" width={100} top={0} right={100}>
                   <Field
                     className={classes.noBorderField}
-                    name="bt-cardExpiration"
+                    name="paymentDetails.expirationDate"
                     label="MM/YYYY"
                     component={InputField}
-                    id="bt-cardExpiration"
                   />
                 </Box>
                 <Box position="absolute" width={66} top={0} right={14}>
                   <Field
                     className={classes.noBorderField}
-                    name="bt-cardCvv"
+                    name="paymentDetails.cvv"
                     label="CVV"
                     component={InputField}
-                    id="bt-cardCvv"
                   />
                 </Box>
               </Box>
             </Grid>
-
+            */}
             {allowFlyMode && (
               <Grid item xs={12}>
                 <Field
