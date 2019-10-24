@@ -64,12 +64,12 @@ const Cart = ({
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const onClickLogo = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
+    dispatch(setCartDrawerOpened(false,false));
     history.push('/gallery');
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
+    dispatch(setCartDrawerOpened(false,false));
   }, [dispatch]);
 
   const togglePromo = useCallback(() => {
@@ -77,7 +77,7 @@ const Cart = ({
   }, [promoVisible, setPromoVisible]);
 
   const handleCheckout = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
+    dispatch(setCartDrawerOpened(false,false));
     history.push('/checkout');
   }, [dispatch, history]);
 

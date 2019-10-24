@@ -262,7 +262,7 @@ export const receivedPatchCart = cart => ({
   payload: cart
 });
 
-export const setCartDrawerOpened = open => (dispatch, getState) => {
+export const setCartDrawerOpened = (open,trackCartDismissed = true) => (dispatch, getState) => {
   const { cart } = getState();
 
   if (cart.setCartDrawerOpened != open) {
@@ -294,11 +294,13 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
     } else {
       // @segment Cart Dismissed
       if(cart.cartDrawerOpened){
+        if(trackCartDismissed){
       window.analytics.track('Cart Dismissed', {
         cart_id: cart._id,
         num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
         products: orderItemsTransformed
       });
+    }
     }
     }
   }

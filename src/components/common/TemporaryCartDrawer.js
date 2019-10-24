@@ -55,7 +55,7 @@ const TemporaryCartDrawer = ({
     ) {
       return;
     }
-    dispatch(setCartDrawerOpened(open));
+    dispatch(setCartDrawerOpened(open,false));
   };
 
   const windowSize = useWindowSize();
