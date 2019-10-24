@@ -2,6 +2,25 @@
 options:
   docker: true
 
+definitions:
+  steps:
+    - step: &build-and-deploy
+        image: docker
+        script:
+          - apk add curl
+          # build the image
+          - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
+          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+          - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
+          - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:${BITBUCKET_BRANCH} .
+          # push to repo
+          - docker push ${NXT_REGISTRY_URL}:${BITBUCKET_BRANCH}
+          - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
+          # deploy to stagging site
+          - export DEPLOY_VAR=$(echo PORTA_WH_${BITBUCKET_BRANCH} | tr '[:lower:]' '[:upper:]')
+          - eval DEPLOY_URL=\$${DEPLOY_VAR}
+          - curl -X POST ${DEPLOY_URL}
+
 pipelines:
   custom: # Pipelines that can only be triggered manually
     sonar:
@@ -13,41 +32,13 @@ pipelines:
           script:
             - echo "Manual triggers for deployments are awesome!"
   branches:
-    master:
-      - step:
-          #python image with aws-cli installed
-          image: docker
-          script:
-            - apk add curl
-            # build the image
-            - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
-            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-            - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
-            - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:latest .
-            # push to repo
-            - docker push ${NXT_REGISTRY_URL}:latest
-            - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
-            # deploy to stagging site
-            - curl -X POST ${UPDATE_WEBHOOK}
     dev:
-      - step:
-          image: docker
-          script:
-            - apk add curl
-            # build the image
-            - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
-            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-            - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
-            - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:dev .
-            # push to repo
-            - docker push ${NXT_REGISTRY_URL}:dev
-            - docker push ${NXT_REGISTRY_URL}:$BUILD_ID
-            # deploy to stagging site
-            - curl -X POST ${DEV_UPDATE_WEBHOOK}
-        services:
-          - docker
-        caches:
-          - docker
+      - step: *build-and-deploy
+    stage:
+      - step: *build-and-deploy
+    master:
+      - step: *build-and-deploy
+
 definitions:
   services:
     docker:
