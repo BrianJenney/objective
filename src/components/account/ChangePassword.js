@@ -77,7 +77,14 @@ const ChangePassword = ({
         setResultVisible(false);
       }
     }
+
   }, [currentUser.changePasswordSubmitting]);
+
+  useEffect(() => {
+    if(window.location.pathname.indexOf("/account/profile")!==-1){
+    window.analytics.page("Account Change Password")
+    }
+  },[])
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(

@@ -8,28 +8,35 @@ import {
   REQUEST_PATCH_CART,
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
-  REQUEST_FETCH_CART_BY_EMAIL,
   REQUEST_REMOVE_CART_BY_ID,
-  UPDATE_CART_WITH_TAX_CALCULATION,
-  RESET_TAX_CALCULATION_IN_CART,
-  RESET_CART,
   REQUEST_ADD_TO_CART,
   REQUEST_REMOVE_FROM_CART,
   REQUEST_UPDATE_QUANTITY,
+  REQUEST_MERGE_CARTS,
+  REQUEST_ADD_COUPON,
+  REQUEST_REMOVE_COUPON,
+  REQUEST_SET_SHIPPING_ADDRESS
 } from './types';
 
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+const localStorageClient = require('store');
+const jwt = require('jsonwebtoken');
 
-export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
+export const requestAddToCart = (cart, product, quantity) => async (
+  dispatch,
+  getState
+) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     cart,
     product,
-    quantity
+    quantity,
+    segmentAnonymousId: localStorageClient.get('ajs_anonymous_id')
   };
   const obj = JSON.stringify(msgpack.encode(params));
+
   stompClient.send(
     '/exchange/cart/cart.request.addtocart',
     {
@@ -38,15 +45,32 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     },
     obj
   );
+
   dispatch({
     type: REQUEST_ADD_TO_CART,
     payload: {}
   });
+
+  // @segment Product Added
+  window.analytics.track('Product Added', {
+    image_url: `https:${product.assets.thumbnail}`,
+    quantity: 1,
+    sku: product.sku,
+    price: Number.parseFloat(product.effectivePrice),
+    product_id: product.id,
+    variant: product.name,
+    name: product.name,
+    brand: cart.storeCode,
+    cart_id: cart._id
+  });
 };
 
-export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
+export const requestRemoveFromCart = (cart, product) => async (
+  dispatch,
+  getState
+) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     cart,
     product
@@ -64,11 +88,29 @@ export const requestRemoveFromCart = (cart, product) => async (dispatch, getStat
     type: REQUEST_REMOVE_FROM_CART,
     payload: {}
   });
+
+  const item = cart.items[product];
+
+  // @segment Product Removed
+  window.analytics.track('Product Removed', {
+    image_url: `https:${item.variant_img}`,
+    quantity: item.quantity,
+    sku: item.sku,
+    price: Number.parseFloat(item.unit_price),
+    product_id: item.variant_id,
+    variant: item.variant_id,
+    name: item.variant_name,
+    brand: cart.storeCode,
+    cart_id: cart._id
+  });
 };
 
-export const requestUpdateQuantity = (cart, product, quantity) => async (dispatch, getState) => {
+export const requestUpdateQuantity = (cart, product, quantity) => async (
+  dispatch,
+  getState
+) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     cart,
     product,
@@ -91,7 +133,7 @@ export const requestUpdateQuantity = (cart, product, quantity) => async (dispatc
 
 export const requestFetchCart = cartId => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
@@ -114,24 +156,28 @@ export const requestFetchCart = cartId => async (dispatch, getState) => {
   });
 };
 
-export const receivedFetchCart = cart => {
-  return {
-    type: RECEIVED_FETCH_CART,
-    payload: cart
-  };
-};
+export const receivedFetchCart = cart => ({
+  type: RECEIVED_FETCH_CART,
+  payload: cart
+});
 
 export const requestCreateCart = () => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   let params = {
     data: {
       storeCode: getState().storefront.code,
-      catalogId: getState().storefront.catalogId,
-      accountId: null,
-      email: null
+      catalogId: getState().storefront.catalogId
     }
   };
+
+  const account = getState().account;
+
+  if (account.data && account.data.account_jwt) {
+    const accountId = jwt.decode(account.data.account_jwt).account_id;
+    params.data.accountId = accountId;
+  }
+
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/cart/cart.request.create',
@@ -147,19 +193,17 @@ export const requestCreateCart = () => async (dispatch, getState) => {
   });
 };
 
-export const receivedCreateCart = cart => {
-  return {
-    type: RECEIVED_CREATE_CART,
-    payload: cart
-  };
-};
+export const receivedCreateCart = cart => ({
+  type: RECEIVED_CREATE_CART,
+  payload: cart
+});
 
 export const requestUpdateCart = (cartId, updates) => async (
   dispatch,
   getState
 ) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
@@ -183,19 +227,17 @@ export const requestUpdateCart = (cartId, updates) => async (
   });
 };
 
-export const receivedUpdateCart = cart => {
-  return {
-    type: RECEIVED_UPDATE_CART,
-    payload: cart
-  };
-};
+export const receivedUpdateCart = cart => ({
+  type: RECEIVED_UPDATE_CART,
+  payload: cart
+});
 
 export const requestPatchCart = (cartId, patches) => async (
   dispatch,
   getState
 ) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     id: cartId,
     data: patches
@@ -209,58 +251,69 @@ export const requestPatchCart = (cartId, patches) => async (
     },
     obj
   );
-  await dispatch({
+  dispatch({
     type: REQUEST_PATCH_CART,
     payload: {}
   });
 };
 
-export const receivedPatchCart = cart => {
-  return {
-    type: RECEIVED_PATCH_CART,
-    payload: cart
-  };
-};
+export const receivedPatchCart = cart => ({
+  type: RECEIVED_PATCH_CART,
+  payload: cart
+});
 
-export const setCartDrawerOpened = open => {
-  return {
+export const setCartDrawerOpened = (open,trackCartDismissed = true) => (dispatch, getState) => {
+  const { cart } = getState();
+
+  if (cart.setCartDrawerOpened != open) {
+    const orderItemsTransformed = [];
+
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: `https:${item.variant_img}`,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      });
+    });
+
+    if (open) {
+
+      // @segment Cart Viewed
+      if(!cart.cartDrawerOpened){
+      window.analytics.track('Cart Viewed', {
+        cart_id: cart._id,
+        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        products: orderItemsTransformed
+      });
+    }
+    } else {
+      // @segment Cart Dismissed
+      if(cart.cartDrawerOpened){
+        if(trackCartDismissed){
+      window.analytics.track('Cart Dismissed', {
+        cart_id: cart._id,
+        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        products: orderItemsTransformed
+      });
+    }
+    }
+    }
+  }
+
+  dispatch({
     type: SET_CART_DRAWER_OPENED,
     payload: open
-  };
-};
-
-export const requestFetchCartByEmail = email => async (dispatch, getState) => {
-  const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
-  const params = {
-    params: {
-      createOnMiss: {
-        storeCode: getState().storefront.code,
-        catalogId: getState().storefront.catalogId
-      },
-      query: {
-        email
-      }
-    }
-  };
-  const obj = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
-    '/exchange/cart/cart.request.find',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId()
-    },
-    obj
-  );
-  dispatch({
-    type: REQUEST_FETCH_CART_BY_EMAIL,
-    payload: {}
   });
 };
 
 export const requestRemoveCartById = id => async (dispatch, getState) => {
   const stompClient = getState().stomp.client;
-  const replyTo = getState().stomp.replyTo;
+  const { replyTo } = getState().stomp;
   const params = {
     id,
     params: {}
@@ -280,15 +333,118 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
   });
 };
 
-export const updateCartWithTaxCalculation = (tax, rate) => {
-  return {
-    type: UPDATE_CART_WITH_TAX_CALCULATION,
-    payload: {tax, rate}
+export const requestMergeCarts = (cartId, accountId) => async (
+  dispatch,
+  getState
+) => {
+  const stompClient = getState().stomp.client;
+  const { replyTo } = getState().stomp;
+  const params = {
+    cartId,
+    accountId
   };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.mergecarts',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_MERGE_CARTS,
+    payload: {}
+  });
 };
 
-export const resetCart = () => {
-  return {
-    type: RESET_CART,
+export const requestAddCoupon = (cartId, promoCode) => async (
+  dispatch,
+  getState
+) => {
+  const stompClient = getState().stomp.client;
+  const { replyTo } = getState().stomp;
+  const params = {
+    cartId,
+    promoCode
   };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.addcoupon',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_ADD_COUPON,
+    payload: {}
+  });
+};
+
+export const segmentAddCouponReceived = (cart) => {
+
+  window.analytics.track("Coupon Applied",{
+    "cart_id": cart._id,
+    "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
+    "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
+    "discount": cart.discount,
+    "order_id": cart.accountId
+  });
+  
+}
+
+export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
+  const stompClient = getState().stomp.client;
+  const { replyTo } = getState().stomp;
+  const params = {
+    cartId
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.removecoupon',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_REMOVE_COUPON,
+    payload: {}
+  });
+};
+
+export const requestSetShippingAddress = (cartId, address) => async (
+  dispatch,
+  getState
+) => {
+  const stompClient = getState().stomp.client;
+  const { replyTo } = getState().stomp;
+  const params = {
+    cartId,
+    address
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/cart/cart.request.setshippingaddress',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    obj
+  );
+
+  dispatch({
+    type: REQUEST_SET_SHIPPING_ADDRESS,
+    payload: {}
+  });
 };

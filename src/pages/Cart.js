@@ -20,6 +20,8 @@ class Cart extends Component {
       return <div></div>;
     }
 
+    window.analytics.page("Cart");
+
     return (
       <Container>
         <Typography component="h1" variant="h5" align="center">

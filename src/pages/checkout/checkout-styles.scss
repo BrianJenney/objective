@@ -1,10 +1,22 @@
 .checkout-wrapper {
+  .bt-payment-holder {
+    display: flex;
+    max-height: 60px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    color: #000;
+    iframe {
+      max-height: 60px;
+    }
+    &.focus, &.hover {
+      border: 1px solid #000;
+    }
+  }
   .justify-content {
     justify-content: space-between !important;
   }
   .cart-drawer {
     background-color: #fff;
-    padding: 24px 20px;
+    padding: 24px 20px !important;
   }
   .signup-form,
   .step-3-wrapper {
@@ -102,6 +114,95 @@
     }
     .MuiIconButton-label a {
       margin-right: -85px;
+    }
+    .firstPanel {
+      .checkoutPanel {
+        margin-top: 15px;
+      }
+    }
+    .lastPanel {
+      .checkoutPanel {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+// Transaction Processing / Error Message Dialog
+.transaction-dialog-container {
+  .MuiPaper-root {
+    min-width: 826px;
+    height: 294px;
+  }
+  .MuiDialogContent-root {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .MuiPaper-root {
+      min-width: 343px;
+      height: 328px;
+    }
+  } 
+}
+
+// Transaction Error / Processing Message Container
+.transaction-message-container {
+  .title {
+    font-family: CanelaText;
+    font-size: 48px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #231f20;
+  }
+  .error-subheader {
+    font-family: FreightTextProBook;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #231f20;
+    padding: 13px 160px;
+  }
+  .processing-subheader {
+    font-family: FreightTextProBook;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #231f20;
+    padding: 13px 160px;
+  }
+  @media (max-width: 768px) {
+    .title {
+      font-family: CanelaText;
+      font-size: 36px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #231f20;
+      padding: 0px 31px;
+    }
+    .error-subheader {
+      padding: 17px 32px;
+    }
+    .processing-subheader {
+      padding: 17px 20px;
     }
   }
 }

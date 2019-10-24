@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { compose } from 'redux';
-import { withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 // import PropTypes from 'prop-types';
+
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -12,9 +14,9 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+
 import { Button } from '../../components/common';
 import { InputField } from '../../components/form-fields';
-
 import { requestForgotPassword } from '../../modules/account/actions';
 import withDialog from '../../hoc/withDialog';
 
@@ -32,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '44px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     padding: theme.spacing(3, 0, 2),
     [theme.breakpoints.down('xs')]: {
@@ -51,7 +53,10 @@ const ForgotPassword = ({ history }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = ({ email }) => {
-    dispatch(requestForgotPassword(email));
+    const location = window.location;
+    const url = location.protocol + '//' + location.host;
+
+    dispatch(requestForgotPassword(email, url));
     history.replace('/password/confirm');
   };
 
@@ -84,7 +89,6 @@ const ForgotPassword = ({ history }) => {
           It's easy to forget. Enter your email address and we'll send you a
           reset link.
         </Typography>
-
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
@@ -98,9 +102,11 @@ const ForgotPassword = ({ history }) => {
 
 const ForgotPasswordDialog = compose(
   withRouter,
-  withDialog,
+  withDialog
 )(ForgotPassword);
 
-const ForgotPasswordPage = (props) => <ForgotPasswordDialog onExited={props.history.goBack} {...props} />;
+const ForgotPasswordPage = props => (
+  <ForgotPasswordDialog onExited={props.history.goBack} {...props} />
+);
 
 export default withRouter(ForgotPasswordPage);

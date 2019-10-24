@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useSelector } from 'react-redux';
 
 import Box from '@material-ui/core/Box';
@@ -12,6 +12,9 @@ const Gallery = () => {
   const catalog = useSelector(state => state.catalog);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+  useEffect(()=>{
+    window.analytics.page("Gallery");
+  },[])
 
   return (
     <Box className="gallery-page">

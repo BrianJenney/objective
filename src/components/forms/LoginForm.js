@@ -56,14 +56,13 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
   const renderForm = ({ values, isValid }) => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
-      <AlertPanel
-        my={2}
-        p={2}
-        type="error"
-        bgcolor="#ffcdd2"
-        text={errorMessage}
-        variant="subtitle2"
-      />
+      {currentUser.loginError && (
+        <AlertPanel
+          type="error"
+          text={errorMessage}
+          onClose={clearLoginError}
+        />
+      )}
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Field
@@ -113,7 +112,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
           <Button
             fullWidth
             type="submit"
-            children="Login"
+            children="Log in"
             disabled={!isValid}
           />
         </Grid>

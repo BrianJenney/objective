@@ -38,7 +38,7 @@ const contentfulOptions = {
     }
   }
 };
-
+let homePageTracked = false;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -61,6 +61,9 @@ class Home extends Component {
       .catch(err => {
         console.log(err);
       });
+    if (!homePageTracked) {
+      window.analytics.page('Home');
+    }
   }
 
   renderHeroSlider() {
@@ -126,7 +129,7 @@ class Home extends Component {
     const family = [
       '5d8ba4f6f5005515a437d4be',
       '5ce6d310585756469c36e250',
-      '5ceec52ba686a03bccfa67c5'
+      '5d8ba8a1f5005515a437d4c2'
     ];
 
     const fps = this.props.products

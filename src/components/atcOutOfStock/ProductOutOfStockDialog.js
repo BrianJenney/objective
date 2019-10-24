@@ -22,7 +22,7 @@ const schema = object().shape({
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     paddingBottom: '10px',
     [theme.breakpoints.down('xs')]: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   name: {
     color: '#003732',
     fontSize: '30px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingBottom: '20px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '20px',
@@ -71,17 +71,62 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
+const ProductOutOfStockForm = ({
+  closeDialog,
+  product_img,
+  product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
+  product_url,
+  handleOpenEmailConfirmation
+}) => {
   const classes = useStyles();
   const initialValues = {
     email: '',
-    subscribed: false
+    subscribed: true
   };
 
   const handleEmailNotification = values => {
     const { email, subscribed } = values;
     // send email notification
     // alert(`send email notification to ${email} with ${subscribed}`);
+
+    window.analytics.track('Email Capture Successful', {
+      email: email,
+      site_location: "back in stock"
+    });
+
+    window.analytics.track('Email Capture Completed', {
+      email: email,
+      site_location: "back in stock"
+    });
+
+
+    if (subscribed) {
+
+      window.analytics.track("Subscribed", {
+        "email": email,
+        "site_location": "back in stock"
+      });
+    
+      window.analytics.track("Subscribed Listrak Auto", {
+        "email": email,
+        "site_location": "back in stock"
+      });
+    }
+    // Listrak event
+    let listrakProductSku = product_variant ? product_variant : product_sku; //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
+    //This try-catch block prevents the ProductOutOfStockForm from breaking if Listrak as a destination isn't enabled in Segment
+    try{
+    window._ltk.Alerts.AddAlert(email, listrakProductSku, 'BIS');
+    window._ltk.Alerts.Submit();
+  } catch(e){
+    console.log(e.message);
+  }
+    handleOpenEmailConfirmation();
+    
     closeDialog();
   };
 
@@ -114,7 +159,7 @@ const ProductOutOfStockForm = ({ closeDialog, product_img, product_name }) => {
               <Field
                 style={{ padding: '20px 7px 20px 0' }}
                 name="subscribed"
-                label="Subscribe to Objective news"
+                label="Subscribe for tips and new product launches"
                 color="primary"
                 component={CheckboxField}
                 value={values.subscribed}

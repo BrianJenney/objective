@@ -4,19 +4,18 @@
   padding-left: 55px !important;
 } */
 
-
-.account-orders-mobile-table div[role="toolbar"]{
-  display:none;
-  }
-  .nxTextField .MuiOutlinedInput-notchedOutline{
-    border-color: #000000;
-  }
-  .nxTextField .MuiInputBase-formControl{
-    height: 50px;
-    font-weight: 600;
-    font-size: 16px;
-    color: #231f20;
-  }
+.account-orders-mobile-table div[role='toolbar'] {
+  display: none;
+}
+.nxTextField .MuiOutlinedInput-notchedOutline {
+  border-color: #000000;
+}
+.nxTextField .MuiInputBase-formControl {
+  height: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #231f20;
+}
 .account-side-menu {
   font-family: p22-underground, sans-serif;
   font-size: 16px;
@@ -28,12 +27,9 @@
   }
 }
 .account-history-return {
-  text-decoration: none;
-  border-bottom: 1px solid #231f20;
   margin-bottom: 24px;
   color: #231f20;
   font-size: 18px;
-  padding-bottom: 3px;
 }
 .account-history-return:visted,
 .account-history-return:active,
@@ -123,7 +119,7 @@
     }
   }
   h3 {
-    font-family: CanelaText;
+    font-family: 'Canela Text Web';
     font-size: 48px;
     margin-bottom: 30px;
   }

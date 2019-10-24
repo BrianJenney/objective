@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
 import CardMedia from '@material-ui/core/CardMedia';
 
 import {
@@ -16,7 +15,7 @@ import {
   StyledTotalWrapper
 } from '../../pages/cart/StyledComponents';
 
-import { getOrderTotalSummary } from '../../utils/order';
+import { displayMoney } from '../../utils/formatters';
 
 import { colorPalette } from '../Theme/color-palette';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '30px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     marginTop: '-13px',
     marginBottom: '20px',
     [theme.breakpoints.down('xs')]: {
@@ -62,9 +61,16 @@ const { MEDIUM_GRAY } = colorPalette;
 
 const CartSummary = ({ order }) => {
   const classes = useStyles();
-  // const totalSummary = calculateCartTotals(cart);
   const { items } = order;
-  const totalSummary = getOrderTotalSummary(order);
+
+  let shippingMethod = null;
+
+  if (order.shippingMethod) {
+    shippingMethod = order.shippingMethod;
+  } else {
+    shippingMethod = order.shipping.options[order.shipping.code];
+  }
+  const promoCode = order.promo ? ` (${order.promo.code})` : '';
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -114,7 +120,7 @@ const CartSummary = ({ order }) => {
                   </Typography>
 
                   <StyledSmallCaps align="right">
-                    ${(item.quantity * item.unit_price).toFixed(2)}
+                    {displayMoney(item.quantity * item.unit_price)}
                   </StyledSmallCaps>
                 </Card>
               </Grid>
@@ -130,7 +136,7 @@ const CartSummary = ({ order }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${totalSummary.subtotal}`}
+                {displayMoney(order.subtotal)}
               </StyledSmallCaps>
             </Grid>
           </StyledTotalWrapper>
@@ -142,28 +148,24 @@ const CartSummary = ({ order }) => {
                 component="p"
                 style={{ position: 'relative', top: '6px' }}
               >
-                Ground 3-5 Business Days
+                {shippingMethod.deliveryEstimate}
               </StyledFinePrint>
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                $0.00
+                {displayMoney(shippingMethod.price, true)}
               </StyledSmallCaps>
             </Grid>
           </Grid>
           <Grid container xs={12}>
             <Grid item xs>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Savings
+                Savings{promoCode}
               </StyledSmallCaps>
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${
-                  totalSummary.discount
-                    ? totalSummary.discount
-                    : '0.00'
-                }`}
+                {displayMoney(order.discount)}
               </StyledSmallCaps>
             </Grid>
           </Grid>
@@ -175,21 +177,10 @@ const CartSummary = ({ order }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {`$${
-                  totalSummary.tax
-                    ? totalSummary.tax
-                    : '0.00'
-                }`}
+                {displayMoney(order.tax)}
               </StyledSmallCaps>
             </Grid>
           </Grid>
-          {/*
-            <Grid item xs={12}>
-              <Link component="button" underline="always">
-                <Typography className={classes.code}>Enter Promo Code</Typography>
-              </Link>
-            </Grid>
-          */}
           <Grid
             container
             xs={12}
@@ -204,7 +195,7 @@ const CartSummary = ({ order }) => {
             </Grid>
             <Grid item>
               <Typography className={classes.total}>
-                {`$${totalSummary.total}`}
+                {displayMoney(order.total)}
               </Typography>
             </Grid>
           </Grid>

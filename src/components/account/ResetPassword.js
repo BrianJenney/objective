@@ -31,6 +31,7 @@ class ResetPassword extends React.Component {
     // In the future this will be updated to grab token based off of email sent to user and will not be hard coded. Also this page will not be accessible unless the user has gotten an email and clicked on the link
     // We do not have email functionality as of yet
     //this.props.requestFetchAccount('5cdc7405da53494ee0f3bafe');
+    window.analytics.page("Account Reset Password");
   }
 
   renderForm = () => {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { withRouter, matchPath } from 'react-router-dom';
 import { compose } from 'redux';
-import CheckoutFooter from './CheckoutFooter';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -28,6 +27,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import CheckoutFooter from './CheckoutFooter';
 import ContactMail from './common/Icons/ContactMail/ContactMail';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
@@ -73,6 +73,14 @@ const DialogContent = withStyles(theme => ({
     padding: theme.spacing(2)
   }
 }))(MuiDialogContent);
+
+const trackEmailSubmitFailure = (email, error_message) => {
+  window.analytics.track('Email Capture Failed', {
+    email: email,
+    error_message: error_message,
+    site_location: 'footer'
+  });
+};
 
 const NeedHelpDialog = () => {
   const [open, setOpen] = useState(false);
@@ -130,6 +138,7 @@ const NeedHelpDialog = () => {
                         paddingBottom: '1px',
                         textDecoration: 'none'
                       }}
+                      href="mailto:Help@objectivewellness.com"
                     >
                       help@objectivewellness.com
                     </Link>
@@ -147,7 +156,9 @@ const NeedHelpDialog = () => {
 const schema = object().shape({
   email: string()
     .required('Email is required')
-    .email('Input valid email address')
+    .email(props => {
+      return 'Input valid email address';
+    })
 });
 
 const StyledBox = withStyles(() => ({
@@ -194,13 +205,35 @@ const Footer = ({ location, currentUser }) => {
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
 
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
-  const gotoUrl = (url, login) => {
-    return currentUser.data.account_jwt ? url : login;
-  };
+  const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
 
   const handleSubmit = useCallback(
     ({ email }) => {
       console.log('SUBMIT SUCCEED!!!', email);
+      window.analytics.track('Email Capture Completed', {
+        email: email,
+        site_location: 'footer'
+      });
+
+      window.analytics.track('Email Capture Successful', {
+        email: email,
+        site_location: 'footer'
+      });
+
+      window.analytics.track("Subscribed", {
+        "email": email,
+        "site_location": "footer"
+      });
+    
+      window.analytics.track("Subscribed Listrak Auto", {
+        "email": email,
+        "site_location": "footer"
+      });
+
+
+      window.analytics.identify({
+        email
+      });
       dispatch(requestSignupEmail(email));
       setConfirmationVisibility(!confirmationVisibility);
     },
@@ -213,7 +246,7 @@ const Footer = ({ location, currentUser }) => {
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
-              <Grid container item={true} xs={12} className="promise">
+              <Grid container item xs={12} className="promise">
                 <Grid item xs={12}>
                   <div className="diamond-outer">
                     <div className="diamond">
@@ -257,7 +290,7 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/">About</NavLink>
+                        <NavLink to="/about_us">About</NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
@@ -332,7 +365,7 @@ const Footer = ({ location, currentUser }) => {
                           initialValues={{ email: '' }}
                           onSubmit={handleSubmit}
                           validationSchema={schema}
-                          render={() => (
+                          render={({ errors }) => (
                             <Form>
                               <Field
                                 name="email"
@@ -364,14 +397,14 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid item xs={6} className="border-bottom border-left icon">
                     <Link
-                      href="https://www.facebook.com/Objective_Wellness"
+                      href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                       target="_blank"
                       rel="noopener"
                     >
                       <img src={fbIcon} alt="facebook" />
                     </Link>
                   </Grid>
-                  <Grid container item={true} xs={12} className="legal">
+                  <Grid container item xs={12} className="legal">
                     <StyledList>
                       <ListItem className="text-center">
                         Objective &bull; All rights reserved
@@ -413,6 +446,7 @@ const Footer = ({ location, currentUser }) => {
                         borderBottom: '1px solid #fff',
                         textDecoration: 'none'
                       }}
+                      href="mailto:Help@objectivewellness.com"
                     >
                       Help@objectivewellness.com
                     </Link>{' '}
@@ -428,7 +462,7 @@ const Footer = ({ location, currentUser }) => {
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
-              <Grid container item={true} xs={12} className="promise">
+              <Grid container item xs={12} className="promise">
                 <Grid item xs={12}>
                   <div className="diamond-outer">
                     <div className="diamond">
@@ -454,10 +488,10 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
               </Grid>
               <div className="footer-main-holder">
-                <Grid container item={true} xs={12} className="footer-main">
+                <Grid container item xs={12} className="footer-main">
                   <Grid item xs={5} className="title border-bottom">
                     <StyledBox>
-                      <NavLink to="/">About</NavLink>
+                      <NavLink to="/about_us">About</NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
@@ -586,7 +620,7 @@ const Footer = ({ location, currentUser }) => {
                         className="border-left icon border-right"
                       >
                         <Link
-                          href="https://www.facebook.com/Objective_Wellness"
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                           target="_blank"
                           rel="noopener"
                         >
@@ -595,7 +629,7 @@ const Footer = ({ location, currentUser }) => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid container item={true} xs={12} className="legal">
+                  <Grid container item xs={12} className="legal">
                     <StyledLegalList>
                       <ListItem>Objective &bull; All rights reserved</ListItem>
                       <ListItem>
@@ -632,6 +666,7 @@ const Footer = ({ location, currentUser }) => {
                         borderBottom: '1px solid #fff',
                         textDecoration: 'none'
                       }}
+                      href="mailto:help@objectivewellness.com"
                     >
                       Help@objectivewellness.com
                     </Link>{' '}

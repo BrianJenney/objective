@@ -1,6 +1,6 @@
 html,
 .pdp-header {
-  font-family: CanelaText;
+  font-family: 'Canela Text Web';
   font-weight: 300;
   font-style: normal;
   font-stretch: normal;
@@ -150,6 +150,17 @@ html,
   }
 }
 @media (max-width: 768px) {
+  .cardTop.rightCol, 
+  .cardBottom.rightCol,
+  .facts-table th:first-of-type,
+  .facts-table td:first-of-type {
+    border-left:  none !important;
+  }
+  .facts-table th:last-of-type,
+  .facts-table td:last-of-type,
+  .bottom-block .other-ingredients  {
+    border-right: none !important;
+  }
   .mobile-grid-modifications {
     background-color: #fdfbf9;
   }

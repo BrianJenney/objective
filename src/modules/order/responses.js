@@ -1,59 +1,36 @@
 import store from '../../store';
-import { receivedCreateOrder, receivedGetOrder, receivedTransactionRequestRefund } from './actions';
+import { receivedCreateOrderSuccess, receivedCreateOrderFailure, receivedGetOrder } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
+import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleOrderResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
-    case 'order.request.create':
-      console.log(
-        '****************** Order Create Response ******************'
-      );
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
-      store.dispatch(receivedCreateOrder(data));
-
+    case 'order.request.createorder':
+      debugRabbitResponse('Order Create Response', status, data, fields, properties);
       // status handling
-      switch (status) {
-        case 'success':
-          // clear cart on success
-          store.dispatch(requestRemoveCartById(data.cartId));
-          store.dispatch(requestCreateCart());
-          break;
-        default:
-          console.log('unknown status ' + status);
+      if (status === 'success') {
+        // clear cart on success
+        store.dispatch(receivedCreateOrderSuccess(data));
+        store.dispatch(requestRemoveCartById(data.cartId));
+        store.dispatch(requestCreateCart());
+      } else {
+        store.dispatch(receivedCreateOrderFailure(data));
       }
       break;
+    case 'order.request.cancelorder':
+      debugRabbitResponse('Order Cancel Response', status, data, fields, properties);
+      store.dispatch(receivedGetOrder(data));
+      break;
     case 'order.request.find':
-      console.log(
-        '****************** Order Find By Account Response ******************'
-      );
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Find Order by Account Response', status, data, fields, properties);
       // This is in the *account* module, so state updates are made in that reducer.
       store.dispatch(receivedFindOrdersByAccount(data.data));
       break;
     case 'order.request.get':
-      console.log('****************** Order Get Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Get Order Response', status, data, fields, properties);
       // This is in the *account* module, so state updates are made in that reducer.
       store.dispatch(receivedGetOrder(data));
-      break;
-    case 'transaction.request.refund':
-      console.log('***** Transaction Request refund');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
-      store.dispatch(receivedTransactionRequestRefund(data));
-
       break;
     default:
       console.log('bad response ' + fields.routingKey);

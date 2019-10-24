@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import { sendCreditCardRequest } from '../../utils/braintree';
+
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
@@ -18,6 +20,14 @@ import { PaymentForm } from '../forms';
 export const FORM_TYPES = {
   ACCOUNT: 'account',
   CHECKOUT: 'checkout'
+};
+
+const usePrevious = value => {
+  const useRefObj = useRef();
+  useEffect(() => {
+    useRefObj.current = value;
+  }, [value]);
+  return useRefObj.current;
 };
 
 const AccountPaymentDetails = ({
@@ -38,6 +48,9 @@ const AccountPaymentDetails = ({
 }) => {
   const [formModeEnabled, setFormModeEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const prevPatchAccountSubmitting = usePrevious(
+    currentUser.patchAccountSubmitting
+  );
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -47,9 +60,38 @@ const AccountPaymentDetails = ({
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
 
   useEffect(() => {
+    if (window.location.pathname.indexOf('/account/payment-details') !== -1) {
+      window.analytics.page('Account Payment Details');
+    }
+  }, []);
+
+  useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
-    const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-    setSelectedIndex(defaultIndex);
+
+    if (selectedIndex < 0) {
+      const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+      setSelectedIndex(defaultIndex);
+    }
+
+    if (
+      prevPatchAccountSubmitting &&
+      !currentUser.patchAccountSubmitting &&
+      formModeEnabled
+    ) {
+      if (!currentUser.patchAccountError && paymentMethods.length > 0) {
+        setSelectedIndex(paymentMethods.length - 1);
+
+        if (onSubmit) {
+          onSubmit(paymentMethods[paymentMethods.length - 1]);
+        }
+      }
+    }
+
+    if (paymentMethods.length === 0) {
+      setFormModeEnabled(true);
+    } else {
+      setFormModeEnabled(false);
+    }
   }, [currentUser.data.paymentMethods]);
 
   const handleSelect = evt => {
@@ -72,23 +114,18 @@ const AccountPaymentDetails = ({
   const handleSave = async (values, actions) => {
     const pureValues = omit(values, ['shouldSaveData']);
     const { shouldSaveData } = values;
-    const { paymentDetails, billingAddress } = pureValues;
+    const { cardData, paymentDetails, billingAddress } = pureValues;
 
     try {
-      const cardResult = await sendCreditCardRequest({
-        ...paymentDetails,
-        zipcode: billingAddress.zipcode
-      });
-      const { nonce, details } = cardResult.creditCards[0];
       const payload = {
         newCreditCard: {
           name: paymentDetails.cardholderName,
-          cardType: details.cardType,
-          last4: details.lastFour,
-          expirationDate: paymentDetails.expirationDate,
+          cardType: cardData.details.cardType,
+          last4: cardData.details.lastFour,
+          expirationDate: cardData.details.expirationMonth + '/' + cardData.details.expirationYear,
           billingAddress
         },
-        nonce
+        nonce: cardData.nonce
       };
 
       if (allowFlyMode && !shouldSaveData) {

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '48px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     padding: theme.spacing(3, 0, 2),
     [theme.breakpoints.down('xs')]: {
@@ -164,7 +164,10 @@ const ResetPassword = ({ history, location }) => {
   const handleSubmit = values => {
     const urlParams = new URLSearchParams(location.search);
     const token = urlParams.getAll('tk').toString();
+
     dispatch(requestPatchAccount(token, values));
+    const localStorageClient = require('store');
+    localStorageClient.remove('token');
     history.replace('/password/success');
   };
 

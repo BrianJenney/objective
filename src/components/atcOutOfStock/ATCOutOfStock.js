@@ -1,5 +1,6 @@
 import React from 'react';
 import CardActions from '@material-ui/core/CardActions';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Button } from '../../components/common';
@@ -102,6 +103,10 @@ export const OutOfStockPDP = ({
   onExited,
   product_img,
   product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
   openOutOfStockDialog,
   handleOpenEmailConfirmation
 }) => {
@@ -121,6 +126,10 @@ export const OutOfStockPDP = ({
           onExited={onExited}
           product_img={product_img}
           product_name={product_name}
+          product_category={product_category}
+          product_id={product_id}
+          product_sku={product_sku}
+          product_variant={product_variant}
           handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}
@@ -133,22 +142,36 @@ export const OutOfStock = ({
   onExited,
   product_img,
   product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
   openOutOfStockDialog,
-  handleOpenEmailConfirmation
+  handleOpenEmailConfirmation,
+  ...rest
 }) => {
   const classes = useStyles();
   return (
     <>
-      <div className="gallery-atc">
-        <Button className={classes.btnOOS} fullWidth onClick={onClick}>
-          TELL ME WHEN IT'S AVAILABLE
+      <Box width={1} className="gallery-atc">
+        <Button
+          className={classes.btnOOS}
+          fullWidth
+          onClick={onClick}
+          {...rest}
+        >
+          TELL ME WHEN IT IS AVAILABLE
         </Button>
-      </div>
+      </Box>
       {openOutOfStockDialog && (
         <ProductOutOfStockDialog
           onExited={onExited}
           product_img={product_img}
           product_name={product_name}
+          product_category={product_category}
+          product_id={product_id}
+          product_sku={product_sku}
+          product_variant={product_variant}
           handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}

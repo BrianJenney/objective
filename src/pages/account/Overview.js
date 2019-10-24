@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
@@ -11,6 +11,7 @@ import { fonts } from '../../components/Theme/fonts.js';
 import { getDefaultEntity } from '../../utils/misc';
 import { NavLink, Button } from '../../components/common';
 import { withLogout } from '../../hoc';
+import ScrollToTop from '../../components/common/ScrollToTop';
 
 const pStyle = {
   padding: 20
@@ -76,6 +77,9 @@ const AccountOverview = props => {
   const handleClick = () => {
     setOpen(!open);
   };
+  useEffect(() => {
+    window.analytics.page('Account Overview');
+  }, []);
   const RenderOverview = () => (
     <div className="account-overview">
       <Typography className={classes.title} variant="h1" gutterBottom>
@@ -109,7 +113,11 @@ const AccountOverview = props => {
       )}
     </div>
   );
-  return <RenderOverview />;
+  return (
+    <ScrollToTop>
+      <RenderOverview />
+    </ScrollToTop>
+  );
 };
 
 AccountOverview.propTypes = {

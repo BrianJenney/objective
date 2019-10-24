@@ -104,6 +104,12 @@ const ProfileDetails = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  useEffect(()=>{
+    if(window.location.pathname.indexOf("/account/profile")!==-1){
+    window.analytics.page("Account Profile");
+    }
+  },[]);
+
   if (!currentUser.data.account_jwt) {
     return <div>No Account</div>;
   }

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '55px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingBottom: '0',
     marginBottom: '22px',
     [theme.breakpoints.down('xs')]: {
@@ -81,6 +81,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+
 const OrderConfirmation = ({ history }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
@@ -90,11 +92,24 @@ const OrderConfirmation = ({ history }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
-  console.log('OrderConfirmation', { order, account });
 
   if (!order) {
     return null;
   }
+
+  let orderItemsTransformedGA = [];
+  order.items.map(item => {
+    orderItemsTransformedGA.push({
+      id: item.variant_id,
+      name: item.variant_name,
+      brand: order.storeCode,
+      variant: item.sku,
+      quantity: item.quantity,
+      price: item.unit_price
+    });
+  });
+
+
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
@@ -111,6 +126,18 @@ const OrderConfirmation = ({ history }) => {
       },
       [history, order._id]
     );
+    useEffect(()=>{
+      window.analytics.page("Order Confirmation");
+      window.gtag('event', 'purchase', {
+        transaction_id: order.orderId,
+        affiliation: order.storeCode,
+        value: order.total,
+        currency: 'USD',
+        tax: order.tax,
+        shipping: order.shippingMethod.price,
+        items: orderItemsTransformedGA
+      });
+    },[])
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -132,26 +159,25 @@ const OrderConfirmation = ({ history }) => {
               order.orderId.substring(16)}
           </strong>
         </Typography>
-        { xs ? 
-
-        (<Grid container style={{overflow: 'hidden'}}>
-          <Grid item style={{overflow: 'hidden'}}>
-
-        <Button
-          type="button"
-          onClick={handleOrderDetail}
-          children="Check Order Status"
-          className={classes.button}
-        />
+        {xs ? (
+          <Grid container style={{ overflow: 'hidden' }}>
+            <Grid item style={{ overflow: 'hidden' }}>
+              <Button
+                type="button"
+                onClick={handleOrderDetail}
+                children="Check Order Status"
+                className={classes.button}
+              />
+            </Grid>
           </Grid>
-
-        </Grid>)
-         : (<Button
-          type="button"
-          onClick={handleOrderDetail}
-          children="Check Order Status"
-          className={classes.button}
-        />)}
+        ) : (
+          <Button
+            type="button"
+            onClick={handleOrderDetail}
+            children="Check Order Status"
+            className={classes.button}
+          />
+        )}
         <Box
           display="flex"
           flexDirection={xs ? 'column' : 'row'}

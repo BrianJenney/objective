@@ -14,7 +14,7 @@ import withDialog from '../../hoc/withDialog';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     paddingBottom: '10px',
     [theme.breakpoints.down('xs')]: {
@@ -41,19 +41,23 @@ const useStyles = makeStyles(theme => ({
   name: {
     color: '#003732',
     fontSize: '30px',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     paddingBottom: '20px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '20px',
       paddingBottom: '16px'
     }
+  },
+  test: {
+    border: 'red 2px solid',
+    [theme.breakpoints.down('xs')]: {}
   }
 }));
 
 const ConfirmEmail = ({ product_img, product_name }) => {
   const classes = useStyles();
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="lg">
       <CssBaseline />
       <Grid container xs={12} direction="row" justify="center" align="center">
         <Grid item xs={12}>

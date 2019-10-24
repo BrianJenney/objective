@@ -100,6 +100,15 @@ const AddressForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const handleSubmit = (values, actions) => {
+    const payload = {
+      ...values,
+      phone: values.phone ? values.phone.trim() : ''
+    };
+
+    onSubmit(payload, actions);
+  };
+
   const renderForm = () => (
     <Form>
       <Box
@@ -113,7 +122,8 @@ const AddressForm = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <AlertPanel
-            p={2}
+            py={2}
+            px={4}
             type="error"
             bgcolor="#ffcdd2"
             text={errorMessage}
@@ -146,7 +156,6 @@ const AddressForm = ({
             name="address1"
             label="Street Address"
             component={InputField}
-            helperText="*No PO Boxes or APO/FPO addresses"
           />
         </Grid>
         <Grid item xs={12}>
@@ -171,12 +180,7 @@ const AddressForm = ({
           <Field name="zipcode" label="Zip Code" component={InputField} />
         </Grid>
         <Grid item xs={12}>
-          <Field
-            name="phone"
-            label="Phone #"
-            component={InputField}
-            helperText="*No PO Boxes or APO/FPO addresses"
-          />
+          <Field name="phone" label="Phone #" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -219,7 +223,7 @@ const AddressForm = ({
                 component={Typography}
                 color="#979797"
                 variant="body2"
-                children="FedEx Ground 3-5 days"
+                children="USPS Priority 3-5 days"
                 fontSize={16}
                 lineHeight={1.69}
               />
@@ -247,7 +251,7 @@ const AddressForm = ({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validationSchema={schema}
       render={renderForm}
       enableReinitialize

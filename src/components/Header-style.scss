@@ -8,7 +8,7 @@
   letter-spacing: 1px;
   font-size: 16px;
   display: flex;
-  height: 160px;
+
   .align-right {
     text-align: right;
   }
@@ -22,7 +22,6 @@
     padding-top: 11px;
   }
   @media (min-width: 1200px) {
-    height: 161px;
     border-bottom: 1px solid #000000;
   }
 
@@ -32,6 +31,7 @@
 
   .holder {
     width: 100%;
+    padding: 20px 0;
     button {
       .MuiButton-label {
         align-items: initial;
@@ -72,22 +72,28 @@
     // padding: 12px;
     letter-spacing: 0.8px;
     width: 100%;
-
-    .option {
-      padding: 0 10px;
-
-      @media (min-width: 1200px) {
-        padding: 0 20px;
-        display: flex;
-        align-items: center;
-
-        &:first-child {
-          justify-content: flex-end;
-        }
-
-        &:nth-child(2) {
-          justify-content: flex-start;
-        }
+    text-align: center;
+    a {
+      color: #fff;
+    }
+    .closeIcon {
+      cursor: pointer;
+      position: absolute;
+      top: -2px;
+      right: 20px;
+    }
+    .closeIconMobile {
+      position: absolute;
+      top: 87px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+    @media (min-width: 450px) {
+      .closeIconMobile {
+        position: absolute;
+        top: 87px;
+        right: 10px;
       }
     }
   }
@@ -120,7 +126,6 @@
 
 @media (max-width: 450px) {
   .headerContainer {
-    min-height: 117px;
     height: auto;
   }
 }

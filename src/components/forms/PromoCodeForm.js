@@ -1,10 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+
 import Grid from '@material-ui/core/Grid';
+
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
+
 import { Button } from '../common';
-import { redeemPromoCode } from '../../apis/Voucherify';
+import { validatePromoCode } from '../../apis/Voucherify';
 import { addCoupon } from '../../modules/cart/functions';
 import { StyledPromoCode } from '../../pages/cart/StyledComponents';
 import { InputField } from '../form-fields';
@@ -22,19 +25,28 @@ const PromoCodeForm = () => {
   const [promoCodeErr, setPromoCodeErr] = useState(null);
   const onSubmit = useCallback(
     async e => {
-      const response = await redeemPromoCode(e.promoCode);
-      if (response.result == 'SUCCESS') {
-        addCoupon(cart, response.voucher);
-      } else if (response.key === 'resource_not_found') {
-        // Should rewrite error message so user can easily understand it
-        setPromoCodeErr(
-          "'" + e.promoCode + "' does not appear to be a valid code"
-        );
+      const response = await validatePromoCode(e.promoCode);
+      window.analytics.track("Coupon Entered", {
+        "cart_id": cart._id,
+        "coupon_id": e.promoCode,
+        "coupon_name": e.promoCode,
+        "order_id": cart.accountId
+      });
+      if (response.valid) {
+        addCoupon(cart._id, response.code);
+
       } else {
-        setPromoCodeErr(response.details);
+        setPromoCodeErr(response.reason);
+        window.analytics.track("Coupon Denied", {
+          "cart_id": cart._id,
+          "coupon_id": e.promoCode,
+          "coupon_name": e.promoCode,
+          "order_id": cart.accountId,
+          "reason": response.reason
+        });
       }
     },
-    [promoCodeErr, setPromoCodeErr, redeemPromoCode]
+    [promoCodeErr, setPromoCodeErr, validatePromoCode]
   );
 
   const renderForm = () => (
@@ -65,11 +77,6 @@ const PromoCodeForm = () => {
           style={{ 'align-items': 'flex-start', height: '42px' }}
         >
           <Grid item xs={10}>
-            {/* <Field
-              name="promoCode"
-              component={InputField}
-              className="promo-code-input"
-            /> */}
             {promoCodeErr ? (
               <Field
                 name="promoCode"

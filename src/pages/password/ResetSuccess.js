@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
     color: '#231f20',
-    fontFamily: 'Canela Text',
+    fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
     padding: theme.spacing(3, 0, 2),
     [theme.breakpoints.down('xs')]: {
@@ -32,6 +32,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const handleClick = () => {
+  console.log('click', window.location);
+  window.location.replace(window.location.origin + '/login');
+};
+
+const localStorageClient = require('store');
+localStorageClient.remove('token');
+
 const ResetSuccess = () => {
   const classes = useStyles();
   return (
@@ -43,7 +51,7 @@ const ResetSuccess = () => {
         <Typography className={classes.subTitle}>
           Click below to return to the account login page
         </Typography>
-        <Button fullWidth component={AdapterLink} to="/">
+        <Button fullWidth onClick={handleClick}>
           Login to your account
         </Button>
         <br />

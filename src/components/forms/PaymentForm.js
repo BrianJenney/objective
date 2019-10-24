@@ -1,7 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
+
+import braintreeClient from 'braintree-web/client';
+import HostedFields from 'braintree-web/hosted-fields';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
+
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -123,6 +129,84 @@ const PaymentForm = ({
   };
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  const [HostedFieldsClient, setHostedFieldsClient] = useState();
+
+  useEffect(() => {
+    try {
+      braintreeClient.create(
+        {
+          authorization: process.env.REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION
+        },
+        (clientErr, clientInstance) => {
+          if (clientErr) {
+            console.log(clientErr);
+            // @TODO need to handle this gracefully
+          }
+
+          HostedFields.create(
+            {
+              client: clientInstance,
+              styles: {
+                'input': {
+                  'font-size': '18px',
+                  'font-family': 'p22-underground, sans-serif',
+                  'font-weight': 'lighter',
+                  'color': '#585858',
+                  'padding': '18.5px 14px'
+                },
+                ':focus': {
+                  'color': '#000'
+                },
+                '.valid': {
+                  'color': '#000'
+                },
+                '.invalid': {
+                  'color': '#000'
+                },
+                '::-webkit-input-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                ':-moz-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                '::-moz-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },       
+                ':-ms-input-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                }
+              },
+              fields: {
+                number: {
+                  container: '#bt-cardNumber',
+                  placeholder: 'Card Number'
+                },
+                expirationDate: {
+                  container: '#bt-cardExpiration',
+                  placeholder: 'MM/YYYY'
+                },
+                cvv: {
+                  container: '#bt-cardCvv',
+                  placeholder: 'CVV'
+                }
+              }
+            },
+            (hostedFieldsErr, hostedFieldsInstance) => {
+              if (hostedFieldsErr) {
+                console.log(hostedFieldsErr);
+                // @TODO need to handle this gracefully
+              }
+
+              setHostedFieldsClient(hostedFieldsInstance);
+              return null;
+            }
+          );
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  }, []);
 
   useEffect(() => {
     clearPatchAccountError();
@@ -138,6 +222,22 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const handleSubmit = async (values, actions) => {
+    const cardData = await HostedFieldsClient.tokenize();
+    const payload = {
+      ...values,
+      cardData,
+      billingAddress: {
+        ...values.billingAddress,
+        phone: values.billingAddress.phone
+          ? values.billingAddress.phone.trim()
+          : ''
+      }
+    };
+
+    onSubmit(payload, actions);
+  };
+
   /* eslint-disable */
   const renderForm = ({ values, setValues }) => (
     <Form>
@@ -152,7 +252,8 @@ const PaymentForm = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <AlertPanel
-            p={2}
+            py={2}
+            px={4}
             type="error"
             bgcolor="#ffcdd2"
             text={errorMessage}
@@ -182,6 +283,20 @@ const PaymentForm = ({
               />
             </Grid>
             <Grid item xs={12}>
+              <Box position="relative" className="bt-payment-holder">
+                <Grid item xs={6}>
+                  <div id="bt-cardNumber"></div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardExpiration"></div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardCvv"></div>
+                </Grid>
+              </Box>
+            </Grid>
+            {/*
+            <Grid item xs={12}>
               <Box position="relative">
                 <Field
                   name="paymentDetails.number"
@@ -208,6 +323,7 @@ const PaymentForm = ({
                 </Box>
               </Box>
             </Grid>
+            */}
             {allowFlyMode && (
               <Grid item xs={12}>
                 <Field
@@ -266,7 +382,6 @@ const PaymentForm = ({
                 label="Street Address"
                 component={InputField}
                 validate={validateTextField}
-                helperText="*No PO Boxes or APO/FPO addresses"
               />
             </Grid>
             <Grid item xs={12}>
@@ -342,7 +457,7 @@ const PaymentForm = ({
   return (
     <Formik
       initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       render={renderForm}
     />
   );

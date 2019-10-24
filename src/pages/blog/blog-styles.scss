@@ -1,0 +1,380 @@
+.journal-gallery {
+  .border-left {
+    padding-left: 20px;
+    border-left: 2px solid;
+  }
+  .flex {
+    display: flex;
+    margin-top: 25px;
+  }
+  .left {
+    .date {
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      color: #000000;
+      border-bottom: 2px solid;
+      padding-bottom: 25px;
+    }
+    .tags {
+      display: grid;
+      border-bottom: 2px solid;
+      padding-bottom: 25px;
+      a {
+        font-family: p22-underground, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: #000000;
+        margin-bottom: 10px;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .share {
+      padding: 25px 0;
+      font-family: p22-underground, sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: 1.23px;
+      color: #000000;
+      margin-bottom: 0;
+    }
+    .social {
+      display: flex;
+      img {
+        width: 40px;
+        &:first-of-type {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+  .header {
+    background-color: #fdfbf9;
+    text-align: center;
+    .container {
+      padding-left: 300px;
+      padding-right: 300px;
+    }
+    h1 {
+      font-family: 'Canela Text Web';
+      font-size: 60px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #231f20;
+      margin: 0 0 12px;
+    }
+    p {
+      font-family: FreightTextProBook;
+      font-size: 26px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.23;
+      letter-spacing: normal;
+      text-align: center;
+      color: #585858;
+      margin: 0;
+    }
+  }
+  .content {
+    hr {
+      height: 2px;
+      background-color: #231f20;
+      &.gray {
+       background-color: gray;
+       margin-bottom: 20px;
+      }
+    }
+    h1 {
+      font-family: p22-underground, sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: 2px;
+      color: #000000;
+      text-transform: uppercase;
+      margin: 20px 0 40px;
+    }
+    h2, h2 a {
+      font-family: 'Canela Text Web';
+      font-size: 32px !important;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.25;
+      letter-spacing: 0.5px;
+      color: #000000;
+      margin: 25px 0 15px;
+      text-decoration: none;
+      text-transform: none;
+    }
+    p {
+      font-family: FreightTextProBook;
+      font-size: 20px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.4;
+      letter-spacing: normal;
+      color: #585858;
+      margin: 0 0 24px;
+    }
+    a {
+      font-family: p22-underground, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: 1.17px;
+      color: #000000;
+      text-transform: uppercase;
+    }
+    img {
+      width: 100%;
+    }
+    .categoryName {
+      font-family: p22-underground, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: 0.95px;
+      color: #000000;
+      text-transform: uppercase;
+      margin-right: 5px;
+    }
+    .minRead {
+      font-family: p22-underground, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1;
+      letter-spacing: 0.95px;
+      color: #000000;
+      text-transform: uppercase;
+      margin-left: 5px;
+    }
+    .callout {
+      margin-bottom: 48px;
+      img {
+        height: 445px;
+      }
+    }
+    .calloutSmall {
+      img {
+        margin-bottom: 15px;
+        max-height: 240px;
+      }
+      h2 {
+        margin: 17px 0 8px;
+      }
+      p {
+        margin: 0 0 20px;
+      }
+      margin-bottom: 70px;
+      .flex {
+        margin-top: 0;
+      }
+    }
+    .list {
+      h2 {
+        margin: 15px 0 5px;
+      }
+      .flex {
+        margin-top: 5px;
+      }
+    }
+    .load {
+      width: 100%;
+      text-align: center;
+      margin: 80px 0;
+      button {
+        width: 400px;
+      }
+    }
+  }
+  &.post {
+    .center {
+      text-align: center;
+      margin-bottom: 55px;
+      h1 {
+        font-family: 'Canela Text Web';
+        font-size: 60px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.17;
+        letter-spacing: normal;
+        text-align: center;
+        color: #000000;
+        text-transform: none;
+        margin: 5px 0 60px;
+      }
+    }
+    h2 {
+      text-align: center;
+      font-size: 42px;
+    }
+    .flex {
+      text-align: center;
+      display: block;
+      margin: 0;
+      .categoryName, .minRead {
+        font-size: 24px;
+        a {
+          font-size: 24px;
+          text-decoration: none;
+        }
+      }
+    }
+    h3, p > b {
+      font-family: p22-underground, sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.43px;
+    }
+    p {
+      font-family: FreightTextProBook;
+      font-size: 20px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.6;
+      letter-spacing: normal;
+      color: #000000;
+    }
+    .related {
+      background-color: #fdfbf9;
+      text-align: left;
+      .flex {
+        text-align: left;
+        .categoryName, .minRead, 
+        .categoryName a, .minRead a {
+          font-size: 14px;
+        }
+      }
+      h2 {
+        text-align: left;
+        font-size: 32px;
+      }
+    }
+
+  }
+}
+
+/* Mobile */
+@media(max-width: 768px) {
+  .journal-gallery {
+    .mobile-flex {
+      display: flex;
+      margin-bottom: 35px;
+      .tagholder, .icon-holder {
+        width: 50%;
+        padding-top: 25px;
+      }
+      .tags {
+        min-height: 117px;
+      }
+      .icon-holder {
+        padding-bottom: 25px;
+        padding-left: 25px;
+        border-bottom: 2px solid;
+        border-left: 2px solid;
+        
+        min-height: 117px;
+        .share {
+          padding: 0 0 10px;
+        }
+      }
+    }
+    .header {
+      .container {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      h1 {
+        font-size: 36px;
+      }
+      p {
+        font-size: 22px;
+      }
+    }
+   .content {
+     padding: 30px 0;
+      .callout {
+      margin-bottom: 48px;
+      img {
+        height: auto;
+      }
+    }
+    h1 {
+      font-size: 18px;
+    }
+    h2 {
+      font-size: 28px !important;
+    }
+    p {
+      font-size: 16px;
+    }
+    .list .load {
+      margin: 40px 0;
+      button {
+        width: 100%;
+        min-width: 300px;
+      }
+    }
+   }
+   &.post {
+     .flex .categoryName, .flex .minRead {
+       font-size: 18px;
+       a {
+         font-size: 18px;
+       }
+     }
+     .center {
+       h1 {
+         font-size: 36px;
+         margin-bottom: 25px;
+       }
+       margin-bottom: 20px;
+     }
+     .left {
+      .date {
+        text-align: center;
+        font-size: 14px;
+        margin-bottom: 0;
+      }
+     }
+     .border-left {
+      padding-left: 0;
+      border-left: none;
+    }
+    p > b {
+      font-size: 16px;
+    }
+   }
+  }
+}

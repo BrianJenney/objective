@@ -55,12 +55,11 @@ const TemporaryCartDrawer = ({
     ) {
       return;
     }
-    dispatch(setCartDrawerOpened(open));
+    dispatch(setCartDrawerOpened(open,false));
   };
 
   const windowSize = useWindowSize();
   const isMobile = windowSize.width < 415;
-  const isNonMobile = windowSize.width > 415;
 
   const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
     ? 1

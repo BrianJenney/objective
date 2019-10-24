@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { get, isNil } from 'lodash';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { Panel } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
@@ -17,14 +22,22 @@ import { CheckoutReviewForm } from '../forms';
 import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
 import CheckoutAuth from './Auth';
-import { STEPS, STEP_KEYS, DATA_KEYS, SHIPPING_METHOD } from './constants';
-import { getDefaultEntity } from '../../utils/misc';
+import { STEPS, STEP_KEYS, DATA_KEYS } from './constants';
+import { getDefaultEntity, scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
-import ScrollToTop from '../common/ScrollToTop';
-import { requestCalculateTax } from '../../modules/tax/actions';
-import { resetCart } from '../../modules/cart/actions';
+import { requestSetShippingAddress } from '../../modules/cart/actions';
+import { resetOrderState } from '../../modules/order/actions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import TransactionMessage from './TransactionMessage';
 
-const getPanelTitleContent = (xs, step, activeStep, payload) => {
+const getPanelTitleContent = (
+  xs,
+  step,
+  activeStep,
+  signupConfirmation,
+  payload
+) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -41,6 +54,7 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
       fontFamily="p22-underground, Helvetica, sans-serif"
       fontSize={xs ? 14 : 18}
       style={{ textTransform: 'uppercase' }}
+      className="checkoutPanel"
     >
       <Box mr={1} children={`STEP ${step + 1}`} />
       <Box children={stepTitle} style={{ fontWeight: 600 }} />
@@ -50,7 +64,12 @@ const getPanelTitleContent = (xs, step, activeStep, payload) => {
 
   if (!isNil(payload)) {
     if (step === 0) {
-      payloadSummary = <AccountSummary values={payload} />;
+      payloadSummary = (
+        <AccountSummary
+          values={payload}
+          signupConfirmation={signupConfirmation}
+        />
+      );
     } else if (step === 1) {
       payloadSummary = <AddressSummary noDefault values={payload} />;
     } else if (step === 2) {
@@ -91,13 +110,55 @@ const Checkout = ({
   clearPatchAccountError,
   requestCreateOrder
 }) => {
-  const [payload, setPayload] = useState({ shippingMethod: SHIPPING_METHOD });
+  const [payload, setPayload] = useState({});
   const [activeStep, setActiveStep] = useState(0);
-  const subtotal = useSelector(state => state.cart.subtotal);
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail } = currentUser.data;
+  const orderError = useSelector(state => state.order.transactionError);
+  const orderIsLoading = useSelector(state => state.order.isLoading);
+  const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
+  const { signupConfirmation } = currentUser;
+  const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+
+  const trackCheckoutStarted = () => {
+    let orderItemsTransformed = [];
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: item.variant_img,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      });
+    });
+    window.analytics.page('Checkout');
+    window.analytics.track('Checkout Started', {
+      cart_id: cart._id,
+      currency: 'USD',
+      discount: cart.discount ? Number.parseFloat(cart.discount) : 0,
+      products: orderItemsTransformed,
+      subtotal: cart.subtotal ? Number.parseFloat(cart.subtotal) : 0,
+      tax: cart.tax ? Number.parseFloat(cart.tax) : 0,
+      total: cart.total ? Number.parseFloat(cart.total) : 0
+    });
+  };
+
+  useEffect(() => {
+    if (orderIsLoading || orderError) {
+      setCheckoutDialogOpen(true);
+    } else {
+      handleCheckoutDialogClose();
+      if (orderError === false) {
+        setPayload({});
+        history.replace('/order');
+      }
+    }
+  }, [orderError, orderIsLoading]);
 
   useEffect(() => {
     if (!account_jwt && activeStep > 0) {
@@ -107,15 +168,33 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2) {
-      dispatch(requestCalculateTax(payload.shippingAddress, subtotal));
+      dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
     }
   }, [
     activeStep,
     payload.shippingAddress,
-    subtotal,
     dispatch,
-    requestCalculateTax
+    requestSetShippingAddress
   ]);
+
+  useEffect(() => {
+    trackCheckoutStarted();
+    scrollToRef(stepRefs[0]);
+  }, []);
+
+  useEffect(() => {
+    if (cart.shipping) {
+      setPayload({
+        ...payload,
+        shippingMethod: cart.shipping.options[cart.shipping.code]
+      });
+    }
+  }, [cart.shipping]);
+
+  const handleCheckoutDialogClose = () => {
+    setCheckoutDialogOpen(false);
+    dispatch(resetOrderState());
+  };
 
   const handleAddressesAndCardSteps = async values => {
     const key = STEP_KEYS[activeStep];
@@ -156,14 +235,43 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    dispatch(resetCart());
-    setPayload({});
-    history.replace('/order');
+    console.log(orderIsLoading, orderError);
+    if (orderIsLoading === true || orderError === null) return null;
 
+    if (orderError === true) {
+      setCheckoutDialogOpen(true);
+    } else {
+      setPayload({});
+      history.replace('/order');
+    }
     return true;
   };
 
-  const handleBack = () => activeStep > 0 && setActiveStep(activeStep - 1);
+  /*
+  @description - Tracks Segment Analytics 'Checkout Step Completed' event
+  */
+  const trackCheckoutStepCompleted = step => {
+    window.analytics.track('Checkout Step Completed', {
+      cart_id: cart._id,
+      step: step + 1
+    });
+  };
+
+  const trackCheckoutStepStarted = step => {
+    window.analytics.track('Checkout Step Started', {
+      cart_id: cart._id,
+      step: step + 1
+    });
+  }
+
+  const setCurrentStep = stepIndex => {
+    setActiveStep(stepIndex);
+    scrollToRef(stepRefs[stepIndex]);
+    trackCheckoutStepStarted(stepIndex);
+  };
+
+  const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
+
   const handleNext = async values => {
     let result = null;
 
@@ -175,7 +283,8 @@ const Checkout = ({
     }
 
     if (result) {
-      setActiveStep(activeStep + 1);
+      setCurrentStep(activeStep + 1);
+      trackCheckoutStepCompleted(activeStep);
     }
     return true;
   };
@@ -189,14 +298,17 @@ const Checkout = ({
       (panelIndex === 3 &&
         (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
+      trackCheckoutStepCompleted(panelIndex);
       return false;
     }
 
-    return setActiveStep(panelIndex);
+    trackCheckoutStepCompleted(panelIndex);
+
+    return setCurrentStep(panelIndex);
   };
 
   return (
-    <ScrollToTop>
+    <>
       <Box bgcolor="rgba(252, 248, 244, 0.5)">
         <Container>
           <Box py={10} className="checkout-wrapper">
@@ -211,100 +323,120 @@ const Checkout = ({
                 className="right-side"
               >
                 <Panel
-                  title={getPanelTitleContent(xs, 0, activeStep, {
-                    email: currentUserEmail
-                  })}
+                  title={getPanelTitleContent(
+                    xs,
+                    0,
+                    activeStep,
+                    signupConfirmation,
+                    {
+                      email: currentUserEmail
+                    }
+                  )}
                   collapsible
                   hideExpandIcon
                   expanded={activeStep === 0}
                   onChange={() => null}
+                  className="firstPanel"
                 >
-                  <CheckoutAuth
-                    currentUser={currentUser}
-                    requestCreateAccount={requestCreateAccount}
-                    clearCreateAccountError={clearCreateAccountError}
-                    requestLogin={requestLogin}
-                    clearLoginError={clearLoginError}
-                    handleNext={() => {
-                      if (activeStep === 0) {
-                        setActiveStep(1);
-                      }
-                    }}
-                  />
+                  <div ref={stepRefs[0]}>
+                    <CheckoutAuth
+                      currentUser={currentUser}
+                      requestCreateAccount={requestCreateAccount}
+                      clearCreateAccountError={clearCreateAccountError}
+                      requestLogin={requestLogin}
+                      clearLoginError={clearLoginError}
+                      handleNext={() => {
+                        if (activeStep === 0) {
+                          setCurrentStep(1);
+                          trackCheckoutStepCompleted(0);
+                        }
+                      }}
+                    />
+                  </div>
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(
                     xs,
                     1,
                     activeStep,
+                    null,
                     payload.shippingAddress
                   )}
                   collapsible
                   expanded={activeStep === 1}
                   onChange={e => onPanelChange(e, 1)}
                 >
-                  <AccountAddresses
-                    currentUser={currentUser}
-                    requestPatchAccount={requestPatchAccount}
-                    clearPatchAccountError={clearPatchAccountError}
-                    formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                    onSubmit={handleNext}
-                    selectionEnabled
-                    allowFlyMode
-                    mt={4}
-                    mx={10}
-                    mb={5}
-                  />
+                  <div ref={stepRefs[1]}>
+                    <AccountAddresses
+                      currentUser={currentUser}
+                      requestPatchAccount={requestPatchAccount}
+                      clearPatchAccountError={clearPatchAccountError}
+                      formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                      onSubmit={handleNext}
+                      selectionEnabled
+                      allowFlyMode
+                      mt={4}
+                      mx={10}
+                      mb={5}
+                    />
+                  </div>
                 </Panel>
                 <Panel
                   title={getPanelTitleContent(
                     xs,
                     2,
                     activeStep,
+                    null,
                     payload.paymentDetails
                   )}
                   collapsible
                   expanded={activeStep === 2}
                   onChange={e => onPanelChange(e, 2)}
                 >
-                  <AccountPaymentDetails
-                    currentUser={currentUser}
-                    requestPatchAccount={requestPatchAccount}
-                    clearPatchAccountError={clearPatchAccountError}
-                    formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                    onBack={handleBack}
-                    onSubmit={handleNext}
-                    selectionEnabled
-                    seedEnabled
-                    addressSeed={payload.shippingAddress}
-                    useSeedLabel="Use shipping address"
-                    allowFlyMode
-                    mt={4}
-                    mx={10}
-                    mb={5}
-                    backLabel="Cancel"
-                    submitLabel="Review Order"
-                  />
+                  <div ref={stepRefs[2]}>
+                    <AccountPaymentDetails
+                      currentUser={currentUser}
+                      requestPatchAccount={requestPatchAccount}
+                      clearPatchAccountError={clearPatchAccountError}
+                      formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                      onBack={handleBack}
+                      onSubmit={handleNext}
+                      selectionEnabled
+                      seedEnabled
+                      addressSeed={payload.shippingAddress}
+                      useSeedLabel="Use shipping address"
+                      allowFlyMode
+                      mt={4}
+                      mx={10}
+                      mb={5}
+                      backLabel="Cancel"
+                      submitLabel="Review Order"
+                    />
+                  </div>
                 </Panel>
                 <Panel
-                  title={getPanelTitleContent(xs, 3, activeStep, {})}
+                  title={getPanelTitleContent(xs, 3, activeStep, null, {})}
                   collapsible
                   hideExpandIcon
                   expanded={activeStep === 3}
                   onChange={e => onPanelChange(e, 3)}
+                  className="lastPanel"
                 >
-                  {xs ? (
-                    <CartDrawer
-                      disableItemEditing
-                      hideCheckoutProceedLink
-                      hideTaxLabel
-                      showOrderSummaryText
+                  <div ref={stepRefs[3]}>
+                    {xs && (
+                      <CartDrawer
+                        disableItemEditing
+                        hideCheckoutProceedLink
+                        hideTaxLabel
+                        showOrderSummaryText
+                        xsBreakpoint={xs}
+                      />
+                    )}
+                    <CheckoutReviewForm
                       xsBreakpoint={xs}
+                      onSubmit={handleNext}
                     />
-                  ) : (
-                    ''
-                  )}
-                  <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
+                  </div>
                 </Panel>
               </Grid>
               {!xs ? (
@@ -321,10 +453,34 @@ const Checkout = ({
                 ''
               )}
             </Grid>
+            <Dialog
+              className="transaction-dialog-container"
+              open={checkoutDialogOpen}
+              onClose={handleCheckoutDialogClose}
+              closeAfterTransition
+            >
+              {orderError ? (
+                <IconButton
+                  aria-label="close"
+                  style={{
+                    position: 'absolute',
+                    right: theme.spacing(1),
+                    top: theme.spacing(1),
+                    color: theme.palette.grey[500]
+                  }}
+                  onClick={handleCheckoutDialogClose}
+                >
+                  <CloseIcon />
+                </IconButton>
+              ) : null}
+              <MuiDialogContent>
+                <TransactionMessage orderError={orderError} />
+              </MuiDialogContent>
+            </Dialog>
           </Box>
         </Container>
       </Box>
-    </ScrollToTop>
+    </>
   );
 };
 

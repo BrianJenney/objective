@@ -35,6 +35,7 @@ const INITIAL_STATE = {
   fetchAccountLoading: null,
   patchAccountSubmitting: null,
   changePasswordSubmitting: null,
+  signupConfirmation: false,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
@@ -53,6 +54,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         signupError: false,
         signupSubmitting: false,
+        signupConfirmation: true,
         data: {
           ...state.data,
           ...action.payload

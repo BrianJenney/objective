@@ -1,45 +1,45 @@
 import store from '../../store';
-import { receivedCreateCart, receivedFetchCart, receivedPatchCart, receivedUpdateCart, setCartDrawerOpened } from './actions';
+import { receivedCreateCart, receivedFetchCart, receivedPatchCart, receivedUpdateCart, setCartDrawerOpened, segmentAddCouponReceived } from './actions';
+import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleCartResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'cart.request.create':
-      console.log('****************** Cart Create Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Create Response', status, data, fields, properties);
       store.dispatch(receivedCreateCart(data));
       break;
     case 'cart.request.find':
-      console.log('****************** Cart Fetch Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Fetch Response', status, data, fields, properties);
       store.dispatch(receivedFetchCart(data.data[0]));
       break;
     case 'cart.request.addtocart':
     case 'cart.request.removefromcart':
     case 'cart.request.updatequantity':
+    case 'cart.request.mergecarts':
+    case 'cart.request.addcoupon':
+    case 'cart.request.removecoupon':
+    case 'cart.request.setshippingaddress':
     case 'cart.request.patch':
-      console.log('****************** Cart Patch Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Patch Response (' + fields.routingKey + ')', status, data, fields, properties);
+      let oldCart = store.getState().cart;
+      let openCartDrawer = true;
+
+      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
+        openCartDrawer = false;
+      }
+
       store.dispatch(receivedPatchCart(data));
-      if (fields.routingKey !== 'cart.request.patch') {
-        console.log('open cart drawer');
+
+      if(fields.routingKey==="cart.request.addcoupon"){
+        segmentAddCouponReceived(data);
+      }
+
+      if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress' && openCartDrawer) {
         store.dispatch(setCartDrawerOpened(true));
       }
       break;
     case 'cart.request.update':
-      console.log('****************** Cart Update Response ******************');
-      console.log(status);
-      console.log(data);
-      console.log(fields);
-      console.log(properties);
+      debugRabbitResponse('Cart Update Response', status, data, fields, properties);
       store.dispatch(receivedUpdateCart(data));
       break;
     default:

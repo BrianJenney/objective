@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Box from '@material-ui/core/Box';
@@ -16,12 +16,9 @@ import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/Shopp
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
 
-import {
-  removeFromCart,
-  adjustQty,
-  calculateCartTotals
-} from '../../modules/cart/functions';
+import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
+import { displayMoney } from '../../utils/formatters';
 
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -58,22 +55,21 @@ const Cart = ({
   disableItemEditing,
   hideTaxLabel,
   showOrderSummaryText,
-  xsBreakpoint
+  xsBreakpoint,
+  location
 }) => {
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
-  const isTaxCalculationInProgress = useSelector(state => state.tax.isLoading);
-  //const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const onClickLogo = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
+    dispatch(setCartDrawerOpened(false,false));
     history.push('/gallery');
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
+    dispatch(setCartDrawerOpened(false,false));
   }, [dispatch]);
 
   const togglePromo = useCallback(() => {
@@ -81,7 +77,7 @@ const Cart = ({
   }, [promoVisible, setPromoVisible]);
 
   const handleCheckout = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
+    dispatch(setCartDrawerOpened(false,false));
     history.push('/checkout');
   }, [dispatch, history]);
 
@@ -96,8 +92,8 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const totalSummary = calculateCartTotals(cart);
-  const mobileDrawerPadding = xsBreakpoint ? '0px' : '24px 20px';
+  const mobileDrawerPadding = window.screen.width < 768 ? '24px 20px' : '0';
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   return (
     <Grid
       container
@@ -113,9 +109,26 @@ const Cart = ({
         {cart.items.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader align="center" style={xsBreakpoint ? {fontSize:"24px", fontWeight:"normal", paddingTop:"0px"} : {}}>{showOrderSummaryText ? 'Order Summary' : 'Your Cart'} </StyledCartHeader>
-              <StyledCartCountHeader component="span" style={xsBreakpoint ? {fontSize:"11px",fontWeight:"600"} : {}}>
-                {' '}
+              <StyledCartHeader
+                align="center"
+                style={
+                  xsBreakpoint
+                    ? {
+                        fontSize: '24px',
+                        fontWeight: 'normal',
+                        paddingTop: '0px'
+                      }
+                    : {}
+                }
+              >
+                {showOrderSummaryText ? 'Order Summary' : 'Your Cart'}{' '}
+              </StyledCartHeader>
+              <StyledCartCountHeader
+                component="span"
+                style={
+                  xsBreakpoint ? { fontSize: '11px', fontWeight: '600' } : {}
+                }
+              >
                 ({cartCount} Items)
               </StyledCartCountHeader>
             </Grid>
@@ -125,7 +138,7 @@ const Cart = ({
                   component="span"
                   onClick={handleCheckout}
                 >
-                  proceed to checkout{' '}
+                  proceed to checkout
                   <StyledArrowIcon>
                     <RightArrow />
                   </StyledArrowIcon>
@@ -140,10 +153,9 @@ const Cart = ({
                 align="center"
                 style={{ paddingBottom: '25px' }}
               >
-                Your Cart{' '}
+                Your Cart
               </StyledCartHeader>
               <StyledCartCountHeader component="span">
-                {' '}
                 ({cartCount} Items)
               </StyledCartCountHeader>
             </Grid>
@@ -261,7 +273,9 @@ const Cart = ({
                       <StyledFinePrint component="div" value={index}>
                         {!disableItemEditing && (
                           <Link
-                            onClick={e => removeFromCart(cart, index)}
+                            onClick={e => {
+                              removeFromCart(cart, index);
+                            }}
                             style={{ color: '#9b9b9b' }}
                           >
                             <StyledRemoveLink>Remove</StyledRemoveLink>
@@ -271,7 +285,7 @@ const Cart = ({
                       <StyledProductPrice
                         style={xsBreakpoint ? { fontSize: '16px' } : {}}
                       >
-                        {`$${(item.quantity * item.unit_price).toFixed(2)}`}
+                        {displayMoney(item.quantity * item.unit_price)}
                       </StyledProductPrice>
                     </StyledCardContent>
                   </Card>
@@ -293,13 +307,13 @@ const Cart = ({
               </Grid>
               <Grid item xs={3} style={{ textAlign: 'right' }}>
                 <StyledProductTotal style={{ fontSize: '18px' }}>
-                  {`$${totalSummary.subtotal.toFixed(2)}`}
+                  {displayMoney(cart.subtotal)}
                 </StyledProductTotal>
               </Grid>
             </StyledTotalWrapper>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && isCheckoutPage ? (
           <Grid
             container
             direction="row"
@@ -313,16 +327,39 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {`$${
-                  shippingData.price ? shippingData.price.toFixed(2) : '0.00'
-                }`}
+                {displayMoney(shippingData.price, true)}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint
               component="p"
               style={{ position: 'relative', top: '6px' }}
             >
-              {shippingData.name}
+              {shippingData.deliveryEstimate}
+            </StyledFinePrint>
+          </Grid>
+        ) : null}
+        {cart.items.length > 0 && !isCheckoutPage ? (
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            style={{ margin: '20px 0px 0px' }}
+          >
+            <Grid item xs={6}>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>
+                Shipping
+              </StyledSmallCaps>
+            </Grid>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
+              <StyledProductTotal style={{ fontSize: '18px' }}>
+                {displayMoney(shippingData.price, true)}
+              </StyledProductTotal>
+            </Grid>
+            <StyledFinePrint
+              component="p"
+              style={{ position: 'relative', top: '6px', marginBottom: '25px' }}
+            >
+              {shippingData.deliveryEstimate}
             </StyledFinePrint>
           </Grid>
         ) : null}
@@ -341,12 +378,12 @@ const Cart = ({
             </Grid>
             <Grid item xs={3} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {`$${cart.savings.toFixed(2)}`}
+                {displayMoney(cart.savings)}
               </StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length > 0 ? (
+        {cart.items.length > 0 && isCheckoutPage ? (
           <Grid
             container
             direction="row"
@@ -360,9 +397,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {!isTaxCalculationInProgress && totalSummary.calculatedTax
-                  ? `$${totalSummary.calculatedTax.toFixed(2)}`
-                  : '$0.00'}
+                {displayMoney(cart.tax)}
               </StyledProductTotal>
             </Grid>
           </Grid>
@@ -415,7 +450,7 @@ const Cart = ({
                   !xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }
                 }
               >
-                {`$${totalSummary.total.toFixed(2)}`}
+                {displayMoney(cart.total)}
               </StyledProductPrice>
             </Grid>
           </Grid>

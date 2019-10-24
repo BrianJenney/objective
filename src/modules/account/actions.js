@@ -24,8 +24,7 @@ import {
   REQUEST_FORGOT_PASSWORD,
   REQUEST_SIGNUP_EMAIL
 } from './types';
-import store from '../../store';
-import { requestCreateCart, requestPatchCart } from '../cart/actions';
+import EventEmitter from '../../events';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -59,17 +58,44 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     type: REQUEST_CREATE_ACCOUNT,
     payload: {}
   });
+   
+  window.analytics.track("Sign Up Email Capture", {
+    "email": email
+  });
+
 };
 
-export const receivedCreateAccountSuccess = createReply => (dispatch, getState) => {
-  localStorageClient.set('token', createReply.jwt);
-  store.dispatch(requestPatchCart(getState().cart._id, {
-    email: createReply.email
-  }));
+export const receivedCreateAccountSuccess = createReply => dispatch => {
+  localStorageClient.set('token', createReply.account_jwt);
+
+  EventEmitter.emit('account.created', createReply);
+
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
     payload: createReply
   });
+  window.analytics.track("Account Created", {
+    "email": createReply.email,
+    "first_name": createReply.firstName,
+    "last_name": createReply.lastName,
+    "phone": "",
+    "signup_type": "organic",
+    "title": "",
+    "username": createReply.email,
+    "site_location": "account creation"
+  });
+if(createReply.newsletter){
+  window.analytics.track("Subscribed", {
+    "email": createReply.email,
+    "site_location": "account creation"
+  });
+
+  window.analytics.track("Subscribed Listrak Auto", {
+    "email": createReply.email,
+    "site_location": "account creation"
+  });
+
+}
 };
 
 export const receivedCreateAccountFailure = error => dispatch => {
@@ -77,6 +103,10 @@ export const receivedCreateAccountFailure = error => dispatch => {
     type: RECEIVED_CREATE_ACCOUNT_FAILURE,
     payload: error
   });
+  
+  window.analytics.track("Sign Up Failed", {
+    "error_message": "Account with email already exists"
+  })
 };
 
 export const clearCreateAccountError = () => dispatch => {
@@ -155,10 +185,7 @@ export const requestPatchAccount = (authToken, patches) => (
   });
 };
 
-export const receivedPatchAccountSuccess = account => (dispatch, getState) => {
-  store.dispatch(requestPatchCart(getState().cart._id, {
-    email: account.email
-  }));
+export const receivedPatchAccountSuccess = account => dispatch => {
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT_SUCCESS,
     payload: account
@@ -258,18 +285,28 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
     type: REQUEST_LOGIN,
     payload: {}
   });
+
+  window.analytics.track("Sign In Completed", {
+    "email": email,
+    "site_location": ""
+  })
 };
 
-export const receivedLoginSuccess = loginReply => (dispatch, getState) => {
+export const receivedLoginSuccess = loginReply => dispatch => {
   localStorageClient.set('token', loginReply.account_jwt);
-  store.dispatch(requestPatchCart(getState().cart._id, {
-    email: loginReply.email
-  }));
+
+  EventEmitter.emit('user.logged.in', loginReply);
+
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: loginReply
   });
   //store.dispatch(requestFetchCartByEmail(loginReply.email));
+  window.analytics.track("Sign In Successful", {
+    "method": "email",
+    "site_location": "",
+    "username": loginReply.email
+  })
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
@@ -277,6 +314,11 @@ export const receivedLoginFailure = loginError => dispatch => {
     type: RECEIVED_LOGIN_FAILURE,
     payload: loginError
   });
+  window.analytics.track("Sign In Failed", {
+    "error_message": "Incorrect Email/Password",
+    "method": "email",
+    "site_location": ""
+  })
 };
 
 export const clearLoginError = () => dispatch => {
@@ -287,7 +329,9 @@ export const clearLoginError = () => dispatch => {
 
 export const requestLogout = () => dispatch => {
   localStorageClient.remove('token');
-  store.dispatch(requestCreateCart());
+
+  EventEmitter.emit('user.logged.out', {});
+
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}
@@ -301,12 +345,13 @@ export const receivedFindOrdersByAccount = orders => dispatch => {
   });
 };
 
-export const requestForgotPassword = email => (dispatch, getState) => {
+export const requestForgotPassword = (email, url) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
-        email
+        email,
+        url
       }
     }
   };

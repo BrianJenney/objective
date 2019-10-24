@@ -1,0 +1,312 @@
+.aboutus {
+  .mobile-only {
+    display: none !important;
+  }
+  .hero {
+    width: 100%;
+  }
+  h1 {
+    font-family: 'Canela Text Web';
+    font-size: 50px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.16;
+    letter-spacing: normal;
+    text-align: center;
+    color: #231f20;
+  }
+  .buttonlink {
+    display: block;
+    width: 402px;
+    height: 80px;
+    font-family: p22-underground, sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.88;
+    letter-spacing: 1.33px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 25px 0;
+    margin: 55px auto 0;
+  }
+  .title {
+    text-align: center;
+    h1 {
+      margin-bottom: 10px;
+    }
+    .slash {
+      width: 275px;
+      margin-bottom: 35px;
+    }
+  }
+  p {
+    font-family: FreightTextProLight;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
+    color: #000000;
+    &.tagline {
+      font-family: FreightTextProMedium;
+      font-size: 28px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.29;
+      letter-spacing: -0.47px;
+      color: #231f20;
+    }
+  }
+  .section1 {
+    max-width: 785px;
+  }
+  .section2 {
+    background-image: url("https://cdn1.stopagingnow.com/objective/aboutus/beakers-desktop.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    background-position: bottom;
+    height: 989px;
+    .text {
+      max-width: 485px;
+      margin: 200px 0;
+    }
+    .mobile-img {
+      display: none;
+    }
+  }
+  .section3 {
+    .border {
+      border: 1px solid #000;
+      padding: 60px 50px;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .svg {
+      max-height: 120px;
+      width: auto;
+    }
+    h2 {
+    font-family: p22-underground, sans-serif;
+    font-size: 20px !important;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: 1.25px;
+    text-align: center;
+    color: #231f20;
+    text-transform: uppercase;
+    }
+    p {
+      text-align: left;
+    }
+  }
+  .section4 {
+    .hundred {
+      width: 100%;
+      display: flex;
+    }
+    .fifty {
+      width: 50%;
+      &.left {
+        margin-top: 200px;
+        img {
+          left: 0;
+          margin-top: 120px;
+          width: inherit;
+        }
+      }
+      &.right {
+        img {
+          right: 0;
+          position: absolute;
+          margin-top: -120px;
+          width: inherit;
+        }
+      }
+    }
+    @media(min-width: 1200px) {
+      .fifty {
+        &.left {
+          margin-top: 100px;
+          img {
+            left: 0;
+            margin-top: 120px;
+            width: 620px;
+          }
+        }
+        &.right {
+          img {
+            right: 0;
+            position: absolute;
+            margin-top: -120px;
+            width: inherit;
+          }
+        }
+      }
+      .container-right {
+        margin-top: 575px;
+      }
+    }
+    @media(min-width: 1600px){
+      .container-left {
+        padding-left: 285px;
+      }
+      .container-right {
+        padding-right: 285px;
+        margin-top: 815px;
+      }
+      .fifty {
+        &.left {
+          img {
+            width: 800px;
+          }
+        }
+      }
+    }
+    h3 {
+      font-family: p22-underground, sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 0.92;
+      letter-spacing: 0.8px;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin-top: 0;
+    }
+  }
+  .section5 {
+    background-color: #fcf8f4;
+    text-align: center;
+    h3 {
+      font-family:  p22-underground, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #000000;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    h1 {
+      margin: 30px 0 0;
+      a, a:hover, a:visited, a:active {
+        text-decoration: none;
+        color: #000000;
+      }
+    }
+  }
+  @media(max-width: 768px) {
+    .xs-hidden {
+      display: none !important;
+    }
+    br {
+      display: none;
+    }
+    .mobile-only {
+      display: block !important;
+    }
+    .buttonlink {
+      width: 100%;
+    }
+    .mobile-padding {
+      padding: 25px 0;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    .title .slash {
+      width: 195px;
+      margin-bottom: 30px;
+    }
+    p {
+      font-size: 16px;
+      &.tagline {
+        font-size: 26px;
+      }
+    }
+    .section1 {
+      .tagline {
+        margin-bottom: 0;
+      }
+    }
+    .section2 {
+      background-image: none;
+      background-size: none;
+      background-repeat: none;
+      position: relative;
+      height: auto;
+      .text {
+        max-width: 100%;
+        margin: 0;
+      }
+      .mobile-img {
+        display: block;
+        width: 100%;
+      }
+    }
+    .section3 {
+      h1 {
+        margin-bottom: 45px;
+      }
+      h2 {
+        font-size: 16px;
+      }
+      .MuiGrid-item {
+        padding: 25px 0;
+      }
+      .border {
+        padding: 60px 16px;
+      }
+      p {
+        widows: 100%;
+      }
+      .MuiGrid-spacing-xs-10 {
+        width: 100%;
+        margin: 0;
+      }
+    }
+    .section4 {
+      img{
+        width: 100%;
+      }
+      p, h1, h3 {
+        padding: 0 16px; 
+      }
+      .buttonlink {
+        width: 100%;
+        max-width: 330px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+    }
+    .section5 {
+      h3 {
+        font-size: 18px;
+      }
+      h1 {
+        font-size: 24px;
+        margin: 10px 0 0;
+      }
+    }
+  }
+}

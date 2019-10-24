@@ -27,14 +27,14 @@ export const StyledContainer = withStyles(theme => ({
       paddingTop: 38,
       paddingBottom: 40,
       backgroundColor: '#fdfbf9',
-      width: "100%",
+      width: '100%'
     }
   }
 }))(Container);
 
 export const StyledTitle = withStyles(theme => ({
   root: {
-    fontFamily: 'CanelaText',
+    fontFamily: 'Canela Text Web',
     fontSize: '48px',
     fontWeight: 'normal',
     fontStyle: 'normal',
@@ -45,7 +45,7 @@ export const StyledTitle = withStyles(theme => ({
     color: '#000000',
     marginBottom: 62,
     [theme.breakpoints.down('xs')]: {
-      fontFamily: 'CanelaText',
+      fontFamily: 'Canela Text Web',
       fontSize: '24px',
       fontWeight: 'normal',
       fontStyle: 'normal',
@@ -54,7 +54,7 @@ export const StyledTitle = withStyles(theme => ({
       letterSpacing: 'normal',
       textAlign: 'center',
       color: '#000000',
-      marginBottom: 44,
+      marginBottom: 44
     }
   }
 }))(Typography);
@@ -79,7 +79,7 @@ export const StyledSubheaders = withStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: 'normal',
       color: '#000000',
-      marginBottom: 24,
+      marginBottom: 24
     }
   }
 }))(Typography);
@@ -102,7 +102,7 @@ export const StyledQuestions = withStyles(theme => ({
       fontStretch: 'normal,',
       lineHeight: 'normal',
       letterSpacing: 'normal',
-      color: '#000000',
+      color: '#000000'
     }
   }
 }))(Typography);
@@ -131,7 +131,7 @@ export const StyledA = withStyles(theme => ({
       fontStretch: 'normal,',
       lineHeight: 'normal',
       letterSpacing: 'normal',
-      color: '#000000',
+      color: '#000000'
     }
   }
 }))(Typography);
@@ -156,14 +156,14 @@ export const StyledAnswers = withStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: 'normal',
       color: '#000000',
-      marginLeft: 8,
+      marginLeft: 8
     }
   }
 }))(Typography);
 
 export const QAContainer = withStyles(theme => ({
   root: {
-    marginBottom: 40,
+    marginBottom: 40
   }
 }))(Grid);
 
@@ -185,12 +185,12 @@ export const StyledText = withStyles(theme => ({
       fontStretch: 'normal,',
       lineHeight: 'normal',
       letterSpacing: 'normal',
-      color: '#000000',
+      color: '#000000'
     }
   }
 }))(Typography);
 
-export const MoreInfoLink = withStyles(theme => ({
+export const StyledLink = withStyles(theme => ({
   root: {
     fontFamily: 'FreightTextProMedium-Regular',
     fontSize: '24px',
@@ -210,7 +210,7 @@ export const MoreInfoLink = withStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: 'normal',
       textDecoration: 'none',
-      color: '#00c3ef',
+      color: '#00c3ef'
     }
   }
 }))(Link);
