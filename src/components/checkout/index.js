@@ -298,6 +298,7 @@ const Checkout = ({
       (panelIndex === 3 &&
         (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
+      trackCheckoutStepCompleted(panelIndex);
       return false;
     }
 
