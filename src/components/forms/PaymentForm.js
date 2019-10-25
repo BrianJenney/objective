@@ -1,7 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { isNaN } from 'lodash';
 import { Formik, Field, Form } from 'formik';
+
+import braintreeClient from 'braintree-web/client';
+import HostedFields from 'braintree-web/hosted-fields';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
+
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -17,6 +23,7 @@ import {
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
 import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -123,6 +130,94 @@ const PaymentForm = ({
   };
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  const [HostedFieldsClient, setHostedFieldsClient] = useState();
+
+  useEffect(() => {
+    try {
+      braintreeClient.create(
+        {
+          authorization: process.env.REACT_APP_BRAINTREE_CLIENT_AUTHORIZATION
+        },
+        (clientErr, clientInstance) => {
+          if (clientErr) {
+            console.log(clientErr);
+            // @TODO need to handle this gracefully
+          }
+
+          HostedFields.create(
+            {
+              client: clientInstance,
+              styles: {
+                'input': {
+                  'font-size': '18px',
+                  'font-family': 'p22-underground, sans-serif',
+                  'font-weight': 'lighter',
+                  'color': '#585858',
+                  'padding': '18.5px 14px'
+                },
+                ':focus': {
+                  'color': '#000'
+                },
+                '.valid': {
+                  'color': '#000'
+                },
+                '.invalid': {
+                  'color': '#000'
+                },
+                '::-webkit-input-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                ':-moz-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                '::-moz-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                },
+                ':-ms-input-placeholder': {
+                  'font-family': 'p22-underground, sans-serif'
+                }
+              },
+              fields: {
+                number: {
+                  container: '#bt-cardNumber',
+                  placeholder: 'Card Number'
+                },
+                expirationDate: {
+                  container: '#bt-cardExpiration',
+                  placeholder: 'MM/YYYY'
+                },
+                cvv: {
+                  container: '#bt-cardCvv',
+                  placeholder: 'CVV'
+                }
+              }
+            },
+            (hostedFieldsErr, hostedFieldsInstance) => {
+              if (hostedFieldsErr) {
+                console.log(hostedFieldsErr);
+                // @TODO need to handle this gracefully
+              }
+              hostedFieldsInstance.on('validityChange', function(event) {
+                let field = event.fields[event.emittedBy];
+
+                if (field.isPotentiallyValid) {
+                  field.container.nextElementSibling.style.display = 'none';
+                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                } else {
+                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  field.container.nextElementSibling.style.display = 'block';
+                }
+              });
+              setHostedFieldsClient(hostedFieldsInstance);
+              return null;
+            }
+          );
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+  }, []);
 
   useEffect(() => {
     clearPatchAccountError();
@@ -138,9 +233,11 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
+    const cardData = await HostedFieldsClient.tokenize();
     const payload = {
       ...values,
+      cardData,
       billingAddress: {
         ...values.billingAddress,
         phone: values.billingAddress.phone
@@ -197,30 +294,25 @@ const PaymentForm = ({
               />
             </Grid>
             <Grid item xs={12}>
-              <Box position="relative">
-                <Field
-                  name="paymentDetails.number"
-                  label="Card Number"
-                  component={InputField}
-                  validate={() => validateCardNumberField(values)}
-                  inputProps={{ style: { paddingRight: 214 } }}
-                />
-                <Box position="absolute" width={100} top={0} right={100}>
-                  <Field
-                    className={classes.noBorderField}
-                    name="paymentDetails.expirationDate"
-                    label="MM/YYYY"
-                    component={InputField}
-                  />
-                </Box>
-                <Box position="absolute" width={66} top={0} right={14}>
-                  <Field
-                    className={classes.noBorderField}
-                    name="paymentDetails.cvv"
-                    label="CVV"
-                    component={InputField}
-                  />
-                </Box>
+              <Box
+                position="relative"
+                className="bt-payment-holder"
+                id="bt-payment-holder"
+              >
+                <Grid item xs={6}>
+                  <div id="bt-cardNumber"></div>
+                  <div className="btError">Please enter valid card number</div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardExpiration"></div>
+                  <div className="btError">
+                    Please enter valid Expiration Date
+                  </div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardCvv"></div>
+                  <div className="btError">Please enter valid CVV</div>
+                </Grid>
               </Box>
             </Grid>
             {allowFlyMode && (
