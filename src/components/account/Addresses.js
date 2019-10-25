@@ -49,14 +49,13 @@ const AccountAddresses = ({
       );
       setSelectedIndex(defaultIndex);
     }
-
   }, [currentUser.data.addressBook]);
 
-  useEffect(()=>{
-    if(window.location.pathname.indexOf("/account/addresses")!==-1){
-      window.analytics.page("Account Addresses");
-      }
-  },[])
+  useEffect(() => {
+    if (window.location.pathname.indexOf('/account/addresses') !== -1) {
+      window.analytics.page('Account Addresses');
+    }
+  }, []);
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
@@ -163,105 +162,104 @@ const AccountAddresses = ({
           allowFlyMode={allowFlyMode}
         />
       ) : (
-        <>
-          {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
-            <Box
-              component={Typography}
-              color="#231f20"
-              variant="h5"
-              children={
-                formType === FORM_TYPES.ACCOUNT
-                  ? 'Saved Addresses'
-                  : 'Shipping Address'
-              }
-              fontSize={titleFontSize}
-              mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
-            />
-          )}
-          {isEmpty(addressBook) && (
-            <AlertPanel mb={2} type="info" text="No Saved Addresses." />
-          )}
-          <Box mx="-8px" my="-8px">
-            <Grid container>
-              {addressBook.map((addressEntity, index) => (
-                <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                  <Box
-                    display="flex"
-                    alignItems="flex-start"
-                    m={1}
-                    px={4}
-                    py={3}
-                    border="2px solid #979797"
-                  >
-                    {selectionEnabled && (
-                      <Box ml="-17px" mt="-9px">
-                        <Radio
-                          name="address-selector"
-                          style={{ color: '#231f20' }}
-                          value={index.toString()}
-                          onChange={handleSelect}
-                          checked={selectedIndex === index}
+          <>
+            {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
+              <Box
+                component={Typography}
+                color="#231f20"
+                variant="h5"
+                children={
+                  formType === FORM_TYPES.ACCOUNT
+                    ? 'Saved Addresses'
+                    : 'Shipping Address'
+                }
+                fontSize={titleFontSize}
+                mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
+              />
+            )}
+            {isEmpty(addressBook) && (
+              <AlertPanel mb={2} type="info" text="No Saved Addresses." />
+            )}
+            <Box mx="-8px" my="-8px">
+              <Grid container>
+                {addressBook.map((addressEntity, index) => (
+                  <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      m={1}
+                      px={4}
+                      py={3}
+                      border="2px solid #979797"
+                    >
+                      {selectionEnabled && (
+                        <Box ml="-17px" mt="-9px">
+                          <Radio
+                            name="address-selector"
+                            style={{ color: '#231f20' }}
+                            value={index.toString()}
+                            onChange={handleSelect}
+                            checked={selectedIndex === index}
+                          />
+                        </Box>
+                      )}
+                      <Box
+                        maxWidth={
+                          selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
+                        }
+                      >
+                        <EditablePanel
+                          title=""
+                          defaultValues={addressEntity}
+                          Summary={AddressSummary}
+                          onEdit={() => {
+                            setFormModeEnabled(true);
+                            setEditedIndex(index);
+                          }}
+                          onRemove={
+                            addressEntity.isDefault
+                              ? undefined
+                              : () => deleteAddress(index)
+                          }
+                          onSetDefault={
+                            addressEntity.isDefault
+                              ? undefined
+                              : () => setDefaultAddress(index)
+                          }
                         />
                       </Box>
-                    )}
-                    <Box
-                      maxWidth={
-                        selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
-                      }
-                    >
-                      <EditablePanel
-                        title=""
-                        defaultValues={addressEntity}
-                        Summary={AddressSummary}
-                        onEdit={() => {
-                          setFormModeEnabled(true);
-                          setEditedIndex(index);
-                        }}
-                        onRemove={
-                          addressEntity.isDefault
-                            ? undefined
-                            : () => deleteAddress(index)
-                        }
-                        onSetDefault={
-                          addressEntity.isDefault
-                            ? undefined
-                            : () => setDefaultAddress(index)
-                        }
-                      />
                     </Box>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-          <Box
-            mt="26px"
-            fontSize={xs ? 14 : 16}
-            fontWeight={600}
-            style={{ textTransform: 'uppercase' }}
-          >
-            <MenuLink
-              onClick={() => {
-                const addressesData = currentUser.data.addressBook || [];
-                setFormModeEnabled(true);
-                setEditedIndex(addressesData.length);
-              }}
-              children="Add New Address"
-              underline="always"
-            />
-          </Box>
-          {onSubmit && (
-            <Box mt={xs ? '28px' : '55px'} width={xs ? 1 : '438px'} mx="auto">
-              <Button
-                fullWidth
-                type="button"
-                onClick={handleSubmit}
-                children="Continue"
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+            <Box
+              mt="26px"
+              fontSize={xs ? 14 : 16}
+              fontWeight={600}
+              style={{ textTransform: 'uppercase' }}
+            >
+              <MenuLink
+                onClick={() => {
+                  const addressesData = currentUser.data.addressBook || [];
+                  setFormModeEnabled(true);
+                }}
+                children="Add New Address"
+                underline="always"
               />
             </Box>
-          )}
-        </>
-      )}
+            {onSubmit && (
+              <Box mt={xs ? '28px' : '55px'} width={xs ? 1 : '438px'} mx="auto">
+                <Button
+                  fullWidth
+                  type="button"
+                  onClick={handleSubmit}
+                  children="Continue"
+                />
+              </Box>
+            )}
+          </>
+        )}
     </Box>
   );
 };
