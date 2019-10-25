@@ -22,3 +22,15 @@
         }
     }
 }
+.btError {
+    display: none;
+    background-color: rgba(208, 2, 27, 0.15);
+    margin: 0;
+    padding: 0 5px;
+    min-height: 24px;
+    line-height: 24px;
+    font-size: 0.75rem;
+    text-align: left;
+    font-family: undefined, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}

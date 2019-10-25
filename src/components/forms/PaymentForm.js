@@ -23,6 +23,7 @@ import {
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
 import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -171,7 +172,7 @@ const PaymentForm = ({
                 },
                 '::-moz-placeholder': {
                   'font-family': 'p22-underground, sans-serif'
-                },       
+                },
                 ':-ms-input-placeholder': {
                   'font-family': 'p22-underground, sans-serif'
                 }
@@ -196,7 +197,17 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
+              hostedFieldsInstance.on('validityChange', function(event) {
+                let field = event.fields[event.emittedBy];
 
+                if (field.isPotentiallyValid) {
+                  field.container.nextElementSibling.style.display = 'none';
+                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                } else {
+                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  field.container.nextElementSibling.style.display = 'block';
+                }
+              });
               setHostedFieldsClient(hostedFieldsInstance);
               return null;
             }
@@ -283,47 +294,27 @@ const PaymentForm = ({
               />
             </Grid>
             <Grid item xs={12}>
-              <Box position="relative" className="bt-payment-holder">
+              <Box
+                position="relative"
+                className="bt-payment-holder"
+                id="bt-payment-holder"
+              >
                 <Grid item xs={6}>
                   <div id="bt-cardNumber"></div>
+                  <div className="btError">Please enter valid card number</div>
                 </Grid>
                 <Grid item xs={3}>
                   <div id="bt-cardExpiration"></div>
+                  <div className="btError">
+                    Please enter valid Expiration Date
+                  </div>
                 </Grid>
                 <Grid item xs={3}>
                   <div id="bt-cardCvv"></div>
+                  <div className="btError">Please enter valid CVV</div>
                 </Grid>
               </Box>
             </Grid>
-            {/*
-            <Grid item xs={12}>
-              <Box position="relative">
-                <Field
-                  name="paymentDetails.number"
-                  label="Card Number"
-                  component={InputField}
-                  validate={() => validateCardNumberField(values)}
-                  inputProps={{ style: { paddingRight: 214 } }}
-                />
-                <Box position="absolute" width={100} top={0} right={100}>
-                  <Field
-                    className={classes.noBorderField}
-                    name="paymentDetails.expirationDate"
-                    label="MM/YYYY"
-                    component={InputField}
-                  />
-                </Box>
-                <Box position="absolute" width={66} top={0} right={14}>
-                  <Field
-                    className={classes.noBorderField}
-                    name="paymentDetails.cvv"
-                    label="CVV"
-                    component={InputField}
-                  />
-                </Box>
-              </Box>
-            </Grid>
-            */}
             {allowFlyMode && (
               <Grid item xs={12}>
                 <Field
