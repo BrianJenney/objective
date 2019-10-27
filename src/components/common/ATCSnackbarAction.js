@@ -22,7 +22,7 @@ const ATCSnackbarAction = ({ variant }) => {
   const dispatch = useDispatch();
 
   const viewCart = () => {
-    dispatch(setCartDrawerOpened(true));
+    dispatch(setCartDrawerOpened(true,false));
   };
 
   return (
