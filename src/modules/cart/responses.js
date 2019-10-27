@@ -35,7 +35,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
       }
 
       if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress' && openCartDrawer) {
-        store.dispatch(setCartDrawerOpened(true));
+        store.dispatch(setCartDrawerOpened(true,false));
       }
       break;
     case 'cart.request.update':
