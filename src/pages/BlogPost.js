@@ -52,7 +52,7 @@ const BlogPost = ({ computedMatch }) => {
   const renderRelatedProducts = products => {
     if (products.length > 0) {
       return products.map(product => (
-        <ul>
+        <ul style={{ marginBottom: 0, listStyleType: 'none' }}>
           <li>
             <Link
               to={`/products/${product.fields.Slug}`}
