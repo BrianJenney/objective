@@ -13,6 +13,7 @@ import { addToCart } from '../../modules/cart/functions';
 import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmed';
 import { Button, NavLink } from '../../components/common';
 import './home-style.scss';
+import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
 
 export const HomeVariantCard = ({ variant }) => {
   const cart = useSelector(state => state.cart);
@@ -58,18 +59,68 @@ export const HomeVariantCard = ({ variant }) => {
   return (
     <Grid item xs={12} md={4}>
       <Card className="tile" ref={ref}>
-        <NavLink to={`/products/${slug}`}>
+        <NavLink
+          to={`/products/${slug}`}
+          onClick={() => {
+            segmentProductClickEvent({
+              image_url: `https:${variant.assets.thumbnail}`,
+              quantity: 1,
+              sku: variant.sku,
+              price: Number.parseFloat(variant.effectivePrice),
+              product_id: variant.id,
+              variant: variant.name,
+              name: variant.name,
+              brand: cart.storeCode,
+              cart_id: cart._id,
+              site_location: "home"
+            });
+          }}
+        >
           <CardMedia
             style={{ height: 430, width: '100%' }}
             image={assets.imgs}
             className="tile-img"
           />
         </NavLink>
-        <NavLink to={`/products/${slug}`} underline="none">
+        <NavLink
+          to={`/products/${slug}`}
+          underline="none"
+          onClick={() => {
+            segmentProductClickEvent({
+              image_url: `https:${variant.assets.thumbnail}`,
+              quantity: 1,
+              sku: variant.sku,
+              price: Number.parseFloat(variant.effectivePrice),
+              product_id: variant.id,
+              variant: variant.name,
+              name: variant.name,
+              brand: cart.storeCode,
+              cart_id: cart._id,
+              site_location: "home"
+            });
+          }}
+        >
           <CardContent className="pding">
             <div className="prod-name-holder">
               <Typography>
-                <Link to={`/products/${slug}`} className="title">
+                <Link
+                  to={`/products/${slug}`}
+                  className="title"
+                  onClick={() => {
+                    segmentProductClickEvent({
+                      image_url: `https:${variant.assets.thumbnail}`,
+                      quantity: 1,
+                      sku: variant.sku,
+                      price: Number.parseFloat(variant.effectivePrice),
+                      product_id: variant.id,
+                      variant: variant.name,
+                      name: variant.name,
+                      brand: cart.storeCode,
+                      cart_id: cart._id,
+                      site_location: "home"
+                    });
+                  }}
+                >
                   {name}
                 </Link>
               </Typography>
