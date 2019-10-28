@@ -220,16 +220,15 @@ const Footer = ({ location, currentUser }) => {
         site_location: 'footer'
       });
 
-      window.analytics.track("Subscribed", {
-        "email": email,
-        "site_location": "footer"
-      });
-    
-      window.analytics.track("Subscribed Listrak Auto", {
-        "email": email,
-        "site_location": "footer"
+      window.analytics.track('Subscribed', {
+        email: email,
+        site_location: 'footer'
       });
 
+      window.analytics.track('Subscribed Listrak Auto', {
+        email: email,
+        site_location: 'footer'
+      });
 
       window.analytics.identify({
         email
@@ -314,9 +313,7 @@ const Footer = ({ location, currentUser }) => {
                           </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
-                            Shipping &amp; Returns
-                          </NavLink>
+                          <NavLink to="/faq">Shipping &amp; Returns</NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink
@@ -526,9 +523,7 @@ const Footer = ({ location, currentUser }) => {
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to={gotoUrl('/shipping', '/login/shipping')}>
-                          Shipping &amp; Returns
-                        </NavLink>
+                        <NavLink to="/faq">Shipping &amp; Returns</NavLink>
                       </ListItem>
                       <ListItem>
                         <NavLink
