@@ -19,6 +19,7 @@ import PromoCodeView from './PromoCodeView';
 import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
+import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
 
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -183,7 +184,22 @@ const Cart = ({
                   }
                 >
                   <Card>
-                    <Link to={`/products/${item.slug}`}>
+                    <Link
+                      to={`/products/${item.slug}`}
+                      onClick={() => {segmentProductClickEvent({
+                        image_url: `https:${item.variant_img}`,
+                        quantity: item.quantity,
+                        sku: item.sku,
+                        price: Number.parseFloat(item.unit_price),
+                        product_id: item.variant_id,
+                        variant: item.variant_id,
+                        name: item.variant_name,
+                        brand: cart.storeCode,
+                        cart_id: cart._id,
+                        site_location: "cart",
+
+                      })}}
+                    >
                       <CardMedia
                         style={{ height: 126, width: 126 }}
                         image={item.variant_img}
@@ -209,6 +225,18 @@ const Cart = ({
                         maxHeight: '40px',
                         overflow: 'hidden'
                       }}
+                      onClick={() => {segmentProductClickEvent({
+                        image_url: `https:${item.variant_img}`,
+                        quantity: item.quantity,
+                        sku: item.sku,
+                        price: Number.parseFloat(item.unit_price),
+                        product_id: item.variant_id,
+                        variant: item.variant_id,
+                        name: item.variant_name,
+                        brand: cart.storeCode,
+                        cart_id: cart._id,
+                        site_location: "cart"
+                      })}}
                     >
                       <StyledProductLink
                         style={{ fontSize: '18px', padding: '0' }}
