@@ -50,7 +50,8 @@ if(!segmentIdentified){
  
  if(user["firstName"]){
   window.analytics.identify(jwt.decode(user.account_jwt).account_id,{
-  name: `${user.firstName} ${user.lastName}`,
+  first_name: `${user.firstName}`,
+  last_name: `${user.lastName}`,
   email: user.email
   });
  
