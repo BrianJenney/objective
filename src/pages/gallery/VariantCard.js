@@ -13,6 +13,7 @@ import { Button, NavLink } from '../../components/common';
 import '../../assets/styles/_variables.scss';
 import { ATC, OutOfStock } from '../../components/atcOutOfStock';
 import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmed';
+import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
 const PriceVariantInfo = ({ variant }) => {
   return variant ? (
     <div>
@@ -84,7 +85,24 @@ const VariantCard = ({ variant, styleMap }) => {
 
   return (
     <Card className="gallery-prod-card" ref={ref}>
-      <NavLink to={`/products/${variant.slug}`} underline="none">
+      <NavLink
+        to={`/products/${variant.slug}`}
+        underline="none"
+        onClick={() => {
+          segmentProductClickEvent({
+            image_url: `https:${variant.assets.thumbnail}`,
+            quantity: 1,
+            sku: variant.sku,
+            price: Number.parseFloat(variant.effectivePrice),
+            product_id: variant.id,
+            variant: variant.name,
+            name: variant.name,
+            brand: cart.storeCode,
+            cart_id: cart._id,
+            site_location: "gallery"
+          });
+        }}
+      >
         <CardMedia
           style={{ height: 500, width: 324 }}
           image={variant.assets.imgs}
@@ -93,7 +111,24 @@ const VariantCard = ({ variant, styleMap }) => {
         />
       </NavLink>
       <CardContent className="pding">
-        <NavLink to={`/products/${variant.slug}`} underline="none">
+        <NavLink
+          to={`/products/${variant.slug}`}
+          underline="none"
+          onClick={() => {
+            segmentProductClickEvent({
+              image_url: `https:${variant.assets.thumbnail}`,
+              quantity: 1,
+              sku: variant.sku,
+              price: Number.parseFloat(variant.effectivePrice),
+              product_id: variant.id,
+              variant: variant.name,
+              name: variant.name,
+              brand: cart.storeCode,
+              cart_id: cart._id,
+              site_location: "gallery"
+            });
+          }}
+        >
           <div className="prod-name-holder">
             <Typography>
               <span className="title" style={styleMap.text}>
