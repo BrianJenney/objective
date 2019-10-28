@@ -49,6 +49,23 @@ const BlogPost = ({ computedMatch }) => {
     window.analytics.page('Journal Post');
   }, [post_slug]);
 
+  const renderRelatedProducts = products => {
+    if (products.length > 0) {
+      return products.map(product => (
+        <ul style={{ marginBottom: 0, listStyleType: 'none' }}>
+          <li>
+            <Link
+              to={`/products/${product.fields.Slug}`}
+              key={`product-key-${product.fields.Slug}`}
+              children={product.fields.productTitle}
+            ></Link>
+          </li>
+        </ul>
+      ));
+    }
+    return null;
+  };
+
   const renderRelatedPosts = posts => {
     if (posts.length > 0) {
       return posts.map((item, key) => (
@@ -65,9 +82,8 @@ const BlogPost = ({ computedMatch }) => {
         <Link
           to={`/journal/tag/${tag.fields.slug}`}
           key={`tag-key-${tag.fields.slug}`}
-        >
-          {tag.fields.tag}
-        </Link>
+          children={tag.fields.tag}
+        ></Link>
       ));
     }
 
@@ -177,6 +193,20 @@ const BlogPost = ({ computedMatch }) => {
               </Grid>
             </Container>
           </Box>
+
+          {post.fields.relatedProducts &&
+          post.fields.relatedProducts.length > 0 ? (
+            <Box className="content related">
+              <Container>
+                <Divider />
+                <h1>Related Products</h1>
+                {renderRelatedProducts(post.fields.relatedProducts)}
+              </Container>
+            </Box>
+          ) : (
+            <></>
+          )}
+
           {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
             <Box className="content related" py={8}>
               <Container>
