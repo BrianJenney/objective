@@ -221,20 +221,12 @@ const Footer = ({ location, currentUser }) => {
       });
 
       window.analytics.track('Subscribed', {
-<<<<<<< HEAD
-        email: email,
-=======
         email,
->>>>>>> DC-576-Account-EditProfileInfo
         site_location: 'footer'
       });
 
       window.analytics.track('Subscribed Listrak Auto', {
-<<<<<<< HEAD
-        email: email,
-=======
         email,
->>>>>>> DC-576-Account-EditProfileInfo
         site_location: 'footer'
       });
 
