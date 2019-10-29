@@ -211,22 +211,30 @@ const Footer = ({ location, currentUser }) => {
     ({ email }) => {
       console.log('SUBMIT SUCCEED!!!', email);
       window.analytics.track('Email Capture Completed', {
-        email: email,
+        email,
         site_location: 'footer'
       });
 
       window.analytics.track('Email Capture Successful', {
-        email: email,
+        email,
         site_location: 'footer'
       });
 
       window.analytics.track('Subscribed', {
+<<<<<<< HEAD
         email: email,
+=======
+        email,
+>>>>>>> DC-576-Account-EditProfileInfo
         site_location: 'footer'
       });
 
       window.analytics.track('Subscribed Listrak Auto', {
+<<<<<<< HEAD
         email: email,
+=======
+        email,
+>>>>>>> DC-576-Account-EditProfileInfo
         site_location: 'footer'
       });
 
