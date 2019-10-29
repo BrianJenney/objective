@@ -16,7 +16,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button, AlertPanel, If } from '../common';
+import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
