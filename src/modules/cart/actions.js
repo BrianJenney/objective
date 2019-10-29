@@ -282,26 +282,31 @@ export const setCartDrawerOpened = (open,trackCartDismissed = true) => (dispatch
     });
 
     if (open) {
-
       // @segment Cart Viewed
-      if(!cart.cartDrawerOpened){
-      window.analytics.track('Cart Viewed', {
-        cart_id: cart._id,
-        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
-        products: orderItemsTransformed
-      });
-    }
+      if (!cart.cartDrawerOpened) {
+        window.analytics.track('Cart Viewed', {
+          cart_id: cart._id,
+          num_products: cart.items.reduce(
+            (acc, item) => acc + item.quantity,
+            0
+          ),
+          products: orderItemsTransformed
+        });
+      }
     } else {
       // @segment Cart Dismissed
-      if(cart.cartDrawerOpened){
-        if(trackCartDismissed){
-      window.analytics.track('Cart Dismissed', {
-        cart_id: cart._id,
-        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
-        products: orderItemsTransformed
-      });
-    }
-    }
+      if (cart.cartDrawerOpened) {
+        if (trackCartDismissed) {
+          window.analytics.track('Cart Dismissed', {
+            cart_id: cart._id,
+            num_products: cart.items.reduce(
+              (acc, item) => acc + item.quantity,
+              0
+            ),
+            products: orderItemsTransformed
+          });
+        }
+      }
     }
   }
 
