@@ -16,7 +16,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button, AlertPanel } from '../common';
+import { Button, AlertPanel, If } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
@@ -197,9 +197,20 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
+              hostedFieldsInstance.on('blur', function(event) {
+                let field = event.fields[event.emittedBy];
+                if (field.isValid) {
+                  field.container.nextElementSibling.style.display = 'none';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
+                } else {
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid #C10230';
+                  field.container.nextElementSibling.style.display = 'block';
+                }
+              });
               hostedFieldsInstance.on('validityChange', function(event) {
                 let field = event.fields[event.emittedBy];
-
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
