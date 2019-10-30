@@ -165,16 +165,16 @@ const PaymentForm = ({
                   'color': '#000'
                 },
                 '::-webkit-input-placeholder': {
-                  'font-family': 'p22-underground, sans-serif'
+                  'font-size': '1rem'
                 },
                 ':-moz-placeholder': {
-                  'font-family': 'p22-underground, sans-serif'
+                  'font-size': '1rem'
                 },
                 '::-moz-placeholder': {
-                  'font-family': 'p22-underground, sans-serif'
+                  'font-size': '1rem'
                 },
                 ':-ms-input-placeholder': {
-                  'font-family': 'p22-underground, sans-serif'
+                  'font-size': '1rem'
                 }
               },
               fields: {
