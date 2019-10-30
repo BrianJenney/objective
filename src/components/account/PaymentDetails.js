@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+
 import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import { sendCreditCardRequest } from '../../utils/braintree';
+
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
@@ -78,6 +80,7 @@ const AccountPaymentDetails = ({
     ) {
       if (!currentUser.patchAccountError && paymentMethods.length > 0) {
         setSelectedIndex(paymentMethods.length - 1);
+
         if (onSubmit) {
           onSubmit(paymentMethods[paymentMethods.length - 1]);
         }
@@ -111,23 +114,18 @@ const AccountPaymentDetails = ({
   const handleSave = async (values, actions) => {
     const pureValues = omit(values, ['shouldSaveData']);
     const { shouldSaveData } = values;
-    const { paymentDetails, billingAddress } = pureValues;
+    const { cardData, paymentDetails, billingAddress } = pureValues;
 
     try {
-      const cardResult = await sendCreditCardRequest({
-        ...paymentDetails,
-        zipcode: billingAddress.zipcode
-      });
-      const { nonce, details } = cardResult.creditCards[0];
       const payload = {
         newCreditCard: {
           name: paymentDetails.cardholderName,
-          cardType: details.cardType,
-          last4: details.lastFour,
-          expirationDate: paymentDetails.expirationDate,
+          cardType: cardData.details.cardType,
+          last4: cardData.details.lastFour,
+          expirationDate: cardData.details.expirationMonth + '/' + cardData.details.expirationYear,
           billingAddress
         },
-        nonce
+        nonce: cardData.nonce
       };
 
       if (allowFlyMode && !shouldSaveData) {
