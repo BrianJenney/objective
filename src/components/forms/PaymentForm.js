@@ -245,6 +245,14 @@ const PaymentForm = ({
   }, [currentUser.patchAccountSubmitting]);
 
   const handleSubmit = async (values, actions) => {
+    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
+      if (!HostedFieldsClient._state.fields[field].isValid) {
+        let elem = HostedFieldsClient._state.fields[field];
+        document.getElementById('bt-payment-holder').style.border =
+          '1px solid #C10230';
+        elem.container.nextElementSibling.style.display = 'block';
+      }
+    });
     const cardData = await HostedFieldsClient.tokenize();
     const payload = {
       ...values,
