@@ -110,7 +110,7 @@ export const fetchLinkedCategory = async id => {
   });
 
   if (response.total < 1) {
-    // @TODO Need to redirect to a 404 page
+    return null;
   } else {
     return response.items[0];
   }
