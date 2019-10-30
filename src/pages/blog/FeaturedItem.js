@@ -22,7 +22,7 @@ const FeaturedItem = post => {
       setSlug(p.fields.categories[0].fields.slug);
     } else if (p.fields.categories && p.fields.categories.length > 0 && p.fields.categories[0].sys && p.fields.categories[0].sys.type === 'Link') {
       fetchLinkedCategory(p.fields.categories[0].sys.id).then(cat => {
-        if (cat.fields) {
+        if (cat && cat.fields) {
           setCategory(cat.fields.title);
           setSlug(cat.fields.slug);
         }
