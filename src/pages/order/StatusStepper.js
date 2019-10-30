@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 
 const getSteps = (status, statusStepper) => {
   let step = 1;
-  if (["cancelled", "refunded"].includes(status)) {
+  if (["canceled", "refunded"].includes(status)) {
     step = 2;
   } else {
     if (statusStepper['Delivered'])
@@ -95,7 +95,7 @@ const getSteps = (status, statusStepper) => {
     else if (statusStepper['Shipped'])
       step = 2;
   }
-  const steps = ["cancelled", "refunded"].includes(status)
+  const steps = ["canceled", "refunded"].includes(status)
     ? ['Processed', 'Cancelled']
     : ['Processed', 'Shipped', 'Delivered'];
   // console.log('status steppers', {statusStepper, step, steps} )
