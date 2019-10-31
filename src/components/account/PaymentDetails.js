@@ -136,7 +136,7 @@ const AccountPaymentDetails = ({
         nonce: cardData.nonce
       };
 
-      trackSegmentPaymentInfoEnteredEvent({payment_method:details.cardType});
+      trackSegmentPaymentInfoEnteredEvent({payment_method:cardData.details.cardType});
 
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
