@@ -135,7 +135,6 @@ const ProfileDetails = ({
     firstName: currentUser.data.firstName,
     lastName: currentUser.data.lastName,
     email: currentUser.data.email
-    // phone: currentUser.data.phone
   };
 
   const renderForm = () => (
@@ -166,9 +165,6 @@ const ProfileDetails = ({
         <Grid item xs={12}>
           <Field label="Email" name="email" component={InputField} />
         </Grid>
-        {/* <Grid item xs={12}>
-            <Field label="Phone Number" name="phone" component={InputField} />
-          </Grid> */}
         <Grid item xs={xs ? 12 : 4}>
           <Button
             mt={2}

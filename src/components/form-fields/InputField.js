@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 InputField.propTypes = {
   field: PropTypes.object,
   form: PropTypes.object,
+  disabled: PropTypes.bool,
   helperText: PropTypes.string,
   fullWidth: PropTypes.bool,
   variant: PropTypes.string
@@ -17,12 +18,13 @@ InputField.defaultProps = {
 };
 
 export default function InputField(props) {
-  const { field, form, helperText, ...rest } = props;
+  const { field, form, helperText, disabled, ...rest } = props;
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);
 
   return (
     <TextField
+      disabled={disabled || form.isSubmitting}
       error={!!(touched && error)}
       helperText={(touched && error) || helperText}
       {...field}
