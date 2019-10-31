@@ -398,15 +398,13 @@ export const requestAddCoupon = (cartId, promoCode) => async (
 * @return - void
 */
 export const segmentAddCouponReceived = (cart) => {
-
-  window.analytics.track("Coupon Applied",{
-    "cart_id": cart._id,
-    "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
-    "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
-    "discount": cart.discount,
-    "order_id": cart.accountId
-  });
-  
+  window.analytics.track('Coupon Applied', {
+    cart_id: cart._id,
+    coupon_id: cart.promo && cart.promo.code ? cart.promo.code : '',
+    coupon_name: cart.promo && cart.promo.code ? cart.promo.code : '',
+    discount: cart.discount,
+    order_id: cart.accountId
+  });  
 }
 
 /*
@@ -415,15 +413,13 @@ export const segmentAddCouponReceived = (cart) => {
 * @return - void
 */
 export const segmentRemoveCouponReceived = (cart) => {
-
-  window.analytics.track("Coupon Removed",{
-    "cart_id": cart._id,
-    "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
-    "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
-    "discount": cart.discount,
-    "order_id": cart.accountId
+  window.analytics.track('Coupon Removed', {
+    cart_id: cart._id,
+    coupon_id: cart.promo && cart.promo.code ? cart.promo.code : '',
+    coupon_name: cart.promo && cart.promo.code ? cart.promo.code : '',
+    discount: cart.discount,
+    order_id: cart.accountId
   });
-  
 }
 
 export const requestRemoveCoupon = cartId => async (dispatch, getState) => {

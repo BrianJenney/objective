@@ -33,6 +33,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
       if(fields.routingKey==="cart.request.addcoupon"){
         segmentAddCouponReceived(data);
       }
+      
       if(fields.routingKey==="cart.request.removecoupon"){
         segmentRemoveCouponReceived(data);
       }
