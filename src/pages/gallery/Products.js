@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +10,7 @@ import CategorySummary from './CategorySummary';
 //import ProductSummary from './ProductSummary';
 import { getProductCategories } from '../../utils/product';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { setIn } from 'formik';
 
 const skinImg = require('../../../src/assets/images/skin.png');
 const healthImg = require('../../../src/assets/images/general.png');
@@ -17,9 +18,29 @@ const energyImg = require('../../../src/assets/images/targeted.png');
 
 const Products = () => {
   const products = useContext(GalleryContext);
+  const [seconds, setSeconds] = useState(0);
 
-  if (!products)
+  useEffect(() => {
+    // track seconds for products to load
+    const interval = setInterval(() => {
+      setSeconds(seconds + 0.5);
+    }, 500);
+
+    if (seconds === 11) {
+      clearInterval(interval);
+    }
+
+    if (!products && seconds === 10) {
+      clearInterval(interval);
+      alert('Something wrong just happened, please refresh your browser and try again');
+    }
+
+    return () => clearInterval(interval);
+  }, [seconds]);
+
+  if (!products) {
     return <LoadingSpinner loadingMessage="Products loading ..." />;
+  }
 
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
