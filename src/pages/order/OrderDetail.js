@@ -119,7 +119,7 @@ const OrderSummary = ({
   tracking,
   orderStatus
 }) => {
-  console.log('==ORDER STATUS==', orderStatus);
+  
   const { cardType, last4 } = paymentData;
   const { email, phoneBook } = account.data;
   const dispatch = useDispatch();
@@ -222,6 +222,7 @@ const OrderSummary = ({
 const OrderDetail = () => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
+  
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));

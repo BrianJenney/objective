@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -119,7 +119,9 @@ const columns = [
 ];
 
 const AccountOrders = ({ currentUser: { data } }) => {
+  
   const dispatch = useDispatch();
+  const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
 
@@ -138,8 +140,12 @@ const AccountOrders = ({ currentUser: { data } }) => {
     window.analytics.page('Account Orders');
   }, []);
 
+
   for (let key in data.orders) {
-    if (data.orders[key].status == 'cancelled') {
+    if (order && data.orders[key]._id == order._id) {
+      data.orders[key].status = order.status;
+    }
+    if (data.orders[key].status == 'canceled') {
       data.orders[key].status = 'Order Cancelled';
     }
   }
