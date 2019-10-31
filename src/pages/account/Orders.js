@@ -142,10 +142,10 @@ const AccountOrders = ({ currentUser: { data } }) => {
 
 
   for (let key in data.orders) {
-    if (order && data.orders[key]._id == order._id) {
+    if (order && data.orders[key]._id === order._id) {
       data.orders[key].status = order.status;
     }
-    if (data.orders[key].status == 'canceled') {
+    if (data.orders[key].status === 'canceled') {
       data.orders[key].status = 'Order Cancelled';
     }
   }
