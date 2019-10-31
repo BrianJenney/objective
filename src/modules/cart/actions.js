@@ -392,9 +392,31 @@ export const requestAddCoupon = (cartId, promoCode) => async (
   });
 };
 
+/*
+* @description - Tracks Coupon Applied Segment event when 
+* cart microservice applies coupon to cart and sends back a response to front end
+* @return - void
+*/
 export const segmentAddCouponReceived = (cart) => {
 
   window.analytics.track("Coupon Applied",{
+    "cart_id": cart._id,
+    "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
+    "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
+    "discount": cart.discount,
+    "order_id": cart.accountId
+  });
+  
+}
+
+/*
+* @description - Tracks Coupon Removed Segment event when 
+* cart microservice removes coupon from cart and sends back a response to front end
+* @return - void
+*/
+export const segmentRemoveCouponReceived = (cart) => {
+
+  window.analytics.track("Coupon Removed",{
     "cart_id": cart._id,
     "coupon_id": cart.promo && cart.promo.code ? cart.promo.code: "",
     "coupon_name": cart.promo && cart.promo.code ? cart.promo.code: "",
