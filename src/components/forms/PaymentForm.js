@@ -198,7 +198,7 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
-              hostedFieldsInstance.on('blur', function(event) {
+              hostedFieldsInstance.on('blur', function (event) {
                 let field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -210,7 +210,7 @@ const PaymentForm = ({
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
-              hostedFieldsInstance.on('validityChange', function(event) {
+              hostedFieldsInstance.on('validityChange', function (event) {
                 let field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -246,7 +246,7 @@ const PaymentForm = ({
   }, [currentUser.patchAccountSubmitting]);
 
   const handleSubmit = async (values, actions) => {
-    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
+    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         let elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
@@ -304,40 +304,6 @@ const PaymentForm = ({
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
-<<<<<<< HEAD
-          <>
-            <Grid item xs={12}>
-              <Field
-                name="paymentDetails.cardholderName"
-                label="Name on Card"
-                component={InputField}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                position="relative"
-                className="bt-payment-holder"
-                id="bt-payment-holder"
-              >
-                <Grid item xs={6}>
-                  <div id="bt-cardNumber"></div>
-                  <div className="btError">Please enter valid card number</div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div id="bt-cardExpiration"></div>
-                  <div className="btError">
-                    Please enter valid Expiration Date
-                  </div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div id="bt-cardCvv"></div>
-                  <div className="btError">Please enter valid CVV</div>
-                </Grid>
-              </Box>
-            </Grid>
-            {allowFlyMode && (
-=======
             <>
               <Grid item xs={12}>
                 <Field
@@ -383,7 +349,6 @@ const PaymentForm = ({
                   />
                 </Grid>
               )}
->>>>>>> Loaders/Disable form in shipping and payment forms
               <Grid item xs={12}>
                 <Box
                   component={Typography}
