@@ -110,6 +110,7 @@ const PaymentForm = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
+
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
       setValues({
@@ -269,7 +270,7 @@ const PaymentForm = ({
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues }) => (
+  const renderForm = ({ values, setValues, isSubmitting }) => (
     <Form>
       <Box
         component={Typography}
@@ -303,6 +304,7 @@ const PaymentForm = ({
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
+<<<<<<< HEAD
           <>
             <Grid item xs={12}>
               <Field
@@ -335,116 +337,155 @@ const PaymentForm = ({
               </Box>
             </Grid>
             {allowFlyMode && (
+=======
+            <>
               <Grid item xs={12}>
                 <Field
-                  name="shouldSaveData"
-                  label="Save details in account"
-                  component={CheckboxField}
+                  name="paymentDetails.cardholderName"
+                  label="Name on Card"
+                  component={InputField}
+                  validate={validateTextField}
                 />
               </Grid>
-            )}
-            <Grid item xs={12}>
-              <Box
-                component={Typography}
-                color="#231f20"
-                variant="h5"
-                children="Billing Address"
-                fontSize={xs ? 24 : 30}
-                mb={1}
-              />
-            </Grid>
-            {seedEnabled && (
               <Grid item xs={12}>
-                <Box display="flex" alignItems="center">
-                  <Checkbox
-                    id="useAddressSeedToggle"
-                    onChange={evt =>
-                      handleUseAddressSeedToggle(evt, values, setValues)
-                    }
+                <Box position="relative">
+                  <Field
+                    name="paymentDetails.number"
+                    label="Card Number"
+                    component={InputField}
+                    validate={() => validateCardNumberField(values)}
+                    inputProps={{ style: { paddingRight: 214 } }}
                   />
-                  <Typography
-                    variant="body2"
-                    children={useSeedLabel}
-                    style={{ color: '#231f20' }}
-                  />
+                  <Box position="absolute" width={100} top={0} right={100}>
+                    <Field
+                      className={classes.noBorderField}
+                      name="paymentDetails.expirationDate"
+                      label="MM/YYYY"
+                      component={InputField}
+                    />
+                  </Box>
+                  <Box position="absolute" width={66} top={0} right={14}>
+                    <Field
+                      className={classes.noBorderField}
+                      name="paymentDetails.cvv"
+                      label="CVV"
+                      component={InputField}
+                    />
+                  </Box>
                 </Box>
               </Grid>
-            )}
-            <Grid item xs={12} sm={6}>
-              <Field
-                name="billingAddress.firstName"
-                label="First Name"
-                component={InputField}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Field
-                name="billingAddress.lastName"
-                label="Last Name"
-                component={InputField}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.address1"
-                label="Street Address"
-                component={InputField}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.address2"
-                label="Apt. suite, bldg, c/o (optional)"
-                component={InputField}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.city"
-                label="City"
-                component={InputField}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Field
-                name="billingAddress.state"
-                label="State"
-                component={SelectField}
-                options={STATE_OPTIONS}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Field
-                name="billingAddress.zipcode"
-                label="Zip Code"
-                component={InputField}
-                validate={validateTextField}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.phone"
-                label="Phone #"
-                component={InputField}
-                helperText="In case we need to contact you about your order"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.country"
-                label="Country"
-                component={SelectField}
-                options={COUNTRY_OPTIONS}
-                disabled
-              />
-            </Grid>
-          </>
-        )}
+              {allowFlyMode && (
+                <Grid item xs={12}>
+                  <Field
+                    name="shouldSaveData"
+                    label="Save details in account"
+                    component={CheckboxField}
+                  />
+                </Grid>
+              )}
+>>>>>>> Loaders/Disable form in shipping and payment forms
+              <Grid item xs={12}>
+                <Box
+                  component={Typography}
+                  color="#231f20"
+                  variant="h5"
+                  children="Billing Address"
+                  fontSize={xs ? 24 : 30}
+                  mb={1}
+                />
+              </Grid>
+              {seedEnabled && (
+                <Grid item xs={12}>
+                  <Box display="flex" alignItems="center">
+                    <Checkbox
+                      id="useAddressSeedToggle"
+                      onChange={evt =>
+                        handleUseAddressSeedToggle(evt, values, setValues)
+                      }
+                    />
+                    <Typography
+                      variant="body2"
+                      children={useSeedLabel}
+                      style={{ color: '#231f20' }}
+                    />
+                  </Box>
+                </Grid>
+              )}
+              <Grid item xs={12} sm={6}>
+                <Field
+                  name="billingAddress.firstName"
+                  label="First Name"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Field
+                  name="billingAddress.lastName"
+                  label="Last Name"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.address1"
+                  label="Street Address"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.address2"
+                  label="Apt. suite, bldg, c/o (optional)"
+                  component={InputField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.city"
+                  label="City"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Field
+                  name="billingAddress.state"
+                  label="State"
+                  component={SelectField}
+                  options={STATE_OPTIONS}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Field
+                  name="billingAddress.zipcode"
+                  label="Zip Code"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.phone"
+                  label="Phone #"
+                  component={InputField}
+                  helperText="In case we need to contact you about your order"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.country"
+                  label="Country"
+                  component={SelectField}
+                  options={COUNTRY_OPTIONS}
+                  disabled
+                />
+              </Grid>
+            </>
+          )}
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
             {onBack && (
@@ -456,7 +497,7 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} />
+            <Button type="submit" children={submitLabel} loading={isSubmitting} />
           </ButtonGroup>
         </Grid>
       </Grid>
