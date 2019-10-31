@@ -370,6 +370,10 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
     type: REQUEST_FORGOT_PASSWORD,
     payload: {}
   });
+
+  window.analytics.track("Forgot Password Request Started", {
+    "email": email
+  });
 };
 
 export const requestSignupEmail = email => (dispatch, getState) => {
