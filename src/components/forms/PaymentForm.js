@@ -110,7 +110,6 @@ const PaymentForm = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
-
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
       setValues({
@@ -314,30 +313,25 @@ const PaymentForm = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <Box position="relative">
-                  <Field
-                    name="paymentDetails.number"
-                    label="Card Number"
-                    component={InputField}
-                    validate={() => validateCardNumberField(values)}
-                    inputProps={{ style: { paddingRight: 214 } }}
-                  />
-                  <Box position="absolute" width={100} top={0} right={100}>
-                    <Field
-                      className={classes.noBorderField}
-                      name="paymentDetails.expirationDate"
-                      label="MM/YYYY"
-                      component={InputField}
-                    />
-                  </Box>
-                  <Box position="absolute" width={66} top={0} right={14}>
-                    <Field
-                      className={classes.noBorderField}
-                      name="paymentDetails.cvv"
-                      label="CVV"
-                      component={InputField}
-                    />
-                  </Box>
+                <Box
+                  position="relative"
+                  className="bt-payment-holder"
+                  id="bt-payment-holder"
+                >
+                  <Grid item xs={6}>
+                    <div id="bt-cardNumber"></div>
+                    <div className="btError">Please enter valid card number</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div id="bt-cardExpiration"></div>
+                    <div className="btError">
+                      Please enter valid Expiration Date
+                  </div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div id="bt-cardCvv"></div>
+                    <div className="btError">Please enter valid CVV</div>
+                  </Grid>
                 </Box>
               </Grid>
               {allowFlyMode && (
