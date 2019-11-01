@@ -104,11 +104,11 @@ const ProfileDetails = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  useEffect(()=>{
-    if(window.location.pathname.indexOf("/account/profile")!==-1){
-    window.analytics.page("Account Profile");
+  useEffect(() => {
+    if (window.location.pathname.indexOf('/account/profile') !== -1) {
+      window.analytics.page('Account Profile');
     }
-  },[]);
+  }, []);
 
   if (!currentUser.data.account_jwt) {
     return <div>No Account</div>;
@@ -134,8 +134,7 @@ const ProfileDetails = ({
   const initialValues = {
     firstName: currentUser.data.firstName,
     lastName: currentUser.data.lastName,
-    email: currentUser.data.email,
-    phone: currentUser.data.phone
+    email: currentUser.data.email
   };
 
   const renderForm = () => (
@@ -166,9 +165,6 @@ const ProfileDetails = ({
         <Grid item xs={12}>
           <Field label="Email" name="email" component={InputField} />
         </Grid>
-        {/* <Grid item xs={12}>
-            <Field label="Phone Number" name="phone" component={InputField} />
-          </Grid> */}
         <Grid item xs={xs ? 12 : 4}>
           <Button
             mt={2}

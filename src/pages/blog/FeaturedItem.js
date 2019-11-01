@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 
+import { fetchLinkedCategory } from '../../utils/blog';
+
 const FeaturedItem = post => {
+  const [category, setCategory] = useState('General');
+  const [slug, setSlug] = useState(null);
+
   let p = post.post;
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
@@ -11,13 +16,19 @@ const FeaturedItem = post => {
     imageUrl = `${p.fields.featuredImage.fields.file.url}?w=424&fm=jpg&q=90`;
   }
 
-  let category = 'General';
-  let slug = null;
-
-  if (p.fields.categories && p.fields.categories.length > 0 && p.fields.categories[0].fields) {
-    category = p.fields.categories[0].fields.title;
-    slug = p.fields.categories[0].fields.slug;
-  }
+  useEffect(() => {
+    if (p.fields.categories && p.fields.categories.length > 0 && p.fields.categories[0].fields) {
+      setCategory(p.fields.categories[0].fields.title);
+      setSlug(p.fields.categories[0].fields.slug);
+    } else if (p.fields.categories && p.fields.categories.length > 0 && p.fields.categories[0].sys && p.fields.categories[0].sys.type === 'Link') {
+      fetchLinkedCategory(p.fields.categories[0].sys.id).then(cat => {
+        if (cat && cat.fields) {
+          setCategory(cat.fields.title);
+          setSlug(cat.fields.slug);
+        }
+      });
+    }
+  }, []);
 
   return (
     <Grid item xs={12} md={4}>

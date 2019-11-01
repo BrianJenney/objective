@@ -102,3 +102,16 @@ export const fetchPostsByTag = async slug => {
     }
   }
 }
+
+export const fetchLinkedCategory = async id => {
+  let response = await contentfulClient.getEntries({
+    content_type: 'blogCategory',
+    'sys.id': id
+  });
+
+  if (response.total < 1) {
+    return null;
+  } else {
+    return response.items[0];
+  }
+}
