@@ -58,7 +58,7 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     type: REQUEST_CREATE_ACCOUNT,
     payload: {}
   });
-   
+
   window.analytics.track("Sign Up Email Capture", {
     "email": email
   });
@@ -84,18 +84,18 @@ export const receivedCreateAccountSuccess = createReply => dispatch => {
     "username": createReply.email,
     "site_location": "account creation"
   });
-if(createReply.newsletter){
-  window.analytics.track("Subscribed", {
-    "email": createReply.email,
-    "site_location": "account creation"
-  });
+  if (createReply.newsletter) {
+    window.analytics.track("Subscribed", {
+      "email": createReply.email,
+      "site_location": "account creation"
+    });
 
-  window.analytics.track("Subscribed Listrak Auto", {
-    "email": createReply.email,
-    "site_location": "account creation"
-  });
+    window.analytics.track("Subscribed Listrak Auto", {
+      "email": createReply.email,
+      "site_location": "account creation"
+    });
 
-}
+  }
 };
 
 export const receivedCreateAccountFailure = error => dispatch => {
@@ -103,7 +103,7 @@ export const receivedCreateAccountFailure = error => dispatch => {
     type: RECEIVED_CREATE_ACCOUNT_FAILURE,
     payload: error
   });
-  
+
   window.analytics.track("Sign Up Failed", {
     "error_message": "Account with email already exists"
   })
@@ -255,7 +255,7 @@ export const clearChangePasswordError = () => dispatch => {
   });
 };
 
-export const requestLogin = ({ email, password }) => (dispatch, getState) => {
+export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -283,7 +283,9 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
 
   dispatch({
     type: REQUEST_LOGIN,
-    payload: {}
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
   });
 
   window.analytics.track("Sign In Completed", {
