@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+
 import ContactMail from '../components/common/Icons/ContactMail/ContactMail';
 import ContactPhone from '../components/common/Icons/ContactPhone/ContactPhone';
 import Link from '@material-ui/core/Link';
@@ -20,6 +20,7 @@ import {
 } from './contactUs/StyledComponents';
 
 import HelpDialog from './help/HelpDialog';
+import HelpConfirmedDialog from './help/HelpConfirmedDialog';
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -59,6 +60,14 @@ const useStyles = makeStyles(theme => ({
 
 const ContactUs = () => {
   const [ openCustomerCareDialog, setOpenCustomerCareDialog ] = useState(false);
+  const [ openHelpConfirmedDialog, setOpenHelpConfirmedDialog ] = useState(false);
+
+  const closeCustomerCareDialog = useCallback(() => {
+    setOpenCustomerCareDialog(false);
+  },[setOpenCustomerCareDialog]);
+
+  const showHelpConfirmedDialog = () => setOpenHelpConfirmedDialog(true);
+
   const classes = useStyles();
   window.analytics.page('Contact');
   return (
@@ -120,8 +129,8 @@ const ContactUs = () => {
                     </Link>
                   </StyledEmail>
                 </Box>
-                { openCustomerCareDialog && <HelpDialog onExited={() => setOpenCustomerCareDialog(false)} />}
-
+                { openCustomerCareDialog && <HelpDialog onExited={closeCustomerCareDialog} showHelpConfirmedDialog={showHelpConfirmedDialog}/>}
+                { openHelpConfirmedDialog && <HelpConfirmedDialog onExited={() => setOpenHelpConfirmedDialog(false)} />}
               </Grid>
             </Box>
           </StyledContainerBackground>
