@@ -14,6 +14,7 @@ import ScrollToTop from '../components/common/ScrollToTop';
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
 import FeaturedItem from './blog/FeaturedItem';
+import FeaturedProduct from './blog/FeaturedProduct';
 
 const dateFormat = require('dateformat');
 
@@ -50,17 +51,10 @@ const BlogPost = ({ computedMatch }) => {
   }, [post_slug]);
 
   const renderRelatedProducts = products => {
+    console.log('products', products);
     if (products.length > 0) {
       return products.map(product => (
-        <ul style={{ marginBottom: 0, listStyleType: 'none' }}>
-          <li>
-            <Link
-              to={`/products/${product.fields.Slug}`}
-              key={`product-key-${product.fields.Slug}`}
-              children={product.fields.productTitle}
-            ></Link>
-          </li>
-        </ul>
+        <FeaturedProduct product={product} key={product.fields.Slug} />
       ));
     }
     return null;
@@ -196,16 +190,18 @@ const BlogPost = ({ computedMatch }) => {
 
           {post.fields.relatedProducts &&
           post.fields.relatedProducts.length > 0 ? (
-            <Box className="content related">
-              <Container>
-                <Divider />
-                <h1>Related Products</h1>
-                {renderRelatedProducts(post.fields.relatedProducts)}
-              </Container>
-            </Box>
-          ) : (
-            <></>
-          )}
+              <Box className="content related">
+                <Container>
+                  <Divider />
+                  <h1>Related Products</h1>
+                  <div style={{ display: 'inline-flex' }}>
+                    {renderRelatedProducts(post.fields.relatedProducts)}
+                  </div>
+                </Container>
+              </Box>
+            ) : (
+              <></>
+            )}
 
           {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
             <Box className="content related" py={8}>
