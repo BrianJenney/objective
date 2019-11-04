@@ -155,7 +155,7 @@ export const clearFetchAccountError = () => dispatch => {
   });
 };
 
-export const requestPatchAccount = (authToken, patches, { setSubmitting }) => (
+export const requestPatchAccount = (authToken, patches, actions) => (
   dispatch,
   getState
 ) => {
@@ -167,6 +167,7 @@ export const requestPatchAccount = (authToken, patches, { setSubmitting }) => (
       account_jwt: authToken
     }
   };
+
   // console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
 
@@ -182,8 +183,16 @@ export const requestPatchAccount = (authToken, patches, { setSubmitting }) => (
   dispatch({
     type: REQUEST_PATCH_ACCOUNT,
     payload: {},
-    onSuccess: () => setSubmitting(false),
-    onFailure: () => setSubmitting(false)
+    onSuccess: () => {
+      if (actions) {
+        actions.setSubmitting(false);
+      }
+    },
+    onFailure: () => {
+      if (actions) {
+        actions.setSubmitting(false);
+      }
+    }
   });
 };
 
@@ -207,7 +216,7 @@ export const clearPatchAccountError = () => dispatch => {
   });
 };
 
-export const requestChangePassword = (authToken, patches) => (
+export const requestChangePassword = (authToken, patches, { setSubmitting }) => (
   dispatch,
   getState
 ) => {
@@ -219,7 +228,7 @@ export const requestChangePassword = (authToken, patches) => (
       account_jwt: authToken
     }
   };
-  // console.log(params);
+
   const payload = JSON.stringify(msgpack.encode(params));
 
   client.send(
@@ -233,7 +242,9 @@ export const requestChangePassword = (authToken, patches) => (
 
   dispatch({
     type: REQUEST_CHANGE_PASSWORD,
-    payload: {}
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
   });
 };
 

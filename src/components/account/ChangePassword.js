@@ -57,8 +57,8 @@ const ChangePassword = ({
   const [resultVisible, setResultVisible] = useState(false);
   const prevSubmitting = usePrevious(currentUser.changePasswordSubmitting);
   const errorMessage = getErrorMessage(currentUser.changePasswordError);
-  const handleSubmit = useCallback(values => {
-    requestChangePassword(currentUser.data.account_jwt, values);
+  const handleSubmit = useCallback((values, actions) => {
+    requestChangePassword(currentUser.data.account_jwt, values, actions);
   });
 
   useEffect(() => {
@@ -81,10 +81,10 @@ const ChangePassword = ({
   }, [currentUser.changePasswordSubmitting]);
 
   useEffect(() => {
-    if(window.location.pathname.indexOf("/account/profile")!==-1){
-    window.analytics.page("Account Change Password")
+    if (window.location.pathname.indexOf("/account/profile") !== -1) {
+      window.analytics.page("Account Change Password")
     }
-  },[])
+  }, [])
 
   const [currentPasswordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
