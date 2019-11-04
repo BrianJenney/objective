@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Help = ({ closeDialog }) => {
+const Help = ({ closeDialog, showHelpConfirmedDialog }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -28,7 +28,7 @@ const Help = ({ closeDialog }) => {
       <Box component={Paper} pb={3}>
         <Box textAlign="center">
           <Typography className={classes.title}>Customer Care</Typography>
-          <HelpForm closeDialog={closeDialog}/>
+          <HelpForm closeDialog={closeDialog} showHelpConfirmedDialog={showHelpConfirmedDialog}/>
         </Box>
       </Box>
     </Container>

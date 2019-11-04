@@ -1,34 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
-import { object, string, boolean } from 'yup';
+import { object, string } from 'yup';
+
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme  } from '@material-ui/core/styles';
-import { Button, NavLink, AlertPanel } from '../../components/common';
-
-import { CheckboxField, InputField, SelectField, TextareaField} from '../../components/form-fields';
-
-import {useDispatch} from "react-redux";
+import { useTheme  } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
-// import {requestCreateCase} from "../../modules/case-feedback/actions";
 
-const useStyles = makeStyles(theme => ({
-  text: {
-    fontFamily: 'p22-underground',
-    fontSize: '14px',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '10px'
-    }
-  },
-  subText: {
-    fontFamily: 'p22-underground',
-    fontSize: '11px',
-    textAlign: 'left',
-    margin: theme.spacing(1, 0)
-  }
-}));
+import { Button } from '../../components/common';
+import { InputField, TextareaField} from '../../components/form-fields';
 
 const INITIAL_VALUES = {
   firstName: '',
@@ -52,16 +34,16 @@ const schema = object().shape({
 const HelpForm = ({
   title,
   closeDialog,
+  showHelpConfirmedDialog
 }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const handleCreateCase = (values) => {
-    console.log('handleCreateCase', {values})
-    // dispatch(requestCreateCase(values));
+  const handleCreateCase = useCallback((values) => {
+    // send values to email manager
     closeDialog();
-  };
+    showHelpConfirmedDialog();
+  }, [closeDialog, showHelpConfirmedDialog]);
 
   const renderForm = ({ isValid }) => (
     <Form>
@@ -132,6 +114,8 @@ const HelpForm = ({
 
 HelpForm.propTypes = {
   title: PropTypes.string,
+  closeDialog: PropTypes.func.isRequired,
+  showHelpConfirmedDialog: PropTypes.func.isRequired,
 };
 
 export default HelpForm;
