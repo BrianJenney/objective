@@ -168,9 +168,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         changePasswordError: false,
-        changePasswordSubmitting: true
+        changePasswordSubmitting: true,
+        onPatchSuccess: action.onSuccess,
+        onPatchFailure: action.onFailure
       };
     case RECEIVED_CHANGE_PASSWORD_SUCCESS:
+      state.onPatchSuccess();
       return {
         ...state,
         changePasswordError: false,
@@ -181,6 +184,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_CHANGE_PASSWORD_FAILURE:
+      state.onPatchFailure();
       return {
         ...state,
         changePasswordError: action.payload,
