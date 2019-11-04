@@ -36,6 +36,8 @@ const INITIAL_STATE = {
   patchAccountSubmitting: null,
   changePasswordSubmitting: null,
   signupConfirmation: false,
+  onLoginSuccess: null,
+  onLoginFailure: null,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
@@ -75,9 +77,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loginError: false,
-        loginSubmitting: true
+        loginSubmitting: true,
+        onLoginSuccess: action.onSuccess,
+        onLoginFailure: action.onFailure
       };
     case RECEIVED_LOGIN_SUCCESS:
+      state.onLoginSuccess();
       return {
         ...state,
         loginError: false,
@@ -88,6 +93,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_LOGIN_FAILURE:
+      state.onLoginFailure();
       return {
         ...state,
         loginError: action.payload,
