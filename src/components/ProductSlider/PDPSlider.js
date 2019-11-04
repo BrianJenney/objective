@@ -9,6 +9,8 @@ import styles from './overrides.module.scss';
 const Carousel = props => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   let { images } = props;
+  const productContext = useContext(ProductContext);
+  const {product} = productContext; 
 
   if (!images) {
     images = [
@@ -68,6 +70,24 @@ const Carousel = props => {
     };
   });
 
+  /*
+  *
+  * @description - Tracks Segment Product Images Browsed Event
+  * @param {Int} currentIndex - The index of the image being browsed
+  * @return void
+  * 
+  */
+  const handleSegmentBrowsedEvent = currentIndex => {
+    const image = images[currentIndex];
+    window.analytics.track('Product Images Browsed', {
+      image_url: `https:${image.fields.file.url}`,
+      index: currentIndex + 1,
+      product_id: product._id,
+      product_name: product.name,
+      sku: product.sku
+    });
+  };
+
   const renderImages = images => {
     let carouselImages = [];
 
@@ -85,6 +105,7 @@ const Carousel = props => {
         items={carouselImages}
         thumbnailPosition={'left'}
         showThumbnails={windowWidth < 769 ? false : true}
+        onSlide={handleSegmentBrowsedEvent}
       />
     );
   };
