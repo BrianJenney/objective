@@ -38,6 +38,8 @@ const INITIAL_STATE = {
   signupConfirmation: false,
   onLoginSuccess: null,
   onLoginFailure: null,
+  onPatchSuccess: null,
+  onPatchFailure: null,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
@@ -135,9 +137,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         patchAccountError: false,
-        patchAccountSubmitting: true
+        patchAccountSubmitting: true,
+        onPatchSuccess: action.onSuccess,
+        onPatchFailure: action.onFailure
       };
     case RECEIVED_PATCH_ACCOUNT_SUCCESS:
+      state.onPatchSuccess();
       return {
         ...state,
         patchAccountError: false,
@@ -148,6 +153,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_PATCH_ACCOUNT_FAILURE:
+      state.onPatchFailure();
       return {
         ...state,
         patchAccountError: action.payload,

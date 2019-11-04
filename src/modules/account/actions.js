@@ -155,7 +155,7 @@ export const clearFetchAccountError = () => dispatch => {
   });
 };
 
-export const requestPatchAccount = (authToken, patches) => (
+export const requestPatchAccount = (authToken, patches, { setSubmitting }) => (
   dispatch,
   getState
 ) => {
@@ -181,7 +181,9 @@ export const requestPatchAccount = (authToken, patches) => (
 
   dispatch({
     type: REQUEST_PATCH_ACCOUNT,
-    payload: {}
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
   });
 };
 
