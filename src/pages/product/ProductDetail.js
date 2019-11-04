@@ -192,7 +192,7 @@ const ProductDetail = () => {
     content == null ||
     selectedVariantSku == null
   )
-    return <LoadingSpinner loadingMessage="Loading product" />;
+    return <LoadingSpinner loadingMessage="Loading product" page="pdp" />;
 
   // const isMobile = windowSize.width < 944;
   const isMobile = windowSize.width < 768;

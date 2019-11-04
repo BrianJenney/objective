@@ -39,7 +39,7 @@ const Products = () => {
   }, [seconds]);
 
   if (!products) {
-    return <LoadingSpinner loadingMessage="Products loading ..." />;
+    return <LoadingSpinner loadingMessage="Products loading ..." page="gallery" />;
   }
 
   const productCategories = getProductCategories(products);
