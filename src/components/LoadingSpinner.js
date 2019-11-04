@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter, matchPath } from 'react-router-dom';
-import { compose } from 'redux';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
@@ -32,8 +31,6 @@ const LoadingSpinner = ({ location, loadingMessage }) => {
       </Box>
     </Container>
   );
-}
+};
 
-const enhance = compose(withRouter);
-
-export default enhance(LoadingSpinner);
+export default withRouter(LoadingSpinner);
