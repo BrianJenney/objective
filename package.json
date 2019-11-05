@@ -49,6 +49,7 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "resize-observer-polyfill": "^1.5.1",
+    "smartystreets-javascript-sdk": "^1.4.1",
     "stompjs": "^2.3.3",
     "store": "^2.0.12",
     "styled-components": "^4.4.0",
