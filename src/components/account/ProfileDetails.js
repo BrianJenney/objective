@@ -82,8 +82,9 @@ const ProfileDetails = ({
   const [resultVisible, setResultVisible] = useState(false);
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);
-  const handleSubmit = useCallback(values => {
-    requestPatchAccount(currentUser.data.account_jwt, values);
+
+  const handleSubmit = useCallback((values, actions) => {
+    requestPatchAccount(currentUser.data.account_jwt, values, actions);
   });
 
   useEffect(() => {
@@ -185,10 +186,10 @@ const ProfileDetails = ({
       {xs ? (
         ''
       ) : (
-        <Typography className={classes.title} variant="h1" gutterBottom>
-          Your Profile
+          <Typography className={classes.title} variant="h1" gutterBottom>
+            Your Profile
         </Typography>
-      )}
+        )}
 
       <Typography className={classes.info} variant="h3" gutterBottom>
         NAME {'&'} EMAIL

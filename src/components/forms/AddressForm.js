@@ -74,6 +74,7 @@ const AddressForm = ({
   const [initialValues, setInitialValues] = useState(
     getInitialValues(INITIAL_VALUES, defaultValues)
   );
+
   const handleUseAddressSeedToggle = event => {
     if (event.target.checked) {
       setInitialValues({ ...addressSeed });
@@ -107,11 +108,10 @@ const AddressForm = ({
       ...values,
       phone: values.phone ? values.phone.trim() : ''
     };
-
     onSubmit(payload, actions);
   };
 
-  const renderForm = () => (
+  const renderForm = ({ isSubmitting }) => (
     <Form>
       <Box
         component={Typography}
@@ -148,10 +148,18 @@ const AddressForm = ({
           </Grid>
         )}
         <Grid item xs={12} sm={6}>
-          <Field name="firstName" label="First Name" component={InputField} />
+          <Field
+            name="firstName"
+            label="First Name"
+            component={InputField}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field name="lastName" label="Last Name" component={InputField} />
+          <Field
+            name="lastName"
+            label="Last Name"
+            component={InputField}
+          />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -168,7 +176,11 @@ const AddressForm = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Field name="city" label="City" component={InputField} />
+          <Field
+            name="city"
+            label="City"
+            component={InputField}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Field
@@ -179,10 +191,18 @@ const AddressForm = ({
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field name="zipcode" label="Zip Code" component={InputField} />
+          <Field
+            name="zipcode"
+            label="Zip Code"
+            component={InputField}
+          />
         </Grid>
         <Grid item xs={12}>
-          <Field name="phone" label="Phone #" component={InputField} />
+          <Field
+            name="phone"
+            label="Phone #"
+            component={InputField}
+          />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -243,7 +263,7 @@ const AddressForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} />
+            <Button type="submit" children={submitLabel} loading={isSubmitting} />
           </ButtonGroup>
         </Grid>
       </Grid>
