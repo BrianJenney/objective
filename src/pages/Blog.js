@@ -33,19 +33,33 @@ const Blog = () => {
     window.analytics.page('Journal Home');
   }, []);
 
-  const renderFeaturedMain = post => FeaturedPost(post);
+  /*
+   *
+   *@description - Track Segment Editorial Grid Item Clicked 
+   *@return void
+   * 
+   */
+  const segmentTrackEditorialItemClicked = (post, cta = '') => {
+    window.analytics.track('Editorial Grid Item Clicked', {
+      cta: cta,
+      label: post.fields.title,
+      text: post.fields.title
+    });
+  };
+
+  const renderFeaturedMain = post => <FeaturedPost segmentAnalyticsTracker={segmentTrackEditorialItemClicked} post={post}/>;
 
   const renderFeaturedPosts = posts => {
     if (posts.length > 0) {
       return posts.map((item, key) => (
-        <FeaturedItem post={item} key={item.sys.id} />
+        <FeaturedItem segmentAnalyticsTracker={segmentTrackEditorialItemClicked} post={item} key={item.sys.id} />
       ));
     }
     return <></>;
   };
 
   const renderPosts = posts =>
-    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
+    posts.map((item, key) => <PostItem segmentAnalyticsTracker={segmentTrackEditorialItemClicked} post={item} key={item.sys.id} />);
 
   return (
     <ScrollToTop>
