@@ -30,6 +30,14 @@ const usePrevious = value => {
   return useRefObj.current;
 };
 
+/*
+* @description - Wrapper function for tracking the Payment Info Entered Segment Event
+* @return void
+*/
+const trackSegmentPaymentInfoEnteredEvent = properties => {
+  window.analytics.track("Payment Info Entered",properties);
+}
+
 const AccountPaymentDetails = ({
   currentUser,
   requestPatchAccount,
@@ -127,6 +135,8 @@ const AccountPaymentDetails = ({
         },
         nonce: cardData.nonce
       };
+
+      trackSegmentPaymentInfoEnteredEvent({payment_method:cardData.details.cardType});
 
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
