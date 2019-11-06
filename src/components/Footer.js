@@ -33,7 +33,7 @@ import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
 import { requestSignupEmail } from '../modules/account/actions';
 import { withCurrentUser } from '../hoc';
-
+import segmentSiteLocation from '../utils/segmentSiteLocation';
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
@@ -73,6 +73,13 @@ const DialogContent = withStyles(theme => ({
     padding: theme.spacing(2)
   }
 }))(MuiDialogContent);
+
+const segmentTrackNavigationClick = e => {
+  window.analytics.track('Navigation Clicked', {
+    label: e.target.innerText ? e.target.innerText : '',
+    site_location: segmentSiteLocation()
+  });
+};
 
 const trackEmailSubmitFailure = (email, error_message) => {
   window.analytics.track('Email Capture Failed', {
@@ -206,7 +213,6 @@ const Footer = ({ location, currentUser }) => {
 
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
   const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
-
   const handleSubmit = useCallback(
     ({ email }) => {
       console.log('SUBMIT SUCCEED!!!', email);
@@ -289,14 +295,14 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/about_us">About</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/about_us">About</NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to="/contact">Contact Us</NavLink>
+                          <NavLink onClick={segmentTrackNavigationClick} to="/contact">Contact Us</NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/faq">FAQs</NavLink>
+                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">FAQs</NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -304,20 +310,21 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink to="/faq">HELP</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">HELP</NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink to={gotoUrl('/account', '/login/account')}>
+                          <NavLink onClick={segmentTrackNavigationClick} to={gotoUrl('/account', '/login/account')}>
                             My Account
                           </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink to="/faq">Shipping &amp; Returns</NavLink>
+                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">Shipping &amp; Returns</NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink
                             to={gotoUrl('/account/orders', '/login/order')}
+                            onClick={segmentTrackNavigationClick}
                           >
                             Track an Order
                           </NavLink>
@@ -351,6 +358,7 @@ const Footer = ({ location, currentUser }) => {
                             to="/signup"
                             underline="always"
                             children="create an account"
+                            onClick={segmentTrackNavigationClick}
                           ></NavLink>{' '}
                           in seconds.
                         </Typography>
@@ -411,10 +419,10 @@ const Footer = ({ location, currentUser }) => {
                   <Grid container xs={12} className="legal">
                     <StyledList>
                       <ListItem className="text-center">
-                        <NavLink to="/privacy-policy">Privacy Policy</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/privacy-policy">Privacy Policy</NavLink>
                       </ListItem>
                       <ListItem className="text-center">
-                        <NavLink to="/terms">Terms of use</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/terms">Terms of use</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
@@ -488,12 +496,12 @@ const Footer = ({ location, currentUser }) => {
                 <Grid container item xs={12} className="footer-main">
                   <Grid item xs={5} className="title border-bottom">
                     <StyledBox>
-                      <NavLink to="/about_us">About</NavLink>
+                      <NavLink onClick={segmentTrackNavigationClick} to="/about_us">About</NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <NavLink to="/faq">HELP</NavLink>
+                      <NavLink onClick={segmentTrackNavigationClick} to="/faq">HELP</NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid
@@ -508,26 +516,27 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={5} className="border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to="/contact">Contact Us</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/contact">Contact Us</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/faq">FAQs</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">FAQs</NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink to={gotoUrl('/account', '/login/account')}>
+                        <NavLink onClick={segmentTrackNavigationClick} to={gotoUrl('/account', '/login/account')}>
                           My Account
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/faq">Shipping &amp; Returns</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">Shipping &amp; Returns</NavLink>
                       </ListItem>
                       <ListItem>
                         <NavLink
                           to={gotoUrl('/account/orders', '/login/order')}
+                          onClick={segmentTrackNavigationClick}
                         >
                           Track an Order
                         </NavLink>
@@ -565,6 +574,7 @@ const Footer = ({ location, currentUser }) => {
                             to="/signup"
                             underline="always"
                             children="create an account"
+                            onClick={segmentTrackNavigationClick}
                           ></NavLink>{' '}
                           in seconds.
                         </Typography>
@@ -628,10 +638,10 @@ const Footer = ({ location, currentUser }) => {
                     <StyledLegalList>
                       <ListItem>Objective &bull; All rights reserved</ListItem>
                       <ListItem>
-                        <NavLink to="/privacypolicy">Privacy Policy</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/privacypolicy">Privacy Policy</NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to="/terms">Terms of use</NavLink>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/terms">Terms of use</NavLink>
                       </ListItem>
                     </StyledLegalList>
                   </Grid>

@@ -22,6 +22,7 @@ import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
 import { height } from '@material-ui/system';
+import segmentSiteLocation from '../utils/segmentSiteLocation';
 const jwt = require('jsonwebtoken');
 
 const StyledLink = withStyles(() => ({
@@ -105,6 +106,14 @@ const Header = ({ currentUser, location }) => {
     setPromoVisible(!promoVisible);
   }, [promoVisible, setPromoVisible]);
 
+  const segmentTrackNavigationClick = e => {
+    window.analytics.track('Navigation Clicked', {
+      label: e.target.innerText ? e.target.innerText : '',
+      site_location: segmentSiteLocation()
+    });
+  };
+  
+
   return (
     <>
       {isCheckoutPage || isOrderPage ? (
@@ -120,7 +129,7 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={1}></Grid>
                   <Grid item xs={8} className="logo text-center">
-                    <NavLink to="/">
+                    <NavLink onClick={segmentTrackNavigationClick} to="/">
                       <Logo />
                     </NavLink>
                   </Grid>
@@ -132,7 +141,7 @@ const Header = ({ currentUser, location }) => {
                   <Grid container item={true} xs={12} className="headerBar">
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
-                        <NavLink to="/gallery">
+                        <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                           Limited Time: Free Shipping for All New Customers
                         </NavLink>
                         <CloseIcon
@@ -152,7 +161,7 @@ const Header = ({ currentUser, location }) => {
                       <Grid container item={true} xs={12}>
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
-                            <NavLink to="/gallery">
+                            <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                               Limited Time: Free Shipping for All New Customers
                             </NavLink>
                             <div
@@ -181,19 +190,19 @@ const Header = ({ currentUser, location }) => {
                       <Grid item xs={4}>
                         <Grid container>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink component={RouterLink} to="/gallery">
+                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
                               Shop
                             </StyledLink>
                           </Grid>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink component={RouterLink} to="/journal">
+                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
                               Journal
                             </StyledLink>
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={4} className="logo text-center">
-                        <NavLink to="/">
+                        <NavLink onClick={segmentTrackNavigationClick} to="/">
                           <Logo />
                         </NavLink>
                       </Grid>
@@ -203,6 +212,7 @@ const Header = ({ currentUser, location }) => {
                             <StyledLink
                               component={RouterLink}
                               {...accountMenuItemConf}
+                              onClick={segmentTrackNavigationClick}
                             />
                           </Grid>
                           <Grid
