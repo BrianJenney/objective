@@ -5,11 +5,11 @@ import Grid from '@material-ui/core/Grid';
 
 import { fetchLinkedCategory } from '../../utils/blog';
 
-const FeaturedItem = post => {
+const FeaturedItem = ({post,segmentAnalyticsTracker}) => {
   const [category, setCategory] = useState('General');
   const [slug, setSlug] = useState(null);
 
-  let p = post.post;
+  let p = post;
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
   if (p.fields.featuredImage && p.fields.featuredImage.fields) {
@@ -32,14 +32,16 @@ const FeaturedItem = post => {
 
   return (
     <Grid item xs={12} md={4}>
-      <img src={ imageUrl } alt={ p.fields.title } />
+      <Link onClick={()=>{segmentAnalyticsTracker(p)}} to={`/journal/posts/${ p.fields.slug }`}>
+        <img src={ imageUrl } alt={ p.fields.title } />
+      </Link>
       <div className="flex">
         <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>&mdash;
         <span className="minRead">{ p.fields.minuteRead } Min Read</span>
       </div>
-      <h2><Link to={`/journal/posts/${ p.fields.slug }`}>{ p.fields.title }</Link></h2>
+      <h2><Link onClick={()=>{segmentAnalyticsTracker(p)}} to={`/journal/posts/${ p.fields.slug }`}>{ p.fields.title }</Link></h2>
       <p>{ p.fields.teaser }</p>
-      <Link to={`/journal/posts/${ p.fields.slug }`}>Read More</Link>
+      <Link onClick={()=>{segmentAnalyticsTracker(p, "Read More")}} to={`/journal/posts/${ p.fields.slug }`}>Read More</Link>
     </Grid>
   );
 };

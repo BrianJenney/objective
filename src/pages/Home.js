@@ -145,6 +145,17 @@ class Home extends Component {
     );
   }
 
+  /*
+   *
+   * @description - Track Segment Banner Clicked event
+   * @return void
+   *
+   */
+
+  segmentTrackBannerClicked() {
+    window.analytics.track('Banner Clicked', this.segmentProperties);
+  }
+
   renderContent() {
     if (!this.state.content) return <></>;
 
@@ -152,7 +163,16 @@ class Home extends Component {
 
     return (
       <div className="home-style">
-        <Link to="/gallery">
+        <Link
+          to="/gallery"
+          segmentProperties={{
+            cta: 'Shop All',
+            destination: '/gallery',
+            site_location: 'home',
+            text: 'Targeted Health Solutions for You and Yours'
+          }}
+          onClick={this.segmentTrackBannerClicked}
+        >
           <ul>{this.renderHeroSlider()}</ul>
         </Link>
         <Container>
