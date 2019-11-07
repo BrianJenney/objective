@@ -198,12 +198,15 @@ class Home extends Component {
               <Grid container spacing={3} className="best-container">
                 {this.renderBestsellers()}
               </Grid>
+              <Box style={{ paddingTop: 90 }}>
+                <Link to="/gallery" className="shopAllLink">
+                  Shop All
+                </Link>
+              </Box>
             </Box>
           </Container>
         </div>
-        <>
-          {this.renderSections()}
-        </>
+        <>{this.renderSections()}</>
         <div className="his-hers-theirs beige-bg">
           <Container>
             <Box py={10}>
@@ -212,6 +215,11 @@ class Home extends Component {
               <Grid container spacing={3} className="solutions-container">
                 {this.renderFamily()}
               </Grid>
+              <Box style={{ paddingTop: 90 }}>
+                <Link to="/gallery" className="shopAllLink">
+                  Shop All
+                </Link>
+              </Box>
             </Box>
           </Container>
         </div>
