@@ -22,7 +22,11 @@ import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
-import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import {
+  getInitialValues,
+  getErrorMessage,
+  scrollToRef
+} from '../../utils/misc';
 import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
@@ -48,27 +52,27 @@ const validateTextField = value => {
   return 'This field is required';
 };
 
-const validateCardNumberField = values => {
-  const { number, expirationDate, cvv } = values.paymentDetails;
-  const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
-  if (!number) {
-    return 'Card number is required';
-  }
-  if (isNaN(Number(number))) {
-    return 'Card number should be a numeric value';
-  }
-  if (!expirationDatePattern.test(expirationDate)) {
-    return 'Expiration date should be a valid date - MM/YYYY';
-  }
-  if (!cvv) {
-    return 'CVV is required';
-  }
-  if (isNaN(Number(cvv))) {
-    return 'CVV should be a numeric value';
-  }
+// const validateCardNumberField = values => {
+//   const { number, expirationDate, cvv } = values.paymentDetails;
+//   const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
+//   if (!number) {
+//     return 'Card number is required';
+//   }
+//   if (isNaN(Number(number))) {
+//     return 'Card number should be a numeric value';
+//   }
+//   if (!expirationDatePattern.test(expirationDate)) {
+//     return 'Expiration date should be a valid date - MM/YYYY';
+//   }
+//   if (!cvv) {
+//     return 'CVV is required';
+//   }
+//   if (isNaN(Number(cvv))) {
+//     return 'CVV should be a numeric value';
+//   }
 
-  return undefined;
-};
+//   return undefined;
+// };
 
 const INITIAL_VALUES = {
   paymentDetails: {
@@ -107,6 +111,8 @@ const PaymentForm = ({
   backLabel,
   allowFlyMode
 }) => {
+  const refBao = useRef();
+  const textFieldRefs = [useRef(null), useRef(null)];
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
@@ -148,21 +154,21 @@ const PaymentForm = ({
             {
               client: clientInstance,
               styles: {
-                'input': {
+                input: {
                   'font-size': '18px',
                   'font-family': 'p22-underground, sans-serif',
                   'font-weight': 'lighter',
-                  'color': '#585858',
-                  'padding': '18.5px 14px'
+                  color: '#585858',
+                  padding: '18.5px 14px'
                 },
                 ':focus': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.valid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.invalid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '::-webkit-input-placeholder': {
                   'font-size': '1rem'
@@ -213,9 +219,11 @@ const PaymentForm = ({
                 let field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
-                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
-                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid #C10230';
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
@@ -244,6 +252,8 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  //hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
+  //if all text fields are filled out, handleSubmit will handle card info
   const handleSubmit = async (values, actions) => {
     Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
@@ -251,6 +261,8 @@ const PaymentForm = ({
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
+        elem.container.scrollIntoView();
+        console.log('form submitted', field);
       }
     });
     const cardData = await HostedFieldsClient.tokenize();
@@ -304,12 +316,21 @@ const PaymentForm = ({
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
           <>
-            <Grid item xs={12}>
+            <Grid item xs={12} ref={refBao}>
               <Field
                 name="paymentDetails.cardholderName"
                 label="Name on Card"
                 component={InputField}
-                validate={validateTextField}
+                ref={textFieldRefs[0]}
+                validate={value => {
+                  if (value) {
+                    return undefined;
+                  } else {
+                    scrollToRef(refBao);
+                    console.log('it is scrolling to ref', refBao);
+                    return 'Field required';
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -456,7 +477,13 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              // onClick={event => {
+              //   console.log('event', event);
+              // }}
+            />
           </ButtonGroup>
         </Grid>
       </Grid>
