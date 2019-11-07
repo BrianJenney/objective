@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 
-const PostItem = post => {
-  let p = post.post;
+const PostItem = ({post,segmentAnalyticsTracker}) => {
+  let p = post;
 
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
@@ -23,16 +23,18 @@ const PostItem = post => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} md={6}>
-        <img src={ imageUrl } />
+        <Link onClick={()=>{segmentAnalyticsTracker(p)}} to={`/journal/posts/${ p.fields.slug }`}>
+          <img src={ imageUrl } />
+        </Link>
       </Grid>
       <Grid item xs={12} md={6}>
         <div className="flex">
           <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>&mdash;
           <span className="minRead">{ p.fields.minuteRead } Min Read</span>
         </div>
-        <h2><Link to={`/journal/posts/${ p.fields.slug }`}>{ p.fields.title }</Link></h2>
+        <h2><Link onClick={()=>{segmentAnalyticsTracker(p)}} to={`/journal/posts/${ p.fields.slug }`}>{ p.fields.title }</Link></h2>
         <p>{ p.fields.teaser }</p>
-        <Link to={`/journal/posts/${ p.fields.slug }`}>Read More</Link>
+        <Link onClick={()=>{segmentAnalyticsTracker(p, "Read More")}} to={`/journal/posts/${ p.fields.slug }`}>Read More</Link>
       </Grid>
     </Grid>
   );

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 
-const FeaturedPost = post => {
+const FeaturedPost = ({post,segmentAnalyticsTracker}) => {
   if (!post.fields || !post.fields.title) {
     return <></>;
   }
@@ -25,16 +25,18 @@ const FeaturedPost = post => {
   return (
     <Grid container spacing={4} className="callout">
       <Grid item xs={12} md={8}>
-        <img src={ imageUrl } alt={ post.fields.title } />
+        <Link onClick={()=>{segmentAnalyticsTracker(post)}} to={`/journal/posts/${ post.fields.slug }`}>
+          <img src={ imageUrl } alt={ post.fields.title } />
+        </Link>
       </Grid>
       <Grid item xs={12} md={4}>
         <div className="flex">
           <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>&mdash;
           <span className="minRead">{ post.fields.minuteRead } Min Read</span>
         </div>
-        <h2><Link to={`/journal/posts/${ post.fields.slug }`}>{ post.fields.title }</Link></h2>
+        <h2><Link onClick={()=>{segmentAnalyticsTracker(post)}} to={`/journal/posts/${ post.fields.slug }`}>{ post.fields.title }</Link></h2>
         <p>{ post.fields.teaser }</p>
-        <Link to={`/journal/posts/${ post.fields.slug }`}>Read More</Link>
+        <Link onClick={()=>{segmentAnalyticsTracker(post, "Read More")}} to={`/journal/posts/${ post.fields.slug }`}>Read More</Link>
       </Grid>
     </Grid>
   );

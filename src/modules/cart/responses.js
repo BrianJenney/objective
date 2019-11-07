@@ -1,5 +1,5 @@
 import store from '../../store';
-import { receivedCreateCart, receivedFetchCart, receivedPatchCart, receivedUpdateCart, setCartDrawerOpened, segmentAddCouponReceived } from './actions';
+import { receivedCreateCart, receivedFetchCart, receivedPatchCart, receivedUpdateCart, setCartDrawerOpened, segmentAddCouponReceived, segmentRemoveCouponReceived } from './actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleCartResponse = (status, data, fields, properties) => {
@@ -32,6 +32,10 @@ export const handleCartResponse = (status, data, fields, properties) => {
 
       if(fields.routingKey==="cart.request.addcoupon"){
         segmentAddCouponReceived(data);
+      }
+      
+      if(fields.routingKey==="cart.request.removecoupon"){
+        segmentRemoveCouponReceived(data);
       }
 
       if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress' && openCartDrawer) {
