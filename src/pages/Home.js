@@ -88,11 +88,21 @@ class Home extends Component {
     if (!this.state.content.homepageSection) return <></>;
 
     return this.state.content.homepageSection.map(section => (
-      <div className="section" key={section.sys.id}>
-        {documentToReactComponents(
-          section.fields.mainContent,
-          contentfulOptions
-        )}
+      <div
+        id={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
+        key={section.sys.id}
+        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url + '")'}}
+      >
+        <Container className="section-container">
+          <Box className="section-holder">
+            <div className="section">
+              {documentToReactComponents(
+                section.fields.mainContent,
+                contentfulOptions
+              )}
+            </div>
+          </Box>
+        </Container>
       </div>
     ));
   }
@@ -188,14 +198,15 @@ class Home extends Component {
               <Grid container spacing={3} className="best-container">
                 {this.renderBestsellers()}
               </Grid>
+              <Box style={{ paddingTop: 90 }}>
+                <Link to="/gallery" className="shopAllLink">
+                  Shop All
+                </Link>
+              </Box>
             </Box>
           </Container>
         </div>
-        <Container className="section-container">
-          <Box py={10} className="section-holder">
-            {this.renderSections()}
-          </Box>
-        </Container>
+        <>{this.renderSections()}</>
         <div className="his-hers-theirs beige-bg">
           <Container>
             <Box py={10}>
@@ -204,6 +215,11 @@ class Home extends Component {
               <Grid container spacing={3} className="solutions-container">
                 {this.renderFamily()}
               </Grid>
+              <Box style={{ paddingTop: 90 }}>
+                <Link to="/gallery" className="shopAllLink">
+                  Shop All
+                </Link>
+              </Box>
             </Box>
           </Container>
         </div>
