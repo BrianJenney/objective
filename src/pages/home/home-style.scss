@@ -184,16 +184,16 @@
   .section-holder {
     padding-bottom: 0;
   }
-  #sectionNum0,
-  #sectionNum1,
-  #sectionNum2 {
+  .sectionNum0,
+  .sectionNum1,
+  .sectionNum2 {
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     padding: 158px 0;
     display: flex;
   }
-  #sectionNum1 {
+  .sectionNum1 {
     direction: rtl;
     .section {
       text-align: left;
@@ -327,9 +327,9 @@
     }
   }
   @media (max-width: 768px) {
-    #sectionNum0,
-    #sectionNum1,
-    #sectionNum2 {
+    .sectionNum0,
+    .sectionNum1,
+    .sectionNum2 {
       background-image: none !important;
       padding: 0;
     }
