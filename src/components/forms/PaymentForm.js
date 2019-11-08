@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { omit } from 'lodash';
+import { get, omit } from 'lodash';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
@@ -91,35 +91,42 @@ const INITIAL_VALUES = {
 };
 
 const checkedFields = [
-  'paymentDetails.cardholderName',
+  'cardholderName',
   'number',
   'expirationDate',
   'cvv',
-  'billingAddress.firstName',
-  'billingAddress.lastName',
-  'billingAddress.stAddress',
-  'billingAddress.city',
-  'billingAddress.state',
-  'billingAddress.zipcode'
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
 ];
 const formikFields = [
-  'paymentDetails.cardholderName',
-  'billingAddress.firstName',
-  'billingAddress.lastName',
-  'billingAddress.stAddress',
-  'billingAddress.city',
-  'billingAddress.state',
-  'billingAddress.zipcode'
+  'cardholderName',
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
 ];
-// const formikValueFieldsMap = {
-//   cardholderName: 'paymentDetails.cardholderName',
-//   firstName: 'billingAddress.firstName',
-//   lastName: 'billingAddress.lastName',
-//   stAddress: 'billingAddress.stAddress',
-//   city: 'billingAddress.city',
-//   state: 'billingAddress.state',
-//   zipcode: 'billingAddress.zipcode'
-// };
+const formikValueFieldsMap = {
+  cardholderName: 'paymentDetails.cardholderName',
+  firstName: 'billingAddress.firstName',
+  lastName: 'billingAddress.lastName',
+  address1: 'billingAddress.address1',
+  city: 'billingAddress.city',
+  state: 'billingAddress.state',
+  zipcode: 'billingAddress.zipcode'
+};
+const validateRequiredField = value => {
+  if (value) {
+    return undefined;
+  }
+  return 'This field is required';
+};
+
 const PaymentForm = ({
   currentUser,
   seedEnabled,
@@ -135,25 +142,19 @@ const PaymentForm = ({
   allowFlyMode
 }) => {
   const fieldRefs = {
-    'paymentDetails.cardholderName': useRef(null),
+    cardholderName: useRef(null),
     number: useRef(null),
     expirationDate: useRef(null),
     cvv: useRef(null),
-    'billingAddress.firstName': useRef(null),
-    'billingAddress.lastName': useRef(null),
-    'billingAddress.stAddress': useRef(null),
-    'billingAddress.city': useRef(null),
-    'billingAddress.state': useRef(null),
-    'billingAddress.zipcode': useRef(null)
+    firstName: useRef(null),
+    lastName: useRef(null),
+    address1: useRef(null),
+    city: useRef(null),
+    state: useRef(null),
+    zipcode: useRef(null)
   };
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const validateRequiredField = value => {
-    if (value) {
-      return undefined;
-    }
-    return 'This field is required';
-  };
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -291,10 +292,13 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  //hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
-  //if all text fields are filled out, handleSubmit will handle card info
+  // hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
+  // if all text fields are filled out, handleSubmit will handle card info
   const handleSubmit = (values, actions) => {
-    const fieldErrors = {};
+    const fieldErrors = {
+      paymentDetails: {},
+      billingAddress: {}
+    };
     Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         let elem = HostedFieldsClient._state.fields[field];
@@ -307,13 +311,24 @@ const PaymentForm = ({
       }
     });
     formikFields.forEach(requiredField => {
-      fieldErrors[requiredField] = validateRequiredField(values[requiredField]);
+      if (requiredField === 'cardholderName') {
+        fieldErrors.paymentDetails[requiredField] = validateRequiredField(
+          values.paymentDetails[requiredField]
+        );
+      } else {
+        fieldErrors.billingAddress[requiredField] = validateRequiredField(
+          values.billingAddress[requiredField]
+        );
+      }
     });
-    console.log('----testing---', fieldErrors);
     actions.setErrors(omit(fieldErrors, ['number', 'expirationDate', 'cvv']));
 
-    const firstInvalidField = checkedFields.find(field => !!fieldErrors[field]);
-    console.log('------culprit----', firstInvalidField);
+    const firstInvalidField = checkedFields.find(field => {
+      if (formikFields.includes(field)) {
+        return !!get(fieldErrors, formikValueFieldsMap[field]);
+      }
+      return !!fieldErrors[field];
+    });
     scrollToRef(fieldRefs[firstInvalidField]);
 
     const cardData = HostedFieldsClient.tokenize();
@@ -455,7 +470,7 @@ const PaymentForm = ({
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div ref={fieldRefs.stAddress}>
+              <div ref={fieldRefs.address1}>
                 <Field
                   name="billingAddress.address1"
                   label="Street Address"
