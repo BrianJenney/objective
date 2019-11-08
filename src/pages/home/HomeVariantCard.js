@@ -72,7 +72,7 @@ export const HomeVariantCard = ({ variant }) => {
               name: variant.name,
               brand: cart.storeCode,
               cart_id: cart._id,
-              site_location: "home"
+              site_location: 'home'
             });
           }}
         >
@@ -96,7 +96,7 @@ export const HomeVariantCard = ({ variant }) => {
               name: variant.name,
               brand: cart.storeCode,
               cart_id: cart._id,
-              site_location: "home"
+              site_location: 'home'
             });
           }}
         >
@@ -117,7 +117,7 @@ export const HomeVariantCard = ({ variant }) => {
                       name: variant.name,
                       brand: cart.storeCode,
                       cart_id: cart._id,
-                      site_location: "home"
+                      site_location: 'home'
                     });
                   }}
                 >

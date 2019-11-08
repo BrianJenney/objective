@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
@@ -14,7 +14,7 @@ import ScrollToTop from '../components/common/ScrollToTop';
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
 import FeaturedItem from './blog/FeaturedItem';
-import FeaturedProduct from './blog/FeaturedProduct';
+import BlogVariantCard from './blog/BlogVariantCard';
 
 const dateFormat = require('dateformat');
 
@@ -39,7 +39,7 @@ const contentfulOptions = {
 
 const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
-
+  const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
   useEffect(() => {
     async function fetchData() {
@@ -51,11 +51,20 @@ const BlogPost = ({ computedMatch }) => {
   }, [post_slug]);
 
   const renderRelatedProducts = products => {
-    console.log('products', products);
-    if (products.length > 0) {
-      return products.map(product => (
-        <FeaturedProduct product={product} key={product.fields.Slug} />
-      ));
+    if (variants && products.length > 0) {
+      return products.map(product => {
+        const productVariant = variants.filter(
+          variant => variant.slug === product.fields.Slug
+        );
+
+        return (
+          <BlogVariantCard
+            product={product}
+            variant={productVariant[0]}
+            key={product.fields.Slug}
+          />
+        );
+      });
     }
     return null;
   };
@@ -190,15 +199,14 @@ const BlogPost = ({ computedMatch }) => {
 
           {post.fields.relatedProducts &&
           post.fields.relatedProducts.length > 0 ? (
-              <Box className="content related">
-                <Container>
-                  <Divider />
-                  <h1>Related Products</h1>
-                  <div style={{ display: 'inline-flex' }}>
-                    {renderRelatedProducts(post.fields.relatedProducts)}
-                  </div>
-                </Container>
-              </Box>
+            <Box className="content">
+              <Container>
+                <h1 align="center">Shop this post</h1>
+                <Grid container spacing={4} className="callout">
+                  {renderRelatedProducts(post.fields.relatedProducts)}
+                </Grid>
+              </Container>
+            </Box>
             ) : (
               <></>
             )}
