@@ -36,6 +36,10 @@ const INITIAL_STATE = {
   patchAccountSubmitting: null,
   changePasswordSubmitting: null,
   signupConfirmation: false,
+  onLoginSuccess: null,
+  onLoginFailure: null,
+  onPatchSuccess: null,
+  onPatchFailure: null,
   data: {
     ...(authToken ? { account_jwt: authToken } : {})
   }
@@ -75,9 +79,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loginError: false,
-        loginSubmitting: true
+        loginSubmitting: true,
+        onLoginSuccess: action.onSuccess,
+        onLoginFailure: action.onFailure
       };
     case RECEIVED_LOGIN_SUCCESS:
+      state.onLoginSuccess();
       return {
         ...state,
         loginError: false,
@@ -88,6 +95,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_LOGIN_FAILURE:
+      state.onLoginFailure();
       return {
         ...state,
         loginError: action.payload,
@@ -129,9 +137,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         patchAccountError: false,
-        patchAccountSubmitting: true
+        patchAccountSubmitting: true,
+        onPatchSuccess: action.onSuccess,
+        onPatchFailure: action.onFailure
       };
     case RECEIVED_PATCH_ACCOUNT_SUCCESS:
+      state.onPatchSuccess();
       return {
         ...state,
         patchAccountError: false,
@@ -142,6 +153,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_PATCH_ACCOUNT_FAILURE:
+      state.onPatchFailure();
       return {
         ...state,
         patchAccountError: action.payload,
@@ -156,9 +168,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         changePasswordError: false,
-        changePasswordSubmitting: true
+        changePasswordSubmitting: true,
+        onPatchSuccess: action.onSuccess,
+        onPatchFailure: action.onFailure
       };
     case RECEIVED_CHANGE_PASSWORD_SUCCESS:
+      state.onPatchSuccess();
       return {
         ...state,
         changePasswordError: false,
@@ -169,6 +184,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_CHANGE_PASSWORD_FAILURE:
+      state.onPatchFailure();
       return {
         ...state,
         changePasswordError: action.payload,

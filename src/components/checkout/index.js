@@ -30,6 +30,7 @@ import { resetOrderState } from '../../modules/order/actions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
+import { Loader } from '../common';
 
 const getPanelTitleContent = (
   xs,
@@ -119,8 +120,13 @@ const Checkout = ({
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+
+  setTimeout(function () {
+    setLoading(false);
+  }, 300);
 
   const trackCheckoutStarted = () => {
     let orderItemsTransformed = [];
@@ -235,7 +241,7 @@ const Checkout = ({
         { paymentMethodToken }
       );
     }
-    console.log(orderIsLoading, orderError);
+
     if (orderIsLoading === true || orderError === null) return null;
 
     if (orderError === true) {
@@ -307,177 +313,179 @@ const Checkout = ({
 
   return (
     <>
-      <Box bgcolor="rgba(252, 248, 244, 0.5)">
-        <Container>
-          <Box py={10} className="checkout-wrapper">
-            <CssBaseline />
-            <Grid container spacing={4}>
-              <Grid
-                item
-                flex={1}
-                xs={12}
-                md={8}
-                style={xs ? { padding: 0 } : {}}
-                className="right-side"
-              >
-                <Panel
-                  title={getPanelTitleContent(
-                    xs,
-                    0,
-                    activeStep,
-                    signupConfirmation,
-                    {
-                      email: currentUserEmail
-                    }
-                  )}
-                  collapsible
-                  hideExpandIcon
-                  expanded={activeStep === 0}
-                  onChange={() => null}
-                  className="firstPanel"
+      {loading ? <Loader /> :
+        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Container>
+            <Box py={10} className="checkout-wrapper">
+              <CssBaseline />
+              <Grid container spacing={4}>
+                <Grid
+                  item
+                  flex={1}
+                  xs={12}
+                  md={8}
+                  style={xs ? { padding: 0 } : {}}
+                  className="right-side"
                 >
-                  <div ref={stepRefs[0]}>
-                    <CheckoutAuth
-                      currentUser={currentUser}
-                      requestCreateAccount={requestCreateAccount}
-                      clearCreateAccountError={clearCreateAccountError}
-                      requestLogin={requestLogin}
-                      clearLoginError={clearLoginError}
-                      handleNext={() => {
-                        if (activeStep === 0) {
-                          setCurrentStep(1);
-                          trackCheckoutStepCompleted(0);
-                        }
-                      }}
-                    />
-                  </div>
-                </Panel>
-                <Panel
-                  title={getPanelTitleContent(
-                    xs,
-                    1,
-                    activeStep,
-                    null,
-                    payload.shippingAddress
-                  )}
-                  collapsible
-                  expanded={activeStep === 1}
-                  onChange={e => onPanelChange(e, 1)}
-                >
-                  <div ref={stepRefs[1]}>
-                    <AccountAddresses
-                      currentUser={currentUser}
-                      requestPatchAccount={requestPatchAccount}
-                      clearPatchAccountError={clearPatchAccountError}
-                      formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                      onSubmit={handleNext}
-                      selectionEnabled
-                      allowFlyMode
-                      mt={4}
-                      mx={10}
-                      mb={5}
-                    />
-                  </div>
-                </Panel>
-                <Panel
-                  title={getPanelTitleContent(
-                    xs,
-                    2,
-                    activeStep,
-                    null,
-                    payload.paymentDetails
-                  )}
-                  collapsible
-                  expanded={activeStep === 2}
-                  onChange={e => onPanelChange(e, 2)}
-                >
-                  <div ref={stepRefs[2]}>
-                    <AccountPaymentDetails
-                      currentUser={currentUser}
-                      requestPatchAccount={requestPatchAccount}
-                      clearPatchAccountError={clearPatchAccountError}
-                      formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                      onBack={handleBack}
-                      onSubmit={handleNext}
-                      selectionEnabled
-                      seedEnabled
-                      addressSeed={payload.shippingAddress}
-                      useSeedLabel="Use shipping address"
-                      allowFlyMode
-                      mt={4}
-                      mx={10}
-                      mb={5}
-                      backLabel="Cancel"
-                      submitLabel="Review Order"
-                    />
-                  </div>
-                </Panel>
-                <Panel
-                  title={getPanelTitleContent(xs, 3, activeStep, null, {})}
-                  collapsible
-                  hideExpandIcon
-                  expanded={activeStep === 3}
-                  onChange={e => onPanelChange(e, 3)}
-                  className="lastPanel"
-                >
-                  <div ref={stepRefs[3]}>
-                    {xs && (
-                      <CartDrawer
-                        disableItemEditing
-                        hideCheckoutProceedLink
-                        hideTaxLabel
-                        showOrderSummaryText
-                        xsBreakpoint={xs}
-                      />
+                  <Panel
+                    title={getPanelTitleContent(
+                      xs,
+                      0,
+                      activeStep,
+                      signupConfirmation,
+                      {
+                        email: currentUserEmail
+                      }
                     )}
-                    <CheckoutReviewForm
-                      xsBreakpoint={xs}
-                      onSubmit={handleNext}
-                    />
-                  </div>
-                </Panel>
-              </Grid>
-              {!xs ? (
-                <Grid item xs={12} md={4} className="left-side">
-                  <CartDrawer
-                    disableItemEditing
-                    hideCheckoutProceedLink
-                    hideTaxLabel
-                    showOrderSummaryText={false}
-                    xsBreakpoint={xs}
-                  />
+                    collapsible
+                    hideExpandIcon
+                    expanded={activeStep === 0}
+                    onChange={() => null}
+                    className="firstPanel"
+                  >
+                    <div ref={stepRefs[0]}>
+                      <CheckoutAuth
+                        currentUser={currentUser}
+                        requestCreateAccount={requestCreateAccount}
+                        clearCreateAccountError={clearCreateAccountError}
+                        requestLogin={requestLogin}
+                        clearLoginError={clearLoginError}
+                        handleNext={() => {
+                          if (activeStep === 0) {
+                            setCurrentStep(1);
+                            trackCheckoutStepCompleted(0);
+                          }
+                        }}
+                      />
+                    </div>
+                  </Panel>
+                  <Panel
+                    title={getPanelTitleContent(
+                      xs,
+                      1,
+                      activeStep,
+                      null,
+                      payload.shippingAddress
+                    )}
+                    collapsible
+                    expanded={activeStep === 1}
+                    onChange={e => onPanelChange(e, 1)}
+                  >
+                    <div ref={stepRefs[1]}>
+                      <AccountAddresses
+                        currentUser={currentUser}
+                        requestPatchAccount={requestPatchAccount}
+                        clearPatchAccountError={clearPatchAccountError}
+                        formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                        onSubmit={handleNext}
+                        selectionEnabled
+                        allowFlyMode
+                        mt={4}
+                        mx={10}
+                        mb={5}
+                      />
+                    </div>
+                  </Panel>
+                  <Panel
+                    title={getPanelTitleContent(
+                      xs,
+                      2,
+                      activeStep,
+                      null,
+                      payload.paymentDetails
+                    )}
+                    collapsible
+                    expanded={activeStep === 2}
+                    onChange={e => onPanelChange(e, 2)}
+                  >
+                    <div ref={stepRefs[2]}>
+                      <AccountPaymentDetails
+                        currentUser={currentUser}
+                        requestPatchAccount={requestPatchAccount}
+                        clearPatchAccountError={clearPatchAccountError}
+                        formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                        onBack={handleBack}
+                        onSubmit={handleNext}
+                        selectionEnabled
+                        seedEnabled
+                        addressSeed={payload.shippingAddress}
+                        useSeedLabel="Use shipping address"
+                        allowFlyMode
+                        mt={4}
+                        mx={10}
+                        mb={5}
+                        backLabel="Cancel"
+                        submitLabel="Review Order"
+                      />
+                    </div>
+                  </Panel>
+                  <Panel
+                    title={getPanelTitleContent(xs, 3, activeStep, null, {})}
+                    collapsible
+                    hideExpandIcon
+                    expanded={activeStep === 3}
+                    onChange={e => onPanelChange(e, 3)}
+                    className="lastPanel"
+                  >
+                    <div ref={stepRefs[3]}>
+                      {xs && (
+                        <CartDrawer
+                          disableItemEditing
+                          hideCheckoutProceedLink
+                          hideTaxLabel
+                          showOrderSummaryText
+                          xsBreakpoint={xs}
+                        />
+                      )}
+                      <CheckoutReviewForm
+                        xsBreakpoint={xs}
+                        onSubmit={handleNext}
+                      />
+                    </div>
+                  </Panel>
                 </Grid>
-              ) : (
-                ''
-              )}
-            </Grid>
-            <Dialog
-              className="transaction-dialog-container"
-              open={checkoutDialogOpen}
-              onClose={handleCheckoutDialogClose}
-              closeAfterTransition
-            >
-              {orderError ? (
-                <IconButton
-                  aria-label="close"
-                  style={{
-                    position: 'absolute',
-                    right: theme.spacing(1),
-                    top: theme.spacing(1),
-                    color: theme.palette.grey[500]
-                  }}
-                  onClick={handleCheckoutDialogClose}
-                >
-                  <CloseIcon />
-                </IconButton>
-              ) : null}
-              <MuiDialogContent>
-                <TransactionMessage orderError={orderError} />
-              </MuiDialogContent>
-            </Dialog>
-          </Box>
-        </Container>
-      </Box>
+                {!xs ? (
+                  <Grid item xs={12} md={4} className="left-side">
+                    <CartDrawer
+                      disableItemEditing
+                      hideCheckoutProceedLink
+                      hideTaxLabel
+                      showOrderSummaryText={false}
+                      xsBreakpoint={xs}
+                    />
+                  </Grid>
+                ) : (
+                    ''
+                  )}
+              </Grid>
+              <Dialog
+                className="transaction-dialog-container"
+                open={checkoutDialogOpen}
+                onClose={handleCheckoutDialogClose}
+                closeAfterTransition
+              >
+                {orderError ? (
+                  <IconButton
+                    aria-label="close"
+                    style={{
+                      position: 'absolute',
+                      right: theme.spacing(1),
+                      top: theme.spacing(1),
+                      color: theme.palette.grey[500]
+                    }}
+                    onClick={handleCheckoutDialogClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ) : null}
+                <MuiDialogContent>
+                  <TransactionMessage orderError={orderError} />
+                </MuiDialogContent>
+              </Dialog>
+            </Box>
+          </Container>
+        </Box>
+      }
     </>
   );
 };

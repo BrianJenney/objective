@@ -40,7 +40,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
   }, []);
 
   const handleLogin = useCallback(
-    values => {
+    (values, actions) => {
       const { email, rememberMe } = values;
       localStorage.setItem('_rememberme_', rememberMe);
       if (rememberMe) {
@@ -48,7 +48,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
       } else {
         localStorage.removeItem('_email_');
       }
-      onSubmit(values);
+      onSubmit(values, actions);
     },
     [onSubmit]
   );

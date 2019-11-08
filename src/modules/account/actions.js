@@ -58,7 +58,7 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     type: REQUEST_CREATE_ACCOUNT,
     payload: {}
   });
-   
+
   window.analytics.track("Sign Up Email Capture", {
     "email": email
   });
@@ -84,18 +84,18 @@ export const receivedCreateAccountSuccess = createReply => dispatch => {
     "username": createReply.email,
     "site_location": "account creation"
   });
-if(createReply.newsletter){
-  window.analytics.track("Subscribed", {
-    "email": createReply.email,
-    "site_location": "account creation"
-  });
+  if (createReply.newsletter) {
+    window.analytics.track("Subscribed", {
+      "email": createReply.email,
+      "site_location": "account creation"
+    });
 
-  window.analytics.track("Subscribed Listrak Auto", {
-    "email": createReply.email,
-    "site_location": "account creation"
-  });
+    window.analytics.track("Subscribed Listrak Auto", {
+      "email": createReply.email,
+      "site_location": "account creation"
+    });
 
-}
+  }
 };
 
 export const receivedCreateAccountFailure = error => dispatch => {
@@ -103,7 +103,7 @@ export const receivedCreateAccountFailure = error => dispatch => {
     type: RECEIVED_CREATE_ACCOUNT_FAILURE,
     payload: error
   });
-  
+
   window.analytics.track("Sign Up Failed", {
     "error_message": "Account with email already exists"
   })
@@ -155,7 +155,7 @@ export const clearFetchAccountError = () => dispatch => {
   });
 };
 
-export const requestPatchAccount = (authToken, patches) => (
+export const requestPatchAccount = (authToken, patches, actions) => (
   dispatch,
   getState
 ) => {
@@ -167,6 +167,7 @@ export const requestPatchAccount = (authToken, patches) => (
       account_jwt: authToken
     }
   };
+
   // console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
 
@@ -181,7 +182,17 @@ export const requestPatchAccount = (authToken, patches) => (
 
   dispatch({
     type: REQUEST_PATCH_ACCOUNT,
-    payload: {}
+    payload: {},
+    onSuccess: () => {
+      if (actions) {
+        actions.setSubmitting(false);
+      }
+    },
+    onFailure: () => {
+      if (actions) {
+        actions.setSubmitting(false);
+      }
+    }
   });
 };
 
@@ -205,7 +216,7 @@ export const clearPatchAccountError = () => dispatch => {
   });
 };
 
-export const requestChangePassword = (authToken, patches) => (
+export const requestChangePassword = (authToken, patches, { setSubmitting }) => (
   dispatch,
   getState
 ) => {
@@ -217,7 +228,7 @@ export const requestChangePassword = (authToken, patches) => (
       account_jwt: authToken
     }
   };
-  // console.log(params);
+
   const payload = JSON.stringify(msgpack.encode(params));
 
   client.send(
@@ -231,7 +242,9 @@ export const requestChangePassword = (authToken, patches) => (
 
   dispatch({
     type: REQUEST_CHANGE_PASSWORD,
-    payload: {}
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
   });
 };
 
@@ -255,7 +268,7 @@ export const clearChangePasswordError = () => dispatch => {
   });
 };
 
-export const requestLogin = ({ email, password }) => (dispatch, getState) => {
+export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -283,7 +296,9 @@ export const requestLogin = ({ email, password }) => (dispatch, getState) => {
 
   dispatch({
     type: REQUEST_LOGIN,
-    payload: {}
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
   });
 
   window.analytics.track("Sign In Completed", {
