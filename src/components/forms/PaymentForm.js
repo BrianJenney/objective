@@ -45,14 +45,7 @@ const usePrevious = value => {
   return ref.current;
 };
 
-// const validateTextField = value => {
-//   if (value) {
-//     return undefined;
-//   }
-//   return 'This field is required';
-// };
-
-// const validateCardNumberField = values => {
+//   const validateCardNumberField = values => {
 //   const { number, expirationDate, cvv } = values.paymentDetails;
 //   const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
 //   if (!number) {
@@ -111,17 +104,27 @@ const PaymentForm = ({
   backLabel,
   allowFlyMode
 }) => {
-  const nameOnCardRef = useRef();
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const stAddressRef = useRef();
-  const cityRef = useRef();
-  const stateRef = useRef();
-  const zipCodeRef = useState();
-
+  const fieldRefs = {
+    nameOnCard: useRef(null),
+    number: useRef(null),
+    expirationDate: useRef(null),
+    cvv: useRef(null),
+    firstName: useRef(null),
+    lastName: useRef(null),
+    stAddress: useRef(null),
+    city: useRef(null),
+    state: useRef(null),
+    zipcode: useRef(null)
+  };
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const classes = useStyles();
+  const validateRequiredField = (field, value) => {
+    if (value) {
+      return undefined;
+    }
+    scrollToRef(fieldRefs[field]);
+    return 'This field is required';
+  };
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -268,7 +271,7 @@ const PaymentForm = ({
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
-        elem.container.scrollIntoView();
+        scrollToRef(fieldRefs[field]);
       }
     });
     const cardData = HostedFieldsClient.tokenize();
@@ -315,27 +318,21 @@ const PaymentForm = ({
               label="Payment Method"
               component={SelectField}
               options={PAYMENT_METHOD_OPTIONS}
-              validate={validateTextField}
             />
           </Grid>
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
           <>
-            <Grid item xs={12} ref={nameOnCardRef}>
-              <Field
-                name="paymentDetails.cardholderName"
-                label="Name on Card"
-                component={InputField}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(nameOnCardRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
+            <Grid item xs={12}>
+              <div ref={fieldRefs.nameOnCard}>
+                <Field
+                  name="paymentDetails.cardholderName"
+                  label="Name on Card"
+                  component={InputField}
+                  validate={value => validateRequiredField('nameOnCard', value)}
+                />
+              </div>
             </Grid>
             <Grid item xs={12}>
               <Box
@@ -344,17 +341,20 @@ const PaymentForm = ({
                 id="bt-payment-holder"
               >
                 <Grid item xs={6}>
-                  <div id="bt-cardNumber"></div>
+                  <div id="bt-cardNumber" ref={fieldRefs.number}></div>
                   <div className="btError">Please enter valid card number</div>
                 </Grid>
                 <Grid item xs={3}>
-                  <div id="bt-cardExpiration"></div>
+                  <div
+                    id="bt-cardExpiration"
+                    ref={fieldRefs.expirationDate}
+                  ></div>
                   <div className="btError">
                     Please enter valid Expiration Date
                   </div>
                 </Grid>
                 <Grid item xs={3}>
-                  <div id="bt-cardCvv"></div>
+                  <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
                   <div className="btError">Please enter valid CVV</div>
                 </Grid>
               </Box>
@@ -395,103 +395,75 @@ const PaymentForm = ({
                 </Box>
               </Grid>
             )}
-            <Grid item xs={12} sm={6} ref={firstNameRef}>
-              <Field
-                name="billingAddress.firstName"
-                label="First Name"
-                component={InputField}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(firstNameRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.firstName}>
+                <Field
+                  name="billingAddress.firstName"
+                  label="First Name"
+                  component={InputField}
+                  validate={value => validateRequiredField('firstName', value)}
+                />
+              </div>
             </Grid>
-            <Grid item xs={12} sm={6} ref={lastNameRef}>
-              <Field
-                name="billingAddress.lastName"
-                label="Last Name"
-                component={InputField}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(lastNameRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} ref={stAddressRef}>
-              <Field
-                name="billingAddress.address1"
-                label="Street Address"
-                component={InputField}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(stAddressRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.lastName}>
+                <Field
+                  name="billingAddress.lastName"
+                  label="Last Name"
+                  component={InputField}
+                  validate={value => validateRequiredField('lastName', value)}
+                />
+              </div>
             </Grid>
             <Grid item xs={12}>
-              <Field
-                name="billingAddress.address2"
-                label="Apt. suite, bldg, c/o (optional)"
-                component={InputField}
-              />
+              <div ref={fieldRefs.stAddress}>
+                <Field
+                  name="billingAddress.address1"
+                  label="Street Address"
+                  component={InputField}
+                  validate={value => validateRequiredField('stAddress', value)}
+                />
+              </div>
             </Grid>
-            <Grid item xs={12} ref={cityRef}>
-              <Field
-                name="billingAddress.city"
-                label="City"
-                component={InputField}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(cityRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
+            <Grid item xs={12}>
+              <div>
+                <Field
+                  name="billingAddress.address2"
+                  label="Apt. suite, bldg, c/o (optional)"
+                  component={InputField}
+                />
+              </div>
             </Grid>
-            <Grid item xs={12} sm={6} ref={stateRef}>
-              <Field
-                name="billingAddress.state"
-                label="State"
-                component={SelectField}
-                options={STATE_OPTIONS}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(stateRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
+            <Grid item xs={12}>
+              <div ref={fieldRefs.city}>
+                <Field
+                  name="billingAddress.city"
+                  label="City"
+                  component={InputField}
+                  validate={value => validateRequiredField('city', value)}
+                />
+              </div>
             </Grid>
-            <Grid item xs={12} sm={6} ref={zipCodeRef}>
-              <Field
-                name="billingAddress.zipcode"
-                label="Zip Code"
-                component={InputField}
-                validate={value => {
-                  if (value) {
-                    return undefined;
-                  } else {
-                    scrollToRef(zipCodeRef);
-                    return 'This field is required';
-                  }
-                }}
-              />
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.state}>
+                <Field
+                  name="billingAddress.state"
+                  label="State"
+                  component={SelectField}
+                  options={STATE_OPTIONS}
+                  validate={value => validateRequiredField('state', value)}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.zipcode}>
+                <Field
+                  name="billingAddress.zipcode"
+                  label="Zip Code"
+                  component={InputField}
+                  validate={value => validateRequiredField('zipcode', value)}
+                />
+              </div>
             </Grid>
             <Grid item xs={12}>
               <Field
