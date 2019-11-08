@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
+import segmentTrackEditorialItemClicked from '../../utils/segmentTrackEditorialItemClicked';
 
-const PostItem = ({post,segmentAnalyticsTracker}) => {
+const PostItem = ({post}) => {
   let p = post;
-
+  let segmentAnalyticsTracker = segmentTrackEditorialItemClicked;
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
   if (p.fields.featuredImage && p.fields.featuredImage.fields) {
