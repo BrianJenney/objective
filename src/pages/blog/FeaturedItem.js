@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 import { fetchLinkedCategory } from '../../utils/blog';
+import segmentTrackEditorialItemClicked from '../../utils/segmentTrackEditorialItemClicked';
 
-const FeaturedItem = ({post,segmentAnalyticsTracker}) => {
+const FeaturedItem = ({post}) => {
   const [category, setCategory] = useState('General');
   const [slug, setSlug] = useState(null);
-
+  let segmentAnalyticsTracker = segmentTrackEditorialItemClicked;
   let p = post;
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
