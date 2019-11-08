@@ -243,7 +243,7 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
-              hostedFieldsInstance.on('blur', function(event) {
+              hostedFieldsInstance.on('blur', function (event) {
                 let field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -255,7 +255,7 @@ const PaymentForm = ({
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
-              hostedFieldsInstance.on('validityChange', function(event) {
+              hostedFieldsInstance.on('validityChange', function (event) {
                 let field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -292,6 +292,7 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+<<<<<<< HEAD
   // hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
   // if all text fields are filled out, handleSubmit will handle card info
   const handleSubmit = (values, actions) => {
@@ -300,6 +301,10 @@ const PaymentForm = ({
       billingAddress: {}
     };
     Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
+=======
+  const handleSubmit = async (values, actions) => {
+    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
+>>>>>>> master
       if (!HostedFieldsClient._state.fields[field].isValid) {
         let elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
@@ -347,7 +352,7 @@ const PaymentForm = ({
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues }) => (
+  const renderForm = ({ values, setValues, isSubmitting }) => (
     <Form>
       <Box
         component={Typography}
@@ -380,13 +385,19 @@ const PaymentForm = ({
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
+<<<<<<< HEAD
           <>
             <Grid item xs={12}>
               <div ref={fieldRefs.cardholderName}>
+=======
+            <>
+              <Grid item xs={12}>
+>>>>>>> master
                 <Field
                   name="paymentDetails.cardholderName"
                   label="Name on Card"
                   component={InputField}
+<<<<<<< HEAD
                 />
               </div>
             </Grid>
@@ -407,49 +418,107 @@ const PaymentForm = ({
                   ></div>
                   <div className="btError">
                     Please enter valid Expiration Date
+=======
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  position="relative"
+                  className="bt-payment-holder"
+                  id="bt-payment-holder"
+                >
+                  <Grid item xs={6}>
+                    <div id="bt-cardNumber"></div>
+                    <div className="btError">Please enter valid card number</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div id="bt-cardExpiration"></div>
+                    <div className="btError">
+                      Please enter valid Expiration Date
+>>>>>>> master
                   </div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div id="bt-cardCvv"></div>
+                    <div className="btError">Please enter valid CVV</div>
+                  </Grid>
+                </Box>
+              </Grid>
+              {allowFlyMode && (
+                <Grid item xs={12}>
+                  <Field
+                    name="shouldSaveData"
+                    label="Save details in account"
+                    component={CheckboxField}
+                  />
                 </Grid>
+<<<<<<< HEAD
                 <Grid item xs={3}>
                   <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
                   <div className="btError">Please enter valid CVV</div>
-                </Grid>
-              </Box>
-            </Grid>
-            {allowFlyMode && (
+=======
+              )}
               <Grid item xs={12}>
-                <Field
-                  name="shouldSaveData"
-                  label="Save details in account"
-                  component={CheckboxField}
+                <Box
+                  component={Typography}
+                  color="#231f20"
+                  variant="h5"
+                  children="Billing Address"
+                  fontSize={xs ? 24 : 30}
+                  mb={1}
                 />
               </Grid>
-            )}
-            <Grid item xs={12}>
-              <Box
-                component={Typography}
-                color="#231f20"
-                variant="h5"
-                children="Billing Address"
-                fontSize={xs ? 24 : 30}
-                mb={1}
-              />
-            </Grid>
-            {seedEnabled && (
-              <Grid item xs={12}>
-                <Box display="flex" alignItems="center">
-                  <Checkbox
-                    id="useAddressSeedToggle"
-                    onChange={evt =>
-                      handleUseAddressSeedToggle(evt, values, setValues)
-                    }
-                  />
-                  <Typography
-                    variant="body2"
-                    children={useSeedLabel}
-                    style={{ color: '#231f20' }}
-                  />
-                </Box>
+              {seedEnabled && (
+                <Grid item xs={12}>
+                  <Box display="flex" alignItems="center">
+                    <Checkbox
+                      id="useAddressSeedToggle"
+                      onChange={evt =>
+                        handleUseAddressSeedToggle(evt, values, setValues)
+                      }
+                    />
+                    <Typography
+                      variant="body2"
+                      children={useSeedLabel}
+                      style={{ color: '#231f20' }}
+                    />
+                  </Box>
+>>>>>>> master
+                </Grid>
+              )}
+              <Grid item xs={12} sm={6}>
+                <Field
+                  name="billingAddress.firstName"
+                  label="First Name"
+                  component={InputField}
+                  validate={validateTextField}
+                />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <Field
+                  name="billingAddress.lastName"
+                  label="Last Name"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.address1"
+                  label="Street Address"
+                  component={InputField}
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.address2"
+                  label="Apt. suite, bldg, c/o (optional)"
+                  component={InputField}
+                />
+              </Grid>
+<<<<<<< HEAD
             )}
             <Grid item xs={12} sm={6}>
               <div ref={fieldRefs.firstName}>
@@ -489,29 +558,47 @@ const PaymentForm = ({
             </Grid>
             <Grid item xs={12}>
               <div ref={fieldRefs.city}>
+=======
+              <Grid item xs={12}>
+>>>>>>> master
                 <Field
                   name="billingAddress.city"
                   label="City"
                   component={InputField}
+<<<<<<< HEAD
                 />
               </div>
             </Grid>
             <Grid item xs={12} sm={6}>
               <div ref={fieldRefs.state}>
+=======
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+>>>>>>> master
                 <Field
                   name="billingAddress.state"
                   label="State"
                   component={SelectField}
                   options={STATE_OPTIONS}
+<<<<<<< HEAD
                 />
               </div>
             </Grid>
             <Grid item xs={12} sm={6}>
               <div ref={fieldRefs.zipcode}>
+=======
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+>>>>>>> master
                 <Field
                   name="billingAddress.zipcode"
                   label="Zip Code"
                   component={InputField}
+<<<<<<< HEAD
                 />
               </div>
             </Grid>
@@ -534,6 +621,30 @@ const PaymentForm = ({
             </Grid>
           </>
         )}
+=======
+                  validate={validateTextField}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.phone"
+                  label="Phone #"
+                  component={InputField}
+                  helperText="In case we need to contact you about your order"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="billingAddress.country"
+                  label="Country"
+                  component={SelectField}
+                  options={COUNTRY_OPTIONS}
+                  disabled
+                />
+              </Grid>
+            </>
+          )}
+>>>>>>> master
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
             {onBack && (
@@ -545,7 +656,7 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} />
+            <Button type="submit" children={submitLabel} loading={isSubmitting} />
           </ButtonGroup>
         </Grid>
       </Grid>

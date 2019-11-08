@@ -47,19 +47,19 @@ const Blog = () => {
     });
   };
 
-  const renderFeaturedMain = post => <FeaturedPost segmentAnalyticsTracker={segmentTrackEditorialItemClicked} post={post}/>;
+  const renderFeaturedMain = post => <FeaturedPost post={post}/>;
 
   const renderFeaturedPosts = posts => {
     if (posts.length > 0) {
       return posts.map((item, key) => (
-        <FeaturedItem segmentAnalyticsTracker={segmentTrackEditorialItemClicked} post={item} key={item.sys.id} />
+        <FeaturedItem post={item} key={item.sys.id} />
       ));
     }
     return <></>;
   };
 
   const renderPosts = posts =>
-    posts.map((item, key) => <PostItem segmentAnalyticsTracker={segmentTrackEditorialItemClicked} post={item} key={item.sys.id} />);
+    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
     <ScrollToTop>
