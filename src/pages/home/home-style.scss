@@ -195,6 +195,8 @@
   }
   .sectionNum1 {
     direction: rtl;
+    padding: 0;
+    margin: 115px 0 0;
     .section {
       text-align: left;
     }
@@ -333,6 +335,9 @@
       background-image: none !important;
       padding: 0;
     }
+    .sectionNum1 {
+      margin: 0;
+    }
     button {
       font-size: 20px !important;
       letter-spacing: 1.65px !important;
@@ -403,7 +408,7 @@
           text-align: center;
         }
       }
-      img {
+      img:nth-of-type(2) {
         display: block;
         position: relative;
         margin-top: 0;
