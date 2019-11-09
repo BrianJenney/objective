@@ -86,7 +86,7 @@ class Home extends Component {
 
   renderSections() {
     if (!this.state.content.homepageSection) return <></>;
-    console.log(this.state.content.homepageSection);
+    
     return this.state.content.homepageSection.map(section => (
       <div
         className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
