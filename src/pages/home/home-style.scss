@@ -195,6 +195,7 @@
   }
   .sectionNum1 {
     direction: rtl;
+    padding: 0;
     .section {
       text-align: left;
     }
@@ -403,7 +404,7 @@
           text-align: center;
         }
       }
-      img {
+      img:nth-of-type(2) {
         display: block;
         position: relative;
         margin-top: 0;
