@@ -196,6 +196,7 @@
   .sectionNum1 {
     direction: rtl;
     padding: 0;
+    margin: 115px 0 0;
     .section {
       text-align: left;
     }
@@ -333,6 +334,9 @@
     .sectionNum2 {
       background-image: none !important;
       padding: 0;
+    }
+    .sectionNum1 {
+      margin: 0;
     }
     button {
       font-size: 20px !important;
