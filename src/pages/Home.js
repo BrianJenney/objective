@@ -86,10 +86,10 @@ class Home extends Component {
 
   renderSections() {
     if (!this.state.content.homepageSection) return <></>;
-
+    console.log(this.state.content.homepageSection);
     return this.state.content.homepageSection.map(section => (
       <div
-        id={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
+        className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
         key={section.sys.id}
         style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url + '")'}}
       >
