@@ -93,6 +93,88 @@
       margin: 0;
     }
   }
+  .shop {
+    .title {
+      margin-bottom: 48px;
+      margin-top: 15px;
+      font-size: 24px;
+      font-weight: 900;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 2px;
+      text-align: center;
+      @media (max-width: 768px) {
+        margin-bottom: 32px;
+        margin-top: 36px;
+        font-size: 18px;
+        font-weight: 900;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 1.5px;
+        text-align: center;
+      }
+    }
+    .variant-card {
+      width: 276px;
+      @media (max-width: 768px) {
+        width: 164px;
+      }
+    }
+    .card {
+      width: 244px;
+      height: 32px;
+      font-family: CanelaText;
+      font-size: 24px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.33;
+      letter-spacing: normal;
+      margin-bottom: 6px;
+      @media (max-width: 768px) {
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.25;
+        letter-spacing: normal;
+      }
+    }
+    .gallery-card {
+      height: 276px;
+      @media (max-width: 768px) {
+        height: 164px;
+      }
+    }
+    .variant-info {
+      height: 24px;
+      font-family: P22Underground;
+      font-size: 24px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      @media (max-width: 768px) {
+        font-size: 16px;
+      }
+    }
+    .prodType {
+      height: 15px;
+      font-family: P22Underground;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+  }
   .content {
     hr {
       height: 2px;

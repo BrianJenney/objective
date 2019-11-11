@@ -1,7 +1,7 @@
 import React, { useCallback, useState, createRef } from 'react';
-import { Link } from 'react-router-dom';
-// import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,8 +19,8 @@ import segmentProductClickEvent from '../../utils/product/segmentProductClickEve
 const PriceVariantInfo = ({ variant }) =>
   variant ? (
     <div>
-      <strong>${variant.effectivePrice}</strong>&nbsp;&mdash;{' '}
-      <span>
+      ${variant.effectivePrice}&nbsp;&mdash;{' '}
+      <span className="prodType">
         {variant.variantInfo.size} {variant.variantInfo.prodType}
       </span>
     </div>
@@ -29,7 +29,8 @@ const PriceVariantInfo = ({ variant }) =>
 const BlogVariantCard = ({ product, variant, key }) => {
   console.log('VALUES-1', variant);
   console.log('VALUES-2', product);
-
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const ref = createRef();
@@ -91,17 +92,16 @@ const BlogVariantCard = ({ product, variant, key }) => {
   if (variant.productCategory === 'skin') {
     styleMap = {
       container: {
-        borderColor: '1px solid #87331f'
+        border: '1px solid #87331f'
       },
       text: {
         color: '#87331f'
       }
     };
-  }
-  if (variant.productCategory === 'energy') {
+  } else if (variant.productCategory === 'energy') {
     styleMap = {
       container: {
-        borderColor: '1px solid #1f396d'
+        border: '1px solid #1f396d'
       },
       text: {
         color: '#1f396d'
@@ -110,17 +110,17 @@ const BlogVariantCard = ({ product, variant, key }) => {
   } else {
     styleMap = {
       container: {
-        borderColor: '1px solid #003833'
+        border: '1px solid #003833'
       },
       text: {
         color: '#003833'
       }
     };
   }
-  console.log('COLOR', styleMap);
+
   return (
-    <Grid item xs={12} md={4}>
-      <Card style={styleMap.container} ref={ref}>
+    <Grid item xs={6} md={3}>
+      <Card className="variant-card" style={styleMap.container} ref={ref}>
         <NavLink
           to={`/products/${variant.slug}`}
           underline="none"
@@ -140,10 +140,9 @@ const BlogVariantCard = ({ product, variant, key }) => {
           }}
         >
           <CardMedia
-            style={{ height: 430, width: '100%' }}
             image={variant.assets.imgs}
             title={variant.name}
-            className="gallery-prod-img"
+            className="gallery-card"
           />
         </NavLink>
         <CardContent>
@@ -166,7 +165,7 @@ const BlogVariantCard = ({ product, variant, key }) => {
             }}
           >
             <div>
-              <Typography style={styleMap.text}>
+              <Typography className="card" style={styleMap.text}>
                 <span>{variant.name}</span>
               </Typography>
             </div>

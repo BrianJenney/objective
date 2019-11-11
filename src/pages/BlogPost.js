@@ -199,10 +199,12 @@ const BlogPost = ({ computedMatch }) => {
 
           {post.fields.relatedProducts &&
           post.fields.relatedProducts.length > 0 ? (
-            <Box className="content">
+            <Box className="shop">
               <Container>
-                <h1 align="center">Shop this post</h1>
-                <Grid container spacing={4} className="callout">
+                <h1 className="title" align="center">
+                  SHOP THIS POST
+                  </h1>
+                <Grid container>
                   {renderRelatedProducts(post.fields.relatedProducts)}
                 </Grid>
               </Container>
