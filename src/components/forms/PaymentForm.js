@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { isNaN } from 'lodash';
+import { get, omit } from 'lodash';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
@@ -22,7 +22,11 @@ import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
-import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import {
+  getInitialValues,
+  getErrorMessage,
+  scrollToRef
+} from '../../utils/misc';
 import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
@@ -41,34 +45,27 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const validateTextField = value => {
-  if (value) {
-    return undefined;
-  }
-  return 'This field is required';
-};
+//   const validateCardNumberField = values => {
+//   const { number, expirationDate, cvv } = values.paymentDetails;
+//   const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
+//   if (!number) {
+//     return 'Card number is required';
+//   }
+//   if (isNaN(Number(number))) {
+//     return 'Card number should be a numeric value';
+//   }
+//   if (!expirationDatePattern.test(expirationDate)) {
+//     return 'Expiration date should be a valid date - MM/YYYY';
+//   }
+//   if (!cvv) {
+//     return 'CVV is required';
+//   }
+//   if (isNaN(Number(cvv))) {
+//     return 'CVV should be a numeric value';
+//   }
 
-const validateCardNumberField = values => {
-  const { number, expirationDate, cvv } = values.paymentDetails;
-  const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
-  if (!number) {
-    return 'Card number is required';
-  }
-  if (isNaN(Number(number))) {
-    return 'Card number should be a numeric value';
-  }
-  if (!expirationDatePattern.test(expirationDate)) {
-    return 'Expiration date should be a valid date - MM/YYYY';
-  }
-  if (!cvv) {
-    return 'CVV is required';
-  }
-  if (isNaN(Number(cvv))) {
-    return 'CVV should be a numeric value';
-  }
-
-  return undefined;
-};
+//   return undefined;
+// };
 
 const INITIAL_VALUES = {
   paymentDetails: {
@@ -93,6 +90,43 @@ const INITIAL_VALUES = {
   shouldSaveData: true
 };
 
+const checkedFields = [
+  'cardholderName',
+  'number',
+  'expirationDate',
+  'cvv',
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
+];
+const formikFields = [
+  'cardholderName',
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
+];
+const formikValueFieldsMap = {
+  cardholderName: 'paymentDetails.cardholderName',
+  firstName: 'billingAddress.firstName',
+  lastName: 'billingAddress.lastName',
+  address1: 'billingAddress.address1',
+  city: 'billingAddress.city',
+  state: 'billingAddress.state',
+  zipcode: 'billingAddress.zipcode'
+};
+const validateRequiredField = value => {
+  if (value) {
+    return undefined;
+  }
+  return 'This field is required';
+};
+
 const PaymentForm = ({
   currentUser,
   seedEnabled,
@@ -107,9 +141,21 @@ const PaymentForm = ({
   backLabel,
   allowFlyMode
 }) => {
+  const fieldRefs = {
+    cardholderName: useRef(null),
+    number: useRef(null),
+    expirationDate: useRef(null),
+    cvv: useRef(null),
+    firstName: useRef(null),
+    lastName: useRef(null),
+    address1: useRef(null),
+    city: useRef(null),
+    state: useRef(null),
+    zipcode: useRef(null)
+  };
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const classes = useStyles();
+
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
       setValues({
@@ -148,21 +194,21 @@ const PaymentForm = ({
             {
               client: clientInstance,
               styles: {
-                'input': {
+                input: {
                   'font-size': '18px',
                   'font-family': 'p22-underground, sans-serif',
                   'font-weight': 'lighter',
-                  'color': '#585858',
-                  'padding': '18.5px 14px'
+                  color: '#585858',
+                  padding: '18.5px 14px'
                 },
                 ':focus': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.valid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.invalid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '::-webkit-input-placeholder': {
                   'font-size': '1rem'
@@ -197,7 +243,7 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
-              hostedFieldsInstance.on('blur', function (event) {
+              hostedFieldsInstance.on('blur', function(event) {
                 let field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -209,13 +255,15 @@ const PaymentForm = ({
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
-              hostedFieldsInstance.on('validityChange', function (event) {
+              hostedFieldsInstance.on('validityChange', function(event) {
                 let field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
-                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
-                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid #C10230';
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
@@ -244,16 +292,46 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  const handleSubmit = async (values, actions) => {
-    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
+  // hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
+  // if all text fields are filled out, handleSubmit will handle card info
+  const handleSubmit = (values, actions) => {
+    const fieldErrors = {
+      paymentDetails: {},
+      billingAddress: {}
+    };
+    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         let elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
+        fieldErrors[field] = 'This field is invalid';
+      } else {
+        fieldErrors[field] = undefined;
       }
     });
-    const cardData = await HostedFieldsClient.tokenize();
+    formikFields.forEach(requiredField => {
+      if (requiredField === 'cardholderName') {
+        fieldErrors.paymentDetails[requiredField] = validateRequiredField(
+          values.paymentDetails[requiredField]
+        );
+      } else {
+        fieldErrors.billingAddress[requiredField] = validateRequiredField(
+          values.billingAddress[requiredField]
+        );
+      }
+    });
+    actions.setErrors(omit(fieldErrors, ['number', 'expirationDate', 'cvv']));
+
+    const firstInvalidField = checkedFields.find(field => {
+      if (formikFields.includes(field)) {
+        return !!get(fieldErrors, formikValueFieldsMap[field]);
+      }
+      return !!fieldErrors[field];
+    });
+    scrollToRef(fieldRefs[firstInvalidField]);
+
+    const cardData = HostedFieldsClient.tokenize();
     const payload = {
       ...values,
       cardData,
@@ -297,154 +375,165 @@ const PaymentForm = ({
               label="Payment Method"
               component={SelectField}
               options={PAYMENT_METHOD_OPTIONS}
-              validate={validateTextField}
             />
           </Grid>
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
-            <>
-              <Grid item xs={12}>
+          <>
+            <Grid item xs={12}>
+              <div ref={fieldRefs.cardholderName}>
                 <Field
                   name="paymentDetails.cardholderName"
                   label="Name on Card"
                   component={InputField}
-                  validate={validateTextField}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Box
+                position="relative"
+                className="bt-payment-holder"
+                id="bt-payment-holder"
+              >
+                <Grid item xs={6}>
+                  <div id="bt-cardNumber" ref={fieldRefs.number}></div>
+                  <div className="btError">Please enter valid card number</div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div
+                    id="bt-cardExpiration"
+                    ref={fieldRefs.expirationDate}
+                  ></div>
+                  <div className="btError">
+                    Please enter valid Expiration Date
+                  </div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardCvv"></div>
+                  <div className="btError">Please enter valid CVV</div>
+                </Grid>
+              </Box>
+            </Grid>
+            {allowFlyMode && (
+              <Grid item xs={12}>
+                <Field
+                  name="shouldSaveData"
+                  label="Save details in account"
+                  component={CheckboxField}
                 />
               </Grid>
+            )}
+            <Grid item xs={12}>
+              <Box
+                component={Typography}
+                color="#231f20"
+                variant="h5"
+                children="Billing Address"
+                fontSize={xs ? 24 : 30}
+                mb={1}
+              />
+            </Grid>
+            {seedEnabled && (
               <Grid item xs={12}>
-                <Box
-                  position="relative"
-                  className="bt-payment-holder"
-                  id="bt-payment-holder"
-                >
-                  <Grid item xs={6}>
-                    <div id="bt-cardNumber"></div>
-                    <div className="btError">Please enter valid card number</div>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <div id="bt-cardExpiration"></div>
-                    <div className="btError">
-                      Please enter valid Expiration Date
-                  </div>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <div id="bt-cardCvv"></div>
-                    <div className="btError">Please enter valid CVV</div>
-                  </Grid>
+                <Box display="flex" alignItems="center">
+                  <Checkbox
+                    id="useAddressSeedToggle"
+                    onChange={evt =>
+                      handleUseAddressSeedToggle(evt, values, setValues)
+                    }
+                  />
+                  <Typography
+                    variant="body2"
+                    children={useSeedLabel}
+                    style={{ color: '#231f20' }}
+                  />
                 </Box>
               </Grid>
-              {allowFlyMode && (
-                <Grid item xs={12}>
-                  <Field
-                    name="shouldSaveData"
-                    label="Save details in account"
-                    component={CheckboxField}
-                  />
-                </Grid>
-              )}
-              <Grid item xs={12}>
-                <Box
-                  component={Typography}
-                  color="#231f20"
-                  variant="h5"
-                  children="Billing Address"
-                  fontSize={xs ? 24 : 30}
-                  mb={1}
-                />
-              </Grid>
-              {seedEnabled && (
-                <Grid item xs={12}>
-                  <Box display="flex" alignItems="center">
-                    <Checkbox
-                      id="useAddressSeedToggle"
-                      onChange={evt =>
-                        handleUseAddressSeedToggle(evt, values, setValues)
-                      }
-                    />
-                    <Typography
-                      variant="body2"
-                      children={useSeedLabel}
-                      style={{ color: '#231f20' }}
-                    />
-                  </Box>
-                </Grid>
-              )}
-              <Grid item xs={12} sm={6}>
+            )}
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.firstName}>
                 <Field
                   name="billingAddress.firstName"
                   label="First Name"
                   component={InputField}
-                  validate={validateTextField}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.lastName}>
                 <Field
                   name="billingAddress.lastName"
                   label="Last Name"
                   component={InputField}
-                  validate={validateTextField}
                 />
-              </Grid>
-              <Grid item xs={12}>
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div ref={fieldRefs.address1}>
                 <Field
                   name="billingAddress.address1"
                   label="Street Address"
                   component={InputField}
-                  validate={validateTextField}
                 />
-              </Grid>
-              <Grid item xs={12}>
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div>
                 <Field
                   name="billingAddress.address2"
                   label="Apt. suite, bldg, c/o (optional)"
                   component={InputField}
                 />
-              </Grid>
-              <Grid item xs={12}>
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div ref={fieldRefs.city}>
                 <Field
                   name="billingAddress.city"
                   label="City"
                   component={InputField}
-                  validate={validateTextField}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.state}>
                 <Field
                   name="billingAddress.state"
                   label="State"
                   component={SelectField}
                   options={STATE_OPTIONS}
-                  validate={validateTextField}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.zipcode}>
                 <Field
                   name="billingAddress.zipcode"
                   label="Zip Code"
                   component={InputField}
-                  validate={validateTextField}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <Field
-                  name="billingAddress.phone"
-                  label="Phone #"
-                  component={InputField}
-                  helperText="In case we need to contact you about your order"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Field
-                  name="billingAddress.country"
-                  label="Country"
-                  component={SelectField}
-                  options={COUNTRY_OPTIONS}
-                  disabled
-                />
-              </Grid>
-            </>
-          )}
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.phone"
+                label="Phone #"
+                component={InputField}
+                helperText="In case we need to contact you about your order"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.country"
+                label="Country"
+                component={SelectField}
+                options={COUNTRY_OPTIONS}
+                disabled
+              />
+            </Grid>
+          </>
+        )}
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
             {onBack && (
@@ -456,7 +545,11 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} loading={isSubmitting} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              loading={isSubmitting}
+            />
           </ButtonGroup>
         </Grid>
       </Grid>
