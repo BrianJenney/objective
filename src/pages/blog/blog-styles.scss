@@ -120,15 +120,7 @@
         text-align: center;
       }
     }
-    .variant-card {
-      width: 276px;
-      @media (max-width: 768px) {
-        width: 164px;
-      }
-    }
     .card {
-      width: 244px;
-      height: 32px;
       font-family: 'Canela Text Web';
       font-size: 24px;
       font-weight: normal;
@@ -144,6 +136,9 @@
         font-style: normal;
         line-height: 1.25;
         letter-spacing: normal;
+      }
+      @media (max-width: 410px) {
+        min-height: 40px;
       }
     }
     .card-content {
@@ -175,7 +170,7 @@
         font-style: normal;
         line-height: 2.5;
         letter-spacing: 1px;
-        padding: 5px !important;
+        padding: 10px !important;
       }
     }
     .gallery-card {

@@ -204,7 +204,7 @@ const BlogPost = ({ computedMatch }) => {
                   <h1 className="title" align="center">
                   SHOP THIS POST
                 </h1>
-                  <Grid container>
+                  <Grid container spacing={3}>
                     {renderRelatedProducts(post.fields.relatedProducts)}
                   </Grid>
                 </Container>
