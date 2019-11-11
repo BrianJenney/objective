@@ -93,6 +93,119 @@
       margin: 0;
     }
   }
+  .shop {
+    margin-bottom: 101px;
+    @media (max-width: 768px) {
+      margin-bottom: 44px;
+    }
+    .title {
+      margin-bottom: 48px;
+      margin-top: 15px;
+      font-size: 24px;
+      font-weight: 900;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 2px;
+      text-align: center;
+      @media (max-width: 768px) {
+        margin-bottom: 32px;
+        margin-top: 36px;
+        font-size: 18px;
+        font-weight: 900;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 1.5px;
+        text-align: center;
+      }
+    }
+    .card {
+      font-family: 'Canela Text Web';
+      font-size: 24px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.33;
+      letter-spacing: normal;
+      margin-bottom: 6px;
+      @media (max-width: 768px) {
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.25;
+        letter-spacing: normal;
+      }
+      @media (max-width: 410px) {
+        min-height: 40px;
+      }
+    }
+    .card-content {
+      padding: 16px 16px 11px 16px;
+      @media (max-width: 768px) {
+        padding: 12px 12px 9px 12px;
+      }
+    }
+    .card-button {
+      padding: 16px;
+      @media (max-width: 768px) {
+        padding: 12px;
+      }
+    }
+    .atc-btn {
+      font-size: 16px;
+      font-weight: 900;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.88;
+      letter-spacing: 1.33px;
+      text-align: center;
+      font-family: p22-underground, sans-serif;
+      padding: 15px !important;
+      @media (max-width: 768px) {
+        font-size: 12px !important;
+        font-weight: 900;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 2.5;
+        letter-spacing: 1px;
+        padding: 10px !important;
+      }
+    }
+    .gallery-card {
+      height: 276px;
+      @media (max-width: 768px) {
+        height: 164px;
+      }
+    }
+    .variant-info {
+      height: 24px;
+      font-family: p22-underground, sans-serif;
+      font-size: 24px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      @media (max-width: 768px) {
+        font-size: 16px;
+      }
+    }
+    .prodType {
+      height: 15px;
+      font-family: p22-underground, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+    }
+  }
   .content {
     hr {
       height: 2px;
