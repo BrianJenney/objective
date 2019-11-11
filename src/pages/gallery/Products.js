@@ -44,7 +44,6 @@ const Products = () => {
 
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
-  console.log('PROD', productCategoriesToProducts);
   productCategories.map(productCategory => {
     products
       .filter(product => product.productCategory === productCategory)

@@ -137,7 +137,7 @@ const BlogVariantCard = ({ product, variant, key }) => {
             className="gallery-card"
           />
         </NavLink>
-        <CardContent>
+        <CardContent className="card-content">
           <NavLink
             to={`/products/${variant.slug}`}
             underline="none"
@@ -168,15 +168,15 @@ const BlogVariantCard = ({ product, variant, key }) => {
           </NavLink>
         </CardContent>
 
-        <div className="cta-area">
+        <div>
           {ATCEnabled && variant.inStock >= 200 && (
-            <CardActions className="gallery-atc">
+            <CardActions className="card-button">
               <ATC
                 onClick={handleAddToCart}
                 variantSku={variant.sku}
                 ATCAdded={ATCAdded}
                 ATCAdding={ATCAdding}
-                btnStyle="atc-button"
+                btnStyle="atc-btn"
               />
             </CardActions>
           )}

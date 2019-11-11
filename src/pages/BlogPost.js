@@ -199,19 +199,19 @@ const BlogPost = ({ computedMatch }) => {
 
           {post.fields.relatedProducts &&
           post.fields.relatedProducts.length > 0 ? (
-            <Box className="shop">
-              <Container>
-                <h1 className="title" align="center">
+              <Box className="shop">
+                <Container>
+                  <h1 className="title" align="center">
                   SHOP THIS POST
-                  </h1>
-                <Grid container>
-                  {renderRelatedProducts(post.fields.relatedProducts)}
-                </Grid>
-              </Container>
-            </Box>
-            ) : (
-              <></>
-            )}
+                </h1>
+                  <Grid container>
+                    {renderRelatedProducts(post.fields.relatedProducts)}
+                  </Grid>
+                </Container>
+              </Box>
+          ) : (
+            <></>
+          )}
 
           {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
             <Box className="content related" py={8}>
