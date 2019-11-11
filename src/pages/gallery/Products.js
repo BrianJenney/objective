@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 
 import GalleryContext from '../../contexts/GalleryContext';
 import CategorySummary from './CategorySummary';
-//import ProductSummary from './ProductSummary';
+// import ProductSummary from './ProductSummary';
 import { getProductCategories } from '../../utils/product';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { setIn } from 'formik';
@@ -44,12 +44,10 @@ const Products = () => {
 
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
-
+  console.log('PROD', productCategoriesToProducts);
   productCategories.map(productCategory => {
     products
-      .filter(product => {
-        return product.productCategory === productCategory;
-      })
+      .filter(product => product.productCategory === productCategory)
       .map(product => {
         if (productCategoriesToProducts[productCategory]) {
           productCategoriesToProducts[productCategory].push(product);
@@ -84,7 +82,7 @@ const Products = () => {
               </div>
             </Grid>
             <CategorySummary
-              key={'core'}
+              key="core"
               products={productCategoriesToProducts.core}
               category={{
                 title: 'Skin & Beauty',
@@ -123,7 +121,7 @@ const Products = () => {
               </div>
             </Grid>
             <CategorySummary
-              key={'energy'}
+              key="energy"
               products={productCategoriesToProducts.energy}
               category={{
                 title: 'Skin & Beauty',
@@ -161,7 +159,7 @@ const Products = () => {
               </div>
             </Grid>
             <CategorySummary
-              key={'skin'}
+              key="skin"
               products={productCategoriesToProducts.skin}
               category={{
                 title: 'Skin & Beauty',

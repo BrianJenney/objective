@@ -1,7 +1,6 @@
 import React, { useCallback, useState, createRef } from 'react';
-import { Link } from 'react-router-dom';
-// import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -14,27 +13,26 @@ import '../../assets/styles/_variables.scss';
 import { ATC, OutOfStock } from '../../components/atcOutOfStock';
 import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmed';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
+
 const PriceVariantInfo = ({ variant }) =>
   variant ? (
     <div>
-      <strong>${variant.effectivePrice}</strong>&nbsp;&mdash;{' '}
-      <span>
+      ${variant.effectivePrice}&nbsp;&mdash;{' '}
+      <span className="prodType">
         {variant.variantInfo.size} {variant.variantInfo.prodType}
       </span>
     </div>
   ) : null;
 
-const VariantCard = ({ variant, styleMap }) => {
+const BlogVariantCard = ({ product, variant, key }) => {
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const ref = createRef();
-  // const windowSize = useWindowSize();
-  // const { enqueueSnackbar } = useSnackbar();∆
+
   const [ATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
-  // const message = <ATCSnackbarAction variant={variant} />;
   const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
 
   const updateQuantityToCart = useCallback(
@@ -81,35 +79,40 @@ const VariantCard = ({ variant, styleMap }) => {
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
   }, [setOpenEmailConfirmation]);
+  let styleMap = {};
+
+  if (variant.productCategory === 'skin') {
+    styleMap = {
+      container: {
+        border: '1px solid #87331f'
+      },
+      text: {
+        color: '#87331f'
+      }
+    };
+  } else if (variant.productCategory === 'energy') {
+    styleMap = {
+      container: {
+        border: '1px solid #1f396d'
+      },
+      text: {
+        color: '#1f396d'
+      }
+    };
+  } else {
+    styleMap = {
+      container: {
+        border: '1px solid #003833'
+      },
+      text: {
+        color: '#003833'
+      }
+    };
+  }
 
   return (
-    <Card className="gallery-prod-card" ref={ref}>
-      <NavLink
-        to={`/products/${variant.slug}`}
-        underline="none"
-        onClick={() => {
-          segmentProductClickEvent({
-            image_url: `https:${variant.assets.thumbnail}`,
-            quantity: 1,
-            sku: variant.sku,
-            price: Number.parseFloat(variant.effectivePrice),
-            product_id: variant.id,
-            variant: variant.name,
-            name: variant.name,
-            brand: cart.storeCode,
-            cart_id: cart._id,
-            site_location: 'gallery'
-          });
-        }}
-      >
-        <CardMedia
-          style={{ height: 500, width: 324 }}
-          image={variant.assets.imgs}
-          title={variant.name}
-          className="gallery-prod-img"
-        />
-      </NavLink>
-      <CardContent className="pding">
+    <Grid item xs={6} md={3}>
+      <Card className="variant-card" style={styleMap.container} ref={ref}>
         <NavLink
           to={`/products/${variant.slug}`}
           underline="none"
@@ -124,55 +127,65 @@ const VariantCard = ({ variant, styleMap }) => {
               name: variant.name,
               brand: cart.storeCode,
               cart_id: cart._id,
-              site_location: 'gallery'
+              site_location: 'journal'
             });
           }}
         >
-          <div className="prod-name-holder">
-            <Typography>
-              <span className="title" style={styleMap.text}>
-                {variant.name}
-              </span>
-            </Typography>
-          </div>
-          <div className="variant-info">
-            <PriceVariantInfo variant={variant} />
-          </div>
+          <CardMedia
+            image={variant.assets.imgs}
+            title={variant.name}
+            className="gallery-card"
+          />
         </NavLink>
-      </CardContent>
+        <CardContent>
+          <NavLink
+            to={`/products/${variant.slug}`}
+            underline="none"
+            onClick={() => {
+              segmentProductClickEvent({
+                image_url: `https:${variant.assets.thumbnail}`,
+                quantity: 1,
+                sku: variant.sku,
+                price: Number.parseFloat(variant.effectivePrice),
+                product_id: variant.id,
+                variant: variant.name,
+                name: variant.name,
+                brand: cart.storeCode,
+                cart_id: cart._id,
+                site_location: 'gallery'
+              });
+            }}
+          >
+            <div>
+              <Typography className="card" style={styleMap.text}>
+                <span>{variant.name}</span>
+              </Typography>
+            </div>
 
-      <div className="cta-area">
-        {ATCEnabled && variant.inStock >= 200 && (
-          <CardActions className="gallery-atc">
-            <ATC
-              onClick={handleAddToCart}
-              variantSku={variant.sku}
-              ATCAdded={ATCAdded}
-              ATCAdding={ATCAdding}
-              btnStyle="atc-button"
-            />
-          </CardActions>
-        )}
+            <div className="variant-info">
+              <PriceVariantInfo variant={variant} />
+            </div>
+          </NavLink>
+        </CardContent>
 
-        {variant.inStock < 200 && (
-          <>
-            <OutOfStock
-              onClick={handleOpenOutOfStockDialog}
-              onExited={closeOutOfStockDialog}
-              product_img={variant.assets.imgs}
-              product_name={variant.name}
-              product_category={variant.category}
-              product_id={variant._id}
-              product_sku={variant.sku}
-              product_variant={variant.defaultVariantSku}
-              product_url={`/products/${variant.slug}`}
-              openOutOfStockDialog={openOutOfStockDialog}
-              handleOpenEmailConfirmation={handleOpenEmailConfirmation}
-            />
+        <div className="cta-area">
+          {ATCEnabled && variant.inStock >= 200 && (
+            <CardActions className="gallery-atc">
+              <ATC
+                onClick={handleAddToCart}
+                variantSku={variant.sku}
+                ATCAdded={ATCAdded}
+                ATCAdding={ATCAdding}
+                btnStyle="atc-button"
+              />
+            </CardActions>
+          )}
 
-            {openEmailConfirmation && (
-              <ConfirmEmail
-                onExited={closeEmailConfirmation}
+          {variant.inStock < 200 && (
+            <>
+              <OutOfStock
+                onClick={handleOpenOutOfStockDialog}
+                onExited={closeOutOfStockDialog}
                 product_img={variant.assets.imgs}
                 product_name={variant.name}
                 product_category={variant.category}
@@ -180,13 +193,28 @@ const VariantCard = ({ variant, styleMap }) => {
                 product_sku={variant.sku}
                 product_variant={variant.defaultVariantSku}
                 product_url={`/products/${variant.slug}`}
+                openOutOfStockDialog={openOutOfStockDialog}
+                handleOpenEmailConfirmation={handleOpenEmailConfirmation}
               />
-            )}
-          </>
-        )}
-      </div>
-    </Card>
+
+              {openEmailConfirmation && (
+                <ConfirmEmail
+                  onExited={closeEmailConfirmation}
+                  product_img={variant.assets.imgs}
+                  product_name={variant.name}
+                  product_category={variant.category}
+                  product_id={variant._id}
+                  product_sku={variant.sku}
+                  product_variant={variant.defaultVariantSku}
+                  product_url={`/products/${variant.slug}`}
+                />
+              )}
+            </>
+          )}
+        </div>
+      </Card>
+    </Grid>
   );
 };
 
-export default VariantCard;
+export default BlogVariantCard;
