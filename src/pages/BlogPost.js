@@ -200,7 +200,7 @@ const BlogPost = ({ computedMatch }) => {
           {post.fields.relatedProducts &&
           post.fields.relatedProducts.length > 0 ? (
               <Box className="shop">
-                <Container>
+                <Container style={{ marginLeft: 15 }}>
                   <h1 className="title" align="center">
                   SHOP THIS POST
                 </h1>
