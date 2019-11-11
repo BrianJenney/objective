@@ -1,7 +1,5 @@
 import React, { useCallback, useState, createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -27,20 +25,14 @@ const PriceVariantInfo = ({ variant }) =>
   ) : null;
 
 const BlogVariantCard = ({ product, variant, key }) => {
-  console.log('VALUES-1', variant);
-  console.log('VALUES-2', product);
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const ref = createRef();
-  // const windowSize = useWindowSize();
-  // const { enqueueSnackbar } = useSnackbar();∆
+
   const [ATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
-  // const message = <ATCSnackbarAction variant={variant} />;
   const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
 
   const updateQuantityToCart = useCallback(
@@ -169,6 +161,7 @@ const BlogVariantCard = ({ product, variant, key }) => {
                 <span>{variant.name}</span>
               </Typography>
             </div>
+
             <div className="variant-info">
               <PriceVariantInfo variant={variant} />
             </div>
