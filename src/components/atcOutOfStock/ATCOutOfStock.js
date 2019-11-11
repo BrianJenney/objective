@@ -3,7 +3,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Button } from '../../components/common';
+import { Button } from "../common";
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 import '../../pages/product/overrides.css';
 import '../../pages/product/PDP-style.css';
@@ -66,18 +66,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding }) => {
-  return (
+export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
     <Button
       fullWidth
       onClick={onClick}
       disabled={variantSku === null}
-      className="atc-button"
+      className={btnStyle ? btnStyle : "atc-button"}
     >
       {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
     </Button>
   );
-};
 
 export const ATCPDP = ({
   onClick,
@@ -85,8 +83,7 @@ export const ATCPDP = ({
   ATCAdded,
   ATCAdding,
   btnStyle
-}) => {
-  return (
+}) => (
     <Button
       fullWidth
       onClick={onClick}
@@ -96,7 +93,6 @@ export const ATCPDP = ({
       {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
     </Button>
   );
-};
 
 export const OutOfStockPDP = ({
   onClick,
