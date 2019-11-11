@@ -13,6 +13,7 @@ import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import { validateAddress } from '../../apis/SmartyStreets';
 
 export const FORM_TYPES = {
   ACCOUNT: 'account',
@@ -102,6 +103,7 @@ const AddressForm = ({
   }, [currentUser.patchAccountSubmitting]);
 
   const handleSubmit = (values, actions) => {
+    const response = validateAddress(values);
     const payload = {
       ...values,
       phone: values.phone ? values.phone.trim() : ''
