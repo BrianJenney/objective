@@ -98,8 +98,9 @@
     @media (max-width: 768px) {
       margin-bottom: 44px;
     }
+    
     .title {
-      margin-bottom: 48px;
+      margin-bottom: 68px;
       margin-top: 15px;
       font-size: 24px;
       font-weight: 900;
@@ -109,7 +110,7 @@
       letter-spacing: 2px;
       text-align: center;
       @media (max-width: 768px) {
-        margin-bottom: 32px;
+        margin-bottom: 42px;
         margin-top: 36px;
         font-size: 18px;
         font-weight: 900;
@@ -119,6 +120,17 @@
         letter-spacing: 1.5px;
         text-align: center;
       }
+    }
+    .title::after {
+      content: '';
+      position: absolute;
+      left:45%;
+      display: inline-block;
+      height: 1em;
+      width: 10%;
+      border-bottom: 2px solid;
+      margin-top: 20px;
+    
     }
     .card {
       font-family: 'Canela Text Web';
