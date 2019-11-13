@@ -97,10 +97,9 @@
     margin-bottom: 101px;
     @media (max-width: 768px) {
       margin-bottom: 44px;
-    }
-    .title {
-      margin-bottom: 48px;
-      margin-top: 15px;
+    }  
+    .title { 
+      margin-top: 55px;
       font-size: 24px;
       font-weight: 900;
       font-stretch: normal;
@@ -109,7 +108,6 @@
       letter-spacing: 2px;
       text-align: center;
       @media (max-width: 768px) {
-        margin-bottom: 32px;
         margin-top: 36px;
         font-size: 18px;
         font-weight: 900;
@@ -118,6 +116,17 @@
         line-height: normal;
         letter-spacing: 1.5px;
         text-align: center;
+      }
+    }
+    .border {
+      display: block;
+      width: 10%;
+      height: 2px;
+      background: black;
+      margin: 0px auto 68px;
+      @media (max-width: 768px) {
+        margin: 0px auto 42px;
+        width: 20%;
       }
     }
     .card {
