@@ -1,6 +1,4 @@
-const isDateEffective = (expirationDate, today) => {
-  return today <= expirationDate;
-};
+const isDateEffective = (expirationDate, today) => today <= expirationDate;
 
 export const getPrices = prices => {
   const today = Date.now();
@@ -53,7 +51,7 @@ export const getVariantTypes = (product, variants) => {
     variants.forEach(variant => {
       variant.attributes.forEach(attribute => {
         if (attribute.name === variantType) {
-          const value = attribute.value;
+          const { value } = attribute;
           if (!variantTypeOptions.includes(value))
             variantTypeOptions.push(value);
         }
@@ -90,9 +88,8 @@ export const getVariantOptionsByVariantType = (
   return options;
 };
 
-export const getVariantOptions = variants => {
-  return variants.map(variant => variant.sku);
-};
+export const getVariantOptions = variants =>
+  variants.map(variant => variant.sku);
 
 export const getDefaultSkuByProduct = product => {
   let defaultVariantSku = null;
