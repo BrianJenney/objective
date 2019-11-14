@@ -8,12 +8,14 @@ import ScrollToTop from '../components/common/ScrollToTop';
 import './blog/blog-styles.scss';
 import { fetchPostsByCategory } from '../utils/blog';
 import PostItem from './blog/PostItem';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const BlogCategory = ({ computedMatch }) => {
   const { category_slug } = computedMatch.params;
 
   const [title, setTitle] = useState('General');
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const results = await fetchPostsByCategory(category_slug);
@@ -25,6 +27,13 @@ const BlogCategory = ({ computedMatch }) => {
     window.analytics.page('Journal Category');
   }, []);
 
+  if (posts.length === 0) {
+    return (
+      <ScrollToTop>
+        <LoadingSpinner loadingMessage="Loading posts..." page="journal" />
+      </ScrollToTop>
+    );
+  }
   const renderPosts = posts =>
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 

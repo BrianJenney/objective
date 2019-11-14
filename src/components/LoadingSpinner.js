@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   progress: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(2)
   }
 }));
 
@@ -20,6 +20,7 @@ const LoadingSpinner = ({ location, loadingMessage, page }) => {
   let size = 0;
   if (page === 'pdp') size = 45;
   if (page === 'gallery') size = 10;
+  if (page === 'journal') size = 50;
 
   return (
     <Container>
