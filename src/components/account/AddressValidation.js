@@ -6,22 +6,34 @@ import { MenuLink, Button } from '../common';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    height: 450,
-    width: 635
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'left'
+    padding: '10px 55px 55px'
   },
   title: {
-    fontSize: 30
+    fontSize: 30,
+    fontFamily: 'Canela Text Web',
+    marginBottom: '10px'
   },
   text: {
-    fontSize: 20
+    fontSize: 20,
+    lineHeight: '1.2'
   },
   atitle: {
-    fontSize: 18
+    fontSize: 20,
+    fontFamily: 'freight-text-pro, sans-serif',
+    lineHeight: '1.4',
+    marginBottom: '18px'
+  },
+  boxHolder: {
+    padding: '40px 0'
+  },
+  boxPadding: {
+    padding: '20px 25px'
+  },
+  continue: {
+    textAlign: 'center',
+    fontWeight: 600,
+    lineHeight: '1.75',
+    paddingTop: '16px'
   }
 }));
 
@@ -75,87 +87,76 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit }) => {
     <>
       {sAddress ? (
         <div className={classes.root}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Box px={6}>
+          <Box>
+            <Paper className={classes.paper}>
+              <Typography className={classes.title}>
+                Shipping Address Validation
+              </Typography>
+              <Typography className={classes.text}>
+                Important: we were not able to validate your shipping address.
+              </Typography>
+            </Paper>
+          </Box>
+          <Grid container spacing={2} className={classes.boxHolder}>
+            <Grid item xs={12} md={6}>
+              <Box
+                border={1}
+                borderColor="#979797"
+                className={classes.boxPadding}
+              >
                 <Paper className={classes.paper}>
-                  <Typography className={classes.title}>
-                    Shipping Address Validation
-                  </Typography>
-                  <Typography className={classes.text}>
-                    Important: we were not able to validate your shipping
-                    address
-                  </Typography>
+                  <div className={classes.atitle}>You entered:</div>
+                  <div className={classes.text}>
+                    {`${origAddress.address1} ${origAddress.address2}`}
+                  </div>
+                  <div className={classes.text}>
+                    {`${origAddress.city} ${origAddress.state}, ${origAddress.zipcode}`}
+                  </div>
                 </Paper>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              <Box pl={6} py={3} mr={1.5}>
-                <Box border={1} borderColor="#979797">
-                  <Paper className={classes.paper}>
-                    <Typography className={classes.atitle}>
-                      You entered:
-                    </Typography>
-                    <Box fontWeight={500}>
-                      <Typography className={classes.text}>
-                        {`${origAddress.address1} ${origAddress.address2}`}
-                      </Typography>
-                      <Typography className={classes.text}>
-                        {`${origAddress.city} ${origAddress.state}, ${origAddress.zipcode}`}
-                      </Typography>
-                    </Box>
-                  </Paper>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box pr={6} py={3}>
-                <Box border={1} borderColor="#979797">
-                  <Paper className={classes.paper}>
-                    <Typography className={classes.atitle}>
-                      We suggest:
-                    </Typography>
-                    <Box fontWeight={500}>
-                      <Typography className={classes.text}>
-                        {sAddress.address1}{' '}
-                        {sAddress.address2 ? sAddress.address2 : ''}
-                      </Typography>
-                      <Typography className={classes.text}>
-                        {`${sAddress.city} ${sAddress.state}, ${sAddress.zipcode}`}
-                      </Typography>
-                    </Box>
-                  </Paper>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box px={5}>
+            <Grid item xs={12} md={6}>
+              <Box
+                border={1}
+                borderColor="#979797"
+                className={classes.boxPadding}
+              >
                 <Paper className={classes.paper}>
-                  <Button
-                    onClick={() => {
-                      setSuggestedAddress(true);
-                    }}
-                    children="USE SUGGESTED ADDRESS"
-                    underline="always"
-                    fullWidth
-                  />
-                </Paper>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box px={20} pt={2}>
-                <Paper className={classes.paper}>
-                  <MenuLink
-                    onClick={() => {
-                      setOriginalAddress(true);
-                    }}
-                    children="CONTINUE WITH ORIGINAL ADDRESS"
-                    underline="always"
-                  />
+                  <div className={classes.atitle}>We suggest:</div>
+                  <div className={classes.text}>
+                    {sAddress.address1}{' '}
+                    {sAddress.address2 ? sAddress.address2 : ''}
+                  </div>
+                  <div className={classes.text}>
+                    {`${sAddress.city} ${sAddress.state}, ${sAddress.zipcode}`}
+                  </div>
                 </Paper>
               </Box>
             </Grid>
           </Grid>
+          <Box>
+            <Paper className={classes.paper}>
+              <Button
+                onClick={() => {
+                  setSuggestedAddress(true);
+                }}
+                children="USE SUGGESTED ADDRESS"
+                underline="always"
+                fullWidth
+              />
+            </Paper>
+          </Box>
+          <Box className={classes.continue}>
+            <Paper className={classes.paper}>
+              <MenuLink
+                onClick={() => {
+                  setOriginalAddress(true);
+                }}
+                children="CONTINUE WITH ORIGINAL ADDRESS"
+                underline="always"
+              />
+            </Paper>
+          </Box>
         </div>
       ) : null}
     </>
