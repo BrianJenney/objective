@@ -90,6 +90,8 @@ const AccountAddresses = ({
   };
 
   const handleSave = (values, actions) => {
+    console.log("ACTIONS HERE", actions);
+    console.log("VALUES HERE", values);
     const pureValues = omit(values, ['shouldSaveData']);
     const { shouldSaveData } = values;
 
