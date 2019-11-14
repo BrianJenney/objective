@@ -100,6 +100,12 @@
     }  
     .gallery-atc {
       padding: 16px;
+      @media (max-width: 768px) {
+        padding: 12px;
+        button {
+          font-size: 14px;
+        }
+      }
     }
     .title { 
       margin-top: 55px;
