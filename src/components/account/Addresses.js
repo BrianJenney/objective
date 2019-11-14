@@ -128,7 +128,6 @@ const AccountAddresses = ({
     if (onSubmit) {
       onSubmit(pureValues);
     }
-
     return true;
   };
 
