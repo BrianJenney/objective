@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 const SmartyStreetsSDK = require('smartystreets-javascript-sdk');
 const SmartyStreetsCore = SmartyStreetsSDK.core;
 
@@ -28,7 +27,6 @@ export const validateAddress = async address => {
   try {
     const result = await usStreetClient.send(lookup);
     const addresstmp = result.lookups[0].result[0];
-    console.log('address1', addresstmp);
 
     // Clean up address and fix format
     let address1 = '';
@@ -52,16 +50,12 @@ export const validateAddress = async address => {
       : addresstmp.components.zipCode;
 
     const returnAddress = {
-      //address1: `${addresstmp.components.primaryNumber} ${addresstmp.components.streetName} ${addresstmp.components.streetSuffix} ${addresstmp.components.streetPostdirection}`,
       address1,
-      //address2: `${addresstmp.components.secondaryDesignator} ${addresstmp.components.secondaryNumber}`,
       address2,
       city: addresstmp.components.cityName,
       state: addresstmp.components.state,
       zipcode
     };
-
-    console.log("return address", returnAddress);
     return returnAddress;
   } catch (e) {
     console.log('error smarty streets api', e);

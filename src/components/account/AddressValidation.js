@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Typography,
-  Box,
-  Grid,
-  Container,
-  CssBaseline,
-  Paper
-} from '@material-ui/core';
+import { Typography, Box, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { MenuLink, Button } from '../common';
