@@ -144,11 +144,6 @@ const AddressForm = ({
   };
 
   const handleDialogExit = (actions) => {
-    // const payload = {
-    //   ...values,
-    //   phone: values.phone ? values.phone.trim() : ''
-    // };
-    // onSubmit(payload, actions);
     actions.setSubmitting(false);
     setAddressSuggestion(false);
   };
