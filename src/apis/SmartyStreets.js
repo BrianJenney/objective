@@ -1,7 +1,7 @@
 const SmartyStreetsSDK = require('smartystreets-javascript-sdk');
 const SmartyStreetsCore = SmartyStreetsSDK.core;
 
-const websiteKey = '14917304965143845'; // Your website key here
+const websiteKey = process.env.SMARTY_STREET_KEY;
 const smartyStreetsSharedCredentials = new SmartyStreetsCore.SharedCredentials(
   websiteKey
 );
