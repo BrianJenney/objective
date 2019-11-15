@@ -13,6 +13,8 @@ import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import { validateAddress } from '../../apis/SmartyStreets';
+import AddressValidation from '../account/AddressValidation';
 
 export const FORM_TYPES = {
   ACCOUNT: 'account',
@@ -73,6 +75,10 @@ const AddressForm = ({
   const [initialValues, setInitialValues] = useState(
     getInitialValues(INITIAL_VALUES, defaultValues)
   );
+  const [addressSuggestionEnabled, setAddressSuggestion] = useState(false);
+  const [originalAddress, setOriginalAddress] = useState(null);
+  const [suggestedAddress, setSuggestedAddress] = useState(null);
+  const [formActions, setFormActions] = useState(null);
 
   const handleUseAddressSeedToggle = event => {
     if (event.target.checked) {
@@ -101,12 +107,45 @@ const AddressForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const isSameAddress = (original, suggested) => {
+    if (
+      original.address1 == suggested.address1 &&
+      original.address2 == suggested.address2 &&
+      original.city == suggested.city &&
+      original.zipcode == suggested.zipcode
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const handleSubmit = (values, actions) => {
-    const payload = {
-      ...values,
-      phone: values.phone ? values.phone.trim() : ''
-    };
-    onSubmit(payload, actions);
+    validateAddress(values).then(
+      response => {
+        setOriginalAddress(values);
+        setSuggestedAddress(response);
+        setFormActions(actions);
+        // Compare addreses, no suggestion dialog if same
+        const isSame = isSameAddress(values, response);
+        if (isSame) {
+          const payload = {
+            ...values,
+            phone: values.phone ? values.phone.trim() : ''
+          };
+          onSubmit(payload, actions);
+        } else {
+          setAddressSuggestion(true);
+        }
+      },
+      error => {
+        console.log('validation error, address form', error);
+      }
+    );
+  };
+
+  const handleDialogExit = (actions) => {
+    actions.setSubmitting(false);
+    setAddressSuggestion(false);
   };
 
   const renderForm = ({ isSubmitting }) => (
@@ -146,18 +185,10 @@ const AddressForm = ({
           </Grid>
         )}
         <Grid item xs={12} sm={6}>
-          <Field
-            name="firstName"
-            label="First Name"
-            component={InputField}
-          />
+          <Field name="firstName" label="First Name" component={InputField} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field
-            name="lastName"
-            label="Last Name"
-            component={InputField}
-          />
+          <Field name="lastName" label="Last Name" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -174,11 +205,7 @@ const AddressForm = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Field
-            name="city"
-            label="City"
-            component={InputField}
-          />
+          <Field name="city" label="City" component={InputField} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Field
@@ -189,18 +216,10 @@ const AddressForm = ({
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field
-            name="zipcode"
-            label="Zip Code"
-            component={InputField}
-          />
+          <Field name="zipcode" label="Zip Code" component={InputField} />
         </Grid>
         <Grid item xs={12}>
-          <Field
-            name="phone"
-            label="Phone #"
-            component={InputField}
-          />
+          <Field name="phone" label="Phone #" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -261,7 +280,11 @@ const AddressForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} loading={isSubmitting} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              loading={isSubmitting}
+            />
           </ButtonGroup>
         </Grid>
       </Grid>
@@ -269,13 +292,26 @@ const AddressForm = ({
   );
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={schema}
-      render={renderForm}
-      enableReinitialize
-    />
+    <>
+      {addressSuggestionEnabled ? (
+        <AddressValidation
+          origAddress={originalAddress}
+          suggAddress={suggestedAddress}
+          actions={formActions}
+          onSubmit={onSubmit}
+          onExited={() => {
+            handleDialogExit(formActions);
+          }}
+        />
+      ) : null}
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={schema}
+        render={renderForm}
+        enableReinitialize
+      />
+    </>
   );
 };
 
