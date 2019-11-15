@@ -38,20 +38,22 @@ const BlogCategory = ({ computedMatch }) => {
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
-    <ScrollToTop>
-      <div className="journal-gallery">
-        <Box className="header" py={8}>
-          <Container className="container">
-            <h1>{title}</h1>
-          </Container>
-        </Box>
-        <Box className="content" py={8}>
-          <Container>
-            <div className="list">{renderPosts(posts)}</div>
-          </Container>
-        </Box>
-      </div>
-    </ScrollToTop>
+    posts.length && (
+      <ScrollToTop>
+        <div className="journal-gallery">
+          <Box className="header" py={8}>
+            <Container className="container">
+              <h1>{title}</h1>
+            </Container>
+          </Box>
+          <Box className="content" py={8}>
+            <Container>
+              <div className="list">{renderPosts(posts)}</div>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
+    )
   );
 };
 
