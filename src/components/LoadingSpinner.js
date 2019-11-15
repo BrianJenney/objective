@@ -11,15 +11,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   progress: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(2)
   }
 }));
 
 const LoadingSpinner = ({ location, loadingMessage, page }) => {
   const classes = useStyles();
   let size = 0;
-  if (page === 'pdp') size = 45;
+  if (page === 'pdp' || page === 'home') size = 45;
   if (page === 'gallery') size = 10;
+  if (page === 'journal') size = 100;
 
   return (
     <Container>
