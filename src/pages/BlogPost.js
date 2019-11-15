@@ -15,6 +15,7 @@ import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
 import FeaturedItem from './blog/FeaturedItem';
 import BlogVariantCard from './blog/BlogVariantCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const dateFormat = require('dateformat');
 
@@ -50,6 +51,13 @@ const BlogPost = ({ computedMatch }) => {
     window.analytics.page('Journal Post');
   }, [post_slug]);
 
+  if (Object.keys(post).length === 0) {
+    return (
+      <ScrollToTop>
+        <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
+      </ScrollToTop>
+    );
+  }
   const renderRelatedProducts = products => {
     if (variants && products.length > 0) {
       return products.map(product => {
@@ -66,7 +74,7 @@ const BlogPost = ({ computedMatch }) => {
         );
       });
     }
-    return null;
+    return <></>;
   };
 
   const renderRelatedPosts = posts => {
@@ -75,7 +83,6 @@ const BlogPost = ({ computedMatch }) => {
         <FeaturedItem post={item} key={item.sys.id} />
       ));
     }
-
     return <></>;
   };
 
@@ -199,18 +206,18 @@ const BlogPost = ({ computedMatch }) => {
 
           {post.fields.relatedProducts &&
           post.fields.relatedProducts.length > 0 ? (
-              <Box className="shop">
-                <Container>
-                  <h1 className="title" align="center">
+            <Box className="shop">
+              <Container>
+                <h1 className="title" align="center">
                   SHOP THIS POST
-                </h1>
-                <div className="border"></div>
-                  <Grid container spacing={3} justify="center">
-                    {renderRelatedProducts(post.fields.relatedProducts)}
-                  </Grid>
-                </Container>
-              </Box>
-          ) : (
+                  </h1>
+                  <div className="border"></div>
+                <Grid container spacing={3} justify="center">
+                  {renderRelatedProducts(post.fields.relatedProducts)}
+                </Grid>
+              </Container>
+            </Box>
+            ) : (
             <></>
           )}
 
