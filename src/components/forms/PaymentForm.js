@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { get, omit } from 'lodash';
+import { useSnackbar } from 'notistack';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
@@ -155,6 +156,7 @@ const PaymentForm = ({
   };
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -294,7 +296,7 @@ const PaymentForm = ({
 
   // hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
   // if all text fields are filled out, handleSubmit will handle card info
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
       billingAddress: {}
@@ -329,21 +331,29 @@ const PaymentForm = ({
       }
       return !!fieldErrors[field];
     });
-    scrollToRef(fieldRefs[firstInvalidField]);
 
-    const cardData = HostedFieldsClient.tokenize();
-    const payload = {
-      ...values,
-      cardData,
-      billingAddress: {
-        ...values.billingAddress,
-        phone: values.billingAddress.phone
-          ? values.billingAddress.phone.trim()
-          : ''
-      }
-    };
+    if (firstInvalidField) {
+      return scrollToRef(fieldRefs[firstInvalidField]);
+    }
 
-    onSubmit(payload, actions);
+    try {
+      const cardData = await HostedFieldsClient.tokenize({
+        cardholderName: values.paymentDetails.cardholderName
+      });
+      const payload = {
+        ...values,
+        cardData,
+        billingAddress: {
+          ...values.billingAddress,
+          phone: values.billingAddress.phone
+            ? values.billingAddress.phone.trim()
+            : ''
+        }
+      };
+      return onSubmit(payload, actions);
+    } catch (err) {
+      enqueueSnackbar(err.message, { variant: 'error' });
+    }
   };
 
   /* eslint-disable */
