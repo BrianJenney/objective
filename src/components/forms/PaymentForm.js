@@ -294,13 +294,12 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  // hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
-  // if all text fields are filled out, handleSubmit will handle card info
   const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
       billingAddress: {}
     };
+
     Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         let elem = HostedFieldsClient._state.fields[field];
@@ -336,24 +335,21 @@ const PaymentForm = ({
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
 
-    try {
-      const cardData = await HostedFieldsClient.tokenize({
-        cardholderName: values.paymentDetails.cardholderName
-      });
-      const payload = {
-        ...values,
-        cardData,
-        billingAddress: {
-          ...values.billingAddress,
-          phone: values.billingAddress.phone
-            ? values.billingAddress.phone.trim()
-            : ''
-        }
-      };
-      return onSubmit(payload, actions);
-    } catch (err) {
-      enqueueSnackbar(err.message, { variant: 'error' });
-    }
+    const cardData = await HostedFieldsClient.tokenize({
+      cardholderName: values.paymentDetails.cardholderName
+    });
+    const payload = {
+      ...values,
+      cardData,
+      billingAddress: {
+        ...values.billingAddress,
+        phone: values.billingAddress.phone
+          ? values.billingAddress.phone.trim()
+          : ''
+      }
+    };
+
+    onSubmit(payload, actions);
   };
 
   /* eslint-disable */
