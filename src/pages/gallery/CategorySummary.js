@@ -17,7 +17,9 @@ const energyImg = require('../../../src/assets/images/targeted.png');
 @return JSX React.Fragment
 */
 const CategorySummary = ({ category, products, styleMap }) => {
-  let title, catIcon, catImg;
+  let title;
+  let catIcon;
+  let catImg;
 
   if (category.slug === 'skin') {
     title = <h3 style={styleMap.text}>Skin & Beauty</h3>;
@@ -39,15 +41,13 @@ const CategorySummary = ({ category, products, styleMap }) => {
 
   return (
     <>
-      {products.map(product => {
-        return (
-          <Grid item xs={12} sm={3} md={3} lg={3} key={product.id}>
-            <div className="opt2" style={styleMap.container}>
-              <VariantCard variant={product} styleMap={styleMap} />
-            </div>
-          </Grid>
-        );
-      })}
+      {products.map(product => (
+        <Grid item xs={12} sm={3} md={3} lg={3} key={product.id}>
+          <div className="opt2" style={styleMap.container}>
+            <VariantCard variant={product} styleMap={styleMap} />
+          </div>
+        </Grid>
+      ))}
     </>
   );
 };
