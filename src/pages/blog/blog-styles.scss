@@ -97,17 +97,30 @@
     margin-bottom: 101px;
     @media (max-width: 768px) {
       margin-bottom: 44px;
-    }  
+    }
     .gallery-atc {
       padding: 16px;
+      button {
+        padding: 19px 0 !important;
+        font-size: 14px !important;
+        line-height: 1.9 !important;
+      }
+      @media (max-width: 1241px) {
+        button {
+          padding: 20px 0 !important;
+          font-size: 13px !important;
+        }
+      }
       @media (max-width: 768px) {
         padding: 12px;
         button {
-          font-size: 14px;
+          padding: 8px 0 !important;
+          font-size: 11px !important;
+          line-height: 1.2 !important;
         }
       }
     }
-    .title { 
+    .title {
       margin-top: 55px;
       font-size: 24px;
       font-weight: 900;
@@ -229,8 +242,8 @@
       height: 2px;
       background-color: #231f20;
       &.gray {
-       background-color: gray;
-       margin-bottom: 20px;
+        background-color: gray;
+        margin-bottom: 20px;
       }
     }
     h1 {
@@ -245,7 +258,8 @@
       text-transform: uppercase;
       margin: 20px 0 40px;
     }
-    h2, h2 a {
+    h2,
+    h2 a {
       font-family: 'Canela Text Web';
       font-size: 32px !important;
       font-weight: normal;
@@ -372,7 +386,8 @@
       text-align: center;
       display: block;
       margin: 0;
-      .categoryName, .minRead {
+      .categoryName,
+      .minRead {
         font-size: 24px;
         a {
           font-size: 24px;
@@ -380,7 +395,8 @@
         }
       }
     }
-    h3, p > b {
+    h3,
+    p > b {
       font-family: p22-underground, sans-serif;
       font-size: 26px;
       font-weight: 600;
@@ -402,8 +418,10 @@
       text-align: left;
       .flex {
         text-align: left;
-        .categoryName, .minRead, 
-        .categoryName a, .minRead a {
+        .categoryName,
+        .minRead,
+        .categoryName a,
+        .minRead a {
           font-size: 14px;
         }
       }
@@ -412,17 +430,17 @@
         font-size: 32px;
       }
     }
-
   }
 }
 
 /* Mobile */
-@media(max-width: 768px) {
+@media (max-width: 768px) {
   .journal-gallery {
     .mobile-flex {
       display: flex;
       margin-bottom: 35px;
-      .tagholder, .icon-holder {
+      .tagholder,
+      .icon-holder {
         width: 50%;
         padding-top: 25px;
       }
@@ -434,7 +452,7 @@
         padding-left: 25px;
         border-bottom: 2px solid;
         border-left: 2px solid;
-        
+
         min-height: 117px;
         .share {
           padding: 0 0 10px;
@@ -453,59 +471,60 @@
         font-size: 22px;
       }
     }
-   .content {
-     padding: 30px 0;
+    .content {
+      padding: 30px 0;
       .callout {
-      margin-bottom: 48px;
-      img {
-        height: auto;
+        margin-bottom: 48px;
+        img {
+          height: auto;
+        }
+      }
+      h1 {
+        font-size: 18px;
+      }
+      h2 {
+        font-size: 28px !important;
+      }
+      p {
+        font-size: 16px;
+      }
+      .list .load {
+        margin: 40px 0;
+        button {
+          width: 100%;
+          min-width: 300px;
+        }
       }
     }
-    h1 {
-      font-size: 18px;
-    }
-    h2 {
-      font-size: 28px !important;
-    }
-    p {
-      font-size: 16px;
-    }
-    .list .load {
-      margin: 40px 0;
-      button {
-        width: 100%;
-        min-width: 300px;
+    &.post {
+      .flex .categoryName,
+      .flex .minRead {
+        font-size: 18px;
+        a {
+          font-size: 18px;
+        }
+      }
+      .center {
+        h1 {
+          font-size: 36px;
+          margin-bottom: 25px;
+        }
+        margin-bottom: 20px;
+      }
+      .left {
+        .date {
+          text-align: center;
+          font-size: 14px;
+          margin-bottom: 0;
+        }
+      }
+      .border-left {
+        padding-left: 0;
+        border-left: none;
+      }
+      p > b {
+        font-size: 16px;
       }
     }
-   }
-   &.post {
-     .flex .categoryName, .flex .minRead {
-       font-size: 18px;
-       a {
-         font-size: 18px;
-       }
-     }
-     .center {
-       h1 {
-         font-size: 36px;
-         margin-bottom: 25px;
-       }
-       margin-bottom: 20px;
-     }
-     .left {
-      .date {
-        text-align: center;
-        font-size: 14px;
-        margin-bottom: 0;
-      }
-     }
-     .border-left {
-      padding-left: 0;
-      border-left: none;
-    }
-    p > b {
-      font-size: 16px;
-    }
-   }
   }
 }
