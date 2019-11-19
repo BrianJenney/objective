@@ -354,7 +354,7 @@ const PaymentForm = ({
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues }) => (
+  const renderForm = ({ values, setValues, isSubmitting }) => (
     <Form>
       <Box
         component={Typography}
