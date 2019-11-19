@@ -332,6 +332,7 @@ const PaymentForm = ({
     });
 
     if (firstInvalidField) {
+      actions.setSubmitting(false);
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
 
@@ -348,7 +349,6 @@ const PaymentForm = ({
           : ''
       }
     };
-
     onSubmit(payload, actions);
     actions.setSubmitting(false);
   };
