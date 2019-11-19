@@ -350,7 +350,7 @@ const PaymentForm = ({
       }
     };
     onSubmit(payload, actions);
-    actions.setSubmitting(false);
+    // actions.setSubmitting(false);
   };
 
   /* eslint-disable */
