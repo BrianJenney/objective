@@ -350,10 +350,11 @@ const PaymentForm = ({
     };
 
     onSubmit(payload, actions);
+    actions.setSubmitting(false);
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues, isSubmitting }) => (
+  const renderForm = ({ values, setValues }) => (
     <Form>
       <Box
         component={Typography}
