@@ -109,10 +109,10 @@ const AddressForm = ({
 
   const isSameAddress = (original, suggested) => {
     if (
-      original.address1 == suggested.address1 &&
-      original.address2 == suggested.address2 &&
-      original.city == suggested.city &&
-      original.zipcode == suggested.zipcode
+      original.address1.trim().toLowerCase() === suggested.address1.trim().toLowerCase() &&
+      original.address2.trim().toLowerCase() === suggested.address2.trim().toLowerCase() &&
+      original.city.trim().toLowerCase() === suggested.city.trim().toLowerCase() &&
+      original.zipcode === suggested.zipcode
     ) {
       return true;
     }
@@ -125,14 +125,18 @@ const AddressForm = ({
         setOriginalAddress(values);
         setSuggestedAddress(response);
         setFormActions(actions);
-        // Compare addreses, no suggestion dialog if same
-        const isSame = isSameAddress(values, response);
-        if (isSame) {
-          const payload = {
-            ...values,
-            phone: values.phone ? values.phone.trim() : ''
-          };
-          onSubmit(payload, actions);
+        if (response !== false) {
+          // Compare addreses, no suggestion dialog if same
+          const isSame = isSameAddress(values, response);
+          if (isSame) {
+            const payload = {
+              ...values,
+              phone: values.phone ? values.phone.trim() : ''
+            };
+            onSubmit(payload, actions);
+          } else {
+            setAddressSuggestion(true);
+          }
         } else {
           setAddressSuggestion(true);
         }

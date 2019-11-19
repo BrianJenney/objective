@@ -37,15 +37,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit }) => {
+const AddressValidation = ({
+  origAddress,
+  suggAddress,
+  actions,
+  onSubmit,
+  closeDialog
+}) => {
   const [suggestedAddress, setSuggestedAddress] = useState(false);
   const [originalAddress, setOriginalAddress] = useState(false);
   const [payload, setPayload] = useState(null);
-
   let sAddress = null;
-  if (origAddress && suggAddress) {
-    sAddress = suggAddress;
-  }
 
   useEffect(() => {
     if (suggestedAddress) {
@@ -80,6 +82,10 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit }) => {
       onSubmit(pload, actions);
     }
   }, [payload]);
+
+  if (origAddress && suggAddress && suggAddress !== 'no-results') {
+    sAddress = suggAddress;
+  }
 
   const classes = useStyles();
 
@@ -158,7 +164,66 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit }) => {
             </Paper>
           </Box>
         </div>
-      ) : null}
+      ) : (
+          <div className={classes.root}>
+            <Box>
+              <Paper className={classes.paper}>
+                <Typography className={classes.title}>
+                  Shipping Address Validation
+              </Typography>
+                <Typography className={classes.text}>
+                  Important: we were not able to validate your shipping address.
+              </Typography>
+                <Typography className={classes.text}>
+                  Please confirm that the address you entered is correct.
+              </Typography>
+              </Paper>
+            </Box>
+            <Grid container spacing={2} className={classes.boxHolder}>
+              <Grid item xs={12} md={6}>
+                <Box
+                  border={1}
+                  borderColor="#979797"
+                  className={classes.boxPadding}
+                >
+                  <Paper className={classes.paper}>
+                    <div className={classes.atitle}>You entered:</div>
+                    <div className={classes.text}>
+                      {`${origAddress.address1} ${origAddress.address2}`}
+                    </div>
+                    <div className={classes.text}>
+                      {`${origAddress.city} ${origAddress.state}, ${origAddress.zipcode}`}
+                    </div>
+                  </Paper>
+                </Box>
+              </Grid>
+            </Grid>
+            <Box>
+              <Paper className={classes.paper}>
+                <Button
+                  onClick={() => {
+                    setOriginalAddress(true);
+                  }}
+                  children="YES, THIS ADDRESS IS CORRECT"
+                  underline="always"
+                  fullWidth
+                />
+              </Paper>
+            </Box>
+            <Box className={classes.continue}>
+              <Paper className={classes.paper}>
+                <MenuLink
+                  onClick={() => {
+                    actions.setSubmitting(false);
+                    closeDialog();
+                  }}
+                  children="EDIT ADDRESS"
+                  underline="always"
+                />
+              </Paper>
+            </Box>
+          </div>
+        )}
     </>
   );
 };
