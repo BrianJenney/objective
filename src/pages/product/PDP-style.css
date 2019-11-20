@@ -70,6 +70,11 @@ html,
   letter-spacing: normal;
   color: #585858;
   padding-right: 5px;
+  padding-top:11px;
+}
+.pdp-info-mobile {
+  position: relative;
+  top: 11px;
 }
 .pdp-restriction {
   font-family: p22-underground;

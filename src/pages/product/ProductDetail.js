@@ -26,6 +26,11 @@ import {
 
 import { ATC, OutOfStockPDP } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
+import {
+  ShippingRestrictionMobile,
+  ShippingRestriction
+} from './ShippingRestrictions';
+import ShippingRestrictionsDialog from './ShippingRestrictionsDialog';
 import './PDP-style.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { NavLink } from '../../components/common';
@@ -102,6 +107,9 @@ const ProductDetail = () => {
   const [ATCAdding, setATCAdding] = useState(false);
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
   const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
+  const [openShippingRestrictions, setOpenShippingRestrictions] = useState(
+    false
+  );
   const windowSize = useWindowSize();
 
   const defaultSku = getDefaultSkuByProduct(product);
@@ -111,9 +119,7 @@ const ProductDetail = () => {
   const [seconds, setSeconds] = useState(0);
   const [prodLoaded, setProdLoaded] = useState(false);
   // const message = (<ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />);
-  console.log('product', product);
-  console.log('variants', variants);
-  console.log('prices', prices);
+
   console.log('content', content);
   const updateQuantityToCart = useCallback(
     qty => {
@@ -160,6 +166,15 @@ const ProductDetail = () => {
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
   }, [setOpenEmailConfirmation]);
+
+  /* Shipping Restrictions */
+  const handleShippingRestrictions = useCallback(() => {
+    setOpenShippingRestrictions(true);
+  }, [setOpenShippingRestrictions]);
+
+  const closeShippingRestrictions = useCallback(() => {
+    setOpenShippingRestrictions(false);
+  }, [setOpenShippingRestrictions]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -290,19 +305,12 @@ const ProductDetail = () => {
                       )}
                     </Grid>
                   )}
-                  <Grid container xs={12} style={{ justifyContent: 'center' }}>
-                    <Grid item className="pdp-restriction-mobile">
-                      <NavLink
-                        to={`/products/${product.slug}/restrictions`}
-                        underline="always"
-                      >
-                        Shipping Restrictions Apply
-                      </NavLink>
-                    </Grid>
-                    <Grid item>
-                      <InfoOutlined style={{ fontSize: '16px' }}></InfoOutlined>
-                    </Grid>
-                  </Grid>
+                  {content.productTitle === 'Relief + Cooling' && (
+                    <ShippingRestrictionMobile
+                      productName={content.productTitle}
+                      onClick={handleShippingRestrictions}
+                    />
+                  )}
                 </Card>
               </Grid>
             </Grid>
@@ -397,21 +405,18 @@ const ProductDetail = () => {
                         )}
                       </Grid>
                     )}
-                    <Grid container>
-                      <Grid item className="pdp-restriction">
-                        <NavLink
-                          to={`/products/${product.slug}/restrictions`}
-                          underline="always"
-                        >
-                          Shipping Restrictions Apply
-                        </NavLink>
-                      </Grid>
-                      <Grid item className="pdp-info-icon">
-                        <InfoOutlined
-                          style={{ fontSize: '18px' }}
-                        ></InfoOutlined>
-                      </Grid>
-                    </Grid>
+                    {content.productTitle === 'Relief + Cooling' && (
+                      <ShippingRestriction
+                        productName={content.productTitle}
+                        onClick={handleShippingRestrictions}
+                      />
+                    )}
+                    {openShippingRestrictions && (
+                      <ShippingRestrictionsDialog
+                        product_name={variant.name}
+                        onExited={closeShippingRestrictions}
+                      />
+                    )}
                   </Card>
                 </Grid>
               </Grid>
