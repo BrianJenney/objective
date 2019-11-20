@@ -6,11 +6,9 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
-import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 
 import ProductContext from '../../contexts/ProductContext';
@@ -33,7 +31,6 @@ import {
 import ShippingRestrictionsDialog from './ShippingRestrictionsDialog';
 import './PDP-style.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { NavLink } from '../../components/common';
 
 const useStyles = makeStyles(theme => ({
   maxWidth: {
@@ -120,7 +117,6 @@ const ProductDetail = () => {
   const [prodLoaded, setProdLoaded] = useState(false);
   // const message = (<ATCSnackbarAction variant={variantMap.get(selectedVariantSku)} />);
 
-  console.log('content', content);
   const updateQuantityToCart = useCallback(
     qty => {
       if (selectedVariantSku === null) return;
@@ -222,6 +218,18 @@ const ProductDetail = () => {
 
   const variant = variantMap.get(selectedVariantSku);
 
+  // Mock-up data: list of restricted states. This list should be pulled from DB
+  const restrictedStates = [
+    { label: 'Arizona', value: 'AZ' },
+    { label: 'Connecticut', value: 'CT' },
+    { label: 'Idaho', value: 'ID' },
+    { label: 'Iowa', value: 'IA' },
+    { label: 'Minnesota', value: 'MN' },
+    { label: 'New Hampshire', value: 'NH' },
+    { label: 'New Jersey', value: 'NJ' },
+    { label: 'Oregon', value: 'OR' },
+    { label: 'Texas', value: 'TX' }
+  ];
   return (
     <>
       {isMobile ? (
@@ -307,8 +315,14 @@ const ProductDetail = () => {
                   )}
                   {content.productTitle === 'Relief + Cooling' && (
                     <ShippingRestrictionMobile
-                      productName={content.productTitle}
                       onClick={handleShippingRestrictions}
+                    />
+                  )}
+                  {openShippingRestrictions && (
+                    <ShippingRestrictionsDialog
+                      product_name={variant.name}
+                      restrictedStates={restrictedStates}
+                      onExited={closeShippingRestrictions}
                     />
                   )}
                 </Card>
@@ -407,13 +421,13 @@ const ProductDetail = () => {
                     )}
                     {content.productTitle === 'Relief + Cooling' && (
                       <ShippingRestriction
-                        productName={content.productTitle}
                         onClick={handleShippingRestrictions}
                       />
                     )}
                     {openShippingRestrictions && (
                       <ShippingRestrictionsDialog
                         product_name={variant.name}
+                        restrictedStates={restrictedStates}
                         onExited={closeShippingRestrictions}
                       />
                     )}
