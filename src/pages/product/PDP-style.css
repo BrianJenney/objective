@@ -60,6 +60,32 @@ html,
   color: #000000;
   text-align: left;
 }
+.pdp-restriction-mobile {
+  font-family: p22-underground;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #585858;
+  padding-right: 5px;
+}
+.pdp-restriction {
+  font-family: p22-underground;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #585858;
+  padding: 14px 5px 0 120px;
+}
+.pdp-info-icon {
+  position: relative;
+  top: 14px;
+}
 
 .pdp-product-variant {
   margin-bottom: 30px;
