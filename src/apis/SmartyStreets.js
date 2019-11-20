@@ -1,7 +1,7 @@
 const SmartyStreetsSDK = require('smartystreets-javascript-sdk');
 const SmartyStreetsCore = SmartyStreetsSDK.core;
 
-const websiteKey = '14917303982694558'; // Your website key here
+const websiteKey = process.env.REACT_APP_SMARTY_STREET_KEY;
 const smartyStreetsSharedCredentials = new SmartyStreetsCore.SharedCredentials(
   websiteKey
 );
@@ -26,8 +26,12 @@ export const validateAddress = async address => {
 
   try {
     const result = await usStreetClient.send(lookup);
-    const addresstmp = result.lookups[0].result[0];
 
+    if (result.lookups[0].result.length === 0) {
+      return false;
+    }
+
+    const addresstmp = result.lookups[0].result[0];
     // Clean up address and fix format
     let address1 = '';
     if (addresstmp.components.primaryNumber)
