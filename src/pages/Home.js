@@ -94,9 +94,7 @@ class Home extends Component {
           section
         )}`}
         key={section.sys.id}
-        style={{
-          backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url}")`
-        }}
+        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url.replace('//images.ctfassets.net/mj9bpefl6wof/','https://nutranext.imgix.net/') + '?q=50&auto=compress,format")'}}
       >
         <Container className="section-container">
           <Box className="section-holder">
