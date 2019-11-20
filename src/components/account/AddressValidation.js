@@ -83,7 +83,7 @@ const AddressValidation = ({
     }
   }, [payload]);
 
-  if (origAddress && suggAddress && suggAddress !== 'no-results') {
+  if (origAddress && suggAddress && suggAddress !== false) {
     sAddress = suggAddress;
   }
 
