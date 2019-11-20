@@ -24,7 +24,7 @@ const PromoCodeForm = () => {
   const cart = useSelector(state => state.cart);
   const [promoCodeErr, setPromoCodeErr] = useState(null);
   const onSubmit = useCallback(
-    async e => {
+    async ( e, form ) => {
       const response = await validatePromoCode(e.promoCode);
       window.analytics.track("Coupon Entered", {
         "cart_id": cart._id,
@@ -34,7 +34,6 @@ const PromoCodeForm = () => {
       });
       if (response.valid) {
         addCoupon(cart._id, response.code);
-
       } else {
         setPromoCodeErr(response.reason);
         window.analytics.track("Coupon Denied", {
@@ -45,6 +44,7 @@ const PromoCodeForm = () => {
           "reason": response.reason
         });
       }
+      form.setSubmitting(false);
     },
     [promoCodeErr, setPromoCodeErr, validatePromoCode]
   );
