@@ -68,13 +68,13 @@ html,
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #585858;
+  color: #585858 !important;
   padding-right: 5px;
-  padding-top:11px;
+  padding-top:8px;
 }
 .pdp-info-mobile {
   position: relative;
-  top: 11px;
+  top: 8px;
 }
 .pdp-restriction {
   font-family: p22-underground;
@@ -84,12 +84,12 @@ html,
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #585858;
-  padding: 14px 5px 0 120px;
+  color: #585858 !important;
+  padding: 8px 5px 0 120px;
 }
 .pdp-info-icon {
   position: relative;
-  top: 14px;
+  top: 8px;
 }
 
 .pdp-product-variant {
