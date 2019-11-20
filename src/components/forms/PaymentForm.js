@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { get, omit } from 'lodash';
+import { useSnackbar } from 'notistack';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
@@ -155,6 +156,7 @@ const PaymentForm = ({
   };
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -292,13 +294,12 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  // hNDLESUBMIT GETS RAN when OTHER TEXTFIELDS are validated before the hostedfield
-  // if all text fields are filled out, handleSubmit will handle card info
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
       billingAddress: {}
     };
+
     Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         let elem = HostedFieldsClient._state.fields[field];
@@ -329,9 +330,15 @@ const PaymentForm = ({
       }
       return !!fieldErrors[field];
     });
-    scrollToRef(fieldRefs[firstInvalidField]);
 
-    const cardData = HostedFieldsClient.tokenize();
+    if (firstInvalidField) {
+      actions.setSubmitting(false);
+      return scrollToRef(fieldRefs[firstInvalidField]);
+    }
+
+    const cardData = await HostedFieldsClient.tokenize({
+      cardholderName: values.paymentDetails.cardholderName
+    });
     const payload = {
       ...values,
       cardData,
@@ -342,8 +349,8 @@ const PaymentForm = ({
           : ''
       }
     };
-
     onSubmit(payload, actions);
+    // actions.setSubmitting(false);
   };
 
   /* eslint-disable */
