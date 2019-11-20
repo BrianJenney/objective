@@ -21,10 +21,10 @@ const dateFormat = require('dateformat');
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=1002&fm=jpg&q=90';
+      let params = '?w=1002&fm=jpg&q=50';
 
       if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=90';
+        params = '?w=450&fm=jpg&q=50';
       }
 
       return (
@@ -101,7 +101,7 @@ const BlogPost = ({ computedMatch }) => {
     let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
     if (post.fields.featuredImage && post.fields.featuredImage.fields) {
-      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`;
+      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=50`;
     }
 
     let category = 'General';

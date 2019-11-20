@@ -104,7 +104,7 @@ const VariantCard = ({ variant, styleMap }) => {
       >
         <CardMedia
           style={{ height: 500, width: 324 }}
-          image={variant.assets.imgs}
+          image={variant.assets.imgs + "&q=50"}
           title={variant.name}
           className="gallery-prod-img"
         />

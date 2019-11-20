@@ -12,7 +12,7 @@ const FeaturedPost = ({post}) => {
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
   if (post.fields.featuredImage && post.fields.featuredImage.fields) {
-    imageUrl = `${post.fields.featuredImage.fields.file.url}?w=880&fm=jpg&q=90`;
+    imageUrl = `${post.fields.featuredImage.fields.file.url}?w=880&fm=jpg&q=50`;
   }
 
   let category = 'General';
