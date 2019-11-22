@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 
-import { AlertPanel } from '../../components/common';
+import { AlertPanel, NavLink } from '../../components/common';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
 
 import { PromoCodeForm } from '../../components/forms';
@@ -20,6 +20,7 @@ import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
+import StateRestrictionsDialog from '../../components/checkout/StateRestrictionsDialog';
 
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -50,6 +51,27 @@ import {
 
 const { MEDIUM_GRAY } = colorPalette;
 
+const useStyles = makeStyles(() => ({
+  cartRestricted: {
+    fontFamily: 'p22-underground',
+    fontSize: '14px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: '1.5',
+    letterSpacing: 'normal',
+    color: '#d0021b',
+    paddingBottom: '26px'
+  },
+  link: {
+    fontSize: '16px',
+    fontWeight: '600',
+    letterSpacing: '1.06px',
+    textTransform: 'uppercase',
+    paddingBottom: '30px'
+  }
+}));
+
 const Cart = ({
   history,
   hideCheckoutProceedLink,
@@ -57,20 +79,48 @@ const Cart = ({
   hideTaxLabel,
   showOrderSummaryText,
   xsBreakpoint,
-  location
+  location,
+  activeStep
 }) => {
+  const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+  // Will replace this hard code with the actual attribute from backend which determines restricted products/state
+  const restrictedProduct = 'Relief + Cooling';
+  const restrictedStatesList = [
+    'AZ',
+    'CT',
+    'ID',
+    'IA',
+    'MN',
+    'NH',
+    'NJ',
+    'OR',
+    'TX'
+  ];
+  const shippingState = cart.shippingAddress ? cart.shippingAddress.state : '';
+  const isStateRestricted = restrictedStatesList.includes(shippingState);
+  const isProductRestricted =
+    cart.items.filter(item => item.variant_name === restrictedProduct).length >
+    0;
+  // If isProductRestricted is true,
+  // Remove the restrictedProduct and update cart
+  // Invoke function removefromCart(cart, product)
+
+  // console.log('isStateRestricted', isStateRestricted);
+  // console.log('isProductRestricted', isProductRestricted);
+  // console.log('CART-STATE', cart);
+  // console.log('active-step', activeStep);
 
   const onClickLogo = useCallback(() => {
-    dispatch(setCartDrawerOpened(false,false));
+    dispatch(setCartDrawerOpened(false, false));
     history.push('/gallery');
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
-    dispatch(setCartDrawerOpened(false,false));
+    dispatch(setCartDrawerOpened(false, false));
   }, [dispatch]);
 
   const togglePromo = useCallback(() => {
@@ -78,7 +128,7 @@ const Cart = ({
   }, [promoVisible, setPromoVisible]);
 
   const handleCheckout = useCallback(() => {
-    dispatch(setCartDrawerOpened(false,false));
+    dispatch(setCartDrawerOpened(false, false));
     history.push('/checkout');
   }, [dispatch, history]);
 
@@ -164,6 +214,26 @@ const Cart = ({
         )}
       </div>
       <Grid container>
+        {!xsBreakpoint &&
+        isCheckoutPage &&
+        activeStep === 2 &&
+        isStateRestricted &&
+        isProductRestricted ? (
+          <Typography className={classes.cartRestricted}>
+            CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
+            cart because this product is not available in the state you
+            selected. We hope to be able to offer {restrictedProduct} in your
+            state soon!
+          </Typography>
+        ) : null}
+        {cartCount === 0 && (
+          <NavLink to="/gallery" underline="always" className={classes.link}>
+            Continue shopping
+          </NavLink>
+        )}
+      </Grid>
+
+      <Grid container>
         {cart.items.length === 0 ? (
           <StyledGridEmptyCart item xs={12}>
             <StyledSmallCapsEmptyCart component="span">
@@ -186,19 +256,20 @@ const Cart = ({
                   <Card>
                     <Link
                       to={`/products/${item.slug}`}
-                      onClick={() => {segmentProductClickEvent({
-                        image_url: `https:${item.variant_img}`,
-                        quantity: item.quantity,
-                        sku: item.sku,
-                        price: Number.parseFloat(item.unit_price),
+                      onClick={() => {
+                      segmentProductClickEvent({
+                          image_url: `https:${item.variant_img}`,
+                          quantity: item.quantity,
+                          sku: item.sku,
+                          price: Number.parseFloat(item.unit_price),
                         product_id: item.variant_id,
-                        variant: item.variant_id,
+                          variant: item.variant_id,
                         name: item.variant_name,
-                        brand: cart.storeCode,
-                        cart_id: cart._id,
-                        site_location: "cart",
-
-                      })}}
+                          brand: cart.storeCode,
+                          cart_id: cart._id,
+                          site_location: 'cart'
+                      });
+                    }}
                     >
                       <CardMedia
                         style={{ height: 126, width: 126 }}
@@ -225,18 +296,20 @@ const Cart = ({
                         maxHeight: '40px',
                         overflow: 'hidden'
                       }}
-                      onClick={() => {segmentProductClickEvent({
-                        image_url: `https:${item.variant_img}`,
-                        quantity: item.quantity,
-                        sku: item.sku,
-                        price: Number.parseFloat(item.unit_price),
+                      onClick={() => {
+                      segmentProductClickEvent({
+                          image_url: `https:${item.variant_img}`,
+                          quantity: item.quantity,
+                          sku: item.sku,
+                          price: Number.parseFloat(item.unit_price),
                         product_id: item.variant_id,
-                        variant: item.variant_id,
+                          variant: item.variant_id,
                         name: item.variant_name,
-                        brand: cart.storeCode,
-                        cart_id: cart._id,
-                        site_location: "cart"
-                      })}}
+                          brand: cart.storeCode,
+                          cart_id: cart._id,
+                          site_location: 'cart'
+                      });
+                    }}
                     >
                       <StyledProductLink
                         style={{ fontSize: '18px', padding: '0' }}
