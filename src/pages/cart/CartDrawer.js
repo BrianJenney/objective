@@ -20,7 +20,6 @@ import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
-import VariantRestrictions from '../../utils/product/variant.restriction.class';
 
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -60,11 +59,6 @@ const Cart = ({
   xsBreakpoint,
   location
 }) => {
-  const allState = useSelector(state => state);
-  console.log(allState);
-  const restrictions = new VariantRestrictions(allState.cart.items);
-  const restrictionValidations = restrictions.validate(allState.cart.shippingAddress,'variant_id');
-  console.log("restrictions",restrictionValidations);
   const cart = useSelector(state => state.cart);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
