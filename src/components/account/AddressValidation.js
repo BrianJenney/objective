@@ -219,8 +219,9 @@ const AddressValidation = ({
                       {`${origAddress.address1} ${origAddress.address2}`}
                     </div>
                     <div className={classes.text}>
-                      {`${origAddress.city} ${origAddress.state}, ${origAddress.zipcode}`}
+                      {`${origAddress.city} ${origAddress.state}`}
                     </div>
+                    <div className={classes.text}>{`${origAddress.zipcode}`}</div>
                   </Paper>
                 </Box>
               </Grid>
