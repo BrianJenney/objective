@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '800px'
   },
   rootXs: {
-    padding: '10px 55px 55px',
+    padding: '10px 55px 55px'
   },
   title: {
     fontSize: 30,
@@ -32,7 +32,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: 20,
     fontFamily: 'freight-text-pro, sans-serif',
     lineHeight: '1.4',
-    marginBottom: '18px'
+    marginBottom: '18px',
+    fontWeight: 600,
   },
   boxHolder: {
     padding: '40px 0'
@@ -139,8 +140,9 @@ const AddressValidation = ({
                     {`${origAddress.address1} ${origAddress.address2}`}
                   </div>
                   <div className={classes.text}>
-                    {`${origAddress.city} ${origAddress.state}, ${origAddress.zipcode}`}
+                    {`${origAddress.city} ${origAddress.state}`}
                   </div>
+                  <div className={classes.text}>{`${origAddress.zipcode}`}</div>
                 </Paper>
               </Box>
             </Grid>
@@ -157,8 +159,9 @@ const AddressValidation = ({
                     {sAddress.address2 ? sAddress.address2 : ''}
                   </div>
                   <div className={classes.text}>
-                    {`${sAddress.city} ${sAddress.state}, ${sAddress.zipcode}`}
+                    {`${sAddress.city} ${sAddress.state}`}
                   </div>
+                  <div className={classes.text}>{`${sAddress.zipcode}`}</div>
                 </Paper>
               </Box>
             </Grid>
@@ -216,8 +219,9 @@ const AddressValidation = ({
                       {`${origAddress.address1} ${origAddress.address2}`}
                     </div>
                     <div className={classes.text}>
-                      {`${origAddress.city} ${origAddress.state}, ${origAddress.zipcode}`}
+                      {`${origAddress.city} ${origAddress.state}`}
                     </div>
+                    <div className={classes.text}>{`${origAddress.zipcode}`}</div>
                   </Paper>
                 </Box>
               </Grid>
