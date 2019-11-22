@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { Panel } from '../common';
+import { Panel, Loader } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
 import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
@@ -30,7 +30,7 @@ import { resetOrderState } from '../../modules/order/actions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
-import { Loader } from '../common';
+import StateRestrictionsDialog from './StateRestrictionsDialog';
 
 const getPanelTitleContent = (
   xs,
@@ -123,13 +123,42 @@ const Checkout = ({
   const [loading, setLoading] = useState(true);
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(
+    true
+  );
+  console.log('cart', cart);
 
-  setTimeout(function () {
+  // Will replace this hard code with the actual attribute from backend which determines restricted products/state
+  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+  const restrictedProduct = 'Relief + Cooling';
+  const restrictedStatesList = [
+    'AZ',
+    'CT',
+    'ID',
+    'IA',
+    'MN',
+    'NH',
+    'NJ',
+    'OR',
+    'TX'
+  ];
+  const shippingState = cart.shippingAddress ? cart.shippingAddress.state : '';
+  const isStateRestricted = restrictedStatesList.includes(shippingState);
+  const isProductRestricted =
+    cart.items.filter(item => item.variant_name === restrictedProduct).length >
+    0;
+  /* Display Shipping Restriction Dialog in Mobile devices */
+
+  const closeShippingRestrictionsDialog = useCallback(() => {
+    setCloseShippingRestrictions(false);
+  }, [setCloseShippingRestrictions]);
+
+  setTimeout(function() {
     setLoading(false);
   }, 300);
 
   const trackCheckoutStarted = () => {
-    let orderItemsTransformed = [];
+    const orderItemsTransformed = [];
     cart.items.forEach(item => {
       orderItemsTransformed.push({
         image_url: item.variant_img,
@@ -268,7 +297,7 @@ const Checkout = ({
       cart_id: cart._id,
       step: step + 1
     });
-  }
+  };
 
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
@@ -313,7 +342,9 @@ const Checkout = ({
 
   return (
     <>
-      {loading ? <Loader /> :
+      {loading ? (
+        <Loader />
+      ) : (
         <Box bgcolor="rgba(252, 248, 244, 0.5)">
           <Container>
             <Box py={10} className="checkout-wrapper">
@@ -386,6 +417,16 @@ const Checkout = ({
                       />
                     </div>
                   </Panel>
+                  {xs &&
+                  activeStep === 2 &&
+                  isStateRestricted &&
+                  isProductRestricted ? (
+                      <StateRestrictionsDialog
+                      product_name={restrictedProduct}
+                      cartCount={cartCount}
+                      onExited={closeShippingRestrictionsDialog}
+                    />
+                  ) : null}
                   <Panel
                     title={getPanelTitleContent(
                       xs,
@@ -435,6 +476,7 @@ const Checkout = ({
                           hideTaxLabel
                           showOrderSummaryText
                           xsBreakpoint={xs}
+                          activeStep={activeStep}
                         />
                       )}
                       <CheckoutReviewForm
@@ -444,7 +486,7 @@ const Checkout = ({
                     </div>
                   </Panel>
                 </Grid>
-                {!xs ? (
+                {!xs && currentUser ? (
                   <Grid item xs={12} md={4} className="left-side">
                     <CartDrawer
                       disableItemEditing
@@ -452,11 +494,12 @@ const Checkout = ({
                       hideTaxLabel
                       showOrderSummaryText={false}
                       xsBreakpoint={xs}
+                      activeStep={activeStep}
                     />
                   </Grid>
                 ) : (
-                    ''
-                  )}
+                  ''
+                )}
               </Grid>
               <Dialog
                 className="transaction-dialog-container"
@@ -485,7 +528,7 @@ const Checkout = ({
             </Box>
           </Container>
         </Box>
-      }
+      )}
     </>
   );
 };

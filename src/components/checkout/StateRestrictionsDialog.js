@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 // Need to pass cart to check the number of items to display proper link
-const StateRestrictions = ({ product_name, cart }) => {
+const StateRestrictions = ({ product_name, cartCount }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs" className={classes.container}>
@@ -49,9 +49,9 @@ const StateRestrictions = ({ product_name, cart }) => {
         </Grid>
         {/* If cart is empty, display 'Continue shopping' or else display 'Continue checkout */}
         <Grid item xs={12}>
-          {cart.length > 0 ? (
+          {cartCount > 0 ? (
             //    What does this step take us to? Can we just simply click Close button to return to Checkout?
-            <NavLink to="" underline="always" className={classes.link}>
+            <NavLink to="/" underline="always" className={classes.link}>
               Continue checkout
             </NavLink>
           ) : (
