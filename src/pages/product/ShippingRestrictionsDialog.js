@@ -9,7 +9,7 @@ import withDialog from '../../hoc/withDialog';
 
 const useStyles = makeStyles(() => ({
   container: {
-    padding: '32px 48px 48px'
+    padding: '16px 48px 48px'
   },
   text: {
     fontFamily: 'FreightTextProBook',

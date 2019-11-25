@@ -45,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridModifications: {
     paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(4),
     backgroundColor: '#fdfbf9'
   },
   btnOOS: {
