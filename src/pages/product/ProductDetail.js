@@ -108,7 +108,6 @@ const ProductDetail = () => {
     false
   );
   const windowSize = useWindowSize();
-
   const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
@@ -218,18 +217,10 @@ const ProductDetail = () => {
 
   const variant = variantMap.get(selectedVariantSku);
 
-  // Mock-up data: list of restricted states. This list should be pulled from DB
-  const restrictedStates = [
-    { label: 'Arizona', value: 'AZ' },
-    { label: 'Connecticut', value: 'CT' },
-    { label: 'Idaho', value: 'ID' },
-    { label: 'Iowa', value: 'IA' },
-    { label: 'Minnesota', value: 'MN' },
-    { label: 'New Hampshire', value: 'NH' },
-    { label: 'New Jersey', value: 'NJ' },
-    { label: 'Oregon', value: 'OR' },
-    { label: 'Texas', value: 'TX' }
-  ];
+  const restrictedStates = variant.restrictions
+    ? variant.restrictions[variant.restrictions.definitions].label
+    : [];
+
   return (
     <>
       {isMobile ? (
@@ -419,7 +410,7 @@ const ProductDetail = () => {
                         )}
                       </Grid>
                     )}
-                    {content.productTitle === 'Relief + Cooling' && (
+                    {variant.restrictions && (
                       <ShippingRestriction
                         onClick={handleShippingRestrictions}
                       />

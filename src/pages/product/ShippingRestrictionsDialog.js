@@ -40,9 +40,9 @@ const ShippingRestrictions = ({ product_name, restrictedStates }) => {
         </Grid>
         <Grid item xs={12}>
           <ul className={classes.list}>
-            {restrictedStates.map(state => (
-              <li key={state.value} className={classes.text}>
-                {state.label}
+            {restrictedStates.map((state, ind) => (
+              <li key={ind} className={classes.text}>
+                {state}
               </li>
             ))}
           </ul>
