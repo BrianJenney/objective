@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import { HeadTags } from '../components/common';
 
 import ScrollToTop from '../components/common/ScrollToTop';
 
@@ -11,13 +13,15 @@ import PostItem from './blog/PostItem';
 
 const BlogCategory = ({ computedMatch }) => {
   const { category_slug } = computedMatch.params;
-
   const [title, setTitle] = useState('General');
   const [posts, setPosts] = useState([]);
+  const siteMap = useSelector(state => state.storefront.siteMap);
+  const blogCategoryMap = siteMap['journal_category_slugs'];
+  const { title: categoryTitle , description} = blogCategoryMap[category_slug];
+
   useEffect(() => {
     async function fetchData() {
       const results = await fetchPostsByCategory(category_slug);
-
       setTitle(results.title);
       setPosts(results.posts);
     }
@@ -29,7 +33,9 @@ const BlogCategory = ({ computedMatch }) => {
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
-    <ScrollToTop>
+    <>
+      <HeadTags title={categoryTitle} description={description} />
+      <ScrollToTop>
       <div className="journal-gallery">
         <Box className="header" py={8}>
           <Container className="container">
@@ -43,6 +49,7 @@ const BlogCategory = ({ computedMatch }) => {
         </Box>
       </div>
     </ScrollToTop>
+    </>
   );
 };
 
