@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { HeadTags } from '../components/common';
 
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
@@ -41,6 +42,10 @@ const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const siteMap = useSelector(state => state.storefront.siteMap);
+  const blogPostMap = siteMap['journal_post_slugs'];
+  const { title, description } = blogPostMap[post_slug];
+
   useEffect(() => {
     async function fetchData() {
       const postData = await fetchPost(post_slug);
@@ -86,7 +91,7 @@ const BlogPost = ({ computedMatch }) => {
           to={`/journal/tag/${tag.fields.slug}`}
           key={`tag-key-${tag.fields.slug}`}
           children={tag.fields.tag}
-        ></Link>
+        />
       ));
     }
 
@@ -117,7 +122,9 @@ const BlogPost = ({ computedMatch }) => {
     }
 
     return (
-      <ScrollToTop>
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
         <div className="journal-gallery post">
           <Box className="content" py={8}>
             <Container>
@@ -204,7 +211,7 @@ const BlogPost = ({ computedMatch }) => {
                   <h1 className="title" align="center">
                   SHOP THIS POST
                 </h1>
-                <div className="border"></div>
+                <div className="border"/>
                   <Grid container spacing={3} justify="center">
                     {renderRelatedProducts(post.fields.relatedProducts)}
                   </Grid>
@@ -229,6 +236,7 @@ const BlogPost = ({ computedMatch }) => {
           )}
         </div>
       </ScrollToTop>
+      </>
     );
   };
 
