@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
-import { Button } from '../components/common';
+import { HeadTags } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
 
 import './blog/blog-styles.scss';
@@ -14,10 +16,14 @@ import PostItem from './blog/PostItem';
 import FeaturedPost from './blog/FeaturedPost';
 import FeaturedItem from './blog/FeaturedItem';
 
-const Blog = () => {
+
+const Blog = ({ location }) => {
   const [featuredMain, setFeaturedMain] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
+  const siteMap = useSelector(state => state.storefront.siteMap);
+  const { title, description } = siteMap[location.pathname.substring(1)];
+
   useEffect(() => {
     async function fetchData() {
       const results = await fetchBlogHome();
@@ -35,9 +41,9 @@ const Blog = () => {
 
   /*
    *
-   *@description - Track Segment Editorial Grid Item Clicked 
+   *@description - Track Segment Editorial Grid Item Clicked
    *@return void
-   * 
+   *
    */
   const segmentTrackEditorialItemClicked = (post, cta = '') => {
     window.analytics.track('Editorial Grid Item Clicked', {
@@ -62,7 +68,9 @@ const Blog = () => {
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
-    <ScrollToTop>
+    <>
+      <HeadTags title={title} description={description} />
+      <ScrollToTop>
       <div className="journal-gallery">
         <Box className="header" py={8}>
           <Container className="container">
@@ -101,7 +109,8 @@ const Blog = () => {
         </Box>
       </div>
     </ScrollToTop>
+    </>
   );
 };
 
-export default Blog;
+export default withRouter(Blog);
