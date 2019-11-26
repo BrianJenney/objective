@@ -8,6 +8,8 @@ import Box from '@material-ui/core/Box';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
+import { HeadTags } from '../components/common';
+
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
@@ -86,7 +88,7 @@ class Home extends Component {
 
   renderSections() {
     if (!this.state.content.homepageSection) return <></>;
-    
+
     return this.state.content.homepageSection.map(section => (
       <div
         className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
@@ -170,60 +172,63 @@ class Home extends Component {
     if (!this.state.content) return <></>;
 
     let { welcomeHeader, welcomeText } = this.state.content;
-
+    const { title, description } = this.props.siteMap['home'];
     return (
-      <div className="home-style">
-        <Link
-          to="/gallery"
-          segmentProperties={{
-            cta: 'Shop All',
-            destination: '/gallery',
-            site_location: 'home',
-            text: 'Targeted Health Solutions for You and Yours'
-          }}
-          onClick={this.segmentTrackBannerClicked}
-        >
-          <ul>{this.renderHeroSlider()}</ul>
-        </Link>
-        <Container>
-          <Box py={10} className="welcome">
-            <h1>{welcomeHeader}</h1>
-            <p>{welcomeText}</p>
-          </Box>
-        </Container>
-        <div className="home-bestsellers beige-bg">
+      <>
+        <HeadTags title={title} description={description} />
+        <div className="home-style">
+          <Link
+            to="/gallery"
+            segmentProperties={{
+              cta: 'Shop All',
+              destination: '/gallery',
+              site_location: 'home',
+              text: 'Targeted Health Solutions for You and Yours'
+            }}
+            onClick={this.segmentTrackBannerClicked}
+          >
+            <ul>{this.renderHeroSlider()}</ul>
+          </Link>
           <Container>
-            <Box py={10}>
-              <h1>Our Bestsellers</h1>
-              <Grid container spacing={3} className="best-container">
-                {this.renderBestsellers()}
-              </Grid>
-              <Box style={{ paddingTop: 90 }}>
-                <Link to="/gallery" className="shopAllLink">
-                  Shop All
-                </Link>
-              </Box>
+            <Box py={10} className="welcome">
+              <h1>{welcomeHeader}</h1>
+              <p>{welcomeText}</p>
             </Box>
           </Container>
-        </div>
-        <>{this.renderSections()}</>
-        <div className="his-hers-theirs beige-bg">
-          <Container>
-            <Box py={10}>
-              <h1>HIS, HERS & THEIRS</h1>
-              <p>Solutions for the whole family</p>
-              <Grid container spacing={3} className="solutions-container">
-                {this.renderFamily()}
-              </Grid>
-              <Box style={{ paddingTop: 90 }}>
-                <Link to="/gallery" className="shopAllLink">
-                  Shop All
-                </Link>
+          <div className="home-bestsellers beige-bg">
+            <Container>
+              <Box py={10}>
+                <h1>Our Bestsellers</h1>
+                <Grid container spacing={3} className="best-container">
+                  {this.renderBestsellers()}
+                </Grid>
+                <Box style={{ paddingTop: 90 }}>
+                  <Link to="/gallery" className="shopAllLink">
+                    Shop All
+                  </Link>
+                </Box>
               </Box>
-            </Box>
-          </Container>
+            </Container>
+          </div>
+          <>{this.renderSections()}</>
+          <div className="his-hers-theirs beige-bg">
+            <Container>
+              <Box py={10}>
+                <h1>HIS, HERS & THEIRS</h1>
+                <p>Solutions for the whole family</p>
+                <Grid container spacing={3} className="solutions-container">
+                  {this.renderFamily()}
+                </Grid>
+                <Box style={{ paddingTop: 90 }}>
+                  <Link to="/gallery" className="shopAllLink">
+                    Shop All
+                  </Link>
+                </Box>
+              </Box>
+            </Container>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -233,7 +238,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.catalog.variants
+  products: state.catalog.variants,
+  siteMap: state.storefront.siteMap,
 });
 
 export default connect(mapStateToProps)(Home);
