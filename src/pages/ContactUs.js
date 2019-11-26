@@ -1,13 +1,17 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+
 import ContactMail from '../components/common/Icons/ContactMail/ContactMail';
 import ContactPhone from '../components/common/Icons/ContactPhone/ContactPhone';
 import Link from '@material-ui/core/Link';
 import ScrollToTop from '../components/common/ScrollToTop';
+import { HeadTags } from '../components/common';
+
 import {
   StyledBackground,
   StyledContainerBackground,
@@ -18,6 +22,7 @@ import {
   StyledPhoneNumber,
   StyledEmail
 } from './contactUs/StyledComponents';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -55,11 +60,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContactUs = () => {
+const ContactUs = ({ location }) => {
   const classes = useStyles();
   window.analytics.page('Contact');
+  const siteMap = useSelector(state => state.storefront.siteMap);
+  const { title, description } = siteMap[location.pathname.substring(1)];
+
   return (
-    <ScrollToTop>
+    <>
+      <HeadTags title={title} description={description} />
+      <ScrollToTop>
       <StyledBackground>
         <Container>
           <StyledContainerBackground>
@@ -123,7 +133,8 @@ const ContactUs = () => {
         </Container>
       </StyledBackground>
     </ScrollToTop>
+    </>
   );
 };
 
-export default ContactUs;
+export default withRouter(ContactUs);
