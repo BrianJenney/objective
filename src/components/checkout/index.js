@@ -125,24 +125,15 @@ const Checkout = ({
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(
-    true
+    false
   );
-  // console.log('cart', cart);
+  const [restrictionMessage, setRestrictionMessage] = useState(false);
+  const [restrictedProduct, setRestrictedProduct] = useState('');
 
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  const restrictions = new VariantRestrictions(cart.items);
-  const restrictionValidations = restrictions.validate(
-    cart.shippingAddress,
-    'variant_id',
-    'variant_name'
-  );
-  const restrictedProduct = restrictionValidations.items.map(
-    item => item.item_name
-  );
-  /* Display Shipping Restriction Dialog in Mobile devices */
 
   const closeShippingRestrictionsDialog = useCallback(() => {
-    setCloseShippingRestrictions(false);
+    setCloseShippingRestrictions(true);
   }, [setCloseShippingRestrictions]);
 
   setTimeout(function() {
@@ -397,6 +388,9 @@ const Checkout = ({
                     <div ref={stepRefs[1]}>
                       <AccountAddresses
                         currentUser={currentUser}
+                        cart={cart}
+                        setRestrictionMessage={setRestrictionMessage}
+                        setRestrictedProduct={setRestrictedProduct}
                         requestPatchAccount={requestPatchAccount}
                         clearPatchAccountError={clearPatchAccountError}
                         formType={ADDRESS_FORM_TYPES.CHECKOUT}
@@ -409,15 +403,13 @@ const Checkout = ({
                       />
                     </div>
                   </Panel>
-                  {xs &&
-                  activeStep === 2 &&
-                  restrictionValidations.hasRestrictions ? (
+                  {xs && activeStep === 2 && restrictionMessage ? (
                     <StateRestrictionsDialog
-                        product_name={restrictedProduct}
-                        cartCount={cartCount}
-                        onExited={closeShippingRestrictionsDialog}
-                      />
-                    ) : null}
+                      product_name={restrictedProduct}
+                      cartCount={cartCount}
+                      onExited={closeShippingRestrictionsDialog}
+                    />
+                  ) : null}
                   <Panel
                     title={getPanelTitleContent(
                       xs,
@@ -468,6 +460,8 @@ const Checkout = ({
                           showOrderSummaryText
                           xsBreakpoint={xs}
                           activeStep={activeStep}
+                          restrictionMessage={restrictionMessage}
+                          restrictedProduct={restrictedProduct}
                         />
                       )}
                       <CheckoutReviewForm
@@ -486,6 +480,8 @@ const Checkout = ({
                       showOrderSummaryText={false}
                       xsBreakpoint={xs}
                       activeStep={activeStep}
+                      restrictionMessage={restrictionMessage}
+                      restrictedProduct={restrictedProduct}
                     />
                   </Grid>
                 ) : (
