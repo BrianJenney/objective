@@ -20,8 +20,7 @@ import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
-import StateRestrictionsDialog from '../../components/checkout/StateRestrictionsDialog';
-
+import VariantRestrictions from '../../utils/product/variant.restriction.class';
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
   StyledCartHeader,
@@ -88,31 +87,22 @@ const Cart = ({
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   // Will replace this hard code with the actual attribute from backend which determines restricted products/state
-  const restrictedProduct = 'Relief + Cooling';
-  const restrictedStatesList = [
-    'AZ',
-    'CT',
-    'ID',
-    'IA',
-    'MN',
-    'NH',
-    'NJ',
-    'OR',
-    'TX'
-  ];
-  const shippingState = cart.shippingAddress ? cart.shippingAddress.state : '';
-  const isStateRestricted = restrictedStatesList.includes(shippingState);
-  const isProductRestricted =
-    cart.items.filter(item => item.variant_name === restrictedProduct).length >
-    0;
+  console.log('cart', cart);
+  const restrictions = new VariantRestrictions(cart.items);
+  const restrictionValidations = restrictions.validate(
+    cart.shippingAddress,
+    'variant_id',
+    'variant_name'
+  );
+  const restrictedProduct = restrictionValidations.items.map(
+    item => item.item_name
+  );
+  console.log('restrictions', restrictionValidations);
+  console.log('restrictedProduct', restrictedProduct);
+
   // If isProductRestricted is true,
   // Remove the restrictedProduct and update cart
   // Invoke function removefromCart(cart, product)
-
-  // console.log('isStateRestricted', isStateRestricted);
-  // console.log('isProductRestricted', isProductRestricted);
-  // console.log('CART-STATE', cart);
-  // console.log('active-step', activeStep);
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false, false));
@@ -217,25 +207,24 @@ const Cart = ({
         {!xsBreakpoint &&
         isCheckoutPage &&
         activeStep === 2 &&
-        isStateRestricted &&
-        isProductRestricted ? (
+        restrictionValidations.hasRestrictions ? (
             <>
-                <Typography className={classes.cartRestricted}>
+              <Typography className={classes.cartRestricted}>
               CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
               cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
               state soon!
-                </Typography>
+            </Typography>
             {cartCount === 0 && (
-                    <NavLink
+                <NavLink
                 to="/gallery"
                 underline="always"
                 className={classes.link}
               >
                 Continue shopping
               </NavLink>
-                  )}
-              </>
+            )}
+          </>
           ) : null}
       </Grid>
 

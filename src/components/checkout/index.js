@@ -31,6 +31,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
+import VariantRestrictions from '../../utils/product/variant.restriction.class';
 
 const getPanelTitleContent = (
   xs,
@@ -126,27 +127,18 @@ const Checkout = ({
   const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(
     true
   );
-  console.log('cart', cart);
+  // console.log('cart', cart);
 
-  // Will replace this hard code with the actual attribute from backend which determines restricted products/state
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  const restrictedProduct = 'Relief + Cooling';
-  const restrictedStatesList = [
-    'AZ',
-    'CT',
-    'ID',
-    'IA',
-    'MN',
-    'NH',
-    'NJ',
-    'OR',
-    'TX'
-  ];
-  const shippingState = cart.shippingAddress ? cart.shippingAddress.state : '';
-  const isStateRestricted = restrictedStatesList.includes(shippingState);
-  const isProductRestricted =
-    cart.items.filter(item => item.variant_name === restrictedProduct).length >
-    0;
+  const restrictions = new VariantRestrictions(cart.items);
+  const restrictionValidations = restrictions.validate(
+    cart.shippingAddress,
+    'variant_id',
+    'variant_name'
+  );
+  const restrictedProduct = restrictionValidations.items.map(
+    item => item.item_name
+  );
   /* Display Shipping Restriction Dialog in Mobile devices */
 
   const closeShippingRestrictionsDialog = useCallback(() => {
@@ -419,14 +411,13 @@ const Checkout = ({
                   </Panel>
                   {xs &&
                   activeStep === 2 &&
-                  isStateRestricted &&
-                  isProductRestricted ? (
-                      <StateRestrictionsDialog
-                      product_name={restrictedProduct}
-                      cartCount={cartCount}
-                      onExited={closeShippingRestrictionsDialog}
-                    />
-                  ) : null}
+                  restrictionValidations.hasRestrictions ? (
+                    <StateRestrictionsDialog
+                        product_name={restrictedProduct}
+                        cartCount={cartCount}
+                        onExited={closeShippingRestrictionsDialog}
+                      />
+                    ) : null}
                   <Panel
                     title={getPanelTitleContent(
                       xs,
