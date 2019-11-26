@@ -305,7 +305,7 @@ const ProductDetail = () => {
                       )}
                     </Grid>
                   )}
-                  {content.productTitle === 'Relief + Cooling' && (
+                  {variant.restrictions && (
                     <ShippingRestrictionMobile
                       onClick={handleShippingRestrictions}
                     />
