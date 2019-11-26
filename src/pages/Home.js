@@ -10,6 +10,8 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
+import { HeadTags } from '../components/common';
+
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -178,9 +180,12 @@ class Home extends Component {
       );
 
     const { welcomeHeader, welcomeText } = this.state.content;
+    const { title, description } = this.props.siteMap['home'];
 
     return (
-      <ScrollToTop>
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
         <div className="home-style">
           <Link
             to="/gallery"
@@ -234,6 +239,7 @@ class Home extends Component {
           </div>
         </div>
       </ScrollToTop>
+    </>
     );
   }
 
@@ -243,7 +249,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.catalog.variants
+  products: state.catalog.variants,
+  siteMap: state.storefront.siteMap,
 });
 
 export default connect(mapStateToProps)(Home);
