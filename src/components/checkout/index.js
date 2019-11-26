@@ -31,7 +31,6 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
-import VariantRestrictions from '../../utils/product/variant.restriction.class';
 
 const getPanelTitleContent = (
   xs,
