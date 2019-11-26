@@ -97,6 +97,19 @@ const AccountAddresses = ({
   const handleSave = (values, actions) => {
     const pureValues = omit(values, ['shouldSaveData']);
     const { shouldSaveData } = values;
+    const restrictions = new VariantRestrictions(cart.items);
+    const restrictionValidations = restrictions.validate(
+      values,
+      'variant_id',
+      'variant_name'
+    );
+    if (restrictionValidations.hasRestrictions) {
+      restrictionValidations.items.map(item => {
+        setRestrictionMessage(true);
+        setRestrictedProduct(item.item_name);
+        removeFromCart(cart, item.key);
+      });
+    }
 
     if (allowFlyMode && !shouldSaveData) {
       actions.setSubmitting(false);
@@ -133,7 +146,6 @@ const AccountAddresses = ({
     if (onSubmit) {
       onSubmit(pureValues);
     }
-
     return true;
   };
 
