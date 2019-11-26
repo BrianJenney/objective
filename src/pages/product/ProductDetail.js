@@ -305,7 +305,7 @@ const ProductDetail = () => {
                       )}
                     </Grid>
                   )}
-                  {variant.restrictions.definitions.length && (
+                  {variant.restrictions && (
                     <ShippingRestrictionMobile
                       onClick={handleShippingRestrictions}
                     />
