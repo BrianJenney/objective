@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Button, Address } from '../components/common';
+import { Button, Address, HeadTags } from '../components/common';
 import { CartSummary } from '../components/summaries';
 
 const useStyles = makeStyles(theme => ({
@@ -137,7 +137,7 @@ const OrderConfirmation = ({ history }) => {
         shipping: order.shippingMethod.price,
         items: orderItemsTransformedGA
       });
-    },[])
+    },[]);
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -229,8 +229,11 @@ const OrderConfirmation = ({ history }) => {
     );
   };
 
+  const title = 'Objective | Order Confirmation';
   return (
-    <Box bgcolor="rgba(252, 248, 244, 0.6)">
+    <>
+      <HeadTags title={title} />
+      <Box bgcolor="rgba(252, 248, 244, 0.6)">
       <Container className={classes.root}>
         <CssBaseline />
         <Box py={xs ? 0 : 10}>
@@ -245,6 +248,7 @@ const OrderConfirmation = ({ history }) => {
         </Box>
       </Container>
     </Box>
+      </>
   );
 };
 
