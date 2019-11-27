@@ -142,7 +142,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                          Limited Time: Free Shipping for All New Customers
+                          CYBER WEEKEND SALE: 30% OFF + FREE SHIPPING SITEWIDE. USE CODE CYBER
                         </NavLink>
                         <CloseIcon
                           className="closeIconMobile"
@@ -162,7 +162,7 @@ const Header = ({ currentUser, location }) => {
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
                             <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                              Limited Time: Free Shipping for All New Customers
+                              CYBER WEEKEND SALE: 30% OFF + FREE SHIPPING SITEWIDE. USE CODE CYBER
                             </NavLink>
                             <div
                               className="closeIcon"
