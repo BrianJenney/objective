@@ -9,13 +9,13 @@ class VariantRestrictions {
   }
 
   /*
-   * @description - Validates a location.state restriction definition
+   * @description - Validates a location_state restriction definition
    * @param {Object} restrictions - Restriction data
    * @param {Object} data - The comparison data
    * @return {Boolean} - Returns whether or not the comparison data is restricted
    */
 
-  ['restriction.definition.location.state'](restrictions, data) {
+  ['restriction.definition.location_state'](restrictions, data) {
     const { state } = data;
     return restrictions.values.includes(state);
   }
