@@ -428,6 +428,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
+                  <Typography className="disclaimer-text">Promotion Details: 30% Off Everything and Free Shipping. Offer valid from November 29, 2019 at 12:00am ET to December 3, 2019 at 3:00am PT online at objectivewellness.com in the U.S. only. Discount applies to merchandise only, not to applicable taxes, shipping & handling charges. Offer cannot be combined with any other offers. Offer is non-transferable and not valid for cash or cash equivalent. No adjustments on previous purchases. Offer subject to change without notice. Enter promo code CYBER at checkout.</Typography>
                   <Typography className="disclaimer-text">
                     * Statements on this website have not been evaluated by the
                     Food and Drug Administration. Any products discussed or
@@ -647,6 +648,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
+                  <Typography className="disclaimer-text">Promotion Details: 30% Off Everything and Free Shipping. Offer valid from November 29, 2019 at 12:00am ET to December 3, 2019 at 3:00am PT online at objectivewellness.com in the U.S. only. Discount applies to merchandise only, not to applicable taxes, shipping & handling charges. Offer cannot be combined with any other offers. Offer is non-transferable and not valid for cash or cash equivalent. No adjustments on previous purchases. Offer subject to change without notice. Enter promo code CYBER at checkout.</Typography>
                   <Typography className="disclaimer-text">
                     * Statements on this website have not been evaluated by the
                     Food and Drug Administration. Any products discussed or
