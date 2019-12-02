@@ -241,12 +241,13 @@ const Checkout = ({
       return false;
     }
 
-    if (paymentMethodNonce) {
+    if (paymentMethodNonce && cart.items.length) {
       requestCreateOrder(
         { ...cart, ...payload, account_jwt },
         { paymentMethodNonce }
       );
-    } else {
+    }
+    if (paymentMethodToken && cart.items.length) {
       requestCreateOrder(
         { ...cart, ...payload, account_jwt },
         { paymentMethodToken }
