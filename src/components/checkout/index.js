@@ -418,6 +418,8 @@ const Checkout = ({
                       null,
                       payload.paymentDetails
                     )}
+                    step={2}
+                    activeStep={activeStep}
                     collapsible
                     expanded={activeStep === 2}
                     onChange={e => onPanelChange(e, 2)}
