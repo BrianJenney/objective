@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -74,6 +74,8 @@ const AccountOverview = props => {
   const [open, setOpen] = React.useState(true);
   const paymentMethods = get(currentUser, 'data.paymentMethods', []);
   const defaultPaymentMethod = getDefaultEntity(paymentMethods) || {};
+
+  console.log('defaultPaymentMethod', defaultPaymentMethod);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -102,15 +104,17 @@ const AccountOverview = props => {
       </p>
       <p>
         <strong>SAVED PAYMENT METHOD</strong>
-        {`${defaultPaymentMethod.cardType} ${defaultPaymentMethod.last4}`}
+        {isEmpty(defaultPaymentMethod)
+          ? 'None'
+          : `${defaultPaymentMethod.cardType} ${defaultPaymentMethod.last4}`}
       </p>
       {xs ? (
         <Button mt={2} mp={3} fullWidth type="submit" onClick={props.logout}>
           Logout
         </Button>
       ) : (
-        ''
-      )}
+          ''
+        )}
     </div>
   );
   return (
