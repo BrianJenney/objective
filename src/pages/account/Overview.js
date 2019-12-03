@@ -75,7 +75,6 @@ const AccountOverview = props => {
   const paymentMethods = get(currentUser, 'data.paymentMethods', []);
   const defaultPaymentMethod = getDefaultEntity(paymentMethods) || {};
 
-  console.log('defaultPaymentMethod', defaultPaymentMethod);
   const handleClick = () => {
     setOpen(!open);
   };
