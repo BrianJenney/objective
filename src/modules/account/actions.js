@@ -367,6 +367,10 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
       query: {
         email,
         url
+      },
+      collation: {
+        locale: 'en_US',
+        strength: 2
       }
     }
   };
