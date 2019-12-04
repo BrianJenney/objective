@@ -313,7 +313,7 @@ const Checkout = ({
     if (
       !expanded ||
       activeStep === 0 ||
-      (panelIndex === 3 &&
+      ([2, 3].includes(panelIndex) &&
         (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
       return false;
