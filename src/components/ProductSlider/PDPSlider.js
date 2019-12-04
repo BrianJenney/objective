@@ -84,7 +84,7 @@ const Carousel = props => {
       index: currentIndex + 1,
       product_id: product._id,
       product_name: product.name,
-      sku: product.sku
+      sku: product.defaultVariantSku
     });
   };
 
