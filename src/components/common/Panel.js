@@ -44,8 +44,6 @@ const Panel = ({
   expanded,
   collapsible,
   hideExpandIcon,
-  step,
-  activeStep,
   onChange,
   children,
   ...rest
@@ -71,7 +69,7 @@ const Panel = ({
       >
         <ExpansionPanelSummary
           expandIcon={
-            hideExpandIcon || activeStep < step? null : (
+            hideExpandIcon ? null : (
               <MenuLink
                 children="CHANGE"
                 underline="always"
