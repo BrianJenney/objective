@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import InputField from './InputField';
 
@@ -23,25 +24,26 @@ SelectField.defaultProps = {
 export default function SelectField(props) {
   const { options, ...rest } = props;
   return (
-    <InputField
-      select
-      SelectProps={{
-        MenuProps: {
-          classes: popoverStyles(),
-          getContentAnchorEl: null,
-          anchorOrigin: {
-            vertical: 'bottom',
-            horizontal: 'left'
-          }
-        }
-      }}
-      {...rest}
-    >
-      {options.map(o => (
-        <MenuItem key={o.value} value={o.value}>
-          {o.label}
-        </MenuItem>
-      ))}
-    </InputField>
+    <Autocomplete
+      options={options}
+      getOptionLabel={option => option.label}
+      renderInput={params => (
+        <InputField
+          {...params}
+          inputProps={{
+            ...params.inputProps,
+            MenuProps: {
+              classes: popoverStyles(),
+              getContentAnchorEl: null,
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'left'
+              }
+            }
+          }}
+          {...rest}
+        />
+      )}
+    />
   );
 }
