@@ -17,6 +17,8 @@ import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
 
+import { useSelector } from 'react-redux';
+
 export const FORM_TYPES = {
   ACCOUNT: 'account',
   CHECKOUT: 'checkout'
@@ -66,7 +68,7 @@ const AccountPaymentDetails = ({
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
-
+  const cart = useSelector(state => state.cart); 
   useEffect(() => {
     if (window.location.pathname.indexOf('/account/payment-details') !== -1) {
       window.analytics.page('Account Payment Details');
@@ -135,8 +137,8 @@ const AccountPaymentDetails = ({
         },
         nonce: cardData.nonce
       };
-
-      trackSegmentPaymentInfoEnteredEvent({payment_method:cardData.details.cardType});
+  
+      trackSegmentPaymentInfoEnteredEvent({cart_id:cart._id,payment_method:cardData.details.cardType});
 
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
