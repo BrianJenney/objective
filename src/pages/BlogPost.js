@@ -49,6 +49,9 @@ const BlogPost = ({ computedMatch }) => {
   useEffect(() => {
     fetchData();
     window.analytics.page('Journal Post');
+    return () => {
+      setPost({});
+    };
   }, [post_slug]);
 
   if (Object.keys(post).length === 0) {
@@ -58,6 +61,7 @@ const BlogPost = ({ computedMatch }) => {
       </ScrollToTop>
     );
   }
+
   const renderRelatedProducts = products => {
     if (variants && products.length > 0) {
       return products.map(product => {
