@@ -42,11 +42,11 @@ const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const fetchData = async () => {
+    const postData = await fetchPost(post_slug);
+    setPost(postData);
+  };
   useEffect(() => {
-    async function fetchData() {
-      const postData = await fetchPost(post_slug);
-      setPost(postData);
-    }
     fetchData();
     window.analytics.page('Journal Post');
   }, [post_slug]);
@@ -210,14 +210,14 @@ const BlogPost = ({ computedMatch }) => {
               <Container>
                 <h1 className="title" align="center">
                   SHOP THIS POST
-                  </h1>
-                  <div className="border"></div>
+                </h1>
+                <div className="border"></div>
                 <Grid container spacing={3} justify="center">
                   {renderRelatedProducts(post.fields.relatedProducts)}
                 </Grid>
               </Container>
             </Box>
-            ) : (
+          ) : (
             <></>
           )}
 
