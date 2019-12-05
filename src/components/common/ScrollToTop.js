@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const ScrollToTop = ({ children }) => {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setTimeout(() => window.scrollTo(0, 0), 100);
   });
 
   return children || null;
