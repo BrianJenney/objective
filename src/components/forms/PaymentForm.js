@@ -46,28 +46,6 @@ const usePrevious = value => {
   return ref.current;
 };
 
-//   const validateCardNumberField = values => {
-//   const { number, expirationDate, cvv } = values.paymentDetails;
-//   const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
-//   if (!number) {
-//     return 'Card number is required';
-//   }
-//   if (isNaN(Number(number))) {
-//     return 'Card number should be a numeric value';
-//   }
-//   if (!expirationDatePattern.test(expirationDate)) {
-//     return 'Expiration date should be a valid date - MM/YYYY';
-//   }
-//   if (!cvv) {
-//     return 'CVV is required';
-//   }
-//   if (isNaN(Number(cvv))) {
-//     return 'CVV should be a numeric value';
-//   }
-
-//   return undefined;
-// };
-
 const INITIAL_VALUES = {
   paymentDetails: {
     paymentMethod: PAYMENT_METHODS.CREDIT_CARD,
@@ -154,6 +132,7 @@ const PaymentForm = ({
     state: useRef(null),
     zipcode: useRef(null)
   };
+  const errRef = useRef(null);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { enqueueSnackbar } = useSnackbar();
@@ -177,7 +156,7 @@ const PaymentForm = ({
     }
   };
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  const errorMessage = getErrorMessage(currentUser.patchAccountError, scrollToRef(errRef));
   const [HostedFieldsClient, setHostedFieldsClient] = useState();
 
   useEffect(() => {
@@ -366,14 +345,16 @@ const PaymentForm = ({
       />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <AlertPanel
-            py={2}
-            px={4}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={errorMessage}
-            variant="subtitle2"
-          />
+          <div ref={errRef}>
+            <AlertPanel
+              py={2}
+              px={4}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={errorMessage}
+              variant="subtitle2"
+            />
+          </div>
         </Grid>
         {!onlyCard && (
           <Grid item xs={12}>
