@@ -1,15 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import { makeStyles } from '@material-ui/core/styles';
 import InputField from './InputField';
-
-const filterOptions = createFilterOptions({
-  matchFrom: 'start',
-  stringify: option => option.label
-});
 
 const popoverStyles = makeStyles({
   paper: {
@@ -30,27 +23,25 @@ SelectField.defaultProps = {
 export default function SelectField(props) {
   const { options, ...rest } = props;
   return (
-    <Autocomplete
-      options={options}
-      filterOptions={filterOptions}
-      getOptionLabel={option => option.label}
-      renderInput={params => (
-        <InputField
-          {...params}
-          inputProps={{
-            ...params.inputProps,
-            MenuProps: {
-              classes: popoverStyles(),
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'left'
-              }
-            }
-          }}
-          {...rest}
-        />
-      )}
-    />
+    <InputField
+      select
+      SelectProps={{
+        MenuProps: {
+          classes: popoverStyles(),
+          getContentAnchorEl: null,
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left'
+          }
+        }
+      }}
+      {...rest}
+    >
+      {options.map(o => (
+        <MenuItem key={o.value} value={o.value}>
+          {o.label}
+        </MenuItem>
+      ))}
+    </InputField>
   );
 }
