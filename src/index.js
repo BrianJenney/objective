@@ -25,6 +25,9 @@ import nxtTheme from './components/Theme/Theme';
 import './assets/styles/global.scss';
 import './fonts/fonts.css';
 
+import { createAnonymousToken, validateToken } from './utils/token';
+
+const localStorageClient = require('store');
 const ObjectId = require('bson-objectid');
 
 const useStyles = makeStyles(() => ({
@@ -61,6 +64,19 @@ const Main = () => {
     </Provider>
   );
 };
+
+let olympusToken = null;
+if (localStorageClient.get('olympusToken')) {
+  olympusToken = localStorageClient.get('olympusToken');
+
+  if (!validateToken(olympusToken)) {
+    olympusToken = createAnonymousToken();
+    localStorageClient.set('olympusToken', olympusToken);
+  }
+} else {
+  olympusToken = createAnonymousToken();
+  localStorageClient.set('olympusToken', olympusToken);
+}
 
 const wss = new WebSocket(process.env.REACT_APP_CLOUDAMQP_HOSTNAME);
 const stompClient = Stomp.over(wss);
