@@ -25,7 +25,10 @@ export const getErrorMessage = error => {
 
   const errors = Array.isArray(error) ? error : [error];
 
-  return errors.map(err => err.message || err.errorMessage).join('\n');
+  const mappedErr = errors
+    .map(err => err.message || err.errorMessage)
+    .join('\n');
+  return mappedErr;
 };
 
 export const formatCurrency = amount => {
@@ -186,8 +189,6 @@ export const scrollToRef = ref => {
   if (!ref.current) {
     return null;
   }
-
   window.scrollTo(0, ref.current.offsetTop);
-
   return true;
 };

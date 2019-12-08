@@ -418,7 +418,7 @@ export const segmentRemoveCouponReceived = (cart) => {
     coupon_id: cart.promo && cart.promo.code ? cart.promo.code : '',
     coupon_name: cart.promo && cart.promo.code ? cart.promo.code : '',
     discount: cart.discount,
-    order_id: cart.accountId
+    order_id: cart.accountId ? cart.accountId : ''
   });
 }
 

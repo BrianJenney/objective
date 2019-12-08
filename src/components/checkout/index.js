@@ -241,12 +241,13 @@ const Checkout = ({
       return false;
     }
 
-    if (paymentMethodNonce) {
+    if (paymentMethodNonce && cart.items.length) {
       requestCreateOrder(
         { ...cart, ...payload, account_jwt },
         { paymentMethodNonce }
       );
-    } else {
+    }
+    if (paymentMethodToken && cart.items.length) {
       requestCreateOrder(
         { ...cart, ...payload, account_jwt },
         { paymentMethodToken }
@@ -312,7 +313,7 @@ const Checkout = ({
     if (
       !expanded ||
       activeStep === 0 ||
-      (panelIndex === 3 &&
+      ([2, 3].includes(panelIndex) &&
         (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
       return false;

@@ -164,9 +164,13 @@ const ProductDetail = () => {
   }, [setOpenEmailConfirmation]);
 
   /* Shipping Restrictions */
-  const handleShippingRestrictions = useCallback(() => {
-    setOpenShippingRestrictions(true);
-  }, [setOpenShippingRestrictions]);
+  const handleShippingRestrictions = useCallback(
+    e => {
+      e.preventDefault();
+      setOpenShippingRestrictions(true);
+    },
+    [setOpenShippingRestrictions]
+  );
 
   const closeShippingRestrictions = useCallback(() => {
     setOpenShippingRestrictions(false);

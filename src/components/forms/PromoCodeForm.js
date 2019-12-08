@@ -30,7 +30,7 @@ const PromoCodeForm = () => {
         "cart_id": cart._id,
         "coupon_id": e.promoCode,
         "coupon_name": e.promoCode,
-        "order_id": cart.accountId
+        "order_id": cart.accountId ? cart.accountId : ''
       });
       if (response.valid) {
         addCoupon(cart._id, response.code);
@@ -40,7 +40,7 @@ const PromoCodeForm = () => {
           "cart_id": cart._id,
           "coupon_id": e.promoCode,
           "coupon_name": e.promoCode,
-          "order_id": cart.accountId,
+          "order_id": cart.accountId ? cart.accountId : '',
           "reason": response.reason
         });
       }
