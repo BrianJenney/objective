@@ -15,10 +15,10 @@ import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleAccountResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
-    case 'account.request.create':
+    case 'account.request.register':
       debugRabbitResponse('Account Create Response', status, data, fields, properties);
       if (status === 'success') {
-        store.dispatch(receivedCreateAccountSuccess(data));
+        store.dispatch(receivedCreateAccountSuccess(data.account, data.token));
       } else {
         store.dispatch(receivedCreateAccountFailure(data));
       }
@@ -50,7 +50,7 @@ export const handleAccountResponse = (status, data, fields, properties) => {
     case 'account.request.login':
       debugRabbitResponse('Account Login Response', status, data, fields, properties);
       if (status === 'success') {
-        store.dispatch(receivedLoginSuccess(data.data[0]));
+        store.dispatch(receivedLoginSuccess(data.account.data[0], data.token));
       } else {
         store.dispatch(receivedLoginFailure(data));
       }
