@@ -157,8 +157,6 @@ const AddressForm = ({
     });
 
     formikFields.forEach(requiredField => {
-      console.log('hello', requiredField);
-
       fieldErrs.address[requiredField] = validateRequiredField(
         values.address[requiredField]
       );
