@@ -25,7 +25,7 @@ import nxtTheme from './components/Theme/Theme';
 import './assets/styles/global.scss';
 import './fonts/fonts.css';
 
-import { createAnonymousToken, validateToken } from './utils/token';
+import { createAnonymousToken } from './utils/token';
 
 const localStorageClient = require('store');
 const ObjectId = require('bson-objectid');
@@ -67,12 +67,8 @@ const Main = () => {
 
 let olympusToken = null;
 if (localStorageClient.get('olympusToken')) {
+  // Validate is a JSON token (use decode not verify); at some point add token expiration
   olympusToken = localStorageClient.get('olympusToken');
-
-  if (!validateToken(olympusToken)) {
-    olympusToken = createAnonymousToken();
-    localStorageClient.set('olympusToken', olympusToken);
-  }
 } else {
   olympusToken = createAnonymousToken();
   localStorageClient.set('olympusToken', olympusToken);
