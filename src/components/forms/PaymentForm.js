@@ -156,7 +156,10 @@ const PaymentForm = ({
     }
   };
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(currentUser.patchAccountError, scrollToRef(errRef));
+  const errorMessage = getErrorMessage(
+    currentUser.patchAccountError,
+    scrollToRef(errRef)
+  );
   const [HostedFieldsClient, setHostedFieldsClient] = useState();
 
   useEffect(() => {
