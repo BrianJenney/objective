@@ -32,7 +32,7 @@ const usePrevious = value => {
 };
 
 const INITIAL_VALUES = {
-  billingAddress: {
+  address: {
     firstName: '',
     lastName: '',
     address1: '',
@@ -64,12 +64,12 @@ const formikFields = [
   'zipcode'
 ];
 const formikValueFieldsMap = {
-  firstName: 'billingAddress.firstName',
-  lastName: 'billingAddress.lastName',
-  address1: 'billingAddress.address1',
-  city: 'billingAddress.city',
-  state: 'billingAddress.state',
-  zipcode: 'billingAddress.zipcode'
+  firstName: 'address.firstName',
+  lastName: 'address.lastName',
+  address1: 'address.address1',
+  city: 'address.city',
+  state: 'address.state',
+  zipcode: 'address.zipcode'
 };
 const validateRequiredField = value => {
   if (value) {
@@ -111,12 +111,12 @@ const AddressForm = ({
     if (event.target.checked) {
       setValues({
         ...values,
-        billingAddress: { ...values.billingAddress, ...addressSeed }
+        address: { ...values.address, ...addressSeed }
       });
     } else {
       setValues({
         ...values,
-        billingAddress: { ...INITIAL_VALUES.billingAddress }
+        address: { ...INITIAL_VALUES.address }
       });
     }
   };
@@ -145,7 +145,7 @@ const AddressForm = ({
 
   const handleSubmit = (values, actions) => {
     const fieldErrs = {
-      billingAdress: {}
+      address: {}
     };
 
     Object.keys(formikValueFieldsMap).forEach(function(field) {
@@ -158,17 +158,12 @@ const AddressForm = ({
 
     formikFields.forEach(requiredField => {
       console.log('hello', requiredField);
-      if (requiredField === 'firstName') {
-        fieldErrs.billingAddress[requiredField] = validateRequiredField(
-          values.billingAddress[requiredField]
-        );
-      } else {
-        fieldErrs.billingAddress[requiredField] = validateRequiredField(
-          values.billingAddress[requiredField]
-        );
-      }
+
+      fieldErrs.address[requiredField] = validateRequiredField(
+        values.address[requiredField]
+      );
     });
-    actions.setErrors(omit(fieldErrs));
+    actions.setErrors(fieldErrs);
 
     const firstInvalidField = checkedFields.find(field => {
       if (formikFields.includes(field)) {
@@ -230,7 +225,7 @@ const AddressForm = ({
         <Grid item xs={12} sm={6}>
           <div ref={fieldRefs.firstName}>
             <Field
-              name="billingAddress.firstName"
+              name="address.firstName"
               label="First Name"
               component={InputField}
             />
@@ -239,7 +234,7 @@ const AddressForm = ({
         <Grid item xs={12} sm={6}>
           <div ref={fieldRefs.lastName}>
             <Field
-              name="billingAddress.lastName"
+              name="address.lastName"
               label="Last Name"
               component={InputField}
             />
@@ -248,7 +243,7 @@ const AddressForm = ({
         <Grid item xs={12}>
           <div ref={fieldRefs.address1}>
             <Field
-              name="billingAddress.address1"
+              name="address.address1"
               label="Street Address"
               component={InputField}
             />
@@ -256,24 +251,20 @@ const AddressForm = ({
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="billingAddress.address2"
+            name="address.address2"
             label="Apt. suite, bldg, c/o (optional)"
             component={InputField}
           />
         </Grid>
         <Grid item xs={12}>
           <div ref={fieldRefs.city}>
-            <Field
-              name="billingAddress.city"
-              label="City"
-              component={InputField}
-            />
+            <Field name="address.city" label="City" component={InputField} />
           </div>
         </Grid>
         <Grid item xs={12} sm={6}>
           <div ref={fieldRefs.state}>
             <Field
-              name="billingAddress.state"
+              name="address.state"
               label="State"
               component={SelectField}
               options={STATE_OPTIONS}
@@ -283,22 +274,18 @@ const AddressForm = ({
         <Grid item xs={12} sm={6}>
           <div ref={fieldRefs.zipcode}>
             <Field
-              name="billingAddress.zipcode"
+              name="address.zipcode"
               label="Zip Code"
               component={InputField}
             />
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Field
-            name="billingAddress.phone"
-            label="Phone #"
-            component={InputField}
-          />
+          <Field name="address.phone" label="Phone #" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="billingAddress.country"
+            name="address.country"
             label="Country"
             component={SelectField}
             options={COUNTRY_OPTIONS}
