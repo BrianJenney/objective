@@ -440,6 +440,7 @@ const PaymentForm = ({
                   label="Country"
                   component={SelectField}
                   options={COUNTRY_OPTIONS}
+                  defaultLabel="United States"
                   disabled
                 />
               </Grid>

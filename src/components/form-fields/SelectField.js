@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete, {
   createFilterOptions
@@ -32,6 +32,21 @@ export default function SelectField(props) {
   const { options, disabled, defaultLabel, ...rest } = props;
   const { initialValues, setFieldValue } = props.form;
 
+  const field = props.field ? props.field : null;
+  const handleChange = (e, value) => {
+    if (field.name === 'state') {
+      setFieldValue(
+        'state',
+        value !== null ? value.value : initialValues.state.value
+      );
+    }
+    if (field.name === 'billingAddress.state') {
+      setFieldValue(
+        'billingAddress.state',
+        value !== null ? value.value : initialValues.billingAddress.state.value
+      );
+    }
+  };
   return (
     <Autocomplete
       options={options}
@@ -39,12 +54,7 @@ export default function SelectField(props) {
       disabled={disabled}
       filterOptions={filterOptions}
       getOptionLabel={option => option.label}
-      onChange={(e, value) => {
-        setFieldValue(
-          'state',
-          value !== null ? value.value : initialValues.state.value
-        );
-      }}
+      onChange={(e, value) => handleChange(e, value)}
       renderInput={params => (
         <InputField
           {...params}
