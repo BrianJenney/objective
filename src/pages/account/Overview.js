@@ -113,8 +113,8 @@ const AccountOverview = props => {
           Logout
         </Button>
       ) : (
-          ''
-        )}
+        ''
+      )}
     </div>
   );
   return (
