@@ -12,11 +12,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
-import {
-  getInitialValues,
-  getErrorMessage,
-  scrollToRef
-} from '../../utils/misc';
+import { getInitialValues, getErrorMessage, scrollToRef } from '../../utils/misc';
+import { validateAddress } from '../../apis/SmartyStreets';
+import AddressValidation from '../account/AddressValidation';
 
 export const FORM_TYPES = {
   ACCOUNT: 'account',
@@ -106,6 +104,10 @@ const AddressForm = ({
   const [initialValues, setInitialValues] = useState(
     getInitialValues(INITIAL_VALUES, defaultValues)
   );
+  const [addressSuggestionEnabled, setAddressSuggestion] = useState(false);
+  const [originalAddress, setOriginalAddress] = useState(null);
+  const [suggestedAddress, setSuggestedAddress] = useState(null);
+  const [formActions, setFormActions] = useState(null);
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -142,6 +144,18 @@ const AddressForm = ({
       onBack();
     }
   }, [currentUser.patchAccountSubmitting]);
+
+  const isSameAddress = (original, suggested) => {
+    if (
+      original.address1.trim().toLowerCase() === suggested.address1.trim().toLowerCase() &&
+      original.address2.trim().toLowerCase() === suggested.address2.trim().toLowerCase() &&
+      original.city.trim().toLowerCase() === suggested.city.trim().toLowerCase() &&
+      original.zipcode === suggested.zipcode
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSubmit = (values, actions) => {
     const fieldErrs = {
@@ -180,6 +194,36 @@ const AddressForm = ({
       phone: values.phone ? values.phone.trim() : ''
     };
     onSubmit(payload, actions);
+    validateAddress(values).then(
+      response => {
+        setOriginalAddress(values);
+        setSuggestedAddress(response);
+        setFormActions(actions);
+        if (response !== false) {
+          // Compare addreses, no suggestion dialog if same
+          const isSame = isSameAddress(values, response);
+          if (isSame) {
+            const payload = {
+              ...values,
+              phone: values.phone ? values.phone.trim() : ''
+            };
+            onSubmit(payload, actions);
+          } else {
+            setAddressSuggestion(true);
+          }
+        } else {
+          setAddressSuggestion(true);
+        }
+      },
+      error => {
+        console.log('validation error, address form', error);
+      }
+    );
+  };
+
+  const handleDialogExit = (actions) => {
+    actions.setSubmitting(false);
+    setAddressSuggestion(false);
   };
 
   const renderForm = ({ values, setValues, isSubmitting }) => (
@@ -352,12 +396,25 @@ const AddressForm = ({
   );
 
   return (
-    <Formik
-      initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-      onSubmit={handleSubmit}
-      render={renderForm}
-      enableReinitialize
-    />
+    <>
+      {addressSuggestionEnabled ? (
+        <AddressValidation
+          origAddress={originalAddress}
+          suggAddress={suggestedAddress}
+          actions={formActions}
+          onSubmit={onSubmit}
+          onExited={() => {
+            handleDialogExit(formActions);
+          }}
+        />
+      ) : null}
+      <Formik
+        initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+        onSubmit={handleSubmit}
+        render={renderForm}
+        enableReinitialize
+      />
+    </>
   );
 };
 

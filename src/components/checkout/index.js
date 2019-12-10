@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { Panel } from '../common';
+import { Panel, Loader } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
 import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
@@ -30,7 +30,7 @@ import { resetOrderState } from '../../modules/order/actions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
-import { Loader } from '../common';
+import StateRestrictionsDialog from './StateRestrictionsDialog';
 
 const getPanelTitleContent = (
   xs,
@@ -123,13 +123,24 @@ const Checkout = ({
   const [loading, setLoading] = useState(true);
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(
+    false
+  );
+  const [restrictionMessage, setRestrictionMessage] = useState(false);
+  const [restrictedProduct, setRestrictedProduct] = useState('');
 
-  setTimeout(function () {
+  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+
+  const closeShippingRestrictionsDialog = useCallback(() => {
+    setCloseShippingRestrictions(true);
+  }, [setCloseShippingRestrictions]);
+
+  setTimeout(function() {
     setLoading(false);
   }, 300);
 
   const trackCheckoutStarted = () => {
-    let orderItemsTransformed = [];
+    const orderItemsTransformed = [];
     cart.items.forEach(item => {
       orderItemsTransformed.push({
         image_url: item.variant_img,
@@ -230,12 +241,13 @@ const Checkout = ({
       return false;
     }
 
-    if (paymentMethodNonce) {
+    if (paymentMethodNonce && cart.items.length) {
       requestCreateOrder(
         { ...cart, ...payload, account_jwt },
         { paymentMethodNonce }
       );
-    } else {
+    }
+    if (paymentMethodToken && cart.items.length) {
       requestCreateOrder(
         { ...cart, ...payload, account_jwt },
         { paymentMethodToken }
@@ -268,7 +280,7 @@ const Checkout = ({
       cart_id: cart._id,
       step: step + 1
     });
-  }
+  };
 
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
@@ -313,7 +325,9 @@ const Checkout = ({
 
   return (
     <>
-      {loading ? <Loader /> :
+      {loading ? (
+        <Loader />
+      ) : (
         <Box bgcolor="rgba(252, 248, 244, 0.5)">
           <Container>
             <Box py={10} className="checkout-wrapper">
@@ -374,6 +388,9 @@ const Checkout = ({
                     <div ref={stepRefs[1]}>
                       <AccountAddresses
                         currentUser={currentUser}
+                        cart={cart}
+                        setRestrictionMessage={setRestrictionMessage}
+                        setRestrictedProduct={setRestrictedProduct}
                         requestPatchAccount={requestPatchAccount}
                         clearPatchAccountError={clearPatchAccountError}
                         formType={ADDRESS_FORM_TYPES.CHECKOUT}
@@ -386,6 +403,13 @@ const Checkout = ({
                       />
                     </div>
                   </Panel>
+                  {xs && activeStep === 2 && restrictionMessage ? (
+                    <StateRestrictionsDialog
+                      product_name={restrictedProduct}
+                      cartCount={cartCount}
+                      onExited={closeShippingRestrictionsDialog}
+                    />
+                  ) : null}
                   <Panel
                     title={getPanelTitleContent(
                       xs,
@@ -435,6 +459,9 @@ const Checkout = ({
                           hideTaxLabel
                           showOrderSummaryText
                           xsBreakpoint={xs}
+                          activeStep={activeStep}
+                          restrictionMessage={restrictionMessage}
+                          restrictedProduct={restrictedProduct}
                         />
                       )}
                       <CheckoutReviewForm
@@ -444,7 +471,7 @@ const Checkout = ({
                     </div>
                   </Panel>
                 </Grid>
-                {!xs ? (
+                {!xs && currentUser ? (
                   <Grid item xs={12} md={4} className="left-side">
                     <CartDrawer
                       disableItemEditing
@@ -452,11 +479,14 @@ const Checkout = ({
                       hideTaxLabel
                       showOrderSummaryText={false}
                       xsBreakpoint={xs}
+                      activeStep={activeStep}
+                      restrictionMessage={restrictionMessage}
+                      restrictedProduct={restrictedProduct}
                     />
                   </Grid>
                 ) : (
-                    ''
-                  )}
+                  ''
+                )}
               </Grid>
               <Dialog
                 className="transaction-dialog-container"
@@ -485,7 +515,7 @@ const Checkout = ({
             </Box>
           </Container>
         </Box>
-      }
+      )}
     </>
   );
 };

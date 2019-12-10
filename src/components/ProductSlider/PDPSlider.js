@@ -84,7 +84,7 @@ const Carousel = props => {
       index: currentIndex + 1,
       product_id: product._id,
       product_name: product.name,
-      sku: product.sku
+      sku: product.defaultVariantSku
     });
   };
 
@@ -92,7 +92,15 @@ const Carousel = props => {
     let carouselImages = [];
 
     images.map(image => {
-      carouselImages.push({ original: image.fields.file.url + '?w=687&w=687&q=90', thumbnail: image.fields.file.url + '?w=120&h=120&q=80' });
+      let imageUrlOriginal = image.fields.file.url + '?w=687&w=687&q=50';
+      let imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/mj9bpefl6wof/');
+      imageUrlOriginal = 'https://nutranext.imgix.net/'+imageUrlOriginalSplit[1]+'&auto=compress,format'; 
+
+      let imageUrlThumbnail = image.fields.file.url + '?w=120&h=120&q=50';
+      let imageUrlThumbnailSplit = imageUrlThumbnail.split('//images.ctfassets.net/mj9bpefl6wof/');
+      imageUrlThumbnail= 'https://nutranext.imgix.net/'+imageUrlThumbnailSplit[1]+'&auto=compress,format'; 
+
+      carouselImages.push({ original: imageUrlOriginal, thumbnail: imageUrlThumbnail });
       return carouselImages;
     });
 

@@ -24,27 +24,27 @@ const PromoCodeForm = () => {
   const cart = useSelector(state => state.cart);
   const [promoCodeErr, setPromoCodeErr] = useState(null);
   const onSubmit = useCallback(
-    async e => {
+    async ( e, form ) => {
       const response = await validatePromoCode(e.promoCode);
       window.analytics.track("Coupon Entered", {
         "cart_id": cart._id,
         "coupon_id": e.promoCode,
         "coupon_name": e.promoCode,
-        "order_id": cart.accountId
+        "order_id": cart.accountId ? cart.accountId : ''
       });
       if (response.valid) {
         addCoupon(cart._id, response.code);
-
       } else {
         setPromoCodeErr(response.reason);
         window.analytics.track("Coupon Denied", {
           "cart_id": cart._id,
           "coupon_id": e.promoCode,
           "coupon_name": e.promoCode,
-          "order_id": cart.accountId,
+          "order_id": cart.accountId ? cart.accountId : '',
           "reason": response.reason
         });
       }
+      form.setSubmitting(false);
     },
     [promoCodeErr, setPromoCodeErr, validatePromoCode]
   );

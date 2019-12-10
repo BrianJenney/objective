@@ -24,6 +24,11 @@ import {
 
 import { ATC, OutOfStockPDP } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
+import {
+  ShippingRestrictionMobile,
+  ShippingRestriction
+} from './ShippingRestrictions';
+import ShippingRestrictionsDialog from './ShippingRestrictionsDialog';
 import './PDP-style.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -40,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   },
   gridModifications: {
     paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(4),
     backgroundColor: '#fdfbf9'
   },
   btnOOS: {
@@ -59,16 +65,16 @@ const useStyles = makeStyles(theme => ({
 let analyticsTracked = false;
 const ProductVariant = ({ productVariant }) => {
   if (!analyticsTracked) {
-    window.analytics.track("Product Viewed", {
-      "cart_id": localStorage.cartId,
-      "image_url": "https:" + productVariant.assets.imgs,
-      "name": productVariant.name,
-      "price": Number.parseFloat(productVariant.effectivePrice),
-      "product_id": productVariant.product_id,
-      "quantity": 1,
-      "sku": productVariant.sku,
-      "url": window.location.href,
-      "variant": productVariant.id
+    window.analytics.track('Product Viewed', {
+      cart_id: localStorage.cartId,
+      image_url: `https:${productVariant.assets.imgs}`,
+      name: productVariant.name,
+      price: Number.parseFloat(productVariant.effectivePrice),
+      product_id: productVariant.product_id,
+      quantity: 1,
+      sku: productVariant.sku,
+      url: window.location.href,
+      variant: productVariant.id
     });
     analyticsTracked = true;
   }
@@ -99,8 +105,10 @@ const ProductDetail = () => {
   const [ATCAdding, setATCAdding] = useState(false);
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
   const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
+  const [openShippingRestrictions, setOpenShippingRestrictions] = useState(
+    false
+  );
   const windowSize = useWindowSize();
-
   const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const pricesMap = getPrices(prices);
@@ -146,7 +154,7 @@ const ProductDetail = () => {
     setOpenOutOfStockDialog(false);
   }, [setOpenOutOfStockDialog]);
 
-  /*Out Of Stock email confirmation */
+  /* Out Of Stock email confirmation */
   const handleOpenEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(true);
   }, [setOpenEmailConfirmation]);
@@ -154,6 +162,19 @@ const ProductDetail = () => {
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
   }, [setOpenEmailConfirmation]);
+
+  /* Shipping Restrictions */
+  const handleShippingRestrictions = useCallback(
+    e => {
+      e.preventDefault();
+      setOpenShippingRestrictions(true);
+    },
+    [setOpenShippingRestrictions]
+  );
+
+  const closeShippingRestrictions = useCallback(() => {
+    setOpenShippingRestrictions(false);
+  }, [setOpenShippingRestrictions]);
 
   useEffect(() => {
     setSelectedVariantSku(defaultSku);
@@ -178,7 +199,9 @@ const ProductDetail = () => {
         selectedVariantSku == null
       ) {
         clearInterval(interval);
-        alert('Something wrong just happened, please refresh your browser and try again');
+        alert(
+          'Something wrong just happened, please refresh your browser and try again'
+        );
       }
     }
 
@@ -198,6 +221,10 @@ const ProductDetail = () => {
   const isMobile = windowSize.width < 768;
 
   const variant = variantMap.get(selectedVariantSku);
+
+  const restrictedStates = variant.restrictions
+    ? variant.restrictions[variant.restrictions.definitions].label
+    : [];
 
   return (
     <>
@@ -282,107 +309,131 @@ const ProductDetail = () => {
                       )}
                     </Grid>
                   )}
+                  {variant.restrictions && (
+                    <ShippingRestrictionMobile
+                      onClick={handleShippingRestrictions}
+                    />
+                  )}
+                  {openShippingRestrictions && (
+                    <ShippingRestrictionsDialog
+                      product_name={variant.name}
+                      restrictedStates={restrictedStates}
+                      onExited={closeShippingRestrictions}
+                    />
+                  )}
                 </Card>
               </Grid>
             </Grid>
           </Grid>
         </>
       ) : (
-          <div className={classes.gridModifications}>
-            <Container>
-              <Grid container xs={12} sm={12}>
-                <Grid container spacing={5} xs={12} sm={12}>
-                  <Grid item xs={12} sm={6}>
-                    <Carousel images={content.productImages} />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Card className={classes.box}>
-                      <CardContent
-                        className={classes.cardRootOverrides}
-                        className="pdp-content"
+        <div className={classes.gridModifications}>
+          <Container>
+            <Grid container xs={12} sm={12}>
+              <Grid container spacing={5} xs={12} sm={12}>
+                <Grid item xs={12} sm={6}>
+                  <Carousel images={content.productImages} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Card className={classes.box}>
+                    <CardContent
+                      className={classes.cardRootOverrides}
+                      className="pdp-content"
+                    >
+                      <h1
+                        className="pdp-header"
+                        style={{ color: product.color }}
                       >
-                        <h1
-                          className="pdp-header"
-                          style={{ color: product.color }}
-                        >
-                          {content.productTitle}
-                        </h1>
-                        <ProductVariant
-                          productVariant={variantMap.get(selectedVariantSku)}
-                        />
-                        <div className="pdp-subtitle">
-                          {content.shortPurposeHeadline}
-                        </div>
-                        <Typography className="pdp-description">
-                          {content.shortDescription}
-                        </Typography>
-                        <Typography className="pdp-direction">
-                          DIRECTIONS
+                        {content.productTitle}
+                      </h1>
+                      <ProductVariant
+                        productVariant={variantMap.get(selectedVariantSku)}
+                      />
+                      <div className="pdp-subtitle">
+                        {content.shortPurposeHeadline}
+                      </div>
+                      <Typography className="pdp-description">
+                        {content.shortDescription}
                       </Typography>
-                        <Typography className="pdp-direction-description">
-                          {content.shortDirections}
-                        </Typography>
+                      <Typography className="pdp-direction">
+                        DIRECTIONS
+                      </Typography>
+                      <Typography className="pdp-direction-description">
+                        {content.shortDirections}
+                      </Typography>
 
-                        {/* <ProductVariantType
+                      {/* <ProductVariantType
                   isMobile={isMobile}
                   variantSlug={variantSlug}
                   updateTerminalVariant={updateTerminalVariant}
                 /> */}
-                        {!ATCEnabled && <Quantity />}
-                      </CardContent>
-                      {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
-                        <Grid>
-                          <CardActions className={classes.maxWidth}>
-                            <ATC
-                              maxWidth={classes.maxWidth}
-                              onClick={handleAddToCart}
-                              variantSku={selectedVariantSku}
-                              ATCAdded={ATCAdded}
-                              ATCAdding={ATCAdding}
-                            />
-                          </CardActions>
-                        </Grid>
-                      )}
-                      {variant.inventory.quantityInStock < 200 && (
-                        <Grid>
-                          <OutOfStockPDP
+                      {!ATCEnabled && <Quantity />}
+                    </CardContent>
+                    {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
+                      <Grid>
+                        <CardActions className={classes.maxWidth}>
+                          <ATC
                             maxWidth={classes.maxWidth}
-                            onClick={handleOpenOutOfStockDialog}
-                            onExited={closeOutOfStockDialog}
-                            product_img={product.assets.img_front}
-                            product_name={product.name}
-                            product_category={product.category}
-                            product_id={product._id}
-                            product_sku={product.sku}
-                            product_variant={product.defaultVariantSku}
-                            product_url={`/products/${product.slug}`}
-                            openOutOfStockDialog={openOutOfStockDialog}
-                            handleOpenEmailConfirmation={
-                              handleOpenEmailConfirmation
-                            }
+                            onClick={handleAddToCart}
+                            variantSku={selectedVariantSku}
+                            ATCAdded={ATCAdded}
+                            ATCAdding={ATCAdding}
                           />
+                        </CardActions>
+                      </Grid>
+                    )}
+                    {variant.inventory.quantityInStock < 200 && (
+                      <Grid>
+                        <OutOfStockPDP
+                          maxWidth={classes.maxWidth}
+                          onClick={handleOpenOutOfStockDialog}
+                          onExited={closeOutOfStockDialog}
+                          product_img={product.assets.img_front}
+                          product_name={product.name}
+                          product_category={product.category}
+                          product_id={product._id}
+                          product_sku={product.sku}
+                          product_variant={product.defaultVariantSku}
+                          product_url={`/products/${product.slug}`}
+                          openOutOfStockDialog={openOutOfStockDialog}
+                          handleOpenEmailConfirmation={
+                            handleOpenEmailConfirmation
+                          }
+                        />
 
-                          {openEmailConfirmation && (
-                            <ConfirmEmail
-                              onExited={closeEmailConfirmation}
-                              product_img={variant.assets.imgs}
-                              product_name={variant.name}
-                              product_category={variant.category}
-                              product_id={variant._id}
-                              product_sku={variant.sku}
-                              product_variant={variant.defaultVariantSku}
-                              product_url={`/products/${variant.slug}`}
-                            />
-                          )}
-                        </Grid>
-                      )}
-                    </Card>
-                  </Grid>
+                        {openEmailConfirmation && (
+                          <ConfirmEmail
+                            onExited={closeEmailConfirmation}
+                            product_img={variant.assets.imgs}
+                            product_name={variant.name}
+                            product_category={variant.category}
+                            product_id={variant._id}
+                            product_sku={variant.sku}
+                            product_variant={variant.defaultVariantSku}
+                            product_url={`/products/${variant.slug}`}
+                          />
+                        )}
+                      </Grid>
+                    )}
+                    {variant.restrictions && (
+                      <ShippingRestriction
+                        onClick={handleShippingRestrictions}
+                      />
+                    )}
+                    {openShippingRestrictions && (
+                      <ShippingRestrictionsDialog
+                        product_name={variant.name}
+                        restrictedStates={restrictedStates}
+                        onExited={closeShippingRestrictions}
+                      />
+                    )}
+                  </Card>
                 </Grid>
               </Grid>
-            </Container>
-          </div>
-        )}
+            </Grid>
+          </Container>
+        </div>
+      )}
     </>
   );
 };

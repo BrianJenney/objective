@@ -23,10 +23,10 @@ const contentfulClient = contentful.createClient({
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=825&fm=jpg&q=90';
+      let params = '?w=825&fm=jpg&q=50';
 
       if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=90';
+        params = '?w=450&fm=jpg&q=50';
       }
 
       return (
@@ -70,11 +70,11 @@ class Home extends Component {
     if (!this.state.content.heroSlider) return <></>;
 
     let images = this.state.content.heroSlider;
-    let params = '?w=2000&fm=jpg&q=90';
+    let params = '?w=2000&fm=jpg&q=50';
 
     if (window.screen.width < 768) {
       images = this.state.content.heroSliderMobile;
-      params = '?w=450&fm=jpg&q=90';
+      params = '?w=450&fm=jpg&q=50';
     }
 
     return images.map(image => (
@@ -91,7 +91,7 @@ class Home extends Component {
       <div
         className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
         key={section.sys.id}
-        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url + '")'}}
+        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url.replace('//images.ctfassets.net/mj9bpefl6wof/','https://nutranext.imgix.net/') + '?q=50&auto=compress,format")'}}
       >
         <Container className="section-container">
           <Box className="section-holder">
