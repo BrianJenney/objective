@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
@@ -38,6 +38,9 @@ const contentfulOptions = {
           alt={node.data.target.fields.title}
         />
       );
+    },
+    [INLINES.HYPERLINK]: (node, children) => {
+      return <Link to={node.data.uri}>{children}</Link>;
     }
   }
 };
@@ -96,7 +99,15 @@ class Home extends Component {
           section
         )}`}
         key={section.sys.id}
-        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url.replace('//images.ctfassets.net/mj9bpefl6wof/','https://nutranext.imgix.net/') + '?q=50&auto=compress,format")'}}
+        style={{
+          backgroundImage:
+            'url("' +
+            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+              '//images.ctfassets.net/mj9bpefl6wof/',
+              'https://nutranext.imgix.net/'
+            ) +
+            '?q=50&auto=compress,format")'
+        }}
       >
         <Container className="section-container">
           <Box className="section-holder">
@@ -186,60 +197,60 @@ class Home extends Component {
       <>
         <HeadTags title={title} description={description} />
         <ScrollToTop>
-        <div className="home-style">
-          <Link
-            to="/gallery"
-            segmentProperties={{
-              cta: 'Shop All',
-              destination: '/gallery',
-              site_location: 'home',
-              text: 'Targeted Health Solutions for You and Yours'
-            }}
-            onClick={this.segmentTrackBannerClicked}
-          >
-            <ul>{this.renderHeroSlider()}</ul>
-          </Link>
-          <Container>
-            <Box py={10} className="welcome">
-              <h1>{welcomeHeader}</h1>
-              <p>{welcomeText}</p>
-            </Box>
-          </Container>
-          <div className="home-bestsellers beige-bg">
+          <div className="home-style">
+            <Link
+              to="/gallery"
+              segmentProperties={{
+                cta: 'Shop All',
+                destination: '/gallery',
+                site_location: 'home',
+                text: 'Targeted Health Solutions for You and Yours'
+              }}
+              onClick={this.segmentTrackBannerClicked}
+            >
+              <ul>{this.renderHeroSlider()}</ul>
+            </Link>
             <Container>
-              <Box py={10}>
-                <h1>Our Bestsellers</h1>
-                <Grid container spacing={3} className="best-container">
-                  {this.renderBestsellers()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link to="/gallery" className="shopAllLink">
-                    Shop All
-                  </Link>
-                </Box>
+              <Box py={10} className="welcome">
+                <h1>{welcomeHeader}</h1>
+                <p>{welcomeText}</p>
               </Box>
             </Container>
-          </div>
-          <>{this.renderSections()}</>
-          <div className="his-hers-theirs beige-bg">
-            <Container>
-              <Box py={10}>
-                <h1>HIS, HERS & THEIRS</h1>
-                <p>Solutions for the whole family</p>
-                <Grid container spacing={3} className="solutions-container">
-                  {this.renderFamily()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link to="/gallery" className="shopAllLink">
-                    Shop All
-                  </Link>
+            <div className="home-bestsellers beige-bg">
+              <Container>
+                <Box py={10}>
+                  <h1>Our Bestsellers</h1>
+                  <Grid container spacing={3} className="best-container">
+                    {this.renderBestsellers()}
+                  </Grid>
+                  <Box style={{ paddingTop: 90 }}>
+                    <Link to="/gallery" className="shopAllLink">
+                      Shop All
+                    </Link>
+                  </Box>
                 </Box>
-              </Box>
-            </Container>
+              </Container>
+            </div>
+            <>{this.renderSections()}</>
+            <div className="his-hers-theirs beige-bg">
+              <Container>
+                <Box py={10}>
+                  <h1>HIS, HERS & THEIRS</h1>
+                  <p>Solutions for the whole family</p>
+                  <Grid container spacing={3} className="solutions-container">
+                    {this.renderFamily()}
+                  </Grid>
+                  <Box style={{ paddingTop: 90 }}>
+                    <Link to="/gallery" className="shopAllLink">
+                      Shop All
+                    </Link>
+                  </Box>
+                </Box>
+              </Container>
+            </div>
           </div>
-        </div>
-      </ScrollToTop>
-    </>
+        </ScrollToTop>
+      </>
     );
   }
 
@@ -250,7 +261,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   products: state.catalog.variants,
-  siteMap: state.storefront.siteMap,
+  siteMap: state.storefront.siteMap
 });
 
 export default connect(mapStateToProps)(Home);

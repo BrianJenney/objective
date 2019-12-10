@@ -74,7 +74,6 @@ const AccountOverview = props => {
   const [open, setOpen] = React.useState(true);
   const paymentMethods = get(currentUser, 'data.paymentMethods', []);
   const defaultPaymentMethod = getDefaultEntity(paymentMethods) || {};
-
   console.log('defaultPaymentMethod', defaultPaymentMethod);
   const handleClick = () => {
     setOpen(!open);
