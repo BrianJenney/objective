@@ -181,9 +181,9 @@ const AccountOrders = ({ currentUser: { data } }) => {
                               <Button
                                 color="primary"
                                 component={AdapterLink}
-                                to={`/orders/${data.orders[dataIndex].orderNumber}`}
+                                to={`/orders/${data.orders[dataIndex]._id}`}
                               >
-                                {data.orders[dataIndex]._id}
+                                {data.orders[dataIndex].orderNumber}
                               </Button>
                             </Typography>
                           </Grid>
