@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import Autocomplete, {
+  createFilterOptions
+} from '@material-ui/lab/Autocomplete';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import InputField from './InputField';
+
+const filterOptions = createFilterOptions({
+  matchFrom: 'start',
+  stringify: option => option.label
+});
 
 const popoverStyles = makeStyles({
   paper: {
@@ -21,27 +29,49 @@ SelectField.defaultProps = {
 };
 
 export default function SelectField(props) {
-  const { options, ...rest } = props;
+  const { options, disabled, defaultLabel, ...rest } = props;
+  const { initialValues, setFieldValue } = props.form;
+
+  const field = props.field ? props.field : null;
+  const handleChange = (e, value) => {
+    if (field.name === 'state') {
+      setFieldValue(
+        'state',
+        value !== null ? value.value : initialValues.state.value
+      );
+    }
+    if (field.name === 'billingAddress.state') {
+      setFieldValue(
+        'billingAddress.state',
+        value !== null ? value.value : initialValues.billingAddress.state.value
+      );
+    }
+  };
   return (
-    <InputField
-      select
-      SelectProps={{
-        MenuProps: {
-          classes: popoverStyles(),
-          getContentAnchorEl: null,
-          anchorOrigin: {
-            vertical: 'bottom',
-            horizontal: 'left'
-          }
-        }
-      }}
-      {...rest}
-    >
-      {options.map(o => (
-        <MenuItem key={o.value} value={o.value}>
-          {o.label}
-        </MenuItem>
-      ))}
-    </InputField>
+    <Autocomplete
+      options={options}
+      inputValue={defaultLabel || null}
+      disabled={disabled}
+      filterOptions={filterOptions}
+      getOptionLabel={option => option.label}
+      onChange={(e, value) => handleChange(e, value)}
+      renderInput={params => (
+        <InputField
+          {...params}
+          inputProps={{
+            ...params.inputProps,
+            MenuProps: {
+              classes: popoverStyles(),
+              getContentAnchorEl: null,
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'left'
+              }
+            }
+          }}
+          {...rest}
+        />
+      )}
+    />
   );
 }

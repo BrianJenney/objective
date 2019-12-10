@@ -109,9 +109,12 @@ const AddressForm = ({
 
   const isSameAddress = (original, suggested) => {
     if (
-      original.address1.trim().toLowerCase() === suggested.address1.trim().toLowerCase() &&
-      original.address2.trim().toLowerCase() === suggested.address2.trim().toLowerCase() &&
-      original.city.trim().toLowerCase() === suggested.city.trim().toLowerCase() &&
+      original.address1.trim().toLowerCase() ===
+        suggested.address1.trim().toLowerCase() &&
+      original.address2.trim().toLowerCase() ===
+        suggested.address2.trim().toLowerCase() &&
+      original.city.trim().toLowerCase() ===
+        suggested.city.trim().toLowerCase() &&
       original.zipcode === suggested.zipcode
     ) {
       return true;
@@ -147,12 +150,12 @@ const AddressForm = ({
     );
   };
 
-  const handleDialogExit = (actions) => {
+  const handleDialogExit = actions => {
     actions.setSubmitting(false);
     setAddressSuggestion(false);
   };
 
-  const renderForm = ({ isSubmitting }) => (
+  const renderForm = ({ isSubmitting, setFieldValue }) => (
     <Form>
       <Box
         component={Typography}
@@ -230,6 +233,7 @@ const AddressForm = ({
             name="country"
             label="Country"
             component={SelectField}
+            defaultLabel="United States"
             options={COUNTRY_OPTIONS}
             disabled
           />
