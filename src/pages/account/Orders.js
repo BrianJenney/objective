@@ -16,7 +16,7 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 
 const columns = [
   {
-    name: '_id',
+    name: 'orderNumber',
     label: 'ORDER ID',
     options: {
       filter: false,
@@ -169,7 +169,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
               isLoading={isLoading}
               moreOptions={{
                 customRowRender: (d, dataIndex, rowIndex) => {
-                  console.log('THIS_DATA', data.orders[dataIndex]);
                   return (
                     <tr className="account-orders-mobile-row">
                       <td>
@@ -182,7 +181,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                               <Button
                                 color="primary"
                                 component={AdapterLink}
-                                to={`/orders/${data.orders[dataIndex]._id}`}
+                                to={`/orders/${data.orders[dataIndex].orderNumber}`}
                               >
                                 {data.orders[dataIndex]._id}
                               </Button>

@@ -129,7 +129,7 @@ const OrderConfirmation = ({ history }) => {
     useEffect(()=>{
       window.analytics.page("Order Confirmation");
       window.gtag('event', 'purchase', {
-        transaction_id: order.orderId,
+        transaction_id: order.orderNumber,
         affiliation: order.storeCode,
         value: order.total,
         currency: 'USD',
@@ -148,15 +148,7 @@ const OrderConfirmation = ({ history }) => {
         <Typography className={classes.text1}>
           Your order number:{' '}
           <strong>
-            {order.orderId.substring(0, 3) +
-              '-' +
-              order.orderId.substring(3, 6) +
-              '-' +
-              order.orderId.substring(6, 10) +
-              '-' +
-              order.orderId.substring(10, 16) +
-              '-' +
-              order.orderId.substring(16)}
+            {order.orderNumber}
           </strong>
         </Typography>
         {xs ? (
