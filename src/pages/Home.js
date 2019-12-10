@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import './home/home-style.scss';
@@ -35,9 +35,13 @@ const contentfulOptions = {
           alt={node.data.target.fields.title}
         />
       );
+    },
+    [INLINES.HYPERLINK]: (node, children) => {
+      return <Link to={node.data.uri}>{children}</Link>;
     }
   }
 };
+
 let homePageTracked = false;
 class Home extends Component {
   constructor(props) {
@@ -86,12 +90,22 @@ class Home extends Component {
 
   renderSections() {
     if (!this.state.content.homepageSection) return <></>;
-    
+
     return this.state.content.homepageSection.map(section => (
       <div
-        className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
+        className={
+          'sectionNum' + this.state.content.homepageSection.indexOf(section)
+        }
         key={section.sys.id}
-        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url.replace('//images.ctfassets.net/mj9bpefl6wof/','https://nutranext.imgix.net/') + '?q=50&auto=compress,format")'}}
+        style={{
+          backgroundImage:
+            'url("' +
+            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+              '//images.ctfassets.net/mj9bpefl6wof/',
+              'https://nutranext.imgix.net/'
+            ) +
+            '?q=50&auto=compress,format")'
+        }}
       >
         <Container className="section-container">
           <Box className="section-holder">
