@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -28,7 +29,6 @@ import {
   getErrorMessage,
   scrollToRef
 } from '../../utils/misc';
-import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -228,7 +228,7 @@ const PaymentForm = ({
                 // @TODO need to handle this gracefully
               }
               hostedFieldsInstance.on('blur', function(event) {
-                let field = event.fields[event.emittedBy];
+                const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border =
@@ -240,7 +240,7 @@ const PaymentForm = ({
                 }
               });
               hostedFieldsInstance.on('validityChange', function(event) {
-                let field = event.fields[event.emittedBy];
+                const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border =
@@ -284,7 +284,7 @@ const PaymentForm = ({
 
     Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
-        let elem = HostedFieldsClient._state.fields[field];
+        const elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
@@ -371,160 +371,160 @@ const PaymentForm = ({
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
-          <>
-            <Grid item xs={12}>
-              <div ref={fieldRefs.cardholderName}>
-                <Field
-                  name="paymentDetails.cardholderName"
-                  label="Name on Card"
-                  component={InputField}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                position="relative"
-                className="bt-payment-holder"
-                id="bt-payment-holder"
-              >
-                <Grid item xs={6}>
-                  <div id="bt-cardNumber" ref={fieldRefs.number}></div>
-                  <div className="btError">Please enter valid card number</div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div
-                    id="bt-cardExpiration"
-                    ref={fieldRefs.expirationDate}
-                  ></div>
-                  <div className="btError">
-                    Please enter valid Exp Date
-                  </div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div id="bt-cardCvv"></div>
-                  <div className="btError">Please enter valid CVV</div>
-                </Grid>
-              </Box>
-            </Grid>
-            {allowFlyMode && (
-              <Grid item xs={12} style={{ marginTop: '25px' }}>
-                <Field
-                  name="shouldSaveData"
-                  label="Save details in account"
-                  component={CheckboxField}
-                />
-              </Grid>
-            )}
-            <Grid item xs={12}>
-              <Box
-                component={Typography}
-                color="#231f20"
-                variant="h5"
-                children="Billing Address"
-                fontSize={xs ? 24 : 30}
-                mb={1}
-              />
-            </Grid>
-            {seedEnabled && (
+            <>
               <Grid item xs={12}>
-                <Box display="flex" alignItems="center">
-                  <Checkbox
-                    id="useAddressSeedToggle"
-                    onChange={evt =>
-                      handleUseAddressSeedToggle(evt, values, setValues)
-                    }
+                <div ref={fieldRefs.cardholderName}>
+                  <Field
+                    name="paymentDetails.cardholderName"
+                    label="Name on Card"
+                    component={InputField}
                   />
-                  <Typography
-                    variant="body2"
-                    children={useSeedLabel}
-                    style={{ color: '#231f20' }}
-                  />
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  position="relative"
+                  className="bt-payment-holder"
+                  id="bt-payment-holder"
+                >
+                  <Grid item xs={6}>
+                    <div id="bt-cardNumber" ref={fieldRefs.number}></div>
+                    <div className="btError">Please enter valid card number</div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div
+                      id="bt-cardExpiration"
+                      ref={fieldRefs.expirationDate}
+                    ></div>
+                    <div className="btError">
+                      Please enter valid Exp Date
+                  </div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <div id="bt-cardCvv"></div>
+                    <div className="btError">Please enter valid CVV</div>
+                  </Grid>
                 </Box>
               </Grid>
-            )}
-            <Grid item xs={12} sm={6}>
-              <div ref={fieldRefs.firstName}>
-                <Field
-                  name="billingAddress.firstName"
-                  label="First Name"
-                  component={InputField}
+              {allowFlyMode && (
+                <Grid item xs={12} style={{ marginTop: '25px' }}>
+                  <Field
+                    name="shouldSaveData"
+                    label="Save details in account"
+                    component={CheckboxField}
+                  />
+                </Grid>
+              )}
+              <Grid item xs={12}>
+                <Box
+                  component={Typography}
+                  color="#231f20"
+                  variant="h5"
+                  children="Billing Address"
+                  fontSize={xs ? 24 : 30}
+                  mb={1}
                 />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <div ref={fieldRefs.lastName}>
+              </Grid>
+              {seedEnabled && (
+                <Grid item xs={12}>
+                  <Box display="flex" alignItems="center">
+                    <Checkbox
+                      id="useAddressSeedToggle"
+                      onChange={evt =>
+                        handleUseAddressSeedToggle(evt, values, setValues)
+                      }
+                    />
+                    <Typography
+                      variant="body2"
+                      children={useSeedLabel}
+                      style={{ color: '#231f20' }}
+                    />
+                  </Box>
+                </Grid>
+              )}
+              <Grid item xs={12} sm={6}>
+                <div ref={fieldRefs.firstName}>
+                  <Field
+                    name="billingAddress.firstName"
+                    label="First Name"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div ref={fieldRefs.lastName}>
+                  <Field
+                    name="billingAddress.lastName"
+                    label="Last Name"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <div ref={fieldRefs.address1}>
+                  <Field
+                    name="billingAddress.address1"
+                    label="Street Address"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <div>
+                  <Field
+                    name="billingAddress.address2"
+                    label="Apt. suite, bldg, c/o (optional)"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <div ref={fieldRefs.city}>
+                  <Field
+                    name="billingAddress.city"
+                    label="City"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div ref={fieldRefs.state}>
+                  <Field
+                    name="billingAddress.state"
+                    label="State"
+                    component={SelectField}
+                    options={STATE_OPTIONS}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <div ref={fieldRefs.zipcode}>
+                  <Field
+                    name="billingAddress.zipcode"
+                    label="Zip Code"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12}>
                 <Field
-                  name="billingAddress.lastName"
-                  label="Last Name"
+                  name="billingAddress.phone"
+                  label="Phone #"
                   component={InputField}
+                  helperText="In case we need to contact you about your order"
                 />
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div ref={fieldRefs.address1}>
+              </Grid>
+              <Grid item xs={12}>
                 <Field
-                  name="billingAddress.address1"
-                  label="Street Address"
-                  component={InputField}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div>
-                <Field
-                  name="billingAddress.address2"
-                  label="Apt. suite, bldg, c/o (optional)"
-                  component={InputField}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <div ref={fieldRefs.city}>
-                <Field
-                  name="billingAddress.city"
-                  label="City"
-                  component={InputField}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <div ref={fieldRefs.state}>
-                <Field
-                  name="billingAddress.state"
-                  label="State"
+                  name="billingAddress.country"
+                  label="Country"
                   component={SelectField}
-                  options={STATE_OPTIONS}
+                  options={COUNTRY_OPTIONS}
+                  disabled
                 />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <div ref={fieldRefs.zipcode}>
-                <Field
-                  name="billingAddress.zipcode"
-                  label="Zip Code"
-                  component={InputField}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.phone"
-                label="Phone #"
-                component={InputField}
-                helperText="In case we need to contact you about your order"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Field
-                name="billingAddress.country"
-                label="Country"
-                component={SelectField}
-                options={COUNTRY_OPTIONS}
-                disabled
-              />
-            </Grid>
-          </>
-        )}
+              </Grid>
+            </>
+          )}
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
             {onBack && (
