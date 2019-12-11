@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -182,6 +182,11 @@ class Home extends Component {
     window.analytics.track('Banner Clicked', this.segmentProperties);
   }
 
+  navigateToTop = url => {
+    this.props.history.push(url);
+    window.scrollTo(0, 0);
+  };
+
   renderContent() {
     if (!this.state.content)
       return (
@@ -241,7 +246,10 @@ class Home extends Component {
                     {this.renderFamily()}
                   </Grid>
                   <Box style={{ paddingTop: 90 }}>
-                    <Link to="/gallery" className="shopAllLink">
+                    <Link
+                      className="shopAllLink"
+                      onClick={this.navigateToTop.bind(this, '/gallery')}
+                    >
                       Shop All
                     </Link>
                   </Box>
@@ -264,4 +272,4 @@ const mapStateToProps = state => ({
   siteMap: state.storefront.siteMap
 });
 
-export default connect(mapStateToProps)(Home);
+export default withRouter(connect(mapStateToProps)(Home));
