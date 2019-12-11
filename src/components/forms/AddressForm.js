@@ -152,11 +152,11 @@ const AddressForm = ({
   const isSameAddress = (original, suggested) => {
     if (
       original.address1.trim().toLowerCase() ===
-        suggested.address1.trim().toLowerCase() &&
+      suggested.address1.trim().toLowerCase() &&
       original.address2.trim().toLowerCase() ===
-        suggested.address2.trim().toLowerCase() &&
+      suggested.address2.trim().toLowerCase() &&
       original.city.trim().toLowerCase() ===
-        suggested.city.trim().toLowerCase() &&
+      suggested.city.trim().toLowerCase() &&
       original.zipcode === suggested.zipcode
     ) {
       return true;
@@ -334,7 +334,6 @@ const AddressForm = ({
             name="address.country"
             label="Country"
             component={SelectField}
-            defaultLabel="United States"
             options={COUNTRY_OPTIONS}
             disabled
           />
