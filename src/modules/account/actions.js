@@ -32,6 +32,7 @@ const ObjectId = require('bson-objectid');
 
 export const requestCreateAccount = account => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
+  const token = localStorageClient.get('olympusToken');
   const { firstName, lastName, email, password, newsletter } = account;
 
   const params = {
@@ -46,10 +47,11 @@ export const requestCreateAccount = account => (dispatch, getState) => {
 
   const payload = JSON.stringify(msgpack.encode(params));
   client.send(
-    '/exchange/account/account.request.create',
+    '/exchange/account/account.request.register',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token
     },
     payload
   );
@@ -59,42 +61,43 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     payload: {}
   });
 
-  window.analytics.track("Sign Up Email Capture", {
-    "email": email
+  window.analytics.track('Sign Up Email Capture', {
+    'email': email
   });
-
 };
 
-export const receivedCreateAccountSuccess = createReply => dispatch => {
-  localStorageClient.set('token', createReply.account_jwt);
-
-  EventEmitter.emit('account.created', createReply);
+export const receivedCreateAccountSuccess = (account, token) => dispatch => {
+  EventEmitter.emit('account.created', {
+    account,
+    token
+  });
 
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
-    payload: createReply
+    payload: account
   });
-  window.analytics.track("Account Created", {
-    "email": createReply.email,
-    "first_name": createReply.firstName,
-    "last_name": createReply.lastName,
-    "phone": "",
-    "signup_type": "organic",
-    "title": "",
-    "username": createReply.email,
-    "site_location": "account creation"
+
+  window.analytics.track('Account Created', {
+    'email': account.email,
+    'first_name': account.firstName,
+    'last_name': account.lastName,
+    'phone': '',
+    'signup_type': 'organic',
+    'title': '',
+    'username': account.email,
+    'site_location': 'account creation'
   });
-  if (createReply.newsletter) {
-    window.analytics.track("Subscribed", {
-      "email": createReply.email,
-      "site_location": "account creation"
+
+  if (account.newsletter) {
+    window.analytics.track('Subscribed', {
+      'email': account.email,
+      'site_location': 'account creation'
     });
 
-    window.analytics.track("Subscribed Listrak Auto", {
-      "email": createReply.email,
-      "site_location": "account creation"
+    window.analytics.track('Subscribed Listrak Auto', {
+      'email': account.email,
+      'site_location': 'account creation'
     });
-
   }
 };
 
@@ -270,12 +273,12 @@ export const clearChangePasswordError = () => dispatch => {
 
 export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatch, getState) => {
   const { client, replyTo } = getState().stomp;
+  const token = localStorageClient.get('olympusToken');
   const params = {
     params: {
       query: {
         email,
-        password,
-        storeCode: getState().storefront.code
+        password
       },
       collation: {
         locale: 'en_US',
@@ -289,7 +292,8 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
     '/exchange/account/account.request.login',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token
     },
     payload
   );
@@ -307,21 +311,22 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
   })
 };
 
-export const receivedLoginSuccess = loginReply => dispatch => {
-  localStorageClient.set('token', loginReply.account_jwt);
-
-  EventEmitter.emit('user.logged.in', loginReply);
+export const receivedLoginSuccess = (account, token) => dispatch => {
+  EventEmitter.emit('user.logged.in', {
+    account,
+    token
+  });
 
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
-    payload: loginReply
+    payload: account
   });
-  //store.dispatch(requestFetchCartByEmail(loginReply.email));
-  window.analytics.track("Sign In Successful", {
-    "method": "email",
-    "site_location": "",
-    "username": loginReply.email
-  })
+
+  window.analytics.track('Sign In Successful', {
+    'method': 'email',
+    'site_location': '',
+    'username': account.email
+  });
 };
 
 export const receivedLoginFailure = loginError => dispatch => {

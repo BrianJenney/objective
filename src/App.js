@@ -19,6 +19,8 @@ import Footer from './components/Footer';
 import routes from './routes';
 import EventEmitter from './events';
 
+import { createAnonymousToken } from './utils/token';
+
 const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
 
@@ -59,25 +61,28 @@ class App extends Component {
 
     requestFetchBootstrap(process.env.REACT_APP_STORE_CODE, accountId, cartId);
 
-    EventEmitter.addListener('account.created', account => {
-      if (account && account.account_jwt) {
-        let accountId = jwt.decode(account.account_jwt).account_id;
+    EventEmitter.addListener('account.created', ({ token }) => {
+      localStorageClient.set('olympusToken', token);
 
-        requestPatchCart(this.props.cart._id, {
-          accountId
-        });
-      }
+      let accountId = jwt.decode(token).account_id;
+
+      requestPatchCart(this.props.cart._id, {
+        accountId
+      });
     });
 
-    EventEmitter.addListener('user.logged.in', account => {
-      if (account && account.account_jwt) {
-        let accountId = jwt.decode(account.account_jwt).account_id;
+    EventEmitter.addListener('user.logged.in', ({ token }) => {
+      localStorageClient.set('olympusToken', token);
 
-        requestMergeCarts(localStorageClient.get('cartId'), accountId);
-      }
+      let accountId = jwt.decode(token).account_id;
+
+      requestMergeCarts(localStorageClient.get('cartId'), accountId);
     });
 
     EventEmitter.addListener('user.logged.out', () => {
+      const olympusToken = createAnonymousToken();
+      localStorageClient.set('olympusToken', olympusToken);
+
       requestCreateCart();
     });
 
