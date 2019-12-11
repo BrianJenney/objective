@@ -12,7 +12,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
-import { getInitialValues, getErrorMessage, scrollToRef } from '../../utils/misc';
+import {
+  getInitialValues,
+  getErrorMessage,
+  scrollToRef
+} from '../../utils/misc';
 import { validateAddress } from '../../apis/SmartyStreets';
 import AddressValidation from '../account/AddressValidation';
 
@@ -192,30 +196,27 @@ const AddressForm = ({
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
 
-    const payload = {
-      ...values,
-      phone: values.phone ? values.phone.trim() : ''
-    };
-    onSubmit(payload, actions);
-    validateAddress(values).then(
+    validateAddress(values.address).then(
       response => {
-        setOriginalAddress(values);
-        setSuggestedAddress(response);
-        setFormActions(actions);
-        if (response !== false) {
+        if (response === false) {
+          setAddressSuggestion(true);
+        } else {
+          setOriginalAddress(values.address);
+          setSuggestedAddress(response);
+          setFormActions(actions);
+          console.log('address', { response });
+
           // Compare addreses, no suggestion dialog if same
-          const isSame = isSameAddress(values, response);
+          const isSame = isSameAddress(values.address, response);
           if (isSame) {
             const payload = {
-              ...values,
-              phone: values.phone ? values.phone.trim() : ''
+              ...values.address,
+              phone: values.address.phone ? values.address.phone.trim() : ''
             };
             onSubmit(payload, actions);
           } else {
             setAddressSuggestion(true);
           }
-        } else {
-          setAddressSuggestion(true);
         }
       },
       error => {
