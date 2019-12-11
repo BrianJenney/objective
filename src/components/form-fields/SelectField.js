@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import InputField from './InputField';
@@ -20,17 +20,26 @@ SelectField.defaultProps = {
 };
 
 export default function SelectField(props) {
-  const { options, ...rest } = props;
+  const { options, defaultLabel, ...rest } = props;
   const [state, setState] = React.useState('');
-
+  const { setFieldValue } = props.form;
+  const field = props.field ? props.field : null;
+  
   const handleChange = event => {
     setState(event.target.value);
+    if (field.name === 'address.state') {
+      setFieldValue('address.state', event.target.value);
+    }
+    if (field.name === 'billingAddress.state') {
+      setFieldValue('billingAddress.state', event.target.value);
+    }
   };
+  
   return (
     <InputField
       select
       onChange={handleChange}
-      value={state}
+      defaultValue={defaultLabel || state}
       SelectProps={{
         native: true,
         MenuProps: {
