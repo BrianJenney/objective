@@ -397,7 +397,7 @@ const PaymentForm = ({
                       ref={fieldRefs.expirationDate}
                     ></div>
                     <div className="btError">
-                      Please enter valid Expiration Date
+                      Please enter valid Exp. Date
                   </div>
                   </Grid>
                   <Grid item xs={3}>
@@ -407,7 +407,7 @@ const PaymentForm = ({
                 </Box>
               </Grid>
               {allowFlyMode && (
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{marginTop: '25px'}}>
                   <Field
                     name="shouldSaveData"
                     label="Save details in account"
