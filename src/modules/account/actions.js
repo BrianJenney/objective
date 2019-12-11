@@ -278,8 +278,7 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
     params: {
       query: {
         email,
-        password,
-        storeCode: getState().storefront.code
+        password
       },
       collation: {
         locale: 'en_US',
