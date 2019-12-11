@@ -16,7 +16,8 @@ const popoverStyles = makeStyles({
   paper: {
     boxShadow:
       '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
-    maxHeight: '200px'
+    backgroundColor: 'F5F5F5',
+    border: '1px black solid'
   }
 });
 
@@ -31,24 +32,26 @@ SelectField.defaultProps = {
 export default function SelectField(props) {
   const { options, disabled, defaultLabel, ...rest } = props;
   const { initialValues, setFieldValue } = props.form;
-
   const field = props.field ? props.field : null;
   const handleChange = (e, value) => {
-    if (field.name === 'state') {
+    console.log('value', value);
+    if (field.name === 'address.state') {
       setFieldValue(
-        'state',
-        value !== null ? value.value : initialValues.state.value
+        'address.state',
+        value !== null ? value.value : initialValues.address.state
       );
     }
     if (field.name === 'billingAddress.state') {
       setFieldValue(
         'billingAddress.state',
-        value !== null ? value.value : initialValues.billingAddress.state.value
+        value !== null ? value.value : initialValues.billingAddress.state
       );
     }
   };
   return (
     <Autocomplete
+      classes={popoverStyles()}
+      autoHighlight
       options={options}
       inputValue={defaultLabel || null}
       disabled={disabled}
