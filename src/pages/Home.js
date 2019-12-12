@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import './home/home-style.scss';
@@ -35,9 +35,17 @@ const contentfulOptions = {
           alt={node.data.target.fields.title}
         />
       );
+    },
+    [INLINES.HYPERLINK]: (node, children) => {
+      return (
+        <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+          {children}
+        </Link>
+      );
     }
   }
 };
+
 let homePageTracked = false;
 class Home extends Component {
   constructor(props) {
@@ -86,12 +94,22 @@ class Home extends Component {
 
   renderSections() {
     if (!this.state.content.homepageSection) return <></>;
-    
+
     return this.state.content.homepageSection.map(section => (
       <div
-        className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
+        className={
+          'sectionNum' + this.state.content.homepageSection.indexOf(section)
+        }
         key={section.sys.id}
-        style={{backgroundImage: 'url("'+ section.fields.mainContent.content[4].data.target.fields.file.url.replace('//images.ctfassets.net/mj9bpefl6wof/','https://nutranext.imgix.net/') + '?q=50&auto=compress,format")'}}
+        style={{
+          backgroundImage:
+            'url("' +
+            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+              '//images.ctfassets.net/mj9bpefl6wof/',
+              'https://nutranext.imgix.net/'
+            ) +
+            '?q=50&auto=compress,format")'
+        }}
       >
         <Container className="section-container">
           <Box className="section-holder">
@@ -166,6 +184,11 @@ class Home extends Component {
     window.analytics.track('Banner Clicked', this.segmentProperties);
   }
 
+  navigateToTop = url => {
+    this.props.history.push(url);
+    window.scrollTo(0, 0);
+  };
+
   renderContent() {
     if (!this.state.content) return <></>;
 
@@ -199,7 +222,10 @@ class Home extends Component {
                 {this.renderBestsellers()}
               </Grid>
               <Box style={{ paddingTop: 90 }}>
-                <Link to="/gallery" className="shopAllLink">
+                <Link
+                  className="shopAllLink"
+                  onClick={this.navigateToTop.bind(this, '/gallery')}
+                >
                   Shop All
                 </Link>
               </Box>
@@ -216,7 +242,10 @@ class Home extends Component {
                 {this.renderFamily()}
               </Grid>
               <Box style={{ paddingTop: 90 }}>
-                <Link to="/gallery" className="shopAllLink">
+                <Link
+                  className="shopAllLink"
+                  onClick={this.navigateToTop.bind(this, '/gallery')}
+                >
                   Shop All
                 </Link>
               </Box>
@@ -236,4 +265,4 @@ const mapStateToProps = state => ({
   products: state.catalog.variants
 });
 
-export default connect(mapStateToProps)(Home);
+export default withRouter(connect(mapStateToProps)(Home));
