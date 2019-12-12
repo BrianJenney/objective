@@ -40,7 +40,11 @@ const contentfulOptions = {
       );
     },
     [INLINES.HYPERLINK]: (node, children) => {
-      return <Link to={node.data.uri}>{children}</Link>;
+      return (
+        <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+          {children}
+        </Link>
+      );
     }
   }
 };
@@ -229,7 +233,10 @@ class Home extends Component {
                     {this.renderBestsellers()}
                   </Grid>
                   <Box style={{ paddingTop: 90 }}>
-                    <Link to="/gallery" className="shopAllLink">
+                    <Link
+                      className="shopAllLink"
+                      onClick={this.navigateToTop.bind(this, '/gallery')}
+                    >
                       Shop All
                     </Link>
                   </Box>
