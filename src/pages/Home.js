@@ -17,7 +17,8 @@ import { HomeVariantCard } from './home/';
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
 });
 
 const contentfulOptions = {
@@ -86,7 +87,7 @@ class Home extends Component {
 
   renderSections() {
     if (!this.state.content.homepageSection) return <></>;
-    
+
     return this.state.content.homepageSection.map(section => (
       <div
         className={'sectionNum' + this.state.content.homepageSection.indexOf(section)}
