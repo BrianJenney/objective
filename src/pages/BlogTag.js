@@ -37,7 +37,7 @@ const BlogTag = ({ computedMatch }) => {
     };
   }, []);
 
-  if (Object.keys(posts).length === 0) {
+  if (posts.length === 0) {
     return (
       <ScrollToTop>
         <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
