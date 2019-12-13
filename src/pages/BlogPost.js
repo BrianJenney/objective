@@ -157,8 +157,8 @@ const BlogPost = ({ computedMatch }) => {
                           {renderTags(post.fields.tags)}
                         </div>
                       ) : (
-                        <></>
-                      )}
+                          <></>
+                        )}
                     </div>
                     <div className="icon-holder">
                       <p className="share">SHARE</p>
@@ -209,21 +209,21 @@ const BlogPost = ({ computedMatch }) => {
           </Box>
 
           {post.fields.relatedProducts &&
-          post.fields.relatedProducts.length > 0 ? (
-            <Box className="shop">
-              <Container>
-                <h1 className="title" align="center">
-                  SHOP THIS POST
+            post.fields.relatedProducts.length > 0 ? (
+              <Box className="shop">
+                <Container>
+                  <h1 className="title" align="center">
+                    SHOP THIS POST
                 </h1>
-                <div className="border"></div>
-                <Grid container spacing={3} justify="center">
-                  {renderRelatedProducts(post.fields.relatedProducts)}
-                </Grid>
-              </Container>
-            </Box>
-          ) : (
-            <></>
-          )}
+                  <div className="border"></div>
+                  <Grid container spacing={3} justify="center">
+                    {renderRelatedProducts(post.fields.relatedProducts)}
+                  </Grid>
+                </Container>
+              </Box>
+            ) : (
+              <></>
+            )}
 
           {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
             <Box className="content related" py={8}>
@@ -236,8 +236,8 @@ const BlogPost = ({ computedMatch }) => {
               </Container>
             </Box>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
         </div>
       </ScrollToTop>
     );
