@@ -45,7 +45,8 @@ const contentfulOptions = {
           {children}
         </Link>
       );
-    }
+    },
+    [BLOCKS.PARAGRAPH]: (node, children) => <p dir="ltr">{children}</p>
   }
 };
 const homePageTracked = false;
