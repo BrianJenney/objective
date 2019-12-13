@@ -11,7 +11,8 @@ const ObjectId = require('bson-objectid');
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
 });
 
 const Context = React.createContext();
