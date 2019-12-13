@@ -8,7 +8,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { HeadTags } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
-
+import LoadingSpinner from '../components/LoadingSpinner';
 import './blog/blog-styles.scss';
 import { fetchPostsByTag } from '../utils/blog';
 import PostItem from './blog/PostItem';
@@ -26,16 +26,27 @@ const BlogTag = ({ computedMatch }) => {
   const blogTagMap = siteMap['journal_tag_slugs'];
   const { title, description } = blogTagMap[tag_slug];
 
-  useEffect(() => {
-    async function fetchData() {
-      const results = await fetchPostsByTag(tag_slug);
+  const fetchData = async () => {
+    const results = await fetchPostsByTag(tag_slug);
+    setTag(results.tag);
+    setPosts(results.posts);
+  };
 
-      setTag(results.tag);
-      setPosts(results.posts);
-    }
+  useEffect(() => {
     fetchData();
     window.analytics.page('Journal Tag');
+    return () => {
+      setPosts([]);
+    };
   }, []);
+
+  if (posts.length === 0) {
+    return (
+      <ScrollToTop>
+        <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
+      </ScrollToTop>
+    );
+  }
 
   const renderPosts = posts =>
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
@@ -44,19 +55,19 @@ const BlogTag = ({ computedMatch }) => {
     <>
       <HeadTags title={title} description={description} />
       <ScrollToTop>
-      <div className="journal-gallery">
-        <Box className="header" py={8}>
-          <Container className="container">
-            <h1>{tag}</h1>
-          </Container>
-        </Box>
-        <Box className="content" py={8}>
-          <Container>
-            <div className="list">{renderPosts(posts)}</div>
-          </Container>
-        </Box>
-      </div>
-    </ScrollToTop>
+        <div className="journal-gallery">
+          <Box className="header" py={8}>
+            <Container className="container">
+              <h1>{tag}</h1>
+            </Container>
+          </Box>
+          <Box className="content" py={8}>
+            <Container>
+              <div className="list">{renderPosts(posts)}</div>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
     </>
   );
 };
