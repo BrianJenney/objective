@@ -9,7 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { Button } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
-
+import LoadingSpinner from '../components/LoadingSpinner';
 import './blog/blog-styles.scss';
 import { fetchPostsByTag } from '../utils/blog';
 import PostItem from './blog/PostItem';
@@ -22,16 +22,28 @@ const BlogTag = ({ computedMatch }) => {
 
   const [tag, setTag] = useState('General');
   const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const results = await fetchPostsByTag(tag_slug);
 
-      setTag(results.tag);
-      setPosts(results.posts);
-    }
+  const fetchData = async () => {
+    const results = await fetchPostsByTag(tag_slug);
+    setTag(results.tag);
+    setPosts(results.posts);
+  };
+
+  useEffect(() => {
     fetchData();
     window.analytics.page('Journal Tag');
+    return () => {
+      setPosts([]);
+    };
   }, []);
+
+  if (Object.keys(posts).length === 0) {
+    return (
+      <ScrollToTop>
+        <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
+      </ScrollToTop>
+    );
+  }
 
   const renderPosts = posts =>
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
