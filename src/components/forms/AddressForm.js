@@ -12,7 +12,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
-import { getInitialValues, getErrorMessage, scrollToRef } from '../../utils/misc';
+import {
+  getInitialValues,
+  getErrorMessage,
+  scrollToRef
+} from '../../utils/misc';
 import { validateAddress } from '../../apis/SmartyStreets';
 import AddressValidation from '../account/AddressValidation';
 
@@ -122,6 +126,7 @@ const AddressForm = ({
       });
     }
   };
+
   const topTitle =
     formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
@@ -147,9 +152,12 @@ const AddressForm = ({
 
   const isSameAddress = (original, suggested) => {
     if (
-      original.address1.trim().toLowerCase() === suggested.address1.trim().toLowerCase() &&
-      original.address2.trim().toLowerCase() === suggested.address2.trim().toLowerCase() &&
-      original.city.trim().toLowerCase() === suggested.city.trim().toLowerCase() &&
+      original.address1.trim().toLowerCase() ===
+      suggested.address1.trim().toLowerCase() &&
+      original.address2.trim().toLowerCase() ===
+      suggested.address2.trim().toLowerCase() &&
+      original.city.trim().toLowerCase() ===
+      suggested.city.trim().toLowerCase() &&
       original.zipcode === suggested.zipcode
     ) {
       return true;
@@ -162,7 +170,7 @@ const AddressForm = ({
       address: {}
     };
 
-    Object.keys(formikValueFieldsMap).forEach(function(field) {
+    Object.keys(formikValueFieldsMap).forEach(function (field) {
       if (!formikValueFieldsMap[field]) {
         fieldErrs[field] = 'This field is invalid';
       } else {
@@ -183,30 +191,32 @@ const AddressForm = ({
       }
       return !!fieldErrs[field];
     });
-
+    // scroll to the first invalid Field
     if (firstInvalidField) {
       actions.setSubmitting(false);
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
 
-    const payload = {
-      ...values,
-      phone: values.phone ? values.phone.trim() : ''
-    };
-    onSubmit(payload, actions);
-    validateAddress(values).then(
+    // Validate input address with SmartyStreet
+    validateAddress(values.address).then(
       response => {
-        setOriginalAddress(values);
+        const inputAddress = {
+          ...values.address,
+          shouldSaveData: values.shouldSaveData,
+          isDefault: values.isDefault
+        };
+        setOriginalAddress(inputAddress);
         setSuggestedAddress(response);
         setFormActions(actions);
         if (response !== false) {
           // Compare addreses, no suggestion dialog if same
-          const isSame = isSameAddress(values, response);
+          const isSame = isSameAddress(values.address, response);
           if (isSame) {
             const payload = {
-              ...values,
-              phone: values.phone ? values.phone.trim() : ''
+              ...values.address,
+              phone: values.address.phone ? values.address.phone.trim() : ''
             };
+            console.log('payload', payload);
             onSubmit(payload, actions);
           } else {
             setAddressSuggestion(true);
@@ -221,7 +231,7 @@ const AddressForm = ({
     );
   };
 
-  const handleDialogExit = (actions) => {
+  const handleDialogExit = actions => {
     actions.setSubmitting(false);
     setAddressSuggestion(false);
   };
