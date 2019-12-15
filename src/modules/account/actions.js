@@ -30,8 +30,6 @@ const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-const token = localStorageClient.get('olympusToken');
-
 export const requestCreateAccount = account => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const { firstName, lastName, email, password, newsletter } = account;
@@ -52,7 +50,7 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -129,7 +127,7 @@ export const requestFetchAccount = id => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -180,7 +178,7 @@ export const requestPatchAccount = (authToken, patches, actions) => (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -241,7 +239,7 @@ export const requestChangePassword = (authToken, patches, { setSubmitting }) => 
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -295,7 +293,7 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -388,7 +386,7 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -419,7 +417,7 @@ export const requestSignupEmail = email => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );

@@ -23,8 +23,6 @@ const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 const jwt = require('jsonwebtoken');
 
-const token = localStorageClient.get('olympusToken');
-
 export const requestAddToCart = (cart, product, quantity) => async (
   dispatch,
   getState
@@ -43,7 +41,7 @@ export const requestAddToCart = (cart, product, quantity) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -82,7 +80,7 @@ export const requestRemoveFromCart = (cart, product) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -123,7 +121,7 @@ export const requestUpdateQuantity = (cart, product, quantity) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -148,7 +146,7 @@ export const requestFetchCart = cartId => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -185,7 +183,7 @@ export const requestCreateCart = () => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -219,7 +217,7 @@ export const requestUpdateCart = (cartId, updates) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -249,7 +247,7 @@ export const requestPatchCart = (cartId, patches) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -330,7 +328,7 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -356,7 +354,7 @@ export const requestMergeCarts = (cartId, accountId) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -383,7 +381,7 @@ export const requestAddCoupon = (cartId, promoCode) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -436,7 +434,7 @@ export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -463,7 +461,7 @@ export const requestSetShippingAddress = (cartId, address) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     obj
   );
