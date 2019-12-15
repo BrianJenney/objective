@@ -126,6 +126,7 @@ const AddressForm = ({
       });
     }
   };
+
   const topTitle =
     formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
@@ -169,7 +170,7 @@ const AddressForm = ({
       address: {}
     };
 
-    Object.keys(formikValueFieldsMap).forEach(function(field) {
+    Object.keys(formikValueFieldsMap).forEach(function (field) {
       if (!formikValueFieldsMap[field]) {
         fieldErrs[field] = 'This field is invalid';
       } else {
@@ -190,22 +191,25 @@ const AddressForm = ({
       }
       return !!fieldErrs[field];
     });
-
+    // scroll to the first invalid Field
     if (firstInvalidField) {
       actions.setSubmitting(false);
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
 
+    // Validate input address with SmartyStreet
     validateAddress(values.address).then(
       response => {
-        if (response === false) {
-          setAddressSuggestion(true);
-        } else {
-          setOriginalAddress(values.address);
-          setSuggestedAddress(response);
-          setFormActions(actions);
-          console.log('address', { response });
+        const inputAddress = {
+          ...values.address,
+          shouldSaveData: values.shouldSaveData,
+          isDefault: values.isDefault
+        };
+        setOriginalAddress(inputAddress);
+        setSuggestedAddress(response);
+        setFormActions(actions);
 
+        if (response !== false) {
           // Compare addreses, no suggestion dialog if same
           const isSame = isSameAddress(values.address, response);
           if (isSame) {
@@ -213,10 +217,13 @@ const AddressForm = ({
               ...values.address,
               phone: values.address.phone ? values.address.phone.trim() : ''
             };
+
             onSubmit(payload, actions);
           } else {
             setAddressSuggestion(true);
           }
+        } else {
+          setAddressSuggestion(true);
         }
       },
       error => {
