@@ -216,7 +216,7 @@ const AddressForm = ({
               ...values.address,
               phone: values.address.phone ? values.address.phone.trim() : ''
             };
-            console.log('payload', payload);
+
             onSubmit(payload, actions);
           } else {
             setAddressSuggestion(true);
