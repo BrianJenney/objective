@@ -11,8 +11,11 @@ import {
   RESET_ORDER_STATE
 } from './types';
 
+const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
+
+const token = localStorageClient.get('olympusToken');
 
 export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
@@ -25,7 +28,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   // The account JWT needs to be passed in as its own argument
   const account_jwt = cart.account_jwt;
   delete cart.account_jwt;
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const { merchantAccountId } = getState().storefront;
 
   /**
@@ -45,12 +48,13 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
-  client.send(
+  stompClient.send(
     '/exchange/order/order.request.createorder',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      jwt: account_jwt
+      jwt: account_jwt,
+      token
     },
     payload
   );
@@ -121,17 +125,18 @@ export const requestCancelOrder = orderId => async (dispatch, getState) => {
     payload: { isLoading: true }
   });
 
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const account_jwt = getState().account.data.account_jwt;
   const params = {
     data: { orderId },
     params: { account_jwt }
   };
   const payload = JSON.stringify(msgpack.encode(params));
-  client.send('/exchange/order/order.request.cancelorder', {
+  stompClient.send('/exchange/order/order.request.cancelorder', {
     'reply-to': replyTo,
     'correlation-id': ObjectId(),
-    jwt: account_jwt
+    jwt: account_jwt,
+    token
   }, payload);
 };
 
@@ -139,7 +144,7 @@ export const requestFindOrdersByAccount = accountJwt => (
   dispatch,
   getState
 ) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
       account_jwt: accountJwt,
@@ -149,11 +154,12 @@ export const requestFindOrdersByAccount = accountJwt => (
   };
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/order/order.request.find',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token
     },
     payload
   );
@@ -167,7 +173,7 @@ export const requestGetOrder = (accountJwt, orderId) => (
   dispatch,
   getState
 ) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   dispatch({
     type: REQUEST_GET_ORDER,
     payload: { isLoading: true }
@@ -180,11 +186,12 @@ export const requestGetOrder = (accountJwt, orderId) => (
   };
   const payload = JSON.stringify(msgpack.encode(getParams));
 
-  client.send(
+  stompClient.send(
     '/exchange/order/order.request.get',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token
     },
     payload
   );

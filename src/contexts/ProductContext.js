@@ -5,16 +5,17 @@ import EventEmitter from '../events';
 
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 
+const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
-
 const contentful = require('contentful');
+
+const Context = React.createContext();
+const token = localStorageClient.get('olympusToken');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
   accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
 });
-
-const Context = React.createContext();
 
 export class ProductStore extends Component {
   constructor(props) {
@@ -27,9 +28,7 @@ export class ProductStore extends Component {
   }
 
   componentDidMount() {
-    const { stomp } = store.getState();
-    const stompClient = stomp.client;
-    const replyTo = stomp.replyTo;
+    const { client: stompClient, replyTo } = store.getState().stomp;
 
     contentfulClient
       .getEntries({
@@ -87,7 +86,8 @@ export class ProductStore extends Component {
       '/exchange/product/product.request.pdp',
       {
         'reply-to': replyTo,
-        'correlation-id': ObjectId()
+        'correlation-id': ObjectId(),
+        token
       },
       obj
     );
