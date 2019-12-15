@@ -4,8 +4,6 @@ const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-const token = localStorageClient.get('olympusToken');
-
 export const requestFetchBootstrap = (storefrontCode, accountId, cartId) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
@@ -18,7 +16,7 @@ export const requestFetchBootstrap = (storefrontCode, accountId, cartId) => asyn
   stompClient.send('/exchange/bootstrap-orchestration/bootstrap-orchestration.request.get', {
     'reply-to': replyTo,
     'correlation-id': ObjectId(),
-    token
+    'token': localStorageClient.get('olympusToken')
   }, obj);
 
   dispatch({

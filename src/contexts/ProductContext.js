@@ -11,7 +11,6 @@ const ObjectId = require('bson-objectid');
 const contentful = require('contentful');
 
 const Context = React.createContext();
-const token = localStorageClient.get('olympusToken');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
   accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
@@ -88,7 +87,7 @@ export class ProductStore extends Component {
       {
         'reply-to': replyTo,
         'correlation-id': ObjectId(),
-        token
+        'token': localStorageClient.get('olympusToken')
       },
       obj
     );

@@ -15,8 +15,6 @@ const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-const token = localStorageClient.get('olympusToken');
-
 export const requestCreateOrder = (cart, nonceOrToken) => async (
   dispatch,
   getState
@@ -54,7 +52,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
       jwt: account_jwt,
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -136,7 +134,7 @@ export const requestCancelOrder = orderId => async (dispatch, getState) => {
     'reply-to': replyTo,
     'correlation-id': ObjectId(),
     jwt: account_jwt,
-    token
+    'token': localStorageClient.get('olympusToken')
   }, payload);
 };
 
@@ -159,7 +157,7 @@ export const requestFindOrdersByAccount = accountJwt => (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -191,7 +189,7 @@ export const requestGetOrder = (accountJwt, orderId) => (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
