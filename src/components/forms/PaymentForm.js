@@ -407,7 +407,7 @@ const PaymentForm = ({
                 </Box>
               </Grid>
               {allowFlyMode && (
-                <Grid item xs={12} style={{marginTop: '25px'}}>
+                <Grid item xs={12} style={{ marginTop: '25px' }}>
                   <Field
                     name="shouldSaveData"
                     label="Save details in account"
@@ -512,7 +512,6 @@ const PaymentForm = ({
                   label="Country"
                   component={SelectField}
                   options={COUNTRY_OPTIONS}
-                  defaultLabel="United States"
                   disabled
                 />
               </Grid>
