@@ -189,11 +189,11 @@ const AddressForm = ({
   const isSameAddress = (original, suggested) => {
     if (
       original.address1.trim().toLowerCase() ===
-        suggested.address1.trim().toLowerCase() &&
+      suggested.address1.trim().toLowerCase() &&
       original.address2.trim().toLowerCase() ===
-        suggested.address2.trim().toLowerCase() &&
+      suggested.address2.trim().toLowerCase() &&
       original.city.trim().toLowerCase() ===
-        suggested.city.trim().toLowerCase() &&
+      suggested.city.trim().toLowerCase() &&
       original.zipcode === suggested.zipcode
     ) {
       return true;
@@ -206,7 +206,7 @@ const AddressForm = ({
       address: {}
     };
 
-    Object.keys(formikValueFieldsMap).forEach(function(field) {
+    Object.keys(formikValueFieldsMap).forEach(function (field) {
       if (!formikValueFieldsMap[field]) {
         fieldErrs[field] = 'This field is invalid';
       } else {
@@ -244,7 +244,6 @@ const AddressForm = ({
         setOriginalAddress(inputAddress);
         setSuggestedAddress(response);
         setFormActions(actions);
-
         if (response !== false) {
           // Compare addreses, no suggestion dialog if same
           const isSame = isSameAddress(values.address, response);

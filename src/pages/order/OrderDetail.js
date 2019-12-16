@@ -91,7 +91,7 @@ const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.text} pt={2}>
-      Tracking #: {tracking && <Link href={tracking.url} style={{color: 'black'}} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
+      Tracking #: {tracking && <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
     </Typography>
   );
 };
@@ -119,9 +119,10 @@ const OrderSummary = ({
   tracking,
   orderStatus
 }) => {
-  
+
   const { cardType, last4 } = paymentData;
-  const { email, phoneBook } = account.data;
+  const { email } = account.data;
+  const { phone } = billingAddress
   const dispatch = useDispatch();
 
   return (
@@ -142,13 +143,13 @@ const OrderSummary = ({
           was issued back to the payment used for the order.
         </Typography>
       ) : (
-        <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on{' '}
-          <strong>{createdAt}</strong>
-        </Typography>
-      )}
+          <Typography className={classes.textFreight}>
+            Your order number: <strong>{orderId}</strong>, placed on{' '}
+            <strong>{createdAt}</strong>
+          </Typography>
+        )}
       <br />
-      { orderStatus !== 'declined' && orderStatus !== 'created' &&
+      {orderStatus !== 'declined' && orderStatus !== 'created' &&
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       }
 
@@ -168,8 +169,8 @@ const OrderSummary = ({
           {'Cancel Order'}
         </CommonButton>
       ) : (
-        ''
-      )}
+          ''
+        )}
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
@@ -184,7 +185,7 @@ const OrderSummary = ({
             <Address
               address={billingAddress}
               email={email}
-              phone={phoneBook ? phoneBook.defaultNum : '1234567890'}
+              phone={phone || null}
             />
           </Box>
         </Grid>
@@ -198,7 +199,7 @@ const OrderSummary = ({
               Shipping Information
             </StyledSmallCaps>
             <Address address={shippingAddress} />
-            { tracking &&
+            {tracking &&
               <TrackingInfo
                 className={classes.text}
                 tracking={tracking}
@@ -222,7 +223,7 @@ const OrderSummary = ({
 const OrderDetail = () => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
-  
+
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));

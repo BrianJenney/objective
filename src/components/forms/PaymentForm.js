@@ -227,7 +227,7 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
-              hostedFieldsInstance.on('blur', function(event) {
+              hostedFieldsInstance.on('blur', function (event) {
                 const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -239,7 +239,7 @@ const PaymentForm = ({
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
-              hostedFieldsInstance.on('validityChange', function(event) {
+              hostedFieldsInstance.on('validityChange', function (event) {
                 const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -282,7 +282,7 @@ const PaymentForm = ({
       billingAddress: {}
     };
 
-    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
+    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         const elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
@@ -397,7 +397,7 @@ const PaymentForm = ({
                       ref={fieldRefs.expirationDate}
                     ></div>
                     <div className="btError">
-                      Please enter valid Exp Date
+                      Please enter valid Exp. Date
                   </div>
                   </Grid>
                   <Grid item xs={3}>
