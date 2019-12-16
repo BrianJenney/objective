@@ -33,7 +33,7 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const INITIAL_VALUES = {
+let INITIAL_VALUES = {
   address: {
     firstName: '',
     lastName: '',
@@ -48,7 +48,7 @@ const INITIAL_VALUES = {
   isDefault: false,
   shouldSaveData: true
 };
-
+const emptyForm = INITIAL_VALUES;
 const checkedFields = [
   'firstName',
   'lastName',
@@ -83,6 +83,7 @@ const validateRequiredField = value => {
 const AddressForm = ({
   currentUser,
   formType,
+  isEditing,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -112,6 +113,41 @@ const AddressForm = ({
   const [originalAddress, setOriginalAddress] = useState(null);
   const [suggestedAddress, setSuggestedAddress] = useState(null);
   const [formActions, setFormActions] = useState(null);
+
+  // Edit form with current input
+  if (isEditing && defaultValues) {
+    const {
+      firstName,
+      lastName,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode,
+      phone,
+      country,
+      isDefault
+    } = defaultValues;
+
+    INITIAL_VALUES = {
+      address: {
+        firstName,
+        lastName,
+        address1,
+        address2,
+        city,
+        state,
+        zipcode,
+        phone,
+        country
+      },
+      isDefault,
+      shouldSaveData: true
+    };
+  }
+  if (!isEditing) {
+    INITIAL_VALUES = emptyForm;
+  }
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -153,11 +189,11 @@ const AddressForm = ({
   const isSameAddress = (original, suggested) => {
     if (
       original.address1.trim().toLowerCase() ===
-      suggested.address1.trim().toLowerCase() &&
+        suggested.address1.trim().toLowerCase() &&
       original.address2.trim().toLowerCase() ===
-      suggested.address2.trim().toLowerCase() &&
+        suggested.address2.trim().toLowerCase() &&
       original.city.trim().toLowerCase() ===
-      suggested.city.trim().toLowerCase() &&
+        suggested.city.trim().toLowerCase() &&
       original.zipcode === suggested.zipcode
     ) {
       return true;
@@ -170,7 +206,7 @@ const AddressForm = ({
       address: {}
     };
 
-    Object.keys(formikValueFieldsMap).forEach(function (field) {
+    Object.keys(formikValueFieldsMap).forEach(function(field) {
       if (!formikValueFieldsMap[field]) {
         fieldErrs[field] = 'This field is invalid';
       } else {
