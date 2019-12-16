@@ -508,6 +508,14 @@ const PaymentForm = ({
               </Grid>
               <Grid item xs={12}>
                 <Field
+                  name="billingAddress.phone"
+                  label="Phone #"
+                  component={InputField}
+                  helperText="In case we need to contact you about your order"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
                   name="billingAddress.country"
                   label="Country"
                   component={SelectField}
