@@ -6,10 +6,10 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
@@ -39,10 +39,10 @@ const contentfulOptions = {
       );
     },
     [INLINES.HYPERLINK]: (node, children) => (
-        <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
-          {children}
-        </Link>
-      ),
+      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+        {children}
+      </Link>
+    ),
     [BLOCKS.PARAGRAPH]: (node, children) => <p dir="ltr">{children}</p>
   }
 };
@@ -98,17 +98,15 @@ class Home extends Component {
 
     return this.state.content.homepageSection.map(section => (
       <div
-        className={
-          `sectionNum${  this.state.content.homepageSection.indexOf(section)}`
-        }
+        className={`sectionNum${this.state.content.homepageSection.indexOf(
+          section
+        )}`}
         key={section.sys.id}
         style={{
-          backgroundImage:
-            `url("${ 
-            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
-              '//images.ctfassets.net/mj9bpefl6wof/',
-              'https://nutranext.imgix.net/'
-            ) 
+          backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+            '//images.ctfassets.net/mj9bpefl6wof/',
+            'https://nutranext.imgix.net/'
+              )
             }?q=50&auto=compress,format")`
         }}
       >
@@ -230,7 +228,8 @@ class Home extends Component {
                 </Grid>
                 <Box style={{ paddingTop: 90 }}>
                   <Link
-to="/gallery" className="shopAllLink"
+                    to="/gallery"
+                    className="shopAllLink"
                     onClick={this.navigateToTop.bind(this, '/gallery')}
                   >
                     Shop All
@@ -250,7 +249,8 @@ to="/gallery" className="shopAllLink"
                 </Grid>
                 <Box style={{ paddingTop: 90 }}>
                   <Link
-to="/gallery" className="shopAllLink"
+                    to="/gallery"
+                    className="shopAllLink"
                     onClick={this.navigateToTop.bind(this, '/gallery')}
                   >
                     Shop All
