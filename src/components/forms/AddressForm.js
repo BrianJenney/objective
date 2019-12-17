@@ -155,7 +155,7 @@ const AddressForm = ({
     setAddressSuggestion(false);
   };
 
-  const renderForm = ({ isSubmitting, setFieldValue }) => (
+  const renderForm = ({ isSubmitting, isValid }) => (
     <Form>
       <Box
         component={Typography}
@@ -291,6 +291,7 @@ const AddressForm = ({
               type="submit"
               children={submitLabel}
               loading={isSubmitting}
+              disabled={!isValid}
             />
           </ButtonGroup>
         </Grid>
