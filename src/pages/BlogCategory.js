@@ -8,12 +8,14 @@ import ScrollToTop from '../components/common/ScrollToTop';
 import './blog/blog-styles.scss';
 import { fetchPostsByCategory } from '../utils/blog';
 import PostItem from './blog/PostItem';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const BlogCategory = ({ computedMatch }) => {
   const { category_slug } = computedMatch.params;
 
   const [title, setTitle] = useState('General');
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const results = await fetchPostsByCategory(category_slug);
@@ -25,24 +27,33 @@ const BlogCategory = ({ computedMatch }) => {
     window.analytics.page('Journal Category');
   }, []);
 
+  if (posts.length === 0) {
+    return (
+      <ScrollToTop>
+        <LoadingSpinner loadingMessage="Loading posts..." page="journal" />
+      </ScrollToTop>
+    );
+  }
   const renderPosts = posts =>
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
-    <ScrollToTop>
-      <div className="journal-gallery">
-        <Box className="header" py={8}>
-          <Container className="container">
-            <h1>{title}</h1>
-          </Container>
-        </Box>
-        <Box className="content" py={8}>
-          <Container>
-            <div className="list">{renderPosts(posts)}</div>
-          </Container>
-        </Box>
-      </div>
-    </ScrollToTop>
+    posts.length && (
+      <ScrollToTop>
+        <div className="journal-gallery">
+          <Box className="header" py={8}>
+            <Container className="container">
+              <h1>{title}</h1>
+            </Container>
+          </Box>
+          <Box className="content" py={8}>
+            <Container>
+              <div className="list">{renderPosts(posts)}</div>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
+    )
   );
 };
 

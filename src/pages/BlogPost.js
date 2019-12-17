@@ -15,6 +15,7 @@ import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
 import FeaturedItem from './blog/FeaturedItem';
 import BlogVariantCard from './blog/BlogVariantCard';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const dateFormat = require('dateformat');
 
@@ -41,15 +42,25 @@ const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const fetchData = async () => {
+    const postData = await fetchPost(post_slug);
+    setPost(postData);
+  };
   useEffect(() => {
-    async function fetchData() {
-      const postData = await fetchPost(post_slug);
-      setPost(postData);
-    }
     fetchData();
     window.analytics.page('Journal Post');
+    return () => {
+      setPost({});
+    };
   }, [post_slug]);
 
+  if (Object.keys(post).length === 0) {
+    return (
+      <ScrollToTop>
+        <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
+      </ScrollToTop>
+    );
+  }
   const renderRelatedProducts = products => {
     if (variants && products.length > 0) {
       return products.map(product => {
@@ -66,7 +77,7 @@ const BlogPost = ({ computedMatch }) => {
         );
       });
     }
-    return null;
+    return <></>;
   };
 
   const renderRelatedPosts = posts => {
@@ -75,7 +86,6 @@ const BlogPost = ({ computedMatch }) => {
         <FeaturedItem post={item} key={item.sys.id} />
       ));
     }
-
     return <></>;
   };
 
@@ -146,8 +156,8 @@ const BlogPost = ({ computedMatch }) => {
                           {renderTags(post.fields.tags)}
                         </div>
                       ) : (
-                        <></>
-                      )}
+                          <></>
+                        )}
                     </div>
                     <div className="icon-holder">
                       <p className="share">SHARE</p>
@@ -198,21 +208,21 @@ const BlogPost = ({ computedMatch }) => {
           </Box>
 
           {post.fields.relatedProducts &&
-          post.fields.relatedProducts.length > 0 ? (
+            post.fields.relatedProducts.length > 0 ? (
               <Box className="shop">
                 <Container>
                   <h1 className="title" align="center">
-                  SHOP THIS POST
+                    SHOP THIS POST
                 </h1>
-                <div className="border"></div>
+                  <div className="border"></div>
                   <Grid container spacing={3} justify="center">
                     {renderRelatedProducts(post.fields.relatedProducts)}
                   </Grid>
                 </Container>
               </Box>
-          ) : (
-            <></>
-          )}
+            ) : (
+              <></>
+            )}
 
           {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
             <Box className="content related" py={8}>
@@ -225,8 +235,8 @@ const BlogPost = ({ computedMatch }) => {
               </Container>
             </Box>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
         </div>
       </ScrollToTop>
     );

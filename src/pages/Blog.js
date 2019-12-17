@@ -13,11 +13,13 @@ import { fetchBlogHome } from '../utils/blog';
 import PostItem from './blog/PostItem';
 import FeaturedPost from './blog/FeaturedPost';
 import FeaturedItem from './blog/FeaturedItem';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Blog = () => {
   const [featuredMain, setFeaturedMain] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const results = await fetchBlogHome();
@@ -35,19 +37,19 @@ const Blog = () => {
 
   /*
    *
-   *@description - Track Segment Editorial Grid Item Clicked 
+   *@description - Track Segment Editorial Grid Item Clicked
    *@return void
-   * 
+   *
    */
   const segmentTrackEditorialItemClicked = (post, cta = '') => {
     window.analytics.track('Editorial Grid Item Clicked', {
-      cta: cta,
+      cta,
       label: post.fields.title,
       text: post.fields.title
     });
   };
 
-  const renderFeaturedMain = post => <FeaturedPost post={post}/>;
+  const renderFeaturedMain = post => <FeaturedPost post={post} />;
 
   const renderFeaturedPosts = posts => {
     if (posts.length > 0) {
@@ -61,6 +63,13 @@ const Blog = () => {
   const renderPosts = posts =>
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
+  if (
+    Object.keys(featuredMain).length === 0 ||
+    featuredPosts.length === 0 ||
+    posts.length === 0
+  ) {
+    return <LoadingSpinner loadingMessage="Loading blog" page="journal" />;
+  }
   return (
     <ScrollToTop>
       <div className="journal-gallery">
@@ -78,12 +87,10 @@ const Blog = () => {
             <Divider />
             <h1>Featured Posts</h1>
             {renderFeaturedMain(featuredMain)}
-            {featuredPosts.length > 0 ? (
+            {featuredPosts.length && (
               <Grid container spacing={4} className="calloutSmall">
                 {renderFeaturedPosts(featuredPosts)}
               </Grid>
-            ) : (
-              <></>
             )}
             <Divider />
             <h1>All Posts</h1>
