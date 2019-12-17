@@ -246,15 +246,30 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const hostedFieldsInvalid = () => {
+    let isHostedFieldsValid = false;
+    if (HostedFieldsClient) {
+      const state = HostedFieldsClient.getState();
+      isHostedFieldsValid = Object.keys(state.fields).every(field => state.fields[field].isValid);
+    }
+    return !isHostedFieldsValid;
+  };
+
   const handleSubmit = async (values, actions) => {
-    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
+    let isHostedFieldInvalid = false;
+    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         const elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
+        isHostedFieldInvalid = true;
       }
     });
+    if (isHostedFieldInvalid) {
+      actions.setSubmitting(false);
+      return;
+    }
     const cardData = await HostedFieldsClient.tokenize();
     const payload = {
       ...values,
@@ -271,7 +286,7 @@ const PaymentForm = ({
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues, isSubmitting }) => (
+  const renderForm = ({ values, setValues, isSubmitting, isValid }) => (
     <Form>
       <Box
         component={Typography}
@@ -458,7 +473,12 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} loading={isSubmitting} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              loading={isSubmitting}
+              disabled={!isValid || hostedFieldsInvalid()}
+            />
           </ButtonGroup>
         </Grid>
       </Grid>
