@@ -32,7 +32,7 @@ const AlertPanel = ({ type, text, style, onClose, notClosable, ...rest }) => {
   const bgColor = BG_COLOR_MAP[type];
 
   useEffect(() => {
-    setVisible(true)
+    setVisible(true);
   }, [text]);
 
   const onPanelClose = () => {
