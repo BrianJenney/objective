@@ -122,7 +122,7 @@ const OrderSummary = ({
 
   const { cardType, last4 } = paymentData;
   const { email } = account.data;
-  const { phone } = billingAddress
+  const { phone } = billingAddress;
   const dispatch = useDispatch();
 
   return (

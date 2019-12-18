@@ -10,7 +10,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
-import { HeadTags } from '../components/common';
 
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
@@ -20,8 +19,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
 });
 
 const contentfulOptions = {
@@ -40,16 +38,15 @@ const contentfulOptions = {
         />
       );
     },
-    [INLINES.HYPERLINK]: (node, children) => {
-      return (
-        <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
-          {children}
-        </Link>
-      );
-    },
+    [INLINES.HYPERLINK]: (node, children) => (
+      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+        {children}
+      </Link>
+    ),
     [BLOCKS.PARAGRAPH]: (node, children) => <p dir="ltr">{children}</p>
   }
 };
+
 const homePageTracked = false;
 class Home extends Component {
   constructor(props) {
@@ -106,13 +103,11 @@ class Home extends Component {
         )}`}
         key={section.sys.id}
         style={{
-          backgroundImage:
-            'url("' +
-            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
-              '//images.ctfassets.net/mj9bpefl6wof/',
-              'https://nutranext.imgix.net/'
-            ) +
-            '?q=50&auto=compress,format")'
+          backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+            '//images.ctfassets.net/mj9bpefl6wof/',
+            'https://nutranext.imgix.net/'
+              )
+            }?q=50&auto=compress,format")`
         }}
       >
         <Container className="section-container">
@@ -202,72 +197,70 @@ class Home extends Component {
       );
 
     const { welcomeHeader, welcomeText } = this.state.content;
-    const { title, description } = this.props.siteMap['home'];
 
     return (
-      <>
-        <HeadTags title={title} description={description} />
-        <ScrollToTop>
-          <div className="home-style">
-            <Link
-              to="/gallery"
-              segmentProperties={{
-                cta: 'Shop All',
-                destination: '/gallery',
-                site_location: 'home',
-                text: 'Targeted Health Solutions for You and Yours'
-              }}
-              onClick={this.segmentTrackBannerClicked}
-            >
-              <ul>{this.renderHeroSlider()}</ul>
-            </Link>
+      <ScrollToTop>
+        <div className="home-style">
+          <Link
+            to="/gallery"
+            segmentProperties={{
+              cta: 'Shop All',
+              destination: '/gallery',
+              site_location: 'home',
+              text: 'Targeted Health Solutions for You and Yours'
+            }}
+            onClick={this.segmentTrackBannerClicked}
+          >
+            <ul>{this.renderHeroSlider()}</ul>
+          </Link>
+          <Container>
+            <Box py={10} className="welcome">
+              <h1>{welcomeHeader}</h1>
+              <p>{welcomeText}</p>
+            </Box>
+          </Container>
+          <div className="home-bestsellers beige-bg">
             <Container>
-              <Box py={10} className="welcome">
-                <h1>{welcomeHeader}</h1>
-                <p>{welcomeText}</p>
+              <Box py={10}>
+                <h1>Our Bestsellers</h1>
+                <Grid container spacing={3} className="best-container">
+                  {this.renderBestsellers()}
+                </Grid>
+                <Box style={{ paddingTop: 90 }}>
+                  <Link
+                    to="/gallery"
+                    className="shopAllLink"
+                    onClick={this.navigateToTop.bind(this, '/gallery')}
+                  >
+                    Shop All
+                  </Link>
+                </Box>
               </Box>
             </Container>
-            <div className="home-bestsellers beige-bg">
-              <Container>
-                <Box py={10}>
-                  <h1>Our Bestsellers</h1>
-                  <Grid container spacing={3} className="best-container">
-                    {this.renderBestsellers()}
-                  </Grid>
-                  <Box style={{ paddingTop: 90 }}>
-                    <Link
-                      className="shopAllLink"
-                      onClick={this.navigateToTop.bind(this, '/gallery')}
-                    >
-                      Shop All
-                    </Link>
-                  </Box>
-                </Box>
-              </Container>
-            </div>
-            <>{this.renderSections()}</>
-            <div className="his-hers-theirs beige-bg">
-              <Container>
-                <Box py={10}>
-                  <h1>HIS, HERS & THEIRS</h1>
-                  <p>Solutions for the whole family</p>
-                  <Grid container spacing={3} className="solutions-container">
-                    {this.renderFamily()}
-                  </Grid>
-                  <Box style={{ paddingTop: 90 }}>
-                    <Link
-                      className="shopAllLink"
-                      onClick={this.navigateToTop.bind(this, '/gallery')}
-                    >
-                      Shop All
-                    </Link>
-                  </Box>
-                </Box>
-              </Container>
-            </div>
           </div>
-        </ScrollToTop>
-      </>
+          <>{this.renderSections()}</>
+          <div className="his-hers-theirs beige-bg">
+            <Container>
+              <Box py={10}>
+                <h1>HIS, HERS & THEIRS</h1>
+                <p>Solutions for the whole family</p>
+                <Grid container spacing={3} className="solutions-container">
+                  {this.renderFamily()}
+                </Grid>
+                <Box style={{ paddingTop: 90 }}>
+                  <Link
+                    to="/gallery"
+                    className="shopAllLink"
+                    onClick={this.navigateToTop.bind(this, '/gallery')}
+                  >
+                    Shop All
+                  </Link>
+                </Box>
+              </Box>
+            </Container>
+          </div>
+        </div>
+      </ScrollToTop>
     );
   }
 
@@ -277,8 +270,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.catalog.variants,
-  siteMap: state.storefront.siteMap
+  products: state.catalog.variants
 });
 
 export default withRouter(connect(mapStateToProps)(Home));

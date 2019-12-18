@@ -276,18 +276,28 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  const hostedFieldsInvalid = () => {
+    let isHostedFieldsValid = false;
+    if (HostedFieldsClient) {
+      const state = HostedFieldsClient.getState();
+      isHostedFieldsValid = Object.keys(state.fields).every(field => state.fields[field].isValid);
+    }
+    return !isHostedFieldsValid;
+  };
+
   const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
       billingAddress: {}
     };
-
+    let isHostedFieldInvalid = false;
     Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
         const elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
+        isHostedFieldInvalid = true;
         fieldErrors[field] = 'This field is invalid';
       } else {
         fieldErrors[field] = undefined;
@@ -317,6 +327,10 @@ const PaymentForm = ({
       actions.setSubmitting(false);
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
+    if (isHostedFieldInvalid) {
+      actions.setSubmitting(false);
+      return;
+    }
 
     const cardData = await HostedFieldsClient.tokenize({
       cardholderName: values.paymentDetails.cardholderName
@@ -332,11 +346,10 @@ const PaymentForm = ({
       }
     };
     onSubmit(payload, actions);
-    // actions.setSubmitting(false);
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues, isSubmitting }) => (
+  const renderForm = ({ values, setValues, isSubmitting, isValid }) => (
     <Form>
       <Box
         component={Typography}
@@ -540,6 +553,7 @@ const PaymentForm = ({
               type="submit"
               children={submitLabel}
               loading={isSubmitting}
+              disabled={!isValid || hostedFieldsInvalid()}
             />
           </ButtonGroup>
         </Grid>
