@@ -180,7 +180,7 @@ export const scrollToRef = ref => {
       ref.current &&
       (ref.current.offsetTop === 150 || ref.current.offsetTop <= 118)
         ? 0
-        : ref.current.offsetTop * 2
+        : ref.current.offsetTop + 50
   });
   return true;
 };
