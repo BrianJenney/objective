@@ -173,9 +173,14 @@ export const scrollToRef = ref => {
   if (!ref.current) {
     return null;
   }
+
   window.scrollTo({
     behavior: ref.current ? 'smooth' : 'auto',
-    top: ref.current ? ref.current.offsetTop * 2 : 0
+    top:
+      ref.current &&
+      (ref.current.offsetTop === 150 || ref.current.offsetTop <= 118)
+        ? 0
+        : ref.current.offsetTop * 2
   });
   return true;
 };
