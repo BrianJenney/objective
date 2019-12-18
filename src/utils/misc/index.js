@@ -68,12 +68,12 @@ export const formatDateTime = (date, isTimeFormatIncluded) =>
 
 export const debugRabbitResponse = (name, status, data, fields, properties) => {
   if (process.env.REACT_APP_ENVIRONMENT === 'development') {
-    console.log('****************** START ' + name + ' ******************');
+    console.log(`****************** START ${name} ******************`);
     console.log(status);
     console.log(data);
     console.log(fields);
     console.log(properties);
-    console.log('****************** END ' + name + ' ******************');
+    console.log(`****************** END ${name} ******************`);
   }
 };
 
@@ -81,8 +81,7 @@ export const getTrackingUrl = (carrier, trackingNo) => {
   let trackingUrl = '';
   switch (carrier) {
     case 'UPS Innovations':
-      trackingUrl =
-        'http://www.ups-mi.net/packageID/PackageID.aspx?PID=' + trackingNo;
+      trackingUrl = `http://www.ups-mi.net/packageID/PackageID.aspx?PID=${trackingNo}`;
       break;
     case 'USPS':
     case 'USPS Priority Mail':
@@ -90,49 +89,34 @@ export const getTrackingUrl = (carrier, trackingNo) => {
     case 'USPS International':
     case 'USPS Intl Priority':
     case 'FirstInternational':
-      trackingUrl =
-        'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
+      trackingUrl = `https://tools.usps.com/go/TrackConfirmAction?tLabels=${trackingNo}`;
       break;
     case 'Airborne':
-      trackingUrl =
-        'http://track.dhl-usa.com//TrackByNbr.asp?ShipmentNumber=' + trackingNo;
+      trackingUrl = `http://track.dhl-usa.com//TrackByNbr.asp?ShipmentNumber=${trackingNo}`;
       break;
     case 'DHL Parcels Ground':
-      trackingUrl =
-        'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
-      trackingUrl =
-        'https://www.logistics.dhl/us-en/home/tracking/tracking-ecommerce.html?tracking-id=' +
-        trackingNo;
-      trackingUrl =
-        'https://webtrack.dhlglobalmail.com/?trackingnumber=' + trackingNo;
+      trackingUrl = `https://tools.usps.com/go/TrackConfirmAction?tLabels=${trackingNo}`;
+      trackingUrl = `https://www.logistics.dhl/us-en/home/tracking/tracking-ecommerce.html?tracking-id=${trackingNo}`;
+      trackingUrl = `https://webtrack.dhlglobalmail.com/?trackingnumber=${trackingNo}`;
       break;
     case 'FedEx Smart Post':
     case 'FedEx 2 Day':
     case 'FedEx Smart':
     case 'FedEx International Economy':
-      trackingUrl =
-        'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' +
-        trackingNo;
+      trackingUrl = `http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=${trackingNo}`;
       break;
     default:
       if (carrier.match(/^USPS/i)) {
-        trackingUrl =
-          'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + trackingNo;
+        trackingUrl = `https://tools.usps.com/go/TrackConfirmAction?tLabels=${trackingNo}`;
       }
       if (carrier.match(/^UPS/i)) {
-        trackingUrl =
-          'http://wwwapps.ups.com/WebTracking/processInputRequest?sort_by=status&tracknums_displayed=1&TypeOfInquiryNumber=T&loc=en_US&InquiryNumber1=' +
-          trackingNo +
-          '&track.x=0&track.y=0';
+        trackingUrl = `http://wwwapps.ups.com/WebTracking/processInputRequest?sort_by=status&tracknums_displayed=1&TypeOfInquiryNumber=T&loc=en_US&InquiryNumber1=${trackingNo}&track.x=0&track.y=0`;
       }
       if (carrier.match(/^FedEx/i)) {
-        trackingUrl =
-          'http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=' +
-          trackingNo;
+        trackingUrl = `http://www.fedex.com/Tracking?sum=n&ascend_header=1&clienttype=dotcom&spnlk=spnl0&initial=n&cntry_code=us&tracknumber_list=${trackingNo}`;
       }
       if (carrier.match(/^DHL/i)) {
-        trackingUrl =
-          'https://webtrack.dhlglobalmail.com/?trackingnumber=' + trackingNo;
+        trackingUrl = `https://webtrack.dhlglobalmail.com/?trackingnumber=${trackingNo}`;
       }
       break;
   }
@@ -189,6 +173,9 @@ export const scrollToRef = ref => {
   if (!ref.current) {
     return null;
   }
-  window.scrollTo(0, ref.current.offsetTop);
+  window.scrollTo({
+    behavior: ref.current ? 'smooth' : 'auto',
+    top: ref.current ? ref.current.offsetTop * 2 : 0
+  });
   return true;
 };
