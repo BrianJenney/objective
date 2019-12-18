@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -23,7 +24,6 @@ import {
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
 import { getInitialValues, getErrorMessage } from '../../utils/misc';
-import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -148,21 +148,21 @@ const PaymentForm = ({
             {
               client: clientInstance,
               styles: {
-                'input': {
+                input: {
                   'font-size': '18px',
                   'font-family': 'p22-underground, sans-serif',
                   'font-weight': 'lighter',
-                  'color': '#585858',
-                  'padding': '18.5px 14px'
+                  color: '#585858',
+                  padding: '18.5px 14px'
                 },
                 ':focus': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.valid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.invalid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '::-webkit-input-placeholder': {
                   'font-size': '1rem'
@@ -197,8 +197,8 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
-              hostedFieldsInstance.on('blur', function (event) {
-                let field = event.fields[event.emittedBy];
+              hostedFieldsInstance.on('blur', function(event) {
+                const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border =
@@ -209,13 +209,15 @@ const PaymentForm = ({
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
-              hostedFieldsInstance.on('validityChange', function (event) {
-                let field = event.fields[event.emittedBy];
+              hostedFieldsInstance.on('validityChange', function(event) {
+                const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
-                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
-                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid #C10230';
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
@@ -245,9 +247,9 @@ const PaymentForm = ({
   }, [currentUser.patchAccountSubmitting]);
 
   const handleSubmit = async (values, actions) => {
-    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
+    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
-        let elem = HostedFieldsClient._state.fields[field];
+        const elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';

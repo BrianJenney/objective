@@ -1,4 +1,5 @@
 export const STATE_OPTIONS = [
+  { label: '', value: '' },
   { label: 'Alabama', value: 'AL' },
   { label: 'Alaska', value: 'AK' },
   { label: 'American Samoa', value: 'AS' },
