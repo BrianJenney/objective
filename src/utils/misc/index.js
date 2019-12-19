@@ -175,22 +175,35 @@ export const scrollToRef = ref => {
   }
   const topPos = ref.current.offsetTop;
 
-  if (topPos === 150 || topPos === 110 || topPos === 118) {
-    window.scrollTo({
-      behavior: ref.current ? 'smooth' : 'auto',
-      top: 0
-    });
-  }
-  if (topPos >= 142) {
-    window.scrollTo({
-      behavior: ref.current ? 'smooth' : 'auto',
-      top: topPos + 50
-    });
-  }
   if (topPos === 0) {
     window.scrollTo({
       behavior: ref.current ? 'smooth' : 'auto',
       top: 200
+    });
+  }
+  if (topPos > 134) {
+    if (topPos <= 142) {
+      window.scrollTo({
+        behavior: ref.current ? 'smooth' : 'auto',
+        top: topPos + 50
+      });
+    }
+    if (topPos === 150) {
+      window.scrollTo({
+        behavior: ref.current ? 'smooth' : 'auto',
+        top: 0
+      });
+    }
+    if (topPos >= 166) {
+      window.scrollTo({
+        behavior: ref.current ? 'smooth' : 'auto',
+        top: topPos + 50
+      });
+    }
+  } else {
+    window.scrollTo({
+      behavior: ref.current ? 'smooth' : 'auto',
+      top: 0
     });
   }
 
