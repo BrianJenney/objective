@@ -180,8 +180,7 @@ export const scrollToRef = ref => {
       behavior: ref.current ? 'smooth' : 'auto',
       top: 200
     });
-  }
-  if (topPos > 134) {
+  } else if (topPos > 134) {
     if (topPos <= 142) {
       window.scrollTo({
         behavior: ref.current ? 'smooth' : 'auto',
