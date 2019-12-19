@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -28,7 +29,6 @@ import {
   getErrorMessage,
   scrollToRef
 } from '../../utils/misc';
-import { COPYFILE_FICLONE_FORCE } from 'constants';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -83,9 +83,6 @@ const checkedFields = [
 ];
 const formikFields = [
   'cardholderName',
-  'number',
-  'expirationDate',
-  'cvv',
   'firstName',
   'lastName',
   'address1',
@@ -231,7 +228,7 @@ const PaymentForm = ({
                 // @TODO need to handle this gracefully
               }
               hostedFieldsInstance.on('blur', function (event) {
-                let field = event.fields[event.emittedBy];
+                const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border =
@@ -243,7 +240,7 @@ const PaymentForm = ({
                 }
               });
               hostedFieldsInstance.on('validityChange', function (event) {
-                let field = event.fields[event.emittedBy];
+                const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border =
@@ -287,7 +284,7 @@ const PaymentForm = ({
 
     Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
       if (!HostedFieldsClient._state.fields[field].isValid) {
-        let elem = HostedFieldsClient._state.fields[field];
+        const elem = HostedFieldsClient._state.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
@@ -402,7 +399,7 @@ const PaymentForm = ({
                     <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
                   <Grid item xs={3}>
-                    <div id="bt-cardCvv"></div>
+                    <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
                 </Box>
