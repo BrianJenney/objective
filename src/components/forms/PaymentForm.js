@@ -555,7 +555,7 @@ const PaymentForm = ({
               type="submit"
               children={submitLabel}
               loading={isSubmitting}
-              disabled={!isValid || hostedFieldsInvalid()}
+            // disabled={!isValid || hostedFieldsInvalid()}
             />
           </ButtonGroup>
         </Grid>
