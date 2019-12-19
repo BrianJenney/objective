@@ -172,42 +172,42 @@ const Cart = ({
             )}
           </StyledHeaderWrapper>
         ) : (
-          <StyledHeaderWrapperEmptyCart container direction="column">
-            <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader
-                align="center"
-                style={{ paddingBottom: '25px' }}
-              >
-                Your Cart
+            <StyledHeaderWrapperEmptyCart container direction="column">
+              <Grid container direction="row" alignItems="baseline">
+                <StyledCartHeader
+                  align="center"
+                  style={{ paddingBottom: '25px' }}
+                >
+                  Your Cart
               </StyledCartHeader>
-              <StyledCartCountHeader component="span">
-                ({cartCount} Items)
+                <StyledCartCountHeader component="span">
+                  ({cartCount} Items)
               </StyledCartCountHeader>
-            </Grid>
-          </StyledHeaderWrapperEmptyCart>
-        )}
+              </Grid>
+            </StyledHeaderWrapperEmptyCart>
+          )}
       </div>
       <Grid container>
         {isCheckoutPage &&
-        (activeStep === 2 || activeStep === 3) &&
-        restrictionMessage ? (
-          <>
-            <Typography className={classes.cartRestricted}>
-              CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
-              cart because this product is not available in the state you
+          (activeStep === 2 || activeStep === 3) &&
+          restrictionMessage ? (
+            <>
+              <Typography className={classes.cartRestricted}>
+                CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
+                cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-              state soon!
+                          state soon!
             </Typography>
-            {cartCount === 0 && (
+              {cartCount === 0 && (
                 <NavLink
                   to="/gallery"
                   underline="always"
                   className={classes.link}
-              >
-                Continue shopping
+                >
+                  Continue shopping
               </NavLink>
-            )}
-          </>
+              )}
+            </>
           ) : null}
       </Grid>
 
@@ -235,19 +235,19 @@ const Cart = ({
                   <Link
                     to={`/products/${item.slug}`}
                     onClick={() => {
-                        segmentProductClickEvent({
+                      segmentProductClickEvent({
                         image_url: `https:${item.variant_img}`,
                         quantity: item.quantity,
                         sku: item.sku,
                         price: Number.parseFloat(item.unit_price),
-                          product_id: item.variant_id,
+                        product_id: item.variant_id,
                         variant: item.variant_id,
-                          name: item.variant_name,
+                        name: item.variant_name,
                         brand: cart.storeCode,
                         cart_id: cart._id,
                         site_location: 'cart'
-                        });
-                      }}
+                      });
+                    }}
                   >
                     <CardMedia
                       style={{ height: 126, width: 126 }}
@@ -275,19 +275,19 @@ const Cart = ({
                       overflow: 'hidden'
                     }}
                     onClick={() => {
-                        segmentProductClickEvent({
+                      segmentProductClickEvent({
                         image_url: `https:${item.variant_img}`,
                         quantity: item.quantity,
                         sku: item.sku,
                         price: Number.parseFloat(item.unit_price),
-                          product_id: item.variant_id,
+                        product_id: item.variant_id,
                         variant: item.variant_id,
-                          name: item.variant_name,
+                        name: item.variant_name,
                         brand: cart.storeCode,
                         cart_id: cart._id,
                         site_location: 'cart'
-                        });
-                      }}
+                      });
+                    }}
                   >
                     <StyledProductLink
                       style={{ fontSize: '18px', padding: '0' }}
@@ -308,39 +308,39 @@ const Cart = ({
                         children={`QTY: ${item.quantity}`}
                       />
                     ) : (
-                      <StyledCardActions>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e =>
-                            adjustQty(cart, e.currentTarget.value, -1)
-                          }
-                          style={{
-                            fontSize: '20pt',
-                            paddingBottom: '4px'
-                          }}
-                          value={index}
-                          disabled={item.quantity < 2}
-                        >
+                        <StyledCardActions>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e =>
+                              adjustQty(cart, e.currentTarget.value, -1)
+                            }
+                            style={{
+                              fontSize: '20pt',
+                              paddingBottom: '4px'
+                            }}
+                            value={index}
+                            disabled={item.quantity < 2}
+                          >
                             -
                         </StyledCounterButton>
-                        <StyledSmallCaps style={{ fontSize: '18px' }}>
-                          {item.quantity}
-                        </StyledSmallCaps>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e =>
-                            adjustQty(cart, e.currentTarget.value, 1)
-                          }
-                          style={{
-                            fontSize: '13pt',
-                            paddingBottom: '2.5px'
-                          }}
-                          value={index}
-                        >
+                          <StyledSmallCaps style={{ fontSize: '18px' }}>
+                            {item.quantity}
+                          </StyledSmallCaps>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e =>
+                              adjustQty(cart, e.currentTarget.value, 1)
+                            }
+                            style={{
+                              fontSize: '13pt',
+                              paddingBottom: '2.5px'
+                            }}
+                            value={index}
+                          >
                             +
                         </StyledCounterButton>
-                      </StyledCardActions>
-                    )}
+                        </StyledCardActions>
+                      )}
                   </Grid>
                   <StyledCardContent
                     style={
@@ -486,13 +486,13 @@ const Cart = ({
           cart.promo ? (
             <PromoCodeView />
           ) : (
-            <>
-              <StyledPromoLink align="left" onClick={togglePromo}>
-                {!promoVisible ? 'Enter Promo Code' : null}
-              </StyledPromoLink>
-              {promoVisible && <PromoCodeForm />}
-            </>
-          )
+              <>
+                <StyledPromoLink align="left" onClick={togglePromo}>
+                  {!promoVisible ? 'Enter Promo Code' : null}
+                </StyledPromoLink>
+                {promoVisible && <PromoCodeForm />}
+              </>
+            )
         ) : null}
 
         {cart.items.length > 0 ? (
