@@ -350,12 +350,12 @@ export const clearLoginError = () => dispatch => {
 export const requestLogout = () => dispatch => {
   localStorageClient.remove('token');
 
-  EventEmitter.emit('user.logged.out', {});
-
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}
   });
+
+  EventEmitter.emit('user.logged.out', {});
 };
 
 export const receivedFindOrdersByAccount = orders => dispatch => {
