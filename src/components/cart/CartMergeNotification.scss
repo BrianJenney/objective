@@ -1,0 +1,56 @@
+.triangle {
+  position: absolute;
+  margin-top: 16px;
+  box-sizing: border-box;
+  background-color: #c3f1cf !important;
+  box-shadow:  0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  height: 186px;
+  width: 242px;
+  top: 120px;
+  left: 75.4%;
+  border: 1px solid #000;
+}
+.triangle::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 1px;
+    margin-left: -0.5em;
+    bottom: -2em;
+    left: 74%;
+    box-sizing: border-box; 
+    border: 10px solid #000;
+    border-color: transparent transparent #c3f1cf #c3f1cf;
+    transform-origin: 0 0 0;
+    transform: rotate(135deg);
+    box-shadow: -1px 1px 1px 0 #000;
+  }
+
+  .triangleXS {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #c3f1cf !important;
+  box-shadow:  0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  height: 157px;
+  width: 200px;
+  top: 70px;
+  left: 48.4%;
+  border: 1px solid #000;
+}
+.triangleXS::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 1px;
+    margin-left: -0.5em;
+    bottom: -2em;
+    left: 85.5%;
+    box-sizing: border-box; 
+    border: 10px solid #000;
+    border-color: transparent transparent #c3f1cf #c3f1cf;
+    transform-origin: 0 0 0;
+    transform: rotate(135deg);
+    box-shadow: -1px 1px 1px 0 #000;
+  }
