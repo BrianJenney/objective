@@ -4,7 +4,6 @@
   font-family: $sansSerif;
   font-weight: 'bold';
   background-color: #000000;
-  border-top: 3px solid #000000;
   color: #ffffff;
 
   a {
@@ -155,7 +154,7 @@
       position: absolute;
       width: 60%;
     }
-    @supports (-ms-ime-align:auto) {
+    @supports (-ms-ime-align: auto) {
       .signup-arrow {
         margin-top: 18px;
         margin-left: -125px;
@@ -163,7 +162,7 @@
         width: 60%;
       }
     }
-      @-moz-document url-prefix() {
+    @-moz-document url-prefix() {
       .signup-arrow {
         margin-top: 25px;
         margin-left: -130px;
@@ -239,7 +238,8 @@
   }
 
   .footer-main {
-    border: 1px solid $gray;
+    border-top: 1px solid $gray2;
+    border-bottom: 1px solid $gray2;
     min-height: 475px;
 
     .logo {

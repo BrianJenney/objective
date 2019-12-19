@@ -84,7 +84,7 @@ const getPanelTitleContent = (
         width={1}
         px={xs ? 8 : 14}
         py={xs ? 3 : 4}
-        bgcolor="rgba(252, 248, 244, 0.5)"
+        bgcolor="rgba(244,240,238,0.5)"
         color="#231f20"
       >
         {payloadSummary}
@@ -328,7 +328,7 @@ const Checkout = ({
       {loading ? (
         <Loader />
       ) : (
-        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+        <Box bgcolor="rgba(244,240,238,0.5)">
           <Container>
             <Box py={10} className="checkout-wrapper">
               <CssBaseline />

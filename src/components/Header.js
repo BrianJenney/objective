@@ -31,8 +31,9 @@ const StyledLink = withStyles(() => ({
     fontWeight: 'normal',
     color: '#000000',
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    fontSize: '16px'
+    letterSpacing: '1.13px',
+    fontSize: '18px',
+    fontWeight: 500
   }
 }))(Link);
 
@@ -50,7 +51,7 @@ const StyledBox = withStyles(() => ({
 let segmentIdentified = false;
 const segmentIdentify = user => {
   if (!segmentIdentified) {
-    if (user['firstName']) {
+    if (user.firstName) {
       window.analytics.identify(jwt.decode(user.account_jwt).account_id, {
         first_name: `${user.firstName}`,
         last_name: `${user.lastName}`,
@@ -72,13 +73,13 @@ const Header = ({ currentUser, location }) => {
   segmentIdentify(currentUser.data);
   const accountMenuItemConf = account_jwt
     ? {
-        key: 'third',
-        children: <LoggedInUser name={firstName} />,
-        link: '/account/overview'
-      }
+      key: 'third',
+      children: <LoggedInUser name={firstName} />,
+      link: '/account/overview'
+    }
     : burger
-    ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
-    : {
+      ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
+      : {
         key: 'third',
         children: <LoginDropdown />,
         link: '/login'
@@ -112,15 +113,14 @@ const Header = ({ currentUser, location }) => {
       site_location: segmentSiteLocation()
     });
   };
-  
 
   return (
     <>
       {isCheckoutPage || isOrderPage ? (
         <CheckoutHeader />
       ) : (
-        <Grid container item={true} xs={12} className="headerContainer">
-          <Grid container item={true} xs={12} spacing={0}>
+        <Grid container item xs={12} className="headerContainer">
+          <Grid container item xs={12} spacing={0}>
             {burger ? (
               <>
                 <Grid container className="top">
@@ -138,10 +138,13 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                 </Grid>
                 {promoVisible ? (
-                  <Grid container item={true} xs={12} className="headerBar">
+                  <Grid container item xs={12} className="headerBar">
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/gallery"
+                        >
                           Limited Time: Free Shipping for All New Customers
                         </NavLink>
                         <CloseIcon
@@ -158,10 +161,13 @@ const Header = ({ currentUser, location }) => {
                 {promoVisible ? (
                   <div className="headerBar">
                     <Container>
-                      <Grid container item={true} xs={12}>
+                      <Grid container item xs={12}>
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
-                            <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/gallery"
+                            >
                               Limited Time: Free Shipping for All New Customers
                             </NavLink>
                             <div
@@ -190,12 +196,20 @@ const Header = ({ currentUser, location }) => {
                       <Grid item xs={4}>
                         <Grid container>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
+                            <StyledLink
+                              onClick={segmentTrackNavigationClick}
+                              component={RouterLink}
+                              to="/gallery"
+                            >
                               Shop
                             </StyledLink>
                           </Grid>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
+                            <StyledLink
+                              onClick={segmentTrackNavigationClick}
+                              component={RouterLink}
+                              to="/journal"
+                            >
                               Journal
                             </StyledLink>
                           </Grid>

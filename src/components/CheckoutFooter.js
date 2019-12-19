@@ -4,9 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
-import ScrollToTop from './common/ScrollToTop';
 
-import { Button, NavLink } from './common';
 import Link from '@material-ui/core/Link';
 import './Footer-style.scss';
 
@@ -15,6 +13,8 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { Button, NavLink } from './common';
+import ScrollToTop from './common/ScrollToTop';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 
 const styles = theme => ({
@@ -140,7 +140,7 @@ class CheckoutFooter extends React.Component {
         className="checkout-footer-container"
         style={{
           padding: 50,
-          background: 'rgba(252, 248, 244, 0.5)',
+          background: 'rgba(244,240,238,0.5)',
           borderTop: '1px solid',
           fontFamily: 'p22-underground, sans-serif',
           fontSize: 18,

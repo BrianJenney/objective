@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Link from '@material-ui/core/Link';
-import { Divider } from '@material-ui/core';
+import { Divider , Container } from '@material-ui/core';
 
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -20,7 +20,7 @@ import { Formik, Field, Form } from 'formik';
 import { Button, NavLink } from './common';
 import { InputField } from './form-fields';
 import './Footer-style.scss';
-import { Container } from '@material-ui/core';
+
 
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -83,8 +83,8 @@ const segmentTrackNavigationClick = e => {
 
 const trackEmailSubmitFailure = (email, error_message) => {
   window.analytics.track('Email Capture Failed', {
-    email: email,
-    error_message: error_message,
+    email,
+    error_message,
     site_location: 'footer'
   });
 };
@@ -163,9 +163,7 @@ const NeedHelpDialog = () => {
 const schema = object().shape({
   email: string()
     .required('Email is required')
-    .email(props => {
-      return 'Input valid email address';
-    })
+    .email(props => 'Input valid email address')
 });
 
 const StyledBox = withStyles(() => ({
@@ -295,14 +293,29 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink onClick={segmentTrackNavigationClick} to="/about_us">About</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/about_us"
+                        >
+                          About
+                        </NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/contact">Contact Us</NavLink>
+                          <NavLink
+                            onClick={segmentTrackNavigationClick}
+                            to="/contact"
+                          >
+                            Contact Us
+                          </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">FAQs</NavLink>
+                          <NavLink
+                            onClick={segmentTrackNavigationClick}
+                            to="/faq"
+                          >
+                            FAQs
+                          </NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
@@ -310,16 +323,29 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">HELP</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/faq"
+                        >
+                          HELP
+                        </NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to={gotoUrl('/account', '/login/account')}>
+                          <NavLink
+                            onClick={segmentTrackNavigationClick}
+                            to={gotoUrl('/account', '/login/account')}
+                          >
                             My Account
                           </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">Shipping &amp; Returns</NavLink>
+                          <NavLink
+                            onClick={segmentTrackNavigationClick}
+                            to="/faq"
+                          >
+                            Shipping &amp; Returns
+                          </NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink
@@ -419,10 +445,20 @@ const Footer = ({ location, currentUser }) => {
                   <Grid container xs={12} className="legal">
                     <StyledList>
                       <ListItem className="text-center">
-                        <NavLink onClick={segmentTrackNavigationClick} to="/privacy-policy">Privacy Policy</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/privacy-policy"
+                        >
+                          Privacy Policy
+                        </NavLink>
                       </ListItem>
                       <ListItem className="text-center">
-                        <NavLink onClick={segmentTrackNavigationClick} to="/terms">Terms of use</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/terms"
+                        >
+                          Terms of use
+                        </NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
@@ -467,41 +503,23 @@ const Footer = ({ location, currentUser }) => {
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
-              <Grid container item xs={12} className="promise">
-                <Grid item xs={12}>
-                  <div className="diamond-outer">
-                    <div className="diamond">
-                      <LogoShort />
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4" gutterBottom className="uppercase">
-                    THE OBJECTIVE PROMISE
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <p>
-                    Behind every Objective supplement are studies, endless hours
-                    of research and a team with over 50 years of combined
-                    experience formulating dietary supplements. And the one
-                    thing we know for sure? Everybody's different. Every body is
-                    different. It's possible that what works wonders for your
-                    best friend might not do a thing for you. So let us know and
-                    we'll refund your money. It's that simple.
-                  </p>
-                </Grid>
-              </Grid>
               <div className="footer-main-holder">
                 <Grid container item xs={12} className="footer-main">
                   <Grid item xs={5} className="title border-bottom">
                     <StyledBox>
-                      <NavLink onClick={segmentTrackNavigationClick} to="/about_us">About</NavLink>
+                      <NavLink
+                        onClick={segmentTrackNavigationClick}
+                        to="/about_us"
+                      >
+                        About
+                      </NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid item xs={6} className="title border-bottom border-left">
                     <StyledBox>
-                      <NavLink onClick={segmentTrackNavigationClick} to="/faq">HELP</NavLink>
+                      <NavLink onClick={segmentTrackNavigationClick} to="/faq">
+                        HELP
+                      </NavLink>
                     </StyledBox>
                   </Grid>
                   <Grid
@@ -516,22 +534,40 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={5} className="border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/contact">Contact Us</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/contact"
+                        >
+                          Contact Us
+                        </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">FAQs</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/faq"
+                        >
+                          FAQs
+                        </NavLink>
                       </ListItem>
                     </StyledList>
                   </Grid>
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink onClick={segmentTrackNavigationClick} to={gotoUrl('/account', '/login/account')}>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to={gotoUrl('/account', '/login/account')}
+                        >
                           My Account
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">Shipping &amp; Returns</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/faq"
+                        >
+                          Shipping &amp; Returns
+                        </NavLink>
                       </ListItem>
                       <ListItem>
                         <NavLink
@@ -638,10 +674,20 @@ const Footer = ({ location, currentUser }) => {
                     <StyledLegalList>
                       <ListItem>Objective &bull; All rights reserved</ListItem>
                       <ListItem>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/privacypolicy">Privacy Policy</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/privacypolicy"
+                        >
+                          Privacy Policy
+                        </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/terms">Terms of use</NavLink>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/terms"
+                        >
+                          Terms of use
+                        </NavLink>
                       </ListItem>
                     </StyledLegalList>
                   </Grid>

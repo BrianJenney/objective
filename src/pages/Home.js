@@ -5,11 +5,10 @@ import { Link, withRouter } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
-import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
-
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
@@ -36,18 +35,16 @@ const contentfulOptions = {
         />
       );
     },
-    [INLINES.HYPERLINK]: (node, children) => {
-      return (
-        <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
-          {children}
-        </Link>
-      );
-    },
+    [INLINES.HYPERLINK]: (node, children) => (
+      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+        {children}
+      </Link>
+    ),
     [BLOCKS.PARAGRAPH]: (node, children) => <p dir="ltr">{children}</p>
   }
 };
 
-let homePageTracked = false;
+const homePageTracked = false;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -58,7 +55,7 @@ class Home extends Component {
     contentfulClient
       .getEntry(OBJECTIVE_HOMEPAGE)
       .then(entry => {
-        let content = entry.fields;
+        const content = entry.fields;
 
         this.setState({
           ...this.state,
@@ -98,18 +95,15 @@ class Home extends Component {
 
     return this.state.content.homepageSection.map(section => (
       <div
-        className={
-          'sectionNum' + this.state.content.homepageSection.indexOf(section)
-        }
+        className={`sectionNum${this.state.content.homepageSection.indexOf(
+          section
+        )}`}
         key={section.sys.id}
         style={{
-          backgroundImage:
-            'url("' +
-            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
-              '//images.ctfassets.net/mj9bpefl6wof/',
-              'https://nutranext.imgix.net/'
-            ) +
-            '?q=50&auto=compress,format")'
+          backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+            '//images.ctfassets.net/mj9bpefl6wof/',
+            'https://nutranext.imgix.net/'
+          )}?q=50&auto=compress,format")`
         }}
       >
         <Container className="section-container">
@@ -134,13 +128,15 @@ class Home extends Component {
     const bestsellers = [
       '5d8bb76ff5005515a437d4c8',
       '5ceebfdca686a03bccfa67c0',
-      '5d8bb840f5005515a437d4cb'
+      '5d8bb840f5005515a437d4cb',
+      '5d8ba8a1f5005515a437d4c2'
     ];
 
     const bps = this.props.products
       .filter(product => bestsellers.includes(product.id))
       .map(product => product);
 
+    console.log(bps);
     return (
       <>
         {bps.map(variant => (
@@ -157,8 +153,9 @@ class Home extends Component {
 
     const family = [
       '5d8ba4f6f5005515a437d4be',
-      '5ce6d310585756469c36e250',
-      '5d8ba8a1f5005515a437d4c2'
+      '5ceec52ba686a03bccfa67c5',
+      '5ceebfdca686a03bccfa67c0',
+      '5ce6d310585756469c36e250'
     ];
 
     const fps = this.props.products
@@ -193,7 +190,7 @@ class Home extends Component {
   renderContent() {
     if (!this.state.content) return <></>;
 
-    let { welcomeHeader, welcomeText } = this.state.content;
+    const { welcomeHeader, welcomeText } = this.state.content;
 
     return (
       <div className="home-style">
@@ -219,10 +216,10 @@ class Home extends Component {
           <Container>
             <Box py={10}>
               <h1>Our Bestsellers</h1>
-              <Grid container spacing={3} className="best-container">
+              <Grid container spacing={4} className="best-container">
                 {this.renderBestsellers()}
               </Grid>
-              <Box style={{ paddingTop: 90 }}>
+              <Box style={{ paddingTop: 70 }}>
                 <Link
                   className="shopAllLink"
                   onClick={this.navigateToTop.bind(this, '/gallery')}
