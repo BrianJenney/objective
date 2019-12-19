@@ -19,7 +19,6 @@ import CartMergeNotification from './cart/CartMergeNotification';
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
-import { height } from '@material-ui/system';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 const jwt = require('jsonwebtoken');
 
@@ -70,7 +69,6 @@ const Header = ({ currentUser, location }) => {
   const [promoVisible, setPromoVisible] = useState(true);
   const cartMerged = useSelector(state => state.cart.cartMerged);
 
-  console.log('cart merged ', cartMerged);
   segmentIdentify(currentUser.data);
   const accountMenuItemConf = account_jwt
     ? {
@@ -115,7 +113,6 @@ const Header = ({ currentUser, location }) => {
     });
   };
 
-
   return (
     <>
       {isCheckoutPage || isOrderPage ? (
@@ -138,6 +135,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={1} className="mobile-cart-icon">
                       {!isCheckoutPage && <ShoppingCart />}
                     </Grid>
+                    {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
                   </Grid>
                   {promoVisible ? (
                     <Grid container item={true} xs={12} className="headerBar">

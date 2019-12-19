@@ -1,56 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Paper, Typography, Button } from '@material-ui/core';
+import { Paper, Tooltip, Typography, useMediaQuery } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { unSetCartMergeNotification } from '../../modules/cart/actions';
+import './CartMergeNotification.scss';
 
 const useStyles = makeStyles(theme => ({
-  paper: {
-    border: '1px solid',
-    padding: theme.spacing(2),
-    width: '242px',
-    height: '186px',
-    boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.5)',
-    opacity: 1,
-    transform: 'none',
-    transition: 'opacity 251ms cubic- bezier(0.4, 0, 0.2, 1) 0ms, transform 167ms cubic- bezier(0.4, 0, 0.2, 1) 0ms',
-    top: '123px',
-    left: '77%',
-    transformOrigin: '143px 0px',
-    outline: '0',
-    position: 'absolute',
-    minHeight: '16px',
-    overflowX: 'hidden',
-    overflowY: 'hidden',
-    backgroundColor: '#c3f1cf',
-  },
-
   text: {
-    fontSize: 18,
+    fontSize: '18px',
     fontFamily: "p22-underground",
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
     fontStretch: 'normal',
     lineHeight: '1.5',
-    paddingTop: '15px'
+    paddingTop: '35px',
+    backgroundColor: '#c3f1cf'
   },
-
   continue: {
-    fontSize: 14,
+    fontSize: '14px',
     fontFamily: 'p22-underground',
     fontWeight: 600,
     textAlign: 'center',
     fontStretch: 'normal',
     fontStyle: 'normal',
     letterSpacing: 'normal',
-    paddingTop: '5px',
+    paddingTop: '7px',
     textDecorationLine: 'underline',
+    cursor: 'pointer',
+    backgroundColor: '#c3f1cf',
+  },
+  textXS: {
+    fontSize: '16px',
+    fontFamily: "p22-underground",
+    textAlign: 'center',
+    letterSpacing: 'normal',
+    textTransform: 'none',
+    fontStretch: 'normal',
+    lineHeight: '24px',
+    paddingTop: '22px',
+    backgroundColor: '#c3f1cf'
+  },
+
+  continueXS: {
+    fontSize: '12px',
+    fontFamily: 'p22-underground',
+    fontWeight: 600,
+    textAlign: 'center',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    letterSpacing: 'normal',
+    paddingTop: '7px',
+    textDecorationLine: 'underline',
+    cursor: 'pointer',
+    backgroundColor: '#c3f1cf',
   }
 }));
 
 const CheckoutNotification = () => {
-  const theme = useTheme();
   const classes = useStyles();
   return (
     <div>
@@ -62,7 +69,9 @@ const CheckoutNotification = () => {
 };
 
 const ElsewhereNotification = () => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -70,12 +79,12 @@ const ElsewhereNotification = () => {
   };
 
   return (
-    <Paper className={classes.paper}>
-      <Typography className={classes.text}>We've added items <br></br>from your previous <br></br>session to your cart.</Typography >
-      <Typography className={classes.continue} onClick={handleClick}> CONTINUE SHOPPING </Typography >
+    <Paper className={xs ? 'triangleXS' : 'triangle'}>
+      <Typography className={xs ? classes.textXS : classes.text}>We've added items <br></br>from your previous <br></br>session to your cart.</Typography >
+      <Typography className={xs ? classes.continueXS : classes.continue} onClick={handleClick}>CONTINUE SHOPPING</Typography >
     </Paper>
   );
-}
+};
 
 const CartMergeNotification = ({ isCheckoutPage }) => {
   return (

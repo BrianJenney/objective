@@ -28,13 +28,11 @@ export const handleCartResponse = (status, data, fields, properties) => {
         openCartDrawer = false;
       }
 
-      console.log('oldCart', oldCart);
-      console.log('mongoCart', data);
+      // Merge carts notification logic
       if (fields.routingKey === "cart.request.mergecarts" && data.items.length > 0) {
         openCartDrawer = false;
         data.cartMerged = true;
       }
-
 
       store.dispatch(receivedPatchCart(data));
 
