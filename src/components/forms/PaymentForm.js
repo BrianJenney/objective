@@ -247,14 +247,21 @@ const PaymentForm = ({
   }, [currentUser.patchAccountSubmitting]);
 
   const handleSubmit = async (values, actions) => {
-    Object.keys(HostedFieldsClient._state.fields).forEach(function(field) {
-      if (!HostedFieldsClient._state.fields[field].isValid) {
-        const elem = HostedFieldsClient._state.fields[field];
+    let isHostedFieldInvalid = false;
+    const hostedFieldState = HostedFieldsClient._state;
+    Object.keys(hostedFieldState.fields).forEach(function(field) {
+      if (!hostedFieldState.fields[field].isValid) {
+        const elem = hostedFieldState.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
+        isHostedFieldInvalid = true;
       }
     });
+    if (isHostedFieldInvalid) {
+      actions.setSubmitting(false);
+      return;
+    }
     const cardData = await HostedFieldsClient.tokenize();
     const payload = {
       ...values,
