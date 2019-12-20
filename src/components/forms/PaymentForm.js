@@ -351,7 +351,7 @@ const PaymentForm = ({
   };
 
   /* eslint-disable */
-  const renderForm = ({ values, setValues, isSubmitting, isValid }) => (
+  const renderForm = ({ values, setValues, isSubmitting }) => (
     <Form>
       <Box
         component={Typography}
@@ -551,12 +551,7 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button
-              type="submit"
-              children={submitLabel}
-              loading={isSubmitting}
-            // disabled={!isValid || hostedFieldsInvalid()}
-            />
+            <Button type="submit" children={submitLabel} loading={isSubmitting} />
           </ButtonGroup>
         </Grid>
       </Grid>
