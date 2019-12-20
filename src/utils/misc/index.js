@@ -173,14 +173,38 @@ export const scrollToRef = ref => {
   if (!ref.current) {
     return null;
   }
+  const topPos = ref.current.offsetTop;
 
-  window.scrollTo({
-    behavior: ref.current ? 'smooth' : 'auto',
-    top:
-      ref.current &&
-      (ref.current.offsetTop === 150 || ref.current.offsetTop <= 118)
-        ? 0
-        : ref.current.offsetTop + 50
-  });
+  if (topPos === 0) {
+    window.scrollTo({
+      behavior: ref.current ? 'smooth' : 'auto',
+      top: 200
+    });
+  } else if (topPos > 134) {
+    if (topPos <= 142) {
+      window.scrollTo({
+        behavior: ref.current ? 'smooth' : 'auto',
+        top: topPos + 50
+      });
+    }
+    if (topPos === 150) {
+      window.scrollTo({
+        behavior: ref.current ? 'smooth' : 'auto',
+        top: 0
+      });
+    }
+    if (topPos >= 166) {
+      window.scrollTo({
+        behavior: ref.current ? 'smooth' : 'auto',
+        top: topPos + 50
+      });
+    }
+  } else {
+    window.scrollTo({
+      behavior: ref.current ? 'smooth' : 'auto',
+      top: 0
+    });
+  }
+
   return true;
 };

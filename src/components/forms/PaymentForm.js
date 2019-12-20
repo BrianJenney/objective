@@ -83,9 +83,6 @@ const checkedFields = [
 ];
 const formikFields = [
   'cardholderName',
-  'number',
-  'expirationDate',
-  'cvv',
   'firstName',
   'lastName',
   'address1',
@@ -404,7 +401,7 @@ const PaymentForm = ({
                   </div>
                   </Grid>
                   <Grid item xs={3}>
-                    <div id="bt-cardCvv"></div>
+                    <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
                 </Box>
