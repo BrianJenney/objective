@@ -50,7 +50,7 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -61,7 +61,7 @@ export const requestCreateAccount = account => (dispatch, getState) => {
   });
 
   window.analytics.track('Sign Up Email Capture', {
-    'email': email
+    email
   });
 };
 
@@ -77,25 +77,25 @@ export const receivedCreateAccountSuccess = (account, token) => dispatch => {
   });
 
   window.analytics.track('Account Created', {
-    'email': account.email,
-    'first_name': account.firstName,
-    'last_name': account.lastName,
-    'phone': '',
-    'signup_type': 'organic',
-    'title': '',
-    'username': account.email,
-    'site_location': 'account creation'
+    email: account.email,
+    first_name: account.firstName,
+    last_name: account.lastName,
+    phone: '',
+    signup_type: 'organic',
+    title: '',
+    username: account.email,
+    site_location: 'account creation'
   });
 
   if (account.newsletter) {
     window.analytics.track('Subscribed', {
-      'email': account.email,
-      'site_location': 'account creation'
+      email: account.email,
+      site_location: 'account creation'
     });
 
     window.analytics.track('Subscribed Listrak Auto', {
-      'email': account.email,
-      'site_location': 'account creation'
+      email: account.email,
+      site_location: 'account creation'
     });
   }
 };
@@ -107,7 +107,7 @@ export const receivedCreateAccountFailure = error => dispatch => {
   });
 
   window.analytics.track('Sign Up Failed', {
-    'error_message': 'Account with email already exists'
+    error_message: 'Account with email already exists'
   });
 };
 
@@ -127,7 +127,7 @@ export const requestFetchAccount = id => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -178,7 +178,7 @@ export const requestPatchAccount = (authToken, patches, actions) => (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -219,10 +219,11 @@ export const clearPatchAccountError = () => dispatch => {
   });
 };
 
-export const requestChangePassword = (authToken, patches, { setSubmitting }) => (
-  dispatch,
-  getState
-) => {
+export const requestChangePassword = (
+  authToken,
+  patches,
+  { setSubmitting }
+) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: authToken,
@@ -239,7 +240,7 @@ export const requestChangePassword = (authToken, patches, { setSubmitting }) => 
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -272,7 +273,10 @@ export const clearChangePasswordError = () => dispatch => {
   });
 };
 
-export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatch, getState) => {
+export const requestLogin = ({ email, password }, { setSubmitting }) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -293,7 +297,7 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -306,26 +310,26 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
   });
 
   window.analytics.track('Sign In Completed', {
-    'email': email,
-    'site_location': ''
+    email,
+    site_location: ''
   });
 };
 
 export const receivedLoginSuccess = (account, token) => dispatch => {
-  EventEmitter.emit('user.logged.in', {
-    account,
-    token
-  });
-
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
     payload: account
   });
 
+  EventEmitter.emit('user.logged.in', {
+    account,
+    token
+  });
+
   window.analytics.track('Sign In Successful', {
-    'method': 'email',
-    'site_location': '',
-    'username': account.email
+    method: 'email',
+    site_location: '',
+    username: account.email
   });
 };
 
@@ -334,10 +338,11 @@ export const receivedLoginFailure = loginError => dispatch => {
     type: RECEIVED_LOGIN_FAILURE,
     payload: loginError
   });
+
   window.analytics.track('Sign In Failed', {
-    'error_message': 'Incorrect Email/Password',
-    'method': 'email',
-    'site_location': ''
+    error_message: 'Incorrect Email/Password',
+    method: 'email',
+    site_location: ''
   });
 };
 
@@ -348,8 +353,6 @@ export const clearLoginError = () => dispatch => {
 };
 
 export const requestLogout = () => dispatch => {
-  localStorageClient.remove('token');
-
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}
@@ -386,7 +389,7 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -397,7 +400,7 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
   });
 
   window.analytics.track('Forgot Password Request Started', {
-    'email': email
+    email
   });
 };
 
@@ -417,7 +420,7 @@ export const requestSignupEmail = email => (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
