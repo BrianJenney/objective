@@ -4,18 +4,11 @@ import { get } from 'lodash';
 import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-
+import { Box, Typography, Grid, Card, CardMedia } from '@material-ui/core';
 import { AlertPanel, NavLink } from '../../components/common';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
-
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
-
 import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
@@ -46,6 +39,7 @@ import {
   StyledProductTotal,
   StyledEstimatedTotal
 } from './StyledComponents';
+import CartMergeNotification from '../../components/cart/CartMergeNotification';
 
 const { MEDIUM_GRAY } = colorPalette;
 
@@ -87,6 +81,7 @@ const Cart = ({
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+  const { cartMerged } = cart;
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false, false));
@@ -156,6 +151,7 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
+              {cartMerged && isCheckoutPage ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
             </Grid>
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
@@ -172,42 +168,42 @@ const Cart = ({
             )}
           </StyledHeaderWrapper>
         ) : (
-          <StyledHeaderWrapperEmptyCart container direction="column">
-            <Grid container direction="row" alignItems="baseline">
-              <StyledCartHeader
-                align="center"
-                style={{ paddingBottom: '25px' }}
-              >
-                Your Cart
+            <StyledHeaderWrapperEmptyCart container direction="column">
+              <Grid container direction="row" alignItems="baseline">
+                <StyledCartHeader
+                  align="center"
+                  style={{ paddingBottom: '25px' }}
+                >
+                  Your Cart
               </StyledCartHeader>
-              <StyledCartCountHeader component="span">
-                ({cartCount} Items)
+                <StyledCartCountHeader component="span">
+                  ({cartCount} Items)
               </StyledCartCountHeader>
-            </Grid>
-          </StyledHeaderWrapperEmptyCart>
-        )}
+              </Grid>
+            </StyledHeaderWrapperEmptyCart>
+          )}
       </div>
       <Grid container>
         {isCheckoutPage &&
-        (activeStep === 2 || activeStep === 3) &&
-        restrictionMessage ? (
-          <>
-            <Typography className={classes.cartRestricted}>
-              CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
-              cart because this product is not available in the state you
+          (activeStep === 2 || activeStep === 3) &&
+          restrictionMessage ? (
+            <>
+              <Typography className={classes.cartRestricted}>
+                CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
+                cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-              state soon!
+                                              state soon!
             </Typography>
-            {cartCount === 0 && (
+              {cartCount === 0 && (
                 <NavLink
                   to="/gallery"
                   underline="always"
                   className={classes.link}
-              >
-                Continue shopping
+                >
+                  Continue shopping
               </NavLink>
-            )}
-          </>
+              )}
+            </>
           ) : null}
       </Grid>
 
@@ -235,19 +231,19 @@ const Cart = ({
                   <Link
                     to={`/products/${item.slug}`}
                     onClick={() => {
-                        segmentProductClickEvent({
+                      segmentProductClickEvent({
                         image_url: `https:${item.variant_img}`,
                         quantity: item.quantity,
                         sku: item.sku,
                         price: Number.parseFloat(item.unit_price),
-                          product_id: item.variant_id,
+                        product_id: item.variant_id,
                         variant: item.variant_id,
-                          name: item.variant_name,
+                        name: item.variant_name,
                         brand: cart.storeCode,
                         cart_id: cart._id,
                         site_location: 'cart'
-                        });
-                      }}
+                      });
+                    }}
                   >
                     <CardMedia
                       style={{ height: 126, width: 126 }}
@@ -275,19 +271,19 @@ const Cart = ({
                       overflow: 'hidden'
                     }}
                     onClick={() => {
-                        segmentProductClickEvent({
+                      segmentProductClickEvent({
                         image_url: `https:${item.variant_img}`,
                         quantity: item.quantity,
                         sku: item.sku,
                         price: Number.parseFloat(item.unit_price),
-                          product_id: item.variant_id,
+                        product_id: item.variant_id,
                         variant: item.variant_id,
-                          name: item.variant_name,
+                        name: item.variant_name,
                         brand: cart.storeCode,
                         cart_id: cart._id,
                         site_location: 'cart'
-                        });
-                      }}
+                      });
+                    }}
                   >
                     <StyledProductLink
                       style={{ fontSize: '18px', padding: '0' }}
@@ -308,39 +304,39 @@ const Cart = ({
                         children={`QTY: ${item.quantity}`}
                       />
                     ) : (
-                      <StyledCardActions>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e =>
-                            adjustQty(cart, e.currentTarget.value, -1)
-                          }
-                          style={{
-                            fontSize: '20pt',
-                            paddingBottom: '4px'
-                          }}
-                          value={index}
-                          disabled={item.quantity < 2}
-                        >
+                        <StyledCardActions>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e =>
+                              adjustQty(cart, e.currentTarget.value, -1)
+                            }
+                            style={{
+                              fontSize: '20pt',
+                              paddingBottom: '4px'
+                            }}
+                            value={index}
+                            disabled={item.quantity < 2}
+                          >
                             -
                         </StyledCounterButton>
-                        <StyledSmallCaps style={{ fontSize: '18px' }}>
-                          {item.quantity}
-                        </StyledSmallCaps>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e =>
-                            adjustQty(cart, e.currentTarget.value, 1)
-                          }
-                          style={{
-                            fontSize: '13pt',
-                            paddingBottom: '2.5px'
-                          }}
-                          value={index}
-                        >
+                          <StyledSmallCaps style={{ fontSize: '18px' }}>
+                            {item.quantity}
+                          </StyledSmallCaps>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e =>
+                              adjustQty(cart, e.currentTarget.value, 1)
+                            }
+                            style={{
+                              fontSize: '13pt',
+                              paddingBottom: '2.5px'
+                            }}
+                            value={index}
+                          >
                             +
                         </StyledCounterButton>
-                      </StyledCardActions>
-                    )}
+                        </StyledCardActions>
+                      )}
                   </Grid>
                   <StyledCardContent
                     style={
@@ -486,13 +482,13 @@ const Cart = ({
           cart.promo ? (
             <PromoCodeView />
           ) : (
-            <>
-              <StyledPromoLink align="left" onClick={togglePromo}>
-                {!promoVisible ? 'Enter Promo Code' : null}
-              </StyledPromoLink>
-              {promoVisible && <PromoCodeForm />}
-            </>
-          )
+              <>
+                <StyledPromoLink align="left" onClick={togglePromo}>
+                  {!promoVisible ? 'Enter Promo Code' : null}
+                </StyledPromoLink>
+                {promoVisible && <PromoCodeForm />}
+              </>
+            )
         ) : null}
 
         {cart.items.length > 0 ? (
