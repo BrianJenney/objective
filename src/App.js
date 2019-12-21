@@ -26,9 +26,6 @@ const localStorageClient = require('store');
 
 class App extends Component {
   static propTypes = {
-    account: PropTypes.object.isRequired,
-    storefront: PropTypes.object.isRequired,
-    catalog: PropTypes.object.isRequired,
     requestFetchBootstrap: PropTypes.func.isRequired,
     requestCreateCart: PropTypes.func.isRequired,
     requestPatchCart: PropTypes.func.isRequired,
@@ -38,33 +35,19 @@ class App extends Component {
 
   componentDidMount() {
     const {
-      account,
       requestFetchBootstrap,
       requestCreateCart,
       requestPatchCart,
       requestRemoveCartById,
       requestMergeCarts
     } = this.props;
-    const { data: accountData } = account;
 
-    let accountId = null;
-
-    if (accountData.account_jwt && !accountData.account_id) {
-      accountId = jwt.decode(accountData.account_jwt).account_id;
-    }
-
-    let cartId = null;
-
-    if (localStorageClient.get('cartId')) {
-      cartId = localStorageClient.get('cartId');
-    }
-
-    requestFetchBootstrap(process.env.REACT_APP_STORE_CODE, accountId, cartId);
+    requestFetchBootstrap();
 
     EventEmitter.addListener('account.created', ({ token }) => {
       localStorageClient.set('olympusToken', token);
 
-      let accountId = jwt.decode(token).account_id;
+      const accountId = jwt.decode(token).account_id;
 
       requestPatchCart(this.props.cart._id, {
         accountId
@@ -74,7 +57,7 @@ class App extends Component {
     EventEmitter.addListener('user.logged.in', ({ token }) => {
       localStorageClient.set('olympusToken', token);
 
-      let accountId = jwt.decode(token).account_id;
+      const accountId = jwt.decode(token).account_id;
 
       requestMergeCarts(localStorageClient.get('cartId'), accountId);
     });
@@ -122,11 +105,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  stompClient: state.stomp.client,
-  storefront: state.storefront,
-  cart: state.cart,
-  account: state.account,
-  catalog: state.catalog
+  cart: state.cart
 });
 
 const mapDispatchToProps = {
@@ -137,7 +116,4 @@ const mapDispatchToProps = {
   requestMergeCarts
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
