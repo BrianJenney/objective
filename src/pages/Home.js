@@ -11,6 +11,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
+
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -39,16 +40,15 @@ const contentfulOptions = {
         />
       );
     },
-    [INLINES.HYPERLINK]: (node, children) => {
-      return (
-        <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
-          {children}
-        </Link>
-      );
-    },
+    [INLINES.HYPERLINK]: (node, children) => (
+      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+        {children}
+      </Link>
+    ),
     [BLOCKS.PARAGRAPH]: (node, children) => <p dir="ltr">{children}</p>
   }
 };
+
 const homePageTracked = false;
 class Home extends Component {
   constructor(props) {
@@ -105,13 +105,11 @@ class Home extends Component {
         )}`}
         key={section.sys.id}
         style={{
-          backgroundImage:
-            'url("' +
-            section.fields.mainContent.content[4].data.target.fields.file.url.replace(
-              '//images.ctfassets.net/mj9bpefl6wof/',
-              'https://nutranext.imgix.net/'
-            ) +
-            '?q=50&auto=compress,format")'
+          backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
+            '//images.ctfassets.net/mj9bpefl6wof/',
+            'https://nutranext.imgix.net/'
+              )
+            }?q=50&auto=compress,format")`
         }}
       >
         <Container className="section-container">
@@ -182,7 +180,6 @@ class Home extends Component {
    * @return void
    *
    */
-
   segmentTrackBannerClicked() {
     window.analytics.track('Banner Clicked', this.segmentProperties);
   }

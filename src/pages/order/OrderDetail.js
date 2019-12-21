@@ -154,11 +154,11 @@ const OrderSummary = ({
           was issued back to the payment used for the order.
         </Typography>
       ) : (
-        <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on{' '}
-          <strong>{createdAt}</strong>
-        </Typography>
-      )}
+          <Typography className={classes.textFreight}>
+            Your order number: <strong>{orderId}</strong>, placed on{' '}
+            <strong>{createdAt}</strong>
+          </Typography>
+        )}
       <br />
       {orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
@@ -180,8 +180,8 @@ const OrderSummary = ({
           Cancel Order
         </CommonButton>
       ) : (
-        ''
-      )}
+          ''
+        )}
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
