@@ -4,18 +4,11 @@ import { get } from 'lodash';
 import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-
+import { Box, Typography, Grid, Card, CardMedia } from '@material-ui/core';
 import { AlertPanel, NavLink } from '../../components/common';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
-
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
-
 import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
@@ -46,6 +39,7 @@ import {
   StyledProductTotal,
   StyledEstimatedTotal
 } from './StyledComponents';
+import CartMergeNotification from '../../components/cart/CartMergeNotification';
 
 const { MEDIUM_GRAY } = colorPalette;
 
@@ -87,6 +81,7 @@ const Cart = ({
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+  const { cartMerged } = cart;
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false, false));
@@ -156,6 +151,7 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
+              {cartMerged && isCheckoutPage ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
             </Grid>
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
@@ -196,7 +192,7 @@ const Cart = ({
                 CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
                 cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-                          state soon!
+                                              state soon!
             </Typography>
               {cartCount === 0 && (
                 <NavLink

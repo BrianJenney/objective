@@ -15,7 +15,6 @@ import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
 import CartMergeNotification from './cart/CartMergeNotification';
 
-
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';

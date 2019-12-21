@@ -1,11 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Paper, Tooltip, Typography, useMediaQuery } from '@material-ui/core';
+import { Paper, Typography, useMediaQuery, Grid } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { unSetCartMergeNotification } from '../../modules/cart/actions';
 import './CartMergeNotification.scss';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
+  box: {
+    backgroundColor: '#c3f1cf',
+    width: '100%',
+    padding: '15px 30px',
+    marginTop: '20px'
+  },
+  boxXS: {
+    backgroundColor: '#c3f1cf',
+    width: '100%',
+    padding: '15px 15px',
+    marginTop: '20px'
+  },
+  textCheckout: {
+    fontSize: '16px',
+    fontFamily: "p22-underground",
+    textAlign: 'center',
+    letterSpacing: 'normal',
+    textTransform: 'none',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    backgroundColor: '#c3f1cf',
+    color: '#003833'
+  },
+  textCheckoutXS: {
+    fontSize: '16px',
+    fontFamily: "p22-underground",
+    textAlign: 'center',
+    letterSpacing: 'normal',
+    textTransform: 'none',
+    fontStretch: 'normal',
+    lineHeight: '1.25',
+    backgroundColor: '#c3f1cf',
+    color: '#003833'
+  },
   text: {
     fontSize: '18px',
     fontFamily: "p22-underground",
@@ -41,7 +75,6 @@ const useStyles = makeStyles(theme => ({
     paddingTop: '22px',
     backgroundColor: '#c3f1cf'
   },
-
   continueXS: {
     fontSize: '12px',
     fontFamily: 'p22-underground',
@@ -59,12 +92,20 @@ const useStyles = makeStyles(theme => ({
 
 const CheckoutNotification = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   return (
-    <div>
-      <Paper>
-        <Typography>CheckoutNotification</Typography>
-      </Paper>
-    </div >
+    <>
+      <Grid className={xs ? classes.boxXS : classes.box}>
+        {xs ? (
+          <Typography className={classes.textCheckoutXS}>
+            We've added items from your previous<br></br>session to your cart.
+          </Typography>
+        ) : (
+            <Typography className={classes.textCheckout}>We've added items from your<br></br>previous session to your cart.</Typography>
+          )}
+      </Grid>
+    </>
   );
 };
 
