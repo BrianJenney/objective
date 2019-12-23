@@ -257,11 +257,7 @@ const AccountPaymentDetails = ({
                         title=""
                         defaultValues={creditCardEntity}
                         Summary={PaymentSummary}
-                        onRemove={
-                          creditCardEntity.isDefault
-                            ? undefined
-                            : () => deleteCreditCard(creditCardEntity.token)
-                        }
+                        onRemove={() => deleteCreditCard(creditCardEntity.token)}
                         onSetDefault={
                           creditCardEntity.isDefault
                             ? undefined
