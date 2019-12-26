@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'freight-text-pro, sans-serif',
     lineHeight: '1.4',
     marginBottom: '18px',
-    fontWeight: 600,
+    fontWeight: 600
   },
   boxHolder: {
     padding: '40px 0'
@@ -66,6 +66,7 @@ const AddressValidation = ({
   onSubmit,
   closeDialog
 }) => {
+  const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [suggestedAddress, setSuggestedAddress] = useState(false);
@@ -110,8 +111,6 @@ const AddressValidation = ({
   if (origAddress && suggAddress && suggAddress !== false) {
     sAddress = suggAddress;
   }
-
-  const classes = useStyles();
 
   return (
     <>
