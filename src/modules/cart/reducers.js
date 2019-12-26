@@ -42,7 +42,6 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_PATCH_CART:
       return { ...state };
     case RECEIVED_PATCH_CART:
-      localStorageClient.set('cartId', action.payload._id);
       return { ...state, ...action.payload };
     case RECEIVED_UPDATE_CART:
       return { ...state, ...action.payload };
