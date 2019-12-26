@@ -281,14 +281,16 @@ const PaymentForm = ({
       paymentDetails: {},
       billingAddress: {}
     };
-
-    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
-      if (!HostedFieldsClient._state.fields[field].isValid) {
-        const elem = HostedFieldsClient._state.fields[field];
+    let isHostedFieldInvalid = false;
+    const hostedFieldState = HostedFieldsClient._state;
+    Object.keys(hostedFieldState.fields).forEach(function (field) {
+      if (!hostedFieldState.fields[field].isValid) {
+        const elem = hostedFieldState.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
         fieldErrors[field] = 'This field is invalid';
+        isHostedFieldInvalid = true;
       } else {
         fieldErrors[field] = undefined;
       }
@@ -317,7 +319,10 @@ const PaymentForm = ({
       actions.setSubmitting(false);
       return scrollToRef(fieldRefs[firstInvalidField]);
     }
-
+    if (isHostedFieldInvalid) {
+      actions.setSubmitting(false);
+      return;
+    }
     const cardData = await HostedFieldsClient.tokenize({
       cardholderName: values.paymentDetails.cardholderName
     });
@@ -332,7 +337,6 @@ const PaymentForm = ({
       }
     };
     onSubmit(payload, actions);
-    // actions.setSubmitting(false);
   };
 
   /* eslint-disable */
@@ -395,7 +399,7 @@ const PaymentForm = ({
                     <div
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
-                    ></div>
+                    />
                     <div className="btError">
                       Please enter valid Exp. Date
                   </div>
