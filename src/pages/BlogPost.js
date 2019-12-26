@@ -43,8 +43,8 @@ const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const blogPostMap = siteMap['journal_post_slugs'];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const blogPostMap = seoMap['journal_post_slugs'];
   const { title, description } = blogPostMap[post_slug];
 
   const fetchData = async () => {

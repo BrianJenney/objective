@@ -22,8 +22,8 @@ import { useSelector } from 'react-redux';
 
 const FAQ = ({ location }) => {
   window.analytics.page('FAQ');
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const { title, description } = siteMap[location.pathname.substring(1)];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   return (
     <>

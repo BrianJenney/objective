@@ -12,9 +12,6 @@ import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
 import { HeadTags } from '../components/common';
 
-import { BLOCKS } from '@contentful/rich-text-types';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -201,7 +198,7 @@ class Home extends Component {
       );
 
     let { welcomeHeader, welcomeText } = this.state.content;
-    const { title, description } = this.props.siteMap['home'];
+    const { title, description } = this.props.seoMap['home'];
     return (
       <>
         <HeadTags title={title} description={description} />
@@ -278,7 +275,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   products: state.catalog.variants,
-  siteMap: state.storefront.siteMap,
+  seoMap: state.storefront.seoMap,
 });
 
 export default withRouter(connect(mapStateToProps)(Home));

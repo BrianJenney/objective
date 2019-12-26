@@ -63,8 +63,8 @@ const useStyles = makeStyles(theme => ({
 const ContactUs = ({ location }) => {
   const classes = useStyles();
   window.analytics.page('Contact');
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const { title, description } = siteMap[location.pathname.substring(1)];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   return (
     <>

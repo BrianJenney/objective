@@ -14,8 +14,8 @@ const Product = ({ match }) => {
   const { product_slug } = match.params;
   const { href: url } = window.location;
   const scrollToTabs = url[url.length - 1] === '#';
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const pdpMap = siteMap['product_slugs'];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const pdpMap = seoMap['product_slugs'];
   const { title, description } = pdpMap[product_slug];
 
   useEffect(() => {

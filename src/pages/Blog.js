@@ -23,8 +23,8 @@ const Blog = ({ location }) => {
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
 
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const { title, description } = siteMap[location.pathname.substring(1)];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   useEffect(() => {
     async function fetchData() {

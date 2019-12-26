@@ -1,6 +1,6 @@
-import { RECEIVED_FETCH_STOREFRONT } from './types';
+import { RECEIVED_FETCH_STOREFRONT, RECIEVED_FETCH_STOREFRONT_SEO } from './types';
 
-const siteMap = {
+const seoMap = {
   home: { title: 'Home | Objective', description: 'Objective Home'},
   gallery: { title: 'Gallery | Objective', description: 'Gallery of products from Objective'},
   contact: { title: 'Contact Us | Objective', description: 'Contact us at Objective'},
@@ -88,7 +88,7 @@ const INITIAL_STATE = {
   name: '',
   domain: '',
   catalogId: '',
-  siteMap
+  seoMap
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -98,6 +98,11 @@ export default (state = INITIAL_STATE, action) => {
         console.log('need to handle this gracefully');
       }
       return { ...state, ...action.payload };
+    case RECIEVED_FETCH_STOREFRONT_SEO:
+      return {
+        ...state,
+        seoMap: action.payload
+      };
     default:
       return state;
   }
