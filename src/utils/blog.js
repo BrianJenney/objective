@@ -34,7 +34,7 @@ export const fetchBlogHome = async () => {
   results.posts = response.items;
 
   return results;
-}
+};
 
 export const fetchPost = async slug => {
   let response = await contentfulClient.getEntries({
@@ -47,7 +47,7 @@ export const fetchPost = async slug => {
   } else {
     return response.items[0];
   }
-}
+};
 
 export const fetchPostsByCategory = async slug => {
   let response = await contentfulClient.getEntries({
@@ -74,7 +74,7 @@ export const fetchPostsByCategory = async slug => {
       posts: response.items
     }
   }
-}
+};
 
 export const fetchPostsByTag = async slug => {
   let response = await contentfulClient.getEntries({
@@ -101,7 +101,7 @@ export const fetchPostsByTag = async slug => {
       posts: response.items
     }
   }
-}
+};
 
 export const fetchLinkedCategory = async id => {
   let response = await contentfulClient.getEntries({
@@ -114,4 +114,10 @@ export const fetchLinkedCategory = async id => {
   } else {
     return response.items[0];
   }
-}
+};
+
+export const fetchStorefrontSeo = async () => {
+  let seoMap = {};
+
+  return seoMap;
+};
