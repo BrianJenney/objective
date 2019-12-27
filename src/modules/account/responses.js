@@ -36,18 +36,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       if (status === 'success') {
         store.dispatch(receivedPatchAccountSuccess(data));
       } else {
-        if (data && data.length > 0) {
-          switch (data[0].message.toLowerCase()) {
-            case 'processor declined':
-              data[0].message = 'CVV number is incorrect';
-              break;
-            case 'do not honor':
-              data[0].message = 'Credit card number is incorrect';
-              break;
-            default:
-              break;
-          }
-        }
         store.dispatch(receivedPatchAccountFailure(data));
       }
       break;
