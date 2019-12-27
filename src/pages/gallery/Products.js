@@ -48,7 +48,6 @@ const Products = () => {
   }
 
   const productCategories = getProductCategories(products);
-  console.log(productCategories);
   const productCategoriesToProducts = {};
   productCategories.map(productCategory => {
     products
