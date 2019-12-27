@@ -31,13 +31,11 @@ export const getPrices = prices => {
 @return - {Array} product categories
 */
 export const getProductCategories = products => {
-  console.log('in getProductCategories');
-  console.log(products);
   const isNewYearPage = window.location.pathname.includes('newyear');
   const productCategoriesMap = new Map();
   const productCategories = [];
   if (isNewYearPage) {
-    products.map(product => {
+    products.reverse().map(product => {
       if (
         product.id == '5d8bb76ff5005515a437d4c8' ||
         product.id == '5d8bb528f5005515a437d4c5' ||
