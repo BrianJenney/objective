@@ -35,7 +35,7 @@ export const getProductCategories = products => {
   const productCategoriesMap = new Map();
   const productCategories = [];
   if (isNewYearPage) {
-    products.reverse().map(product => {
+    products.map(product => {
       if (
         product.id == '5d8bb76ff5005515a437d4c8' ||
         product.id == '5d8bb528f5005515a437d4c5' ||
