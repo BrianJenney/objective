@@ -37,23 +37,19 @@ export const getProductCategories = products => {
   const productCategoriesMap = new Map();
   const productCategories = [];
   if (isNewYearPage) {
-    products
-      .filter(
-        product =>
-          [
-            '5d8bb76ff5005515a437d4c8',
-            '5d8bb528f5005515a437d4c5',
-            '5ceebfdca686a03bccfa67c0'
-          ].indexOf(product.id) != -1
-      )
-      .map(product => {
-        if (!productCategoriesMap.has(product.productCategory)) {
-          productCategoriesMap.set(product.productCategory, true);
-          productCategories.push('newyear');
-        }
-      });
-    console.log('at the end');
-    console.log(products);
+    products.map(product => {
+      if (
+        product.id == '5d8bb76ff5005515a437d4c8' ||
+        product.id == '5d8bb528f5005515a437d4c5' ||
+        product.id == '5ceebfdca686a03bccfa67c0'
+      ) {
+        product.productCategory = 'newyear';
+      }
+      if (!productCategoriesMap.has(product.productCategory)) {
+        productCategoriesMap.set(product.productCategory, true);
+        productCategories.push(product.productCategory);
+      }
+    });
   } else {
     products.map(product => {
       if (!productCategoriesMap.has(product.productCategory)) {
