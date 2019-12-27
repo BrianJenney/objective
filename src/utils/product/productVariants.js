@@ -33,14 +33,33 @@ export const getPrices = prices => {
 export const getProductCategories = products => {
   console.log('in getProductCategories');
   console.log(products);
+  const isNewYearPage = window.location.pathname.includes('newyear');
   const productCategoriesMap = new Map();
   const productCategories = [];
-  products.map(product => {
-    if (!productCategoriesMap.has(product.productCategory)) {
-      productCategoriesMap.set(product.productCategory, true);
-      productCategories.push(product.productCategory);
-    }
-  });
+  if (isNewYearPage) {
+    products
+      .filter(
+        product =>
+          [
+            '5d8bb76ff5005515a437d4c8',
+            '5d8bb528f5005515a437d4c5',
+            '5ceebfdca686a03bccfa67c0'
+          ].indexOf(product.id) != -1
+      )
+      .map(product => {
+        if (!productCategoriesMap.has(product.productCategory)) {
+          productCategoriesMap.set(product.productCategory, true);
+          productCategories.push('newyear');
+        }
+      });
+  } else {
+    products.map(product => {
+      if (!productCategoriesMap.has(product.productCategory)) {
+        productCategoriesMap.set(product.productCategory, true);
+        productCategories.push(product.productCategory);
+      }
+    });
+  }
 
   return productCategories;
 };
