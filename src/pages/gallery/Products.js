@@ -68,7 +68,50 @@ const Products = () => {
   return (
     <>
       {isNewYearPage ? (
-        <>dksnvdsjk</>
+        <Box py={5} className="newyear">
+          <Container>
+            <Grid container spacing={4}>
+              <Grid item xs={12} sm={12} md={6} lg={6}>
+                <div className="opt1">
+                  <Grid container className="gallery-content-blurb">
+                    <Grid item xs={12} md={5} className="leftside">
+                      <h3>Be Your Best YOU</h3>
+                      <Divider variant="fullWidth" />
+                      <p>
+                        This year, feel sharper, more rested and healthier doing
+                        everything you do—our science-backed supplements make it
+                        easy. Order today risk-free with our 90-day, 100% refund
+                        guarantee.
+                      </p>
+                    </Grid>
+                    <Grid item xs={12} md={7}>
+                      <img
+                        src="https://cdn1.stopagingnow.com/objective/NYSY-GalleryPage-BusinessWoman-706x1000px.png"
+                        alt=""
+                        className="blurb-img"
+                      />
+                    </Grid>
+                  </Grid>
+                </div>
+              </Grid>
+              <CategorySummary
+                key="core"
+                products={productCategoriesToProducts.core}
+                category={{
+                  title: 'Skin & Beauty',
+                  description: 'Some description',
+                  slug: 'core'
+                }}
+                styleMap={{
+                  container: {
+                    borderColor: productCategoriesToProducts.core[0].color
+                  },
+                  text: { color: productCategoriesToProducts.core[0].color }
+                }}
+              />
+            </Grid>
+          </Container>
+        </Box>
       ) : (
         <>
           <Box py={5} className="corehealth">
