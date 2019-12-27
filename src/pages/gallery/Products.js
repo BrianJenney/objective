@@ -19,7 +19,7 @@ const energyImg = require('../../../src/assets/images/targeted.png');
 const Products = () => {
   const products = useContext(GalleryContext);
   const [seconds, setSeconds] = useState(0);
-  const isNewYearPage = window.location.pathname == '/newyear';
+  const isNewYearPage = window.location.pathname.includes('newyear');
 
   useEffect(() => {
     // track seconds for products to load
@@ -49,7 +49,6 @@ const Products = () => {
 
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
-  console.log(productCategories);
   productCategories.map(productCategory => {
     products
       .filter(product => product.productCategory === productCategory)
@@ -94,12 +93,12 @@ const Products = () => {
                 </div>
               </Grid>
               <CategorySummary
-                key="core"
-                products={productCategoriesToProducts.core}
+                key="newyear"
+                products={productCategoriesToProducts.newyear}
                 category={{
                   title: 'Skin & Beauty',
                   description: 'Some description',
-                  slug: 'core'
+                  slug: 'newyear'
                 }}
                 styleMap={{
                   container: {
