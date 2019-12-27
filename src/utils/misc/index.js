@@ -173,6 +173,7 @@ export const scrollToRef = ref => {
   if (!ref.current) {
     return null;
   }
+
   const topPos = ref.current.offsetTop;
 
   if (topPos === 0) {
@@ -205,6 +206,5 @@ export const scrollToRef = ref => {
       top: 0
     });
   }
-
   return true;
 };

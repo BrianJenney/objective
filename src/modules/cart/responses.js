@@ -29,7 +29,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
       }
 
       // Merge carts notification logic
-      if (fields.routingKey === "cart.request.mergecarts" && data.items.length > 0) {
+      if (fields.routingKey === "cart.request.mergecarts" && (data.items.length !== oldCart.items.length)) {
         openCartDrawer = false;
         data.cartMerged = true;
       }
