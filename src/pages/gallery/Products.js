@@ -20,8 +20,6 @@ const Products = () => {
   const products = useContext(GalleryContext);
   const [seconds, setSeconds] = useState(0);
   const isNewYearPage = window.location.pathname == '/newyear';
-  console.log('hereeee');
-  console.log(isNewYearPage);
 
   useEffect(() => {
     // track seconds for products to load
@@ -51,6 +49,7 @@ const Products = () => {
 
   const productCategories = getProductCategories(products);
   const productCategoriesToProducts = {};
+  console.log(productCategories);
   productCategories.map(productCategory => {
     products
       .filter(product => product.productCategory === productCategory)
