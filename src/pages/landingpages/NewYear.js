@@ -21,13 +21,13 @@ const NewYear = ({ location }) => {
       <Box className="hero-holder">
         {mobile ? (
           <img
-            src="https://cdn1.stopagingnow.com/objective/gallery-header-mobile.gif"
+            src="https://cdn1.stopagingnow.com/objective/Gallery-Header-Mobile-450x566px.gif"
             alt=""
             className="gallery-hero"
           />
         ) : (
           <img
-            src="https://cdn1.stopagingnow.com/objective/NYSY_gallery-header.gif"
+            src="https://cdn1.stopagingnow.com/objective/Gallery-Header-2000x636px.gif"
             alt=""
             className="gallery-hero"
           />
