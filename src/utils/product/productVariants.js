@@ -31,6 +31,8 @@ export const getPrices = prices => {
 @return - {Array} product categories
 */
 export const getProductCategories = products => {
+  console.log('in getProductCategories');
+  console.log(products);
   const productCategoriesMap = new Map();
   const productCategories = [];
   products.map(product => {
