@@ -52,6 +52,8 @@ export const getProductCategories = products => {
           productCategories.push('newyear');
         }
       });
+    console.log('at the end');
+    console.log(products);
   } else {
     products.map(product => {
       if (!productCategoriesMap.has(product.productCategory)) {
