@@ -1,5 +1,4 @@
-import { RECEIVED_FETCH_STOREFRONT, REQUEST_FETCH_STOREFRONT_SEO, RECIEVED_FETCH_STOREFRONT_SEO } from './types';
-import { REQUEST_CREATE_ACCOUNT } from '../account/types';
+import { RECEIVED_FETCH_STOREFRONT, RECIEVED_FETCH_STOREFRONT_SEO } from './types';
 import { fetchStorefrontSeo } from '../../utils/blog';
 
 export const receivedFetchStorefront = storeFront => {
@@ -9,11 +8,8 @@ export const receivedFetchStorefront = storeFront => {
   };
 };
 
-export const requestFetchStorefrontSeo = () => (dispatch) => {
-  dispatch({
-    type: REQUEST_FETCH_STOREFRONT_SEO,
-  });
-  const seoMap = fetchStorefrontSeo();
+export const requestFetchStorefrontSeo = (loadingFromContentFul) => async (dispatch) => {
+  const seoMap = await fetchStorefrontSeo(loadingFromContentFul);
   dispatch({
     type: RECIEVED_FETCH_STOREFRONT_SEO,
     payload: seoMap
