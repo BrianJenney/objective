@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,9 +23,6 @@ import {
   StyledEmail
 } from './contactUs/StyledComponents';
 import { useSelector } from 'react-redux';
-
-import HelpDialog from './help/HelpDialog';
-import HelpConfirmedDialog from './help/HelpConfirmedDialog';
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -64,19 +61,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ContactUs = ({ location }) => {
-  const [ openCustomerCareDialog, setOpenCustomerCareDialog ] = useState(false);
-  const [ openHelpConfirmedDialog, setOpenHelpConfirmedDialog ] = useState(false);
-
-  const closeCustomerCareDialog = useCallback(() => {
-    setOpenCustomerCareDialog(false);
-  },[setOpenCustomerCareDialog]);
-
-  const showHelpConfirmedDialog = () => setOpenHelpConfirmedDialog(true);
-
   const classes = useStyles();
   window.analytics.page('Contact');
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const { title, description } = siteMap[location.pathname.substring(1)];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   return (
     <>
@@ -133,14 +121,12 @@ const ContactUs = ({ location }) => {
                         paddingBottom: '1.5px',
                         textDecoration: 'none'
                       }}
-                      onClick={() => setOpenCustomerCareDialog(true)}
+                      href="mailto:help@objectivewellness.com"
                     >
                       help@objectivewellness.com
                     </Link>
                   </StyledEmail>
                 </Box>
-                { openCustomerCareDialog && <HelpDialog onExited={closeCustomerCareDialog} showHelpConfirmedDialog={showHelpConfirmedDialog}/>}
-                { openHelpConfirmedDialog && <HelpConfirmedDialog onExited={() => setOpenHelpConfirmedDialog(false)} />}
               </Grid>
             </Box>
           </StyledContainerBackground>

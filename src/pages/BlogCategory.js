@@ -17,8 +17,8 @@ const BlogCategory = ({ computedMatch }) => {
   const [title, setTitle] = useState('General');
   const [posts, setPosts] = useState([]);
 
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const blogCategoryMap = siteMap['journal_category_slugs'];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const blogCategoryMap = seoMap['journal_category_slugs'];
   const { title: categoryTitle , description} = blogCategoryMap[category_slug];
 
   useEffect(() => {

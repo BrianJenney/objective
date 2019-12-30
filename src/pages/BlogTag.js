@@ -21,9 +21,8 @@ const BlogTag = ({ computedMatch }) => {
 
   const [tag, setTag] = useState('General');
   const [posts, setPosts] = useState([]);
-
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const blogTagMap = siteMap['journal_tag_slugs'];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const blogTagMap = seoMap['journal_tag_slugs'];
   const { title, description } = blogTagMap[tag_slug];
 
   const fetchData = async () => {

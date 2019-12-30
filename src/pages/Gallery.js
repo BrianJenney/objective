@@ -11,14 +11,14 @@ import Products from './gallery/Products';
 
 const Gallery = ({ location }) => {
 
-  const siteMap = useSelector(state => state.storefront.siteMap);
+  const seoMap = useSelector(state => state.storefront.seoMap);
   const catalog = useSelector(state => state.catalog);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   useEffect(()=>{
     window.analytics.page("Gallery");
   },[]);
-  const { title, description } = siteMap[location.pathname.substring(1)];
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   return (
     <>

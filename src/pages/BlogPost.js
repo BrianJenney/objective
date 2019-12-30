@@ -43,8 +43,8 @@ const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const blogPostMap = siteMap['journal_post_slugs'];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const blogPostMap = seoMap['journal_post_slugs'];
   const { title, description } = blogPostMap[post_slug];
 
   const fetchData = async () => {
@@ -66,7 +66,6 @@ const BlogPost = ({ computedMatch }) => {
       </ScrollToTop>
     );
   }
-
   const renderRelatedProducts = products => {
     if (variants && products.length > 0) {
       return products.map(product => {
@@ -221,8 +220,8 @@ const BlogPost = ({ computedMatch }) => {
                 <Container>
                   <h1 className="title" align="center">
                     SHOP THIS POST
-                </h1>
-                  <div className="border"></div>
+                  </h1>
+                  <div className="border"/>
                   <Grid container spacing={3} justify="center">
                     {renderRelatedProducts(post.fields.relatedProducts)}
                   </Grid>

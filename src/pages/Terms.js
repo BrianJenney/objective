@@ -20,8 +20,8 @@ import './privacyPolicyAndTerms/style.scss';
 import { useSelector } from 'react-redux';
 
 const Terms = ({ location }) => {
-  const siteMap = useSelector(state => state.storefront.siteMap);
-  const { title, description } = siteMap[location.pathname.substring(1)];
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   return (
     <>
