@@ -1,7 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ScrollToTop from '../components/common/ScrollToTop';
+import { HeadTags } from '../components/common';
+
 import {
   StyledBackground,
   StyledTitle,
@@ -13,10 +17,16 @@ import {
   StyledLink
 } from './privacyPolicyAndTerms/StyledComponents';
 import './privacyPolicyAndTerms/style.scss';
+import { useSelector } from 'react-redux';
 
-const Terms = () => {
+const Terms = ({ location }) => {
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
+
   return (
-    <ScrollToTop>
+    <>
+      <HeadTags title={title} description={description} />
+      <ScrollToTop>
       <StyledBackground>
         <StyledContainer className="terms-container">
           <Box>
@@ -691,9 +701,9 @@ const Terms = () => {
                 (e) A statement by you that you have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law; and
                 (f) A statement by you that the information contained in your notice is accurate and that you attest under penalty of perjury that you are the copyright owner or that you are authorized to act on the copyright owner’s behalf.
                 </StyledParagraph>
-                <StyledParagraph>Designated Agent: Senior Trademark and Copyright Counsel<br></br>
-                Email: <StyledLink>DMCAtakedown@clorox.com</StyledLink>{' '}<br></br>
-                  Address: 1221 Broadway, Oakland, CA 94612<br></br>
+                <StyledParagraph>Designated Agent: Senior Trademark and Copyright Counsel<br/>
+                Email: <StyledLink>DMCAtakedown@clorox.com</StyledLink>{' '}<br/>
+                  Address: 1221 Broadway, Oakland, CA 94612<br/>
                 Phone: <StyledLink href="tel:510-271-7000">510-271-7000</StyledLink>
                 </StyledParagraph>
                 <StyledParagraph>
@@ -787,7 +797,8 @@ const Terms = () => {
         </StyledContainer>
       </StyledBackground>
     </ScrollToTop>
+    </>
   );
 };
 
-export default Terms;
+export default withRouter(Terms);
