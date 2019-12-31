@@ -166,9 +166,15 @@ const SignupForm = ({
                 Terms &amp; Conditions&nbsp;
               </NavLink>
               &amp;&nbsp;
-              <NavLink to="/privacypolicy" underline="always">
+              {/* <NavLink to="/privacypolicy" underline="always">
                 Privacy Policy
-              </NavLink>
+              </NavLink> */}
+              <a
+                href="https://www.thecloroxcompany.com/privacy/"
+                target="_blank"
+              >
+                Privacy Policy
+              </a>
             </div>
           </div>
         </Grid>
