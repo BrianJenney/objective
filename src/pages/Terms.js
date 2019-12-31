@@ -1,11 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ScrollToTop from '../components/common/ScrollToTop';
-import { HeadTags } from '../components/common';
-
 import {
   StyledBackground,
   StyledTitle,
@@ -17,21 +13,9 @@ import {
   StyledLink
 } from './privacyPolicyAndTerms/StyledComponents';
 import './privacyPolicyAndTerms/style.scss';
-import { useSelector } from 'react-redux';
 
-const Terms = ({ location }) => {
-  const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
-
-<<<<<<< HEAD
-  return (
-    <>
-      <HeadTags title={title} description={description} />
-      <ScrollToTop>
-=======
 const Terms = () => (
     <ScrollToTop>
->>>>>>> OBJ-CCPA-Compliance
       <StyledBackground>
         <StyledContainer className="terms-container">
           <Box>
@@ -798,21 +782,6 @@ const Terms = () => (
             </Grid>
             <Grid>
               <ParagraphContainer>
-<<<<<<< HEAD
-                <StyledSubheaders id="copyright">Copyright Infringement Notices</StyledSubheaders>
-                <StyledParagraph>If you believe that any Content on a Site infringes upon any copyright which you own or control, you may send a written notification to our designated copyright agent (the “Designated Agent”), identified below, with the following information:</StyledParagraph>
-                <StyledParagraph>(a) A description of the copyrighted work or other intellectual property that you claim has been infringed, with sufficient detail so that we can identify the alleged infringing material;
-                (b) The URL or other specific location on the Site that contains the alleged infringing material described in (a) above, with reasonably sufficient information to enable us to locate the alleged infringing material;
-                (c) Your name, mailing address, telephone number and email address;
-                (d) The electronic or physical signature of the owner of the copyright or a person authorized to act on the owner’s behalf;
-                (e) A statement by you that you have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law; and
-                (f) A statement by you that the information contained in your notice is accurate and that you attest under penalty of perjury that you are the copyright owner or that you are authorized to act on the copyright owner’s behalf.
-                </StyledParagraph>
-                <StyledParagraph>Designated Agent: Senior Trademark and Copyright Counsel<br/>
-                Email: <StyledLink>DMCAtakedown@clorox.com</StyledLink>{' '}<br/>
-                  Address: 1221 Broadway, Oakland, CA 94612<br/>
-                Phone: <StyledLink href="tel:510-271-7000">510-271-7000</StyledLink>
-=======
                 <StyledSubheaders id="copyright">
                   Copyright Infringement Notices
                 </StyledSubheaders>
@@ -850,7 +819,6 @@ const Terms = () => (
                   Address: 1221 Broadway, Oakland, CA 94612<br></br>
                   Phone:{' '}
                   <StyledLink href="tel:510-271-7000">510-271-7000</StyledLink>
->>>>>>> OBJ-CCPA-Compliance
                 </StyledParagraph>
                 <StyledParagraph>
                   We will terminate users who, in our sole discretion, are
@@ -1362,7 +1330,6 @@ const Terms = () => (
         </StyledContainer>
       </StyledBackground>
     </ScrollToTop>
-    </>
   );
 
-export default withRouter(Terms);
+export default Terms;
