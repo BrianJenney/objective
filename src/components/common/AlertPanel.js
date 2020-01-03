@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import CloseIcon from '@material-ui/icons/Close';
@@ -30,6 +30,11 @@ const AlertPanel = ({ type, text, style, onClose, notClosable, ...rest }) => {
   const [visible, setVisible] = useState(true);
   const color = COLOR_MAP[type];
   const bgColor = BG_COLOR_MAP[type];
+
+  useEffect(() => {
+    setVisible(true);
+  }, [text]);
+
   const onPanelClose = () => {
     setVisible(false);
     if (onClose) {

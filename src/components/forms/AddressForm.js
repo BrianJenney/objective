@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { object, string, boolean } from 'yup';
+import { get, omit } from 'lodash';
 import { Formik, Field, Form } from 'formik';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -12,7 +12,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
-import { getInitialValues, getErrorMessage } from '../../utils/misc';
+import {
+  getInitialValues,
+  getErrorMessage,
+  scrollToRef
+} from '../../utils/misc';
 import { validateAddress } from '../../apis/SmartyStreets';
 import AddressValidation from '../account/AddressValidation';
 
@@ -29,36 +33,57 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const schema = object().shape({
-  firstName: string().required('First name is required'),
-  lastName: string().required('Last name is required'),
-  address1: string().required('Street address is required'),
-  address2: string().nullable(),
-  city: string().required('City is required'),
-  state: string().required('State is required'),
-  zipcode: string().required('Zip code is required'),
-  phone: string().nullable(),
-  country: string().required('Country is required'),
-  shouldSaveData: boolean()
-});
-
-const INITIAL_VALUES = {
-  firstName: '',
-  lastName: '',
-  address1: '',
-  address2: '',
-  city: '',
-  state: '',
-  zipcode: '',
-  phone: '',
-  country: 'US',
+let INITIAL_VALUES = {
+  address: {
+    firstName: '',
+    lastName: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    phone: '',
+    country: 'US'
+  },
   isDefault: false,
   shouldSaveData: true
+};
+const emptyForm = INITIAL_VALUES;
+const checkedFields = [
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
+];
+const formikFields = [
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
+];
+const formikValueFieldsMap = {
+  firstName: 'address.firstName',
+  lastName: 'address.lastName',
+  address1: 'address.address1',
+  city: 'address.city',
+  state: 'address.state',
+  zipcode: 'address.zipcode'
+};
+const validateRequiredField = value => {
+  if (value) {
+    return undefined;
+  }
+  return 'This field is required';
 };
 
 const AddressForm = ({
   currentUser,
   formType,
+  isEditing,
   seedEnabled,
   addressSeed,
   useSeedLabel,
@@ -70,6 +95,15 @@ const AddressForm = ({
   backLabel,
   allowFlyMode
 }) => {
+  const fieldRefs = {
+    firstName: useRef(null),
+    lastName: useRef(null),
+    address1: useRef(null),
+    city: useRef(null),
+    state: useRef(null),
+    zipcode: useRef(null)
+  };
+  const errRef = useRef(null);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [initialValues, setInitialValues] = useState(
@@ -80,18 +114,63 @@ const AddressForm = ({
   const [suggestedAddress, setSuggestedAddress] = useState(null);
   const [formActions, setFormActions] = useState(null);
 
-  const handleUseAddressSeedToggle = event => {
+  // Edit form with current input
+  if (isEditing && defaultValues) {
+    const {
+      firstName,
+      lastName,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode,
+      phone,
+      country,
+      isDefault
+    } = defaultValues;
+
+    INITIAL_VALUES = {
+      address: {
+        firstName,
+        lastName,
+        address1,
+        address2,
+        city,
+        state,
+        zipcode,
+        phone,
+        country
+      },
+      isDefault,
+      shouldSaveData: true
+    };
+  }
+  if (!isEditing) {
+    INITIAL_VALUES = emptyForm;
+  }
+
+  const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
-      setInitialValues({ ...addressSeed });
+      setValues({
+        ...values,
+        address: { ...values.address, ...addressSeed }
+      });
     } else {
-      setInitialValues(getInitialValues(INITIAL_VALUES, defaultValues));
+      setValues({
+        ...values,
+        address: { ...INITIAL_VALUES.address }
+      });
     }
   };
+
   const topTitle =
     formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  const errorMessage = getErrorMessage(
+    currentUser.patchAccountError,
+    scrollToRef(errRef)
+  );
 
   useEffect(() => {
     clearPatchAccountError();
@@ -109,9 +188,12 @@ const AddressForm = ({
 
   const isSameAddress = (original, suggested) => {
     if (
-      original.address1.trim().toLowerCase() === suggested.address1.trim().toLowerCase() &&
-      original.address2.trim().toLowerCase() === suggested.address2.trim().toLowerCase() &&
-      original.city.trim().toLowerCase() === suggested.city.trim().toLowerCase() &&
+      original.address1.trim().toLowerCase() ===
+      suggested.address1.trim().toLowerCase() &&
+      original.address2.trim().toLowerCase() ===
+      suggested.address2.trim().toLowerCase() &&
+      original.city.trim().toLowerCase() ===
+      suggested.city.trim().toLowerCase() &&
       original.zipcode === suggested.zipcode
     ) {
       return true;
@@ -120,19 +202,57 @@ const AddressForm = ({
   };
 
   const handleSubmit = (values, actions) => {
-    validateAddress(values).then(
+    const fieldErrs = {
+      address: {}
+    };
+
+    Object.keys(formikValueFieldsMap).forEach(function (field) {
+      if (!formikValueFieldsMap[field]) {
+        fieldErrs[field] = 'This field is invalid';
+      } else {
+        fieldErrs[field] = undefined;
+      }
+    });
+
+    formikFields.forEach(requiredField => {
+      fieldErrs.address[requiredField] = validateRequiredField(
+        values.address[requiredField]
+      );
+    });
+    actions.setErrors(fieldErrs);
+
+    const firstInvalidField = checkedFields.find(field => {
+      if (formikFields.includes(field)) {
+        return !!get(fieldErrs, formikValueFieldsMap[field]);
+      }
+      return !!fieldErrs[field];
+    });
+    // scroll to the first invalid Field
+    if (firstInvalidField) {
+      actions.setSubmitting(false);
+      return scrollToRef(fieldRefs[firstInvalidField]);
+    }
+
+    // Validate input address with SmartyStreet
+    validateAddress(values.address).then(
       response => {
-        setOriginalAddress(values);
+        const inputAddress = {
+          ...values.address,
+          shouldSaveData: values.shouldSaveData,
+          isDefault: values.isDefault
+        };
+        setOriginalAddress(inputAddress);
         setSuggestedAddress(response);
         setFormActions(actions);
         if (response !== false) {
           // Compare addreses, no suggestion dialog if same
-          const isSame = isSameAddress(values, response);
+          const isSame = isSameAddress(values.address, response);
           if (isSame) {
             const payload = {
-              ...values,
-              phone: values.phone ? values.phone.trim() : ''
+              ...values.address,
+              phone: values.address.phone ? values.address.phone.trim() : ''
             };
+
             onSubmit(payload, actions);
           } else {
             setAddressSuggestion(true);
@@ -147,12 +267,12 @@ const AddressForm = ({
     );
   };
 
-  const handleDialogExit = (actions) => {
+  const handleDialogExit = actions => {
     actions.setSubmitting(false);
     setAddressSuggestion(false);
   };
 
-  const renderForm = ({ isSubmitting }) => (
+  const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
     <Form>
       <Box
         component={Typography}
@@ -164,14 +284,16 @@ const AddressForm = ({
       />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <AlertPanel
-            py={2}
-            px={4}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={errorMessage}
-            variant="subtitle2"
-          />
+          <div ref={errRef}>
+            <AlertPanel
+              py={2}
+              px={4}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={errorMessage}
+              variant="subtitle2"
+            />
+          </div>
         </Grid>
         {seedEnabled && (
           <Grid item xs={12}>
@@ -189,45 +311,69 @@ const AddressForm = ({
           </Grid>
         )}
         <Grid item xs={12} sm={6}>
-          <Field name="firstName" label="First Name" component={InputField} />
+          <div ref={fieldRefs.firstName}>
+            <Field
+              name="address.firstName"
+              label="First Name"
+              component={InputField}
+            />
+          </div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field name="lastName" label="Last Name" component={InputField} />
+          <div ref={fieldRefs.lastName}>
+            <Field
+              name="address.lastName"
+              label="Last Name"
+              component={InputField}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div ref={fieldRefs.address1}>
+            <Field
+              name="address.address1"
+              label="Street Address"
+              component={InputField}
+            />
+          </div>
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="address1"
-            label="Street Address"
-            component={InputField}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            name="address2"
+            name="address.address2"
             label="Apt. suite, bldg, c/o (optional)"
             component={InputField}
           />
         </Grid>
         <Grid item xs={12}>
-          <Field name="city" label="City" component={InputField} />
+          <div ref={fieldRefs.city}>
+            <Field name="address.city" label="City" component={InputField} />
+          </div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field
-            name="state"
-            label="State"
-            component={SelectField}
-            options={STATE_OPTIONS}
-          />
+          <div ref={fieldRefs.state}>
+            <Field
+              name="address.state"
+              label="State"
+              component={SelectField}
+              options={STATE_OPTIONS}
+            />
+          </div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Field name="zipcode" label="Zip Code" component={InputField} />
+          <div ref={fieldRefs.zipcode}>
+            <Field
+              name="address.zipcode"
+              label="Zip Code"
+              component={InputField}
+            />
+          </div>
         </Grid>
         <Grid item xs={12}>
-          <Field name="phone" label="Phone #" component={InputField} />
+          <Field name="address.phone" label="Phone #" component={InputField} />
         </Grid>
         <Grid item xs={12}>
           <Field
-            name="country"
+            name="address.country"
             label="Country"
             component={SelectField}
             options={COUNTRY_OPTIONS}
@@ -309,9 +455,8 @@ const AddressForm = ({
         />
       ) : null}
       <Formik
-        initialValues={initialValues}
+        initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
         onSubmit={handleSubmit}
-        validationSchema={schema}
         render={renderForm}
         enableReinitialize
       />

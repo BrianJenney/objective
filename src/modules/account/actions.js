@@ -31,7 +31,7 @@ const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
 export const requestCreateAccount = account => (dispatch, getState) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const { firstName, lastName, email, password, newsletter } = account;
 
   const params = {
@@ -45,11 +45,12 @@ export const requestCreateAccount = account => (dispatch, getState) => {
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
-  client.send(
-    '/exchange/account/account.request.create',
+  stompClient.send(
+    '/exchange/account/account.request.register',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -59,42 +60,43 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     payload: {}
   });
 
-  window.analytics.track("Sign Up Email Capture", {
-    "email": email
+  window.analytics.track('Sign Up Email Capture', {
+    email
   });
-
 };
 
-export const receivedCreateAccountSuccess = createReply => dispatch => {
-  localStorageClient.set('token', createReply.account_jwt);
-
-  EventEmitter.emit('account.created', createReply);
+export const receivedCreateAccountSuccess = (account, token) => dispatch => {
+  EventEmitter.emit('account.created', {
+    account,
+    token
+  });
 
   dispatch({
     type: RECEIVED_CREATE_ACCOUNT_SUCCESS,
-    payload: createReply
+    payload: account
   });
-  window.analytics.track("Account Created", {
-    "email": createReply.email,
-    "first_name": createReply.firstName,
-    "last_name": createReply.lastName,
-    "phone": "",
-    "signup_type": "organic",
-    "title": "",
-    "username": createReply.email,
-    "site_location": "account creation"
+
+  window.analytics.track('Account Created', {
+    email: account.email,
+    first_name: account.firstName,
+    last_name: account.lastName,
+    phone: '',
+    signup_type: 'organic',
+    title: '',
+    username: account.email,
+    site_location: 'account creation'
   });
-  if (createReply.newsletter) {
-    window.analytics.track("Subscribed", {
-      "email": createReply.email,
-      "site_location": "account creation"
+
+  if (account.newsletter) {
+    window.analytics.track('Subscribed', {
+      email: account.email,
+      site_location: 'account creation'
     });
 
-    window.analytics.track("Subscribed Listrak Auto", {
-      "email": createReply.email,
-      "site_location": "account creation"
+    window.analytics.track('Subscribed Listrak Auto', {
+      email: account.email,
+      site_location: 'account creation'
     });
-
   }
 };
 
@@ -104,9 +106,9 @@ export const receivedCreateAccountFailure = error => dispatch => {
     payload: error
   });
 
-  window.analytics.track("Sign Up Failed", {
-    "error_message": "Account with email already exists"
-  })
+  window.analytics.track('Sign Up Failed', {
+    error_message: 'Account with email already exists'
+  });
 };
 
 export const clearCreateAccountError = () => dispatch => {
@@ -116,15 +118,16 @@ export const clearCreateAccountError = () => dispatch => {
 };
 
 export const requestFetchAccount = id => (dispatch, getState) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = { id };
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/account/account.request.get',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -159,7 +162,7 @@ export const requestPatchAccount = (authToken, patches, actions) => (
   dispatch,
   getState
 ) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: authToken,
     data: patches,
@@ -168,14 +171,14 @@ export const requestPatchAccount = (authToken, patches, actions) => (
     }
   };
 
-  // console.log(params);
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/account/account.request.patch',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -216,11 +219,12 @@ export const clearPatchAccountError = () => dispatch => {
   });
 };
 
-export const requestChangePassword = (authToken, patches, { setSubmitting }) => (
-  dispatch,
-  getState
-) => {
-  const { client, replyTo } = getState().stomp;
+export const requestChangePassword = (
+  authToken,
+  patches,
+  { setSubmitting }
+) => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: authToken,
     data: patches,
@@ -231,11 +235,12 @@ export const requestChangePassword = (authToken, patches, { setSubmitting }) => 
 
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/account/account.request.changePassword',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -268,14 +273,16 @@ export const clearChangePasswordError = () => dispatch => {
   });
 };
 
-export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatch, getState) => {
-  const { client, replyTo } = getState().stomp;
+export const requestLogin = ({ email, password }, { setSubmitting }) => (
+  dispatch,
+  getState
+) => {
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
         email,
-        password,
-        storeCode: getState().storefront.code
+        password
       },
       collation: {
         locale: 'en_US',
@@ -285,11 +292,12 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
   };
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/account/account.request.login',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -301,27 +309,28 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatc
     onFailure: () => setSubmitting(false)
   });
 
-  window.analytics.track("Sign In Completed", {
-    "email": email,
-    "site_location": ""
-  })
+  window.analytics.track('Sign In Completed', {
+    email,
+    site_location: ''
+  });
 };
 
-export const receivedLoginSuccess = loginReply => dispatch => {
-  localStorageClient.set('token', loginReply.account_jwt);
-
-  EventEmitter.emit('user.logged.in', loginReply);
-
+export const receivedLoginSuccess = (account, token) => dispatch => {
   dispatch({
     type: RECEIVED_LOGIN_SUCCESS,
-    payload: loginReply
+    payload: account
   });
-  //store.dispatch(requestFetchCartByEmail(loginReply.email));
-  window.analytics.track("Sign In Successful", {
-    "method": "email",
-    "site_location": "",
-    "username": loginReply.email
-  })
+
+  EventEmitter.emit('user.logged.in', {
+    account,
+    token
+  });
+
+  window.analytics.track('Sign In Successful', {
+    method: 'email',
+    site_location: '',
+    username: account.email
+  });
 };
 
 export const receivedLoginFailure = loginError => dispatch => {
@@ -329,11 +338,12 @@ export const receivedLoginFailure = loginError => dispatch => {
     type: RECEIVED_LOGIN_FAILURE,
     payload: loginError
   });
-  window.analytics.track("Sign In Failed", {
-    "error_message": "Incorrect Email/Password",
-    "method": "email",
-    "site_location": ""
-  })
+
+  window.analytics.track('Sign In Failed', {
+    error_message: 'Incorrect Email/Password',
+    method: 'email',
+    site_location: ''
+  });
 };
 
 export const clearLoginError = () => dispatch => {
@@ -343,14 +353,12 @@ export const clearLoginError = () => dispatch => {
 };
 
 export const requestLogout = () => dispatch => {
-  localStorageClient.remove('token');
-
-  EventEmitter.emit('user.logged.out', {});
-
   dispatch({
     type: REQUEST_LOGOUT,
     payload: {}
   });
+
+  EventEmitter.emit('user.logged.out', {});
 };
 
 export const receivedFindOrdersByAccount = orders => dispatch => {
@@ -361,7 +369,7 @@ export const receivedFindOrdersByAccount = orders => dispatch => {
 };
 
 export const requestForgotPassword = (email, url) => (dispatch, getState) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
@@ -376,11 +384,12 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
   };
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/account/account.request.forgotpassword',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -390,13 +399,13 @@ export const requestForgotPassword = (email, url) => (dispatch, getState) => {
     payload: {}
   });
 
-  window.analytics.track("Forgot Password Request Started", {
-    "email": email
+  window.analytics.track('Forgot Password Request Started', {
+    email
   });
 };
 
 export const requestSignupEmail = email => (dispatch, getState) => {
-  const { client, replyTo } = getState().stomp;
+  const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
@@ -406,11 +415,12 @@ export const requestSignupEmail = email => (dispatch, getState) => {
   };
   const payload = JSON.stringify(msgpack.encode(params));
 
-  client.send(
+  stompClient.send(
     '/exchange/account/account.request.signupemail',
     {
       'reply-to': replyTo,
-      'correlation-id': ObjectId()
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
     },
     payload
   );

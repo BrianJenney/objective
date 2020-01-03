@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { isNaN } from 'lodash';
+import { get, omit } from 'lodash';
+import { useSnackbar } from 'notistack';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
@@ -15,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -22,8 +24,11 @@ import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
 } from '../../constants/payment';
-import { getInitialValues, getErrorMessage } from '../../utils/misc';
-import { COPYFILE_FICLONE_FORCE } from 'constants';
+import {
+  getInitialValues,
+  getErrorMessage,
+  scrollToRef
+} from '../../utils/misc';
 
 const useStyles = makeStyles(() => ({
   noBorderField: {
@@ -39,35 +44,6 @@ const usePrevious = value => {
     ref.current = value;
   }, [value]);
   return ref.current;
-};
-
-const validateTextField = value => {
-  if (value) {
-    return undefined;
-  }
-  return 'This field is required';
-};
-
-const validateCardNumberField = values => {
-  const { number, expirationDate, cvv } = values.paymentDetails;
-  const expirationDatePattern = /^(0[1-9]|10|11|12)\/20[0-9]{2}$/g;
-  if (!number) {
-    return 'Card number is required';
-  }
-  if (isNaN(Number(number))) {
-    return 'Card number should be a numeric value';
-  }
-  if (!expirationDatePattern.test(expirationDate)) {
-    return 'Expiration date should be a valid date - MM/YYYY';
-  }
-  if (!cvv) {
-    return 'CVV is required';
-  }
-  if (isNaN(Number(cvv))) {
-    return 'CVV should be a numeric value';
-  }
-
-  return undefined;
 };
 
 const INITIAL_VALUES = {
@@ -93,6 +69,43 @@ const INITIAL_VALUES = {
   shouldSaveData: true
 };
 
+const checkedFields = [
+  'cardholderName',
+  'number',
+  'expirationDate',
+  'cvv',
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
+];
+const formikFields = [
+  'cardholderName',
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode'
+];
+const formikValueFieldsMap = {
+  cardholderName: 'paymentDetails.cardholderName',
+  firstName: 'billingAddress.firstName',
+  lastName: 'billingAddress.lastName',
+  address1: 'billingAddress.address1',
+  city: 'billingAddress.city',
+  state: 'billingAddress.state',
+  zipcode: 'billingAddress.zipcode'
+};
+const validateRequiredField = value => {
+  if (value) {
+    return undefined;
+  }
+  return 'This field is required';
+};
+
 const PaymentForm = ({
   currentUser,
   seedEnabled,
@@ -107,9 +120,23 @@ const PaymentForm = ({
   backLabel,
   allowFlyMode
 }) => {
+  const fieldRefs = {
+    cardholderName: useRef(null),
+    number: useRef(null),
+    expirationDate: useRef(null),
+    cvv: useRef(null),
+    firstName: useRef(null),
+    lastName: useRef(null),
+    address1: useRef(null),
+    city: useRef(null),
+    state: useRef(null),
+    zipcode: useRef(null)
+  };
+  const errRef = useRef(null);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
       setValues({
@@ -129,7 +156,10 @@ const PaymentForm = ({
     }
   };
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  const errorMessage = getErrorMessage(
+    currentUser.patchAccountError,
+    scrollToRef(errRef)
+  );
   const [HostedFieldsClient, setHostedFieldsClient] = useState();
 
   useEffect(() => {
@@ -148,21 +178,21 @@ const PaymentForm = ({
             {
               client: clientInstance,
               styles: {
-                'input': {
+                input: {
                   'font-size': '18px',
                   'font-family': 'p22-underground, sans-serif',
                   'font-weight': 'lighter',
-                  'color': '#585858',
-                  'padding': '18.5px 14px'
+                  color: '#585858',
+                  padding: '18.5px 14px'
                 },
                 ':focus': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.valid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '.invalid': {
-                  'color': '#000'
+                  color: '#000'
                 },
                 '::-webkit-input-placeholder': {
                   'font-size': '1rem'
@@ -198,7 +228,7 @@ const PaymentForm = ({
                 // @TODO need to handle this gracefully
               }
               hostedFieldsInstance.on('blur', function (event) {
-                let field = event.fields[event.emittedBy];
+                const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
                   document.getElementById('bt-payment-holder').style.border =
@@ -210,12 +240,14 @@ const PaymentForm = ({
                 }
               });
               hostedFieldsInstance.on('validityChange', function (event) {
-                let field = event.fields[event.emittedBy];
+                const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
-                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
-                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid #C10230';
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
@@ -245,15 +277,55 @@ const PaymentForm = ({
   }, [currentUser.patchAccountSubmitting]);
 
   const handleSubmit = async (values, actions) => {
-    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
-      if (!HostedFieldsClient._state.fields[field].isValid) {
-        let elem = HostedFieldsClient._state.fields[field];
+    const fieldErrors = {
+      paymentDetails: {},
+      billingAddress: {}
+    };
+    let isHostedFieldInvalid = false;
+    const hostedFieldState = HostedFieldsClient._state;
+    Object.keys(hostedFieldState.fields).forEach(function (field) {
+      if (!hostedFieldState.fields[field].isValid) {
+        const elem = hostedFieldState.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
+        fieldErrors[field] = 'This field is invalid';
+        isHostedFieldInvalid = true;
+      } else {
+        fieldErrors[field] = undefined;
       }
     });
-    const cardData = await HostedFieldsClient.tokenize();
+    formikFields.forEach(requiredField => {
+      if (requiredField === 'cardholderName') {
+        fieldErrors.paymentDetails[requiredField] = validateRequiredField(
+          values.paymentDetails[requiredField]
+        );
+      } else {
+        fieldErrors.billingAddress[requiredField] = validateRequiredField(
+          values.billingAddress[requiredField]
+        );
+      }
+    });
+    actions.setErrors(omit(fieldErrors, ['number', 'expirationDate', 'cvv']));
+
+    const firstInvalidField = checkedFields.find(field => {
+      if (formikFields.includes(field)) {
+        return !!get(fieldErrors, formikValueFieldsMap[field]);
+      }
+      return !!fieldErrors[field];
+    });
+
+    if (firstInvalidField) {
+      actions.setSubmitting(false);
+      return scrollToRef(fieldRefs[firstInvalidField]);
+    }
+    if (isHostedFieldInvalid) {
+      actions.setSubmitting(false);
+      return;
+    }
+    const cardData = await HostedFieldsClient.tokenize({
+      cardholderName: values.paymentDetails.cardholderName
+    });
     const payload = {
       ...values,
       cardData,
@@ -264,7 +336,6 @@ const PaymentForm = ({
           : ''
       }
     };
-
     onSubmit(payload, actions);
   };
 
@@ -281,14 +352,16 @@ const PaymentForm = ({
       />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <AlertPanel
-            py={2}
-            px={4}
-            type="error"
-            bgcolor="#ffcdd2"
-            text={errorMessage}
-            variant="subtitle2"
-          />
+          <div ref={errRef}>
+            <AlertPanel
+              py={2}
+              px={4}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={errorMessage}
+              variant="subtitle2"
+            />
+          </div>
         </Grid>
         {!onlyCard && (
           <Grid item xs={12}>
@@ -297,7 +370,6 @@ const PaymentForm = ({
               label="Payment Method"
               component={SelectField}
               options={PAYMENT_METHOD_OPTIONS}
-              validate={validateTextField}
             />
           </Grid>
         )}
@@ -305,12 +377,13 @@ const PaymentForm = ({
           PAYMENT_METHODS.CREDIT_CARD && (
             <>
               <Grid item xs={12}>
-                <Field
-                  name="paymentDetails.cardholderName"
-                  label="Name on Card"
-                  component={InputField}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.cardholderName}>
+                  <Field
+                    name="paymentDetails.cardholderName"
+                    label="Name on Card"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
                 <Box
@@ -319,23 +392,24 @@ const PaymentForm = ({
                   id="bt-payment-holder"
                 >
                   <Grid item xs={6}>
-                    <div id="bt-cardNumber"></div>
+                    <div id="bt-cardNumber" ref={fieldRefs.number}></div>
                     <div className="btError">Please enter valid card number</div>
                   </Grid>
                   <Grid item xs={3}>
-                    <div id="bt-cardExpiration"></div>
-                    <div className="btError">
-                      Please enter valid Expiration Date
-                  </div>
+                    <div
+                      id="bt-cardExpiration"
+                      ref={fieldRefs.expirationDate}
+                    ></div>
+                    <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
                   <Grid item xs={3}>
-                    <div id="bt-cardCvv"></div>
+                    <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
                 </Box>
               </Grid>
               {allowFlyMode && (
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ marginTop: '25px' }}>
                   <Field
                     name="shouldSaveData"
                     label="Save details in account"
@@ -371,60 +445,68 @@ const PaymentForm = ({
                 </Grid>
               )}
               <Grid item xs={12} sm={6}>
-                <Field
-                  name="billingAddress.firstName"
-                  label="First Name"
-                  component={InputField}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.firstName}>
+                  <Field
+                    name="billingAddress.firstName"
+                    label="First Name"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Field
-                  name="billingAddress.lastName"
-                  label="Last Name"
-                  component={InputField}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.lastName}>
+                  <Field
+                    name="billingAddress.lastName"
+                    label="Last Name"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
-                <Field
-                  name="billingAddress.address1"
-                  label="Street Address"
-                  component={InputField}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.address1}>
+                  <Field
+                    name="billingAddress.address1"
+                    label="Street Address"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
-                <Field
-                  name="billingAddress.address2"
-                  label="Apt. suite, bldg, c/o (optional)"
-                  component={InputField}
-                />
+                <div>
+                  <Field
+                    name="billingAddress.address2"
+                    label="Apt. suite, bldg, c/o (optional)"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
-                <Field
-                  name="billingAddress.city"
-                  label="City"
-                  component={InputField}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.city}>
+                  <Field
+                    name="billingAddress.city"
+                    label="City"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Field
-                  name="billingAddress.state"
-                  label="State"
-                  component={SelectField}
-                  options={STATE_OPTIONS}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.state}>
+                  <Field
+                    name="billingAddress.state"
+                    label="State"
+                    component={SelectField}
+                    options={STATE_OPTIONS}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Field
-                  name="billingAddress.zipcode"
-                  label="Zip Code"
-                  component={InputField}
-                  validate={validateTextField}
-                />
+                <div ref={fieldRefs.zipcode}>
+                  <Field
+                    name="billingAddress.zipcode"
+                    label="Zip Code"
+                    component={InputField}
+                  />
+                </div>
               </Grid>
               <Grid item xs={12}>
                 <Field
@@ -456,7 +538,11 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} loading={isSubmitting} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              loading={isSubmitting}
+            />
           </ButtonGroup>
         </Grid>
       </Grid>

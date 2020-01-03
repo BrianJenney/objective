@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import InputField from './InputField';
 
@@ -21,11 +20,28 @@ SelectField.defaultProps = {
 };
 
 export default function SelectField(props) {
-  const { options, ...rest } = props;
+  const { options, defaultLabel, ...rest } = props;
+  const [state, setState] = React.useState('');
+  const { setFieldValue } = props.form;
+  const field = props.field ? props.field : null;
+  
+  const handleChange = event => {
+    setState(event.target.value);
+    if (field.name === 'address.state') {
+      setFieldValue('address.state', event.target.value);
+    }
+    if (field.name === 'billingAddress.state') {
+      setFieldValue('billingAddress.state', event.target.value);
+    }
+  };
+  
   return (
     <InputField
       select
+      onChange={handleChange}
+      defaultValue={defaultLabel || state}
       SelectProps={{
+        native: true,
         MenuProps: {
           classes: popoverStyles(),
           getContentAnchorEl: null,
@@ -38,9 +54,9 @@ export default function SelectField(props) {
       {...rest}
     >
       {options.map(o => (
-        <MenuItem key={o.value} value={o.value}>
+        <option key={o.value} value={o.value}>
           {o.label}
-        </MenuItem>
+        </option>
       ))}
     </InputField>
   );

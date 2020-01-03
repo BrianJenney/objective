@@ -31,14 +31,31 @@ export const getPrices = prices => {
 @return - {Array} product categories
 */
 export const getProductCategories = products => {
+  const isNewYearPage = window.location.pathname.includes('newyear');
   const productCategoriesMap = new Map();
   const productCategories = [];
-  products.map(product => {
-    if (!productCategoriesMap.has(product.productCategory)) {
-      productCategoriesMap.set(product.productCategory, true);
-      productCategories.push(product.productCategory);
-    }
-  });
+  if (isNewYearPage) {
+    products.map(product => {
+      if (
+        product.id == '5d8bb76ff5005515a437d4c8' ||
+        product.id == '5d8bb528f5005515a437d4c5' ||
+        product.id == '5ceebfdca686a03bccfa67c0'
+      ) {
+        product.productCategory = 'newyear';
+      }
+      if (!productCategoriesMap.has(product.productCategory)) {
+        productCategoriesMap.set(product.productCategory, true);
+        productCategories.push(product.productCategory);
+      }
+    });
+  } else {
+    products.map(product => {
+      if (!productCategoriesMap.has(product.productCategory)) {
+        productCategoriesMap.set(product.productCategory, true);
+        productCategories.push(product.productCategory);
+      }
+    });
+  }
 
   return productCategories;
 };

@@ -35,6 +35,8 @@ import {
   LoginToAccountPage
 } from './pages/Login';
 
+import NewYear from './pages/landingpages/NewYear';
+
 export default [
   { path: '/', exact: true, component: HomePage },
   { path: '/login', exact: true, nonAuth: true, component: LoginPage },
@@ -136,5 +138,6 @@ export default [
   { path: '/journal/tag/:tag_slug', exact: true, component: BlogTag },
   { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
   { path: '/journal', exact: true, component: Blog },
+  { path: '/newyear', exact: true, component: NewYear },
   { path: '/:page', exact: true, component: StaticPage }
 ];

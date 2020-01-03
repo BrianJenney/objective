@@ -31,6 +31,7 @@ const AccountAddresses = ({
   ...rest
 }) => {
   const [formModeEnabled, setFormModeEnabled] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [editedIndex, setEditedIndex] = useState(-1);
   const theme = useTheme();
@@ -97,22 +98,27 @@ const AccountAddresses = ({
   const handleSave = (values, actions) => {
     const pureValues = omit(values, ['shouldSaveData']);
     const { shouldSaveData } = values;
-    const restrictions = new VariantRestrictions(cart.items);
-    const restrictionValidations = restrictions.validate(
-      values,
-      'variant_id',
-      'variant_name'
-    );
-    if (restrictionValidations.hasRestrictions) {
-      restrictionValidations.items.map(item => {
-        setRestrictionMessage(true);
-        setRestrictedProduct(item.item_name);
-        removeFromCart(cart, item.key);
-      });
+    let currentIndex = editedIndex;
+    // Validate new address against cart_items at Checkout only
+    if (formType === 'checkout') {
+      const restrictions = new VariantRestrictions(cart.items);
+      const restrictionValidations = restrictions.validate(
+        values,
+        'variant_id',
+        'variant_name'
+      );
+      if (restrictionValidations.hasRestrictions) {
+        restrictionValidations.items.map(item => {
+          setRestrictionMessage(true);
+          setRestrictedProduct(item.item_name);
+          removeFromCart(cart, item.key);
+        });
+      }
     }
 
     if (allowFlyMode && !shouldSaveData) {
       actions.setSubmitting(false);
+      setIsEditing(false);
       setFormModeEnabled(false);
       setEditedIndex(-1);
 
@@ -125,6 +131,7 @@ const AccountAddresses = ({
         pureValues.isDefault = true;
       }
       newAddressBook = [...addressBook, pureValues];
+      currentIndex = newAddressBook.length - 1;
     } else {
       newAddressBook = addressBook.map((addressEntity, index) => {
         if (index === editedIndex) {
@@ -137,10 +144,10 @@ const AccountAddresses = ({
     const payload = { addressBook: newAddressBook };
 
     requestPatchAccount(account_jwt, payload);
-
+    setIsEditing(false);
     actions.setSubmitting(false);
     setFormModeEnabled(false);
-    setSelectedIndex(editedIndex);
+    setSelectedIndex(currentIndex);
     setEditedIndex(-1);
 
     if (onSubmit) {
@@ -179,6 +186,7 @@ const AccountAddresses = ({
         <AddressForm
           currentUser={currentUser}
           formType={formType}
+          isEditing={isEditing}
           seedEnabled={seedEnabled}
           addressSeed={addressSeed}
           useSeedLabel={useSeedLabel}
@@ -243,6 +251,7 @@ const AccountAddresses = ({
                         defaultValues={addressEntity}
                         Summary={AddressSummary}
                         onEdit={() => {
+                          setIsEditing(true);
                           setFormModeEnabled(true);
                           setEditedIndex(index);
                         }}
