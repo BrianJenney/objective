@@ -130,7 +130,6 @@ const Checkout = ({
   const [restrictedProduct, setRestrictedProduct] = useState('');
 
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  const cartMerged = useSelector(state => state.cart.cartMerged);
   const closeShippingRestrictionsDialog = useCallback(() => {
     setCloseShippingRestrictions(true);
   }, [setCloseShippingRestrictions]);

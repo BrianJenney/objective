@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Paper, Typography, useMediaQuery, Grid } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
