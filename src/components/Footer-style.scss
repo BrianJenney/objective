@@ -23,71 +23,50 @@
   .copy {
     margin-left: -1px;
   }
-
-  .promise {
-    background-color: #ffffff;
-    text-align: center;
-    color: #000000;
-    padding: 40px 16px 25px;
-    h3 {
-      letter-spacing: 1.5px;
-      font-size: 23px;
-      font-weight: 600;
-    }
-
-    h4 {
-      font-family: p22-underground, sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: 2.25px;
-      text-align: center;
-      color: #000000;
-      margin-bottom: 20px;
-    }
-    p {
-      font-family: FreightTextProBook;
-      font-size: 16px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.5;
-      letter-spacing: normal;
-      text-align: center;
-      color: #000000;
-      text-transform: none;
-      margin: 0;
-    }
-    .diamond-outer {
-      width: 140px;
-      margin: 0 auto 75px;
-    }
+  .diamond-outer {
+    width: 167px;
+    margin: 10px auto 10px;
     .diamond {
       background: #000;
-      height: 140px;
+      height: 167px;
       text-align: center;
       transform: rotate(45deg);
-      width: 140px;
+      width: 167px;
       padding: 35px;
       svg {
-        width: 65px;
+        width: 92px;
         transform: rotate(315deg);
         path {
           fill: #fff;
         }
       }
     }
-    @media (min-width: 1200px) {
-      padding: 40px 165px;
-      p {
-        font-size: 20px;
-      }
-    }
+  }
 
-    @media (min-width: 1600px) {
-      padding: 70px 200px;
+  .promise {
+    padding: 30px 25px;
+    h4 {
+      font-family: p22-underground, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1.5px;
+      color: #959595;
+      margin-bottom: 7px;
+    }
+    p {
+      font-family: freight-text-pro, sans-serif;
+      font-size: 16px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 26px;
+      letter-spacing: normal;
+      color: #fff;
+      text-transform: initial;
+      margin: 0;
     }
   }
   .signup-box {
@@ -219,6 +198,9 @@
   .border-right {
     border-right: 1px solid $gray;
   }
+  .border-top {
+    border-top: 1px solid $gray;
+  }
 
   .uppercase {
     text-transform: uppercase;
@@ -238,10 +220,6 @@
   }
 
   .footer-main {
-    border-top: 1px solid $gray2;
-    border-bottom: 1px solid $gray2;
-    min-height: 475px;
-
     .logo {
       padding: 20px 23px;
       svg {
@@ -453,7 +431,7 @@
       padding-bottom: 7px;
     }
     h4 {
-      font-family: FreightTextProBook, serif;
+      font-family: FreightTextProBook, sans-serif;
       font-size: 16px;
       font-weight: normal;
       font-style: normal;

@@ -12,21 +12,20 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Link from '@material-ui/core/Link';
-import { Divider , Container } from '@material-ui/core';
+import { Divider, Container } from '@material-ui/core';
 
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 
-import { Button, NavLink } from './common';
-import { InputField } from './form-fields';
 import './Footer-style.scss';
-
 
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { InputField } from './form-fields';
+import { Button, NavLink } from './common';
 import CheckoutFooter from './CheckoutFooter';
 import ContactMail from './common/Icons/ContactMail/ContactMail';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
@@ -740,9 +739,6 @@ Footer.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const enhance = compose(
-  withRouter,
-  withCurrentUser
-);
+const enhance = compose(withRouter, withCurrentUser);
 
 export default enhance(Footer);
