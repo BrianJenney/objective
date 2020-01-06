@@ -54,3 +54,93 @@
     transform: rotate(135deg);
     box-shadow: -1px 1px 1px 0 #000;
   }
+
+  @media(min-width: 1000px) {
+    .triangle {
+      left: 74.5%;
+      &:after {
+        left: 89.2%;
+      }
+    }
+  }
+
+  @media(min-width: 1100px) {
+    .triangle {
+      left: 77%;
+      &:after {
+        left: 89.2%;
+      }
+    }
+  }
+
+  @media(min-width: 1200px) {
+    .triangle {
+      left: 78.4%;
+      &:after {
+        left: 91%;
+      }
+    }
+  }
+
+  @media(min-width: 1300px) {
+    .triangle {
+      left: 80.2%;
+      &:after {
+        left: 91%;
+      }
+    }
+  }
+
+  @media(min-width: 1400px) {
+    .triangle {
+      left: 81.7%;
+      &:after {
+        left: 90%;
+      }
+    }
+  }
+  
+  @media(min-width: 1500px) {
+    .triangle {
+      left: 82.5%;
+      &:after {
+        left: 72.5%;
+      }
+    }
+  }
+
+  @media(min-width: 1600px) {
+    .triangle {
+      left: 80%;
+      &:after {
+        left: 75%;
+      }
+    }
+  }
+
+  @media(min-width: 1700px) {
+    .triangle {
+      left: 78.8%;
+      &:after {
+        left: 71.5%;
+      }
+    }
+  }
+
+  @media(min-width: 1800px) {
+    .triangle {
+      left: 77.5%;
+      &:after {
+        left: 69%;
+      }
+    }
+  }
+
+  @media(min-width: 1900px) {
+    .triangle {
+      left: 76%;
+      &:after {
+        left: 69%;
+      }
+    }
+  }
