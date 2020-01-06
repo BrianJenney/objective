@@ -145,7 +145,7 @@ export const HomeVariantCard = ({ variant }) => {
           )}
           {variant.inStock < 200 && (
             <>
-              <CardActions>
+              <CardActions class="oos-home">
                 <OutOfStock
                   onClick={handleOpenOutOfStockDialog}
                   onExited={closeOutOfStockDialog}
