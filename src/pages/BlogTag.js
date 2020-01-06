@@ -54,19 +54,19 @@ const BlogTag = ({ computedMatch }) => {
     <>
       <HeadTags title={title} description={description} />
       <ScrollToTop>
-      <div className="journal-gallery">
-        <Box className="header" py={8}>
-          <Container className="container">
-            <h1>{tag}</h1>
-          </Container>
-        </Box>
-        <Box className="content" py={8}>
-          <Container>
-            <div className="list">{renderPosts(posts)}</div>
-          </Container>
-        </Box>
-      </div>
-    </ScrollToTop>
+        <div className="journal-gallery">
+          <Box className="header" py={8}>
+            <Container className="container">
+              <h1>{tag}</h1>
+            </Container>
+          </Box>
+          <Box className="content" py={8}>
+            <Container>
+              <div className="list">{renderPosts(posts)}</div>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
     </>
   );
 };

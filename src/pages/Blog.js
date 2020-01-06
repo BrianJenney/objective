@@ -80,42 +80,42 @@ const Blog = ({ location }) => {
     <>
       <HeadTags title={title} description={description} />
       <ScrollToTop>
-        <div className="journal-gallery">
-          <Box className="header" py={8}>
-            <Container className="container">
-              <h1>The Journal</h1>
-              <p>
-                Lifestyle tips, recipes, deep dives into study results and
-                more...to make good health easy
-              </p>
-            </Container>
-          </Box>
-          <Box className="content" py={8}>
-            <Container>
-              <Divider />
-              <h1>Featured Posts</h1>
-              {renderFeaturedMain(featuredMain)}
-              {featuredPosts.length && (
-                <Grid container spacing={4} className="calloutSmall">
-                  {renderFeaturedPosts(featuredPosts)}
-                </Grid>
-              )}
-              <Divider />
-              <h1>All Posts</h1>
-              <div className="list">
-                {renderPosts(posts)}
-                {/*
-                <div className="load">
-                  <Button variant="contained" color="primary">
-                    Load More
-                  </Button>
-                </div>
-                */}
+      <div className="journal-gallery">
+        <Box className="header" py={8}>
+          <Container className="container">
+            <h1>The Journal</h1>
+            <p>
+              Lifestyle tips, recipes, deep dives into study results and
+              more...to make good health easy
+            </p>
+          </Container>
+        </Box>
+        <Box className="content" py={8}>
+          <Container>
+            <Divider />
+            <h1>Featured Posts</h1>
+            {renderFeaturedMain(featuredMain)}
+            {featuredPosts.length && (
+              <Grid container spacing={4} className="calloutSmall">
+                {renderFeaturedPosts(featuredPosts)}
+              </Grid>
+            )}
+            <Divider />
+            <h1>All Posts</h1>
+            <div className="list">
+              {renderPosts(posts)}
+              {/*
+              <div className="load">
+                <Button variant="contained" color="primary">
+                  Load More
+                </Button>
               </div>
-            </Container>
-          </Box>
-        </div>
-      </ScrollToTop>
+              */}
+            </div>
+          </Container>
+        </Box>
+      </div>
+    </ScrollToTop>
     </>
   );
 };

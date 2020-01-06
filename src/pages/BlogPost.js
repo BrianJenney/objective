@@ -66,7 +66,6 @@ const BlogPost = ({ computedMatch }) => {
       </ScrollToTop>
     );
   }
-
   const renderRelatedProducts = products => {
     if (variants && products.length > 0) {
       return products.map(product => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Paper, Typography, useMediaQuery, Grid } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -113,21 +113,43 @@ const ElsewhereNotification = () => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const node = useRef();
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  useEffect(() => {
+    // add when mounted
+    document.addEventListener("click", handleClick);
+    document.addEventListener("touchstart", handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener("click", handleClick);
+      document.addEventListener("touchstart", handleClick);
+    };
+  }, []);
+
+  const handleClick = e => {
+    if (node.current && node.current.contains(e.target)) {
+      // inside click
+      dispatch(unSetCartMergeNotification());
+    }
+    // outside click
     dispatch(unSetCartMergeNotification());
   };
 
   return (
-    <Paper className={xs ? 'triangleXS' : 'triangle'}>
-      <Typography className={xs ? classes.textXS : classes.text}>We've added items <br></br>from your previous <br></br>session to your cart.</Typography >
-      <Typography className={xs ? classes.continueXS : classes.continue} onClick={handleClick}>CONTINUE SHOPPING</Typography >
-    </Paper>
+    <>
+      <div ref={node}>
+        <Paper className={xs ? 'triangleXS' : 'triangle'}>
+          <Typography className={xs ? classes.textXS : classes.text}>We've added items <br></br>from your previous <br></br>session to your cart.</Typography>
+          <Typography className={xs ? classes.continueXS : classes.continue}>CONTINUE SHOPPING</Typography>
+        </Paper>
+      </div>
+    </>
   );
 };
 
 const CartMergeNotification = ({ isCheckoutPage }) => {
+
   return (
     <>{isCheckoutPage ? <CheckoutNotification /> : <ElsewhereNotification />}</>
   );
