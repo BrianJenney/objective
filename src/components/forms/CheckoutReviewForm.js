@@ -43,15 +43,14 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
       justifyContent="center"
       style={{ width: '100%', margin: '0px auto', maxWidth: '430px' }}
     >
-      <Box
-        component={NavLink}
-        to="/terms"
-        underline="always"
-        fontSize={11}
-        mx={1}
-        style={{ width: 'auto', marginRight: '3px', fontSize: '11px' }}
-      >
-        Terms &amp; Conditions
+      <Box mx={1}>
+        <a
+          style={{ fontSize: '11px', color: '#000000' }}
+          href="https://www.objectivewellness.com/terms"
+          target="_blank"
+        >
+          Terms &amp; Conditions
+        </a>
       </Box>
       <Typography variant="body2" style={{ fontSize: '11px' }}>
         &nbsp;and

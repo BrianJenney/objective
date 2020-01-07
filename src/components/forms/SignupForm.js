@@ -162,9 +162,15 @@ const SignupForm = ({
           <div className={classes.text}>
             By creating an account you agree to the Objective Wellness&nbsp;
             <div className={classes.text2}>
-              <NavLink to="/terms" underline="always">
+              {/*<NavLink to="/terms" underline="always">
                 Terms &amp; Conditions&nbsp;
-              </NavLink>
+              </NavLink>*/}
+              <a style={{ fontSize: '14px', color: '#000000' }}
+                 href="https://www.objectivewellness.com/terms"
+                 target="_blank"
+              >
+                Terms &amp; Conditions&nbsp;
+              </a>
               &amp;&nbsp;
               {/* <NavLink to="/privacypolicy" underline="always">
                 Privacy Policy
