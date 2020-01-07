@@ -45,7 +45,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
     >
       <Box
         component={NavLink}
-        to="/terms-conditions"
+        to="/terms"
         underline="always"
         fontSize={11}
         mx={1}
@@ -54,17 +54,15 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
         Terms &amp; Conditions
       </Box>
       <Typography variant="body2" style={{ fontSize: '11px' }}>
-        and
+        &nbsp;and
       </Typography>
-      <Box
-        component={NavLink}
-        mx={1}
-        to="/privacy-policy"
-        underline="always"
-        fontSize={11}
-        style={{ marginLeft: '3px', fontSize: '11px' }}
-      >
-        Privacy Policy
+      <Box mx={1}>
+        <a style={{ fontSize: '11px', color: '#000000' }}
+          href="https://www.thecloroxcompany.com/privacy/"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
       </Box>
     </Box>
   </Box>
