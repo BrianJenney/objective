@@ -29,6 +29,7 @@ import segmentSiteLocation from '../utils/segmentSiteLocation';
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
+const pinIcon = require('../../src/assets/images/pinterest.png');
 
 const segmentTrackNavigationClick = e => {
   window.analytics.track('Navigation Clicked', {
@@ -133,46 +134,57 @@ const Footer = ({ location, currentUser }) => {
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
-              <Grid container item xs={12} className="promise">
-                <Grid item xs={12}>
-                  <div className="diamond-outer">
-                    <div className="diamond">
-                      <LogoShort />
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4" gutterBottom className="uppercase">
-                    THE OBJECTIVE PROMISE
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <p>
-                    Behind every Objective supplement are studies, endless hours
-                    of research and a team with over 50 years of combined
-                    experience formulating dietary supplements. And the one
-                    thing we know for sure? Everybody's different. Every body is
-                    different. It's possible that what works wonders for your
-                    best friend might not do a thing for you. So let us know and
-                    we'll refund your money. It's that simple.
-                  </p>
-                </Grid>
-              </Grid>
               <div className="footer-main-holder">
                 <Grid container className="footer-main" xs={12}>
-                  <Grid item xs={6} className="border-bottom row1 logo">
-                    <StyledBox>
-                      <LogoShort />
-                    </StyledBox>
+                  <Grid item xs className="row1 border-top border-bottom ">
+                    <Grid item xs={3} className="row1 logo border-right">
+                      <StyledBox>
+                        <LogoShort />
+                      </StyledBox>
+                    </Grid>
+                    <Grid className="row1 icon-container">
+                      <div className="uppercase follow-text">Follow Us</div>
+                      <Link
+                        href="https://www.instagram.com/objective_wellness"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <img src={igIcon} alt="instagram" />
+                      </Link>
+                      <Link
+                        href="https://www.facebook.com/Objective_Wellness-114299813287253/"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <img src={fbIcon} alt="facebook" />
+                      </Link>
+                      <Link href="" target="_blank" rel="noopener">
+                        <img src={pinIcon} alt="pinterest" />
+                      </Link>
+                    </Grid>
                   </Grid>
-                  <Grid
-                    item
-                    xs={6}
-                    className="border-bottom border-left row1 copy-mobile"
-                  >
-                    <StyledBox>
-                      <div className="rotate">Copyright 2019</div>
-                    </StyledBox>
+                  <Grid container item xs={12} className="promise">
+                    <Grid item xs={12}>
+                      <Typography
+                        variant="h4"
+                        gutterBottom
+                        className="uppercase"
+                      >
+                        THE OBJECTIVE PROMISE
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <p>
+                        Behind every Objective supplement are studies, endless
+                        hours of research and a team with over 50 years of
+                        combined experience formulating dietary supplements. And
+                        the one thing we know for sure? Everybody's different.
+                        Every body is different. It's possible that what works
+                        wonders for your best friend might not do a thing for
+                        you. So let us know and we'll refund your money. It's
+                        that simple.
+                      </p>
+                    </Grid>
                   </Grid>
                   <Grid item xs={6} className="row2 border-bottom">
                     <Grid container spacing={0}>
@@ -301,24 +313,6 @@ const Footer = ({ location, currentUser }) => {
                       </>
                     )}
                   </Grid>
-                  <Grid item xs={6} className="border-bottom icon">
-                    <Link
-                      href="https://www.instagram.com/objective_wellness"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <img src={igIcon} alt="instagram" />
-                    </Link>
-                  </Grid>
-                  <Grid item xs={6} className="border-bottom border-left icon">
-                    <Link
-                      href="https://www.facebook.com/Objective_Wellness-114299813287253/"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <img src={fbIcon} alt="facebook" />
-                    </Link>
-                  </Grid>
                   <Grid container item xs={12} className="legal">
                     <StyledList>
                       <ListItem className="text-center">
@@ -387,6 +381,24 @@ const Footer = ({ location, currentUser }) => {
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
+              <Grid container item xs={12} className="promise">
+                <Grid item xs={12}>
+                  <Typography variant="h4" gutterBottom className="uppercase">
+                    THE OBJECTIVE PROMISE
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <p>
+                    Behind every Objective supplement are studies, endless hours
+                    of research and a team with over 50 years of combined
+                    experience formulating dietary supplements. And the one
+                    thing we know for sure? Everybody's different. Every body is
+                    different. It's possible that what works wonders for your
+                    best friend might not do a thing for you. So let us know and
+                    we'll refund your money. It's that simple.
+                  </p>
+                </Grid>
+              </Grid>
               <div className="footer-main-holder">
                 <Grid container item xs={12} className="footer-main">
                   <Grid item xs={5} className="title border-bottom">
