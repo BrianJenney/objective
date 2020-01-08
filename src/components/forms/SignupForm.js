@@ -167,14 +167,20 @@ const SignupForm = ({
           <div className={classes.text}>
             By creating an account you agree to the Objective Wellness&nbsp;
             <div className={classes.text2}>
-              <NavLink to="/termsandconditions" underline="always">
+              {/*<NavLink to="/terms" underline="always">
                 Terms &amp; Conditions&nbsp;
-              </NavLink>
-              &amp;&nbsp;
+              </NavLink>*/}
+              <a style={{ color: '#000000' }}
+                 href="https://www.objectivewellness.com/terms"
+                 target="_blank"
+              >
+                Terms of Use
+              </a>
+              &nbsp; &amp; &nbsp;
               {/* <NavLink to="/privacypolicy" underline="always">
                 Privacy Policy
               </NavLink> */}
-              <a
+              <a style={{ color: '#000000' }}
                 href="https://www.thecloroxcompany.com/privacy/"
                 target="_blank"
               >

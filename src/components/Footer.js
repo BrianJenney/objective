@@ -458,12 +458,18 @@ const Footer = ({ location, currentUser }) => {
                         </a>
                       </ListItem>
                       <ListItem className="text-center">
-                        <NavLink
+                        <a
+                          href="https://www.objectivewellness.com/terms"
+                          target="_blank"
+                        >
+                          Terms of use
+                        </a>
+                        {/*<NavLink
                           onClick={segmentTrackNavigationClick}
                           to="/terms"
                         >
                           Terms of use
-                        </NavLink>
+                        </NavLink>*/}
                       </ListItem>
                     </StyledList>
                   </Grid>
@@ -731,12 +737,19 @@ const Footer = ({ location, currentUser }) => {
                         </a>
                       </ListItem>
                       <ListItem>
-                        <NavLink
+                        {/*<NavLink
                           onClick={segmentTrackNavigationClick}
                           to="/terms"
                         >
                           Terms of use
-                        </NavLink>
+                        </NavLink>*/}
+                        <a
+                          href="https://www.objectivewellness.com/terms"
+                          target="_blank"
+                        >
+                          Terms of use
+                        </a>
+
                       </ListItem>
                     </StyledLegalList>
                   </Grid>
