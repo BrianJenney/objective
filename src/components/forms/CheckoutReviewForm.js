@@ -49,7 +49,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
           href="https://www.objectivewellness.com/terms"
           target="_blank"
         >
-          Terms &amp; Conditions
+          Terms of Use
         </a>
       </Box>
       <Typography variant="body2" style={{ fontSize: '11px' }}>
