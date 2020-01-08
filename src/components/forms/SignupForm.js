@@ -165,17 +165,17 @@ const SignupForm = ({
               {/*<NavLink to="/terms" underline="always">
                 Terms &amp; Conditions&nbsp;
               </NavLink>*/}
-              <a style={{ fontSize: '14px', color: '#000000' }}
+              <a style={{ color: '#000000' }}
                  href="https://www.objectivewellness.com/terms"
                  target="_blank"
               >
-                Terms &amp; Conditions&nbsp;
+                Terms of Use
               </a>
-              &amp;&nbsp;
+              &nbsp; &amp; &nbsp;
               {/* <NavLink to="/privacypolicy" underline="always">
                 Privacy Policy
               </NavLink> */}
-              <a style={{ fontSize: '14px', color: '#000000' }}
+              <a style={{ color: '#000000' }}
                 href="https://www.thecloroxcompany.com/privacy/"
                 target="_blank"
               >
