@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
     color: '#003833'
   },
   textCheckoutXS: {
-    fontSize: '16px',
+    fontSize: '15px',
     fontFamily: "p22-underground",
     textAlign: 'center',
     letterSpacing: 'normal',
@@ -98,9 +98,14 @@ const CheckoutNotification = () => {
     <>
       <Grid className={xs ? classes.boxXS : classes.box}>
         {xs ? (
-          <Typography className={classes.textCheckoutXS}>
-            We've added items from your previous<br></br>session to your cart.
-          </Typography>
+          <>
+            <Typography className={classes.textCheckoutXS}>
+              We've added items from your previous
+            </Typography>
+            <Typography className={classes.textCheckoutXS}>
+              session to your cart.
+            </Typography>
+          </>
         ) : (
             <Typography className={classes.textCheckout}>We've added items from your<br></br>previous session to your cart.</Typography>
           )}
