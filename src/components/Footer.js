@@ -19,16 +19,9 @@ import { Formik, Field, Form } from 'formik';
 
 import './Footer-style.scss';
 
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import { InputField } from './form-fields';
 import { Button, NavLink } from './common';
 import CheckoutFooter from './CheckoutFooter';
-import ContactMail from './common/Icons/ContactMail/ContactMail';
-import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
 import { requestSignupEmail } from '../modules/account/actions';
 import { withCurrentUser } from '../hoc';
@@ -36,42 +29,6 @@ import segmentSiteLocation from '../utils/segmentSiteLocation';
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
-
-const styles = theme => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2)
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500]
-  }
-});
-const DialogTitle = withStyles(styles)(props => {
-  const { children, classes, onClose } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
-
-const DialogContent = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2)
-  }
-}))(MuiDialogContent);
 
 const segmentTrackNavigationClick = e => {
   window.analytics.track('Navigation Clicked', {
@@ -86,77 +43,6 @@ const trackEmailSubmitFailure = (email, error_message) => {
     error_message,
     site_location: 'footer'
   });
-};
-
-const NeedHelpDialog = () => {
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <div>
-      <ListItem style={{ padding: '0px' }}>
-        <NavLink onClick={handleClickOpen} style={{ textDecoration: 'none' }}>
-          HELP
-        </NavLink>
-      </ListItem>
-      <Dialog
-        className="checkout-contact-container"
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose} />
-        <DialogContent>
-          <Box textAlign="center">
-            <Grid
-              container
-              spacing={0}
-              style={{ borderBottom: '1px solid #979797' }}
-            >
-              <Grid item>
-                <Box textAlign="center">
-                  <ContactPhone />
-                </Box>
-                <Box textAlign="center" pb={2}>
-                  <Typography variant="h2">
-                    Need help? Give us a call for immediate assistance:
-                  </Typography>
-                  <Typography>(800) 270-5771</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-            <Grid container spacing={0}>
-              <Grid item>
-                <Box textAlign="center" px={3}>
-                  <Typography variant="h3">
-                    or send us an email and will get back to you as soon as
-                    possible:
-                  </Typography>
-                  <Typography variant="h4">
-                    <Link
-                      style={{
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #000',
-                        paddingBottom: '1px',
-                        textDecoration: 'none'
-                      }}
-                      href="mailto:Help@objectivewellness.com"
-                    >
-                      help@objectivewellness.com
-                    </Link>
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
 };
 
 const schema = object().shape({
@@ -212,7 +98,6 @@ const Footer = ({ location, currentUser }) => {
   const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
   const handleSubmit = useCallback(
     ({ email }) => {
-      console.log('SUBMIT SUCCEED!!!', email);
       window.analytics.track('Email Capture Completed', {
         email,
         site_location: 'footer'
