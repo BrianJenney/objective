@@ -1,0 +1,258 @@
+.triangle {
+  position: absolute;
+  margin-top: 16px;
+  box-sizing: border-box;
+  background-color: #c3f1cf !important;
+  box-shadow:  0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  height: 186px;
+  width: 242px;
+  left: 17.4%;
+  margin-right: 50px;
+  border: 1px solid #000;
+}
+.triangle::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 1px;
+    margin-left: -0.5em;
+    bottom: -2em;
+    left: 74%;
+    box-sizing: border-box; 
+    border: 10px solid #000;
+    border-color: transparent transparent #c3f1cf #c3f1cf;
+    transform-origin: 0 0 0;
+    transform: rotate(135deg);
+    box-shadow: -1px 1px 1px 0 #000;
+  }
+// Iphone 6/7/8/ Plus
+.triangleXS {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #c3f1cf !important;
+  box-shadow:  0 2px 5px 0 rgba(0, 0, 0, 0.5);
+  height: 157px;
+  width: 200px;
+  top: 70px;
+  left: 48.4%;
+  border: 1px solid #000;
+    &:after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 1px;
+    margin-left: -0.5em;
+    bottom: -2em;
+    left: 85.5%;
+    box-sizing: border-box; 
+    border: 10px solid #000;
+    border-color: transparent transparent #c3f1cf #c3f1cf;
+    transform-origin: 0 0 0;
+    transform: rotate(135deg);
+    box-shadow: -1px 1px 1px 0 #000;
+    }
+  }
+
+//  Iphone 5/SE
+@media(min-width: 320px) {
+    .triangleXS {
+      left: 34.4%;
+      &:after {
+        left: 93.2%;
+      }
+    }
+}
+  // Galaxy S5
+@media(min-width: 360px) {
+    .triangleXS {
+      left: 41.4%;
+      &:after {
+        left: 89.2%;
+      }
+    }
+}
+
+  // Iphone 6/7/8/X
+@media(min-width: 375px) {
+  .triangleXS {
+     left: 43%;
+      &:after {
+        left: 91.2%;
+      }
+    }
+}
+
+  // Pixel 2/2xl
+@media(min-width: 411px) {
+    .triangleXS {
+      left: 47.5%;
+      &:after {
+        left: 89.2%;
+      }
+    }
+}
+// ipad
+@media only screen
+    and (width: 768px) 
+    and (height: 1024px)  {
+    .triangle {
+      left: -85% !important;;
+      &:after {
+        left: 90%;
+      }
+    }
+  }  
+// IPad Pro
+@media only screen
+    and (width: 1024px) 
+    and (height: 1366px)  {
+    .triangle {
+      left: -38% !important;
+      &:after {
+        left: 90%;
+      }
+    }
+  }
+
+@media only screen
+    and (min-width: 700px) 
+    and (max-width: 774px)  {
+    .triangle {
+      left: -90%;
+      &:after {
+        left: 89.5%;
+      }
+    }
+  }  
+
+@media only screen
+    and (min-width: 775px) 
+    and (max-width: 833px)  {
+    .triangle {
+      left: -75%;
+      &:after {
+        left: 89.5%;
+      }
+    }
+  }  
+
+@media only screen
+    and (min-width: 834px) 
+    and (max-width: 881px)  {
+    .triangle {
+      left: -70%;
+      &:after {
+        left: 93.5%;
+      }
+    }
+  }
+
+@media only screen
+    and (min-width: 882px) 
+    and (max-width: 941px)  {
+    .triangle {
+      left: -60%;
+      &:after {
+        left: 93.5%;
+      }
+    }
+  }  
+
+@media only screen
+    and (min-width: 942px) 
+    and (max-width: 999px)  {
+    .triangle {
+      left: -50%;
+      &:after {
+        left: 93.5%;
+      }
+    }
+  }   
+
+@media only screen
+    and (min-width: 1000px) 
+    and (max-width: 1044px)  {
+    .triangle {
+      left: -35%;
+      &:after {
+        left: 88.5%;
+      }
+    }
+  }  
+
+@media only screen
+    and (min-width: 1045px) 
+    and (max-width: 1099px)  {
+    .triangle {
+      left: -30%;
+      &:after {
+        left: 90%;
+      }
+    }
+  }  
+
+@media only screen
+    and (min-width: 1100px) 
+    and (max-width: 1159px)  {
+    .triangle {
+      left: -22%;
+      &:after {
+        left: 90%;
+      }
+    }
+  }  
+
+@media only screen
+    and (min-width: 1160px) 
+    and (max-width: 1226px)  {
+    .triangle {
+      left: -20%;
+      &:after {
+        left: 90%;
+      }
+    }
+  }
+
+@media only screen
+    and (min-width: 1227px) 
+    and (max-width: 1269px)  {
+    .triangle {
+      left: -10%;
+      &:after {
+        left: 87%;
+      }
+    }
+  }
+
+@media only screen
+    and (min-width: 1270px) 
+    and (max-width: 1340px)  {
+    .triangle {
+      left: -7%;
+      &:after {
+        left: 90%;
+      }
+    }
+  }
+@media only screen
+    and (min-width: 1341px) 
+    and (max-width: 1400px)  {
+    .triangle {
+      left: -3%;
+      &:after {
+        left: 90.5%;
+      }
+    }
+  }
+  @media only screen
+    and (min-width: 1401px) 
+    and (max-width: 1470px)  {
+    .triangle {
+      left: 4%;
+      &:after {
+        left: 85.8%;
+      }
+    }
+  }
