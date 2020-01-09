@@ -133,8 +133,8 @@ const Header = ({ currentUser, location }) => {
                     </Grid>
                     <Grid item xs={1} className="mobile-cart-icon">
                       {!isCheckoutPage && <ShoppingCart />}
+                      {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
                     </Grid>
-                    {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
                   </Grid>
                   {promoVisible ? (
                     <Grid container item={true} xs={12} className="headerBar">
@@ -220,9 +220,9 @@ const Header = ({ currentUser, location }) => {
                                 className="header-shop-holder h-pding"
                               >
                                 {!isCheckoutPage && <ShoppingCart />}
-
+                                {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
                               </Grid>
-                              {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+
                             </Grid>
                           </Grid>
                         </Grid>

@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
   textCheckout: {
     fontSize: '16px',
-    fontFamily: "p22-underground",
+    fontFamily: 'p22-underground',
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
@@ -30,8 +30,8 @@ const useStyles = makeStyles(() => ({
     color: '#003833'
   },
   textCheckoutXS: {
-    fontSize: '16px',
-    fontFamily: "p22-underground",
+    fontSize: '15px',
+    fontFamily: 'p22-underground',
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
   },
   text: {
     fontSize: '18px',
-    fontFamily: "p22-underground",
+    fontFamily: 'p22-underground',
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
@@ -62,11 +62,11 @@ const useStyles = makeStyles(() => ({
     paddingTop: '7px',
     textDecorationLine: 'underline',
     cursor: 'pointer',
-    backgroundColor: '#c3f1cf',
+    backgroundColor: '#c3f1cf'
   },
   textXS: {
     fontSize: '16px',
-    fontFamily: "p22-underground",
+    fontFamily: 'p22-underground',
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
@@ -86,7 +86,7 @@ const useStyles = makeStyles(() => ({
     paddingTop: '7px',
     textDecorationLine: 'underline',
     cursor: 'pointer',
-    backgroundColor: '#c3f1cf',
+    backgroundColor: '#c3f1cf'
   }
 }));
 
@@ -98,11 +98,18 @@ const CheckoutNotification = () => {
     <>
       <Grid className={xs ? classes.boxXS : classes.box}>
         {xs ? (
-          <Typography className={classes.textCheckoutXS}>
-            We've added items from your previous<br></br>session to your cart.
-          </Typography>
+          <>
+            <Typography className={classes.textCheckoutXS}>
+              We've added items from your previous
+            </Typography>
+            <Typography className={classes.textCheckoutXS}>
+              session to your cart.
+            </Typography>
+          </>
         ) : (
-            <Typography className={classes.textCheckout}>We've added items from your<br></br>previous session to your cart.</Typography>
+            <Typography className={classes.textCheckout}>
+              We've added items from your<br></br>previous session to your cart.
+          </Typography>
           )}
       </Grid>
     </>
@@ -118,12 +125,12 @@ const ElsewhereNotification = () => {
 
   useEffect(() => {
     // add when mounted
-    document.addEventListener("click", handleClick);
-    document.addEventListener("touchstart", handleClick);
+    document.addEventListener('click', handleClick);
+    document.addEventListener('touchstart', handleClick);
     // return function to be called when unmounted
     return () => {
-      document.removeEventListener("click", handleClick);
-      document.addEventListener("touchstart", handleClick);
+      document.removeEventListener('click', handleClick);
+      document.addEventListener('touchstart', handleClick);
     };
   }, []);
 
@@ -140,8 +147,13 @@ const ElsewhereNotification = () => {
     <>
       <div ref={node}>
         <Paper className={xs ? 'triangleXS' : 'triangle'}>
-          <Typography className={xs ? classes.textXS : classes.text}>We've added items <br></br>from your previous <br></br>session to your cart.</Typography>
-          <Typography className={xs ? classes.continueXS : classes.continue}>CONTINUE SHOPPING</Typography>
+          <Typography className={xs ? classes.textXS : classes.text}>
+            We've added items <br></br>from your previous <br></br>session to
+            your cart.
+          </Typography>
+          <Typography className={xs ? classes.continueXS : classes.continue}>
+            CONTINUE SHOPPING
+          </Typography>
         </Paper>
       </div>
     </>
@@ -149,7 +161,6 @@ const ElsewhereNotification = () => {
 };
 
 const CartMergeNotification = ({ isCheckoutPage }) => {
-
   return (
     <>{isCheckoutPage ? <CheckoutNotification /> : <ElsewhereNotification />}</>
   );
