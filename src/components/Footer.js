@@ -158,7 +158,11 @@ const Footer = ({ location, currentUser }) => {
                       >
                         <img src={fbIcon} alt="facebook" />
                       </Link>
-                      <Link href="" target="_blank" rel="noopener">
+                      <Link
+                        href="https://www.pinterest.com/objectivewellness"
+                        target="_blank"
+                        rel="noopener"
+                      >
                         <img src={pinIcon} alt="pinterest" />
                       </Link>
                     </Grid>
