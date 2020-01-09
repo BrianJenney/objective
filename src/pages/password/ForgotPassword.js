@@ -60,7 +60,7 @@ const ForgotPassword = ({ history }) => {
     history.replace('/password/confirm');
   };
 
-  const renderForm = ({ isValid }) => (
+  const renderForm = () => (
     <Form>
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -72,7 +72,7 @@ const ForgotPassword = ({ history }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" fullWidth children="Request Reset Link" disabled={!isValid}/>
+          <Button type="submit" fullWidth children="Request Reset Link" />
         </Grid>
       </Grid>
     </Form>

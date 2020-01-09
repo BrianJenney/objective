@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { HeadTags } from '../components/common';
+import { Button } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
 import './blog/blog-styles.scss';
@@ -21,9 +22,6 @@ const BlogTag = ({ computedMatch }) => {
 
   const [tag, setTag] = useState('General');
   const [posts, setPosts] = useState([]);
-  const seoMap = useSelector(state => state.storefront.seoMap);
-  const blogTagMap = seoMap['journal_tag_slugs'];
-  const { title, description } = blogTagMap[tag_slug];
 
   const fetchData = async () => {
     const results = await fetchPostsByTag(tag_slug);
@@ -51,23 +49,20 @@ const BlogTag = ({ computedMatch }) => {
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
-    <>
-      <HeadTags title={title} description={description} />
-      <ScrollToTop>
-        <div className="journal-gallery">
-          <Box className="header" py={8}>
-            <Container className="container">
-              <h1>{tag}</h1>
-            </Container>
-          </Box>
-          <Box className="content" py={8}>
-            <Container>
-              <div className="list">{renderPosts(posts)}</div>
-            </Container>
-          </Box>
-        </div>
-      </ScrollToTop>
-    </>
+    <ScrollToTop>
+      <div className="journal-gallery">
+        <Box className="header" py={8}>
+          <Container className="container">
+            <h1>{tag}</h1>
+          </Container>
+        </Box>
+        <Box className="content" py={8}>
+          <Container>
+            <div className="list">{renderPosts(posts)}</div>
+          </Container>
+        </Box>
+      </div>
+    </ScrollToTop>
   );
 };
 

@@ -1,10 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ScrollToTop from '../components/common/ScrollToTop';
-import { HeadTags } from '../components/common';
 import {
   StyledBackground,
   StyledTitle,
@@ -18,17 +15,11 @@ import {
   StyledText,
   StyledLink
 } from './faq/StyledComponents';
-import { useSelector } from 'react-redux';
 
-const FAQ = ({ location }) => {
+const FAQ = () => {
   window.analytics.page('FAQ');
-  const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
-
   return (
-    <>
-      <HeadTags title={title} description={description} />
-      <ScrollToTop>
+    <ScrollToTop>
       <StyledBackground>
         <StyledContainer>
           <Box>
@@ -207,8 +198,7 @@ const FAQ = ({ location }) => {
         </StyledContainer>
       </StyledBackground>
     </ScrollToTop>
-    </>
   );
 };
 
-export default withRouter(FAQ);
+export default FAQ;

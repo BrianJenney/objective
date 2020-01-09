@@ -2,7 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { Drawer, CssBaseline, AppBar, Toolbar, IconButton, Divider, List, ListItem, Box, Typography } from '@material-ui/core';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -67,6 +76,10 @@ const DropdownMenu = ({
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => setAnchorEl(null);
+
+
+  console.log('itemRestProps', menuItems);
+
 
   return (
     <Box {...rest}>

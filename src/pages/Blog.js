@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
-import { HeadTags } from '../components/common';
+import { Button } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
 
 import './blog/blog-styles.scss';
@@ -17,14 +15,10 @@ import FeaturedPost from './blog/FeaturedPost';
 import FeaturedItem from './blog/FeaturedItem';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-
-const Blog = ({ location }) => {
+const Blog = () => {
   const [featuredMain, setFeaturedMain] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
-
-  const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
 
   useEffect(() => {
     async function fetchData() {
@@ -77,9 +71,7 @@ const Blog = ({ location }) => {
     return <LoadingSpinner loadingMessage="Loading blog" page="journal" />;
   }
   return (
-    <>
-      <HeadTags title={title} description={description} />
-      <ScrollToTop>
+    <ScrollToTop>
       <div className="journal-gallery">
         <Box className="header" py={8}>
           <Container className="container">
@@ -116,8 +108,7 @@ const Blog = ({ location }) => {
         </Box>
       </div>
     </ScrollToTop>
-    </>
   );
 };
 
-export default withRouter(Blog);
+export default Blog;

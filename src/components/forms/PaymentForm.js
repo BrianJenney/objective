@@ -276,31 +276,21 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
-  const hostedFieldsInvalid = () => {
-    let isHostedFieldsValid = false;
-    if (HostedFieldsClient) {
-      const state = HostedFieldsClient.getState();
-      isHostedFieldsValid = Object.keys(state.fields).every(
-        field => state.fields[field].isValid
-      );
-    }
-    return !isHostedFieldsValid;
-  };
-
   const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
       billingAddress: {}
     };
     let isHostedFieldInvalid = false;
-    Object.keys(HostedFieldsClient._state.fields).forEach(function (field) {
-      if (!HostedFieldsClient._state.fields[field].isValid) {
-        const elem = HostedFieldsClient._state.fields[field];
+    const hostedFieldState = HostedFieldsClient._state;
+    Object.keys(hostedFieldState.fields).forEach(function (field) {
+      if (!hostedFieldState.fields[field].isValid) {
+        const elem = hostedFieldState.fields[field];
         document.getElementById('bt-payment-holder').style.border =
           '1px solid #C10230';
         elem.container.nextElementSibling.style.display = 'block';
-        isHostedFieldInvalid = true;
         fieldErrors[field] = 'This field is invalid';
+        isHostedFieldInvalid = true;
       } else {
         fieldErrors[field] = undefined;
       }
@@ -333,7 +323,6 @@ const PaymentForm = ({
       actions.setSubmitting(false);
       return;
     }
-
     const cardData = await HostedFieldsClient.tokenize({
       cardholderName: values.paymentDetails.cardholderName
     });
@@ -411,9 +400,7 @@ const PaymentForm = ({
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
                     ></div>
-                    <div className="btError">
-                      Please enter valid Exp. Date
-                  </div>
+                    <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
                   <Grid item xs={3}>
                     <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
@@ -551,7 +538,11 @@ const PaymentForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} loading={isSubmitting} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              loading={isSubmitting}
+            />
           </ButtonGroup>
         </Grid>
       </Grid>

@@ -26,7 +26,6 @@ import './assets/styles/global.scss';
 import './fonts/fonts.css';
 
 import { createAnonymousToken } from './utils/token';
-import { requestFetchStorefrontSeo } from './modules/storefront/actions';
 
 const localStorageClient = require('store');
 const ObjectId = require('bson-objectid');
@@ -98,9 +97,10 @@ const connectWebsocket = () => {
  *
  * @return none
  */
-const onStompConnectSuccess = async () => {
+const onStompConnectSuccess = () => {
   console.log('Successfully Connected');
   let replyTo = ObjectId();
+
   store.dispatch(connectStomp(stompClient, replyTo));
 
   stompClient.subscribe('/queue/' + replyTo, body => {
@@ -108,9 +108,6 @@ const onStompConnectSuccess = async () => {
   }, {
     'auto-delete': true
   });
-
-  // Fetch seo metatags for storefront
-  await store.dispatch(requestFetchStorefrontSeo(false));
 
   ReactDOM.render(<Main />, document.querySelector('#root'));
 };

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { get, isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
-import { useTheme , makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
-
+import { makeStyles } from '@material-ui/core/styles';
 import { fonts } from '../../components/Theme/fonts.js';
 import { getDefaultEntity } from '../../utils/misc';
 import { NavLink, Button } from '../../components/common';
@@ -74,6 +74,7 @@ const AccountOverview = props => {
   const [open, setOpen] = React.useState(true);
   const paymentMethods = get(currentUser, 'data.paymentMethods', []);
   const defaultPaymentMethod = getDefaultEntity(paymentMethods) || {};
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -111,8 +112,8 @@ const AccountOverview = props => {
           Logout
         </Button>
       ) : (
-        ''
-      )}
+          ''
+        )}
     </div>
   );
   return (

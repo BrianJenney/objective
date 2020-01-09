@@ -1,11 +1,7 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ScrollToTop from '../components/common/ScrollToTop';
-import { HeadTags } from '../components/common';
-
 import {
   StyledBackground,
   StyledTitle,
@@ -17,23 +13,17 @@ import {
   StyledLink
 } from './privacyPolicyAndTerms/StyledComponents';
 import './privacyPolicyAndTerms/style.scss';
-import { useSelector } from 'react-redux';
 
-const PrivacyPolicy = ({ location }) => {
-  const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
-
+const PrivacyPolicy = () => {
   return (
-    <>
-      <HeadTags title={title} description={description} />
-      <ScrollToTop>
+    <ScrollToTop> 
     <StyledBackground>
       <StyledContainer className="privacypolicy-container">
         <Box>
           <Grid>
             <Box style={{paddingBottom: 35}}>
-              <StyledParagraph>Objective is a part of the The Clorox Company’s family of brands supporting the overall corporate mission to make everyday life better, every day. Please read the Privacy Policy below for further details.</StyledParagraph>
-            </Box>
+              <StyledParagraph>Objective is a part of the The Clorox Company’s family of brands supporting the overall corporate mission to make everyday life better, every day. Please read the Privacy Policy below for further details.</StyledParagraph>  
+            </Box>  
             <Box textAlign="center">
               <StyledTitle>Privacy Policy Statement</StyledTitle>
             </Box>
@@ -1023,9 +1013,8 @@ const PrivacyPolicy = ({ location }) => {
         </Box>
       </StyledContainer>
       </StyledBackground>
-    </ScrollToTop>
-    </>
+    </ScrollToTop> 
   );
 };
 
-export default withRouter(PrivacyPolicy);
+export default PrivacyPolicy;

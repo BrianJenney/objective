@@ -68,7 +68,7 @@ const AccountPaymentDetails = ({
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart); 
   useEffect(() => {
     if (window.location.pathname.indexOf('/account/payment-details') !== -1) {
       window.analytics.page('Account Payment Details');
@@ -133,12 +133,11 @@ const AccountPaymentDetails = ({
           cardType: cardData.details.cardType,
           last4: cardData.details.lastFour,
           expirationDate: cardData.details.expirationMonth + '/' + cardData.details.expirationYear,
-          isDefault: false,
           billingAddress
         },
         nonce: cardData.nonce
       };
-
+  
       trackSegmentPaymentInfoEnteredEvent({cart_id:cart._id,payment_method:cardData.details.cardType});
 
       if (allowFlyMode && !shouldSaveData) {
@@ -258,8 +257,10 @@ const AccountPaymentDetails = ({
                         title=""
                         defaultValues={creditCardEntity}
                         Summary={PaymentSummary}
-                        onRemove={() =>
-                          deleteCreditCard(creditCardEntity.token)
+                        onRemove={
+                          creditCardEntity.isDefault
+                            ? undefined
+                            : () => deleteCreditCard(creditCardEntity.token)
                         }
                         onSetDefault={
                           creditCardEntity.isDefault
