@@ -195,45 +195,40 @@ const Footer = ({ location, currentUser }) => {
                       </p>
                     </Grid>
                   </Grid>
-                  <Grid item xs={6} className="row2 border-bottom">
+                  <Grid item xs={6} className="border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/about_us"
-                        >
-                          About
-                        </NavLink>
+                        About
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
                           <NavLink
                             onClick={segmentTrackNavigationClick}
-                            to="/contact"
+                            to="/about_us"
                           >
-                            Contact Us
+                            About Us
                           </NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink
                             onClick={segmentTrackNavigationClick}
-                            to="/faq"
+                            to="/journal"
                           >
-                            FAQs
+                            Journal
+                          </NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink onClick={segmentTrackNavigationClick} to="">
+                            Press
                           </NavLink>
                         </ListItem>
                       </StyledList>
                     </Grid>
                   </Grid>
-                  <Grid item xs={6} className="row2 border-bottom border-left">
+                  <Grid item xs={6} className="border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/faq"
-                        >
-                          HELP
-                        </NavLink>
+                        HELP
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
@@ -249,15 +244,23 @@ const Footer = ({ location, currentUser }) => {
                             onClick={segmentTrackNavigationClick}
                             to="/faq"
                           >
-                            Shipping &amp; Returns
+                            Shipping &amp; Refunds
                           </NavLink>
                         </ListItem>
                         <ListItem>
                           <NavLink
-                            to={gotoUrl('/account/orders', '/login/order')}
                             onClick={segmentTrackNavigationClick}
+                            to="/contact"
                           >
-                            Track an Order
+                            Contact Us
+                          </NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink
+                            onClick={segmentTrackNavigationClick}
+                            to="/faq"
+                          >
+                            FAQs
                           </NavLink>
                         </ListItem>
                       </StyledList>

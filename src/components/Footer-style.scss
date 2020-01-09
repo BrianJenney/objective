@@ -216,9 +216,10 @@
       font-size: 16px;
       font-weight: 600;
       text-transform: uppercase;
-      padding: 40px 20px 20px 20px;
+      padding: 31px 0px 18px 0px;
       letter-spacing: 1px;
       text-align: left;
+      color: #959595;
 
       @media (min-width: 1200px) {
         padding: 45px 50px;
@@ -291,6 +292,10 @@
           letter-spacing: 1.31px;
           color: #959595;
         }
+        img {
+          width: 27px;
+          height: 27px;
+        }
       }
     }
 
@@ -354,7 +359,7 @@
   @media (max-width: 768px) {
     .footer-main {
       .links {
-        padding: 0px 0px 36px 20px;
+        padding: 0px 0px 32px 0px;
         font-size: 15px;
       }
       .legal ul li {
