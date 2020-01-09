@@ -155,6 +155,11 @@ const defaultSeoMap = {
     'skin-health': { title: 'Skin Health - Journal Tag | Objective', description: 'Objective Journal Tag: Skin Health'},
     'beauty': { title: 'Beauty - Journal Tag | Objective', description: 'Objective Journal Tag: Beauty'},
     'studies': { title: 'Studies - Journal Tag | Objective', description: 'Objective Journal Tag: Studies'},
+    'healthy-weight': { title: 'Healthy Weight - Journal Tag | Objective', description: 'Objective Journal Tag: Healthy Weight'},
+    'cardiovascular-health': { title: 'Cardiovascular Health - Journal Tag | Objective', description: 'Objective Journal Tag: Cardiovascular Health'},
+    'circulation': { title: 'Circulation - Journal Tag | Objective', description: 'Objective Journal Tag: Circulation'},
+    'sleep': { title: 'Sleep - Journal Tag | Objective', description: 'Objective Journal Tag: Sleep'},
+
   },
   journal_post_slugs: {
     'the-bee-glue-secret-to-stronger-immune-health' : {
@@ -196,6 +201,18 @@ const defaultSeoMap = {
     '7-reasons-to-start-taking-turmeric-today': {
       title: '7 Reasons to Start Taking Turmeric Today | Objective Journal Post',
       description: 'Objective Journal Post: 7 Reasons to Start Taking Turmeric Today'
+    },
+    'hiit-hype-or-helpful-weight-loss-and-other-weight-loss-trends-actually': {
+      title: 'HIIT: Hype or Helpful Weight Loss? And Other Trends Actually Worth a Shot | Objective Journal Post',
+      description: 'Objective Journal Post: HIIT: Hype or Helpful Weight Loss? And Other Trends Actually Worth a Shot'
+    },
+    '3-surprising-ways-to-fall-asleep': {
+      title: 'A Study in Studies: What “Science-Backed” Really Means | Objective Journal Post',
+      description: 'Objective Journal Post: A Study in Studies: What “Science-Backed” Really Means” Really Means'
+    },
+    'the-health-secret-of-samurai-warriors': {
+      title: 'The Health Secret of Samurai Warriors | Objective Journal Post',
+      description: 'Objective Journal Post: The Health Secret of Samurai Warriors'
     },
   }
 };
