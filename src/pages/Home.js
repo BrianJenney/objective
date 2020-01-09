@@ -10,6 +10,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
+import { HeadTags } from '../components/common';
 
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
@@ -196,71 +197,74 @@ class Home extends Component {
         </ScrollToTop>
       );
 
-    const { welcomeHeader, welcomeText } = this.state.content;
-
+    let { welcomeHeader, welcomeText } = this.state.content;
+    const { title, description } = this.props.seoMap['home'];
     return (
-      <ScrollToTop>
-        <div className="home-style">
-          <Link
-            to="/gallery"
-            segmentProperties={{
-              cta: 'Shop All',
-              destination: '/gallery',
-              site_location: 'home',
-              text: 'Targeted Health Solutions for You and Yours'
-            }}
-            onClick={this.segmentTrackBannerClicked}
-          >
-            <ul>{this.renderHeroSlider()}</ul>
-          </Link>
-          <Container>
-            <Box py={10} className="welcome">
-              <h1>{welcomeHeader}</h1>
-              <p>{welcomeText}</p>
-            </Box>
-          </Container>
-          <div className="home-bestsellers beige-bg">
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
+          <div className="home-style">
+            <Link
+              to="/gallery"
+              segmentProperties={{
+                cta: 'Shop All',
+                destination: '/gallery',
+                site_location: 'home',
+                text: 'Targeted Health Solutions for You and Yours'
+              }}
+              onClick={this.segmentTrackBannerClicked}
+            >
+              <ul>{this.renderHeroSlider()}</ul>
+            </Link>
             <Container>
-              <Box py={10}>
-                <h1>Our Bestsellers</h1>
-                <Grid container spacing={3} className="best-container">
-                  {this.renderBestsellers()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link
-                    to="/gallery"
-                    className="shopAllLink"
-                    onClick={this.navigateToTop.bind(this, '/gallery')}
-                  >
-                    Shop All
-                  </Link>
-                </Box>
+              <Box py={10} className="welcome">
+                <h1>{welcomeHeader}</h1>
+                <p>{welcomeText}</p>
               </Box>
             </Container>
-          </div>
-          <>{this.renderSections()}</>
-          <div className="his-hers-theirs beige-bg">
-            <Container>
-              <Box py={10}>
-                <h1>HIS, HERS & THEIRS</h1>
-                <p>Solutions for the whole family</p>
-                <Grid container spacing={3} className="solutions-container">
-                  {this.renderFamily()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link
-                    to="/gallery"
-                    className="shopAllLink"
-                    onClick={this.navigateToTop.bind(this, '/gallery')}
-                  >
-                    Shop All
-                  </Link>
+            <div className="home-bestsellers beige-bg">
+              <Container>
+                <Box py={10}>
+                  <h1>Our Bestsellers</h1>
+                  <Grid container spacing={3} className="best-container">
+                    {this.renderBestsellers()}
+                  </Grid>
+                  <Box style={{ paddingTop: 90 }}>
+                    <Link
+                      to="/gallery"
+                      className="shopAllLink"
+                      onClick={this.navigateToTop.bind(this, '/gallery')}
+                    >
+                      Shop All
+                    </Link>
+                  </Box>
                 </Box>
-              </Box>
-            </Container>
+              </Container>
+            </div>
+            <>{this.renderSections()}</>
+            <div className="his-hers-theirs beige-bg">
+              <Container>
+                <Box py={10}>
+                  <h1>HIS, HERS & THEIRS</h1>
+                  <p>Solutions for the whole family</p>
+                  <Grid container spacing={3} className="solutions-container">
+                    {this.renderFamily()}
+                  </Grid>
+                  <Box style={{ paddingTop: 90 }}>
+                    <Link
+                      to="/gallery"
+                      className="shopAllLink"
+                      onClick={this.navigateToTop.bind(this, '/gallery')}
+                    >
+                      Shop All
+                    </Link>
+                  </Box>
+                </Box>
+              </Container>
+            </div>
           </div>
-        </div>
-      </ScrollToTop>
+        </ScrollToTop>
+      </>
     );
   }
 
@@ -270,7 +274,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.catalog.variants
+  products: state.catalog.variants,
+  seoMap: state.storefront.seoMap,
 });
 
 export default withRouter(connect(mapStateToProps)(Home));

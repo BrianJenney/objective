@@ -13,7 +13,8 @@ const contentful = require('contentful');
 const Context = React.createContext();
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
 });
 
 export class ProductStore extends Component {

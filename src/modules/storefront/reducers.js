@@ -1,9 +1,10 @@
-import { RECEIVED_FETCH_STOREFRONT } from './types';
+import { RECEIVED_FETCH_STOREFRONT, RECIEVED_FETCH_STOREFRONT_SEO } from './types';
 
 const INITIAL_STATE = {
   name: '',
   domain: '',
-  catalogId: ''
+  catalogId: '',
+  seoMap: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,6 +14,13 @@ export default (state = INITIAL_STATE, action) => {
         console.log('need to handle this gracefully');
       }
       return { ...state, ...action.payload };
+
+    case RECIEVED_FETCH_STOREFRONT_SEO:
+      return {
+        ...state,
+        seoMap: action.payload
+      };
+
     default:
       return state;
   }

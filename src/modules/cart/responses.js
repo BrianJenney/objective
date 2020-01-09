@@ -28,18 +28,24 @@ export const handleCartResponse = (status, data, fields, properties) => {
         openCartDrawer = false;
       }
 
+      // Merge carts notification logic
+      if (fields.routingKey === "cart.request.mergecarts" && (data.items.length !== oldCart.items.length)) {
+        openCartDrawer = false;
+        data.cartMerged = true;
+      }
+
       store.dispatch(receivedPatchCart(data));
 
-      if(fields.routingKey==="cart.request.addcoupon"){
+      if (fields.routingKey === "cart.request.addcoupon") {
         segmentAddCouponReceived(data);
       }
-      
-      if(fields.routingKey==="cart.request.removecoupon"){
+
+      if (fields.routingKey === "cart.request.removecoupon") {
         segmentRemoveCouponReceived(data);
       }
 
       if (fields.routingKey !== 'cart.request.patch' && fields.routingKey !== 'cart.request.setshippingaddress' && openCartDrawer) {
-        store.dispatch(setCartDrawerOpened(true,false));
+        store.dispatch(setCartDrawerOpened(true, false));
       }
       break;
     case 'cart.request.update':
