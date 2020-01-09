@@ -167,7 +167,12 @@ const Footer = ({ location, currentUser }) => {
                       </Link>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={12} className="promise">
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    className="promise border-bottom"
+                  >
                     <Grid item xs={12}>
                       <Typography
                         variant="h4"
