@@ -82,6 +82,11 @@ const SignupForm = ({
     clearCreateAccountError();
   }, []);
 
+  const handleSubmit = useCallback((values, form) => {
+    onSubmit(values);
+    form.setSubmitting(false);
+  }, [onSubmit]);
+
   const renderForm = ({ isValid }) => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
@@ -185,7 +190,7 @@ const SignupForm = ({
   return (
     <Formik
       initialValues={INITIAL_VALUES}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validationSchema={schema}
       render={renderForm}
     />
