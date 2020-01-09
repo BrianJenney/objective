@@ -15,7 +15,8 @@ import {
   REQUEST_MERGE_CARTS,
   REQUEST_ADD_COUPON,
   REQUEST_REMOVE_COUPON,
-  REQUEST_SET_SHIPPING_ADDRESS
+  REQUEST_SET_SHIPPING_ADDRESS,
+  UNSET_CART_MERGE_NOTIFICATION
 } from './types';
 
 const localStorageClient = require('store');
@@ -262,7 +263,7 @@ export const receivedPatchCart = cart => ({
   payload: cart
 });
 
-export const setCartDrawerOpened = (open,trackCartDismissed = true) => (dispatch, getState) => {
+export const setCartDrawerOpened = (open, trackCartDismissed = true) => (dispatch, getState) => {
   const { cart } = getState();
 
   if (cart.setCartDrawerOpened != open) {
@@ -313,6 +314,13 @@ export const setCartDrawerOpened = (open,trackCartDismissed = true) => (dispatch
   dispatch({
     type: SET_CART_DRAWER_OPENED,
     payload: open
+  });
+};
+
+export const unSetCartMergeNotification = () => dispatch => {
+  dispatch({
+    type: UNSET_CART_MERGE_NOTIFICATION,
+    payload: false
   });
 };
 
@@ -404,7 +412,7 @@ export const segmentAddCouponReceived = (cart) => {
     coupon_name: cart.promo && cart.promo.code ? cart.promo.code : '',
     discount: cart.discount,
     order_id: cart.accountId
-  });  
+  });
 }
 
 /*
