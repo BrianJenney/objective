@@ -299,7 +299,10 @@ const Footer = ({ location, currentUser }) => {
                       </>
                     ) : (
                       <>
-                        <span>Sign up for tips and new product launches.</span>
+                        <span>
+                          Subscribe and never miss out on new products, special
+                          offers, health tips, and more.
+                        </span>
                         <Formik
                           initialValues={{ email: '' }}
                           onSubmit={handleSubmit}
