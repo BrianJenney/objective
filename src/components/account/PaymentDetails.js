@@ -78,10 +78,18 @@ const AccountPaymentDetails = ({
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
 
-    if (selectedIndex < 0) {
       const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-      setSelectedIndex(defaultIndex);
-    }
+      //if there is a default payment method, select it.
+      if (defaultIndex !== -1) {
+        setSelectedIndex(defaultIndex);
+      } else {
+        if (paymentMethods.length > 0) {
+          setSelectedIndex(0);
+        } else {
+          setSelectedIndex(-1);
+        }
+      }
+
 
     if (
       prevPatchAccountSubmitting &&
@@ -90,7 +98,6 @@ const AccountPaymentDetails = ({
     ) {
       if (!currentUser.patchAccountError && paymentMethods.length > 0) {
         setSelectedIndex(paymentMethods.length - 1);
-
         if (onSubmit) {
           onSubmit(paymentMethods[paymentMethods.length - 1]);
         }
@@ -102,6 +109,8 @@ const AccountPaymentDetails = ({
     } else {
       setFormModeEnabled(false);
     }
+
+    
   }, [currentUser.data.paymentMethods]);
 
   const handleSelect = evt => {
@@ -301,6 +310,7 @@ const AccountPaymentDetails = ({
                   type="button"
                   onClick={handleSubmit}
                   children={submitLabel}
+                  disabled={selectedIndex===-1}
                 />
               )}
             </ButtonGroup>
