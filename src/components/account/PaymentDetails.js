@@ -77,10 +77,16 @@ const AccountPaymentDetails = ({
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
-
-    if (selectedIndex < 0) {
-      const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+    const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
+    //if there is a default payment method, select it.
+    if (defaultIndex !== -1) {
       setSelectedIndex(defaultIndex);
+    } else {
+      if (paymentMethods.length > 0) {
+        setSelectedIndex(0);
+      } else {
+        setSelectedIndex(-1);
+      }
     }
 
     if (
@@ -258,10 +264,8 @@ const AccountPaymentDetails = ({
                           title=""
                           defaultValues={creditCardEntity}
                           Summary={PaymentSummary}
-                          onRemove={
-                            creditCardEntity.isDefault
-                              ? undefined
-                              : () => deleteCreditCard(creditCardEntity.token)
+                          onRemove={() =>
+                            deleteCreditCard(creditCardEntity.token)
                           }
                           onSetDefault={
                             creditCardEntity.isDefault
@@ -303,6 +307,7 @@ const AccountPaymentDetails = ({
                     type="button"
                     onClick={handleSubmit}
                     children={submitLabel}
+                    disabled={selectedIndex===-1}
                   />
                 )}
               </ButtonGroup>
