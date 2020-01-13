@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -90,36 +90,42 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const tracking = getTracking(rowData[3], rowData[2]);
-        return tracking ? (
-          <Link
-            href={tracking.url}
-            style={{ color: 'black' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tracking.number}
-          </Link>
-        ) : null;
+        const trackings = getTracking(rowData[3], rowData[2]);
+        return trackings ?
+          (trackings.map(tracking =>
+            <p>
+              <Link
+                href={tracking.url}
+                style={{ color: 'black' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tracking.number}
+              </Link>
+              <br />
+            </p>
+          )
+          )
+          : null;
       }
     }
   }
 
   /*
-  {
-    name: "updatedAt",
-    label: "Updated On",
-    options: {
-      filter: false,
-      sort: false,
-      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
-    },
-  },
-  */
+{
+            name: "updatedAt",
+          label: "Updated On",
+options: {
+            filter: false,
+          sort: false,
+          customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
+        },
+      },
+      */
 ];
 
 const AccountOrders = ({ currentUser: { data } }) => {
-  
+
   const dispatch = useDispatch();
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
@@ -236,13 +242,13 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-            <DataTable
-              title={xs ? '' : 'Your Orders'}
-              data={data.orders}
-              columns={columns}
-              isLoading={isLoading}
-            />
-          )}
+              <DataTable
+                title={xs ? '' : 'Your Orders'}
+                data={data.orders}
+                columns={columns}
+                isLoading={isLoading}
+              />
+            )}
         </Grid>
       </Grid>
     </ScrollToTop>
