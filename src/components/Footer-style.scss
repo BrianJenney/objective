@@ -55,13 +55,14 @@
     font-family: freight-text-pro, sans-serif;
     font-size: 16px;
     text-transform: none;
-    padding: 31px 0px 40px;
+    padding: 40px 0px 40px;
     color: #959595;
+
     .MuiFormHelperText-root.Mui-error {
       color: #fff;
     }
     .MuiOutlinedInput-notchedOutline {
-      top: 10px;
+      top: 0;
       left: 0;
       right: 0;
       bottom: 0;
@@ -98,15 +99,17 @@
     @media (max-width: 768px) {
       form {
         .MuiFormControl-fullWidth {
-          width: 98%;
+          width: 76%;
           .MuiInputBase-fullWidth {
             width: 98%;
           }
         }
-      }
-      button {
-        min-width: auto;
-        padding: 0;
+        button {
+          background: #fff;
+          width: 82.7px;
+          height: 60px;
+          padding-top: 9px;
+        }
       }
     }
     .signup-arrow {
@@ -324,14 +327,16 @@
     }
 
     input {
-      margin: 10px 0 0;
+      font-family: p22-underground, sans-serif;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
       color: #ffffff;
-      padding: 15px 10px 10px 10px;
-      border: 1px solid #fff;
+      // padding: 15px 10px 10px 10px;
+      // border: 1px solid #fff;
       background-color: #000000;
-      &:hover {
-        border: 1px solid #fff;
-      }
     }
 
     input::placeholder {

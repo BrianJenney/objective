@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Link from '@material-ui/core/Link';
-import { Divider, Container } from '@material-ui/core';
+import { Divider, Container, Button } from '@material-ui/core';
 
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -20,12 +20,13 @@ import { Formik, Field, Form } from 'formik';
 import './Footer-style.scss';
 
 import { InputField } from './form-fields';
-import { Button, NavLink } from './common';
+import { NavLink } from './common';
 import CheckoutFooter from './CheckoutFooter';
 import LogoShort from './common/Icons/LogoShort/LogoShort';
 import { requestSignupEmail } from '../modules/account/actions';
 import { withCurrentUser } from '../hoc';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
+import Arrow from '../../src/components/common/Icons/Arrow/Arrow.js';
 const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
@@ -217,11 +218,6 @@ const Footer = ({ location, currentUser }) => {
                             Journal
                           </NavLink>
                         </ListItem>
-                        <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="">
-                            Press
-                          </NavLink>
-                        </ListItem>
                       </StyledList>
                     </Grid>
                   </Grid>
@@ -308,19 +304,34 @@ const Footer = ({ location, currentUser }) => {
                           onSubmit={handleSubmit}
                           validationSchema={schema}
                           render={({ errors }) => (
-                            <Form>
+                            <Form style={{ height: 63, marginTop: 24 }}>
                               <Field
                                 name="email"
                                 label=""
                                 placeholder="Your Email"
                                 component={InputField}
+                                InputProps={{
+                                  style: {
+                                    border: '#fff solid 1px',
+                                    width: 260
+                                  }
+                                }}
                               />
                               <Button type="submit">
-                                <img
-                                  src={arrowImage}
-                                  className="mobile-arrow"
-                                  alt="arrow"
-                                />
+                                <Grid>
+                                  <Arrow className="arrow-icon" />
+                                  <Typography
+                                    style={{
+                                      fontFamily: 'P22-Underground',
+                                      fontSize: '12px',
+                                      fontWeight: 600,
+                                      position: 'relative',
+                                      bottom: 10
+                                    }}
+                                  >
+                                    Submit
+                                  </Typography>
+                                </Grid>
                               </Button>
                             </Form>
                           )}
