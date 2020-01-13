@@ -404,26 +404,43 @@ const Footer = ({ location, currentUser }) => {
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
-              <Grid container item xs={12} className="promise">
-                <Grid item xs={12}>
-                  <Typography variant="h4" gutterBottom className="uppercase">
-                    THE OBJECTIVE PROMISE
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <p>
-                    Behind every Objective supplement are studies, endless hours
-                    of research and a team with over 50 years of combined
-                    experience formulating dietary supplements. And the one
-                    thing we know for sure? Everybody's different. Every body is
-                    different. It's possible that what works wonders for your
-                    best friend might not do a thing for you. So let us know and
-                    we'll refund your money. It's that simple.
-                  </p>
-                </Grid>
-              </Grid>
               <div className="footer-main-holder">
                 <Grid container item xs={12} className="footer-main">
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    className=" row1 border-top border-bottom"
+                  >
+                    <Grid className="logo">
+                      <StyledBox>
+                        <LogoShort />
+                      </StyledBox>
+                    </Grid>
+                    <Grid item xs={10} className="promise">
+                      <Grid item xs={12}>
+                        <Typography
+                          variant="h4"
+                          gutterBottom
+                          className="uppercase"
+                        >
+                          THE OBJECTIVE PROMISE
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <p>
+                          Behind every Objective supplement are studies, endless
+                          hours of research and a team with over 50 years of
+                          combined experience formulating dietary supplements.
+                          And the one thing we know for sure? Everybody's
+                          different. Every body is different. It's possible that
+                          what works wonders for your best friend might not do a
+                          thing for you. So let us know and we'll refund your
+                          money. It's that simple.
+                        </p>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                   <Grid item xs={5} className="title border-bottom">
                     <StyledBox>
                       <NavLink
@@ -439,15 +456,6 @@ const Footer = ({ location, currentUser }) => {
                       <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                         HELP
                       </NavLink>
-                    </StyledBox>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={1}
-                    className="border-bottom logo border-left copy"
-                  >
-                    <StyledBox>
-                      <LogoShort />
                     </StyledBox>
                   </Grid>
                   <Grid item xs={5} className="border-bottom">

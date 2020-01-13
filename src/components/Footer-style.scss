@@ -49,6 +49,13 @@
       text-transform: initial;
       margin: 0;
     }
+    @media (min-width: 1200px) {
+      padding: 30px;
+      border-left: 1px solid $gray;
+      p {
+        font-size: 16px;
+      }
+    }
   }
   .signup-box {
     text-align: left;
@@ -109,6 +116,16 @@
           width: 82.7px;
           height: 60px;
           padding-top: 9px;
+          .cls-1,
+          .cls-2 {
+            fill: none;
+            stroke: #231f20;
+            stroke-miterlimit: 10;
+            stroke-width: 2px;
+          }
+          .cls-2 {
+            stroke-linecap: square;
+          }
         }
       }
     }
@@ -214,16 +231,6 @@
         }
       }
     }
-    .cls-1,
-    .cls-2 {
-      fill: none;
-      stroke: #231f20;
-      stroke-miterlimit: 10;
-      stroke-width: 2px;
-    }
-    .cls-2 {
-      stroke-linecap: square;
-    }
     .title {
       font-family: p22-underground, Helvetica, sans-serif;
       font-size: 16px;
@@ -317,6 +324,15 @@
         img {
           width: 27px;
           height: 27px;
+        }
+      }
+      @media (min-width: 1200px) {
+        .logo {
+          padding: 20px 46px;
+          svg {
+            width: 92px;
+            height: 92px;
+          }
         }
       }
     }
