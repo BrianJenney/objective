@@ -244,12 +244,21 @@
 
     .legal {
       text-transform: uppercase;
-      font-size: 10px;
       letter-spacing: 0.8px;
+      font-weight: 600;
+      color: #959595;
 
       @media (min-width: 320px) {
+        font-size: 12px;
         display: flex;
         justify-content: center;
+        padding: 15px;
+        .legal-text {
+          display: flex;
+          justify-content: center;
+          padding-top: 5px;
+          text-decoration: underline;
+        }
       }
       @media (min-width: 1200px) {
         border-top: 1px solid #414141;

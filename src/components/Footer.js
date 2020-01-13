@@ -339,32 +339,24 @@ const Footer = ({ location, currentUser }) => {
                       </>
                     )}
                   </Grid>
-                  <Grid container item xs={12} className="legal">
-                    <StyledList>
-                      <ListItem className="text-center">
-                        Objective &bull; All rights reserved
-                      </ListItem>
-                    </StyledList>
-                  </Grid>
-                  <Grid container xs={12} className="legal">
-                    <StyledList>
-                      <ListItem className="text-center">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/privacy-policy"
-                        >
-                          Privacy Policy
-                        </NavLink>
-                      </ListItem>
-                      <ListItem className="text-center">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/terms"
-                        >
-                          Terms of use
-                        </NavLink>
-                      </ListItem>
-                    </StyledList>
+                  <Grid container item xs={12} className="legal border-bottom">
+                    © Objective 2019
+                    <Grid container xs={12} className="legal-text">
+                      <NavLink
+                        onClick={segmentTrackNavigationClick}
+                        to="/privacy-policy"
+                        style={{ paddingRight: 10, color: '#959595' }}
+                      >
+                        Privacy Policy
+                      </NavLink>
+                      <NavLink
+                        onClick={segmentTrackNavigationClick}
+                        to="/terms"
+                        style={{ color: '#959595' }}
+                      >
+                        Terms of use
+                      </NavLink>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
