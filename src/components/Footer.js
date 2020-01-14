@@ -461,6 +461,7 @@ const Footer = ({ location, currentUser }) => {
                         <NavLink
                           onClick={segmentTrackNavigationClick}
                           to="/terms"
+                          target="_blank"
                         >
                           Terms of use
                         </NavLink>
@@ -654,7 +655,7 @@ const Footer = ({ location, currentUser }) => {
                             underline="always"
                             children="create an account"
                             onClick={segmentTrackNavigationClick}
-                          ></NavLink>{' '}
+                          />{' '}
                           in seconds.
                         </Typography>
                       </>
@@ -734,6 +735,7 @@ const Footer = ({ location, currentUser }) => {
                         <NavLink
                           onClick={segmentTrackNavigationClick}
                           to="/terms"
+                          target="_blank"
                         >
                           Terms of use
                         </NavLink>
