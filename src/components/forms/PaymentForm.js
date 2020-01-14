@@ -125,6 +125,7 @@ const PaymentForm = ({
     number: useRef(null),
     expirationDate: useRef(null),
     cvv: useRef(null),
+    postalCode: useRef(null),
     firstName: useRef(null),
     lastName: useRef(null),
     address1: useRef(null),
@@ -219,6 +220,10 @@ const PaymentForm = ({
                 cvv: {
                   container: '#bt-cardCvv',
                   placeholder: 'CVV'
+                },
+                postalCode: {
+                  container: '#bt-cardZipCode',
+                  placeholder: 'Zip Code'
                 }
               }
             },
@@ -395,17 +400,22 @@ const PaymentForm = ({
                     <div id="bt-cardNumber" ref={fieldRefs.number}></div>
                     <div className="btError">Please enter valid card number</div>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                     <div
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
                     ></div>
                     <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                     <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
+                  <Grid item xs={2}>
+                    <div id="bt-cardZipCode" ref={fieldRefs.postalCode}></div>
+                    <div className="btError">Please enter valid Zip Code</div>
+                  </Grid>
+
                 </Box>
               </Grid>
               {allowFlyMode && (
