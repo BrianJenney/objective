@@ -316,6 +316,7 @@ const AddressForm = ({
               name="address.firstName"
               label="First Name"
               component={InputField}
+              autoComplete="given-name"
             />
           </div>
         </Grid>
@@ -325,6 +326,7 @@ const AddressForm = ({
               name="address.lastName"
               label="Last Name"
               component={InputField}
+              autoComplete="family-name"
             />
           </div>
         </Grid>
@@ -334,6 +336,7 @@ const AddressForm = ({
               name="address.address1"
               label="Street Address"
               component={InputField}
+              autoComplete="address-line1"
             />
           </div>
         </Grid>
@@ -342,11 +345,17 @@ const AddressForm = ({
             name="address.address2"
             label="Apt. suite, bldg, c/o (optional)"
             component={InputField}
+            autoComplete="address-line2"
           />
         </Grid>
         <Grid item xs={12}>
           <div ref={fieldRefs.city}>
-            <Field name="address.city" label="City" component={InputField} />
+            <Field
+              name="address.city"
+              label="City"
+              component={InputField}
+              autoComplete="address-level2"
+            />
           </div>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -365,11 +374,18 @@ const AddressForm = ({
               name="address.zipcode"
               label="Zip Code"
               component={InputField}
+              autoComplete="postal-code"
             />
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Field name="address.phone" label="Phone #" component={InputField} />
+          <Field
+            name="address.phone"
+            label="Phone #"
+            component={InputField}
+            type="tel"
+            autoComplete="tel"
+          />
         </Grid>
         <Grid item xs={12}>
           <Field
