@@ -320,7 +320,7 @@ const Footer = ({ location, currentUser }) => {
                                   }
                                 }}
                               />
-                              <Button type="submit">
+                              <Button type="submit" className="signup-arrow">
                                 <Grid>
                                   <Arrow />
                                   <Typography
@@ -582,7 +582,7 @@ const Footer = ({ location, currentUser }) => {
                                     }
                                   }}
                                 />
-                                <Button type="submit">
+                                <Button type="submit" className="signup-arrow">
                                   <Grid>
                                     <Arrow />
                                     <Typography
