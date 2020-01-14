@@ -441,76 +441,96 @@ const Footer = ({ location, currentUser }) => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xs={5} className="title border-bottom">
-                    <StyledBox>
-                      <NavLink
-                        onClick={segmentTrackNavigationClick}
-                        to="/about_us"
-                      >
-                        About
-                      </NavLink>
-                    </StyledBox>
-                  </Grid>
-                  <Grid item xs={6} className="title border-bottom border-left">
-                    <StyledBox>
-                      <NavLink onClick={segmentTrackNavigationClick} to="/faq">
-                        HELP
-                      </NavLink>
-                    </StyledBox>
-                  </Grid>
-                  <Grid item xs={5} className="border-bottom">
-                    <StyledList className="links">
-                      <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/contact"
-                        >
-                          Contact Us
-                        </NavLink>
-                      </ListItem>
-                      <ListItem>
+                  <Grid
+                    item
+                    xs={12}
+                    className="border-bottom"
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <Grid
+                      item
+                      xs={6}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        padding: '12px 0px'
+                      }}
+                    >
+                      <Grid item xs={2} style={{ marginRight: 60 }}>
+                        <Grid className="title">About</Grid>
+                        <StyledList className="links">
+                          <ListItem>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/about_us"
+                            >
+                              About Us
+                            </NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/journal"
+                            >
+                              Journal
+                            </NavLink>
+                          </ListItem>
+                        </StyledList>
+                      </Grid>
+                      <Grid item xs={4} style={{ marginLeft: 59 }}>
+                        <Grid className="title">Help</Grid>
+                        <StyledList className="links">
+                          <ListItem>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to={gotoUrl('/account', '/login/account')}
+                            >
+                              My Account
+                            </NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/faq"
+                            >
+                              Shipping &amp; Refunds
+                            </NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/contact"
+                            >
+                              Contact Us
+                            </NavLink>
+                          </ListItem>
+                          <ListItem>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/faq"
+                            >
+                              FAQs
+                            </NavLink>
+                          </ListItem>
+                        </StyledList>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={6} className="border-left">
+                      <StyledBox>
                         <NavLink
                           onClick={segmentTrackNavigationClick}
                           to="/faq"
                         >
-                          FAQs
+                          HELP
                         </NavLink>
-                      </ListItem>
-                    </StyledList>
+                      </StyledBox>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6} className="border-left border-bottom">
-                    <StyledList className="links">
-                      <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to={gotoUrl('/account', '/login/account')}
-                        >
-                          My Account
-                        </NavLink>
-                      </ListItem>
-                      <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/faq"
-                        >
-                          Shipping &amp; Returns
-                        </NavLink>
-                      </ListItem>
-                      <ListItem>
-                        <NavLink
-                          to={gotoUrl('/account/orders', '/login/order')}
-                          onClick={segmentTrackNavigationClick}
-                        >
-                          Track an Order
-                        </NavLink>
-                      </ListItem>
-                    </StyledList>
-                  </Grid>
-                  <Grid item xs={1} className="border-left copy">
-                    <StyledBox>
-                      <div className="rotate">Copyright 2019</div>
-                    </StyledBox>
-                  </Grid>
+
                   <Grid item xs={5} className="signup-box">
                     {confirmationVisibility ? (
                       <>
