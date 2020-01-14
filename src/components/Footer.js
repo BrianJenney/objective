@@ -270,7 +270,8 @@ const Footer = ({ location, currentUser }) => {
                             fontFamily: 'P22-Underground',
                             fontSize: '22px',
                             lineHeight: 'normal',
-                            letterSpacing: 'normal'
+                            letterSpacing: 'normal',
+                            color: '#fff'
                           }}
                         >
                           Awesome! You're on the list!
@@ -289,6 +290,7 @@ const Footer = ({ location, currentUser }) => {
                             underline="always"
                             children="create an account"
                             onClick={segmentTrackNavigationClick}
+                            style={{ color: '#959595' }}
                           ></NavLink>{' '}
                           in seconds.
                         </Typography>
@@ -304,7 +306,7 @@ const Footer = ({ location, currentUser }) => {
                           onSubmit={handleSubmit}
                           validationSchema={schema}
                           render={({ errors }) => (
-                            <Form style={{ height: 63, marginTop: 24 }}>
+                            <Form style={{ height: 61, marginTop: 24 }}>
                               <Field
                                 name="email"
                                 label=""
@@ -313,20 +315,22 @@ const Footer = ({ location, currentUser }) => {
                                 InputProps={{
                                   style: {
                                     border: '#fff solid 1px',
-                                    width: 260
+                                    width: '100%',
+                                    height: '100%'
                                   }
                                 }}
                               />
                               <Button type="submit">
                                 <Grid>
-                                  <Arrow className="arrow-icon" />
+                                  <Arrow />
                                   <Typography
                                     style={{
                                       fontFamily: 'P22-Underground',
                                       fontSize: '12px',
                                       fontWeight: 600,
                                       position: 'relative',
-                                      bottom: 10
+                                      bottom: 10,
+                                      letterSpacing: 1
                                     }}
                                   >
                                     Submit
@@ -457,7 +461,7 @@ const Footer = ({ location, currentUser }) => {
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        padding: '12px 0px'
+                        padding: '8px 0px 41px'
                       }}
                     >
                       <Grid item xs={2} style={{ marginRight: 60 }}>
@@ -519,76 +523,88 @@ const Footer = ({ location, currentUser }) => {
                         </StyledList>
                       </Grid>
                     </Grid>
-                    <Grid item xs={6} className="border-left">
-                      <StyledBox>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/faq"
-                        >
-                          HELP
-                        </NavLink>
-                      </StyledBox>
-                    </Grid>
-                  </Grid>
 
-                  <Grid item xs={5} className="signup-box">
-                    {confirmationVisibility ? (
-                      <>
-                        <Typography
-                          style={{
-                            fontFamily: 'P22-Underground',
-                            fontSize: '24px',
-                            lineHeight: 'normal',
-                            letterSpacing: 'normal'
-                          }}
-                        >
-                          Awesome! You're on the list!
-                        </Typography>
-                        <Typography
-                          style={{
-                            fontFamily: 'FreightTextProBook',
-                            fontSize: '16px',
-                            opacity: '0.5',
-                            letterSpacing: 'normal'
-                          }}
-                        >
-                          Be a step ahead and{' '}
-                          <NavLink
-                            to="/signup"
-                            underline="always"
-                            children="create an account"
-                            onClick={segmentTrackNavigationClick}
-                          ></NavLink>{' '}
-                          in seconds.
-                        </Typography>
-                      </>
-                    ) : (
-                      <>
-                        <span>Sign up for tips and new product launches.</span>
-                        <Formik
-                          initialValues={{ email: '' }}
-                          onSubmit={handleSubmit}
-                          validationSchema={schema}
-                          render={() => (
-                            <Form>
-                              <Field
-                                name="email"
-                                label=""
-                                placeholder="Your Email"
-                                component={InputField}
-                              />
-                              <Button type="submit">
-                                <img
-                                  src={arrowImage}
-                                  className="signup-arrow"
-                                  alt="arrow"
+                    <Grid item xs={6} className=" border-left signup-box">
+                      {confirmationVisibility ? (
+                        <>
+                          <Typography
+                            style={{
+                              fontFamily: 'P22-Underground',
+                              fontSize: '24px',
+                              lineHeight: 'normal',
+                              letterSpacing: 'normal',
+                              color: '#fff'
+                            }}
+                          >
+                            Awesome! You're on the list!
+                          </Typography>
+                          <Typography
+                            style={{
+                              fontFamily: 'FreightTextProBook',
+                              fontSize: '17px',
+                              opacity: '0.5',
+                              letterSpacing: 'normal'
+                            }}
+                          >
+                            Be a step ahead and{' '}
+                            <NavLink
+                              to="/signup"
+                              underline="always"
+                              children="create an account"
+                              onClick={segmentTrackNavigationClick}
+                              style={{ color: '#959595' }}
+                            ></NavLink>{' '}
+                            in seconds.
+                          </Typography>
+                        </>
+                      ) : (
+                        <>
+                          <span>
+                            Subscribe and never miss out on new products,
+                            special offers, health tips, and more.
+                          </span>
+                          <Formik
+                            initialValues={{ email: '' }}
+                            onSubmit={handleSubmit}
+                            validationSchema={schema}
+                            render={() => (
+                              <Form style={{ marginTop: 24, height: 61 }}>
+                                <Field
+                                  name="email"
+                                  label=""
+                                  placeholder="Your Email"
+                                  component={InputField}
+                                  InputProps={{
+                                    style: {
+                                      border: '#fff solid 1px',
+                                      width: '100%',
+                                      height: '100%'
+                                    }
+                                  }}
                                 />
-                              </Button>
-                            </Form>
-                          )}
-                        />
-                      </>
-                    )}
+                                <Button type="submit">
+                                  <Grid>
+                                    <Arrow />
+                                    <Typography
+                                      style={{
+                                        fontFamily: 'P22-Underground',
+                                        fontSize: '14px',
+                                        fontWeight: 600,
+                                        position: 'relative',
+                                        bottom: 10,
+                                        letterSpacing: 1.17
+                                      }}
+                                    >
+                                      Submit
+                                    </Typography>
+                                  </Grid>
+                                </Button>
+                              </Form>
+                            )}
+                          />
+                        </>
+                      )}
+                    </Grid>
                   </Grid>
                   <Grid item xs={3}></Grid>
                   <Grid item xs={3}>

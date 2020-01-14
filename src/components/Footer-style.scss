@@ -78,19 +78,39 @@
       position: absolute;
     }
     @media (min-width: 1200px) {
-      font-size: 16px;
-      padding: 30px 0px 30px 50px;
+      font-size: 18px;
+      padding: 32px 0px 79px 39px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
       .MuiFormHelperText-root.Mui-error {
         color: #fff;
       }
-      .MuiOutlinedInput-notchedOutline {
-        top: 10px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: 0;
-        padding: 0;
-        position: absolute;
+      form {
+        .MuiFormControl-fullWidth {
+          width: 76%;
+          .MuiInputBase-fullWidth {
+            width: 98%;
+          }
+        }
+        button {
+          background: #fff;
+          width: 115px;
+          height: 100%;
+          padding-top: 9px;
+          .cls-1,
+          .cls-2 {
+            fill: none;
+            stroke: #231f20;
+            stroke-miterlimit: 10;
+            stroke-width: 2px;
+          }
+          .cls-2 {
+            stroke-linecap: square;
+          }
+        }
       }
     }
     form {
@@ -113,8 +133,8 @@
         }
         button {
           background: #fff;
-          width: 82.7px;
-          height: 60px;
+          width: 115px;
+          height: 100%;
           padding-top: 9px;
           .cls-1,
           .cls-2 {
@@ -242,7 +262,7 @@
       color: #959595;
 
       @media (min-width: 1200px) {
-        padding: 31px 0px 16px 0px;
+        padding: 31px 0px 18px 0px;
       }
     }
 
