@@ -382,6 +382,7 @@ const PaymentForm = ({
                     name="paymentDetails.cardholderName"
                     label="Name on Card"
                     component={InputField}
+                    autoComplete="name"
                   />
                 </div>
               </Grid>
@@ -450,6 +451,7 @@ const PaymentForm = ({
                     name="billingAddress.firstName"
                     label="First Name"
                     component={InputField}
+                    autoComplete="given-name"
                   />
                 </div>
               </Grid>
@@ -459,6 +461,7 @@ const PaymentForm = ({
                     name="billingAddress.lastName"
                     label="Last Name"
                     component={InputField}
+                    autoComplete="family-name"
                   />
                 </div>
               </Grid>
@@ -468,6 +471,7 @@ const PaymentForm = ({
                     name="billingAddress.address1"
                     label="Street Address"
                     component={InputField}
+                    autoComplete="address-line1"
                   />
                 </div>
               </Grid>
@@ -477,6 +481,7 @@ const PaymentForm = ({
                     name="billingAddress.address2"
                     label="Apt. suite, bldg, c/o (optional)"
                     component={InputField}
+                    autoComplete="address-line2"
                   />
                 </div>
               </Grid>
@@ -486,6 +491,7 @@ const PaymentForm = ({
                     name="billingAddress.city"
                     label="City"
                     component={InputField}
+                    autoComplete="address-level2"
                   />
                 </div>
               </Grid>
@@ -505,6 +511,7 @@ const PaymentForm = ({
                     name="billingAddress.zipcode"
                     label="Zip Code"
                     component={InputField}
+                    autoComplete="postal-code"
                   />
                 </div>
               </Grid>
@@ -514,6 +521,8 @@ const PaymentForm = ({
                   label="Phone #"
                   component={InputField}
                   helperText="In case we need to contact you about your order"
+                  type="tel"
+                  autoComplete="tel"
                 />
               </Grid>
               <Grid item xs={12}>
