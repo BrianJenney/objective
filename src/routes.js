@@ -26,7 +26,8 @@ import {
   BlogTag,
   AboutUs,
   PrivacyPolicyPage,
-  TermsPage
+  TermsPage,
+  NotFoundPage
 } from './pages';
 
 import {
@@ -139,5 +140,6 @@ export default [
   { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
   { path: '/journal', exact: true, component: Blog },
   { path: '/newyear', exact: true, component: NewYear },
+  { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
 ];
