@@ -2,7 +2,6 @@ import React from 'react';
 import { useMediaQuery } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { NavLink } from '../../components/common';
-import './NotFound.scss';
 
 const useStyles = makeStyles({
   root: {
