@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     marginBottom: '-4px'
   }
 });
+
 // Not found 404 Page
 const NotFound = () => {
   const theme = useTheme();
@@ -35,32 +36,6 @@ const NotFound = () => {
       </NavLink>
     </>
   );
-
-  // const desktopImage = 'https://images.ctfassets.net/mj9bpefl6wof/5loXjfMH09OyWJ0jf2mJmB/456292b8129b50626fd60bc09a565c66/broken_pill_desktop.png?w=2000&fm=jpg&q=50';
-  // const mobileImage = 'https://images.ctfassets.net/mj9bpefl6wof/5dKaCvZbW7P36PurFOzShz/cc1ae84f6add97889662daebc1874ef8/broken_pill_mobile.png?w=450&fm=jpg&q=50';
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // const imageUrl = windowWidth >= 650 ? desktopImage : mobileImage;
-
-  // const handleWindowResize = () => {
-  //   setWindowWidth(window.innerWidth);
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('resize', handleWindowResize);
-
-  //   return () => {
-  //     window.removeEventListener('resize', handleWindowResize);
-  //   }
-  // });
-
-  // return (
-  //   <div className="notFound" style={{ backgroundImage: `url(${imageUrl})` }}>
-  //     <div className="notFound-content">
-  //       <h1>Pineapples</h1>
-  //       <p>They are good</p>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default NotFound;
