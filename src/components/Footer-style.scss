@@ -311,6 +311,12 @@
             width: 92px;
             height: 92px;
           }
+          .icon-container {
+            justify-content: space-evenly;
+            .follow-text {
+              color: red;
+            }
+          }
         }
       }
     }
