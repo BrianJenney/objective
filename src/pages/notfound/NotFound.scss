@@ -1,0 +1,28 @@
+
+.notFound {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    max-height: 535px;
+}
+
+.notFound-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px;
+}
+
+@media (min-width: 650px ) {
+    .notFound {
+        background-position: center center;
+    }
+
+    .notFound-content {
+        align-items: flex-end;
+        justify-content: center;
+    }
+}
