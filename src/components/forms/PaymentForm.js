@@ -498,19 +498,6 @@ const PaymentForm = ({
                   />
                 </div>
               </Grid>
-              {/*
-              <Grid item xs={12} sm={6}>
-                <div ref={fieldRefs.zipcode}>
-
-                    <Field
-                      name="billingAddress.zipcode"
-                      label="Zip Code"
-                      component={InputField}
-                    />
-
-                </div>
-              </Grid>
-              */}
               <Grid item xs={12} sm={6}>
                 <Field
                   name="billingAddress.phone"
