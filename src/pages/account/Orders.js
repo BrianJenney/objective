@@ -231,6 +231,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/transactions/${data.orders[dataIndex]._id}`}
                               />
+
                             </Typography>
                           </Grid>
                         </Grid>
@@ -250,7 +251,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
             )}
         </Grid>
       </Grid>
-    </ScrollToTop>
+    </ScrollToTop >
   );
 };
 

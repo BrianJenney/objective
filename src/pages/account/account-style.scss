@@ -157,16 +157,20 @@
     height: 50px;
     margin-bottom: 8px;
     td,
-    td a,
+    td a, 
     td p {
       font-family: p22-underground, sans-serif;
       font-size: 18px !important;
       text-transform: capitalize;
       @media (max-width: 959.95px) {
-        display: inline-flex;
+        // display: inline-flex;
         line-height: inherit;
-      }
-    }
+        min-width: 50%;
+      };      
+    } 
+    td:last-child {
+      display: block
+    } 
   }
   tfoot {
     display: none;
@@ -184,7 +188,7 @@
   .account-orders {
     tbody > tr {
       background-color: #fbf7f3;
-      height: auto;
+      height: 160px;
       margin-bottom: 16px;
       display: block;
       padding: 10px;
