@@ -344,15 +344,16 @@ const Footer = ({ location, currentUser }) => {
                     )}
                   </Grid>
                   <Grid container item xs={12} className="legal border-bottom">
-                    © Objective 2019
+                    © Objective 2020
                     <Grid container xs={12} className="legal-text">
-                      <NavLink
+                      <a
                         onClick={segmentTrackNavigationClick}
-                        to="/privacy-policy"
+                        href="https://www.thecloroxcompany.com/privacy/"
+                        target="_blank"
                         style={{ paddingRight: 10, color: '#959595' }}
                       >
                         Privacy Policy
-                      </NavLink>
+                      </a>
                       <NavLink
                         onClick={segmentTrackNavigationClick}
                         to="/terms"
@@ -606,13 +607,16 @@ const Footer = ({ location, currentUser }) => {
                       )}
                     </Grid>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} className="row1 border-bottom">
                     <Grid
                       item
                       xs={3}
                       className="row1 icon-container border-right"
+                      style={{
+                        padding: '24px 0px'
+                      }}
                     >
-                      <div className="uppercase">Follow Us</div>
+                      <div className="uppercase follow-text">Follow Us</div>
                       <Link
                         href="https://www.instagram.com/objective_wellness"
                         target="_blank"
@@ -636,28 +640,27 @@ const Footer = ({ location, currentUser }) => {
                         <img src={pinIcon} alt="pinterest" />
                       </Link>
                     </Grid>
-                  </Grid>
-
-                  <Grid container item xs={12} className="legal">
-                    <StyledLegalList>
-                      <ListItem>Objective &bull; All rights reserved</ListItem>
-                      <ListItem>
-                        <NavLink
+                    <Grid item x={9} className="legal">
+                      <div style={{ paddingRight: 20 }}>© Objective 2020 </div>
+                      &bull;
+                      <Grid className="legal-text">
+                        <a
                           onClick={segmentTrackNavigationClick}
-                          to="/privacypolicy"
+                          href="https://www.thecloroxcompany.com/privacy/"
+                          target="_blank"
+                          style={{ padding: '0px 20px', color: '#959595' }}
                         >
                           Privacy Policy
-                        </NavLink>
-                      </ListItem>
-                      <ListItem>
+                        </a>
                         <NavLink
                           onClick={segmentTrackNavigationClick}
                           to="/terms"
+                          style={{ color: '#959595' }}
                         >
                           Terms of use
                         </NavLink>
-                      </ListItem>
-                    </StyledLegalList>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
