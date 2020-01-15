@@ -16,7 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -29,14 +28,6 @@ import {
   getErrorMessage,
   scrollToRef
 } from '../../utils/misc';
-
-const useStyles = makeStyles(() => ({
-  noBorderField: {
-    '& .MuiOutlinedInput-notchedOutline': {
-      border: 0
-    }
-  }
-}));
 
 const usePrevious = value => {
   const ref = useRef();
@@ -61,7 +52,7 @@ const INITIAL_VALUES = {
     address2: '',
     city: '',
     state: '',
-    zipcode: '',
+    zipcode: '94539',
     phone: '',
     country: 'US'
   },
@@ -136,7 +127,6 @@ const PaymentForm = ({
   const errRef = useRef(null);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { enqueueSnackbar } = useSnackbar();
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -397,22 +387,22 @@ const PaymentForm = ({
                   id="bt-payment-holder"
                 >
                   <Grid item xs={6}>
-                    <div id="bt-cardNumber" ref={fieldRefs.number}></div>
+                    <div id="bt-cardNumber" ref={fieldRefs.number} />
                     <div className="btError">Please enter valid card number</div>
                   </Grid>
                   <Grid item xs={2}>
                     <div
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
-                    ></div>
+                    />
                     <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
                   <Grid item xs={2}>
-                    <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
+                    <div id="bt-cardCvv" ref={fieldRefs.cvv} />
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
                   <Grid item xs={2}>
-                    <div id="bt-cardZipCode" ref={fieldRefs.postalCode}></div>
+                    <div id="bt-cardZipCode" ref={fieldRefs.postalCode} />
                     <div className="btError">Please enter valid Zip Code</div>
                   </Grid>
 
@@ -509,16 +499,20 @@ const PaymentForm = ({
                   />
                 </div>
               </Grid>
+              {/*
               <Grid item xs={12} sm={6}>
                 <div ref={fieldRefs.zipcode}>
-                  <Field
-                    name="billingAddress.zipcode"
-                    label="Zip Code"
-                    component={InputField}
-                  />
+
+                    <Field
+                      name="billingAddress.zipcode"
+                      label="Zip Code"
+                      component={InputField}
+                    />
+
                 </div>
               </Grid>
-              <Grid item xs={12}>
+              */}
+              <Grid item xs={12} sm={6}>
                 <Field
                   name="billingAddress.phone"
                   label="Phone #"
