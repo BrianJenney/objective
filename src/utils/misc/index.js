@@ -151,6 +151,7 @@ export const getShippingAndTracking = order => {
   let shippedDate = '';
   let deliveredDate = '';
   const item = items[0];
+
   if (item.tracking && shipTracking) {
     tracking = getTracking(items, status);
     const trackingNo = item.tracking.number;

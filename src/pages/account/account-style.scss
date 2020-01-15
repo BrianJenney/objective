@@ -162,6 +162,10 @@
       font-family: p22-underground, sans-serif;
       font-size: 18px !important;
       text-transform: capitalize;
+      @media (max-width: 959.95px) {
+        display: inline-flex;
+        line-height: inherit;
+      }
     }
   }
   tfoot {

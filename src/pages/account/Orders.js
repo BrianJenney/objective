@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -14,6 +13,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
+
 const columns = [
   {
     name: '_id',
@@ -24,6 +24,7 @@ const columns = [
       customBodyRender: (value, tableMeta, updateValue) => {
         return (
           <Button
+            style={{ lineHeight: 0, paddingLeft: '1px' }}
             color="primary"
             component={AdapterLink}
             to={`/orders/${value}`}
@@ -93,7 +94,7 @@ const columns = [
         const trackings = getTracking(rowData[3], rowData[2]);
         return trackings ?
           (trackings.map(tracking =>
-            <p>
+            <>
               <Link
                 href={tracking.url}
                 style={{ color: 'black' }}
@@ -103,9 +104,8 @@ const columns = [
                 {tracking.number}
               </Link>
               <br />
-            </p>
-          )
-          )
+            </>
+          ))
           : null;
       }
     }
@@ -155,7 +155,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
       data.orders[key].status = 'Order Cancelled';
     }
   }
-
   return (
     <ScrollToTop>
       <Grid
