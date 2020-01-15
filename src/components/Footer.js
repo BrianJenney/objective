@@ -405,6 +405,19 @@ const Footer = ({ location, currentUser }) => {
                     method.
                   </Typography>
                 </Grid>
+                <div className="ccpa-footer">
+                  <a
+                    href="https://thecloroxcompany.com/brands"
+                    target="_blank"
+                    rel="external"
+                  >
+                    <img
+                      src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg"
+                      alt="CLX"
+                    />
+                    <span>Member of the CLX family of brands</span>
+                  </a>
+                </div>
               </div>
             </Grid>
           </Container>
@@ -706,6 +719,19 @@ const Footer = ({ location, currentUser }) => {
                     through an alternative method.
                   </Typography>
                 </Grid>
+                <div className="ccpa-footer">
+                  <a
+                    href="https://thecloroxcompany.com/brands"
+                    target="_blank"
+                    rel="external"
+                  >
+                    <img
+                      src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg"
+                      alt="CLX"
+                    />
+                    <span>Member of the CLX family of brands</span>
+                  </a>
+                </div>
               </div>
             </Grid>
           </Container>
