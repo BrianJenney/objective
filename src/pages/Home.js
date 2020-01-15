@@ -10,7 +10,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
-
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -106,8 +105,7 @@ class Home extends Component {
           backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
             '//images.ctfassets.net/mj9bpefl6wof/',
             'https://nutranext.imgix.net/'
-              )
-            }?q=50&auto=compress,format")`
+          )}?q=50&auto=compress,format")`
         }}
       >
         <Container className="section-container">
@@ -132,13 +130,15 @@ class Home extends Component {
     const bestsellers = [
       '5d8bb76ff5005515a437d4c8',
       '5ceebfdca686a03bccfa67c0',
-      '5d8bb840f5005515a437d4cb'
+      '5d8bb840f5005515a437d4cb',
+      '5d8ba8a1f5005515a437d4c2'
     ];
 
     const bps = this.props.products
       .filter(product => bestsellers.includes(product.id))
       .map(product => product);
 
+    console.log(bps);
     return (
       <>
         {bps.map(variant => (
@@ -155,8 +155,9 @@ class Home extends Component {
 
     const family = [
       '5d8ba4f6f5005515a437d4be',
-      '5ce6d310585756469c36e250',
-      '5d8ba8a1f5005515a437d4c2'
+      '5ceec52ba686a03bccfa67c5',
+      '5ceebfdca686a03bccfa67c0',
+      '5ce6d310585756469c36e250'
     ];
 
     const fps = this.props.products

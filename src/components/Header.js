@@ -5,7 +5,14 @@ import { compose } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { withStyles, useTheme } from '@material-ui/core/styles';
-import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
+import {
+  useMediaQuery,
+  Container,
+  Grid,
+  Box,
+  Link,
+  SvgIcon
+} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { withCurrentUser } from '../hoc';
@@ -27,8 +34,9 @@ const StyledLink = withStyles(() => ({
     fontWeight: 'normal',
     color: '#000000',
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    fontSize: '16px'
+    letterSpacing: '1.13px',
+    fontSize: '18px',
+    fontWeight: 500
   }
 }))(Link);
 
@@ -46,7 +54,7 @@ const StyledBox = withStyles(() => ({
 let segmentIdentified = false;
 const segmentIdentify = user => {
   if (!segmentIdentified) {
-    if (user['firstName']) {
+    if (user.firstName) {
       window.analytics.identify(jwt.decode(user.account_jwt).account_id, {
         first_name: `${user.firstName}`,
         last_name: `${user.lastName}`,
@@ -71,13 +79,13 @@ const Header = ({ currentUser, location }) => {
   segmentIdentify(currentUser.data);
   const accountMenuItemConf = account_jwt
     ? {
-      key: 'third',
-      children: <LoggedInUser name={firstName} />,
-      link: '/account/overview'
-    }
+        key: 'third',
+        children: <LoggedInUser name={firstName} />,
+        link: '/account/overview'
+      }
     : burger
-      ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
-      : {
+    ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
+    : {
         key: 'third',
         children: <LoginDropdown />,
         link: '/login'
@@ -117,122 +125,141 @@ const Header = ({ currentUser, location }) => {
       {isCheckoutPage || isOrderPage ? (
         <CheckoutHeader />
       ) : (
-          <Grid container item={true} xs={12} className="headerContainer">
-            <Grid container item={true} xs={12} spacing={0}>
-              {burger ? (
-                <>
-                  <Grid container className="top">
-                    <Grid item xs={1}>
-                      {renderBurgerIcon()}
-                    </Grid>
-                    <Grid item xs={1}></Grid>
-                    <Grid item xs={8} className="logo text-center">
-                      <NavLink onClick={segmentTrackNavigationClick} to="/">
-                        <Logo />
-                      </NavLink>
-                    </Grid>
-                    <Grid item xs={1} className="mobile-cart-icon">
-                      {!isCheckoutPage && <ShoppingCart />}
-                      {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+        <Grid container item={true} xs={12} className="headerContainer">
+          <Grid container item={true} xs={12} spacing={0}>
+            {burger ? (
+              <>
+                <Grid container className="top">
+                  <Grid item xs={1}>
+                    {renderBurgerIcon()}
+                  </Grid>
+                  <Grid item xs={1}></Grid>
+                  <Grid item xs={8} className="logo text-center">
+                    <NavLink onClick={segmentTrackNavigationClick} to="/">
+                      <Logo />
+                    </NavLink>
+                  </Grid>
+                  <Grid item xs={1} className="mobile-cart-icon">
+                    {!isCheckoutPage && <ShoppingCart />}
+                    {cartMerged ? (
+                      <CartMergeNotification isCheckoutPage={isCheckoutPage} />
+                    ) : null}
+                  </Grid>
+                </Grid>
+                {promoVisible ? (
+                  <Grid container item={true} xs={12} className="headerBar">
+                    <Grid item xs={12}>
+                      <StyledBox fontSize={9}>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to="/gallery"
+                        >
+                          Limited Time: Free Shipping for All New Customers
+                        </NavLink>
+                        <CloseIcon
+                          className="closeIconMobile"
+                          onClick={handlePromoClose}
+                        />
+                      </StyledBox>
                     </Grid>
                   </Grid>
-                  {promoVisible ? (
-                    <Grid container item={true} xs={12} className="headerBar">
-                      <Grid item xs={12}>
-                        <StyledBox fontSize={9}>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                            Limited Time: Free Shipping for All New Customers
-                        </NavLink>
-                          <CloseIcon
-                            className="closeIconMobile"
-                            onClick={handlePromoClose}
-                          />
-                        </StyledBox>
-                      </Grid>
-                    </Grid>
-                  ) : null}
-                </>
-              ) : (
-                  <>
-                    {promoVisible ? (
-                      <div className="headerBar">
-                        <Container>
-                          <Grid container item={true} xs={12}>
-                            <Grid item xs={12}>
-                              <StyledBox fontSize={12}>
-                                <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                                  Limited Time: Free Shipping for All New Customers
+                ) : null}
+              </>
+            ) : (
+              <>
+                {promoVisible ? (
+                  <div className="headerBar">
+                    <Container>
+                      <Grid container item={true} xs={12}>
+                        <Grid item xs={12}>
+                          <StyledBox fontSize={12}>
+                            <NavLink
+                              onClick={segmentTrackNavigationClick}
+                              to="/gallery"
+                            >
+                              Limited Time: Free Shipping for All New Customers
                             </NavLink>
-                                <div
-                                  className="closeIcon"
-                                  onClick={handlePromoClose}
-                                >
-                                  Close
+                            <div
+                              className="closeIcon"
+                              onClick={handlePromoClose}
+                            >
+                              Close
                               <CloseIcon
-                                    onClick={handlePromoClose}
-                                    style={{
-                                      position: 'relative',
-                                      top: 9,
-                                      paddingLeft: 5
-                                    }}
-                                  />
-                                </div>
-                              </StyledBox>
-                            </Grid>
-                          </Grid>
-                        </Container>
-                      </div>
-                    ) : null}
-                    <div className="holder">
-                      <Container>
+                                onClick={handlePromoClose}
+                                style={{
+                                  position: 'relative',
+                                  top: 9,
+                                  paddingLeft: 5
+                                }}
+                              />
+                            </div>
+                          </StyledBox>
+                        </Grid>
+                      </Grid>
+                    </Container>
+                  </div>
+                ) : null}
+                <div className="holder">
+                  <Container>
+                    <Grid container>
+                      <Grid item xs={4}>
                         <Grid container>
-                          <Grid item xs={4}>
-                            <Grid container>
-                              <Grid item xs={6} className="h-pding">
-                                <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
-                                  Shop
+                          <Grid item xs={6} className="h-pding">
+                            <StyledLink
+                              onClick={segmentTrackNavigationClick}
+                              component={RouterLink}
+                              to="/gallery"
+                            >
+                              Shop
                             </StyledLink>
-                              </Grid>
-                              <Grid item xs={6} className="h-pding">
-                                <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
-                                  Journal
+                          </Grid>
+                          <Grid item xs={6} className="h-pding">
+                            <StyledLink
+                              onClick={segmentTrackNavigationClick}
+                              component={RouterLink}
+                              to="/journal"
+                            >
+                              Journal
                             </StyledLink>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                          <Grid item xs={4} className="logo text-center">
-                            <NavLink onClick={segmentTrackNavigationClick} to="/">
-                              <Logo />
-                            </NavLink>
-                          </Grid>
-                          <Grid item xs={4}>
-                            <Grid container className="align-right">
-                              <Grid item xs={6} className="acct h-pding">
-                                <StyledLink
-                                  component={RouterLink}
-                                  {...accountMenuItemConf}
-                                  onClick={segmentTrackNavigationClick}
-                                />
-                              </Grid>
-                              <Grid
-                                item
-                                xs={6}
-                                className="header-shop-holder h-pding"
-                              >
-                                {!isCheckoutPage && <ShoppingCart />}
-                                {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
-                              </Grid>
-
-                            </Grid>
                           </Grid>
                         </Grid>
-                      </Container>
-                    </div>
-                  </>
-                )}
-            </Grid>
+                      </Grid>
+                      <Grid item xs={4} className="logo text-center">
+                        <NavLink onClick={segmentTrackNavigationClick} to="/">
+                          <Logo />
+                        </NavLink>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Grid container className="align-right">
+                          <Grid item xs={6} className="acct h-pding">
+                            <StyledLink
+                              component={RouterLink}
+                              {...accountMenuItemConf}
+                              onClick={segmentTrackNavigationClick}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            xs={6}
+                            className="header-shop-holder h-pding"
+                          >
+                            {!isCheckoutPage && <ShoppingCart />}
+                            {cartMerged ? (
+                              <CartMergeNotification
+                                isCheckoutPage={isCheckoutPage}
+                              />
+                            ) : null}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Container>
+                </div>
+              </>
+            )}
           </Grid>
-        )}
+        </Grid>
+      )}
     </>
   );
 };
@@ -242,9 +269,6 @@ Header.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const enhance = compose(
-  withCurrentUser,
-  withRouter
-);
+const enhance = compose(withCurrentUser, withRouter);
 
 export default enhance(Header);

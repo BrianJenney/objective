@@ -1,16 +1,15 @@
-import React, { useCallback,useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
 
 import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
@@ -32,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     padding: '40px',
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: 'rgba(252, 248, 244, 0.6)',
+      backgroundColor: 'rgba(244,240,238, 0.5)',
       padding: '15px'
     }
   },
@@ -81,8 +80,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const OrderConfirmation = ({ history }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
@@ -97,7 +94,7 @@ const OrderConfirmation = ({ history }) => {
     return null;
   }
 
-  let orderItemsTransformedGA = [];
+  const orderItemsTransformedGA = [];
   order.items.map(item => {
     orderItemsTransformedGA.push({
       id: item.variant_id,
@@ -109,11 +106,7 @@ const OrderConfirmation = ({ history }) => {
     });
   });
 
-
-
-  const OrderCartSummary = () => {
-    return <CartSummary order={order} />;
-  };
+  const OrderCartSummary = () => <CartSummary order={order} />;
 
   const OrderDetail = () => {
     const { cardType, last4 } = order.paymentData;
@@ -126,8 +119,8 @@ const OrderConfirmation = ({ history }) => {
       },
       [history, order._id]
     );
-    useEffect(()=>{
-      window.analytics.page("Order Confirmation");
+    useEffect(() => {
+      window.analytics.page('Order Confirmation');
       window.gtag('event', 'purchase', {
         transaction_id: order.orderId,
         affiliation: order.storeCode,
@@ -137,7 +130,7 @@ const OrderConfirmation = ({ history }) => {
         shipping: order.shippingMethod.price,
         items: orderItemsTransformedGA
       });
-    },[])
+    }, []);
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -148,15 +141,13 @@ const OrderConfirmation = ({ history }) => {
         <Typography className={classes.text1}>
           Your order number:{' '}
           <strong>
-            {order.orderId.substring(0, 3) +
-              '-' +
-              order.orderId.substring(3, 6) +
-              '-' +
-              order.orderId.substring(6, 10) +
-              '-' +
-              order.orderId.substring(10, 16) +
-              '-' +
-              order.orderId.substring(16)}
+            {`${order.orderId.substring(0, 3)}-${order.orderId.substring(
+              3,
+              6
+            )}-${order.orderId.substring(6, 10)}-${order.orderId.substring(
+              10,
+              16
+            )}-${order.orderId.substring(16)}`}
           </strong>
         </Typography>
         {xs ? (
@@ -230,7 +221,7 @@ const OrderConfirmation = ({ history }) => {
   };
 
   return (
-    <Box bgcolor="rgba(252, 248, 244, 0.6)">
+    <Box bgcolor="rgba(244,240,238, 0.5)">
       <Container className={classes.root}>
         <CssBaseline />
         <Box py={xs ? 0 : 10}>

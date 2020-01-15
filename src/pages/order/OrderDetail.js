@@ -23,7 +23,7 @@ import { requestCancelOrder } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(252, 248, 244, 0.6)'
+    backgroundColor: 'rgba(244,240,238, 0.5)'
   },
   main: {
     padding: theme.spacing(10, 5),
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(3, 4),
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: 'rgba(252, 248, 244, 0.6)',
+      backgroundColor: 'rgba(244,240,238, 0.5)',
       padding: 0
     }
   },
@@ -76,14 +76,18 @@ const useStyles = makeStyles(theme => ({
 
 const getStatusStepper = statusStepper => {
   const processedDate = formatDateTime(statusStepper.processedDate, false);
-  const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
-  const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
+  const shippedDate = statusStepper.shippedDate
+    ? formatDateTime(statusStepper.shippedDate, false)
+    : '';
+  const deliveredDate = statusStepper.deliveredDate
+    ? formatDateTime(statusStepper.deliveredDate, false)
+    : '';
   const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
   return {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate,
+    Cancelled: cancelledDate
   };
 };
 
@@ -91,14 +95,23 @@ const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.text} pt={2}>
-      Tracking #: {tracking && <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
+      Tracking #:{' '}
+      {tracking && (
+        <Link
+          href={tracking.url}
+          style={{ color: 'black' }}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {tracking.number}
+        </Link>
+      )}
     </Typography>
   );
 };
 
-const OrderCartSummary = ({ order }) => {
-  return order ? <CartSummary order={order} /> : null;
-};
+const OrderCartSummary = ({ order }) =>
+  order ? <CartSummary order={order} /> : null;
 
 const cancelOrder = (orderRef, dispatch) => {
   dispatch(requestCancelOrder(orderRef));
@@ -119,7 +132,6 @@ const OrderSummary = ({
   tracking,
   orderStatus
 }) => {
-
   const { cardType, last4 } = paymentData;
   const { email } = account.data;
   const { phone } = billingAddress;
@@ -132,7 +144,7 @@ const OrderSummary = ({
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
-          <span>{'Return to order history'}</span>
+          <span>Return to order history</span>
         </RouterLink>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
@@ -143,15 +155,15 @@ const OrderSummary = ({
           was issued back to the payment used for the order.
         </Typography>
       ) : (
-          <Typography className={classes.textFreight}>
-            Your order number: <strong>{orderId}</strong>, placed on{' '}
-            <strong>{createdAt}</strong>
-          </Typography>
-        )}
+        <Typography className={classes.textFreight}>
+          Your order number: <strong>{orderId}</strong>, placed on{' '}
+          <strong>{createdAt}</strong>
+        </Typography>
+      )}
       <br />
-      {orderStatus !== 'declined' && orderStatus !== 'created' &&
+      {orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
-      }
+      )}
 
       {orderStatus === 'placed' ? (
         <CommonButton
@@ -166,11 +178,11 @@ const OrderSummary = ({
             }
           }}
         >
-          {'Cancel Order'}
+          Cancel Order
         </CommonButton>
       ) : (
-          ''
-        )}
+        ''
+      )}
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
@@ -199,12 +211,9 @@ const OrderSummary = ({
               Shipping Information
             </StyledSmallCaps>
             <Address address={shippingAddress} />
-            {tracking &&
-              <TrackingInfo
-                className={classes.text}
-                tracking={tracking}
-              />
-            }
+            {tracking && (
+              <TrackingInfo className={classes.text} tracking={tracking} />
+            )}
           </Box>
         </Grid>
       </Box>
@@ -235,19 +244,16 @@ const OrderDetail = () => {
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
 
-  const orderId =
-    order.orderId.substring(0, 3) +
-    '-' +
-    order.orderId.substring(3, 6) +
-    '-' +
-    order.orderId.substring(6, 10) +
-    '-' +
-    order.orderId.substring(10, 16) +
-    '-' +
-    order.orderId.substring(16);
+  const orderId = `${order.orderId.substring(0, 3)}-${order.orderId.substring(
+    3,
+    6
+  )}-${order.orderId.substring(6, 10)}-${order.orderId.substring(
+    10,
+    16
+  )}-${order.orderId.substring(16)}`;
 
   return (
-    <Box bgcolor="rgba(252, 248, 244, 0.5)">
+    <Box bgcolor="rgba(244,240,238, 0.5)">
       <Container>
         <CssBaseline />
         <Box py={10} className={classes.containingBox}>

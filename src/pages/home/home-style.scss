@@ -11,7 +11,7 @@
     font-family: p22-underground, Helvetica, sans-serif;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 25px 100px;
+    padding: 22px 150px;
   }
   .best-container > div {
     &:nth-of-type(1) {
@@ -30,7 +30,8 @@
         }
       }
     }
-    &:nth-of-type(3) {
+    &:nth-of-type(3),
+    &:nth-of-type(4) {
       .tile {
         border: 1px solid #003833;
         .title {
@@ -40,7 +41,8 @@
     }
   }
   .solutions-container > div {
-    &:nth-of-type(1) {
+    &:nth-of-type(1),
+    &:nth-of-type(2) {
       .tile {
         border: 1px solid #1f396d;
         .title {
@@ -48,8 +50,8 @@
         }
       }
     }
-    &:nth-of-type(2),
-    &:nth-of-type(3) {
+    &:nth-of-type(3),
+    &:nth-of-type(4) {
       .tile {
         border: 1px solid #003833;
         .title {
@@ -59,7 +61,7 @@
     }
   }
   .beige-bg {
-    background-color: rgba(252, 248, 244, 0.5);
+    background-color: rgba(244, 240, 238, 0.5);
   }
   ul {
     padding: 0;
@@ -68,15 +70,15 @@
   }
   h1 {
     font-family: p22-underground, sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     font-style: normal;
     font-stretch: normal;
-    line-height: 1;
-    letter-spacing: 1.5px;
+    line-height: 1.2;
+    letter-spacing: 1.25px;
     color: #231f20;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   button {
     min-width: 282px;
@@ -122,12 +124,12 @@
     text-align: center;
     p {
       font-family: 'Canela Text Web';
-      font-size: 50px;
+      font-size: 44px;
       font-weight: 300;
       font-style: normal;
       font-stretch: normal;
-      line-height: 1.16;
-      letter-spacing: -1px;
+      line-height: 1.23;
+      letter-spacing: -0.88px;
       text-align: center;
       color: #231f20;
     }
@@ -149,8 +151,8 @@
     }
   }
   .welcome {
-    padding-left: 300px;
-    padding-right: 300px;
+    padding-left: 275px;
+    padding-right: 275px;
     p {
       margin: 0 auto;
     }
@@ -167,7 +169,7 @@
       margin-top: 0;
       margin-bottom: 60px;
     }
-    &:before {
+    /* &:before {
       border-right: 1rem solid transparent;
       border-bottom: calc(1rem * 1.732) solid #fff;
       border-left: 1rem solid transparent;
@@ -179,7 +181,7 @@
       top: 0;
       left: calc(50% - 1rem);
       transform: rotate(180deg);
-    }
+    } */
   }
   .section-holder {
     padding-bottom: 0;
@@ -269,25 +271,25 @@
   .tile {
     text-align: left;
     .prod-name-holder {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       p {
         text-align: left;
         margin: 0;
       }
       .title {
         font-family: 'Canela Text Web';
-        font-size: 32px;
+        font-size: 24px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
-        line-height: 1.31;
+        line-height: 1.33;
         letter-spacing: normal;
         text-decoration: none;
       }
     }
     .variant-info {
       font-family: p22-underground, sans-serif;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -295,16 +297,16 @@
       letter-spacing: normal;
       color: #2f2f2f;
       strong {
-        font-size: 30px;
+        font-size: 24px;
         color: #231f20;
         font-weight: normal;
       }
     }
     .pding {
-      padding: 40px 35px 30px;
+      padding: 15px;
     }
     .home-atc {
-      padding: 0 35px 40px;
+      padding: 0 15px 15px;
       button {
         min-width: 0;
       }
@@ -372,7 +374,7 @@
     .section {
       min-height: 0px;
       margin-bottom: 0px;
-      display:flex;
+      display: flex;
       flex-flow: column;
       h1 {
         margin-top: 0;
@@ -484,4 +486,7 @@
   .md-hidden {
     display: none;
   }
+}
+.oos-home {
+  padding: 0 15px 15px !important;
 }
