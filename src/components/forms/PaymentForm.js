@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { get, omit } from 'lodash';
-import { useSnackbar } from 'notistack';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
 import HostedFields from 'braintree-web/hosted-fields';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -52,7 +51,7 @@ const INITIAL_VALUES = {
     address2: '',
     city: '',
     state: '',
-    zipcode: '94539',
+    zipcode: '     ',
     phone: '',
     country: 'US'
   },
