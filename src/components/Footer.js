@@ -389,16 +389,20 @@ const Footer = ({ location, currentUser }) => {
                     platforms, please email us at{' '}
                     <Link
                       style={{
-                        borderBottom: '1px solid #fff',
-                        textDecoration: 'none'
+                        borderBottom: '1px solid #959595',
+                        textDecoration: 'none',
+                        color: '#959595'
                       }}
                       href="mailto:Help@objectivewellness.com"
                     >
                       Help@objectivewellness.com
                     </Link>{' '}
                     or call us at{' '}
-                    <Link href="tel:800-270-5771">800-270-5771</Link> so that we
-                    can provide you access through an alternative method.
+                    <Link href="tel:800-270-5771" style={{ color: '#959595' }}>
+                      800-270-5771
+                    </Link>{' '}
+                    so that we can provide you access through an alternative
+                    method.
                   </Typography>
                 </Grid>
               </div>
@@ -669,6 +673,10 @@ const Footer = ({ location, currentUser }) => {
                     Food and Drug Administration. Any products discussed or
                     advertised are not intended to diagnose, treat, cure or
                     prevent any disease. Testimonial results are not typical.
+                    Customers may have received a gift certificate after
+                    submitting their testimonial. If you are pregnant, nursing,
+                    taking medication, or have a medical condition, consult your
+                    physician before using any dietary supplement.
                   </Typography>
                   <Typography className="disclaimer-text">
                     Objective is committed to making its website accessible for
@@ -685,8 +693,9 @@ const Footer = ({ location, currentUser }) => {
                     <Link
                       style={{
                         cursor: 'pointer',
-                        borderBottom: '1px solid #fff',
-                        textDecoration: 'none'
+                        borderBottom: '1px solid #959595',
+                        textDecoration: 'none',
+                        color: '#959595'
                       }}
                       href="mailto:help@objectivewellness.com"
                     >
