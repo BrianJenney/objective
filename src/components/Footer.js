@@ -615,34 +615,35 @@ const Footer = ({ location, currentUser }) => {
                     <Grid
                       item
                       xs={3}
-                      className="row1 icon-container border-right"
+                      className="row1 border-right"
                       style={{
                         padding: '24px 0px'
                       }}
                     >
                       <div className="uppercase follow-text">Follow Us</div>
-                      <Link
-                        href="https://www.instagram.com/objective_wellness"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <img src={igIcon} alt="instagram" />
-                      </Link>
-
-                      <Link
-                        href="https://www.facebook.com/Objective_Wellness-114299813287253/"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <img src={fbIcon} alt="facebook" />
-                      </Link>
-                      <Link
-                        href="https://www.pinterest.com/objectivewellness"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <img src={pinIcon} alt="pinterest" />
-                      </Link>
+                      <Grid className=" row1 icon-container">
+                        <Link
+                          href="https://www.instagram.com/objective_wellness"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <img src={igIcon} alt="instagram" />
+                        </Link>
+                        <Link
+                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <img src={fbIcon} alt="facebook" />
+                        </Link>
+                        <Link
+                          href="https://www.pinterest.com/objectivewellness"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          <img src={pinIcon} alt="pinterest" />
+                        </Link>
+                      </Grid>
                     </Grid>
                     <Grid item x={9} className="legal">
                       <div style={{ paddingRight: 20 }}>© Objective 2020 </div>
