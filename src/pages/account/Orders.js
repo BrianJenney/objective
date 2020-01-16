@@ -4,20 +4,18 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import ScrollToTop from '../../components/common/ScrollToTop';
-
 
 const columns = [
   {
-    name: '_id',
-    label: 'ORDER ID',
+    name: 'orderNumber',
+    label: 'ORDER NUMBER',
     options: {
       filter: false,
       sort: false,
@@ -92,20 +90,20 @@ const columns = [
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
         const trackings = getTracking(rowData[3], rowData[2]);
-        return trackings ?
-          (trackings.map(tracking =>
-            <>
-              <Link
-                href={tracking.url}
-                style={{ color: 'black' }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {tracking.number}
-              </Link>
-              <br />
-            </>
-          ))
+        return trackings
+          ? trackings.map(tracking => (
+              <>
+                <Link
+                  href={tracking.url}
+                  style={{ color: 'black' }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {tracking.number}
+                </Link>
+                <br />
+              </>
+            ))
           : null;
       }
     }
@@ -125,7 +123,6 @@ options: {
 ];
 
 const AccountOrders = ({ currentUser: { data } }) => {
-
   const dispatch = useDispatch();
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
@@ -145,7 +142,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
   useEffect(() => {
     window.analytics.page('Account Orders');
   }, []);
-
 
   for (let key in data.orders) {
     if (order && data.orders[key]._id === order._id) {
@@ -174,14 +170,13 @@ const AccountOrders = ({ currentUser: { data } }) => {
               isLoading={isLoading}
               moreOptions={{
                 customRowRender: (d, dataIndex, rowIndex) => {
-                  console.log('THIS_DATA', data.orders[dataIndex]);
                   return (
                     <tr className="account-orders-mobile-row">
                       <td>
                         <Grid container direction="row">
                           <Grid item xs>
                             <Typography className="order-meta-title-item">
-                              ORDER ID
+                              ORDER NUMBER
                             </Typography>
                             <Typography className="order-meta-item-info">
                               <Button
@@ -189,7 +184,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/orders/${data.orders[dataIndex]._id}`}
                               >
-                                {data.orders[dataIndex]._id}
+                                {data.orders[dataIndex].orderNumber}
                               </Button>
                             </Typography>
                           </Grid>
@@ -231,7 +226,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/transactions/${data.orders[dataIndex]._id}`}
                               />
-
                             </Typography>
                           </Grid>
                         </Grid>
@@ -242,16 +236,16 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-              <DataTable
-                title={xs ? '' : 'Your Orders'}
-                data={data.orders}
-                columns={columns}
-                isLoading={isLoading}
-              />
-            )}
+            <DataTable
+              title={xs ? '' : 'Your Orders'}
+              data={data.orders}
+              columns={columns}
+              isLoading={isLoading}
+            />
+          )}
         </Grid>
       </Grid>
-    </ScrollToTop >
+    </ScrollToTop>
   );
 };
 

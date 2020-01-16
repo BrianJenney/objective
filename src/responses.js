@@ -13,7 +13,6 @@ export default body => {
   let data = json.data;
   let fields = json.fields;
   let properties = json.properties;
-
   switch (fields.exchange) {
     case 'bootstrap-orchestration':
       handleBootstrapResponse(status, data, fields, properties);
@@ -28,16 +27,16 @@ export default body => {
       break;
 
     case 'order':
-    case 'transaction' :
+    case 'transaction':
       handleOrderResponse(status, data, fields, properties);
       break;
 
     default:
       EventEmitter.emit(fields.routingKey, {
-        'status': status,
-        'data': data,
-        'fields': fields,
-        'properties': properties
+        status: status,
+        data: data,
+        fields: fields,
+        properties: properties
       });
   }
 };
