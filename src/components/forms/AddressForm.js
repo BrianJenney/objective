@@ -365,6 +365,7 @@ const AddressForm = ({
               name="address.zipcode"
               label="Zip Code"
               component={InputField}
+              type="number"
             />
           </div>
         </Grid>
