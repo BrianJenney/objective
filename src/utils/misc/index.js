@@ -151,10 +151,9 @@ export const getShippingAndTracking = order => {
   let shippedDate = '';
   let deliveredDate = '';
   const item = items[0];
-
-  if (item.tracking && shipTracking) {
+  if (item.tracking_list && shipTracking) {
     tracking = getTracking(items, status);
-    const trackingNo = item.tracking.number;
+    const trackingNo = item.tracking_list.number;
     if (shipTracking[trackingNo] && shipTracking[trackingNo].tracking_status) {
       shippedDate = shipTracking[trackingNo].tracking_status.object_created;
       if (shipTracking[trackingNo].tracking_status.status === 'DELIVERED') {
@@ -162,6 +161,7 @@ export const getShippingAndTracking = order => {
       }
     }
   }
+
   const statusStepper = {
     status,
     processedDate,
