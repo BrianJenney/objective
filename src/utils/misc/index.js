@@ -125,17 +125,17 @@ export const getTrackingUrl = (carrier, trackingNo) => {
 
 export const getTracking = (items, status) => {
   let trackings = [];
-  let trackingNo = [];
+  let trackingNo = {};
   items.map(item => {
     if (!item.tracking_list) return null;
     if (['shipped', 'delivered'].includes(status) && item.tracking_list) {
       item.tracking_list.map(({ number, carrier }) => {
-        if (!trackingNo.includes(number)) {
+        if (!trackingNo[number]) {
           trackings.push({
             number: number,
             url: getTrackingUrl(carrier, number)
           });
-          trackingNo.push(number);
+          trackingNo[number] = number;
         }
       });
     }
