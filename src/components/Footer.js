@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme, withStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Link from '@material-ui/core/Link';
-import { Divider, Container, Button } from '@material-ui/core';
+import { Container, Button } from '@material-ui/core';
 
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
@@ -27,7 +27,6 @@ import { requestSignupEmail } from '../modules/account/actions';
 import { withCurrentUser } from '../hoc';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 import Arrow from '../../src/components/common/Icons/Arrow/Arrow.js';
-const arrowImage = require('../../src/assets/images/arrow.png');
 const igIcon = require('../../src/assets/images/instagram.png');
 const fbIcon = require('../../src/assets/images/facebook.png');
 const pinIcon = require('../../src/assets/images/pinterest.png');
@@ -74,18 +73,6 @@ const StyledList = withStyles(() => ({
     letterSpacing: '1px',
     fontSize: 18,
     lineHeight: '2.22'
-  }
-}))(List);
-
-const StyledLegalList = withStyles(() => ({
-  root: {
-    fontFamily: 'p22-underground, sans-serif',
-    fontWeight: 'normal',
-    color: '#ffffff',
-    textTransform: 'uppercase',
-    letterSpacing: '0.83px',
-    fontSize: 10,
-    lineHeight: 'normal'
   }
 }))(List);
 
