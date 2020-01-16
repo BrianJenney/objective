@@ -51,7 +51,7 @@ const INITIAL_VALUES = {
     address2: '',
     city: '',
     state: '',
-    zipcode: '     ',
+    zipcode: '',
     phone: '',
     country: 'US'
   },
@@ -210,10 +210,6 @@ const PaymentForm = ({
                   container: '#bt-cardCvv',
                   placeholder: 'CVV'
                 },
-                postalCode: {
-                  container: '#bt-cardZipCode',
-                  placeholder: 'Zip Code'
-                }
               }
             },
             (hostedFieldsErr, hostedFieldsInstance) => {
@@ -318,7 +314,10 @@ const PaymentForm = ({
       return;
     }
     const cardData = await HostedFieldsClient.tokenize({
-      cardholderName: values.paymentDetails.cardholderName
+      cardholderName: values.paymentDetails.cardholderName,
+      billingAddress: {
+        postalCode: values.billingAddress.zipcode
+      }
     });
     const payload = {
       ...values,
@@ -390,22 +389,17 @@ const PaymentForm = ({
                     <div id="bt-cardNumber" ref={fieldRefs.number} />
                     <div className="btError">Please enter valid card number</div>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <div
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
                     />
                     <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <div id="bt-cardCvv" ref={fieldRefs.cvv} />
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
-                  <Grid item xs={2}>
-                    <div id="bt-cardZipCode" ref={fieldRefs.postalCode} />
-                    <div className="btError">Please enter valid Zip Code</div>
-                  </Grid>
-
                 </Box>
               </Grid>
               {allowFlyMode && (
@@ -505,6 +499,15 @@ const PaymentForm = ({
                 </div>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <div ref={fieldRefs.zipcode}>
+                  <Field
+                    name="billingAddress.zipcode"
+                    label="Zip Code"
+                    component={InputField}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} >
                 <Field
                   name="billingAddress.phone"
                   label="Phone #"
