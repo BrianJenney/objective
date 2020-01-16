@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -17,7 +17,7 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 const columns = [
   {
     name: 'orderNumber',
-    label: 'ORDER ID',
+    label: 'ORDER NUMBER',
     options: {
       filter: false,
       sort: false,
@@ -119,7 +119,6 @@ const columns = [
 ];
 
 const AccountOrders = ({ currentUser: { data } }) => {
-  
   const dispatch = useDispatch();
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
@@ -139,7 +138,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
   useEffect(() => {
     window.analytics.page('Account Orders');
   }, []);
-
 
   for (let key in data.orders) {
     if (order && data.orders[key]._id === order._id) {
