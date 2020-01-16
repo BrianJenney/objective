@@ -324,7 +324,10 @@ const PaymentForm = ({
       return;
     }
     const cardData = await HostedFieldsClient.tokenize({
-      cardholderName: values.paymentDetails.cardholderName
+      cardholderName: values.paymentDetails.cardholderName,
+      billingAddress : {
+        postalCode: values.billingAddress.zipcode
+      }
     });
     const payload = {
       ...values,
@@ -505,6 +508,7 @@ const PaymentForm = ({
                     name="billingAddress.zipcode"
                     label="Zip Code"
                     component={InputField}
+                    type="number"
                   />
                 </div>
               </Grid>
