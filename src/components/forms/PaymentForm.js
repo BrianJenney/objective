@@ -2,21 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { get, omit } from 'lodash';
-import { useSnackbar } from 'notistack';
 import { Formik, Field, Form } from 'formik';
 
 import braintreeClient from 'braintree-web/client';
 import HostedFields from 'braintree-web/hosted-fields';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { COPYFILE_FICLONE_FORCE } from 'constants';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
@@ -29,14 +27,6 @@ import {
   getErrorMessage,
   scrollToRef
 } from '../../utils/misc';
-
-const useStyles = makeStyles(() => ({
-  noBorderField: {
-    '& .MuiOutlinedInput-notchedOutline': {
-      border: 0
-    }
-  }
-}));
 
 const usePrevious = value => {
   const ref = useRef();
@@ -61,7 +51,7 @@ const INITIAL_VALUES = {
     address2: '',
     city: '',
     state: '',
-    zipcode: '',
+    zipcode: '     ',
     phone: '',
     country: 'US'
   },
@@ -125,6 +115,7 @@ const PaymentForm = ({
     number: useRef(null),
     expirationDate: useRef(null),
     cvv: useRef(null),
+    postalCode: useRef(null),
     firstName: useRef(null),
     lastName: useRef(null),
     address1: useRef(null),
@@ -135,7 +126,6 @@ const PaymentForm = ({
   const errRef = useRef(null);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { enqueueSnackbar } = useSnackbar();
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
@@ -219,6 +209,10 @@ const PaymentForm = ({
                 cvv: {
                   container: '#bt-cardCvv',
                   placeholder: 'CVV'
+                },
+                postalCode: {
+                  container: '#bt-cardZipCode',
+                  placeholder: 'Zip Code'
                 }
               }
             },
@@ -393,19 +387,23 @@ const PaymentForm = ({
                   id="bt-payment-holder"
                 >
                   <Grid item xs={6}>
-                    <div id="bt-cardNumber" ref={fieldRefs.number}></div>
+                    <div id="bt-cardNumber" ref={fieldRefs.number} />
                     <div className="btError">Please enter valid card number</div>
                   </Grid>
-                  <Grid item xs={3}>
+                  <Grid item xs={2}>
                     <div
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
-                    ></div>
+                    />
                     <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
-                  <Grid item xs={3}>
-                    <div id="bt-cardCvv" ref={fieldRefs.cvv}></div>
+                  <Grid item xs={2}>
+                    <div id="bt-cardCvv" ref={fieldRefs.cvv} />
                     <div className="btError">Please enter valid CVV</div>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <div id="bt-cardZipCode" ref={fieldRefs.postalCode} />
+                    <div className="btError">Please enter valid Zip Code</div>
                   </Grid>
                 </Box>
               </Grid>
@@ -506,16 +504,6 @@ const PaymentForm = ({
                 </div>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <div ref={fieldRefs.zipcode}>
-                  <Field
-                    name="billingAddress.zipcode"
-                    label="Zip Code"
-                    component={InputField}
-                    autoComplete="postal-code"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12}>
                 <Field
                   name="billingAddress.phone"
                   label="Phone #"
