@@ -124,20 +124,25 @@ export const getTrackingUrl = (carrier, trackingNo) => {
 };
 
 export const getTracking = (items, status) => {
-  let trackingNo = '';
-  let trackingUrl = '';
-  const item = items[0];
-  if (!item.tracking) return null;
-  if (['shipped', 'delivered'].includes(status) && item.tracking) {
-    const { number, carrier } = item.tracking;
-    trackingNo = number;
-    trackingUrl = getTrackingUrl(carrier, number);
-  }
-  return {
-    number: trackingNo,
-    url: trackingUrl
-  };
+  let trackings = [];
+  let trackingNo = [];
+  items.map(item => {
+    if (!item.tracking_list) return null;
+    if (['shipped', 'delivered'].includes(status) && item.tracking_list) {
+      item.tracking_list.map(({ number, carrier }) => {
+        if (!trackingNo.includes(number)) {
+          trackings.push({
+            number: number,
+            url: getTrackingUrl(carrier, number)
+          });
+          trackingNo.push(number);
+        }
+      });
+    }
+  });
+  return trackings;
 };
+
 
 export const getShippingAndTracking = order => {
   const { status, items, shipTracking, createdAt, updatedAt } = order;
@@ -146,9 +151,9 @@ export const getShippingAndTracking = order => {
   let shippedDate = '';
   let deliveredDate = '';
   const item = items[0];
-  if (item.tracking && shipTracking) {
+  if (item.tracking_list && shipTracking) {
     tracking = getTracking(items, status);
-    const trackingNo = item.tracking.number;
+    const trackingNo = item.tracking_list.number;
     if (shipTracking[trackingNo] && shipTracking[trackingNo].tracking_status) {
       shippedDate = shipTracking[trackingNo].tracking_status.object_created;
       if (shipTracking[trackingNo].tracking_status.status === 'DELIVERED') {
@@ -156,6 +161,7 @@ export const getShippingAndTracking = order => {
       }
     }
   }
+
   const statusStepper = {
     status,
     processedDate,
