@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,6 +12,7 @@ import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
+
 const columns = [
   {
     name: 'orderNumber',
@@ -23,6 +23,7 @@ const columns = [
       customBodyRender: (value, tableMeta, updateValue) => {
         return (
           <Button
+            style={{ lineHeight: 0, paddingLeft: '1px' }}
             color="primary"
             component={AdapterLink}
             to={`/orders/${value}`}
@@ -89,32 +90,37 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const tracking = getTracking(rowData[3], rowData[2]);
-        return tracking ? (
-          <Link
-            href={tracking.url}
-            style={{ color: 'black' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tracking.number}
-          </Link>
-        ) : null;
+        const trackings = getTracking(rowData[3], rowData[2]);
+        return trackings ?
+          (trackings.map(tracking =>
+            <>
+              <Link
+                href={tracking.url}
+                style={{ color: 'black' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tracking.number}
+              </Link>
+              <br />
+            </>
+          ))
+          : null;
       }
     }
   }
 
   /*
-  {
-    name: "updatedAt",
-    label: "Updated On",
-    options: {
-      filter: false,
-      sort: false,
-      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
-    },
-  },
-  */
+{
+            name: "updatedAt",
+          label: "Updated On",
+options: {
+            filter: false,
+          sort: false,
+          customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
+        },
+      },
+      */
 ];
 
 const AccountOrders = ({ currentUser: { data } }) => {
@@ -146,7 +152,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
       data.orders[key].status = 'Order Cancelled';
     }
   }
-
   return (
     <ScrollToTop>
       <Grid
@@ -222,6 +227,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/transactions/${data.orders[dataIndex]._id}`}
                               />
+
                             </Typography>
                           </Grid>
                         </Grid>
@@ -232,16 +238,16 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-            <DataTable
-              title={xs ? '' : 'Your Orders'}
-              data={data.orders}
-              columns={columns}
-              isLoading={isLoading}
-            />
-          )}
+              <DataTable
+                title={xs ? '' : 'Your Orders'}
+                data={data.orders}
+                columns={columns}
+                isLoading={isLoading}
+              />
+            )}
         </Grid>
       </Grid>
-    </ScrollToTop>
+    </ScrollToTop >
   );
 };
 
