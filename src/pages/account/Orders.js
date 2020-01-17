@@ -15,6 +15,12 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 
 const columns = [
   {
+    name: '_id',
+    options: {
+      display: 'false'
+    }
+  },
+  {
     name: 'orderNumber',
     label: 'ORDER NUMBER',
     options: {
@@ -25,7 +31,7 @@ const columns = [
           <Button
             color="primary"
             component={AdapterLink}
-            to={`/orders/${value}`}
+            to={`/orders/${tableMeta.rowData[0]}`}
           >
             {value}
           </Button>
@@ -172,7 +178,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                         <Grid container direction="row">
                           <Grid item xs>
                             <Typography className="order-meta-title-item">
-                              ORDER ID
+                              ORDER NUMBER
                             </Typography>
                             <Typography className="order-meta-item-info">
                               <Button
