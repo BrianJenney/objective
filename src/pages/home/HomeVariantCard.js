@@ -57,7 +57,7 @@ export const HomeVariantCard = ({ variant }) => {
   }, [setOpenEmailConfirmation]);
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={3}>
       <Card className="tile" ref={ref}>
         <NavLink
           to={`/products/${slug}`}
@@ -77,8 +77,8 @@ export const HomeVariantCard = ({ variant }) => {
           }}
         >
           <CardMedia
-            style={{ height: 430, width: '100%' }}
-            image={assets.imgs + "&q=50"}
+            style={{ height: 264, width: '100%' }}
+            image={`${assets.imgs}&q=50`}
             className="tile-img"
           />
         </NavLink>
@@ -102,28 +102,26 @@ export const HomeVariantCard = ({ variant }) => {
         >
           <CardContent className="pding">
             <div className="prod-name-holder">
-              <Typography>
-                <Link
-                  to={`/products/${slug}`}
-                  className="title"
-                  onClick={() => {
-                    segmentProductClickEvent({
-                      image_url: `https:${variant.assets.thumbnail}`,
-                      quantity: 1,
-                      sku: variant.sku,
-                      price: Number.parseFloat(variant.effectivePrice),
-                      product_id: variant.id,
-                      variant: variant.name,
-                      name: variant.name,
-                      brand: cart.storeCode,
-                      cart_id: cart._id,
-                      site_location: 'home'
-                    });
-                  }}
-                >
-                  {name}
-                </Link>
-              </Typography>
+              <Link
+                to={`/products/${slug}`}
+                className="title"
+                onClick={() => {
+                  segmentProductClickEvent({
+                    image_url: `https:${variant.assets.thumbnail}`,
+                    quantity: 1,
+                    sku: variant.sku,
+                    price: Number.parseFloat(variant.effectivePrice),
+                    product_id: variant.id,
+                    variant: variant.name,
+                    name: variant.name,
+                    brand: cart.storeCode,
+                    cart_id: cart._id,
+                    site_location: 'home'
+                  });
+                }}
+              >
+                {name}
+              </Link>
             </div>
             <div className="variant-info">
               <div>
@@ -147,7 +145,7 @@ export const HomeVariantCard = ({ variant }) => {
           )}
           {variant.inStock < 200 && (
             <>
-              <CardActions>
+              <CardActions class="oos-home">
                 <OutOfStock
                   onClick={handleOpenOutOfStockDialog}
                   onExited={closeOutOfStockDialog}

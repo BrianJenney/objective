@@ -2,14 +2,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { fonts } from '../../components/Theme/fonts';
 import { SvgIcon } from '@material-ui/core';
+import { fonts } from '../../components/Theme/fonts';
 
 const { $brandSans, $brandSerif, body } = fonts;
 
 export const StyledBackground = withStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(252, 248, 244, 0.5)',
+    backgroundColor: 'rgba(244,240,238, 0.5)',
     padding: '90px 0px',
     [theme.breakpoints.down('xs')]: {
       padding: '0px',
@@ -27,7 +27,7 @@ export const StyledContainerBackground = withStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       padding: '59px 36px',
       height: 'auto',
-      width: 'auto',
+      width: 'auto'
     }
   }
 }))(Box);
@@ -54,7 +54,7 @@ export const StyledHeader = withStyles(theme => ({
       letterSpacing: 'normal',
       color: '#231f20',
       paddingBottom: 7,
-      paddingTop: 0,
+      paddingTop: 0
     }
   }
 }))(Typography);
@@ -107,7 +107,7 @@ export const StyledParagraph1 = withStyles(theme => ({
       color: '#231f20',
       margin: 0,
       padding: '0px 20px 19px 20px',
-      margin: '0px 20px',
+      margin: '0px 20px'
     }
   }
 }))(Typography);
@@ -158,7 +158,7 @@ export const StyledPhoneNumber = withStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: 'normal',
       color: '#231f20',
-      paddingBottom: 36,
+      paddingBottom: 36
     }
   }
 }))(Typography);
@@ -181,8 +181,7 @@ export const StyledEmail = withStyles(theme => ({
       fontStretch: 'normal',
       lineHeight: 'normal',
       letterSpacing: 'normal',
-      color: '#231f20',
+      color: '#231f20'
     }
   }
 }))(Typography);
-

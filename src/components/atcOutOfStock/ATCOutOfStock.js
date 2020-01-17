@@ -3,7 +3,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Button } from "../common";
+import { Button } from '../common';
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 import '../../pages/product/overrides.css';
 import '../../pages/product/PDP-style.css';
@@ -22,10 +22,10 @@ const useStyles = makeStyles(theme => ({
     height: 'auto',
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-    padding: '15px 0 !important',
-    fontSize: '14px !important',
-    lineHeight: '1.8 !important',
-    letterSpacing: '1.17px !important',
+    padding: '14px 0 !important',
+    fontSize: '16px !important',
+    lineHeight: '1 !important',
+    letterSpacing: '1.33px !important',
     '&:hover': {
       backgroundColor: theme.palette.common.white
     }
@@ -67,15 +67,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
-    <Button
-      fullWidth
-      onClick={onClick}
-      disabled={variantSku === null}
-      className={btnStyle ? btnStyle : "atc-button"}
-    >
-      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
-    </Button>
-  );
+  <Button
+    fullWidth
+    onClick={onClick}
+    disabled={variantSku === null}
+    className={btnStyle ? btnStyle : 'atc-button'}
+  >
+    {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+  </Button>
+);
 
 export const ATCPDP = ({
   onClick,
@@ -84,15 +84,15 @@ export const ATCPDP = ({
   ATCAdding,
   btnStyle
 }) => (
-    <Button
-      fullWidth
-      onClick={onClick}
-      disabled={variantSku === null}
-      className={btnStyle}
-    >
-      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
-    </Button>
-  );
+  <Button
+    fullWidth
+    onClick={onClick}
+    disabled={variantSku === null}
+    className={btnStyle}
+  >
+    {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+  </Button>
+);
 
 export const OutOfStockPDP = ({
   onClick,
