@@ -95,6 +95,7 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
+<<<<<<< HEAD
         const trackings = getTracking(rowData[3], rowData[2]);
         return trackings
           ? trackings.map(tracking => (
@@ -111,6 +112,19 @@ const columns = [
               </>
             ))
           : null;
+=======
+        const tracking = getTracking(rowData[4], rowData[3]);
+        return tracking ? (
+          <Link
+            href={tracking.url}
+            style={{ color: 'black' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tracking.number}
+          </Link>
+        ) : null;
+>>>>>>> DC-771-order-number
       }
     }
   }
