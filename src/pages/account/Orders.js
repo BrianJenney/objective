@@ -12,7 +12,6 @@ import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
-
 const columns = [
   {
     name: '_id',
@@ -96,22 +95,17 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const trackings = getTracking(rowData[3], rowData[2]);
-        return trackings ?
-          (trackings.map(tracking =>
-            <>
-              <Link
-                href={tracking.url}
-                style={{ color: 'black' }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {tracking.number}
-              </Link>
-              <br />
-            </>
-          ))
-          : null;
+        const tracking = getTracking(rowData[4], rowData[3]);
+        return tracking ? (
+          <Link
+            href={tracking.url}
+            style={{ color: 'black' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tracking.number}
+          </Link>
+        ) : null;
       }
     }
   }
@@ -233,7 +227,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/transactions/${data.orders[dataIndex]._id}`}
                               />
-
                             </Typography>
                           </Grid>
                         </Grid>
@@ -244,16 +237,16 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-              <DataTable
-                title={xs ? '' : 'Your Orders'}
-                data={data.orders}
-                columns={columns}
-                isLoading={isLoading}
-              />
-            )}
+            <DataTable
+              title={xs ? '' : 'Your Orders'}
+              data={data.orders}
+              columns={columns}
+              isLoading={isLoading}
+            />
+          )}
         </Grid>
       </Grid>
-    </ScrollToTop >
+    </ScrollToTop>
   );
 };
 
