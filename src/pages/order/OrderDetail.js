@@ -235,17 +235,6 @@ const OrderDetail = () => {
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
 
-  const orderId =
-    order.orderId.substring(0, 3) +
-    '-' +
-    order.orderId.substring(3, 6) +
-    '-' +
-    order.orderId.substring(6, 10) +
-    '-' +
-    order.orderId.substring(10, 16) +
-    '-' +
-    order.orderId.substring(16);
-
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
@@ -255,7 +244,7 @@ const OrderDetail = () => {
             <Grid item xs={mainWidth}>
               <OrderSummary
                 account={account}
-                orderId={orderId}
+                orderId={order.orderNumber}
                 orderRef={order._id}
                 createdAt={formatDateTime(order.createdAt, false)}
                 shippingAddress={order.shippingAddress}

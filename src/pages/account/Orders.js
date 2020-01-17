@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
 const columns = [
   {
-    name: '_id',
-    label: 'ORDER ID',
+    name: 'orderNumber',
+    label: 'ORDER NUMBER',
     options: {
       filter: false,
       sort: false,
@@ -119,7 +118,6 @@ const columns = [
 ];
 
 const AccountOrders = ({ currentUser: { data } }) => {
-  
   const dispatch = useDispatch();
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
@@ -139,7 +137,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
   useEffect(() => {
     window.analytics.page('Account Orders');
   }, []);
-
 
   for (let key in data.orders) {
     if (order && data.orders[key]._id === order._id) {
@@ -169,7 +166,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
               isLoading={isLoading}
               moreOptions={{
                 customRowRender: (d, dataIndex, rowIndex) => {
-                  console.log('THIS_DATA', data.orders[dataIndex]);
                   return (
                     <tr className="account-orders-mobile-row">
                       <td>
@@ -184,7 +180,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/orders/${data.orders[dataIndex]._id}`}
                               >
-                                {data.orders[dataIndex]._id}
+                                {data.orders[dataIndex].orderNumber}
                               </Button>
                             </Typography>
                           </Grid>
