@@ -95,17 +95,22 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const tracking = getTracking(rowData[4], rowData[3]);
-        return tracking ? (
-          <Link
-            href={tracking.url}
-            style={{ color: 'black' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tracking.number}
-          </Link>
-        ) : null;
+        const trackings = getTracking(rowData[4], rowData[3]);
+        return trackings ?
+          (trackings.map(tracking =>
+            <>
+              <Link
+                href={tracking.url}
+                style={{ color: 'black' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tracking.number}
+              </Link>
+              <br />
+            </>
+          ))
+          : null;
       }
     }
   }
@@ -237,13 +242,13 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-            <DataTable
-              title={xs ? '' : 'Your Orders'}
-              data={data.orders}
-              columns={columns}
-              isLoading={isLoading}
-            />
-          )}
+              <DataTable
+                title={xs ? '' : 'Your Orders'}
+                data={data.orders}
+                columns={columns}
+                isLoading={isLoading}
+              />
+            )}
         </Grid>
       </Grid>
     </ScrollToTop>
