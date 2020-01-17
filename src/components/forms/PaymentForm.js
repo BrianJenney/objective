@@ -51,7 +51,7 @@ const INITIAL_VALUES = {
     address2: '',
     city: '',
     state: '',
-    zipcode: '     ',
+    zipcode: '',
     phone: '',
     country: 'US'
   },
@@ -210,10 +210,6 @@ const PaymentForm = ({
                   container: '#bt-cardCvv',
                   placeholder: 'CVV'
                 },
-                postalCode: {
-                  container: '#bt-cardZipCode',
-                  placeholder: 'Zip Code'
-                }
               }
             },
             (hostedFieldsErr, hostedFieldsInstance) => {
@@ -319,7 +315,7 @@ const PaymentForm = ({
     }
     const cardData = await HostedFieldsClient.tokenize({
       cardholderName: values.paymentDetails.cardholderName,
-      billingAddress : {
+      billingAddress: {
         postalCode: values.billingAddress.zipcode
       }
     });
@@ -393,22 +389,17 @@ const PaymentForm = ({
                     <div id="bt-cardNumber" ref={fieldRefs.number} />
                     <div className="btError">Please enter valid card number</div>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <div
                       id="bt-cardExpiration"
                       ref={fieldRefs.expirationDate}
                     />
                     <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <div id="bt-cardCvv" ref={fieldRefs.cvv} />
                     <div className="btError">Please enter valid CVV</div>
                   </Grid>
-                  <Grid item xs={2}>
-                    <div id="bt-cardZipCode" ref={fieldRefs.postalCode} />
-                    <div className="btError">Please enter valid Zip Code</div>
-                  </Grid>
-
                 </Box>
               </Grid>
               {allowFlyMode && (
