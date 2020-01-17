@@ -14,6 +14,12 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 
 const columns = [
   {
+    name: '_id',
+    options: {
+      display: 'false'
+    }
+  },
+  {
     name: 'orderNumber',
     label: 'ORDER NUMBER',
     options: {
@@ -25,7 +31,7 @@ const columns = [
             style={{ lineHeight: 0, paddingLeft: '1px' }}
             color="primary"
             component={AdapterLink}
-            to={`/orders/${value}`}
+            to={`/orders/${tableMeta.rowData[0]}`}
           >
             {value}
           </Button>
