@@ -17,7 +17,13 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 const columns = [
   {
     name: '_id',
-    label: 'ORDER ID',
+    options: {
+      display: 'false'
+    }
+  },
+  {
+    name: 'orderNumber',
+    label: 'ORDER NUMBER',
     options: {
       filter: false,
       sort: false,
@@ -27,7 +33,7 @@ const columns = [
             style={{ lineHeight: 0, paddingLeft: '1px' }}
             color="primary"
             component={AdapterLink}
-            to={`/orders/${value}`}
+            to={`/orders/${tableMeta.rowData[0]}`}
           >
             {value}
           </Button>
@@ -91,7 +97,7 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const trackings = getTracking(rowData[3], rowData[2]);
+        const trackings = getTracking(rowData[4], rowData[3]);
         return trackings ?
           (trackings.map(tracking =>
             <>
@@ -189,7 +195,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                                 component={AdapterLink}
                                 to={`/orders/${data.orders[dataIndex]._id}`}
                               >
-                                {data.orders[dataIndex]._id}
+                                {data.orders[dataIndex].orderNumber}
                               </Button>
                             </Typography>
                           </Grid>
