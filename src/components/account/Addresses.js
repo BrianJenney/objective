@@ -49,12 +49,7 @@ const AccountAddresses = ({
       setFormModeEnabled(false);
     }
 
-    if (selectedIndex < 0) {
-      const defaultIndex = addressesData.findIndex(
-        address => address.isDefault
-      );
-      setSelectedIndex(defaultIndex);
-    }
+    setSelectedIndex(addressesData.findIndex(address => address.isDefault));
   }, [currentUser.data.addressBook]);
 
   useEffect(() => {
@@ -221,55 +216,109 @@ const AccountAddresses = ({
           <Box mx="-8px" my="-8px">
             <Grid container>
               {addressBook.map((addressEntity, index) => (
-                <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                  <Box
-                    display="flex"
-                    alignItems="flex-start"
-                    m={1}
-                    px={4}
-                    py={3}
-                    border="2px solid #979797"
-                  >
-                    {selectionEnabled && (
-                      <Box ml="-17px" mt="-9px">
-                        <Radio
-                          name="address-selector"
-                          style={{ color: '#231f20' }}
-                          value={index.toString()}
-                          onChange={handleSelect}
-                          checked={selectedIndex === index}
+                addressEntity.isDefault ? (
+                  <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      m={1}
+                      px={4}
+                      py={3}
+                      border="2px solid #979797"
+                    >
+                      {selectionEnabled && (
+                        <Box ml="-17px" mt="-9px">
+                          <Radio
+                            name="address-selector"
+                            style={{ color: '#231f20' }}
+                            value={index.toString()}
+                            onChange={handleSelect}
+                            checked={selectedIndex === index}
+                          />
+                        </Box>
+                      )}
+                      <Box
+                        maxWidth={
+                          selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
+                        }
+                      >
+                        <EditablePanel
+                          title=""
+                          defaultValues={addressEntity}
+                          Summary={AddressSummary}
+                          onEdit={() => {
+                            setIsEditing(true);
+                            setFormModeEnabled(true);
+                            setEditedIndex(index);
+                          }}
+                          onRemove={
+                            addressEntity.isDefault
+                              ? undefined
+                              : () => deleteAddress(index)
+                          }
+                          onSetDefault={
+                            addressEntity.isDefault
+                              ? undefined
+                              : () => setDefaultAddress(index)
+                          }
                         />
                       </Box>
-                    )}
-                    <Box
-                      maxWidth={
-                        selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
-                      }
-                    >
-                      <EditablePanel
-                        title=""
-                        defaultValues={addressEntity}
-                        Summary={AddressSummary}
-                        onEdit={() => {
-                          setIsEditing(true);
-                          setFormModeEnabled(true);
-                          setEditedIndex(index);
-                        }}
-                        onRemove={
-                          addressEntity.isDefault
-                            ? undefined
-                            : () => deleteAddress(index)
-                        }
-                        onSetDefault={
-                          addressEntity.isDefault
-                            ? undefined
-                            : () => setDefaultAddress(index)
-                        }
-                      />
                     </Box>
-                  </Box>
-                </Grid>
+                  </Grid>
+                ) : (null)
               ))}
+                {addressBook.map((addressEntity, index) => (
+                  addressEntity.isDefault === false ? (
+                    <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+                      <Box
+                        display="flex"
+                        alignItems="flex-start"
+                        m={1}
+                        px={4}
+                        py={3}
+                        border="2px solid #979797"
+                      >
+                        {selectionEnabled && (
+                          <Box ml="-17px" mt="-9px">
+                            <Radio
+                              name="address-selector"
+                              style={{ color: '#231f20' }}
+                              value={index.toString()}
+                              onChange={handleSelect}
+                              checked={selectedIndex === index}
+                            />
+                          </Box>
+                        )}
+                        <Box
+                          maxWidth={
+                            selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
+                          }
+                        >
+                          <EditablePanel
+                            title=""
+                            defaultValues={addressEntity}
+                            Summary={AddressSummary}
+                            onEdit={() => {
+                              setIsEditing(true);
+                              setFormModeEnabled(true);
+                              setEditedIndex(index);
+                            }}
+                            onRemove={
+                              addressEntity.isDefault
+                                ? undefined
+                                : () => deleteAddress(index)
+                            }
+                            onSetDefault={
+                              addressEntity.isDefault
+                                ? undefined
+                                : () => setDefaultAddress(index)
+                            }
+                          />
+                        </Box>
+                      </Box>
+                    </Grid>
+                  ) : (null)
+                ))}
             </Grid>
           </Box>
           <Box
