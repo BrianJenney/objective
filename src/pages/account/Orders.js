@@ -96,16 +96,21 @@ const columns = [
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
         const tracking = getTracking(rowData[4], rowData[3]);
-        return tracking ? (
-          <Link
-            href={tracking.url}
-            style={{ color: 'black' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tracking.number}
-          </Link>
-        ) : null;
+        return trackings
+          ? trackings.map(tracking => (
+              <>
+                <Link
+                  href={tracking.url}
+                  style={{ color: 'black' }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {tracking.number}
+                </Link>
+                <br />
+              </>
+            ))
+          : null;
       }
     }
   }
@@ -128,7 +133,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
-
+  console.log(data.orders);
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
