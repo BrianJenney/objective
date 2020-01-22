@@ -27,6 +27,7 @@ const columns = [
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
+        console.log(tableMeta.rowData);
         return (
           <Button
             color="primary"
