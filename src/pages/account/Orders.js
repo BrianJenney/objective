@@ -95,7 +95,7 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const tracking = getTracking(rowData[4], rowData[3]);
+        const trackings = getTracking(rowData[4], rowData[3]);
         return trackings
           ? trackings.map(tracking => (
               <>
