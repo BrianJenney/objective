@@ -27,7 +27,6 @@ const columns = [
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        console.log(tableMeta.rowData);
         return (
           <Button
             color="primary"
@@ -96,7 +95,7 @@ const columns = [
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
-        const trackings = []; //getTracking(rowData[4], rowData[3]);
+        const trackings = getTracking(rowData[4], rowData[3]);
         return trackings
           ? trackings.map(tracking => (
               <>
@@ -134,7 +133,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
-  console.log(data.orders);
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
