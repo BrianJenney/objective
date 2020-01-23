@@ -157,12 +157,23 @@
     height: 50px;
     margin-bottom: 8px;
     td,
-    td a,
+    td a, 
     td p {
       font-family: p22-underground, sans-serif;
       font-size: 18px !important;
       text-transform: capitalize;
-    }
+      @media (max-width: 959.95px) {
+        // display: inline-flex;
+        line-height: inherit;
+        min-width: 50%;
+      };      
+    } 
+    td:last-child {
+      display: block;
+       @media (max-width: 959.95px) {
+        display: contents
+      };      
+    } 
   }
   tfoot {
     display: none;

@@ -89,11 +89,17 @@ const getStatusStepper = statusStepper => {
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-  return (
-    <Typography className={classes.text} pt={2}>
-      Tracking #: {tracking && <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
-    </Typography>
-  );
+  return tracking.map(tracking => {
+    return (
+      <>
+        <Typography className={classes.text} pt={2}>
+          {tracking && <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
+        </Typography>
+      </>
+
+    )
+  }
+  )
 };
 
 const OrderCartSummary = ({ order }) => {
@@ -200,10 +206,15 @@ const OrderSummary = ({
             </StyledSmallCaps>
             <Address address={shippingAddress} />
             {tracking &&
-              <TrackingInfo
-                className={classes.text}
-                tracking={tracking}
-              />
+              <>
+                <Typography className={classes.text} pt={2}>
+                  Tracking #:
+                </Typography>
+                <TrackingInfo
+                  className={classes.text}
+                  tracking={tracking}
+                />
+              </>
             }
           </Box>
         </Grid>
@@ -232,6 +243,7 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
+
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
 
