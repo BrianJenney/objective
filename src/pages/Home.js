@@ -59,7 +59,7 @@ class Home extends Component {
       .getEntry(OBJECTIVE_HOMEPAGE)
       .then(entry => {
         const content = entry.fields;
-
+        // console.log('content', content)
         this.setState({
           ...this.state,
           content: {

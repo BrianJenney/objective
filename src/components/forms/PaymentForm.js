@@ -209,7 +209,7 @@ const PaymentForm = ({
                 cvv: {
                   container: '#bt-cardCvv',
                   placeholder: 'CVV'
-                },
+                }
               }
             },
             (hostedFieldsErr, hostedFieldsInstance) => {
@@ -504,6 +504,8 @@ const PaymentForm = ({
                     name="billingAddress.zipcode"
                     label="Zip Code"
                     component={InputField}
+                    autoComplete="postal-code"
+                    type="number"
                   />
                 </div>
               </Grid>
