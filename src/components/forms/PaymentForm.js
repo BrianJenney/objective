@@ -209,7 +209,7 @@ const PaymentForm = ({
                 cvv: {
                   container: '#bt-cardCvv',
                   placeholder: 'CVV'
-                },
+                }
               }
             },
             (hostedFieldsErr, hostedFieldsInstance) => {

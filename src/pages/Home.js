@@ -60,7 +60,7 @@ class Home extends Component {
       .getEntry(OBJECTIVE_HOMEPAGE)
       .then(entry => {
         const content = entry.fields;
-
+        // console.log('content', content)
         this.setState({
           ...this.state,
           content: {
@@ -107,7 +107,7 @@ class Home extends Component {
           backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
             '//images.ctfassets.net/mj9bpefl6wof/',
             'https://nutranext.imgix.net/'
-              )
+          )
             }?q=50&auto=compress,format")`
         }}
       >

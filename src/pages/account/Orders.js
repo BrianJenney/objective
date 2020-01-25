@@ -117,9 +117,9 @@ const columns = [
 
   /*
 {
-            name: "updatedAt",
+          name: "updatedAt",
           label: "Updated On",
-options: {
+          options: {
             filter: false,
           sort: false,
           customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
@@ -133,7 +133,6 @@ const AccountOrders = ({ currentUser: { data } }) => {
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
-
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
