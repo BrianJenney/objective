@@ -54,7 +54,7 @@
     line-height: 1.67;
     letter-spacing: normal;
     color: #000000;
-    &.tagline {
+    &:nth-of-type(5) {
       font-family: FreightTextProMedium;
       font-size: 28px;
       font-weight: normal;
@@ -63,6 +63,9 @@
       line-height: 1.29;
       letter-spacing: -0.47px;
       color: #231f20;
+    }
+    &:nth-of-type(6) {
+      visibility: hidden; 
     }
   }
   .section1 {
@@ -75,10 +78,21 @@
     position: relative;
     background-position: bottom;
     height: 989px;
+    
     .text {
       max-width: 485px;
       margin: 200px 0;
     }
+    h5 {
+      font-family: FreightTextProMedium;
+      font-size: 28px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      letter-spacing: -0.47px;
+      color: #231f20;
+    }
+    
     .mobile-img {
       display: none;
     }
@@ -239,12 +253,12 @@
     }
     p {
       font-size: 16px;
-      &.tagline {
-        font-size: 26px;
+      &:nth-of-type(5) {
+        font-size: 26px;        
       }
     }
     .section1 {
-      .tagline {
+      :nth-of-type(5) {
         margin-bottom: 0;
       }
     }

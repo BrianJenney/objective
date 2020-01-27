@@ -6,98 +6,120 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Button } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
 import './about/about-styles.scss';
+import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { OBJECTIVE_ABOUTUS } from '../constants/contentfulEntries';
+import { receivedLoginFailure } from '../modules/account/actions';
+
+// Contentful
+const contentful = require('contentful');
+const contentfulClient = contentful.createClient({
+  space: OBJECTIVE_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
+});
+
+const contentfulOptions = {
+  renderNode: {
+    [INLINES.HYPERLINK]: (node, children) => (
+      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+        {children}
+      </Link>
+    ),
+    [BLOCKS.PARAGRAPH]: (node, children) => <p dir="ltr">{children}</p>
+  }
+};
 
 const AboutUs = () => {
+  const { log } = console;
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const [contents, setContents] = useState();
+  // Fetch data from Contentful
+  const fetchData = async () => {
+    const results = [];
+    const response = await contentfulClient.getEntries({
+      content_type: 'aboutUs'
+    });
+    const entries = response.items.forEach(entry => {
+      if (entry.fields) {
+        results.push(entry.fields);
+      }
+    });
+    setContents(...results);
+  };
 
-  return (
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const renderHeroSlider = () => {
+    if (!contents.heroSlider) return <></>;
+
+    let images = contents.heroSlider;
+    let params = '?w=2000&fm=jpg&q=50';
+    if (window.screen.width < 768) {
+      images = contents.heroSliderMobile;
+      params = '?w=450&fm=jpg&q=50';
+    }
+
+    return images.map(image => (
+      <li key={image.sys.id} style={{ listStyleType: 'none' }}>
+        <img src={image.fields.file.url + params} className="hero" />
+      </li>
+    ));
+  };
+  log('response-testing', contents);
+  // const segmentTrackBannerClicked = () => {
+  //   window.analytics.track('Banner Clicked', segmentProperties);
+  // };
+  const renderWelcomeText = () => {
+    if (!contents.welcomeText) return <></>;
+    return contents.welcomeText.content.map(text => (
+      <p>{text.content[0].value}</p>
+    ));
+  };
+
+  const renderAdditionalText = () => {
+    if (!contents.additionalText) return <></>;
+    const allContents = contents.additionalText.content;
+
+    return allContents.map(eachText => (
+      <div>{documentToReactComponents(eachText, contentfulOptions)}</div>
+    ));
+  };
+
+  return contents ? (
     <ScrollToTop>
       <div className="aboutus">
-        {mobile ? (
-          <img
-            src="https://cdn1.stopagingnow.com/objective/aboutus/hero-mobile.png"
-            alt=""
-            className="hero"
-          />
-        ) : (
-          <img
-            src="https://cdn1.stopagingnow.com/objective/aboutus/hero-desktop.png"
-            alt=""
-            className="hero"
-          />
-        )}
+        {renderHeroSlider()}
         <Box py={8} className="mobile-padding">
           <Container className="section1">
             <div className="title">
-              <h1>Our Objective</h1>
+              <h1>{contents.welcomeHeader}</h1>
               <img
                 src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
                 alt=""
                 className="slash"
               />
             </div>
-            <p>
-              Here we are, right with you. In the middle of our
-              circles&mdash;family, friends, neighbors, colleagues and our
-              community. We’re worrying about our parents’ health, constantly
-              concerned about the kids we’re raising. Feeling our own bodies
-              starting to betray us. And we’re not going to take it.
-            </p>
-            <p>
-              Like you, we are parents, sons and daughters, brothers and
-              sisters&mdash;but we are also nutritionists, researchers and
-              innovators who have been formulating and marketing vitamins and
-              minerals for decades for everyone but ourselves, our generation.
-            </p>
-            <p>
-              Until now. We’re taking everything we know and developing
-              science-backed health solutions for us, our families, our
-              friends...and for you and yours.
-            </p>
-            <p>
-              And, frankly, we know a lot. We know to get real results, you need
-              the amounts and forms of ingredients shown to work in clinical
-              studies. Nothing unproven or trendy. No half doses. No pixie dust.
-              Who has time to waste on pixie dust?
-            </p>
-            <p className="tagline">
-              So, we set out to create a wellness brand that takes care of us,
-              the generation who is taking care of everyone else. . .
-            </p>
+            {renderWelcomeText()}
           </Container>
         </Box>
         <Box className="section2 mobile-padding" py={8}>
           <img
             src="https://cdn1.stopagingnow.com/objective/aboutus/beakers-mobile.png"
             className="mobile-img"
-          />
+          />{' '}
+          >
           <Container>
-            <div className="text">
-              <p className="tagline">You see, it starts with you.</p>
-              <p>
-                It is why flight attendants ask the caretaker to put their
-                oxygen mask on first before helping the child. Simple right? The
-                healthier you are, the better and longer you can care for those
-                you love.
-              </p>
-              <p>
-                But we also understand healthy can be confusing and downright
-                overwhelming for those who haven’t spent decades analyzing the
-                quality of raw ingredients or toying with hundreds of versions
-                of formulas to get it right.
-              </p>
-              <p>
-                So, we will give you the facts, what we can do but also what we
-                can’t do. We will cut through all the clutter so you don’t have
-                to&mdash;whether you are an expert label-reader or find
-                supplements and health products daunting.
-              </p>
-            </div>
+            <Box>
+              <div className="text">{renderAdditionalText()}</div>
+            </Box>
             <Link to="/gallery" className="buttonlink mobile-only">
               Shop Better Health
             </Link>
@@ -256,7 +278,9 @@ const AboutUs = () => {
         </Box>
       </div>
     </ScrollToTop>
-  );
+  ) : (
+      <></>
+    );
 };
 
 export default AboutUs;
