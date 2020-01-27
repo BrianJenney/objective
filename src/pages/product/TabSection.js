@@ -78,8 +78,6 @@ export default function PdpTabs({ scrollToTabs }) {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const tabsRef = useRef(null);
-  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77');
-  console.log(product);
 
   useEffect(() => {
     if (product && variants.length && content) {
@@ -115,12 +113,21 @@ export default function PdpTabs({ scrollToTabs }) {
                   className={classes.tabs}
                   style={{ borderLeft: 'none' }}
                 />
-                <Tab
-                  variant="smallHeader"
-                  label="Supplement Facts"
-                  {...a11yProps(1)}
-                  className={classes.tabs}
-                />
+                {product.sku == 'TFPR' ? (
+                  <Tab
+                    variant="smallHeader"
+                    label="Drug Facts"
+                    {...a11yProps(1)}
+                    className={classes.tabs}
+                  />
+                ) : (
+                  <Tab
+                    variant="smallHeader"
+                    label="Supplement Facts"
+                    {...a11yProps(1)}
+                    className={classes.tabs}
+                  />
+                )}
               </Tabs>
             </AppBar>
             <TabPanel
