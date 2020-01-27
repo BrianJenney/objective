@@ -100,7 +100,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     'est_ship_date': order.shippingMethod.deliveryEstimate,
     'item_count': order.items.length,
     'order_date': order.transactions.transactionDate,
-    'order_id': order.orderId,
+    'order_id': order.orderNumber,
     'order_link': 'https://objectivewellness.com/orders/' + order._id,
     'payment_method': 'Credit Card',
     'payment_method_detail': order.paymentData.cardType,
