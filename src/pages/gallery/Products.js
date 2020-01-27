@@ -160,9 +160,9 @@ const Products = () => {
                         <h3>Targeted Solutions</h3>
                         <Divider variant="fullWidth" />
                         <p>
-                          Crafted with ingredients to deliver specific results,
-                          from better sleep to sharper thinking and hormone
-                          help.
+                          Crafted with ingredients aimed to deliver specific
+                          results, from better sleep to sharper thinking and
+                          hormone help.
                         </p>
                       </Grid>
                       <Grid item xs={12} md={7}>
