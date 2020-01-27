@@ -10,7 +10,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 
-
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -60,11 +59,24 @@ class Home extends Component {
       .getEntry(OBJECTIVE_HOMEPAGE)
       .then(entry => {
         const content = entry.fields;
-        // console.log('content', content)
         this.setState({
           ...this.state,
           content: {
             ...content
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    contentfulClient
+      .getEntries({ content_type: 'homepageBestsellers' })
+      .then(entry => {
+        const products = entry.items;
+        this.setState({
+          ...this.state,
+          carousel: {
+            ...products
           }
         });
       })
@@ -107,8 +119,7 @@ class Home extends Component {
           backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
             '//images.ctfassets.net/mj9bpefl6wof/',
             'https://nutranext.imgix.net/'
-          )
-            }?q=50&auto=compress,format")`
+          )}?q=50&auto=compress,format")`
         }}
       >
         <Container className="section-container">
