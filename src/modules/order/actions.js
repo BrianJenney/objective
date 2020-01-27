@@ -42,7 +42,14 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 
   const params = {
     data: { cart },
-    params: { account_jwt, nonceOrToken, merchantAccountId }
+    params: {
+      account_jwt,
+      nonceOrToken,
+      merchantAccountId,
+      ...(localStorageClient.get('clickId') && {
+        clickId: localStorageClient.get('clickId')
+      })
+    }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
@@ -52,7 +59,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
       jwt: account_jwt,
-      'token': localStorageClient.get('olympusToken')
+      'token': localStorageClient.get('olympusToken'),
     },
     payload
   );
