@@ -78,6 +78,8 @@ export default function PdpTabs({ scrollToTabs }) {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const tabsRef = useRef(null);
+  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77');
+  console.log(product);
 
   useEffect(() => {
     if (product && variants.length && content) {
