@@ -61,6 +61,7 @@ const ImportantNotes = ({ data }) => {
 
 export default function SupplementFactsTab() {
   const { content, product } = useContext(ProductContext);
+  console.log(product);
 
   if (!content) {
     return null;
