@@ -72,13 +72,14 @@
     max-width: 785px;
   }
   .section2 {
-    background-image: url("https://cdn1.stopagingnow.com/objective/aboutus/beakers-desktop.png");
-    background-size: cover;
+    .desktop-img {
+      background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     background-position: bottom;
     height: 989px;
-    
+    padding-top: 10px;
+    }
     .text {
       max-width: 485px;
       margin: 200px 0;

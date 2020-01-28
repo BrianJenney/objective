@@ -25,6 +25,20 @@ const contentfulClient = contentful.createClient({
 
 const contentfulOptions = {
   renderNode: {
+    [BLOCKS.EMBEDDED_ASSET]: node => {
+      let params = '?w=825&fm=jpg&q=50';
+
+      if (window.screen.width < 768) {
+        params = '?w=450&fm=jpg&q=50';
+      }
+
+      return (
+        <img
+          src={node.data.target.fields.file.url + params}
+          alt={node.data.target.fields.title}
+        />
+      );
+    },
     [INLINES.HYPERLINK]: (node, children) => (
       <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
         {children}
@@ -87,8 +101,10 @@ const AboutUs = () => {
   const renderAdditionalText = () => {
     if (!contents.additionalText) return <></>;
     const allContents = contents.additionalText.content;
-
-    return allContents.map(eachText => (
+    const allTexts = allContents.filter(
+      ({ nodeType }) => nodeType !== 'embedded-asset-block'
+    );
+    return allTexts.map(eachText => (
       <div>{documentToReactComponents(eachText, contentfulOptions)}</div>
     ));
   };
@@ -111,19 +127,43 @@ const AboutUs = () => {
           </Container>
         </Box>
         <Box className="section2 mobile-padding" py={8}>
-          <img
-            src="https://cdn1.stopagingnow.com/objective/aboutus/beakers-mobile.png"
-            className="mobile-img"
-          />{' '}
-          >
-          <Container>
-            <Box>
-              <div className="text">{renderAdditionalText()}</div>
-            </Box>
-            <Link to="/gallery" className="buttonlink mobile-only">
-              Shop Better Health
-            </Link>
-          </Container>
+          {mobile ? (
+            <>
+              <img
+                src={
+                  contents.additionalText.content[6].data.target.fields.file.url
+                }
+                className="mobile-img"
+              ></img>
+              <Container>
+                <Box>
+                  <div className="text">{renderAdditionalText()}</div>
+                </Box>
+                <Link to="/gallery" className="buttonlink mobile-only">
+                  Shop Better Health
+                </Link>
+              </Container>
+            </>
+          ) : (
+              <div
+                style={{
+                  backgroundImage: `url("${contents.additionalText.content[4].data.target.fields.file.url.replace(
+                    '//images.ctfassets.net/mj9bpefl6wof/',
+                    'https://nutranext.imgix.net/'
+                  )}?q=50&auto=compress,format")`
+                }}
+                className="desktop-img"
+              >
+                <Container>
+                  <Box>
+                    <div className="text">{renderAdditionalText()}</div>
+                  </Box>
+                  <Link to="/gallery" className="buttonlink mobile-only">
+                    Shop Better Health
+                </Link>
+                </Container>
+              </div>
+            )}
         </Box>
         <Box py={8} className="mobile-padding">
           <Container className="section3">
