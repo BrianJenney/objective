@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,6 +20,7 @@ import routes from './routes';
 import EventEmitter from './events';
 
 import { createAnonymousToken } from './utils/token';
+import { getDaysDiff } from './utils/misc';
 
 const jwt = require('jsonwebtoken');
 const localStorageClient = require('store');
@@ -39,8 +40,27 @@ class App extends Component {
       requestCreateCart,
       requestPatchCart,
       requestRemoveCartById,
-      requestMergeCarts
+      requestMergeCarts,
     } = this.props;
+
+    // ImpactRadius, Segment click id logic
+    // Ref: Jira DC-846
+    const oldClickId = localStorageClient.get('clickId');
+    const params = new URLSearchParams(window.location.search);
+    const clickId = params.get('irclickid');
+    if (oldClickId && getDaysDiff(localStorageClient.get('clickIdSetupTime')) > 30) {
+      localStorageClient.remove('clickIdSetupTime');
+      localStorageClient.remove('clickId');
+    }
+    if (clickId !== null) {
+      if (!oldClickId) {
+        localStorageClient.set('clickId', clickId);
+        localStorageClient.set('clickIdSetupTime', new Date());
+      } else if (oldClickId && clickId !== oldClickId) {
+        localStorageClient.set('clickId', clickId);
+        localStorageClient.set('clickIdSetupTime', new Date());
+      }
+    }
 
     requestFetchBootstrap();
 
@@ -113,7 +133,7 @@ const mapDispatchToProps = {
   requestCreateCart,
   requestPatchCart,
   requestRemoveCartById,
-  requestMergeCarts
+  requestMergeCarts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
