@@ -141,14 +141,14 @@ class Home extends Component {
       return null;
     }
 
-    const bestsellers = [
-      '5d8bb76ff5005515a437d4c8',
-      '5ceebfdca686a03bccfa67c0',
-      '5d8bb840f5005515a437d4cb'
-    ];
+    const bestsellers = [];
+
+    this.state.carousel[0].fields.products.map(product => {
+      bestsellers.push(product.fields.sku);
+    });
 
     const bps = this.props.products
-      .filter(product => bestsellers.includes(product.id))
+      .filter(product => bestsellers.includes(product.sku.split('-')[0]))
       .map(product => product);
 
     return (
