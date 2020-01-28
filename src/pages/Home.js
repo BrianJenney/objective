@@ -144,9 +144,14 @@ class Home extends Component {
     const bestsellers = [];
 
     if (this.state.carousel) {
-      this.state.carousel[0].fields.products.map(product => {
-        bestsellers.push(product.fields.sku);
-      });
+      let carousel = this.state.carousel;
+      for (let key in carousel) {
+        if (carousel[key].fields.identifier === 'bestsellers') {
+          carousel[key].fields.products.map(product => {
+            bestsellers.push(product.fields.sku);
+          });
+        }
+      }
     } else {
       return null;
     }
