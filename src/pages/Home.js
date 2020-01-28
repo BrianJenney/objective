@@ -143,9 +143,13 @@ class Home extends Component {
 
     const bestsellers = [];
 
-    this.state.carousel[0].fields.products.map(product => {
-      bestsellers.push(product.fields.sku);
-    });
+    if (this.state.carousel) {
+      this.state.carousel[0].fields.products.map(product => {
+        bestsellers.push(product.fields.sku);
+      });
+    } else {
+      return null;
+    }
 
     const bps = this.props.products
       .filter(product => bestsellers.includes(product.sku.split('-')[0]))
