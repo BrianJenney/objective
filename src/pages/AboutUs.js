@@ -109,6 +109,40 @@ const AboutUs = () => {
     ));
   };
 
+  const renderApproachBlock = () => {
+    if (!contents.approachBlock) return <></>;
+    const { content } = contents.approachBlock;
+    const title = content[0].content[0].value;
+    const subTitle = content[1].content[0].value;
+    const allBlocks = content
+      .slice(2, 5)
+      .map(block => block.data.target.fields.mainContent.content);
+    log('allblocks-testing', allBlocks);
+    return (
+      <>
+        <h1>
+          {title}
+          <br />
+          {subTitle}
+        </h1>
+        <Grid container spacing={10}>
+          {allBlocks.map(block => (
+            <Grid item xs={12} md={4}>
+              <img
+                src={block[0].data.target.fields.file.url}
+                key={block[0].data.target.sys.id}
+                alt=""
+                className="svg"
+              />
+              <h2>{block[1].content[0].value}</h2>
+              <p>{block[2].content[0].value}</p>
+            </Grid>
+          ))}
+        </Grid>
+      </>
+    );
+  };
+
   return contents ? (
     <ScrollToTop>
       <div className="aboutus">
@@ -168,63 +202,7 @@ const AboutUs = () => {
         <Box py={8} className="mobile-padding">
           <Container className="section3">
             <div className="border">
-              <h1>
-                Our Objective approach <br />
-                to better health
-              </h1>
-              <Grid container spacing={10}>
-                <Grid item xs={12} md={4}>
-                  <img
-                    src="https://cdn1.stopagingnow.com/objective/svg/plant_nutrition.svg"
-                    alt=""
-                    className="svg"
-                  />
-                  <h2>
-                    Supplements Straight <br />
-                    from Science
-                  </h2>
-                  <p>
-                    We break down the research and put it at your fingertips. We
-                    tell you what to expect and when. No magic bullets, just
-                    real results. We believe you should know what you’re taking,
-                    where it’s from and why it works.
-                  </p>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <img
-                    src="https://cdn1.stopagingnow.com/objective/svg/2_pills.svg"
-                    alt=""
-                    className="svg"
-                  />
-                  <h2>
-                    A New Perspective on <br />
-                    How to Take Supplements
-                  </h2>
-                  <p>
-                    How you take supplements is just as important as what’s in
-                    them. Sometimes pills work best. Sometimes it’s a powder to
-                    add to your coffee. Sometimes it’s a chocolate mint to help
-                    you sleep.
-                  </p>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <img
-                    src="https://cdn1.stopagingnow.com/objective/svg/journal.svg"
-                    alt=""
-                    className="svg"
-                  />
-                  <h2>
-                    Solutions Beyond <br />
-                    Supplements
-                  </h2>
-                  <p>
-                    Pills (and chocolates and powders) are not the only path to
-                    great health. What we eat and how we exercise, work and play
-                    all play roles. Check out The Journal for tips, recipes and
-                    other ways to make good health easy.
-                  </p>
-                </Grid>
-              </Grid>
+              {renderApproachBlock()}
               <Link to="/gallery" className="buttonlink">
                 Shop Better Health
               </Link>
