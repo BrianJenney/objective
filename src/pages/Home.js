@@ -156,6 +156,7 @@ class Home extends Component {
       return null;
     }
 
+    // TODO figure out a way to maintain indices order
     const bps = this.props.products
       .filter(product => bestsellers.includes(product.sku.split('-')[0]))
       .map(product => product);
@@ -174,14 +175,24 @@ class Home extends Component {
       return null;
     }
 
-    const family = [
-      '5d8ba4f6f5005515a437d4be',
-      '5ce6d310585756469c36e250',
-      '5d8ba8a1f5005515a437d4c2'
-    ];
+    const family = [];
 
+    if (this.state.carousel) {
+      let carousel = this.state.carousel;
+      for (let key in carousel) {
+        if (carousel[key].fields.identifier === 'solutions_whole_family') {
+          carousel[key].fields.products.map(product => {
+            family.push(product.fields.sku);
+          });
+        }
+      }
+    } else {
+      return null;
+    }
+
+    // TODO figure out a way to maintain indices order
     const fps = this.props.products
-      .filter(product => family.includes(product.id))
+      .filter(product => family.includes(product.sku.split('-')[0]))
       .map(product => product);
 
     return (
