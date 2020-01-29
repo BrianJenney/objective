@@ -39,7 +39,11 @@ const contentfulOptions = {
       );
     },
     [INLINES.HYPERLINK]: (node, children) => (
-      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+      <Link
+        to={node.data.uri}
+        className="shopAllLink"
+        onClick={() => window.scrollTo(0, 0)}
+      >
         {children}
       </Link>
     ),
@@ -156,17 +160,32 @@ class Home extends Component {
       return null;
     }
 
-    // TODO figure out a way to maintain indices order
-    const bps = this.props.products
-      .filter(product => bestsellers.includes(product.sku.split('-')[0]))
-      .map(product => product);
+    const bps = this.props.products.filter(product =>
+      bestsellers.includes(product.sku.split('-')[0])
+    );
 
     return (
-      <>
-        {bps.map(variant => (
-          <HomeVariantCard variant={variant} key={variant.id} />
-        ))}
-      </>
+      <div className="home-bestsellers beige-bg">
+        <Container>
+          <Box py={10}>
+            {documentToReactComponents(
+              this.state.content.bestsellers.content[0],
+              contentfulOptions
+            )}
+            <Grid container spacing={3} className="best-container">
+              {bps.map(variant => (
+                <HomeVariantCard variant={variant} key={variant.id} />
+              ))}
+            </Grid>
+            <Box style={{ paddingTop: 90 }}>
+              {documentToReactComponents(
+                this.state.content.bestsellers.content[2],
+                contentfulOptions
+              )}
+            </Box>
+          </Box>
+        </Container>
+      </div>
     );
   }
 
@@ -251,25 +270,7 @@ class Home extends Component {
               <p>{welcomeText}</p>
             </Box>
           </Container>
-          <div className="home-bestsellers beige-bg">
-            <Container>
-              <Box py={10}>
-                <h1>Our Bestsellers</h1>
-                <Grid container spacing={3} className="best-container">
-                  {this.renderBestsellers()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link
-                    to="/gallery"
-                    className="shopAllLink"
-                    onClick={this.navigateToTop.bind(this, '/gallery')}
-                  >
-                    Shop All
-                  </Link>
-                </Box>
-              </Box>
-            </Container>
-          </div>
+          <>{this.renderBestsellers()}</>
           <>{this.renderSections()}</>
           <div className="his-hers-theirs beige-bg">
             <Container>
