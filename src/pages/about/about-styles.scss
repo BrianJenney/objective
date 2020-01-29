@@ -54,7 +54,7 @@
     line-height: 1.67;
     letter-spacing: normal;
     color: #000000;
-    &.tagline {
+    &:nth-of-type(5) {
       font-family: FreightTextProMedium;
       font-size: 28px;
       font-weight: normal;
@@ -64,21 +64,36 @@
       letter-spacing: -0.47px;
       color: #231f20;
     }
+    &:nth-of-type(6) {
+      visibility: hidden; 
+    }
   }
   .section1 {
     max-width: 785px;
   }
   .section2 {
-    background-image: url("https://cdn1.stopagingnow.com/objective/aboutus/beakers-desktop.png");
-    background-size: cover;
+    .desktop-img {
+      background-size: cover;
     background-repeat: no-repeat;
     position: relative;
     background-position: bottom;
     height: 989px;
+    padding-top: 10px;
+    }
     .text {
       max-width: 485px;
       margin: 200px 0;
     }
+    h5 {
+      font-family: FreightTextProMedium;
+      font-size: 28px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      letter-spacing: -0.47px;
+      color: #231f20;
+    }
+    
     .mobile-img {
       display: none;
     }
@@ -175,6 +190,16 @@
         }
       }
     }
+    .textNum0 {
+      font-family: FreightTextProMedium;
+      font-size: 28px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.29;
+      letter-spacing: -0.47px;
+      color: #231f20;
+    }
     h3 {
       font-family: p22-underground, sans-serif;
       font-size: 24px;
@@ -223,6 +248,18 @@
     }
     .mobile-only {
       display: block !important;
+      .textNum1,
+      .textNum2 {
+        font-family: FreightTextProLight;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.67;
+        letter-spacing: normal;
+        color: #231f20;
+        visibility: visible !important;
+      }
     }
     .buttonlink {
       width: 100%;
@@ -239,12 +276,12 @@
     }
     p {
       font-size: 16px;
-      &.tagline {
-        font-size: 26px;
+      &:nth-of-type(5) {
+        font-size: 26px;        
       }
     }
     .section1 {
-      .tagline {
+      :nth-of-type(5) {
         margin-bottom: 0;
       }
     }
