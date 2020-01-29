@@ -209,17 +209,36 @@ class Home extends Component {
       return null;
     }
 
-    // TODO figure out a way to maintain indices order
     const fps = this.props.products
       .filter(product => family.includes(product.sku.split('-')[0]))
       .map(product => product);
 
     return (
-      <>
-        {fps.map(variant => (
-          <HomeVariantCard variant={variant} key={variant.id} />
-        ))}
-      </>
+      <div className="his-hers-theirs beige-bg">
+        <Container>
+          <Box py={10}>
+            {documentToReactComponents(
+              this.state.content.solutionForFamily.content[0],
+              contentfulOptions
+            )}
+            {documentToReactComponents(
+              this.state.content.solutionForFamily.content[1],
+              contentfulOptions
+            )}
+            <Grid container spacing={3} className="solutions-container">
+              {fps.map(variant => (
+                <HomeVariantCard variant={variant} key={variant.id} />
+              ))}
+            </Grid>
+            <Box style={{ paddingTop: 90 }}>
+              {documentToReactComponents(
+                this.state.content.solutionForFamily.content[3],
+                contentfulOptions
+              )}
+            </Box>
+          </Box>
+        </Container>
+      </div>
     );
   }
 
@@ -272,26 +291,7 @@ class Home extends Component {
           </Container>
           <>{this.renderBestsellers()}</>
           <>{this.renderSections()}</>
-          <div className="his-hers-theirs beige-bg">
-            <Container>
-              <Box py={10}>
-                <h1>HIS, HERS & THEIRS</h1>
-                <p>Solutions for the whole family</p>
-                <Grid container spacing={3} className="solutions-container">
-                  {this.renderFamily()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link
-                    to="/gallery"
-                    className="shopAllLink"
-                    onClick={this.navigateToTop.bind(this, '/gallery')}
-                  >
-                    Shop All
-                  </Link>
-                </Box>
-              </Box>
-            </Container>
-          </div>
+          <>{this.renderFamily()}</>
         </div>
       </ScrollToTop>
     );
