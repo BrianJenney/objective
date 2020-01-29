@@ -39,7 +39,11 @@ const contentfulOptions = {
       );
     },
     [INLINES.HYPERLINK]: (node, children) => (
-      <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
+      <Link
+        to={node.data.uri}
+        className="shopAllLink"
+        onClick={() => window.scrollTo(0, 0)}
+      >
         {children}
       </Link>
     ),
@@ -59,11 +63,24 @@ class Home extends Component {
       .getEntry(OBJECTIVE_HOMEPAGE)
       .then(entry => {
         const content = entry.fields;
-        // console.log('content', content)
         this.setState({
           ...this.state,
           content: {
             ...content
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    contentfulClient
+      .getEntries({ content_type: 'homepageBestsellers' })
+      .then(entry => {
+        const products = entry.items;
+        this.setState({
+          ...this.state,
+          carousel: {
+            ...products
           }
         });
       })
@@ -128,24 +145,48 @@ class Home extends Component {
       return null;
     }
 
-    const bestsellers = [
-      '5d8bb76ff5005515a437d4c8',
-      '5ceebfdca686a03bccfa67c0',
-      '5d8bb840f5005515a437d4cb',
-      '5d8ba8a1f5005515a437d4c2'
-    ];
+    const bestsellers = [];
 
-    const bps = this.props.products
-      .filter(product => bestsellers.includes(product.id))
-      .map(product => product);
+    if (this.state.carousel) {
+      let carousel = this.state.carousel;
+      for (let key in carousel) {
+        if (carousel[key].fields.identifier === 'bestsellers') {
+          carousel[key].fields.products.map(product => {
+            bestsellers.push(product.fields.sku);
+          });
+        }
+      }
+    } else {
+      return null;
+    }
+
+    const bps = this.props.products.filter(product =>
+      bestsellers.includes(product.sku.split('-')[0])
+    );
 
     console.log(bps);
     return (
-      <>
-        {bps.map(variant => (
-          <HomeVariantCard variant={variant} key={variant.id} />
-        ))}
-      </>
+      <div className="home-bestsellers beige-bg">
+        <Container>
+          <Box py={10}>
+            {documentToReactComponents(
+              this.state.content.bestsellers.content[0],
+              contentfulOptions
+            )}
+            <Grid container spacing={3} className="best-container">
+              {bps.map(variant => (
+                <HomeVariantCard variant={variant} key={variant.id} />
+              ))}
+            </Grid>
+            <Box style={{ paddingTop: 90 }}>
+              {documentToReactComponents(
+                this.state.content.bestsellers.content[2],
+                contentfulOptions
+              )}
+            </Box>
+          </Box>
+        </Container>
+      </div>
     );
   }
 
@@ -154,23 +195,51 @@ class Home extends Component {
       return null;
     }
 
-    const family = [
-      '5d8ba4f6f5005515a437d4be',
-      '5ceec52ba686a03bccfa67c5',
-      '5ceebfdca686a03bccfa67c0',
-      '5ce6d310585756469c36e250'
-    ];
+    const family = [];
+
+    if (this.state.carousel) {
+      let carousel = this.state.carousel;
+      for (let key in carousel) {
+        if (carousel[key].fields.identifier === 'solutions_whole_family') {
+          carousel[key].fields.products.map(product => {
+            family.push(product.fields.sku);
+          });
+        }
+      }
+    } else {
+      return null;
+    }
 
     const fps = this.props.products
-      .filter(product => family.includes(product.id))
+      .filter(product => family.includes(product.sku.split('-')[0]))
       .map(product => product);
 
     return (
-      <>
-        {fps.map(variant => (
-          <HomeVariantCard variant={variant} key={variant.id} />
-        ))}
-      </>
+      <div className="his-hers-theirs beige-bg">
+        <Container>
+          <Box py={10}>
+            {documentToReactComponents(
+              this.state.content.solutionForFamily.content[0],
+              contentfulOptions
+            )}
+            {documentToReactComponents(
+              this.state.content.solutionForFamily.content[1],
+              contentfulOptions
+            )}
+            <Grid container spacing={3} className="solutions-container">
+              {fps.map(variant => (
+                <HomeVariantCard variant={variant} key={variant.id} />
+              ))}
+            </Grid>
+            <Box style={{ paddingTop: 90 }}>
+              {documentToReactComponents(
+                this.state.content.solutionForFamily.content[3],
+                contentfulOptions
+              )}
+            </Box>
+          </Box>
+        </Container>
+      </div>
     );
   }
 
@@ -221,46 +290,9 @@ class Home extends Component {
               <p>{welcomeText}</p>
             </Box>
           </Container>
-          <div className="home-bestsellers beige-bg">
-            <Container>
-              <Box py={10}>
-                <h1>Our Bestsellers</h1>
-                <Grid container spacing={3} className="best-container">
-                  {this.renderBestsellers()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link
-                    to="/gallery"
-                    className="shopAllLink"
-                    onClick={this.navigateToTop.bind(this, '/gallery')}
-                  >
-                    Shop All
-                  </Link>
-                </Box>
-              </Box>
-            </Container>
-          </div>
+          <>{this.renderBestsellers()}</>
           <>{this.renderSections()}</>
-          <div className="his-hers-theirs beige-bg">
-            <Container>
-              <Box py={10}>
-                <h1>HIS, HERS & THEIRS</h1>
-                <p>Solutions for the whole family</p>
-                <Grid container spacing={3} className="solutions-container">
-                  {this.renderFamily()}
-                </Grid>
-                <Box style={{ paddingTop: 90 }}>
-                  <Link
-                    to="/gallery"
-                    className="shopAllLink"
-                    onClick={this.navigateToTop.bind(this, '/gallery')}
-                  >
-                    Shop All
-                  </Link>
-                </Box>
-              </Box>
-            </Container>
-          </div>
+          <>{this.renderFamily()}</>
         </div>
       </ScrollToTop>
     );
