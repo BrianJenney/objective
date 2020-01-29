@@ -69,6 +69,16 @@ const AboutUs = () => {
     fetchData();
   }, []);
 
+  // Google Optimize
+  const optimize = async () => {
+    await window.dataLayer.push({ event: 'optimize.activate' });
+  };
+  useEffect(() => {
+    if (window.dataLayer) {
+      optimize();
+    }
+  }, [contents]);
+
   const renderHeroSlider = () => {
     if (!contents.heroSlider) return <></>;
 
