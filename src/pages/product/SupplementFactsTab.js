@@ -94,7 +94,6 @@ export default function SupplementFactsTab() {
 
   return (
     <div className="label-info-wrapper">
-      // eslint-disable-next-line prettier/prettier
       {product.sku == 'TFPR' ? <h2>Drug Facts</h2> : <h2>Supplement Facts</h2>}
       <div className="top-block" style={{ borderTop: border2 }}>
         <div className="flex-desktop">
