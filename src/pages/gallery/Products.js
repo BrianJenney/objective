@@ -160,7 +160,7 @@ const Products = () => {
                         <h3>Targeted Solutions</h3>
                         <Divider variant="fullWidth" />
                         <p>
-                          Crafted with ingredients shown to deliver specific
+                          Crafted with ingredients aimed to deliver specific
                           results, from better sleep to sharper thinking and
                           hormone help.
                         </p>
@@ -199,8 +199,8 @@ const Products = () => {
                         <h3>Skin Health</h3>
                         <Divider variant="fullWidth" />
                         <p>
-                          Nourish your skin from within and topically for fewer
-                          wrinkles, even tone and a healthy, radiant glow.
+                          Nourish your skin from within and topically for an
+                          even tone and a healthy, radiant glow.
                         </p>
                       </Grid>
                       <Grid item xs={12} md={7}>
