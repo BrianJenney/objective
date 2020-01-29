@@ -190,6 +190,16 @@
         }
       }
     }
+    .textNum0 {
+      font-family: FreightTextProMedium;
+      font-size: 28px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.29;
+      letter-spacing: -0.47px;
+      color: #231f20;
+    }
     h3 {
       font-family: p22-underground, sans-serif;
       font-size: 24px;
@@ -238,6 +248,18 @@
     }
     .mobile-only {
       display: block !important;
+      .textNum1,
+      .textNum2 {
+        font-family: FreightTextProLight;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.67;
+        letter-spacing: normal;
+        color: #231f20;
+        visibility: visible !important;
+      }
     }
     .buttonlink {
       width: 100%;

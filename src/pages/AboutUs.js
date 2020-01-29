@@ -15,7 +15,6 @@ import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_ABOUTUS } from '../constants/contentfulEntries';
 import { receivedLoginFailure } from '../modules/account/actions';
 
-// Contentful
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
@@ -49,11 +48,10 @@ const contentfulOptions = {
 };
 
 const AboutUs = () => {
-  const { log } = console;
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [contents, setContents] = useState();
-  // Fetch data from Contentful
+
   const fetchData = async () => {
     const results = [];
     const response = await contentfulClient.getEntries({
@@ -87,10 +85,7 @@ const AboutUs = () => {
       </li>
     ));
   };
-  log('response-testing', contents);
-  // const segmentTrackBannerClicked = () => {
-  //   window.analytics.track('Banner Clicked', segmentProperties);
-  // };
+
   const renderWelcomeText = () => {
     if (!contents.welcomeText) return <></>;
     return contents.welcomeText.content.map(text => (
@@ -117,7 +112,6 @@ const AboutUs = () => {
     const allBlocks = content
       .slice(2, 5)
       .map(block => block.data.target.fields.mainContent.content);
-    log('allblocks-testing', allBlocks);
     return (
       <>
         <h1>
@@ -139,6 +133,64 @@ const AboutUs = () => {
             </Grid>
           ))}
         </Grid>
+      </>
+    );
+  };
+
+  const renderSections = () => {
+    if (!contents.aboutUsContent) return <></>;
+    const { content } = contents.aboutUsContent;
+    const title = content[0].content[0].value;
+    const subTitle1 = content[1].content[0].value;
+    const subTitle2 = content[2].content[0].value;
+    const sections = content
+      .slice(3, 5)
+      .map(section => section.data.target.fields.mainContent.content);
+    const allTexts = sections.map(each =>
+      each.filter(({ nodeType }) => nodeType !== 'embedded-asset-block')
+    );
+    const allImgs = sections.map(each =>
+      each.filter(({ nodeType }) => nodeType === 'embedded-asset-block')
+    );
+
+    return (
+      <>
+        <h3>{title}</h3>
+        <h1>
+          {subTitle1} <br />
+          {subTitle2}
+        </h1>
+        {mobile ? (
+          <div className="mobile-only">
+            <img src={allImgs[1][1].data.target.fields.file.url} />
+            {allTexts[0].map((text, key) => (
+              <p className={`textNum${key}`}>{text.content[0].value}</p>
+            ))}
+            <img src={allImgs[0][1].data.target.fields.file.url} />
+            {allTexts[1].map((text, key) => (
+              <p className={`textNum${key}`}>{text.content[0].value}</p>
+            ))}
+          </div>
+        ) : (
+            <div className="hundred xs-hidden">
+              <div className="left fifty">
+                <Container className="container-left">
+                  {allTexts[0].map((text, key) => (
+                    <p className={`textNum${key}`}>{text.content[0].value}</p>
+                  ))}
+                </Container>
+                <img src={allImgs[0][0].data.target.fields.file.url} />
+              </div>
+              <div className="right fifty">
+                <img src={allImgs[1][0].data.target.fields.file.url} />
+                <Container className="container-right">
+                  {allTexts[1].map((text, key) => (
+                    <p className={`textNum${key}`}>{text.content[0].value}</p>
+                  ))}
+                </Container>
+              </div>
+            </div>
+          )}
       </>
     );
   };
@@ -210,76 +262,7 @@ const AboutUs = () => {
           </Container>
         </Box>
         <Box py={8} className="section4 mobile-padding">
-          <h3>A Little More You Should Know...</h3>
-          <h1>
-            The objective take on <br />
-            labeling & manufacturing
-          </h1>
-          <div className="hundred xs-hidden">
-            <div className="left fifty">
-              <Container className="container-left">
-                <p className="tagline">What you see is what you get</p>
-                <p>
-                  The ingredients, amounts and forms you find in the supplement
-                  facts section of our labels are what you’ll find
-                  inside—verified, validated and guaranteed. And we
-                  intentionally designed our labels to make it easy for you to
-                  see what’s inside and what it will do for you—whether you’re
-                  scrutinizing the supplement facts or glancing at the front of
-                  the package.
-                </p>
-              </Container>
-              <img src="https://cdn1.stopagingnow.com/objective/aboutus/ingredients-desktop.png" />
-            </div>
-            <div className="right fifty">
-              <img src="https://cdn1.stopagingnow.com/objective/aboutus/bottle-desktop.png" />
-              <Container className="container-right">
-                <p className="tagline">We play it safe and by the rules</p>
-                <p>
-                  All of our supplements are manufactured in the United States.
-                  We gather the raw ingredients from across the globe, bring
-                  them here, quarantine them, identify them, test them for
-                  purity and potency. Then we test and validate the finished
-                  products all over again.
-                </p>
-                <p>
-                  We work with a handful of manufacturers who meticulously
-                  adhere to the Food and Drug Administration’s (FDA) Current
-                  Good Manufacturing Procedures (cGMP). These facilities are
-                  regularly inspected and certified by the FDA. Frankly, any
-                  supplement you take should be able to say this. If they
-                  don’t—run, don’t walk.
-                </p>
-              </Container>
-            </div>
-          </div>
-          <div className="mobile-only">
-            <img src="https://cdn1.stopagingnow.com/objective/aboutus/bottle-mobile.png" />
-            <p className="tagline">What you see is what you get</p>
-            <p>
-              The ingredients, amounts and forms you find in the supplement
-              facts section of our labels are what you’ll find inside—verified,
-              validated and guaranteed. And we intentionally designed our labels
-              to make it easy for you to see what’s inside and what it will do
-              for you—whether you’re scrutinizing the supplement facts or
-              glancing at the front of the package.
-            </p>
-            <img src="https://cdn1.stopagingnow.com/objective/aboutus/ingredients-mobile.png" />
-            <p className="tagline">We play it safe and by the rules</p>
-            <p>
-              All of our supplements are manufactured in the United States. We
-              gather the raw ingredients from across the globe, bring them here,
-              quarantine them, identify them, test them for purity and potency.
-              Then we test and validate the finished products all over again.
-            </p>
-            <p>
-              We work with a handful of manufacturers who meticulously adhere to
-              the Food and Drug Administration’s (FDA) Current Good
-              Manufacturing Procedures (cGMP). These facilities are regularly
-              inspected and certified by the FDA. Frankly, any supplement you
-              take should be able to say this. If they don’t—run, don’t walk.
-            </p>
-          </div>
+          {renderSections()}
           <Link to="/gallery" className="buttonlink">
             Shop Better Health
           </Link>
