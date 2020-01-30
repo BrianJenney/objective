@@ -1,0 +1,447 @@
+html,
+.pdp-header {
+  font-family: 'Canela Text Web';
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.pdp-header {
+  color: #1f396d;
+  font-size: 54px;
+  margin: 0 0 20px;
+}
+
+.pdp-subtitle {
+  font-family: p22-underground, sans-serif;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.pdp-description {
+  font-family: FreightTextProBook;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.pdp-benefits {
+  margin: 30px 0 10px;
+
+  .benefit {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      width: 78px;
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .text {
+      margin-left: 24px;
+      font-family: 'Canela Text Web';
+      font-size: 20px;
+      line-height: 1.5;
+      letter-spacing: -0.5px;
+      color: #21478c;
+    }
+  }
+}
+
+.pdp-accordion {
+  border-top: 2px solid #cac9c8;
+  border-bottom: 2px solid #cac9c8;
+
+  .MuiExpansionPanel-root {
+    padding: 15px 0;
+
+    &.Mui-expanded {
+      .expansion-panel-title {
+        .plus-icon {
+          display: none;
+        }
+        .close-icon {
+          display: block;
+        }
+      }
+    }
+
+    .expansion-panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .title-text {
+        font-size: 16px;
+        font-weight: 900;
+        line-height: 2;
+        letter-spacing: 1.13px;
+        color: #000000;
+        text-transform: uppercase;
+      }
+      .plus-icon,
+      .close-icon {
+        img {
+          width: auto;
+          height: 12px;
+        }
+      }
+      .plus-icon {
+        display: block;
+      }
+      .close-icon {
+        display: none;
+      }
+    }
+
+    .MuiExpansionPanelSummary-root {
+      min-height: auto;
+    }
+
+    .MuiExpansionPanelDetails-root {
+      padding: 24px 0 0 !important;
+
+      p {
+        margin: 0 0 16px !important;
+        font-family: FreightTextProBook;
+        font-size: 18px;
+        line-height: 1.67;
+        color: #000000;
+      }
+      p:last-child {
+        margin-bottom: 0 !important;
+      }
+      .clinical-results {
+        img {
+          width: 260px;
+          height: auto;
+        }
+      }
+      .ingredients {
+        h5 {
+          text-transform: uppercase;
+          font-size: 16px;
+          margin: 0;
+          line-height: 1.67;
+          color: #000000;
+          font-weight: normal;
+        }
+      }
+      .directions {
+        .summary {
+          margin-bottom: 20px;
+        }
+        .entry {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+
+          .icon {
+            flex: 0 0 37px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+              width: auto;
+              height: 100%;
+            }
+          }
+          .text {
+            margin-left: 22px;
+            font-family: FreightTextProBook;
+            font-size: 24px;
+            color: #1f396d;
+          }
+        }
+      }
+      .faqs {
+        h5 {
+          text-transform: uppercase;
+          font-size: 18px;
+          margin: 0;
+          line-height: 1.67;
+          color: #000000;
+          font-weight: 600;
+        }
+      }
+      .supplement-facts {
+        .ingredients {
+          table {
+            border: 1px solid #003833;
+
+            th,
+            td {
+              padding: 15px;
+              border-right: 1px solid #ccd7d6;
+              border-bottom: 1px solid #ccd7d6;
+              text-align: left;
+
+              &:last-child {
+                border-right: none;
+              }
+            }
+
+            tbody tr:last-child td {
+              border-bottom: none;
+            }
+
+            thead th {
+              font-size: 14px;
+              font-weight: 600;
+              color: #000000;
+            }
+
+            tbody td {
+              font-family: FreightTextProBook;
+              font-size: 16px;
+              line-height: 1.25;
+              color: #000000;
+            }
+          }
+        }
+        .notes {
+          margin-top: 22px;
+
+          li {
+            margin-bottom: 10px;
+            p {
+              font-family: p22-underground, sans-serif;
+              font-size: 14px;
+              color: #000000;
+            }
+          }
+
+          ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+          }
+        }
+        .other-ingredients,
+        .important {
+          h4 {
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 2;
+            letter-spacing: 1.13px;
+            color: #000000;
+            text-transform: uppercase;
+            margin: 0;
+          }
+          ul {
+            padding-left: 0;
+            margin: 5px 0;
+            list-style-type: none;
+
+            li {
+              margin-bottom: 10px;
+              display: flex;
+
+              &:before {
+                display: block;
+                content: '';
+                width: 10px;
+                height: 10px;
+                background-color: #1f396d;
+                margin-right: 12px;
+                margin-top: 5px;
+              }
+            }
+
+            p {
+              font-size: 16px;
+              line-height: 1.25;
+              color: #000000;
+              width: calc(100% - 22px);
+            }
+          }
+        }
+      }
+    }
+  }
+  .MuiExpansionPanel-root:before {
+    background-color: #979797;
+  }
+  .MuiExpansionPanel-root.Mui-expanded {
+    margin: 0;
+  }
+  .MuiExpansionPanel-root.Mui-expanded:before {
+    opacity: 1;
+  }
+  .MuiExpansionPanel-root.Mui-expanded + .MuiExpansionPanel-root {
+    border-top: 1px solid #979797;
+  }
+  .MuiPaper-root {
+    background-color: transparent;
+  }
+}
+
+.pdp-atc-container {
+  background-color: #fff;
+  margin-top: 34px;
+  position: fixed;
+  bottom: 5px;
+  width: 400px;
+  z-index: 1200;
+}
+
+.pdp-restriction-mobile {
+  font-family: p22-underground;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #585858 !important;
+  padding-right: 5px;
+  padding-top: 8px;
+}
+.pdp-info-mobile {
+  position: relative;
+  top: 8px;
+}
+.pdp-restriction {
+  font-family: p22-underground;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #585858 !important;
+  padding: 8px 5px 0 120px;
+}
+.pdp-info-icon {
+  position: relative;
+  top: 8px;
+}
+
+.pdp-product-variant {
+  margin-bottom: 30px;
+}
+
+.pdp-price {
+  font-family: p22-underground, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+  letter-spacing: normal;
+}
+
+.pdp-price-dash {
+  font-size: 30px;
+  color: #979797;
+  margin: 0 10px;
+}
+
+.pdp-price-description {
+  font-family: p22-underground, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #000000;
+}
+.research-sources {
+  margin-bottom: 60px;
+}
+.research-sources h2 {
+  font-family: p22-underground, sans-serif;
+  font-size: 18px !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2.25px;
+  margin-bottom: 22px;
+}
+.research-sources ul {
+  list-style-type: none;
+  padding-left: 0;
+  font-family: FreightTextProBook;
+  font-size: 12px;
+  margin: 0;
+}
+.research-sources ol {
+  padding-left: 0;
+  font-family: FreightTextProBook;
+  font-size: 12px;
+  margin: 0 0 0 12px;
+}
+.research-sources ul li {
+  margin-bottom: 15px;
+}
+
+@media only screen and (min-width: 735.99px) {
+  .research-sources h2 {
+    font-size: 24px !important;
+  }
+  .research-sources ul {
+    font-size: 14px;
+  }
+  .pdp-content {
+    &.MuiCardContent-root {
+      display: flex;
+      flex-direction: column;
+      padding: 0 16px;
+    }
+  }
+  .pdp-subtitle {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+  }
+  .pdp-description {
+    font-size: 18px;
+  }
+  .pdp-product-type {
+    font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .cardTop.rightCol,
+  .cardBottom.rightCol,
+  .facts-table th:first-of-type,
+  .facts-table td:first-of-type {
+    border-left: none !important;
+  }
+  .facts-table th:last-of-type,
+  .facts-table td:last-of-type,
+  .bottom-block .other-ingredients {
+    border-right: none !important;
+  }
+  .mobile-grid-modifications {
+    background-color: #fdfbf9;
+  }
+  .pdp-content {
+    padding: 25px 0 0 !important;
+  }
+  .mobile-padding {
+    padding: 0 16px;
+  }
+  .mobile-padding-small {
+    padding: 0 8px;
+  }
+  .pdp-header {
+    font-size: 36px;
+    margin: 0px 0 5px;
+  }
+  .pdp-subtitle {
+    margin-bottom: 1px;
+    letter-spacing: 0.57px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .pdp-price {
+    font-size: 22px;
+    padding-top: 5px;
+  }
+  .pdp-price-description {
+    font-size: 18px;
+    padding-top: 5px;
+    letter-spacing: 0.64px;
+  }
+}

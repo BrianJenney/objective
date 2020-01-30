@@ -366,7 +366,7 @@
 .image-gallery-thumbnails-wrapper.right {
   display: inline-block;
   vertical-align: top;
-  width: 108px;
+  width: 100px;
 }
 
 @media (max-width: 768px) {
@@ -416,7 +416,7 @@
   .image-gallery-left-nav {
     transform: rotate(90deg);
     top: -25px;
-    left: -70px;
+    left: -61px;
     font-size: 1em;
     padding: 0;
   }
@@ -424,7 +424,7 @@
   .image-gallery-right-nav {
     transform: rotate(90deg);
     top: 100%;
-    left: -70px;
+    left: -61px;
     font-size: 1em;
     padding: 0;
   }
@@ -474,7 +474,7 @@
   display: inline-block;
   border: 4px solid transparent;
   transition: border 0.3s ease-out;
-  width: 100px;
+  width: 86px;
 }
 
 @media (max-width: 768px) {
