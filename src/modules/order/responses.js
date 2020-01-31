@@ -4,6 +4,8 @@ import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
+const localStorageClient = require('store');
+
 export const handleOrderResponse = (status, data, fields, properties) => {
   switch (fields.routingKey) {
     case 'order.request.createorder':
@@ -14,6 +16,13 @@ export const handleOrderResponse = (status, data, fields, properties) => {
         store.dispatch(receivedCreateOrderSuccess(data));
         store.dispatch(requestRemoveCartById(data.cartId));
         store.dispatch(requestCreateCart());
+
+        // ImpactRadius, Segment
+        // Remove clickId/timer on success order
+        if (properties.clickId) {
+          localStorageClient.remove('clickId');
+          localStorageClient.remove('clickIdSetupTime');
+        }
       } else {
         store.dispatch(receivedCreateOrderFailure(data));
       }
