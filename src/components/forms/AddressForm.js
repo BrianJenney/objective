@@ -10,7 +10,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button, AlertPanel } from '../common';
+import { Button, AlertPanel, NavLink } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   getInitialValues,
@@ -19,6 +19,31 @@ import {
 } from '../../utils/misc';
 import { validateAddress } from '../../apis/SmartyStreets';
 import AddressValidation from '../account/AddressValidation';
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: '30px',
+    fontFamily: 'Canela Text Web'
+  },
+  mobileTitle: {
+    fontSize: '24px',
+    fontFamily: 'FreightTextProBook'
+  },
+  subTitle: {
+    textAlign: 'right',
+    fontSize: '18px',
+    fontWeight: 'normal',
+    fontFamily: 'p22-underground, Helvetica, sans-serif',
+    paddingTop: '5px',
+    fontWeight: 600
+  },
+  mobileLogin: {
+    fontFamily: 'P22Underground',
+    fontSize: '14px',
+    fontWeight: 600
+  },
+  mobileBox: {}
+}));
 
 export const FORM_TYPES = {
   ACCOUNT: 'account',
@@ -43,7 +68,8 @@ let INITIAL_VALUES = {
     state: '',
     zipcode: '',
     phone: '',
-    country: 'US'
+    country: 'US',
+    email: ''
   },
   isDefault: false,
   shouldSaveData: true
@@ -55,7 +81,8 @@ const checkedFields = [
   'address1',
   'city',
   'state',
-  'zipcode'
+  'zipcode',
+  'email'
 ];
 const formikFields = [
   'firstName',
@@ -63,7 +90,8 @@ const formikFields = [
   'address1',
   'city',
   'state',
-  'zipcode'
+  'zipcode',
+  'email'
 ];
 const formikValueFieldsMap = {
   firstName: 'address.firstName',
@@ -71,7 +99,8 @@ const formikValueFieldsMap = {
   address1: 'address.address1',
   city: 'address.city',
   state: 'address.state',
-  zipcode: 'address.zipcode'
+  zipcode: 'address.zipcode',
+  email: 'address.email'
 };
 const validateRequiredField = value => {
   if (value) {
@@ -101,9 +130,11 @@ const AddressForm = ({
     address1: useRef(null),
     city: useRef(null),
     state: useRef(null),
-    zipcode: useRef(null)
+    zipcode: useRef(null),
+    email: useRef(null)
   };
   const errRef = useRef(null);
+  const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [initialValues, setInitialValues] = useState(
@@ -113,7 +144,6 @@ const AddressForm = ({
   const [originalAddress, setOriginalAddress] = useState(null);
   const [suggestedAddress, setSuggestedAddress] = useState(null);
   const [formActions, setFormActions] = useState(null);
-
   // Edit form with current input
   if (isEditing && defaultValues) {
     const {
@@ -126,9 +156,10 @@ const AddressForm = ({
       zipcode,
       phone,
       country,
-      isDefault
+      isDefault,
+      email
     } = defaultValues;
-
+    
     INITIAL_VALUES = {
       address: {
         firstName,
@@ -139,7 +170,8 @@ const AddressForm = ({
         state,
         zipcode,
         phone,
-        country
+        country,
+        email
       },
       isDefault,
       shouldSaveData: true
@@ -147,6 +179,10 @@ const AddressForm = ({
   }
   if (!isEditing) {
     INITIAL_VALUES = emptyForm;
+  }
+  //If user is logged in, do not require email
+  if(currentUser.data.account_jwt){
+    delete checkedFields[checkedFields.findIndex((field) => field ==="email")];
   }
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
@@ -205,7 +241,6 @@ const AddressForm = ({
     const fieldErrs = {
       address: {}
     };
-
     Object.keys(formikValueFieldsMap).forEach(function (field) {
       if (!formikValueFieldsMap[field]) {
         fieldErrs[field] = 'This field is invalid';
@@ -274,14 +309,33 @@ const AddressForm = ({
 
   const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
     <Form>
-      <Box
-        component={Typography}
-        color="#231f20"
-        variant="h5"
-        children={topTitle}
-        fontSize={xs ? 24 : 30}
-        mb={xs ? 3 : 4}
-      />
+      <Box display="flex" mb={xs ? 3 : 4} className="justify-content">
+        <Typography
+          color="#231f20"
+          variant="h5"
+          fontSize={xs ? 24 : 30}
+          className={xs ? classes.mobileTitle : classes.title}
+        >
+          {topTitle}
+        </Typography>
+
+        {!currentUser.data.account_jwt && (
+          <>
+            <Box>
+              <Typography
+                variant="body1"
+                className={xs ? classes.mobileLogin : classes.subTitle}
+              >
+                <NavLink
+                  to={`/login${window.location.pathname}`}
+                  children="LOG IN"
+                  underline="always"
+                />
+              </Typography>
+            </Box>
+          </>
+        )}
+      </Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <div ref={errRef}>
@@ -387,6 +441,19 @@ const AddressForm = ({
             autoComplete="tel"
           />
         </Grid>
+        {!currentUser.data.account_jwt && (
+          <Grid item xs={12}>
+            <div ref={fieldRefs.email}>
+            <Field
+              name="address.email"
+              label="Email"
+              component={InputField}
+              type="email"
+              autoComplete="email"
+            />
+            </div>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Field
             name="address.country"
@@ -396,11 +463,21 @@ const AddressForm = ({
             disabled
           />
         </Grid>
-        {allowFlyMode && (
+        {allowFlyMode && currentUser.data.account_jwt && (
           <Grid item xs={12}>
             <Field
               name="shouldSaveData"
               label="Save details in account"
+              component={CheckboxField}
+            />
+          </Grid>
+        )}
+        {allowFlyMode && !currentUser.data.account_jwt && (
+          <Grid item xs={12}>
+            <Field
+              name="address.shouldSubscribe"
+              label="Keep me updated with exclusive offers and product launches"
+              checked
               component={CheckboxField}
             />
           </Grid>

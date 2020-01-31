@@ -76,6 +76,12 @@ const AccountPaymentDetails = ({
   }, []);
 
   useEffect(() => {
+    if(rest.resetFormMode && creditCards.length===0){
+      setFormModeEnabled(true);
+    }
+  }, [rest.resetFormMode]); 
+
+  useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
     const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
     //if there is a default payment method, select it.
@@ -147,6 +153,15 @@ const AccountPaymentDetails = ({
 
       trackSegmentPaymentInfoEnteredEvent({ cart_id: cart._id, payment_method: cardData.details.cardType });
 
+      if(allowFlyMode && !account_jwt){
+        actions.setSubmitting(false);
+        setFormModeEnabled(false);
+
+        return onSubmit({
+          ...payload.newCreditCard,
+          nonce: payload.nonce
+        });
+      }
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
         setFormModeEnabled(false);
