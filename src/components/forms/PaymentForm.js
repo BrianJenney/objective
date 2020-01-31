@@ -368,168 +368,189 @@ const PaymentForm = ({
         )}
         {values.paymentDetails.paymentMethod ===
           PAYMENT_METHODS.CREDIT_CARD && (
-            <>
-              <Grid item xs={12}>
-                <div ref={fieldRefs.cardholderName}>
-                  <Field
-                    name="paymentDetails.cardholderName"
-                    label="Name on Card"
-                    component={InputField}
-                    autoComplete="name"
-                  />
-                </div>
+          <>
+            <Grid item xs={12}>
+              <div ref={fieldRefs.cardholderName}>
+                <Field
+                  name="paymentDetails.cardholderName"
+                  label="Name on Card"
+                  component={InputField}
+                  autoComplete="name"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Box
+                position="relative"
+                className="bt-payment-holder"
+                id="bt-payment-holder"
+              >
+                <Grid item xs={6}>
+                  <div id="bt-cardNumber" ref={fieldRefs.number} />
+                  <div className="btError">Please enter valid card number</div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardExpiration" ref={fieldRefs.expirationDate} />
+                  <div className="btError">Please enter valid Exp. Date</div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div id="bt-cardCvv" ref={fieldRefs.cvv} />
+                  <div className="btError">Please enter valid CVV</div>
+                </Grid>
+              </Box>
+            </Grid>
+            {allowFlyMode && (
+              <Grid item xs={12} style={{ marginTop: '25px' }}>
+                <Field
+                  name="shouldSaveData"
+                  label="Save details in account"
+                  component={CheckboxField}
+                />
               </Grid>
+            )}
+            <Grid item xs={12}>
+              <Box
+                component={Typography}
+                color="#231f20"
+                variant="h5"
+                children="Billing Address"
+                fontSize={xs ? 24 : 30}
+                mb={1}
+              />
+            </Grid>
+            {seedEnabled && (
               <Grid item xs={12}>
-                <Box
-                  position="relative"
-                  className="bt-payment-holder"
-                  id="bt-payment-holder"
-                >
-                  <Grid item xs={6}>
-                    <div id="bt-cardNumber" ref={fieldRefs.number} />
-                    <div className="btError">Please enter valid card number</div>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <div
-                      id="bt-cardExpiration"
-                      ref={fieldRefs.expirationDate}
-                    />
-                    <div className="btError">Please enter valid Exp. Date</div>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <div id="bt-cardCvv" ref={fieldRefs.cvv} />
-                    <div className="btError">Please enter valid CVV</div>
-                  </Grid>
+                <Box display="flex" alignItems="center">
+                  <Checkbox
+                    id="useAddressSeedToggle"
+                    onChange={evt =>
+                      handleUseAddressSeedToggle(evt, values, setValues)
+                    }
+                  />
+                  <Typography
+                    variant="body2"
+                    children={useSeedLabel}
+                    style={{ color: '#231f20' }}
+                  />
                 </Box>
               </Grid>
-              {allowFlyMode && (
-                <Grid item xs={12} style={{ marginTop: '25px' }}>
-                  <Field
-                    name="shouldSaveData"
-                    label="Save details in account"
-                    component={CheckboxField}
-                  />
-                </Grid>
-              )}
-              <Grid item xs={12}>
+            )}
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.firstName}>
+                <Field
+                  name="billingAddress.firstName"
+                  label="First Name"
+                  component={InputField}
+                  autoComplete="given-name"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.lastName}>
+                <Field
+                  name="billingAddress.lastName"
+                  label="Last Name"
+                  component={InputField}
+                  autoComplete="family-name"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div ref={fieldRefs.address1}>
+                <Field
+                  name="billingAddress.address1"
+                  label="Street Address"
+                  component={InputField}
+                  autoComplete="address-line1"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div>
+                <Field
+                  name="billingAddress.address2"
+                  label="Apt. suite, bldg, c/o (optional)"
+                  component={InputField}
+                  autoComplete="address-line2"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div ref={fieldRefs.city}>
+                <Field
+                  name="billingAddress.city"
+                  label="City"
+                  component={InputField}
+                  autoComplete="address-level2"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.state}>
+                <Field
+                  name="billingAddress.state"
+                  label="State"
+                  component={SelectField}
+                  options={STATE_OPTIONS}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div ref={fieldRefs.zipcode}>
+                <Field
+                  name="billingAddress.zipcode"
+                  label="Zip Code"
+                  component={InputField}
+                  autoComplete="postal-code"
+                  type="number"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.phone"
+                label="Phone #"
+                component={InputField}
+                helperText="In case we need to contact you about your order"
+                type="tel"
+                autoComplete="tel"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="billingAddress.country"
+                label="Country"
+                component={SelectField}
+                options={COUNTRY_OPTIONS}
+                disabled
+              />
+            </Grid>
+
+            {!currentUser.data.account_jwt && (
+              <>
                 <Box
                   component={Typography}
                   color="#231f20"
                   variant="h5"
-                  children="Billing Address"
+                  children="Save your information for faster checkout"
                   fontSize={xs ? 24 : 30}
-                  mb={1}
+                  mb={xs ? 3 : 4}
+                  mt={xs ? 3 : 4}
                 />
-              </Grid>
-              {seedEnabled && (
                 <Grid item xs={12}>
-                  <Box display="flex" alignItems="center">
-                    <Checkbox
-                      id="useAddressSeedToggle"
-                      onChange={evt =>
-                        handleUseAddressSeedToggle(evt, values, setValues)
-                      }
-                    />
-                    <Typography
-                      variant="body2"
-                      children={useSeedLabel}
-                      style={{ color: '#231f20' }}
-                    />
-                  </Box>
+                  <Field
+                    name="billingAddress.password"
+                    label="Password"
+                    component={InputField}
+                    helperText="Add a password to easily track your order and check out faster next time"
+                    type="password"
+                    autoComplete="password"
+                  />
                 </Grid>
-              )}
-              <Grid item xs={12} sm={6}>
-                <div ref={fieldRefs.firstName}>
-                  <Field
-                    name="billingAddress.firstName"
-                    label="First Name"
-                    component={InputField}
-                    autoComplete="given-name"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <div ref={fieldRefs.lastName}>
-                  <Field
-                    name="billingAddress.lastName"
-                    label="Last Name"
-                    component={InputField}
-                    autoComplete="family-name"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div ref={fieldRefs.address1}>
-                  <Field
-                    name="billingAddress.address1"
-                    label="Street Address"
-                    component={InputField}
-                    autoComplete="address-line1"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div>
-                  <Field
-                    name="billingAddress.address2"
-                    label="Apt. suite, bldg, c/o (optional)"
-                    component={InputField}
-                    autoComplete="address-line2"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div ref={fieldRefs.city}>
-                  <Field
-                    name="billingAddress.city"
-                    label="City"
-                    component={InputField}
-                    autoComplete="address-level2"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <div ref={fieldRefs.state}>
-                  <Field
-                    name="billingAddress.state"
-                    label="State"
-                    component={SelectField}
-                    options={STATE_OPTIONS}
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <div ref={fieldRefs.zipcode}>
-                  <Field
-                    name="billingAddress.zipcode"
-                    label="Zip Code"
-                    component={InputField}
-                    autoComplete="postal-code"
-                    type="number"
-                  />
-                </div>
-              </Grid>
-              <Grid item xs={12} >
-                <Field
-                  name="billingAddress.phone"
-                  label="Phone #"
-                  component={InputField}
-                  helperText="In case we need to contact you about your order"
-                  type="tel"
-                  autoComplete="tel"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Field
-                  name="billingAddress.country"
-                  label="Country"
-                  component={SelectField}
-                  options={COUNTRY_OPTIONS}
-                  disabled
-                />
-              </Grid>
-            </>
-          )}
+              </>
+            )}
+          </>
+        )}
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
             {onBack && (
