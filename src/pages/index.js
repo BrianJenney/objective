@@ -7,6 +7,7 @@ export { default as GalleryPage } from './Gallery';
 export { default as ProductPage } from './Product';
 export { default as OrderConfirmationPage } from './OrderConfirmation';
 export { default as CheckoutPage } from './Checkout';
+export { default as CheckoutPage2 } from './Checkout2';
 export { default as ForgotPassword } from './password/ForgotPassword';
 export { default as ConfirmPassword } from './password/ConfirmPassword';
 export { default as ResetPassword } from './password/ResetPassword';

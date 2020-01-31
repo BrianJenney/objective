@@ -4,6 +4,11 @@ export const STEPS = [
   'Payment & Billing Address',
   'Review & Order'
 ];
+export const STEPS_V2 = [
+  'Shipping',
+  'Payment & Billing Address',
+  'Review & Order'
+];
 export const STEP_KEYS = [
   'account',
   'shippingAddress',

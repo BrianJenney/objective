@@ -39,10 +39,14 @@ const AccountAddresses = ({
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
-
+  useEffect(() => {
+    if(rest.resetFormMode && addressBook.length===0){
+      setFormModeEnabled(true);
+      setIsEditing(true);
+    }
+  }, [rest.resetFormMode]); 
   useEffect(() => {
     const addressesData = currentUser.data.addressBook || [];
-
     if (addressesData.length === 0) {
       setFormModeEnabled(true);
     } else {
@@ -96,6 +100,13 @@ const AccountAddresses = ({
     let currentIndex = editedIndex;
     // Validate new address against cart_items at Checkout only
     if (formType === 'checkout') {
+      if(!account_jwt){
+        actions.setSubmitting(false);
+        setIsEditing(false);
+        setFormModeEnabled(false);
+        setEditedIndex(-1);
+        return onSubmit(pureValues);
+      }
       const restrictions = new VariantRestrictions(cart.items);
       const restrictionValidations = restrictions.validate(
         values,
@@ -174,9 +185,16 @@ const AccountAddresses = ({
 
     return true;
   };
-
+  
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
+      {currentUser.signupError && currentUser.signupError.errorMessage && (
+        <AlertPanel
+          mb={2}
+          type="error"
+          text={`${currentUser.signupError.errorMessage}`}
+        />
+      )}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}
@@ -185,7 +203,13 @@ const AccountAddresses = ({
           seedEnabled={seedEnabled}
           addressSeed={addressSeed}
           useSeedLabel={useSeedLabel}
-          defaultValues={editedIndex > -1 ? addressBook[editedIndex] : null}
+          defaultValues={
+            editedIndex > -1
+              ? addressBook[editedIndex]
+              : rest.shippingAddressActive
+              ? rest.shippingAddressActive
+              : null
+          }
           onSubmit={handleSave}
           clearPatchAccountError={clearPatchAccountError}
           onBack={() => {

@@ -13,6 +13,7 @@ import {
   AccountPaymentDetailsPage,
   AccountProfilePage,
   CheckoutPage,
+  CheckoutPage2,
   ForgotPassword,
   ConfirmPassword,
   ResetPassword,
@@ -33,7 +34,8 @@ import {
 import {
   LoginToOrderPage,
   LoginToShippingPage,
-  LoginToAccountPage
+  LoginToAccountPage,
+  LoginToCheckoutPage
 } from './pages/Login';
 
 import NewYear from './pages/landingpages/NewYear';
@@ -58,6 +60,18 @@ export default [
     exact: true,
     nonAuth: true,
     component: LoginToShippingPage
+  },
+  {
+    path: '/login/checkout',
+    exact: true,
+    nonAuth: true,
+    component: LoginToCheckoutPage
+  },
+  {
+    path: '/login/checkout2',
+    exact: true,
+    nonAuth: true,
+    component: LoginToCheckoutPage
   },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
@@ -84,6 +98,12 @@ export default [
     exact: true,
     injectCurrentUser: true,
     component: CheckoutPage
+  },
+  {
+    path: '/checkout2',
+    exact: true,
+    injectCurrentUser: true,
+    component: CheckoutPage2
   },
   {
     path: '/account',

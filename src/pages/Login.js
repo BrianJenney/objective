@@ -36,3 +36,9 @@ const LoginToAccount = props => (
   <LoginDialog onExited={props.history.goBack} loginTitle="Log in to your account" {...props} />
 );
 export const LoginToAccountPage = withRouter(LoginToAccount);
+
+const LoginToCheckout = props => (
+  <LoginDialog onExited={props.history.goBack} loginTitle="Log in to checkout" {...props} />
+);
+export const LoginToCheckoutPage = withRouter(LoginToCheckout);
+
