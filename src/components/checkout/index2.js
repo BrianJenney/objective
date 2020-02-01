@@ -284,6 +284,13 @@ const Checkout = ({
     }
   }, [cart.shipping]);
 
+  //Cart is empty, go to Home page
+  useEffect(() => {
+    if (cartCount === 0 && cart._id) {
+      history.push('/');
+    }
+  }, [cart.items]);
+
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
     dispatch(resetOrderState());

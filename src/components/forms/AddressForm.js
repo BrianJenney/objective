@@ -477,7 +477,6 @@ const AddressForm = ({
             <Field
               name="address.shouldSubscribe"
               label="Keep me updated with exclusive offers and product launches"
-              checked
               component={CheckboxField}
             />
           </Grid>
