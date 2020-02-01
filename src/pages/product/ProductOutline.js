@@ -93,7 +93,7 @@ const ProductOutline = ({ scrollToTabs }) => {
     }
   }, [product, variants, prices, content]);
 
-  if (!product) return null;
+  if (!product || !content) return null;
 
   return (
     <Container>
