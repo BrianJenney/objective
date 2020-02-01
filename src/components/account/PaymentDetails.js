@@ -76,10 +76,10 @@ const AccountPaymentDetails = ({
   }, []);
 
   useEffect(() => {
-    if(rest.resetFormMode && creditCards.length===0){
+    if(rest.resetFormMode && creditCards.length===0 && !account_jwt){
       setFormModeEnabled(true);
     }
-  }, [rest.resetFormMode]); 
+  }, [rest]); 
 
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];

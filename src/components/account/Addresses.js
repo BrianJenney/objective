@@ -40,11 +40,11 @@ const AccountAddresses = ({
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
   useEffect(() => {
-    if(rest.resetFormMode && addressBook.length===0){
+    if(rest.resetFormMode && addressBook.length===0 && !formModeEnabled && !account_jwt){
       setFormModeEnabled(true);
       setIsEditing(true);
     }
-  }, [rest.resetFormMode]); 
+  }, [rest]); 
   useEffect(() => {
     const addressesData = currentUser.data.addressBook || [];
     if (addressesData.length === 0) {
