@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { get, omit } from 'lodash';
@@ -16,7 +16,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button, AlertPanel } from '../common';
+import { Button, AlertPanel, NavLink } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   PAYMENT_METHODS,
@@ -69,7 +69,8 @@ const checkedFields = [
   'address1',
   'city',
   'state',
-  'zipcode'
+  'zipcode',
+  'password'
 ];
 const formikFields = [
   'cardholderName',
@@ -78,7 +79,8 @@ const formikFields = [
   'address1',
   'city',
   'state',
-  'zipcode'
+  'zipcode',
+  'password'
 ];
 const formikValueFieldsMap = {
   cardholderName: 'paymentDetails.cardholderName',
@@ -87,12 +89,19 @@ const formikValueFieldsMap = {
   address1: 'billingAddress.address1',
   city: 'billingAddress.city',
   state: 'billingAddress.state',
-  zipcode: 'billingAddress.zipcode'
+  zipcode: 'billingAddress.zipcode',
+  password: 'billingAddress.password'
 };
-const validateRequiredField = value => {
+const validateRequiredField = (value, field = false) => {
+  if (field === 'password') {
+    if (value && value.length && value.length < 6) {
+      return 'Password must be atleast 6 characters';
+    }
+  }
   if (value) {
     return undefined;
   }
+
   return 'This field is required';
 };
 
@@ -121,7 +130,8 @@ const PaymentForm = ({
     address1: useRef(null),
     city: useRef(null),
     state: useRef(null),
-    zipcode: useRef(null)
+    zipcode: useRef(null),
+    password: useRef(null)
   };
   const errRef = useRef(null);
   const theme = useTheme();
@@ -145,6 +155,15 @@ const PaymentForm = ({
       });
     }
   };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = useCallback(
+    event => {
+      event.preventDefault();
+      setPasswordVisible(!passwordVisible);
+    },
+    [passwordVisible, setPasswordVisible]
+  );
+
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(
     currentUser.patchAccountError,
@@ -217,7 +236,7 @@ const PaymentForm = ({
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
               }
-              hostedFieldsInstance.on('blur', function (event) {
+              hostedFieldsInstance.on('blur', function(event) {
                 const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -229,7 +248,7 @@ const PaymentForm = ({
                   field.container.nextElementSibling.style.display = 'block';
                 }
               });
-              hostedFieldsInstance.on('validityChange', function (event) {
+              hostedFieldsInstance.on('validityChange', function(event) {
                 const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
@@ -266,6 +285,13 @@ const PaymentForm = ({
     }
   }, [currentUser.patchAccountSubmitting]);
 
+  if (currentUser.data.account_jwt) {
+    delete checkedFields[
+      checkedFields.findIndex(field => field === 'password')
+    ];
+    delete formikFields[checkedFields.findIndex(field => field === 'password')];
+    delete formikValueFieldsMap['password'];
+  }
   const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
@@ -273,7 +299,7 @@ const PaymentForm = ({
     };
     let isHostedFieldInvalid = false;
     const hostedFieldState = HostedFieldsClient._state;
-    Object.keys(hostedFieldState.fields).forEach(function (field) {
+    Object.keys(hostedFieldState.fields).forEach(function(field) {
       if (!hostedFieldState.fields[field].isValid) {
         const elem = hostedFieldState.fields[field];
         document.getElementById('bt-payment-holder').style.border =
@@ -288,11 +314,13 @@ const PaymentForm = ({
     formikFields.forEach(requiredField => {
       if (requiredField === 'cardholderName') {
         fieldErrors.paymentDetails[requiredField] = validateRequiredField(
-          values.paymentDetails[requiredField]
+          values.paymentDetails[requiredField],
+          requiredField
         );
       } else {
         fieldErrors.billingAddress[requiredField] = validateRequiredField(
-          values.billingAddress[requiredField]
+          values.billingAddress[requiredField],
+          requiredField
         );
       }
     });
@@ -538,14 +566,36 @@ const PaymentForm = ({
                   mt={xs ? 3 : 4}
                 />
                 <Grid item xs={12}>
-                  <Field
-                    name="billingAddress.password"
-                    label="Password"
-                    component={InputField}
-                    helperText="Add a password to easily track your order and check out faster next time"
-                    type="password"
-                    autoComplete="password"
-                  />
+                  <div ref={fieldRefs.password}>
+                    <Field
+                      name="billingAddress.password"
+                      label="Password"
+                      component={InputField}
+                      helperText="Add a password to easily track your order and check out faster next time"
+                      type={passwordVisible ? 'text' : 'password'}
+                      InputProps={{
+                        endAdornment: (
+                          <Box width={1} textAlign="right">
+                            <NavLink
+                              style={{
+                                fontFamily: 'P22-underground',
+                                fontSize: '12px'
+                              }}
+                              type="button"
+                              underline="always"
+                              onClick={event => togglePasswordVisibility(event)}
+                              children={
+                                passwordVisible
+                                  ? 'HIDE PASSWORD'
+                                  : 'SHOW PASSWORD'
+                              }
+                            />
+                          </Box>
+                        )
+                      }}
+                      autoComplete="current-password"
+                    />
+                  </div>
                 </Grid>
               </>
             )}

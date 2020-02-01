@@ -70,7 +70,7 @@ const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const { account_jwt, firstName } = currentUser.data;
   const [promoVisible, setPromoVisible] = useState(true);
