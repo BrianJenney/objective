@@ -53,7 +53,8 @@ const INITIAL_VALUES = {
     state: '',
     zipcode: '',
     phone: '',
-    country: 'US'
+    country: 'US',
+    password: ''
   },
   isDefault: false,
   shouldSaveData: true
@@ -291,6 +292,7 @@ const PaymentForm = ({
     ];
     delete formikFields[checkedFields.findIndex(field => field === 'password')];
     delete formikValueFieldsMap['password'];
+    delete INITIAL_VALUES.billingAddress.password;
   }
   const handleSubmit = async (values, actions) => {
     const fieldErrors = {
