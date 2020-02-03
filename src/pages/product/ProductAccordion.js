@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +14,6 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { Panel } from '../../components/common';
 
 const plusIcon = require('../../assets/images/plus_symbol.svg');
-const closeIcon = require('../../assets/images/close_symbol.svg');
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
@@ -35,6 +34,7 @@ const contentfulOptions = {
 };
 
 const ProductAccordion = ({ content }) => {
+  const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
   const accordionItems = [
     {
       title: 'Clinical Results',
@@ -152,6 +152,13 @@ const ProductAccordion = ({ content }) => {
       )
     }
   ];
+  const onPanelChange = (expanded, panelIndex) => {
+    if (!expanded) {
+      setExpandedPanelIndex(null);
+    } else {
+      setExpandedPanelIndex(panelIndex);
+    }
+  };
 
   return (
     <>
@@ -161,16 +168,15 @@ const ProductAccordion = ({ content }) => {
           title={
             <Box className="expansion-panel-title">
               <Box className="title-text">{accordionItem.title}</Box>
-              <Box className="plus-icon">
+              <Box className="collapse-icon">
                 <img src={plusIcon} alt="" />
-              </Box>
-              <Box className="close-icon">
-                <img src={closeIcon} alt="" />
               </Box>
             </Box>
           }
           collapsible
           hideExpandIcon
+          expanded={expandedPanelIndex === index}
+          onChange={e => onPanelChange(e, index)}
         >
           <Box className={accordionItem.className}>{accordionItem.content}</Box>
         </Panel>

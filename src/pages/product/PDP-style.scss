@@ -58,11 +58,10 @@ html,
 
     &.Mui-expanded {
       .expansion-panel-title {
-        .plus-icon {
-          display: none;
-        }
-        .close-icon {
-          display: block;
+        .collapse-icon {
+          img {
+            transform: rotate(45deg);
+          }
         }
       }
     }
@@ -80,18 +79,11 @@ html,
         color: #000000;
         text-transform: uppercase;
       }
-      .plus-icon,
-      .close-icon {
+      .collapse-icon {
         img {
           width: auto;
           height: 12px;
         }
-      }
-      .plus-icon {
-        display: block;
-      }
-      .close-icon {
-        display: none;
       }
     }
 
@@ -281,15 +273,15 @@ html,
 }
 
 .pdp-atc-container {
-  background-color: #fdfbf9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 34px;
-  position: fixed;
-  bottom: 5px;
-  width: 400px;
-  z-index: 1200;
+  .atc-btn {
+    background-color: #fdfbf9;
+    margin-top: 34px;
+    position: fixed;
+    box-shadow: 0 0 5px 5px #888;
+    bottom: 5px;
+    width: 400px;
+    z-index: 1200;
+  }
 
   .atc-note {
     font-family: p22-underground, sans-serif;

@@ -125,10 +125,12 @@ const ProductDetail = () => {
   const handleWindowScroll = evt => {
     const { scrollTop } = evt.target.scrollingElement;
     if (atcRef.current) {
-      if (scrollTop > 530) {
+      if (scrollTop > 1200 - window.innerHeight) {
         atcRef.current.style.position = 'static';
+        atcRef.current.style.boxShadow = 'none';
       } else {
         atcRef.current.style.position = 'fixed';
+        atcRef.current.style.boxShadow = '0 0 5px 5px #888';
       }
     }
   };
@@ -401,22 +403,31 @@ const ProductDetail = () => {
                     </CardContent>
                     {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
                       <CardActions className={classes.maxWidth}>
-                        <Box className="pdp-atc-container" ref={atcRef}>
-                          <ATC
-                            price={
-                              variantMap.get(selectedVariantSku).effectivePrice
-                            }
-                            maxWidth={classes.maxWidth}
-                            onClick={handleAddToCart}
-                            variantSku={selectedVariantSku}
-                            ATCAdded={ATCAdded}
-                            ATCAdding={ATCAdding}
-                          />
-                          <Box width={0.8}>
-                            <Typography className="atc-note">
-                              Our Objective Promise ensures you’re making a
-                              risk-free purchase
-                            </Typography>
+                        <Box className="pdp-atc-container" width={1}>
+                          <Box className="atc-btn" ref={atcRef}>
+                            <ATC
+                              price={
+                                variantMap.get(selectedVariantSku)
+                                  .effectivePrice
+                              }
+                              maxWidth={classes.maxWidth}
+                              onClick={handleAddToCart}
+                              variantSku={selectedVariantSku}
+                              ATCAdded={ATCAdded}
+                              ATCAdding={ATCAdding}
+                            />
+                          </Box>
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            <Box width={320}>
+                              <Typography className="atc-note">
+                                Our Objective Promise ensures you’re making a
+                                risk-free purchase
+                              </Typography>
+                            </Box>
                           </Box>
                         </Box>
                       </CardActions>
