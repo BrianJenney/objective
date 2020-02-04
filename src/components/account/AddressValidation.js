@@ -93,6 +93,11 @@ const AddressValidation = ({
         ...payload,
         phone: payload.phone ? payload.phone.trim() : ''
       };
+
+      if(origAddress.email){
+        pload.email = origAddress.email
+      }
+
       onSubmit(pload, actions);
     } else if (suggestedAddress) {
       pload = {
@@ -104,6 +109,10 @@ const AddressValidation = ({
         phone: origAddress.phone ? origAddress.phone.trim() : '',
         shouldSaveData: origAddress.shouldSaveData
       };
+      if(origAddress.email){
+        pload.email = origAddress.email
+      }
+      
       onSubmit(pload, actions);
     }
   }, [payload]);
