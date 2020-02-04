@@ -29,6 +29,10 @@ const useStyles = makeStyles(() => ({
     color: '#000',
     textTransform: 'uppercase'
   },
+  keyObjective: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
   keyObjectiveHeading: {
     fontFamily: 'FreightTextProBook',
     fontWeight: 'normal',
@@ -98,17 +102,37 @@ const ProductOutline = ({ scrollToTabs }) => {
   return (
     <Container>
       <div className={classes.root} ref={containerRef}>
-        <Typography className={classes.heading} variant="h4" align="center">
-          Key Objective
-        </Typography>
-        <Box width={0.7}>
-          <Typography
-            className={classes.keyObjectiveHeading}
-            variant="h3"
-            align="center"
-          >
-            {content.keyObjective}
-          </Typography>
+        <Box className={classes.keyObjective}>
+          <Box style={{ flex: '0 0 250px' }}>
+            <img
+              src={content.keyObjectiveImages[0].url}
+              alt=""
+              width="100%"
+              height="auto"
+            />
+          </Box>
+          <Box>
+            <Typography className={classes.heading} variant="h4" align="center">
+              Key Objective
+            </Typography>
+            <Box>
+              <Typography
+                className={classes.keyObjectiveHeading}
+                variant="h3"
+                align="center"
+              >
+                {content.keyObjective}
+              </Typography>
+            </Box>
+          </Box>
+          <Box style={{ flex: '0 0 250px' }}>
+            <img
+              src={content.keyObjectiveImages[1].url}
+              alt=""
+              width="100%"
+              height="auto"
+            />
+          </Box>
         </Box>
         <Typography className={classes.heading} variant="h4" align="center">
           How It Works

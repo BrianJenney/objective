@@ -2,6 +2,7 @@ export { default as If } from './If';
 export { default as AlertPanel } from './AlertPanel';
 export { default as Button } from './Button';
 export { default as Carousel } from './Carousel';
+export { default as Dialog } from './Dialog';
 export { default as Panel } from './Panel';
 export { default as EditablePanel } from './EditablePanel';
 export { default as FormSummarySection } from './FormSummarySection';

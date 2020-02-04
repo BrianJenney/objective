@@ -105,9 +105,25 @@ html,
         margin-bottom: 0 !important;
       }
       .clinical-results {
-        img {
-          width: 260px;
-          height: auto;
+        .contentful-container {
+          img {
+            width: 260px;
+            height: auto;
+          }
+        }
+        .magnifier-container {
+          margin-top: 15px;
+          position: relative;
+          height: 40px;
+
+          button {
+            position: absolute;
+            left: 230px;
+          }
+          img {
+            width: 18px;
+            height: 16px;
+          }
         }
       }
       .ingredients {

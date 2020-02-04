@@ -9,11 +9,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import IconButton from '@material-ui/core/IconButton';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { Panel } from '../../components/common';
+import { Panel, Dialog } from '../../components/common';
 
 const plusIcon = require('../../assets/images/plus_symbol.svg');
+const magnifierIcon = require('../../assets/images/magnifier.svg');
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
@@ -35,13 +37,34 @@ const contentfulOptions = {
 
 const ProductAccordion = ({ content }) => {
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const onPanelChange = (expanded, panelIndex) => {
+    if (!expanded) {
+      setExpandedPanelIndex(null);
+    } else {
+      setExpandedPanelIndex(panelIndex);
+    }
+  };
+  const openClinicalResultsImageModal = () => setImageModalOpen(true);
+  const closeClinicalResultsImageModal = () => setImageModalOpen(false);
   const accordionItems = [
     {
       title: 'Clinical Results',
       className: 'clinical-results',
-      content: documentToReactComponents(
-        content.clinicalResults,
-        contentfulOptions
+      content: (
+        <>
+          <Box className="contentful-container">
+            {documentToReactComponents(
+              content.clinicalResults,
+              contentfulOptions
+            )}
+          </Box>
+          <Box className="magnifier-container">
+            <IconButton onClick={openClinicalResultsImageModal}>
+              <img src={magnifierIcon} alt="" />
+            </IconButton>
+          </Box>
+        </>
       )
     },
     {
@@ -152,13 +175,6 @@ const ProductAccordion = ({ content }) => {
       )
     }
   ];
-  const onPanelChange = (expanded, panelIndex) => {
-    if (!expanded) {
-      setExpandedPanelIndex(null);
-    } else {
-      setExpandedPanelIndex(panelIndex);
-    }
-  };
 
   return (
     <>
@@ -181,6 +197,16 @@ const ProductAccordion = ({ content }) => {
           <Box className={accordionItem.className}>{accordionItem.content}</Box>
         </Panel>
       ))}
+      <Dialog onClose={closeClinicalResultsImageModal} open={imageModalOpen}>
+        <Box mx={4} p={5}>
+          <img
+            src={content.clinicalResults.content[1].data.target.fields.file.url}
+            alt=""
+            width="100%"
+            height="auto"
+          />
+        </Box>
+      </Dialog>
     </>
   );
 };
