@@ -532,7 +532,6 @@ const PaymentForm = ({
                   label="Zip Code"
                   component={InputField}
                   autoComplete="postal-code"
-                  type="number"
                 />
               </div>
             </Grid>
