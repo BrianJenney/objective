@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '../common';
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 import '../../pages/product/overrides.css';
-import '../../pages/product/PDP-style.css';
+import '../../pages/product/PDP-style.scss';
 import { Typography } from '@material-ui/core';
 import EnvelopeIcon from './EnvelopeIcon';
 import { closeSync } from 'fs';
@@ -66,14 +66,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
+export const ATC = ({
+  price,
+  onClick,
+  variantSku,
+  ATCAdded,
+  ATCAdding,
+  btnStyle
+}) => (
   <Button
     fullWidth
     onClick={onClick}
     disabled={variantSku === null}
-    className={btnStyle ? btnStyle : 'atc-button'}
+    className={btnStyle || 'atc-button'}
   >
-    {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+    {!ATCAdded
+      ? `$${price} - ADD TO CART`
+      : !ATCAdding
+      ? 'PRODUCT ADDED'
+      : 'ADDING...'}
   </Button>
 );
 

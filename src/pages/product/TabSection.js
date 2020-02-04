@@ -12,7 +12,6 @@ import ProductContext from '../../contexts/ProductContext';
 import { scrollToRef } from '../../utils/misc';
 import './cards-styles.css';
 import HowItWorksTab from './HowItWorksTab';
-import SupplementFactsTab from './SupplementFactsTab';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -144,7 +143,6 @@ export default function PdpTabs({ scrollToTabs }) {
               dir={theme.direction}
               className="tabpanel"
             >
-              <SupplementFactsTab />
             </TabPanel>
           </div>
         </Box>
