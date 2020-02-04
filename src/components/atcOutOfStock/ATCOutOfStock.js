@@ -3,10 +3,10 @@ import CardActions from '@material-ui/core/CardActions';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Button } from "../common";
+import { Button } from '../common';
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 import '../../pages/product/overrides.css';
-import '../../pages/product/PDP-style.css';
+import '../../pages/product/PDP-style.scss';
 import { Typography } from '@material-ui/core';
 import EnvelopeIcon from './EnvelopeIcon';
 import { closeSync } from 'fs';
@@ -66,16 +66,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
-    <Button
-      fullWidth
-      onClick={onClick}
-      disabled={variantSku === null}
-      className={btnStyle ? btnStyle : "atc-button"}
-    >
-      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
-    </Button>
-  );
+export const ATC = ({
+  price,
+  onClick,
+  variantSku,
+  ATCAdded,
+  ATCAdding,
+  btnStyle
+}) => (
+  <Button
+    fullWidth
+    onClick={onClick}
+    disabled={variantSku === null}
+    className={btnStyle || 'atc-button'}
+  >
+    {!ATCAdded
+      ? `$${price} - ADD TO CART`
+      : !ATCAdding
+      ? 'PRODUCT ADDED'
+      : 'ADDING...'}
+  </Button>
+);
 
 export const ATCPDP = ({
   onClick,
@@ -84,15 +95,15 @@ export const ATCPDP = ({
   ATCAdding,
   btnStyle
 }) => (
-    <Button
-      fullWidth
-      onClick={onClick}
-      disabled={variantSku === null}
-      className={btnStyle}
-    >
-      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
-    </Button>
-  );
+  <Button
+    fullWidth
+    onClick={onClick}
+    disabled={variantSku === null}
+    className={btnStyle}
+  >
+    {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+  </Button>
+);
 
 export const OutOfStockPDP = ({
   onClick,
