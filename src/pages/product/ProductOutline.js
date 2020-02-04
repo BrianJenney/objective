@@ -103,7 +103,7 @@ const ProductOutline = ({ scrollToTabs }) => {
     <Container>
       <div className={classes.root} ref={containerRef}>
         <Box className={classes.keyObjective}>
-          <Box style={{ flex: '0 0 250px' }}>
+          <Box style={{ flex: '0 0 180px' }}>
             <img
               src={content.keyObjectiveImages[0].url}
               alt=""
@@ -125,7 +125,7 @@ const ProductOutline = ({ scrollToTabs }) => {
               </Typography>
             </Box>
           </Box>
-          <Box style={{ flex: '0 0 250px' }}>
+          <Box style={{ flex: '0 0 180px' }}>
             <img
               src={content.keyObjectiveImages[1].url}
               alt=""

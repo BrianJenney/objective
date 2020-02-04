@@ -31,7 +31,7 @@ html,
     align-items: center;
 
     .icon {
-      width: 78px;
+      flex: 0 0 78px;
       height: 78px;
       display: flex;
       align-items: center;
@@ -295,7 +295,7 @@ html,
     position: fixed;
     box-shadow: 0 0 5px 5px #888;
     bottom: 5px;
-    width: 400px;
+    width: 360px;
     z-index: 1200;
   }
 

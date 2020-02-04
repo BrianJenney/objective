@@ -197,7 +197,7 @@ const ProductDetail = () => {
 
   //Google Optimize
   const optimize = async () => {
-    await window.dataLayer.push({ 'event': "optimize.activate" });
+    await window.dataLayer.push({ event: 'optimize.activate' });
   };
   useEffect(() => {
     if (window.dataLayer) {
@@ -432,7 +432,7 @@ const ProductDetail = () => {
                             justifyContent="center"
                             alignItems="center"
                           >
-                            <Box width={320}>
+                            <Box width={288} textAlign="center">
                               <Typography className="atc-note">
                                 Our Objective Promise ensures you’re making a
                                 risk-free purchase
