@@ -103,6 +103,7 @@ const ProductVariant = ({ productVariant }) => {
 const ProductDetail = () => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
+  const contentRef = useRef();
   const atcRef = useRef();
   const dispatch = useDispatch();
   const { product, variants, prices, content } = useContext(ProductContext);
@@ -123,9 +124,17 @@ const ProductDetail = () => {
   const [seconds, setSeconds] = useState(0);
 
   const handleWindowScroll = evt => {
+    const OFFSET = 80;
     const { scrollTop } = evt.target.scrollingElement;
-    if (atcRef.current) {
-      if (scrollTop > 1200 - window.innerHeight) {
+
+    if (atcRef.current && contentRef.current) {
+      if (
+        scrollTop >
+        OFFSET +
+          contentRef.current.offsetTop +
+          contentRef.current.offsetHeight -
+          window.innerHeight
+      ) {
         atcRef.current.style.position = 'static';
         atcRef.current.style.boxShadow = 'none';
       } else {
@@ -377,41 +386,40 @@ const ProductDetail = () => {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Card className={classes.box}>
-                    <CardContent
-                      className={classes.cardRootOverrides}
-                      className="pdp-content"
-                    >
-                      <Typography variant="h1" className="pdp-header">
-                        {content.productTitle}
-                      </Typography>
-                      <ProductVariant
-                        productVariant={variantMap.get(selectedVariantSku)}
-                      />
-                      <Box className="pdp-subtitle">
-                        {content.shortPurposeHeadline}
-                      </Box>
-                      <Box className="pdp-description">
-                        {content.shortDescription}
-                      </Box>
-                      <Box className="pdp-benefits">
-                        {productBenefits.map((benefit, index) => (
-                          <Box className="benefit" key={index.toString()}>
-                            <Box className="icon">
-                              <img
-                                src={benefit.fields.icon.fields.file.url}
-                                alt=""
-                              />
+                    <CardContent className={classes.cardRootOverrides}>
+                      <Box className="pdp-content" ref={contentRef}>
+                        <Typography variant="h1" className="pdp-header">
+                          {content.productTitle}
+                        </Typography>
+                        <ProductVariant
+                          productVariant={variantMap.get(selectedVariantSku)}
+                        />
+                        <Box className="pdp-subtitle">
+                          {content.shortPurposeHeadline}
+                        </Box>
+                        <Box className="pdp-description">
+                          {content.shortDescription}
+                        </Box>
+                        <Box className="pdp-benefits">
+                          {productBenefits.map((benefit, index) => (
+                            <Box className="benefit" key={index.toString()}>
+                              <Box className="icon">
+                                <img
+                                  src={benefit.fields.icon.fields.file.url}
+                                  alt=""
+                                />
+                              </Box>
+                              <Box className="text">
+                                <Box>{benefit.fields.benefitText}</Box>
+                              </Box>
                             </Box>
-                            <Box className="text">
-                              <Box>{benefit.fields.benefitText}</Box>
-                            </Box>
-                          </Box>
-                        ))}
+                          ))}
+                        </Box>
+                        <Box className="pdp-accordion">
+                          <ProductAccordion content={content} />
+                        </Box>
+                        {!ATCEnabled && <Quantity />}
                       </Box>
-                      <Box className="pdp-accordion">
-                        <ProductAccordion content={content} />
-                      </Box>
-                      {!ATCEnabled && <Quantity />}
                     </CardContent>
                     {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
                       <CardActions className={classes.maxWidth}>
