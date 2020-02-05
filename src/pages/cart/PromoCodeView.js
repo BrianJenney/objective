@@ -6,7 +6,11 @@ import Grid from '@material-ui/core/Grid';
 
 import { removeCoupon } from '../../modules/cart/functions';
 import { displayMoney } from '../../utils/formatters';
-import { StyledSmallCaps, StyledFinePrint, StyledProductTotal } from '../../pages/cart/StyledComponents';
+import {
+  StyledSmallCaps,
+  StyledFinePrint,
+  StyledProductTotal
+} from '../../pages/cart/StyledComponents';
 import { colorPalette } from '../../components/Theme/color-palette';
 
 const { LIGHT_GRAY } = colorPalette;
@@ -33,7 +37,11 @@ const PromoCodeView = () => {
         </StyledProductTotal>
       </Grid>
       <StyledFinePrint component="p">
-        {cart.promo.code}<br />
+        {// TODO: Replace code
+        cart.promo.code !== 'VOUCHERIFY.IO-10-PERCENT-OFF'
+          ? cart.promo.code
+          : ''}
+        <br />
         <Link
           onClick={e => removeCoupon(cart._id)}
           style={{
