@@ -47,6 +47,18 @@ const ProductAccordion = ({ content }) => {
   };
   const openClinicalResultsImageModal = () => setImageModalOpen(true);
   const closeClinicalResultsImageModal = () => setImageModalOpen(false);
+  const {
+    clinicalResults = {},
+    clinicalResultsEnlargedImage = {},
+    ingredients = {},
+    directions = { summary: '', details: [] },
+    frequentlyAskedQuestions = {},
+    supplementFactsIngredientsParagraph = null,
+    supplementFactsIngredients = [],
+    supplementFactsNotes = {},
+    supplementFactsOtherIngredients = [],
+    supplementFactsImportant = []
+  } = content;
   const accordionItems = [
     {
       title: 'Clinical Results',
@@ -54,43 +66,49 @@ const ProductAccordion = ({ content }) => {
       content: (
         <>
           <Box className="contentful-container">
-            {documentToReactComponents(
-              content.clinicalResults,
-              contentfulOptions
-            )}
+            {documentToReactComponents(clinicalResults, contentfulOptions)}
           </Box>
           <Box className="magnifier-container">
             <IconButton onClick={openClinicalResultsImageModal}>
               <img src={magnifierIcon} alt="" />
             </IconButton>
           </Box>
+          <Dialog
+            onClose={closeClinicalResultsImageModal}
+            open={imageModalOpen}
+          >
+            <Box mx={4} p={5}>
+              <img
+                src={clinicalResultsEnlargedImage.fields.file.url}
+                alt=""
+                width="100%"
+                height="auto"
+              />
+            </Box>
+          </Dialog>
         </>
       )
     },
     {
       title: 'Ingredients',
       className: 'ingredients',
-      content: documentToReactComponents(content.ingredients, contentfulOptions)
+      content: documentToReactComponents(ingredients, contentfulOptions)
     },
     {
       title: 'Directions',
       className: 'directions',
       content: (
         <>
-          <Box className="summary">{content.directions.summary}</Box>
+          <Box className="summary">{directions.summary}</Box>
           <Box className="details">
-            <Box className="entry">
-              <Box className="icon">
-                <img src={content.directions.details[0].icon} alt="" />
+            {directions.details.map((detail, index) => (
+              <Box className="entry" key={`entry_${index.toString()}`}>
+                <Box className="icon">
+                  <img src={detail.icon} alt="" />
+                </Box>
+                <Box className="text">{detail.label}</Box>
               </Box>
-              <Box className="text">{content.directions.details[0].label}</Box>
-            </Box>
-            <Box className="entry">
-              <Box className="icon">
-                <img src={content.directions.details[1].icon} alt="" />
-              </Box>
-              <Box className="text">{content.directions.details[1].label}</Box>
-            </Box>
+            ))}
           </Box>
         </>
       )
@@ -99,7 +117,7 @@ const ProductAccordion = ({ content }) => {
       title: 'Frequently Asked Questions',
       className: 'faqs',
       content: documentToReactComponents(
-        content.frequentlyAskedQuestions,
+        frequentlyAskedQuestions,
         contentfulOptions
       )
     },
@@ -109,9 +127,9 @@ const ProductAccordion = ({ content }) => {
       content: (
         <>
           <Box className="ingredients">
-            {content.supplementFactsIngredientsParagraph ? (
+            {supplementFactsIngredientsParagraph ? (
               <Box className="ingredients-pg">
-                {content.supplementFactsIngredientsParagraph}
+                {supplementFactsIngredientsParagraph}
               </Box>
             ) : (
               <Table>
@@ -123,46 +141,39 @@ const ProductAccordion = ({ content }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {content.supplementFactsIngredients.map(
-                    (ingredient, index) => (
-                      <TableRow key={`tr_${index.toString()}`}>
-                        <TableCell>{ingredient.ingredient}</TableCell>
-                        <TableCell>{ingredient.amount}</TableCell>
-                        <TableCell>{ingredient.dailyValue}</TableCell>
-                      </TableRow>
-                    )
-                  )}
+                  {supplementFactsIngredients.map((ingredient, index) => (
+                    <TableRow key={`tr_${index.toString()}`}>
+                      <TableCell>{ingredient.ingredient}</TableCell>
+                      <TableCell>{ingredient.amount}</TableCell>
+                      <TableCell>{ingredient.dailyValue}</TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             )}
           </Box>
           <Box className="notes">
-            {documentToReactComponents(
-              content.supplementFactsNotes,
-              contentfulOptions
-            )}
+            {documentToReactComponents(supplementFactsNotes, contentfulOptions)}
           </Box>
           <Box className="other-ingredients">
             <Typography variant="h4">Other Ingredients</Typography>
             <List disablePadding>
-              {content.supplementFactsOtherIngredients.map(
-                (otherIngredient, index) => (
-                  <ListItem
-                    key={`other-ingredient-${index.toString()}`}
-                    disableGutters
-                  >
-                    <Typography component="span">
-                      {otherIngredient.replace(/\|/g, ',')}
-                    </Typography>
-                  </ListItem>
-                )
-              )}
+              {supplementFactsOtherIngredients.map((otherIngredient, index) => (
+                <ListItem
+                  key={`other-ingredient-${index.toString()}`}
+                  disableGutters
+                >
+                  <Typography component="span">
+                    {otherIngredient.replace(/\|/g, ',')}
+                  </Typography>
+                </ListItem>
+              ))}
             </List>
           </Box>
           <Box className="important">
             <Typography variant="h4">Important</Typography>
             <List disablePadding>
-              {content.supplementFactsImportant.map((important, index) => (
+              {supplementFactsImportant.map((important, index) => (
                 <ListItem key={`important-${index.toString()}`} disableGutters>
                   <Typography component="span">
                     {important.replace(/\|/g, ',')}
@@ -197,16 +208,6 @@ const ProductAccordion = ({ content }) => {
           <Box className={accordionItem.className}>{accordionItem.content}</Box>
         </Panel>
       ))}
-      <Dialog onClose={closeClinicalResultsImageModal} open={imageModalOpen}>
-        <Box mx={4} p={5}>
-          <img
-            src={content.clinicalResults.content[1].data.target.fields.file.url}
-            alt=""
-            width="100%"
-            height="auto"
-          />
-        </Box>
-      </Dialog>
     </>
   );
 };
@@ -214,6 +215,7 @@ const ProductAccordion = ({ content }) => {
 ProductAccordion.propTypes = {
   content: PropTypes.shape({
     clinicalResults: PropTypes.any,
+    clinicalResultsEnlargedImage: PropTypes.any,
     ingredients: PropTypes.any,
     directions: PropTypes.shape({
       summary: PropTypes.string,
