@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
     '& ul': {
       paddingLeft: '20px'
     },
-    '& li p': {
+    '& li p, & p': {
       fontFamily: 'FreightTextProBook',
       fontSize: '18px',
       fontWeight: 'normal',
