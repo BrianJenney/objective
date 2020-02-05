@@ -252,6 +252,8 @@ const ProductDetail = () => {
     ? variant.restrictions[variant.restrictions.definitions].label
     : [];
 
+  const { productBenefits = [] } = content;
+
   return (
     <>
       {isMobile ? (
@@ -382,7 +384,7 @@ const ProductDetail = () => {
                         {content.shortDescription}
                       </Box>
                       <Box className="pdp-benefits">
-                        {content.productBenefits.map((benefit, index) => (
+                        {productBenefits.map((benefit, index) => (
                           <Box className="benefit" key={index.toString()}>
                             <Box className="icon">
                               <img

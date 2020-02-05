@@ -78,6 +78,8 @@ const ProductLearnMore = () => {
     return null;
   }
 
+  const { learnMoreBlocks = [] } = content;
+
   return (
     <Box className={classes.root}>
       <Typography className={classes.heading} variant="h4" align="center">
@@ -85,7 +87,7 @@ const ProductLearnMore = () => {
       </Typography>
       <Box width="1200px">
         <Grid container spacing={2}>
-          {content.learnMoreBlocks.map((learnMoreBlock, index) => (
+          {learnMoreBlocks.map((learnMoreBlock, index) => (
             <Grid key={`block-${index.toString()}`} item xs={12} sm={4}>
               <img
                 className={classes.thumbnail}

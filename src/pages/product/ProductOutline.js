@@ -99,18 +99,22 @@ const ProductOutline = ({ scrollToTabs }) => {
 
   if (!product || !content) return null;
 
+  const { keyObjectiveImages } = content;
+
   return (
     <Container>
       <div className={classes.root} ref={containerRef}>
         <Box className={classes.keyObjective}>
-          <Box style={{ flex: '0 0 250px' }}>
-            <img
-              src={content.keyObjectiveImages[0].url}
-              alt=""
-              width="100%"
-              height="auto"
-            />
-          </Box>
+          {keyObjectiveImages && keyObjectiveImages.length === 2 && (
+            <Box style={{ flex: '0 0 250px' }}>
+              <img
+                src={keyObjectiveImages[0].url}
+                alt=""
+                width="100%"
+                height="auto"
+              />
+            </Box>
+          )}
           <Box>
             <Typography className={classes.heading} variant="h4" align="center">
               Key Objective
@@ -125,14 +129,16 @@ const ProductOutline = ({ scrollToTabs }) => {
               </Typography>
             </Box>
           </Box>
-          <Box style={{ flex: '0 0 250px' }}>
-            <img
-              src={content.keyObjectiveImages[1].url}
-              alt=""
-              width="100%"
-              height="auto"
-            />
-          </Box>
+          {keyObjectiveImages && keyObjectiveImages.length === 2 && (
+            <Box style={{ flex: '0 0 250px' }}>
+              <img
+                src={keyObjectiveImages[1].url}
+                alt=""
+                width="100%"
+                height="auto"
+              />
+            </Box>
+          )}
         </Box>
         <Typography className={classes.heading} variant="h4" align="center">
           How It Works
