@@ -48,14 +48,14 @@ const ProductAccordion = ({ content }) => {
   const openClinicalResultsImageModal = () => setImageModalOpen(true);
   const closeClinicalResultsImageModal = () => setImageModalOpen(false);
   const {
-    clinicalResults = {},
-    clinicalResultsEnlargedImage = {},
-    ingredients = {},
+    clinicalResults,
+    clinicalResultsEnlargedImage,
+    ingredients,
     directions = { summary: '', details: [] },
-    frequentlyAskedQuestions = {},
+    frequentlyAskedQuestions,
     supplementFactsIngredientsParagraph = null,
     supplementFactsIngredients = [],
-    supplementFactsNotes = {},
+    supplementFactsNotes,
     supplementFactsOtherIngredients = [],
     supplementFactsImportant = []
   } = content;
@@ -68,22 +68,26 @@ const ProductAccordion = ({ content }) => {
           <Box className="contentful-container">
             {documentToReactComponents(clinicalResults, contentfulOptions)}
           </Box>
-          <Box className="magnifier-container">
-            <IconButton onClick={openClinicalResultsImageModal}>
-              <img src={magnifierIcon} alt="" />
-            </IconButton>
-          </Box>
+          {clinicalResultsEnlargedImage && (
+            <Box className="magnifier-container">
+              <IconButton onClick={openClinicalResultsImageModal}>
+                <img src={magnifierIcon} alt="" />
+              </IconButton>
+            </Box>
+          )}
           <Dialog
             onClose={closeClinicalResultsImageModal}
             open={imageModalOpen}
           >
             <Box mx={4} p={5}>
-              <img
-                src={clinicalResultsEnlargedImage.fields.file.url}
-                alt=""
-                width="100%"
-                height="auto"
-              />
+              {clinicalResultsEnlargedImage && (
+                <img
+                  src={clinicalResultsEnlargedImage.fields.file.url}
+                  alt=""
+                  width="100%"
+                  height="auto"
+                />
+              )}
             </Box>
           </Dialog>
         </>
