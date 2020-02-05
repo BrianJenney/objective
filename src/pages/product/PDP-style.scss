@@ -403,13 +403,13 @@ html,
   .research-sources ul {
     font-size: 14px;
   }
+
   .pdp-content {
-    &.MuiCardContent-root {
-      display: flex;
-      flex-direction: column;
-      padding: 0 16px;
-    }
+    display: flex;
+    flex-direction: column;
+    margin-top: -16px;
   }
+
   .pdp-subtitle {
     font-size: 18px;
     font-weight: 900;
