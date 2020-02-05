@@ -112,12 +112,21 @@ export default function PdpTabs({ scrollToTabs }) {
                   className={classes.tabs}
                   style={{ borderLeft: 'none' }}
                 />
-                <Tab
-                  variant="smallHeader"
-                  label="Supplement Facts"
-                  {...a11yProps(1)}
-                  className={classes.tabs}
-                />
+                {product.sku == 'TFPR' ? (
+                  <Tab
+                    variant="smallHeader"
+                    label="Drug Facts"
+                    {...a11yProps(1)}
+                    className={classes.tabs}
+                  />
+                ) : (
+                  <Tab
+                    variant="smallHeader"
+                    label="Supplement Facts"
+                    {...a11yProps(1)}
+                    className={classes.tabs}
+                  />
+                )}
               </Tabs>
             </AppBar>
             <TabPanel

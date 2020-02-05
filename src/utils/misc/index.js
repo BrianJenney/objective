@@ -214,3 +214,8 @@ export const scrollToRef = ref => {
   }
   return true;
 };
+
+export const getDaysDiff = dateFrom => {
+  const microSecondsDiff = Math.abs((new Date(dateFrom)).getTime() - (new Date().getTime()));
+  return (Math.floor(microSecondsDiff / (1000 * 60 * 60 * 24)));
+};

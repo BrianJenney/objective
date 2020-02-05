@@ -42,7 +42,14 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
 
   const params = {
     data: { cart },
-    params: { account_jwt, nonceOrToken, merchantAccountId }
+    params: {
+      account_jwt,
+      nonceOrToken,
+      merchantAccountId,
+      ...(localStorageClient.get('clickId') && {
+        clickId: localStorageClient.get('clickId')
+      })
+    }
   };
 
   const payload = JSON.stringify(msgpack.encode(params));
@@ -52,7 +59,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
       jwt: account_jwt,
-      'token': localStorageClient.get('olympusToken')
+      'token': localStorageClient.get('olympusToken'),
     },
     payload
   );
@@ -93,7 +100,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     'est_ship_date': order.shippingMethod.deliveryEstimate,
     'item_count': order.items.length,
     'order_date': order.transactions.transactionDate,
-    'order_id': order.orderId,
+    'order_id': order.orderNumber,
     'order_link': 'https://objectivewellness.com/orders/' + order._id,
     'payment_method': 'Credit Card',
     'payment_method_detail': order.paymentData.cardType,
