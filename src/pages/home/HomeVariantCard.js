@@ -57,8 +57,12 @@ export const HomeVariantCard = ({ variant }) => {
   }, [setOpenEmailConfirmation]);
 
   return (
-    <Grid item xs={12} md={3}>
-      <Card className="tile" ref={ref}>
+    <Grid item xs={12} md={4}>
+      <Card
+        className="tile"
+        ref={ref}
+        style={{ border: `1px solid ${variant.color}` }}
+      >
         <NavLink
           to={`/products/${slug}`}
           onClick={() => {
@@ -77,7 +81,7 @@ export const HomeVariantCard = ({ variant }) => {
           }}
         >
           <CardMedia
-            style={{ height: 264, width: '100%' }}
+            style={{ height: 430, width: '100%' }}
             image={`${assets.imgs}&q=50`}
             className="tile-img"
           />
@@ -102,26 +106,29 @@ export const HomeVariantCard = ({ variant }) => {
         >
           <CardContent className="pding">
             <div className="prod-name-holder">
-              <Link
-                to={`/products/${slug}`}
-                className="title"
-                onClick={() => {
-                  segmentProductClickEvent({
-                    image_url: `https:${variant.assets.thumbnail}`,
-                    quantity: 1,
-                    sku: variant.sku,
-                    price: Number.parseFloat(variant.effectivePrice),
-                    product_id: variant.id,
-                    variant: variant.name,
-                    name: variant.name,
-                    brand: cart.storeCode,
-                    cart_id: cart._id,
-                    site_location: 'home'
-                  });
-                }}
-              >
-                {name}
-              </Link>
+              <Typography>
+                <Link
+                  to={`/products/${slug}`}
+                  className="title"
+                  onClick={() => {
+                    segmentProductClickEvent({
+                      image_url: `https:${variant.assets.thumbnail}`,
+                      quantity: 1,
+                      sku: variant.sku,
+                      price: Number.parseFloat(variant.effectivePrice),
+                      product_id: variant.id,
+                      variant: variant.name,
+                      name: variant.name,
+                      brand: cart.storeCode,
+                      cart_id: cart._id,
+                      site_location: 'home'
+                    });
+                  }}
+                  style={{ color: variant.color }}
+                >
+                  {name}
+                </Link>
+              </Typography>
             </div>
             <div className="variant-info">
               <div>
