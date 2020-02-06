@@ -58,7 +58,11 @@ export const HomeVariantCard = ({ variant }) => {
 
   return (
     <Grid item xs={12} md={4}>
-      <Card className="tile" ref={ref}>
+      <Card
+        className="tile"
+        ref={ref}
+        style={{ border: `1px solid ${variant.color}` }}
+      >
         <NavLink
           to={`/products/${slug}`}
           onClick={() => {
@@ -78,7 +82,7 @@ export const HomeVariantCard = ({ variant }) => {
         >
           <CardMedia
             style={{ height: 430, width: '100%' }}
-            image={assets.imgs + "&q=50"}
+            image={assets.imgs + '&q=50'}
             className="tile-img"
           />
         </NavLink>
@@ -120,6 +124,7 @@ export const HomeVariantCard = ({ variant }) => {
                       site_location: 'home'
                     });
                   }}
+                  style={{ color: variant.color }}
                 >
                   {name}
                 </Link>

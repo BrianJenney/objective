@@ -172,7 +172,7 @@ class Home extends Component {
               this.state.content.bestsellers.content[0],
               contentfulOptions
             )}
-            <Grid container spacing={3} className="best-container">
+            <Grid container spacing={3}>
               {bps.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
@@ -225,7 +225,7 @@ class Home extends Component {
               this.state.content.solutionForFamily.content[1],
               contentfulOptions
             )}
-            <Grid container spacing={3} className="solutions-container">
+            <Grid container spacing={3}>
               {fps.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
