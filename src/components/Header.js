@@ -5,14 +5,7 @@ import { compose } from 'redux';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { withStyles, useTheme } from '@material-ui/core/styles';
-import {
-  useMediaQuery,
-  Container,
-  Grid,
-  Box,
-  Link,
-  SvgIcon
-} from '@material-ui/core';
+import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { withCurrentUser } from '../hoc';
@@ -72,7 +65,8 @@ const segmentIdentify = user => {
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+  const isCheckoutPage =
+    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const { account_jwt, firstName } = currentUser.data;
   const [promoVisible, setPromoVisible] = useState(true);
@@ -161,37 +155,18 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={1} className="mobile-cart-icon">
                     {!isCheckoutPage && <ShoppingCart />}
-<<<<<<< HEAD
-                    {cartMerged ? (
-                      <CartMergeNotification isCheckoutPage={isCheckoutPage} />
-                    ) : null}
-=======
                     {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
                     {cartNotification ? <CartNotification /> : null}
->>>>>>> DC-954-obj-acq-discounting
                   </Grid>
                 </Grid>
                 {promoVisible ? (
                   <Grid container item={true} xs={12} className="headerBar">
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
-<<<<<<< HEAD
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/gallery"
-                        >
-                          Limited Time: Free Shipping for All New Customers
-                        </NavLink>
-                        <CloseIcon
-                          className="closeIconMobile"
-                          onClick={handlePromoClose}
-                        />
-=======
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                           Limited Time: Free Shipping for All New Customers
                         </NavLink>
                         <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
->>>>>>> DC-954-obj-acq-discounting
                       </StyledBox>
                     </Grid>
                   </Grid>
@@ -205,23 +180,10 @@ const Header = ({ currentUser, location }) => {
                       <Grid container item={true} xs={12}>
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
-<<<<<<< HEAD
-                            <NavLink
-                              onClick={segmentTrackNavigationClick}
-                              to="/gallery"
-                            >
-                              Limited Time: Free Shipping for All New Customers
-                            </NavLink>
-                            <div
-                              className="closeIcon"
-                              onClick={handlePromoClose}
-                            >
-=======
                             <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                               Limited Time: Free Shipping for All New Customers
                             </NavLink>
                             <div className="closeIcon" onClick={handlePromoClose}>
->>>>>>> DC-954-obj-acq-discounting
                               Close
                               <CloseIcon
                                 onClick={handlePromoClose}
@@ -244,28 +206,12 @@ const Header = ({ currentUser, location }) => {
                       <Grid item xs={4}>
                         <Grid container>
                           <Grid item xs={6} className="h-pding">
-<<<<<<< HEAD
-                            <StyledLink
-                              onClick={segmentTrackNavigationClick}
-                              component={RouterLink}
-                              to="/gallery"
-                            >
-=======
                             <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
->>>>>>> DC-954-obj-acq-discounting
                               Shop
                             </StyledLink>
                           </Grid>
                           <Grid item xs={6} className="h-pding">
-<<<<<<< HEAD
-                            <StyledLink
-                              onClick={segmentTrackNavigationClick}
-                              component={RouterLink}
-                              to="/journal"
-                            >
-=======
                             <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
->>>>>>> DC-954-obj-acq-discounting
                               Journal
                             </StyledLink>
                           </Grid>
@@ -285,24 +231,10 @@ const Header = ({ currentUser, location }) => {
                               onClick={segmentTrackNavigationClick}
                             />
                           </Grid>
-<<<<<<< HEAD
-                          <Grid
-                            item
-                            xs={6}
-                            className="header-shop-holder h-pding"
-                          >
-                            {!isCheckoutPage && <ShoppingCart />}
-                            {cartMerged ? (
-                              <CartMergeNotification
-                                isCheckoutPage={isCheckoutPage}
-                              />
-                            ) : null}
-=======
                           <Grid item xs={6} className="header-shop-holder h-pding">
                             {!isCheckoutPage && <ShoppingCart />}
                             {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
                             {cartNotification ? <CartNotification /> : null}
->>>>>>> DC-954-obj-acq-discounting
                           </Grid>
                         </Grid>
                       </Grid>
