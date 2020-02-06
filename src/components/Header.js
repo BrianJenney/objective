@@ -2,17 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Link as RouterLink, withRouter, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { withStyles, useTheme } from '@material-ui/core/styles';
-import {
-  useMediaQuery,
-  Container,
-  Grid,
-  Box,
-  Link,
-  SvgIcon
-} from '@material-ui/core';
+import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { withCurrentUser } from '../hoc';
@@ -20,8 +13,9 @@ import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
-import CartMergeNotification from './cart/CartMergeNotification';
+import { CartMergeNotification, CartNotification } from './cart';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
+import { setCartNotification } from '../modules/utils/actions';
 
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
@@ -75,21 +69,22 @@ const Header = ({ currentUser, location }) => {
   const { account_jwt, firstName } = currentUser.data;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
+  const dispatch = useDispatch();
   const cartMerged = useSelector(state => state.cart.cartMerged);
   const cart = useSelector(state => state.cart);
+  const cartNotification = useSelector(state => state.utils.cartNotification);
 
   useEffect(() => {
     if (
-      isAcqDiscount(
-        paramsToObject(new URLSearchParams(window.location.search))
-      ) &&
+      isAcqDiscount(paramsToObject(new URLSearchParams(window.location.search))) &&
       acqDiscount === false &&
       cart._id
     ) {
-      console.log('this acq discount applied', cart._id);
       setAcqDiscount(true);
       removeCoupon(cart._id);
-      addCoupon(cart._id, 'VOUCHERIFY.IO-10-PERCENT-OFF');
+      // TODO: put the actual coupon before merging to live
+      addCoupon(cart._id, 'voucherify.io-sandbox-03');
+      dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id]);
 
@@ -158,25 +153,18 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={1} className="mobile-cart-icon">
                     {!isCheckoutPage && <ShoppingCart />}
-                    {cartMerged ? (
-                      <CartMergeNotification isCheckoutPage={isCheckoutPage} />
-                    ) : null}
+                    {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+                    {cartNotification ? <CartNotification /> : null}
                   </Grid>
                 </Grid>
                 {promoVisible ? (
                   <Grid container item={true} xs={12} className="headerBar">
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/gallery"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                           Limited Time: Free Shipping for All New Customers
                         </NavLink>
-                        <CloseIcon
-                          className="closeIconMobile"
-                          onClick={handlePromoClose}
-                        />
+                        <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
                       </StyledBox>
                     </Grid>
                   </Grid>
@@ -190,16 +178,10 @@ const Header = ({ currentUser, location }) => {
                       <Grid container item={true} xs={12}>
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
-                            <NavLink
-                              onClick={segmentTrackNavigationClick}
-                              to="/gallery"
-                            >
+                            <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                               Limited Time: Free Shipping for All New Customers
                             </NavLink>
-                            <div
-                              className="closeIcon"
-                              onClick={handlePromoClose}
-                            >
+                            <div className="closeIcon" onClick={handlePromoClose}>
                               Close
                               <CloseIcon
                                 onClick={handlePromoClose}
@@ -222,20 +204,12 @@ const Header = ({ currentUser, location }) => {
                       <Grid item xs={4}>
                         <Grid container>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink
-                              onClick={segmentTrackNavigationClick}
-                              component={RouterLink}
-                              to="/gallery"
-                            >
+                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
                               Shop
                             </StyledLink>
                           </Grid>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink
-                              onClick={segmentTrackNavigationClick}
-                              component={RouterLink}
-                              to="/journal"
-                            >
+                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
                               Journal
                             </StyledLink>
                           </Grid>
@@ -255,17 +229,10 @@ const Header = ({ currentUser, location }) => {
                               onClick={segmentTrackNavigationClick}
                             />
                           </Grid>
-                          <Grid
-                            item
-                            xs={6}
-                            className="header-shop-holder h-pding"
-                          >
+                          <Grid item xs={6} className="header-shop-holder h-pding">
                             {!isCheckoutPage && <ShoppingCart />}
-                            {cartMerged ? (
-                              <CartMergeNotification
-                                isCheckoutPage={isCheckoutPage}
-                              />
-                            ) : null}
+                            {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+                            {cartNotification ? <CartNotification /> : null}
                           </Grid>
                         </Grid>
                       </Grid>

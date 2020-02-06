@@ -1,8 +1,11 @@
 import { SET_CART_NOTIFICATION } from './types';
 
-export const setCartNotification = booleanVal => dispatch => {
+export const setCartNotification = (booleanVal, variant = null) => dispatch => {
   dispatch({
     type: SET_CART_NOTIFICATION,
-    payload: booleanVal
+    payload: {
+      cartNotification: booleanVal,
+      notificationVariant: variant
+    }
   });
 };

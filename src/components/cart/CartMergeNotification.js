@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Paper, Typography, useMediaQuery, Grid } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { unSetCartMergeNotification } from '../../modules/cart/actions';
-import './CartMergeNotification.scss';
+import './CartNotification.scss';
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -99,18 +99,14 @@ const CheckoutNotification = () => {
       <Grid className={xs ? classes.boxXS : classes.box}>
         {xs ? (
           <>
-            <Typography className={classes.textCheckoutXS}>
-              We've added items from your previous
-            </Typography>
-            <Typography className={classes.textCheckoutXS}>
-              session to your cart.
-            </Typography>
+            <Typography className={classes.textCheckoutXS}>We've added items from your previous</Typography>
+            <Typography className={classes.textCheckoutXS}>session to your cart.</Typography>
           </>
         ) : (
-            <Typography className={classes.textCheckout}>
-              We've added items from your<br></br>previous session to your cart.
+          <Typography className={classes.textCheckout}>
+            We've added items from your<br></br>previous session to your cart.
           </Typography>
-          )}
+        )}
       </Grid>
     </>
   );
@@ -148,12 +144,9 @@ const ElsewhereNotification = () => {
       <div ref={node}>
         <Paper className={xs ? 'triangleXS' : 'triangle'}>
           <Typography className={xs ? classes.textXS : classes.text}>
-            We've added items <br></br>from your previous <br></br>session to
-            your cart.
+            We've added items <br></br>from your previous <br></br>session to your cart.
           </Typography>
-          <Typography className={xs ? classes.continueXS : classes.continue}>
-            CONTINUE SHOPPING
-          </Typography>
+          <Typography className={xs ? classes.continueXS : classes.continue}>CONTINUE SHOPPING</Typography>
         </Paper>
       </div>
     </>
@@ -161,9 +154,7 @@ const ElsewhereNotification = () => {
 };
 
 const CartMergeNotification = ({ isCheckoutPage }) => {
-  return (
-    <>{isCheckoutPage ? <CheckoutNotification /> : <ElsewhereNotification />}</>
-  );
+  return <>{isCheckoutPage ? <CheckoutNotification /> : <ElsewhereNotification />}</>;
 };
 
 export default CartMergeNotification;
