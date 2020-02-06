@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
     textTransform: 'none',
     fontStretch: 'normal',
     lineHeight: '1.5',
-    paddingTop: '35px',
+    paddingTop: '20px',
     backgroundColor: '#c3f1cf'
   },
   continue: {
@@ -60,6 +60,7 @@ const useStyles = makeStyles(() => ({
     fontStyle: 'normal',
     letterSpacing: 'normal',
     paddingTop: '7px',
+    paddingBottom: '15px',
     textDecorationLine: 'underline',
     cursor: 'pointer',
     backgroundColor: '#c3f1cf'
@@ -72,7 +73,7 @@ const useStyles = makeStyles(() => ({
     textTransform: 'none',
     fontStretch: 'normal',
     lineHeight: '24px',
-    paddingTop: '22px',
+    paddingTop: '20px',
     backgroundColor: '#c3f1cf'
   },
   continueXS: {
@@ -84,6 +85,7 @@ const useStyles = makeStyles(() => ({
     fontStyle: 'normal',
     letterSpacing: 'normal',
     paddingTop: '7px',
+    paddingBottom: '15px',
     textDecorationLine: 'underline',
     cursor: 'pointer',
     backgroundColor: '#c3f1cf'

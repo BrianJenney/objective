@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -7,27 +7,33 @@ import './CartNotification.scss';
 
 const useStyles = makeStyles(() => ({
   text: {
-    fontSize: '18px',
-    fontFamily: 'p22-underground',
+    fontSize: '24px',
+    fontFamily: 'CanelaText',
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
     fontStretch: 'normal',
-    lineHeight: '1.5',
-    paddingTop: '35px',
-    backgroundColor: '#c3f1cf'
+    lineHeight: '1',
+    paddingTop: '20px',
+    paddingBottom: '20px',
+    backgroundColor: '#c3f1cf',
+    fontWeight: '500',
+    color: '#003833'
   },
 
   textXS: {
-    fontSize: '16px',
-    fontFamily: 'p22-underground',
+    fontSize: '24px',
+    fontFamily: 'CanelaText',
     textAlign: 'center',
     letterSpacing: 'normal',
     textTransform: 'none',
     fontStretch: 'normal',
-    lineHeight: '24px',
-    paddingTop: '22px',
-    backgroundColor: '#c3f1cf'
+    lineHeight: '1',
+    paddingTop: '20px',
+    paddingBottom: '20px',
+    backgroundColor: '#c3f1cf',
+    fontWeight: '520',
+    color: '#003833'
   }
 }));
 
@@ -67,7 +73,11 @@ const CartNotification = () => {
         {xs ? (
           <>
             <Typography className={classes.textXS}>
-              Your 25% off
+              Your
+              {discount.discount.type && discount.discount.type === 'PERCENT'
+                ? ` ${discount.discount.percent_off}% `
+                : `$${discount.discount.amount_off} `}
+              off
               <br></br>promo code has
               <br></br>been applied to
               <br></br>your cart.
