@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Paper, Typography, useMediaQuery, Grid } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { unSetCartMergeNotification } from '../../modules/cart/actions';
-import './CartMergeNotification.scss';
+import './CartNotification.scss';
 
 const useStyles = makeStyles(() => ({
   box: {
@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
     textTransform: 'none',
     fontStretch: 'normal',
     lineHeight: '1.5',
-    paddingTop: '35px',
+    paddingTop: '20px',
     backgroundColor: '#c3f1cf'
   },
   continue: {
@@ -60,6 +60,7 @@ const useStyles = makeStyles(() => ({
     fontStyle: 'normal',
     letterSpacing: 'normal',
     paddingTop: '7px',
+    paddingBottom: '15px',
     textDecorationLine: 'underline',
     cursor: 'pointer',
     backgroundColor: '#c3f1cf'
@@ -72,7 +73,7 @@ const useStyles = makeStyles(() => ({
     textTransform: 'none',
     fontStretch: 'normal',
     lineHeight: '24px',
-    paddingTop: '22px',
+    paddingTop: '20px',
     backgroundColor: '#c3f1cf'
   },
   continueXS: {
@@ -84,6 +85,7 @@ const useStyles = makeStyles(() => ({
     fontStyle: 'normal',
     letterSpacing: 'normal',
     paddingTop: '7px',
+    paddingBottom: '15px',
     textDecorationLine: 'underline',
     cursor: 'pointer',
     backgroundColor: '#c3f1cf'
@@ -99,18 +101,14 @@ const CheckoutNotification = () => {
       <Grid className={xs ? classes.boxXS : classes.box}>
         {xs ? (
           <>
-            <Typography className={classes.textCheckoutXS}>
-              We've added items from your previous
-            </Typography>
-            <Typography className={classes.textCheckoutXS}>
-              session to your cart.
-            </Typography>
+            <Typography className={classes.textCheckoutXS}>We've added items from your previous</Typography>
+            <Typography className={classes.textCheckoutXS}>session to your cart.</Typography>
           </>
         ) : (
-            <Typography className={classes.textCheckout}>
-              We've added items from your<br></br>previous session to your cart.
+          <Typography className={classes.textCheckout}>
+            We've added items from your<br></br>previous session to your cart.
           </Typography>
-          )}
+        )}
       </Grid>
     </>
   );
@@ -148,12 +146,9 @@ const ElsewhereNotification = () => {
       <div ref={node}>
         <Paper className={xs ? 'triangleXS' : 'triangle'}>
           <Typography className={xs ? classes.textXS : classes.text}>
-            We've added items <br></br>from your previous <br></br>session to
-            your cart.
+            We've added items <br></br>from your previous <br></br>session to your cart.
           </Typography>
-          <Typography className={xs ? classes.continueXS : classes.continue}>
-            CONTINUE SHOPPING
-          </Typography>
+          <Typography className={xs ? classes.continueXS : classes.continue}>CONTINUE SHOPPING</Typography>
         </Paper>
       </div>
     </>
@@ -161,9 +156,7 @@ const ElsewhereNotification = () => {
 };
 
 const CartMergeNotification = ({ isCheckoutPage }) => {
-  return (
-    <>{isCheckoutPage ? <CheckoutNotification /> : <ElsewhereNotification />}</>
-  );
+  return <>{isCheckoutPage ? <CheckoutNotification /> : <ElsewhereNotification />}</>;
 };
 
 export default CartMergeNotification;

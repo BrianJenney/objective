@@ -25,9 +25,7 @@ export const getErrorMessage = error => {
 
   const errors = Array.isArray(error) ? error : [error];
 
-  const mappedErr = errors
-    .map(err => err.message || err.errorMessage)
-    .join('\n');
+  const mappedErr = errors.map(err => err.message || err.errorMessage).join('\n');
   return mappedErr;
 };
 
@@ -43,12 +41,7 @@ export const formatCurrency = amount => {
 
 const convertFormattedDateTime = (parseDate, isTimeFormatIncluded = false) => (
   <span>
-    <FormattedDate
-      value={parseDate}
-      month="2-digit"
-      day="2-digit"
-      year="numeric"
-    />
+    <FormattedDate value={parseDate} month="2-digit" day="2-digit" year="numeric" />
     {isTimeFormatIncluded && ' '}
     {isTimeFormatIncluded && (
       <FormattedTime
@@ -63,8 +56,7 @@ const convertFormattedDateTime = (parseDate, isTimeFormatIncluded = false) => (
   </span>
 );
 
-export const formatDateTime = (date, isTimeFormatIncluded) =>
-  convertFormattedDateTime(date, isTimeFormatIncluded);
+export const formatDateTime = (date, isTimeFormatIncluded) => convertFormattedDateTime(date, isTimeFormatIncluded);
 
 export const debugRabbitResponse = (name, status, data, fields, properties) => {
   if (process.env.REACT_APP_ENVIRONMENT === 'development') {
@@ -143,7 +135,6 @@ export const getTracking = (items, status) => {
   return trackings;
 };
 
-
 export const getShippingAndTracking = order => {
   const { status, items, shipTracking, createdAt, updatedAt } = order;
   let tracking = null;
@@ -216,6 +207,25 @@ export const scrollToRef = ref => {
 };
 
 export const getDaysDiff = dateFrom => {
-  const microSecondsDiff = Math.abs((new Date(dateFrom)).getTime() - (new Date().getTime()));
-  return (Math.floor(microSecondsDiff / (1000 * 60 * 60 * 24)));
+  const microSecondsDiff = Math.abs(new Date(dateFrom).getTime() - new Date().getTime());
+  return Math.floor(microSecondsDiff / (1000 * 60 * 60 * 24));
+};
+
+export const paramsToObject = url => {
+  const obj = {};
+  for (let pair of url.entries()) {
+    obj[pair[0]] = pair[1];
+  }
+  return obj;
+};
+
+export const isAcqDiscount = obj => {
+  if (typeof obj != 'undefined') {
+    if (obj.hasOwnProperty('utm_source') && obj.hasOwnProperty('utm_source') && obj.hasOwnProperty('utm_content')) {
+      if (obj.utm_source === 'facebook' && obj.utm_medium === 'social' && obj.utm_content.includes('25off')) {
+        return true;
+      }
+    }
+  }
+  return false;
 };
