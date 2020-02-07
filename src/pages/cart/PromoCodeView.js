@@ -23,8 +23,7 @@ const PromoCodeView = () => {
         <StyledProductTotal style={{ 'font-size': '18px' }}>{displayMoney(cart.discount)}</StyledProductTotal>
       </Grid>
       <StyledFinePrint component="p">
-        {// TODO: put the actual coupon before merging to live
-        cart.promo.code !== 'VOUCHERIFY.IO-SANDBOX-03' ? cart.promo.code : ''}
+        {cart.promo.code !== 'SAVE25' ? cart.promo.code : ''}
         <br />
         <Link
           onClick={e => removeCoupon(cart._id)}
