@@ -112,13 +112,6 @@ const ProductDetail = () => {
   const pricesMap = getPrices(prices);
   const variantMap = getVariantMap(product, variants, pricesMap);
   const variant = variantMap.get(selectedVariantSku);
-  const {
-    productImages,
-    productTitle,
-    shortPurposeHeadline,
-    shortDescription,
-    productBenefits = []
-  } = content;
 
   const updateQuantityToCart = useCallback(
     qty => {
@@ -228,6 +221,14 @@ const ProductDetail = () => {
   if (!product || !variants.length || !content || !selectedVariantSku) {
     return <LoadingSpinner loadingMessage="Loading product" page="pdp" />;
   }
+
+  const {
+    productImages,
+    productTitle,
+    shortPurposeHeadline,
+    shortDescription,
+    productBenefits = []
+  } = content;
 
   return (
     <Box className={classes.gridModifications}>
