@@ -9,7 +9,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
-
+import HeadTags from '../components/common/HeadTags';
 import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -148,8 +148,8 @@ class Home extends Component {
     const bestsellers = [];
 
     if (this.state.carousel) {
-      let carousel = this.state.carousel;
-      for (let key in carousel) {
+      const { carousel } = this.state;
+      for (const key in carousel) {
         if (carousel[key].fields.identifier === 'bestsellers') {
           carousel[key].fields.products.map(product => {
             bestsellers.push(product.fields.sku);
@@ -198,8 +198,8 @@ class Home extends Component {
     const family = [];
 
     if (this.state.carousel) {
-      let carousel = this.state.carousel;
-      for (let key in carousel) {
+      const { carousel } = this.state;
+      for (const key in carousel) {
         if (carousel[key].fields.identifier === 'solutions_whole_family') {
           carousel[key].fields.products.map(product => {
             family.push(product.fields.sku);
@@ -268,33 +268,36 @@ class Home extends Component {
       );
 
     const { welcomeHeader, welcomeText } = this.state.content;
-
+    const { title, description } = this.props.seoMap['/'];
     return (
-      <ScrollToTop>
-        <div className="home-style">
-          <Link
-            to="/gallery"
-            segmentProperties={{
-              cta: 'Shop All',
-              destination: '/gallery',
-              site_location: 'home',
-              text: 'Targeted Health Solutions for You and Yours'
-            }}
-            onClick={this.segmentTrackBannerClicked}
-          >
-            <ul>{this.renderHeroSlider()}</ul>
-          </Link>
-          <Container>
-            <Box py={10} className="welcome">
-              <h1>{welcomeHeader}</h1>
-              <p>{welcomeText}</p>
-            </Box>
-          </Container>
-          <>{this.renderBestsellers()}</>
-          <>{this.renderSections()}</>
-          <>{this.renderFamily()}</>
-        </div>
-      </ScrollToTop>
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
+          <div className="home-style">
+            <Link
+              to="/gallery"
+              segmentProperties={{
+                cta: 'Shop All',
+                destination: '/gallery',
+                site_location: 'home',
+                text: 'Targeted Health Solutions for You and Yours'
+              }}
+              onClick={this.segmentTrackBannerClicked}
+            >
+              <ul>{this.renderHeroSlider()}</ul>
+            </Link>
+            <Container>
+              <Box py={10} className="welcome">
+                <h1>{welcomeHeader}</h1>
+                <p>{welcomeText}</p>
+              </Box>
+            </Container>
+            <>{this.renderBestsellers()}</>
+            <>{this.renderSections()}</>
+            <>{this.renderFamily()}</>
+          </div>
+        </ScrollToTop>
+      </>
     );
   }
 
@@ -304,7 +307,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.catalog.variants
+  products: state.catalog.variants,
+  seoMap: state.storefront.seoMap
 });
 
 export default withRouter(connect(mapStateToProps)(Home));

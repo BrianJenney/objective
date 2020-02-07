@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
@@ -16,7 +16,7 @@ import { fetchPost } from '../utils/blog';
 import FeaturedItem from './blog/FeaturedItem';
 import BlogVariantCard from './blog/BlogVariantCard';
 import LoadingSpinner from '../components/LoadingSpinner';
-
+import HeadTags from '../components/common/HeadTags';
 const dateFormat = require('dateformat');
 
 const contentfulOptions = {
@@ -40,6 +40,8 @@ const contentfulOptions = {
 
 const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[post_slug];
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
   const fetchData = async () => {
@@ -56,9 +58,12 @@ const BlogPost = ({ computedMatch }) => {
 
   if (Object.keys(post).length === 0) {
     return (
-      <ScrollToTop>
-        <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
+          <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
       </ScrollToTop>
+      </>
     );
   }
   const renderRelatedProducts = products => {
@@ -127,71 +132,73 @@ const BlogPost = ({ computedMatch }) => {
     }
 
     return (
-      <ScrollToTop>
-        <div className="journal-gallery post">
-          <Box className="content" py={8}>
-            <Container>
-              <Box className="center">
-                <div className="flex">
-                  <span className="categoryName">
-                    <Link to={`/journal/category/${slug}`}>{category}</Link>
-                  </span>
-                  |
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
+          <div className="journal-gallery post">
+            <Box className="content" py={8}>
+              <Container>
+                <Box className="center">
+                  <div className="flex">
+                    <span className="categoryName">
+                      <Link to={`/journal/category/${slug}`}>{category}</Link>
+                    </span>
+                    |
                   <span className="minRead">
-                    {post.fields.minuteRead} Min Read
+                      {post.fields.minuteRead} Min Read
                   </span>
-                </div>
-                <h1>{post.fields.title}</h1>
-                <img src={imageUrl} />
-              </Box>
-              <Grid container>
-                <Grid item xs={12} md={2} className="left">
-                  <p className="date">
-                    {dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}
-                  </p>
-                  <div className="mobile-flex">
-                    <div className="tagholder">
-                      {post.fields.tags && post.fields.tags.length > 0 ? (
-                        <div className="tags">
-                          {renderTags(post.fields.tags)}
+                  </div>
+                  <h1>{post.fields.title}</h1>
+                  <img src={imageUrl} />
+                </Box>
+                <Grid container>
+                  <Grid item xs={12} md={2} className="left">
+                    <p className="date">
+                      {dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}
+                    </p>
+                    <div className="mobile-flex">
+                      <div className="tagholder">
+                        {post.fields.tags && post.fields.tags.length > 0 ? (
+                          <div className="tags">
+                            {renderTags(post.fields.tags)}
+                          </div>
+                        ) : (
+                            <></>
+                          )}
+                      </div>
+                      <div className="icon-holder">
+                        <p className="share">SHARE</p>
+                        <div className="social">
+                          <a
+                            href="https://www.instagram.com/objective_wellness"
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            <img
+                              src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
+                              alt="instagram"
+                            />
+                          </a>
+                          <a
+                            href="https://www.facebook.com/Objective_Wellness-114299813287253/"
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            <img
+                              src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
+                              alt="facebook"
+                            />
+                          </a>
                         </div>
-                      ) : (
-                          <></>
-                        )}
-                    </div>
-                    <div className="icon-holder">
-                      <p className="share">SHARE</p>
-                      <div className="social">
-                        <a
-                          href="https://www.instagram.com/objective_wellness"
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          <img
-                            src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
-                            alt="instagram"
-                          />
-                        </a>
-                        <a
-                          href="https://www.facebook.com/Objective_Wellness-114299813287253/"
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          <img
-                            src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
-                            alt="facebook"
-                          />
-                        </a>
                       </div>
                     </div>
-                  </div>
-                </Grid>
-                <Grid item xs={12} md={10} className="border-left">
-                  {documentToReactComponents(
-                    post.fields.body,
-                    contentfulOptions
-                  )}
-                  {/* Quote Block
+                  </Grid>
+                  <Grid item xs={12} md={10} className="border-left">
+                    {documentToReactComponents(
+                      post.fields.body,
+                      contentfulOptions
+                    )}
+                    {/* Quote Block
                   <Divider className="gray" />
                   <h2>
                     And that’s a one-two punch
@@ -202,43 +209,44 @@ const BlogPost = ({ computedMatch }) => {
                   </h2>
                   <Divider className="gray" />
                   */}
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Container>
-          </Box>
+              </Container>
+            </Box>
 
-          {post.fields.relatedProducts &&
-            post.fields.relatedProducts.length > 0 ? (
-              <Box className="shop">
-                <Container>
-                  <h1 className="title" align="center">
-                    SHOP THIS POST
+            {post.fields.relatedProducts &&
+              post.fields.relatedProducts.length > 0 ? (
+                <Box className="shop">
+                  <Container>
+                    <h1 className="title" align="center">
+                      SHOP THIS POST
                 </h1>
-                  <div className="border"></div>
-                  <Grid container spacing={3} justify="center">
-                    {renderRelatedProducts(post.fields.relatedProducts)}
+                    <div className="border"></div>
+                    <Grid container spacing={3} justify="center">
+                      {renderRelatedProducts(post.fields.relatedProducts)}
+                    </Grid>
+                  </Container>
+                </Box>
+              ) : (
+                <></>
+              )}
+
+            {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
+              <Box className="content related" py={8}>
+                <Container>
+                  <Divider />
+                  <h1>Related Posts</h1>
+                  <Grid container spacing={4} className="calloutSmall">
+                    {renderRelatedPosts(post.fields.relatedPosts)}
                   </Grid>
                 </Container>
               </Box>
             ) : (
-              <></>
-            )}
-
-          {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
-            <Box className="content related" py={8}>
-              <Container>
-                <Divider />
-                <h1>Related Posts</h1>
-                <Grid container spacing={4} className="calloutSmall">
-                  {renderRelatedPosts(post.fields.relatedPosts)}
-                </Grid>
-              </Container>
-            </Box>
-          ) : (
-              <></>
-            )}
-        </div>
-      </ScrollToTop>
+                <></>
+              )}
+          </div>
+        </ScrollToTop>
+      </>
     );
   };
 
