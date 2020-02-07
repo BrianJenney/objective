@@ -101,13 +101,13 @@ const CartNotification = () => {
     );
   }
 
-  return (
+  return content != null ? (
     <>
       <div ref={node}>
         <Paper className={xs ? 'triangleXS' : 'triangle'}>{content}</Paper>
       </div>
     </>
-  );
+  ) : null;
 };
 
 export default CartNotification;
