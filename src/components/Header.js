@@ -84,8 +84,7 @@ const Header = ({ currentUser, location }) => {
     ) {
       setAcqDiscount(true);
       removeCoupon(cart._id);
-      // TODO: put the actual coupon before merging to live
-      addCoupon(cart._id, 'voucherify.io-sandbox-03');
+      addCoupon(cart._id, 'SAVE25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id]);
