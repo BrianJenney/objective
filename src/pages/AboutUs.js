@@ -14,6 +14,8 @@ import './about/about-styles.scss';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_ABOUTUS } from '../constants/contentfulEntries';
 import { receivedLoginFailure } from '../modules/account/actions';
+import HeadTags from '../components/common/HeadTags';
+import { useSelector } from 'react-redux';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
@@ -47,10 +49,12 @@ const contentfulOptions = {
   }
 };
 
-const AboutUs = () => {
+const AboutUs = ({ location }) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [contents, setContents] = useState();
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[location.pathname.substring(1)];
 
   const fetchData = async () => {
     const results = [];
@@ -206,89 +210,93 @@ const AboutUs = () => {
   };
 
   return contents ? (
-    <ScrollToTop>
-      <div className="aboutus">
-        {renderHeroSlider()}
-        <Box py={8} className="mobile-padding">
-          <Container className="section1">
-            <div className="title">
-              <h1>{contents.welcomeHeader}</h1>
-              <img
-                src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
-                alt=""
-                className="slash"
-              />
-            </div>
-            {renderWelcomeText()}
-          </Container>
-        </Box>
-        <Box className="section2 mobile-padding" py={8}>
-          {mobile ? (
-            <>
-              <img
-                src={
-                  contents.additionalText.content[6].data.target.fields.file.url
-                }
-                className="mobile-img"
-              ></img>
-              <Container>
-                <Box>
-                  <div className="text">{renderAdditionalText()}</div>
-                </Box>
-                <Link to="/gallery" className="buttonlink mobile-only">
-                  Shop Better Health
-                </Link>
-              </Container>
-            </>
-          ) : (
-              <div
-                style={{
-                  backgroundImage: `url("${contents.additionalText.content[4].data.target.fields.file.url.replace(
-                    '//images.ctfassets.net/mj9bpefl6wof/',
-                    'https://nutranext.imgix.net/'
-                  )}?q=50&auto=compress,format")`
-                }}
-                className="desktop-img"
-              >
+    <>
+      <HeadTags title={title} description={description} />
+      <ScrollToTop>
+        <div className="aboutus">
+          {renderHeroSlider()}
+          <Box py={8} className="mobile-padding">
+            <Container className="section1">
+              <div className="title">
+                <h1>{contents.welcomeHeader}</h1>
+                <img
+                  src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
+                  alt=""
+                  className="slash"
+                />
+              </div>
+              {renderWelcomeText()}
+            </Container>
+          </Box>
+          <Box className="section2 mobile-padding" py={8}>
+            {mobile ? (
+              <>
+                <img
+                  src={
+                    contents.additionalText.content[6].data.target.fields.file
+                      .url
+                  }
+                  className="mobile-img"
+                ></img>
                 <Container>
                   <Box>
                     <div className="text">{renderAdditionalText()}</div>
                   </Box>
                   <Link to="/gallery" className="buttonlink mobile-only">
                     Shop Better Health
-                </Link>
+                  </Link>
                 </Container>
+              </>
+            ) : (
+                <div
+                  style={{
+                    backgroundImage: `url("${contents.additionalText.content[4].data.target.fields.file.url.replace(
+                      '//images.ctfassets.net/mj9bpefl6wof/',
+                      'https://nutranext.imgix.net/'
+                    )}?q=50&auto=compress,format")`
+                  }}
+                  className="desktop-img"
+                >
+                  <Container>
+                    <Box>
+                      <div className="text">{renderAdditionalText()}</div>
+                    </Box>
+                    <Link to="/gallery" className="buttonlink mobile-only">
+                      Shop Better Health
+                  </Link>
+                  </Container>
+                </div>
+              )}
+          </Box>
+          <Box py={8} className="mobile-padding">
+            <Container className="section3">
+              <div className="border">
+                {renderApproachBlock()}
+                <Link to="/gallery" className="buttonlink">
+                  Shop Better Health
+                </Link>
               </div>
-            )}
-        </Box>
-        <Box py={8} className="mobile-padding">
-          <Container className="section3">
-            <div className="border">
-              {renderApproachBlock()}
-              <Link to="/gallery" className="buttonlink">
-                Shop Better Health
-              </Link>
-            </div>
-          </Container>
-        </Box>
-        <Box py={8} className="section4 mobile-padding">
-          {renderSections()}
-          <Link to="/gallery" className="buttonlink">
-            Shop Better Health
-          </Link>
-        </Box>
-        <Box py={8} className="section5 mobile-padding">
-          <Container>
-            <h3>Press & Media Inquires?</h3>
-            <h1>
-              <a href="mailto:press@objectivewellness.com">
-                press@objectivewellness.com
-              </a>
-            </h1>
-          </Container>
-        </Box>
-      </div>
-    </ScrollToTop>
+            </Container>
+          </Box>
+          <Box py={8} className="section4 mobile-padding">
+            {renderSections()}
+            <Link to="/gallery" className="buttonlink">
+              Shop Better Health
+            </Link>
+          </Box>
+          <Box py={8} className="section5 mobile-padding">
+            <Container>
+              <h3>Press & Media Inquires?</h3>
+              <h1>
+                <a href="mailto:press@objectivewellness.com">
+                  press@objectivewellness.com
+                </a>
+              </h1>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
+    </>
   ) : (
       <></>
     );
