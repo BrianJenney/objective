@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +16,7 @@ import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_ABOUTUS } from '../constants/contentfulEntries';
 import { receivedLoginFailure } from '../modules/account/actions';
 import HeadTags from '../components/common/HeadTags';
-import { useSelector } from 'react-redux';
+
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({

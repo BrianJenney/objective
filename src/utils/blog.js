@@ -127,6 +127,5 @@ export const fetchStorefrontSeo = async () => {
     const { page, title, description } = fields;
     seoMetadata[page] = { title, description };
   });
-  console.log('seo', seoMetadata);
   return seoMetadata;
 };
