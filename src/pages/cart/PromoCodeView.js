@@ -15,25 +15,16 @@ const PromoCodeView = () => {
   const cart = useSelector(state => state.cart);
 
   return (
-    <Grid
-      container
-      direction="row"
-      xs={12}
-      justify="space-between"
-      style={{ margin: '0 0 20px 0' }}
-    >
+    <Grid container direction="row" xs={12} justify="space-between" style={{ margin: '0 0 20px 0' }}>
       <Grid item xs={6}>
-        <StyledSmallCaps style={{ 'font-size': '14px' }}>
-          Discount
-        </StyledSmallCaps>
+        <StyledSmallCaps style={{ 'font-size': '14px' }}>Discount</StyledSmallCaps>
       </Grid>
       <Grid item xs={6} style={{ 'text-align': 'right' }}>
-        <StyledProductTotal style={{ 'font-size': '18px' }}>
-          {displayMoney(cart.discount)}
-        </StyledProductTotal>
+        <StyledProductTotal style={{ 'font-size': '18px' }}>{displayMoney(cart.discount)}</StyledProductTotal>
       </Grid>
       <StyledFinePrint component="p">
-        {cart.promo.code}<br />
+        {cart.promo.code !== 'SAVE25' ? cart.promo.code : ''}
+        <br />
         <Link
           onClick={e => removeCoupon(cart._id)}
           style={{
