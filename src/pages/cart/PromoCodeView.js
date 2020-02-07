@@ -24,7 +24,7 @@ const PromoCodeView = () => {
       </Grid>
       <StyledFinePrint component="p">
         {// TODO: put the actual coupon before merging to live
-        cart.promo.code !== 'VOUCHERIFY.IO-SANDBOX-03' ? cart.promo.code : ''}
+        cart.promo.code !== 'SAVE25' ? cart.promo.code : ''}
         <br />
         <Link
           onClick={e => removeCoupon(cart._id)}
