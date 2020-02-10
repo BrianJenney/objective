@@ -6,15 +6,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import ProductContext from '../../contexts/ProductContext';
 import { MenuLink } from '../../components/common';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     marginTop: '20px',
-    paddingTop: '10px',
-    paddingBottom: '100px',
+    padding: '10px 16px 100px',
     backgroundColor: '#fdfbf9',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      padding: '10px 16px 57px'
+    }
   },
   heading: {
     marginTop: '70px',
@@ -25,7 +27,17 @@ const useStyles = makeStyles(() => ({
     lineHeight: 1.33,
     letterSpacing: '1.7px',
     color: '#000',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '48px',
+      marginBottom: '39px',
+      fontSize: '16px',
+      lineHeight: 'normal',
+      letterSpacing: '1.28px'
+    }
+  },
+  learnMoreContent: {
+    maxWidth: '1200px'
   },
   thumbnail: {
     width: '100%',
@@ -35,7 +47,12 @@ const useStyles = makeStyles(() => ({
     textTransform: 'uppercase',
     fontSize: '14px',
     fontWeight: 600,
-    color: '#000'
+    color: '#000',
+    [theme.breakpoints.down('sm')]: {
+      fontWeight: 900,
+      lineHeight: 1,
+      letterSpacing: '0.95px'
+    }
   },
   longHypen: {
     width: '25px',
@@ -46,27 +63,48 @@ const useStyles = makeStyles(() => ({
   },
   duration: {
     textTransform: 'uppercase',
-    fontSize: '18px',
-    color: '#000'
+    fontSize: '14px',
+    color: '#000',
+    [theme.breakpoints.down('sm')]: {
+      lineHeight: 1,
+      letterSpacing: '0.95px'
+    }
   },
   title: {
-    fontSize: '42px',
+    fontSize: '32px',
+    fontFamily: 'Canela Text Web',
     fontWeight: 500,
     color: '#000',
     marginTop: '20px',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '28px',
+      fontWeight: 'normal',
+      lineHeight: 1.29,
+      letterSpacing: '0.44px'
+    }
   },
   description: {
     fontSize: '20px',
     color: '#707070',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '16px',
+      lineHeight: 1.63,
+      marginBottom: '13px'
+    }
   },
   readMore: {
     textDecoration: 'underline',
     fontSize: '14px',
     fontWeight: 600,
     color: '#000',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      fontWeight: 900,
+      lineHeight: 1.63,
+      letterSpacing: '1.17px'
+    }
   }
 }));
 
@@ -85,7 +123,7 @@ const ProductLearnMore = () => {
       <Typography className={classes.heading} variant="h4" align="center">
         Want to Learn More?
       </Typography>
-      <Box width="1200px">
+      <Box className={classes.learnMoreContent}>
         <Grid container spacing={2}>
           {learnMoreBlocks.map((learnMoreBlock, index) => (
             <Grid key={`block-${index.toString()}`} item xs={12} sm={4}>

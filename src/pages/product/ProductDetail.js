@@ -17,7 +17,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
-import Carousel from '../../components/ProductSlider/PDPSlider';
+import { Dialog, MenuLink } from '../../components/common';
+import LogoShort from '../../components/common/Icons/LogoShort/LogoShort';
+import PDPSlider from '../../components/ProductSlider/PDPSlider';
 import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
 import {
@@ -32,6 +34,20 @@ import './PDP-style.scss';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(4),
+    backgroundColor: '#fcf9f6',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '2px',
+      paddingBottom: '22px'
+    }
+  },
+  containerRoot: {
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
+  },
   maxWidth: {
     maxWidth: '464px',
     justifyContent: 'center'
@@ -42,11 +58,6 @@ const useStyles = makeStyles(theme => ({
   },
   box: {
     backgroundColor: 'transparent'
-  },
-  gridModifications: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(4),
-    backgroundColor: '#fdfbf9'
   },
   btnOOS: {
     border: '1.5px solid',
@@ -104,6 +115,7 @@ const ProductDetail = () => {
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const [promiseModalOpen, setPromiseModalOpen] = useState(false);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
   const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
@@ -151,6 +163,9 @@ const ProductDetail = () => {
     setOpenOutOfStockDialog(false);
   }, [setOpenOutOfStockDialog]);
 
+  const openPromiseModal = () => setPromiseModalOpen(true);
+  const closePromiseModal = () => setPromiseModalOpen(false);
+
   /* Out Of Stock email confirmation */
   const handleOpenEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(true);
@@ -176,7 +191,7 @@ const ProductDetail = () => {
         atcRef.current.style.boxShadow = 'none';
       } else {
         atcRef.current.style.position = 'fixed';
-        atcRef.current.style.boxShadow = '0 0 5px 5px #888';
+        atcRef.current.style.boxShadow = '0 0 8px 8px #ccc';
       }
     }
   };
@@ -231,11 +246,11 @@ const ProductDetail = () => {
   } = content;
 
   return (
-    <Box className={classes.gridModifications}>
-      <Container>
+    <Box className={classes.root}>
+      <Container className={classes.containerRoot}>
         <Grid container xs={12} sm={12}>
           <Grid item xs={12} sm={8}>
-            <Carousel images={productImages} />
+            <PDPSlider images={productImages} />
           </Grid>
           <Grid item xs={12} sm={4}>
             <Card className={classes.box}>
@@ -292,11 +307,40 @@ const ProductDetail = () => {
                     >
                       <Box width={320}>
                         <Typography className="atc-note">
-                          Our Objective Promise ensures you’re making a
-                          risk-free purchase
+                          Our{' '}
+                          <MenuLink onClick={openPromiseModal}>
+                            Objective Promise
+                          </MenuLink>{' '}
+                          ensures you’re making a risk-free purchase
                         </Typography>
                       </Box>
                     </Box>
+                    <Dialog onClose={closePromiseModal} open={promiseModalOpen}>
+                      <Box p={5}>
+                        <Box className="promise-content">
+                          <Box className="diamond">
+                            <LogoShort />
+                          </Box>
+                          <Typography
+                            variant="h4"
+                            gutterBottom
+                            className="uppercase promise-title"
+                          >
+                            THE OBJECTIVE PROMISE
+                          </Typography>
+                          <Typography className="promise-description">
+                            Behind every Objective supplement are studies,
+                            endless hours of research and a team with over 50
+                            years of combined experience formulating dietary
+                            supplements. And the one thing we know for sure?
+                            Everybody's different. Every body is different. It's
+                            possible that what works wonders for your best
+                            friend might not do a thing for you. So let us know
+                            and we'll refund your money. It's that simple.
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Dialog>
                   </Box>
                 </CardActions>
               )}
