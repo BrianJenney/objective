@@ -24,7 +24,7 @@ html,
 }
 
 .pdp-benefits {
-  margin: 30px 0 10px;
+  margin: 16px 0;
 
   .benefit {
     display: flex;
@@ -32,6 +32,7 @@ html,
 
     .icon {
       flex: 0 0 78px;
+      width: 78px;
       height: 78px;
       display: flex;
       align-items: center;
@@ -82,7 +83,7 @@ html,
       .collapse-icon {
         img {
           width: auto;
-          height: 12px;
+          height: 18px;
         }
       }
     }
@@ -108,21 +109,28 @@ html,
         .contentful-container {
           img {
             width: 260px;
-            height: auto;
+            height: 260px;
           }
         }
         .magnifier-container {
-          margin-top: 15px;
           position: relative;
-          height: 40px;
+
+          .MuiIconButton-root:hover {
+            background-color: transparent;
+          }
 
           button {
             position: absolute;
-            left: 230px;
+            width: 260px;
+            height: 260px;
+            bottom: 5px;
           }
           img {
             width: 18px;
             height: 16px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
           }
         }
       }
@@ -133,12 +141,16 @@ html,
           margin: 0;
           line-height: 1.67;
           color: #000000;
-          font-weight: normal;
+          font-weight: 900;
         }
       }
       .directions {
         .summary {
           margin-bottom: 20px;
+          font-family: FreightTextProBook;
+          font-size: 18px;
+          line-height: 1.5;
+          color: #000000;
         }
         .entry {
           display: flex;
@@ -162,6 +174,7 @@ html,
             font-family: FreightTextProBook;
             font-size: 24px;
             color: #1f396d;
+            line-height: 1;
           }
         }
       }
@@ -289,14 +302,17 @@ html,
 }
 
 .pdp-atc-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .atc-btn {
-    background-color: #fdfbf9;
     margin-top: 34px;
     position: fixed;
-    box-shadow: 0 0 5px 5px #888;
+    box-shadow: 0 0 8px 8px #ccc;
     bottom: 5px;
-    width: 360px;
-    z-index: 1200;
+    width: 413px;
+    z-index: 1;
   }
 
   .atc-note {
@@ -307,6 +323,58 @@ html,
     letter-spacing: 1.13px;
     color: #707070;
     margin-top: 9px;
+    text-align: center;
+
+    .MuiLink-underlineHover {
+      text-decoration: underline;
+      color: #707070;
+    }
+  }
+}
+
+.promise-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .diamond {
+    background: #000;
+    height: 120px;
+    width: 120px;
+    text-align: center;
+    transform: rotate(45deg);
+    padding: 35px;
+    margin-bottom: 65px;
+
+    svg {
+      width: 65px;
+      transform: rotate(315deg);
+
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+  .promise-title {
+    font-family: p22-underground, sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.35;
+    letter-spacing: 1px;
+    color: #000000;
+    margin-bottom: 17px;
+    text-align: center;
+  }
+
+  .promise-description {
+    font-family: FreightTextProBook;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+    text-align: center;
   }
 }
 
@@ -435,11 +503,8 @@ html,
   .bottom-block .other-ingredients {
     border-right: none !important;
   }
-  .mobile-grid-modifications {
-    background-color: #fdfbf9;
-  }
   .pdp-content {
-    padding: 25px 0 0 !important;
+    margin-top: -16px;
   }
   .mobile-padding {
     padding: 0 16px;
@@ -447,23 +512,57 @@ html,
   .mobile-padding-small {
     padding: 0 8px;
   }
-  .pdp-header {
-    font-size: 36px;
-    margin: 0px 0 5px;
+  .MuiTypography-h1.pdp-header {
+    font-size: 32px;
+    font-weight: normal;
+    margin: 0 0 5px;
+  }
+  .pdp-product-variant {
+    margin-bottom: 20px;
   }
   .pdp-subtitle {
-    margin-bottom: 1px;
+    margin-bottom: 5px;
     letter-spacing: 0.57px;
     font-size: 16px;
     font-weight: 600;
+  }
+  .pdp-description {
+    font-size: 16px;
   }
   .pdp-price {
     font-size: 22px;
     padding-top: 5px;
   }
   .pdp-price-description {
-    font-size: 18px;
-    padding-top: 5px;
+    font-size: 12px;
     letter-spacing: 0.64px;
+  }
+  .pdp-benefits {
+    margin: 10px 0;
+
+    .benefit {
+      .icon {
+        flex: 0 0 58px;
+        width: 58px;
+      }
+    }
+  }
+  .pdp-accordion {
+    margin: 0 -16px;
+
+    .MuiExpansionPanel-root {
+      padding: 15px 16px;
+    }
+  }
+  .pdp-atc-container {
+    .atc-btn {
+      margin-top: 6px;
+      width: 375px;
+      bottom: 0;
+
+      .atc-button {
+        padding: 12px 16px !important;
+      }
+    }
   }
 }

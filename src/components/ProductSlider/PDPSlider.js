@@ -1,23 +1,25 @@
 import React, { useContext, useState, useEffect } from 'react';
-
-import ProductContext from '../../contexts/ProductContext';
 import ImageGallery from 'react-image-gallery';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import ProductContext from '../../contexts/ProductContext';
 import './image-gallery-overrides.css';
 import styles from './overrides.module.scss';
 
-const Carousel = props => {
+const PDPSlider = props => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   let { images } = props;
   const productContext = useContext(ProductContext);
-  const {product} = productContext; 
+  const { product } = productContext;
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   if (!images) {
     images = [
       {
-        'fields': {
-          'file': {
-            'url': 'https://cdn1.stopagingnow.com/objective/658x658.png'
+        fields: {
+          file: {
+            url: 'https://cdn1.stopagingnow.com/objective/658x658.png'
           }
         }
       }
@@ -25,9 +27,13 @@ const Carousel = props => {
   }
 
   useEffect(() => {
-    const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper');
+    const imageWrapper = document.getElementsByClassName(
+      'image-gallery-slide-wrapper'
+    );
     const largeImg = document.getElementsByClassName('image-gallery-image');
-    const thumbImg = document.getElementsByClassName('image-gallery-thumbnails-container');
+    const thumbImg = document.getElementsByClassName(
+      'image-gallery-thumbnails-container'
+    );
 
     if (imageWrapper.length < 1) {
       return undefined;
@@ -60,8 +66,6 @@ const Carousel = props => {
       setWindowWidth(window.innerWidth);
       if (windowWidth < 769) {
         imageWrapper[0].classList.add(styles['newWidth']);
-      } else {
-        return;
       }
     };
     window.addEventListener('resize', handleResize);
@@ -71,12 +75,12 @@ const Carousel = props => {
   });
 
   /*
-  *
-  * @description - Tracks Segment Product Images Browsed Event
-  * @param {Int} currentIndex - The index of the image being browsed
-  * @return void
-  * 
-  */
+   *
+   * @description - Tracks Segment Product Images Browsed Event
+   * @param {Int} currentIndex - The index of the image being browsed
+   * @return void
+   *
+   */
   const handleSegmentBrowsedEvent = currentIndex => {
     const image = images[currentIndex];
     window.analytics.track('Product Images Browsed', {
@@ -93,26 +97,39 @@ const Carousel = props => {
 
     images.map(image => {
       let imageUrlOriginal = image.fields.file.url + '?w=687&w=687&q=50';
-      let imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/mj9bpefl6wof/');
-      imageUrlOriginal = 'https://nutranext.imgix.net/'+imageUrlOriginalSplit[1]+'&auto=compress,format'; 
+      let imageUrlOriginalSplit = imageUrlOriginal.split(
+        '//images.ctfassets.net/mj9bpefl6wof/'
+      );
+      imageUrlOriginal =
+        'https://nutranext.imgix.net/' +
+        imageUrlOriginalSplit[1] +
+        '&auto=compress,format';
 
       let imageUrlThumbnail = image.fields.file.url + '?w=120&h=120&q=50';
-      let imageUrlThumbnailSplit = imageUrlThumbnail.split('//images.ctfassets.net/mj9bpefl6wof/');
-      imageUrlThumbnail= 'https://nutranext.imgix.net/'+imageUrlThumbnailSplit[1]+'&auto=compress,format'; 
+      let imageUrlThumbnailSplit = imageUrlThumbnail.split(
+        '//images.ctfassets.net/mj9bpefl6wof/'
+      );
+      imageUrlThumbnail =
+        'https://nutranext.imgix.net/' +
+        imageUrlThumbnailSplit[1] +
+        '&auto=compress,format';
 
-      carouselImages.push({ original: imageUrlOriginal, thumbnail: imageUrlThumbnail });
+      carouselImages.push({
+        original: imageUrlOriginal,
+        thumbnail: imageUrlThumbnail
+      });
       return carouselImages;
     });
 
     return (
       <ImageGallery
-        showNav={true}
+        showNav
         additionalClass={styles['set-gallery-width']}
         showFullscreenButton={false}
         showPlayButton={false}
         items={carouselImages}
-        thumbnailPosition={'left'}
-        showThumbnails={windowWidth < 769 ? false : true}
+        thumbnailPosition={xs ? 'bottom' : 'left'}
+        showThumbnails
         onSlide={handleSegmentBrowsedEvent}
       />
     );
@@ -121,4 +138,4 @@ const Carousel = props => {
   return <>{renderImages(images)}</>;
 };
 
-export default Carousel;
+export default PDPSlider;

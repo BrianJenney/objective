@@ -147,9 +147,13 @@ const ProductAccordion = ({ content }) => {
                 <TableBody>
                   {supplementFactsIngredients.map((ingredient, index) => (
                     <TableRow key={`tr_${index.toString()}`}>
-                      <TableCell>{ingredient.ingredient}</TableCell>
+                      <TableCell
+                        dangerouslySetInnerHTML={{
+                          __html: ingredient.ingredient
+                        }}
+                      />
                       <TableCell>{ingredient.amount}</TableCell>
-                      <TableCell>{ingredient.dailyValue}</TableCell>
+                      <TableCell>{ingredient.daily_value}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
