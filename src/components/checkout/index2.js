@@ -31,6 +31,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
+import Login from '../Login';
 
 const getPanelTitleContent = (
   xs,
@@ -106,6 +107,7 @@ const Checkout = ({
 }) => {
   const [payload, setPayload] = useState({});
   const [resetFormMode, setResetFormMode] = useState(false);
+  const [authMode, setAuthMode] = useState("shipping");
   const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
@@ -261,6 +263,12 @@ const Checkout = ({
     }
   }, [currentUser.data.account_jwt]);
 
+  useEffect(() =>{
+    if(account_jwt && authMode==='login' && activeStep===0){
+        setAuthMode("shipping");
+    }
+  }, [currentUser.data.account_jwt])
+
   useEffect(() => {
     if (activeStep === 1) {
        setShippingAddressActive(payload.shippingAddress);
@@ -414,34 +422,35 @@ const Checkout = ({
       {loading ? (
         <Loader />
       ) : (
-          <Box bgcolor="rgba(252, 248, 244, 0.5)">
-            <Container>
-              <Box py={10} className="checkout-wrapper">
-                <CssBaseline />
-                <Grid container spacing={4}>
-                  <Grid
-                    item
-                    flex={1}
-                    xs={12}
-                    md={8}
-                    style={xs ? { padding: 0 } : {}}
-                    className="right-side"
+        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Container>
+            <Box py={10} className="checkout-wrapper">
+              <CssBaseline />
+              <Grid container spacing={4}>
+                <Grid
+                  item
+                  flex={1}
+                  xs={12}
+                  md={8}
+                  style={xs ? { padding: 0 } : {}}
+                  className="right-side"
+                >
+                  <Panel
+                    title={getPanelTitleContent(
+                      xs,
+                      0,
+                      activeStep,
+                      null,
+                      payload.shippingAddress
+                    )}
+                    collapsible
+                    expanded={activeStep === 0}
+                    onChange={e => onPanelChange(e, 0)}
                   >
-                    <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        0,
-                        activeStep,
-                        null,
-                        payload.shippingAddress
-                      )}
-                      collapsible
-                      expanded={activeStep === 0}
-                      onChange={e => onPanelChange(e, 0)}
-                    >
-                      <div ref={stepRefs[0]}>
+                    <div ref={stepRefs[0]}>
+                      {authMode === 'shipping' ? (
                         <AccountAddresses
-                          checkoutVersion={"2"}
+                          checkoutVersion={2}
                           currentUser={currentUser}
                           cart={cart}
                           setRestrictionMessage={setRestrictionMessage}
@@ -454,127 +463,135 @@ const Checkout = ({
                           allowFlyMode
                           resetFormMode={resetFormMode}
                           shippingAddressActive={shippingAddressActive}
+                          switchToLogin={() => setAuthMode('login')}
                           mt={4}
                           mx={10}
                           mb={5}
                         />
-                      </div>
-                    </Panel>
-                    {xs && activeStep === 1 && restrictionMessage ? (
-                      <StateRestrictionsDialog
-                        product_name={restrictedProduct}
-                        cartCount={cartCount}
-                        onExited={closeShippingRestrictionsDialog}
-                      />
-                    ) : null}
-                    <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        1,
-                        activeStep,
-                        null,
-                        payload.paymentDetails
+                      ) : (
+                        <Login
+                          requestLogin={requestLogin}
+                          clearLoginError={clearLoginError}
+                          switchToSignup={() => setAuthMode('shipping')}
+                        />
                       )}
-                      collapsible
-                      expanded={activeStep === 1}
-                      onChange={e => onPanelChange(e, 1)}
-                    >
-                      <div ref={stepRefs[1]}>
-                        <AccountPaymentDetails
-                          checkoutVersion={"2"}
-                          currentUser={currentUser}
-                          requestPatchAccount={requestPatchAccount}
-                          clearPatchAccountError={clearPatchAccountError}
-                          formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                          onBack={handleBack}
-                          onSubmit={handleNext}
-                          selectionEnabled
-                          seedEnabled
-                          addressSeed={payload.shippingAddress}
-                          useSeedLabel="Use shipping address"
-                          allowFlyMode
-                          mt={4}
-                          mx={10}
-                          mb={5}
-                          backLabel="Cancel"
-                          submitLabel="Review Order"
-                          resetFormMode={resetPaymentDetailsFormMode}
-                        />
-                      </div>
-                    </Panel>
-                    <Panel
-                      title={getPanelTitleContent(xs, 2, activeStep, null, {})}
-                      collapsible
-                      hideExpandIcon
-                      expanded={activeStep === 2}
-                      onChange={e => onPanelChange(e, 2)}
-                      className="lastPanel"
-                    >
-                      <div ref={stepRefs[2]}>
-                        {xs && (
-                          <CartDrawer
-                            disableItemEditing
-                            hideCheckoutProceedLink
-                            hideTaxLabel
-                            showOrderSummaryText
-                            xsBreakpoint={xs}
-                            activeStep={activeStep}
-                            restrictionMessage={restrictionMessage}
-                            restrictedProduct={restrictedProduct}
-                          />
-                        )}
-                        <CheckoutReviewForm
-                          xsBreakpoint={xs}
-                          onSubmit={handleNext}
-                        />
-                      </div>
-                    </Panel>
-                  </Grid>
-                  {!xs && currentUser ? (
-                    <Grid item xs={12} md={4} className="left-side">
-                      <CartDrawer
-                        disableItemEditing
-                        hideCheckoutProceedLink
-                        hideTaxLabel
-                        showOrderSummaryText={false}
-                        xsBreakpoint={xs}
-                        activeStep={activeStep}
-                        restrictionMessage={restrictionMessage}
-                        restrictedProduct={restrictedProduct}
-                      />
-                    </Grid>
-                  ) : (
-                      ''
-                    )}
-                </Grid>
-                <Dialog
-                  className="transaction-dialog-container"
-                  open={checkoutDialogOpen}
-                  onClose={handleCheckoutDialogClose}
-                  closeAfterTransition
-                >
-                  {orderError ? (
-                    <IconButton
-                      aria-label="close"
-                      style={{
-                        position: 'absolute',
-                        right: theme.spacing(1),
-                        top: theme.spacing(1),
-                        color: theme.palette.grey[500]
-                      }}
-                      onClick={handleCheckoutDialogClose}
-                    >
-                      <CloseIcon />
-                    </IconButton>
+                    </div>
+                  </Panel>
+                  {xs && activeStep === 1 && restrictionMessage ? (
+                    <StateRestrictionsDialog
+                      product_name={restrictedProduct}
+                      cartCount={cartCount}
+                      onExited={closeShippingRestrictionsDialog}
+                    />
                   ) : null}
-                  <MuiDialogContent>
-                    <TransactionMessage orderError={orderError} />
-                  </MuiDialogContent>
-                </Dialog>
-              </Box>
-            </Container>
-          </Box>
-        )}
+                  <Panel
+                    title={getPanelTitleContent(
+                      xs,
+                      1,
+                      activeStep,
+                      null,
+                      payload.paymentDetails
+                    )}
+                    collapsible
+                    expanded={activeStep === 1}
+                    onChange={e => onPanelChange(e, 1)}
+                  >
+                    <div ref={stepRefs[1]}>
+                      <AccountPaymentDetails
+                        checkoutVersion={2}
+                        currentUser={currentUser}
+                        requestPatchAccount={requestPatchAccount}
+                        clearPatchAccountError={clearPatchAccountError}
+                        formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                        onBack={handleBack}
+                        onSubmit={handleNext}
+                        selectionEnabled
+                        seedEnabled
+                        addressSeed={payload.shippingAddress}
+                        useSeedLabel="Use shipping address"
+                        allowFlyMode
+                        mt={4}
+                        mx={10}
+                        mb={5}
+                        backLabel="Cancel"
+                        submitLabel="Review Order"
+                        resetFormMode={resetPaymentDetailsFormMode}
+                      />
+                    </div>
+                  </Panel>
+                  <Panel
+                    title={getPanelTitleContent(xs, 2, activeStep, null, {})}
+                    collapsible
+                    hideExpandIcon
+                    expanded={activeStep === 2}
+                    onChange={e => onPanelChange(e, 2)}
+                    className="lastPanel"
+                  >
+                    <div ref={stepRefs[2]}>
+                      {xs && (
+                        <CartDrawer
+                          disableItemEditing
+                          hideCheckoutProceedLink
+                          hideTaxLabel
+                          showOrderSummaryText
+                          xsBreakpoint={xs}
+                          activeStep={activeStep}
+                          restrictionMessage={restrictionMessage}
+                          restrictedProduct={restrictedProduct}
+                        />
+                      )}
+                      <CheckoutReviewForm
+                        xsBreakpoint={xs}
+                        onSubmit={handleNext}
+                      />
+                    </div>
+                  </Panel>
+                </Grid>
+                {!xs && currentUser ? (
+                  <Grid item xs={12} md={4} className="left-side">
+                    <CartDrawer
+                      disableItemEditing
+                      hideCheckoutProceedLink
+                      hideTaxLabel
+                      showOrderSummaryText={false}
+                      xsBreakpoint={xs}
+                      activeStep={activeStep}
+                      restrictionMessage={restrictionMessage}
+                      restrictedProduct={restrictedProduct}
+                    />
+                  </Grid>
+                ) : (
+                  ''
+                )}
+              </Grid>
+              <Dialog
+                className="transaction-dialog-container"
+                open={checkoutDialogOpen}
+                onClose={handleCheckoutDialogClose}
+                closeAfterTransition
+              >
+                {orderError ? (
+                  <IconButton
+                    aria-label="close"
+                    style={{
+                      position: 'absolute',
+                      right: theme.spacing(1),
+                      top: theme.spacing(1),
+                      color: theme.palette.grey[500]
+                    }}
+                    onClick={handleCheckoutDialogClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ) : null}
+                <MuiDialogContent>
+                  <TransactionMessage orderError={orderError} />
+                </MuiDialogContent>
+              </Dialog>
+            </Box>
+          </Container>
+        </Box>
+      )}
     </>
   );
 };

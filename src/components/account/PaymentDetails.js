@@ -214,6 +214,8 @@ const AccountPaymentDetails = ({
           onSubmit={handleSave}
           onBack={() => setFormModeEnabled(false)}
           allowFlyMode={allowFlyMode}
+          checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
+          submitLabel={submitLabel}
         />
       ) : (
           <>

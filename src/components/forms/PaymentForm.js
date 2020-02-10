@@ -8,14 +8,17 @@ import braintreeClient from 'braintree-web/client';
 import HostedFields from 'braintree-web/hosted-fields';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Checkbox from '@material-ui/core/Checkbox';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { InputField, SelectField, CheckboxField } from '../form-fields';
+import { InputField, SelectField, CheckboxField, RadioGroupField } from '../form-fields';
 import { Button, AlertPanel, NavLink } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
@@ -27,6 +30,29 @@ import {
   getErrorMessage,
   scrollToRef
 } from '../../utils/misc';
+
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: '26px',
+    fontFamily: 'Canela Text Web'
+  },
+  mobileTitle: {
+    fontSize: '24px',
+    fontFamily: 'FreightTextProBook'
+  },
+  subTitle: {
+    textAlign: 'right',
+    fontSize: '16px',
+    fontWeight: 'normal',
+    fontFamily: 'p22-underground, Helvetica, sans-serif',
+    marginLeft: '3px',
+    marginBottom:'16px',
+    marginTop: '8px'
+  },
+  formControlLabel : {
+    fontSize: '20px'
+  }
+}));
 
 const usePrevious = value => {
   const ref = useRef();
@@ -118,7 +144,8 @@ const PaymentForm = ({
   onlyCard,
   submitLabel,
   backLabel,
-  allowFlyMode
+  allowFlyMode,
+  ...rest
 }) => {
   const fieldRefs = {
     cardholderName: useRef(null),
@@ -137,7 +164,7 @@ const PaymentForm = ({
   const errRef = useRef(null);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-
+  const classes = useStyles();
   const handleUseAddressSeedToggle = (event, values, setValues) => {
     if (event.target.checked) {
       setValues({
@@ -156,6 +183,9 @@ const PaymentForm = ({
       });
     }
   };
+
+  const [billingAddressMode, setBillingAddressMode] = useState('sameAsShipping');
+  const [initialRender, setInitialRender] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
     event => {
@@ -169,6 +199,17 @@ const PaymentForm = ({
   const errorMessage = getErrorMessage(
     currentUser.patchAccountError
   );
+
+  const handleSetBillingAddressMode = (event, values, setValues) => {
+    if(event.target.value === 'sameAsShipping'){
+      handleUseAddressSeedToggle({target:{checked:true}},values,setValues);
+    }else{
+      handleUseAddressSeedToggle({target:{checked:false}},values,setValues);
+    }
+
+    setBillingAddressMode(event.target.value);
+  };
+  
 
   useEffect(() => {
     if (errorMessage) {
@@ -367,10 +408,44 @@ const PaymentForm = ({
     };
     onSubmit(payload, actions);
   };
-
+  
+  const preRenderBillingAddress = (values, setValues) => {
+    if (!initialRender && billingAddressMode==='sameAsShipping' && Object.keys(addressSeed).length > 0 && seedEnabled && rest.checkoutVersion && rest.checkoutVersion === 2) {
+      handleSetBillingAddressMode(
+        { target: { value: 'sameAsShipping' } },
+        values,
+        setValues
+      );
+      setInitialRender(true);
+    }
+  }
   /* eslint-disable */
-  const renderForm = ({ values, setValues, isSubmitting }) => (
+  const renderForm = ({ values, setValues, isSubmitting }) => {preRenderBillingAddress(values, setValues); return(
     <Form>
+      {rest.checkoutVersion && rest.checkoutVersion === 2 && (
+              <Box display="block" mb={xs ? 2 : 3} className="justify-content">
+              <Typography
+                color="#231f20"
+                variant="h5"
+                fontSize={xs ? 24 : 30}
+                className={xs ? classes.mobileTitle : classes.title}
+              >
+                Secure Payment
+              </Typography>
+      
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      className={xs ? classes.mobileLogin : classes.subTitle}
+                      style={{textAlign:'left', margin:'0px'}}
+                    > 
+                     All transactions are secure and encrypted
+                      
+                    </Typography>
+                  </Box>
+              
+            </Box>
+      )}
       <Box
         component={Typography}
         color="#231f20"
@@ -436,11 +511,12 @@ const PaymentForm = ({
               </Box>
             </Grid>
             {allowFlyMode && (
-              <Grid item xs={12} style={{ marginTop: '25px' }}>
+              <Grid item xs={12} style={rest.checkoutVersion && rest.checkoutVersion === 2 ? { marginTop: '0px', paddingLeft: '3px' } : {}}>
                 <Field
                   name="shouldSaveData"
-                  label="Save details in account"
+                  label={rest.checkoutVersion && rest.checkoutVersion === 2 ? 'Save as default card' : 'Save details in account'}
                   component={CheckboxField}
+                  style={rest.checkoutVersion && rest.checkoutVersion === 2 ? {paddingLeft: '3px'} : {}}
                 />
               </Grid>
             )}
@@ -454,7 +530,33 @@ const PaymentForm = ({
                 mb={1}
               />
             </Grid>
-            {seedEnabled && (
+            {seedEnabled && rest.checkoutVersion && rest.checkoutVersion === 2 && (
+              <Grid item xs={12}>
+                <Box>
+                  <RadioGroup
+                    id="toggleBillingAddressFormMode"
+                    onChange={evt => {handleSetBillingAddressMode(evt, values, setValues)}}
+                    value={billingAddressMode}
+                  >
+                    <FormControlLabel
+                      key="formControlLabelSameAsShipping"
+                      value="sameAsShipping"
+                      control={<Radio color={'primary'} size={'small'} />}
+                      label="Same as shipping address"
+                      classes={{label:classes.formControlLabel}}
+                    />
+                    <FormControlLabel
+                      key="formControlLabelDifferentShipping"
+                      value="differentShipping"
+                      control={<Radio color={'primary'} size={'small'}  />}
+                      label="Use a different billing address"
+                      classes={{label:classes.formControlLabel}}
+                    />
+                  </RadioGroup>
+                </Box>
+              </Grid>
+            )}
+            {seedEnabled && (!rest.checkoutVersion || (rest.checkoutVersion && rest.checkoutVersion === 1)) && (
               <Grid item xs={12}>
                 <Box display="flex" alignItems="center">
                   <Checkbox
@@ -471,6 +573,9 @@ const PaymentForm = ({
                 </Box>
               </Grid>
             )}
+            
+            {(billingAddressMode==='differentShipping' || (!rest.checkoutVersion || (rest.checkoutVersion && rest.checkoutVersion === 1))) && (
+            <>
             <Grid item xs={12} sm={6}>
               <div ref={fieldRefs.firstName}>
                 <Field
@@ -498,6 +603,11 @@ const PaymentForm = ({
                   label="Street Address"
                   component={InputField}
                   autoComplete="address-line1"
+                  helperText={
+                    rest.checkoutVersion && rest.checkoutVersion === 2
+                      ? '*No PO Boxes or APO/FPO addresses'
+                      : false
+                  }
                 />
               </div>
             </Grid>
@@ -511,7 +621,13 @@ const PaymentForm = ({
                 />
               </div>
             </Grid>
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              sm={
+                rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false
+              }
+            >
               <div ref={fieldRefs.city}>
                 <Field
                   name="billingAddress.city"
@@ -521,7 +637,11 @@ const PaymentForm = ({
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid
+              item
+              xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+              sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 2 : 6}
+            >
               <div ref={fieldRefs.state}>
                 <Field
                   name="billingAddress.state"
@@ -531,7 +651,11 @@ const PaymentForm = ({
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid
+              item
+              xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+              sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 4 : 6}
+            >
               <div ref={fieldRefs.zipcode}>
                 <Field
                   name="billingAddress.zipcode"
@@ -551,7 +675,15 @@ const PaymentForm = ({
                 autoComplete="tel"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              style={
+                rest.checkoutVersion && rest.checkoutVersion === 2
+                  ? { display: 'none' }
+                  : {}
+              }
+            >
               <Field
                 name="billingAddress.country"
                 label="Country"
@@ -560,25 +692,32 @@ const PaymentForm = ({
                 disabled
               />
             </Grid>
-
+            </>
+              )}
             {!currentUser.data.account_jwt && (
               <>
-                <Box
-                  component={Typography}
-                  color="#231f20"
-                  variant="h5"
-                  children="Save your information for faster checkout"
-                  fontSize={xs ? 24 : 30}
-                  mb={xs ? 3 : 4}
-                  mt={xs ? 3 : 4}
-                />
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ marginBottom: '10px' }}>
+                  <Box
+                    component={Typography}
+                    color="#231f20"
+                    variant="h5"
+                    children="Easy order status and snappy checkout"
+                    fontSize={xs ? 24 : 26}
+                    mb={1}
+                    mt={xs ? 2 : 3}
+                  />
+                  <Typography
+                    variant="p"
+                    children="For faster checkout next time, create a password"
+                    className={classes.subTitle}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{marginBottom:'40px'}}>
                   <div ref={fieldRefs.password}>
                     <Field
                       name="billingAddress.password"
                       label="Password"
                       component={InputField}
-                      helperText="Add a password to easily track your order and check out faster next time"
                       type={passwordVisible ? 'text' : 'password'}
                       InputProps={{
                         endAdornment: (
@@ -610,15 +749,17 @@ const PaymentForm = ({
         )}
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
-            {onBack && (
-              <Button
-                color="secondary"
-                type="button"
-                onClick={onBack}
-                children={backLabel}
-                mr={2}
-              />
-            )}
+            {onBack &&
+              currentUser.data.paymentMethods &&
+              currentUser.data.paymentMethods.length > 0 && (
+                <Button
+                  color="secondary"
+                  type="button"
+                  onClick={onBack}
+                  children={backLabel}
+                  mr={2}
+                />
+              )}
             <Button
               type="submit"
               children={submitLabel}
@@ -628,7 +769,7 @@ const PaymentForm = ({
         </Grid>
       </Grid>
     </Form>
-  );
+  )};
   /* eslint-enable */
 
   return (

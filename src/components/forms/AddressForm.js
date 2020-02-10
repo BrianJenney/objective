@@ -10,7 +10,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button, AlertPanel, NavLink } from '../common';
+import { Button, AlertPanel, NavLink, MenuLink } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
   getInitialValues,
@@ -22,7 +22,7 @@ import AddressValidation from '../account/AddressValidation';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '30px',
+    fontSize: '26px',
     fontFamily: 'Canela Text Web'
   },
   mobileTitle: {
@@ -31,16 +31,19 @@ const useStyles = makeStyles(theme => ({
   },
   subTitle: {
     textAlign: 'right',
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 'normal',
     fontFamily: 'p22-underground, Helvetica, sans-serif',
-    paddingTop: '5px',
-    fontWeight: 600
+    paddingTop: '5px'
+  },
+  subTitleLink: {
+    fontWeight: 600,
+    marginLeft: '5px'
   },
   mobileLogin: {
     fontFamily: 'P22Underground',
     fontSize: '14px',
-    fontWeight: 600
+    fontWeight: 'normal'
   },
   mobileBox: {}
 }));
@@ -122,7 +125,8 @@ const AddressForm = ({
   onBack,
   submitLabel,
   backLabel,
-  allowFlyMode
+  allowFlyMode,
+  ...rest
 }) => {
   const fieldRefs = {
     firstName: useRef(null),
@@ -200,7 +204,7 @@ const AddressForm = ({
   };
 
   const topTitle =
-    formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
+    rest.checkoutVersion && rest.checkoutVersion === 2 ? 'Objective Secure Checkout' : formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(
@@ -309,7 +313,7 @@ const AddressForm = ({
 
   const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
     <Form>
-      <Box display="flex" mb={xs ? 3 : 4} className="justify-content">
+      <Box display="block" mb={xs ? 3 : 4} className="justify-content">
         <Typography
           color="#231f20"
           variant="h5"
@@ -321,15 +325,17 @@ const AddressForm = ({
 
         {!currentUser.data.account_jwt && (
           <>
-            <Box>
+            <Box style={{float:"left"}}>
               <Typography
                 variant="body1"
                 className={xs ? classes.mobileLogin : classes.subTitle}
-              >
-                <NavLink
-                  to={`/login${window.location.pathname}`}
+              > 
+               Already have an account?
+                <MenuLink
+                  onClick={rest.switchToLogin}
                   children="LOG IN"
                   underline="always"
+                  className={classes.subTitleLink}
                 />
               </Typography>
             </Box>
@@ -391,6 +397,7 @@ const AddressForm = ({
               label="Street Address"
               component={InputField}
               autoComplete="address-line1"
+              helperText={rest.checkoutVersion && rest.checkoutVersion===2 ? "*No PO Boxes or APO/FPO addresses" : false}
             />
           </div>
         </Grid>
@@ -402,7 +409,7 @@ const AddressForm = ({
             autoComplete="address-line2"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={rest.checkoutVersion && rest.checkoutVersion===2 ? 6 : false}>
           <div ref={fieldRefs.city}>
             <Field
               name="address.city"
@@ -412,7 +419,7 @@ const AddressForm = ({
             />
           </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion===2 ? 6 : 12} sm={rest.checkoutVersion && rest.checkoutVersion===2 ? 2 : 6}>
           <div ref={fieldRefs.state}>
             <Field
               name="address.state"
@@ -422,7 +429,7 @@ const AddressForm = ({
             />
           </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion===2 ? 6 : 12} sm={rest.checkoutVersion && rest.checkoutVersion===2 ? 4 : 6}>
           <div ref={fieldRefs.zipcode}>
             <Field
               name="address.zipcode"
@@ -439,6 +446,7 @@ const AddressForm = ({
             component={InputField}
             type="tel"
             autoComplete="tel"
+            helperText={rest.checkoutVersion && rest.checkoutVersion===2 ? "In case we need to contact you about your order" : false}
           />
         </Grid>
         {!currentUser.data.account_jwt && (
@@ -450,11 +458,12 @@ const AddressForm = ({
               component={InputField}
               type="email"
               autoComplete="email"
+              helperText={rest.checkoutVersion && rest.checkoutVersion===2 ? "We do not sell your information. We'll confirm your order to this e-mail." : false}
             />
             </div>
           </Grid>
         )}
-        <Grid item xs={12}>
+        <Grid item xs={12} style={rest.checkoutVersion && rest.checkoutVersion===2 ? {display:'none'} : {}}>
           <Field
             name="address.country"
             label="Country"
@@ -473,11 +482,12 @@ const AddressForm = ({
           </Grid>
         )}
         {allowFlyMode && !currentUser.data.account_jwt && (
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{paddingTop:'0px', paddingLeft:'3px'}}>
             <Field
               name="address.shouldSubscribe"
               label="Keep me updated with exclusive offers and product launches"
               component={CheckboxField}
+              style={{paddingLeft:'3px'}}
             />
           </Grid>
         )}
@@ -513,7 +523,7 @@ const AddressForm = ({
         )}
         <Grid item xs={12}>
           <ButtonGroup fullWidth>
-            {onBack && (
+            {onBack && currentUser.data.addressBook && currentUser.data.addressBook.length > 0 &&  (
               <Button
                 color="secondary"
                 type="button"
