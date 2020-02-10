@@ -73,23 +73,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let analyticsTracked = false;
-
 const ProductVariant = ({ productVariant }) => {
-  if (!analyticsTracked) {
-    window.analytics.track('Product Viewed', {
-      cart_id: localStorage.cartId,
-      image_url: `https:${productVariant.assets.imgs}`,
-      name: productVariant.name,
-      price: Number.parseFloat(productVariant.effectivePrice),
-      product_id: productVariant.product_id,
-      quantity: 1,
-      sku: productVariant.sku,
-      url: window.location.href,
-      variant: productVariant.id
-    });
-    analyticsTracked = true;
-  }
+  useEffect(() => {
+    if (productVariant) {
+      window.analytics.track('Product Viewed', {
+        cart_id: localStorage.cartId,
+        image_url: `https:${productVariant.assets.imgs}`,
+        name: productVariant.name,
+        price: Number.parseFloat(productVariant.effectivePrice),
+        product_id: productVariant.product_id,
+        quantity: 1,
+        sku: productVariant.sku,
+        url: window.location.href,
+        variant: productVariant.id
+      });
+    }
+  }, []);
+
   return productVariant ? (
     <Box
       display="flex"
