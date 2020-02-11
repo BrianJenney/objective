@@ -177,7 +177,9 @@ const ProductDetail = () => {
 
   const handleWindowScroll = evt => {
     const OFFSET = 80;
-    const { scrollTop } = evt.target.scrollingElement;
+    const scrollingElement =
+      evt.target.scrollingElement || evt.target.document.scrollingElement;
+    const { scrollTop } = scrollingElement;
 
     if (atcRef.current && contentRef.current) {
       if (
