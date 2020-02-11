@@ -6,17 +6,24 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ProductContext from '../../contexts/ProductContext';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     marginTop: '65px',
     marginBottom: '65px',
     display: 'flex',
     justifyContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '58px',
+      marginBottom: '58px'
+    },
     '& p': {
       fontFamily: 'FreightTextProBook',
       fontSize: '14px',
       color: '#000',
-      lineHeight: 'normal'
+      lineHeight: 'normal',
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '12px'
+      }
     }
   },
   heading: {
@@ -27,7 +34,13 @@ const useStyles = makeStyles(() => ({
     lineHeight: 1.33,
     letterSpacing: '1.7px',
     color: '#000',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: '20px',
+      fontSize: '18px',
+      fontWeight: 600,
+      letterSpacing: '1.13px'
+    }
   }
 }));
 
