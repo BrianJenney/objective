@@ -44,6 +44,9 @@ const ProductAccordion = ({ content }) => {
     } else {
       setExpandedPanelIndex(panelIndex);
     }
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('scroll'));
+    }, 500);
   };
   const openClinicalResultsImageModal = () => setImageModalOpen(true);
   const closeClinicalResultsImageModal = () => setImageModalOpen(false);
