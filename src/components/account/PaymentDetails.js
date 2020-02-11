@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { get, isEmpty, omit } from 'lodash';
@@ -17,8 +18,6 @@ import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
 
-import { useSelector } from 'react-redux';
-
 export const FORM_TYPES = {
   ACCOUNT: 'account',
   CHECKOUT: 'checkout'
@@ -33,12 +32,12 @@ const usePrevious = value => {
 };
 
 /*
-* @description - Wrapper function for tracking the Payment Info Entered Segment Event
-* @return void
-*/
+ * @description - Wrapper function for tracking the Payment Info Entered Segment Event
+ * @return void
+ */
 const trackSegmentPaymentInfoEnteredEvent = properties => {
-  window.analytics.track("Payment Info Entered", properties);
-}
+  window.analytics.track('Payment Info Entered', properties);
+};
 
 const AccountPaymentDetails = ({
   currentUser,
@@ -78,15 +77,13 @@ const AccountPaymentDetails = ({
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
     const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-    //if there is a default payment method, select it.
+    // if there is a default payment method, select it.
     if (defaultIndex !== -1) {
       setSelectedIndex(defaultIndex);
+    } else if (paymentMethods.length > 0) {
+      setSelectedIndex(0);
     } else {
-      if (paymentMethods.length > 0) {
-        setSelectedIndex(0);
-      } else {
-        setSelectedIndex(-1);
-      }
+      setSelectedIndex(-1);
     }
 
     if (
@@ -138,14 +135,20 @@ const AccountPaymentDetails = ({
           name: paymentDetails.cardholderName,
           cardType: cardData.details.cardType,
           last4: cardData.details.lastFour,
-          expirationDate: cardData.details.expirationMonth + '/' + cardData.details.expirationYear,
+          expirationDate:
+            cardData.details.expirationMonth +
+            '/' +
+            cardData.details.expirationYear,
           billingAddress,
           isDefault: false
         },
         nonce: cardData.nonce
       };
 
-      trackSegmentPaymentInfoEnteredEvent({ cart_id: cart._id, payment_method: cardData.details.cardType });
+      trackSegmentPaymentInfoEnteredEvent({
+        cart_id: cart._id,
+        payment_method: cardData.details.cardType
+      });
 
       if (allowFlyMode && !shouldSaveData) {
         actions.setSubmitting(false);
@@ -201,119 +204,119 @@ const AccountPaymentDetails = ({
           allowFlyMode={allowFlyMode}
         />
       ) : (
-          <>
-            {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
-              <Box
-                component={Typography}
-                color="#231f20"
-                variant="h5"
-                children={
-                  formType === FORM_TYPES.ACCOUNT
-                    ? 'Payment Details'
-                    : 'Credit Card'
-                }
-                fontSize={titleFontSize}
-                mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
-              />
-            )}
-            {!xs && formType === FORM_TYPES.ACCOUNT && (
-              <Box
-                color="#231f20"
-                component={Typography}
-                variant="h5"
-                children="Credit Card"
-                fontSize={18}
-                fontWeight={600}
-                fontFamily="p22-underground"
-                style={{ textTransform: 'uppercase' }}
-                mb={4}
-              />
-            )}
-            {isEmpty(creditCards) && (
-              <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
-            )}
-            <Box mx="-8px" my="-8px">
-              <Grid container>
-                {creditCards.map((creditCardEntity, index) => (
-                  <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
-                    <Box
-                      display="flex"
-                      alignItems="flex-start"
-                      m={1}
-                      px={4}
-                      py={3}
-                      border="2px solid #979797"
-                    >
-                      {selectionEnabled && (
-                        <Box ml="-17px" mt="-9px">
-                          <Radio
-                            name="payment-method-selector"
-                            style={{ color: '#231f20' }}
-                            value={index.toString()}
-                            onChange={handleSelect}
-                            checked={selectedIndex === index}
-                          />
-                        </Box>
-                      )}
-                      <Box
-                        maxWidth={
-                          selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
-                        }
-                      >
-                        <EditablePanel
-                          title=""
-                          defaultValues={creditCardEntity}
-                          Summary={PaymentSummary}
-                          onRemove={() =>
-                            deleteCreditCard(creditCardEntity.token)
-                          }
-                          onSetDefault={
-                            creditCardEntity.isDefault
-                              ? undefined
-                              : () => setDefaultCreditCard(creditCardEntity.token)
-                          }
+        <>
+          {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
+            <Box
+              component={Typography}
+              color="#231f20"
+              variant="h5"
+              children={
+                formType === FORM_TYPES.ACCOUNT
+                  ? 'Payment Details'
+                  : 'Credit Card'
+              }
+              fontSize={titleFontSize}
+              mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
+            />
+          )}
+          {!xs && formType === FORM_TYPES.ACCOUNT && (
+            <Box
+              color="#231f20"
+              component={Typography}
+              variant="h5"
+              children="Credit Card"
+              fontSize={18}
+              fontWeight={600}
+              fontFamily="p22-underground"
+              style={{ textTransform: 'uppercase' }}
+              mb={4}
+            />
+          )}
+          {isEmpty(creditCards) && (
+            <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
+          )}
+          <Box mx="-8px" my="-8px">
+            <Grid container>
+              {creditCards.map((creditCardEntity, index) => (
+                <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
+                  <Box
+                    display="flex"
+                    alignItems="flex-start"
+                    m={1}
+                    px={4}
+                    py={3}
+                    border="2px solid #979797"
+                  >
+                    {selectionEnabled && (
+                      <Box ml="-17px" mt="-9px">
+                        <Radio
+                          name="payment-method-selector"
+                          style={{ color: '#231f20' }}
+                          value={index.toString()}
+                          onChange={handleSelect}
+                          checked={selectedIndex === index}
                         />
                       </Box>
+                    )}
+                    <Box
+                      maxWidth={
+                        selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
+                      }
+                    >
+                      <EditablePanel
+                        title=""
+                        defaultValues={creditCardEntity}
+                        Summary={PaymentSummary}
+                        onRemove={() =>
+                          deleteCreditCard(creditCardEntity.token)
+                        }
+                        onSetDefault={
+                          creditCardEntity.isDefault
+                            ? undefined
+                            : () => setDefaultCreditCard(creditCardEntity.token)
+                        }
+                      />
                     </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-            <Box
-              mt="26px"
-              fontSize={xs ? 14 : 16}
-              fontWeight={600}
-              style={{ textTransform: 'uppercase' }}
-            >
-              <MenuLink
-                onClick={() => setFormModeEnabled(true)}
-                children="Add New Card"
-                underline="always"
-              />
-            </Box>
-            <Box mt={xs ? '28px' : '55px'}>
-              <ButtonGroup fullWidth>
-                {onBack && (
-                  <Button
-                    color="secondary"
-                    type="button"
-                    onClick={onBack}
-                    children={backLabel}
-                    mr={2}
-                  />
-                )}
-                {onSubmit && (
-                  <Button
-                    type="button"
-                    onClick={handleSubmit}
-                    children={submitLabel}
-                    disabled={selectedIndex===-1}
-                  />
-                )}
-              </ButtonGroup>
-            </Box>
-          </>
-        )}
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+          <Box
+            mt="26px"
+            fontSize={xs ? 14 : 16}
+            fontWeight={600}
+            style={{ textTransform: 'uppercase' }}
+          >
+            <MenuLink
+              onClick={() => setFormModeEnabled(true)}
+              children="Add New Card"
+              underline="always"
+            />
+          </Box>
+          <Box mt={xs ? '28px' : '55px'}>
+            <ButtonGroup fullWidth>
+              {onBack && (
+                <Button
+                  color="secondary"
+                  type="button"
+                  onClick={onBack}
+                  children={backLabel}
+                  mr={2}
+                />
+              )}
+              {onSubmit && (
+                <Button
+                  type="button"
+                  onClick={handleSubmit}
+                  children={submitLabel}
+                  disabled={selectedIndex === -1}
+                />
+              )}
+            </ButtonGroup>
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

@@ -1,38 +1,43 @@
 import paypal from 'paypal-checkout';
 import braintreePaypalCheckout from 'braintree-web/paypal-checkout';
+import braintreeDataCollector from 'braintree-web/paypal-checkout';
 import { env } from './config';
 import createClient from './client';
 
-export const sendPaypalCheckoutRequest = async (amount, shippingAddress) => {
-  const {
-    recipientName,
-    address1,
-    address2,
-    city,
-    country,
-    zipcode,
-    state,
-    phone
-  } = shippingAddress;
+export const sendPaypalCheckoutRequest = async (
+  amount,
+  shippingAddress,
+  flow
+) => {
   const commit = true;
-  const flow = 'checkout';
   const currency = 'USD';
   const enableShippingAddress = true;
   const shippingAddressEditable = false;
-  const shippingAddressOverride = {
-    recipientName,
-    address1,
-    address2,
-    city,
-    country,
-    postalCode: zipcode,
-    state,
-    phone
+
+  const shippingAddressOverride = shippingAddress && {
+    recipientName: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+    line1: shippingAddress.address1,
+    line2: shippingAddress.address2,
+    city: shippingAddress.city,
+    countryCode: shippingAddress.country,
+    postalCode: shippingAddress.zipcode,
+    state: shippingAddress.state
   };
 
   try {
     const client = await createClient();
+
+    if (flow === 'vault') {
+      const dataCollector = await braintreeDataCollector.create({
+        client,
+        paypal: true
+      });
+
+      console.log(dataCollector.deviceData);
+    }
+
     const paypalCheckout = await braintreePaypalCheckout.create({ client });
+
     const checkoutPromise = new Promise((resolve, reject) => {
       paypal.Button.render(
         {
@@ -45,11 +50,12 @@ export const sendPaypalCheckoutRequest = async (amount, shippingAddress) => {
               currency,
               enableShippingAddress,
               shippingAddressEditable,
-              shippingAddressOverride
+              shippingAddressOverride: shippingAddress
+                ? shippingAddressOverride
+                : null
             }),
           onAuthorize: async data => {
             const payload = await paypalCheckout.tokenizePayment(data);
-
             resolve(payload);
           },
           onCancel: data => reject(data),
@@ -58,11 +64,10 @@ export const sendPaypalCheckoutRequest = async (amount, shippingAddress) => {
         '#paypal-checkout-button'
       );
     });
-
     const paypalResponse = await checkoutPromise;
-
     return paypalResponse;
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };

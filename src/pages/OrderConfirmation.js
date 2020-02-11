@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -81,8 +81,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const OrderConfirmation = ({ history }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
@@ -109,8 +107,6 @@ const OrderConfirmation = ({ history }) => {
     });
   });
 
-
-
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
   };
@@ -118,6 +114,7 @@ const OrderConfirmation = ({ history }) => {
   const OrderDetail = () => {
     const { cardType, last4 } = order.paymentData;
     const { shippingAddress, billingAddress } = order;
+    console.log('Shipping Address');
     const { email } = account.data;
     const handleOrderDetail = useCallback(
       e => {
@@ -126,8 +123,8 @@ const OrderConfirmation = ({ history }) => {
       },
       [history, order._id]
     );
-    useEffect(()=>{
-      window.analytics.page("Order Confirmation");
+    useEffect(() => {
+      window.analytics.page('Order Confirmation');
       window.gtag('event', 'purchase', {
         transaction_id: order.orderNumber,
         affiliation: order.storeCode,
@@ -137,7 +134,7 @@ const OrderConfirmation = ({ history }) => {
         shipping: order.shippingMethod.price,
         items: orderItemsTransformedGA
       });
-    },[])
+    }, []);
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -146,10 +143,7 @@ const OrderConfirmation = ({ history }) => {
           {email}.
         </Typography>
         <Typography className={classes.text1}>
-          Your order number:{' '}
-          <strong>
-            {order.orderNumber}
-          </strong>
+          Your order number: <strong>{order.orderNumber}</strong>
         </Typography>
         {xs ? (
           <Grid container style={{ overflow: 'hidden' }}>

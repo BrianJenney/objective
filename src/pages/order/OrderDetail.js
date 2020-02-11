@@ -76,14 +76,18 @@ const useStyles = makeStyles(theme => ({
 
 const getStatusStepper = statusStepper => {
   const processedDate = formatDateTime(statusStepper.processedDate, false);
-  const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
-  const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
+  const shippedDate = statusStepper.shippedDate
+    ? formatDateTime(statusStepper.shippedDate, false)
+    : '';
+  const deliveredDate = statusStepper.deliveredDate
+    ? formatDateTime(statusStepper.deliveredDate, false)
+    : '';
   const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
   return {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate,
+    Cancelled: cancelledDate
   };
 };
 
@@ -93,13 +97,20 @@ const TrackingInfo = ({ tracking }) => {
     return (
       <>
         <Typography className={classes.text} pt={2}>
-          {tracking && <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
+          {tracking && (
+            <Link
+              href={tracking.url}
+              style={{ color: 'black' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {tracking.number}
+            </Link>
+          )}
         </Typography>
       </>
-
-    )
-  }
-  )
+    );
+  });
 };
 
 const OrderCartSummary = ({ order }) => {
@@ -125,10 +136,9 @@ const OrderSummary = ({
   tracking,
   orderStatus
 }) => {
-
   const { cardType, last4 } = paymentData;
   const { email } = account.data;
-  const { phone } = billingAddress;
+  const phone = billingAddress ? billingAddress.phone : null;
   const dispatch = useDispatch();
 
   return (
@@ -149,15 +159,15 @@ const OrderSummary = ({
           was issued back to the payment used for the order.
         </Typography>
       ) : (
-          <Typography className={classes.textFreight}>
-            Your order number: <strong>{orderId}</strong>, placed on{' '}
-            <strong>{createdAt}</strong>
-          </Typography>
-        )}
+        <Typography className={classes.textFreight}>
+          Your order number: <strong>{orderId}</strong>, placed on{' '}
+          <strong>{createdAt}</strong>
+        </Typography>
+      )}
       <br />
-      {orderStatus !== 'declined' && orderStatus !== 'created' &&
+      {orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
-      }
+      )}
 
       {orderStatus === 'placed' ? (
         <CommonButton
@@ -175,8 +185,8 @@ const OrderSummary = ({
           {'Cancel Order'}
         </CommonButton>
       ) : (
-          ''
-        )}
+        ''
+      )}
       <Box
         display="flex"
         flexDirection={xs ? 'column' : 'row'}
@@ -205,17 +215,14 @@ const OrderSummary = ({
               Shipping Information
             </StyledSmallCaps>
             <Address address={shippingAddress} />
-            {tracking &&
+            {tracking && (
               <>
                 <Typography className={classes.text} pt={2}>
                   Tracking #:
                 </Typography>
-                <TrackingInfo
-                  className={classes.text}
-                  tracking={tracking}
-                />
+                <TrackingInfo className={classes.text} tracking={tracking} />
               </>
-            }
+            )}
           </Box>
         </Grid>
       </Box>
