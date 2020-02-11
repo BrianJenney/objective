@@ -66,41 +66,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ATC = ({
-  price,
-  onClick,
-  variantSku,
-  ATCAdded,
-  ATCAdding,
-  btnStyle
-}) => (
-  <Button
-    fullWidth
-    onClick={onClick}
-    disabled={variantSku === null}
-    className={btnStyle || 'atc-button'}
-  >
-    {!ATCAdded
-      ? `$${price} - ADD TO CART`
-      : !ATCAdding
-      ? 'PRODUCT ADDED'
-      : 'ADDING...'}
+export const ATC = ({ price, onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
+  <Button fullWidth onClick={onClick} disabled={variantSku === null} className={btnStyle || 'atc-button'}>
+    {!ATCAdded ? (price ? `$${price} - ADD TO CART` : 'ADD TO CART') : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
   </Button>
 );
 
-export const ATCPDP = ({
-  onClick,
-  variantSku,
-  ATCAdded,
-  ATCAdding,
-  btnStyle
-}) => (
-  <Button
-    fullWidth
-    onClick={onClick}
-    disabled={variantSku === null}
-    className={btnStyle}
-  >
+export const ATCPDP = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
+  <Button fullWidth onClick={onClick} disabled={variantSku === null} className={btnStyle}>
     {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
   </Button>
 );
@@ -123,9 +96,7 @@ export const OutOfStockPDP = ({
       <CardActions className={classes.maxWidth}>
         <Button className={classes.btnPDP} fullWidth onClick={onClick}>
           <EnvelopeIcon />
-          <Typography className={classes.textPDP}>
-            TELL ME WHEN IT'S AVAILABLE
-          </Typography>
+          <Typography className={classes.textPDP}>TELL ME WHEN IT'S AVAILABLE</Typography>
         </Button>
       </CardActions>
       {openOutOfStockDialog && (
@@ -161,12 +132,7 @@ export const OutOfStock = ({
   return (
     <>
       <Box width={1} className="gallery-atc">
-        <Button
-          className={classes.btnOOS}
-          fullWidth
-          onClick={onClick}
-          {...rest}
-        >
+        <Button className={classes.btnOOS} fullWidth onClick={onClick} {...rest}>
           TELL ME WHEN IT IS AVAILABLE
         </Button>
       </Box>
