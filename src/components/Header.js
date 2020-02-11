@@ -20,6 +20,7 @@ import { setCartNotification } from '../modules/utils/actions';
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
+import LandingHeader from './LandingHeader';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 import { paramsToObject, isAcqDiscount } from '../utils/misc';
 const jwt = require('jsonwebtoken');
@@ -68,6 +69,7 @@ const Header = ({ currentUser, location }) => {
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
+  const isLanding = matchPath(location.pathname, { path: '/landing' });
   const { account_jwt, firstName } = currentUser.data;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
@@ -137,6 +139,8 @@ const Header = ({ currentUser, location }) => {
     <>
       {isCheckoutPage || isOrderPage ? (
         <CheckoutHeader />
+      ) : isLanding ? (
+        <></>
       ) : (
         <Grid container item={true} xs={12} className="headerContainer">
           <Grid container item={true} xs={12} spacing={0}>
