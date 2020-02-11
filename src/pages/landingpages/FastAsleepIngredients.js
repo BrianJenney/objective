@@ -50,7 +50,7 @@ const FastAsleepIngredients = ({ location }) => {
     addCoupon(cart._id, 'voucherify.io-sandbox-04');
     console.log('2');
     //redirect
-    window.location.href = '/checkout';
+    //window.location.href = '/checkout';
   };
 
   return (
