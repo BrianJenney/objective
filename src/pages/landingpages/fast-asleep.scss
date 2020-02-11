@@ -1,3 +1,9 @@
+.hidden-xs {
+  display: block;
+}
+.xs-only {
+  display: none;
+}
 .smaller-container {
   margin: 0 auto !important;
 }
@@ -380,5 +386,124 @@ ol {
     line-height: 1.93;
     letter-spacing: normal;
     color: #333333;
+  }
+}
+.landing-header {
+  background-color: #000;
+  height: 90px;
+  color: #fff;
+  padding: 25px 0;
+  svg {
+    height: 40px;
+  }
+  .cls-1 {
+    fill: #fff;
+  }
+  .link-holder {
+    display: flex;
+    justify-content: space-between;
+  }
+  a,
+  a:hover,
+  a:active,
+  a:visited {
+    font-family: p22-underground, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.28;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 500px) {
+  .hidden-xs {
+    display: none;
+  }
+  .xs-only {
+    display: block;
+  }
+  .landing-header {
+    height: 55px;
+    padding: 15px 0;
+    .link-holder {
+      justify-content: center;
+      svg {
+        height: 35px;
+      }
+    }
+  }
+  h1 {
+    font-size: 36px;
+    margin: 15px 0 5px;
+  }
+  h2 {
+    font-size: 22px;
+    letter-spacing: 0.22px;
+    margin: 25px 0 10px;
+  }
+  h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+  p {
+    margin: 0 0 10px;
+  }
+  .hero-image {
+    margin-bottom: 25px;
+  }
+  .gaba-img-and-desc {
+    width: 50%;
+    margin-right: 0;
+    float: right;
+    margin-left: 15px;
+  }
+  .mt-50 {
+    margin-top: 25px;
+  }
+  .link-holder-mobile {
+    border: 1px solid #000;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+    a,
+    a:active,
+    a:visited,
+    a:hover {
+      font-family: p22-underground, Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1.5px;
+      color: #1f396d;
+      text-transform: uppercase;
+    }
+    ul {
+      list-style-image: none;
+      margin-top: 0;
+      li {
+        line-height: normal;
+      }
+    }
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .beige-box {
+    &.benefits {
+      width: 100%;
+      margin-left: 0;
+      padding: 20px 25px;
+      margin-bottom: 10px;
+    }
+    &.saffron {
+      width: 100%;
+      margin-left: 0;
+      padding: 30px 25px;
+    }
   }
 }
