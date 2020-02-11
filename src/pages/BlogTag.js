@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { useSelector } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -13,10 +13,12 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import './blog/blog-styles.scss';
 import { fetchPostsByTag } from '../utils/blog';
 import PostItem from './blog/PostItem';
+import HeadTags from '../components/common/HeadTags';
 
 const BlogTag = ({ computedMatch }) => {
   const { tag_slug } = computedMatch.params;
-
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const { title, description } = seoMap[tag_slug];
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -39,9 +41,12 @@ const BlogTag = ({ computedMatch }) => {
 
   if (posts.length === 0) {
     return (
-      <ScrollToTop>
-        <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
-      </ScrollToTop>
+      <>
+        <HeadTags title={title} description={description} />
+        <ScrollToTop>
+          <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
+        </ScrollToTop>
+      </>
     );
   }
 
@@ -49,20 +54,23 @@ const BlogTag = ({ computedMatch }) => {
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
-    <ScrollToTop>
-      <div className="journal-gallery">
-        <Box className="header" py={8}>
-          <Container className="container">
-            <h1>{tag}</h1>
-          </Container>
-        </Box>
-        <Box className="content" py={8}>
-          <Container>
-            <div className="list">{renderPosts(posts)}</div>
-          </Container>
-        </Box>
-      </div>
-    </ScrollToTop>
+    <>
+      <HeadTags title={title} description={description} />
+      <ScrollToTop>
+        <div className="journal-gallery">
+          <Box className="header" py={8}>
+            <Container className="container">
+              <h1>{tag}</h1>
+            </Container>
+          </Box>
+          <Box className="content" py={8}>
+            <Container>
+              <div className="list">{renderPosts(posts)}</div>
+            </Container>
+          </Box>
+        </div>
+      </ScrollToTop>
+    </>
   );
 };
 

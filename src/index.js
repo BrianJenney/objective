@@ -26,6 +26,7 @@ import './assets/styles/global.scss';
 import './fonts/fonts.css';
 
 import { createAnonymousToken } from './utils/token';
+import { requestFetchStorefrontSeo } from './modules/storefront/actions';
 
 const localStorageClient = require('store');
 const ObjectId = require('bson-objectid');
@@ -39,6 +40,7 @@ const useStyles = makeStyles(() => ({
 
 const Main = () => {
   const classes = useStyles();
+
   return (
     <Provider store={store}>
       <IntlProvider locale="en">
@@ -90,24 +92,31 @@ const connectWebsocket = () => {
     onStompConnectError,
     process.env.REACT_APP_CLOUDAMQP_USERNAME
   );
-}
+};
 
 /**
  * STOMP connect success callback handler
  *
  * @return none
  */
-const onStompConnectSuccess = () => {
+const onStompConnectSuccess = async () => {
   console.log('Successfully Connected');
-  let replyTo = ObjectId();
+  const replyTo = ObjectId();
 
   store.dispatch(connectStomp(stompClient, replyTo));
 
-  stompClient.subscribe('/queue/' + replyTo, body => {
-    handleResponse(body);
-  }, {
-    'auto-delete': true
-  });
+  stompClient.subscribe(
+    `/queue/${replyTo}`,
+    body => {
+      handleResponse(body);
+    },
+    {
+      'auto-delete': true
+    }
+  );
+
+  // Fetch seo metatags for storefront
+  await store.dispatch(requestFetchStorefrontSeo(true));
 
   ReactDOM.render(<Main />, document.querySelector('#root'));
 };
