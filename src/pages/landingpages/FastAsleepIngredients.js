@@ -21,8 +21,6 @@ const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
 const FastAsleepIngredients = ({ location }) => {
   const cart = useSelector(state => state.cart);
   const catalog = useSelector(state => state.catalog);
-  console.log('******************');
-  console.log(catalog);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
@@ -39,13 +37,36 @@ const FastAsleepIngredients = ({ location }) => {
     window.analytics.page('FastAsleepIngredients');
   }, []);
   const handleClick = () => {
-    console.log('HANDLE CLICK');
-    console.log(cart);
+    const selectedV = {
+      _id: '5d8bb528f5005515a437d4c5',
+      createdAt: '2019-05-23T17:06:23.836Z',
+      modifiedAt: '2020-01-30T15:36:19.528Z',
+      product_id: '5d8bb4eff5005515a437d4c4',
+      sku: 'TGSS-1BOT-CHO',
+      name: 'Fast Asleep',
+      title: 'Fast Asleep',
+      description: 'Fast Asleep Variant Description',
+      assets: {
+        imgs: '//images.ctfassets.net/mj9bpefl6wof/xqQA0XqUDxjxei…7a9fa3/fast_asleep_front_v2.png?w=600&fm=jpg&q=80',
+        thumbnail:
+          '//images.ctfassets.net/mj9bpefl6wof/4q1AYG7w0sToY2…4efbefa6f975433337ae8fad/fast_asleep_front_LR.jpg'
+      },
+      subscribable: true,
+      variantInfo: { prodType: 'Chocolates', size: '30' },
+      attributes: [
+        { name: 'Pill Type', value: 'Capsules' },
+        { name: 'Diet Type', value: 'Vegetarian' }
+      ],
+      effectivePrice: '40.00',
+      slug: 'fast-asleep',
+      id: '5d8bb528f5005515a437d4c5'
+    };
     //atc
-    //addToCart(cart._id, variant, 1);
+    addToCart(cart._id, selectedV, 1);
     //add coupon
     addCoupon(cart._id, 'voucherify.io-sandbox-04');
     //redirect
+    window.location.href = '/checkout';
   };
 
   return (

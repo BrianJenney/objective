@@ -10,8 +10,6 @@ import {
 import store from '../../store';
 
 export const addToCart = (cart, selectedVariant, quantity) => {
-  console.log('HEREEEEEEEEE');
-  console.log(selectedVariant);
   store.dispatch(requestAddToCart(cart, selectedVariant, quantity));
 };
 
