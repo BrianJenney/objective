@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
@@ -20,6 +20,8 @@ const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
 const FastAsleepIngredients = ({ location }) => {
   const cart = useSelector(state => state.cart);
   const catalog = useSelector(state => state.catalog);
+  const [prodAdded, setProdAdded] = useState(false);
+  const [couponAdded, setCouponAdded] = useState(false);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
@@ -35,36 +37,50 @@ const FastAsleepIngredients = ({ location }) => {
   useEffect(() => {
     window.analytics.page('FastAsleepIngredients');
   }, []);
-  const handleClick = () => {
-    console.log('HANDLE CLICK');
-    console.log(catalog);
-    console.log(catalog.variants);
-    const vts = catalog.variants;
-    const targetObject = vts.find(item => item.slug == 'fast-asleep');
-    console.log('targetObject:', targetObject);
-    //atc
-    addToCart(cart._id, targetObject, 1);
-    console.log('1');
-    //add coupon
-    addCoupon(cart._id, 'voucherify.io-sandbox-04');
-    console.log('2');
-    //redirect
-    //window.location.href = '/checkout';
-    //Segment tracking
-    window.analytics.track('Product Clicked', {
-      brand: 'OBJ',
-      cart_id: cart._id,
-      coupon: 'SLUMBER15',
-      image_url: targetObject.assets.thumbnail,
-      name: targetObject.name,
-      price: targetObject.effectivePrice,
-      product_id: targetObject.product_id,
-      quantity: 1,
-      site_location: 'Fast Asleep Ingredients Landing Page',
-      sku: targetObject.sku,
-      url: window.location.href
-    });
-  };
+  // const handleClick = () => {
+  //   const targetObject = catalog.variants.find(item => item.slug === 'fast-asleep');
+  //   console.log('this targetObject:', targetObject);
+  //   //atc
+  //   addToCart(cart, targetObject, 1);
+  //   console.log('this 1');
+  //   //add coupon
+  //   addCoupon(cart._id, 'voucherify.io-sandbox-04');
+  //   console.log('this 2');
+  //   //redirect
+  //   //window.location.href = '/checkout';
+  // };
+
+  const handleAddToCart = useCallback(() => {
+    const selectedVariant = catalog.variants.find(item => item.slug === 'fast-asleep');
+    setTimeout(() => {
+      addToCart(cart, selectedVariant, 1);
+      setProdAdded(true);
+    }, 500);
+  }, [cart, catalog, dispatch]);
+
+  const handleAddCoupon = useCallback(() => {
+    setTimeout(() => {
+      addCoupon(cart._id, 'voucherify.io-sandbox-04');
+      setCouponAdded(true);
+    }, 500);
+  }, [cart, catalog, dispatch]);
+
+  const handleClick = useCallback(() => {
+    handleAddToCart();
+    //handleAddCoupon();
+  }, [cart, catalog, dispatch]);
+
+  useEffect(() => {
+    if (prodAdded && couponAdded) {
+      window.location.href = '/checkout';
+    }
+  }, [prodAdded, couponAdded]);
+
+  useEffect(() => {
+    if (cart.items.length > 0 && couponAdded === false) {
+      handleAddCoupon();
+    }
+  }, [cart]);
 
   return (
     <div className="fast-asleep-lp">
