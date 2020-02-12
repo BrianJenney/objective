@@ -14,7 +14,7 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { Panel, Loader } from '../common';
+import { Panel, Loader, MenuLink } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
 import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
@@ -437,7 +437,15 @@ const Checkout = ({
             <Container>
               <Box py={10} className="checkout-wrapper">
                 <CssBaseline />
-                <Grid container spacing={4} style={{ 'margin-top': '50px' }}>
+                <Grid container spacing={4}>
+                  {xs ? (
+                    <MenuLink
+                      to="/gallery"
+                      children=" < Continue Shopping"
+                      underline="always"
+                      style={{ padding: '40px 20px 20px' }}
+                    />
+                  ) : null}
                   <Grid
                     item
                     flex={1}
