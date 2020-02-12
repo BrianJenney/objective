@@ -355,8 +355,7 @@ const Checkout = ({
     setPpButtonRendered(true);
     payload.paymentDetails = await sendPaypalCheckoutRequest(
       total,
-      shippingAddress,
-      'checkout'
+      shippingAddress
     );
     setPayload({
       ...payload,

@@ -138,7 +138,7 @@ const OrderSummary = ({
 }) => {
   const { cardType, last4 } = paymentData;
   const { email } = account.data;
-  const phone = billingAddress ? billingAddress.phone : null;
+  const { phone } = billingAddress || { phone: null };
   const dispatch = useDispatch();
 
   return (
