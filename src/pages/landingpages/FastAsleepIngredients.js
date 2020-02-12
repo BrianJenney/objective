@@ -419,7 +419,7 @@ const FastAsleepIngredients = ({ location }) => {
                 with Saffron & GABA Chocolates
               </div>
               <NavLink onClick={handleClick} className="green-btn">
-                GET 25% OFF
+                GET 15% OFF
               </NavLink>
             </div>
           </Grid>
@@ -640,7 +640,7 @@ const FastAsleepIngredients = ({ location }) => {
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
                 <NavLink onClick={handleClick} className="black-btn">
-                  GET 25% off your first order
+                  GET 15% off your first order
                 </NavLink>
               </div>
               <img
