@@ -12,7 +12,6 @@ import { addCoupon, removeCoupon, addToCart } from '../../modules/cart/functions
 import { setCartNotification } from '../../modules/utils/actions';
 import Logo from '../../components/common/Icons/Logo/Logo';
 import { Container, Grid } from '@material-ui/core';
-import FastAsleepMelatonin from './FastAsleepMelatonin';
 
 import './fast-asleep.scss';
 
