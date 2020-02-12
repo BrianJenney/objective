@@ -45,7 +45,7 @@ const FastAsleepMelatonin = ({ location }) => {
     console.log('targetObject:', targetObject);
     //atc
     addToCart(cart._id, targetObject, 1);
-    console.log('1');
+    console.log('this console 1');
     //add coupon
     addCoupon(cart._id, 'voucherify.io-sandbox-04');
     console.log('2');
