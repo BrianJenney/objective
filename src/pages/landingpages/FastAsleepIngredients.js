@@ -518,14 +518,14 @@ const FastAsleepIngredients = ({ location }) => {
         <Grid container>
           <Grid item xs={12} md={10} className="smaller-container hidden-xs">
             <div className="big-banner hidden-xs">
-              there’s a simple, way to get the deep, <br />
+              there’s a simple way to get the deep, <br />
               restorative, high-quality sleep you need
             </div>
           </Grid>
         </Grid>
       </Container>
       <div className="big-banner xs-only">
-        there’s a simple, way to get the deep, restorative, high-quality sleep you need
+        there’s a simple way to get the deep, restorative, high-quality sleep you need
       </div>
       <Container>
         <Grid container>
