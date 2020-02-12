@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { get, omit } from 'lodash';
 import { Formik, Field, Form } from 'formik';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
-import { Button, AlertPanel, NavLink } from '../common';
-import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
+import { Button, AlertPanel, NavLink, MenuLink } from '../common';
+import { COUNTRY_OPTIONS, STATE_OPTIONS, STATE_OPTIONS_ABBR } from '../../constants/location';
 import {
   getInitialValues,
   getErrorMessage,
@@ -19,10 +19,10 @@ import {
 } from '../../utils/misc';
 import { validateAddress } from '../../apis/SmartyStreets';
 import AddressValidation from '../account/AddressValidation';
-import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '30px',
+    fontSize: '26px',
     fontFamily: 'Canela Text Web'
   },
   mobileTitle: {
@@ -31,18 +31,35 @@ const useStyles = makeStyles(theme => ({
   },
   subTitle: {
     textAlign: 'right',
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 'normal',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
-    paddingTop: '5px',
-    fontWeight: 600
+    fontFamily: 'p22-underground, Helvetica, sans-serif'
+  },
+  subTitleLink: {
+    fontWeight: 600,
+    marginLeft: '5px'
   },
   mobileLogin: {
-    fontFamily: 'P22Underground',
+    fontFamily: 'P22-Underground',
     fontSize: '14px',
-    fontWeight: 600
+    fontWeight: 'normal'
   },
-  mobileBox: {}
+  mobileBox: {},
+  root : {
+    '& .MuiInputLabel-root': {
+      fontSize: '16px'
+    },
+    '& .MuiInputBase-root' : {
+      fontSize: '16px'
+    },
+    '& .MuiFormHelperText-root' : {
+      fontSize: '11px',
+      color : '#231f20'
+    },
+    '& .MuiOutlinedInput-notchedOutline' : {
+      borderColor: '#231f20'
+    }
+  }
 }));
 
 export const FORM_TYPES = {
@@ -122,7 +139,8 @@ const AddressForm = ({
   onBack,
   submitLabel,
   backLabel,
-  allowFlyMode
+  allowFlyMode,
+  ...rest
 }) => {
   const fieldRefs = {
     firstName: useRef(null),
@@ -159,7 +177,7 @@ const AddressForm = ({
       isDefault,
       email
     } = defaultValues;
-    
+
     INITIAL_VALUES = {
       address: {
         firstName,
@@ -180,9 +198,9 @@ const AddressForm = ({
   if (!isEditing) {
     INITIAL_VALUES = emptyForm;
   }
-  //If user is logged in, do not require email
-  if(currentUser.data.account_jwt){
-    delete checkedFields[checkedFields.findIndex((field) => field ==="email")];
+  // If user is logged in, do not require email
+  if (currentUser.data.account_jwt) {
+    delete checkedFields[checkedFields.findIndex(field => field === 'email')];
   }
 
   const handleUseAddressSeedToggle = (event, values, setValues) => {
@@ -200,7 +218,11 @@ const AddressForm = ({
   };
 
   const topTitle =
-    formType === FORM_TYPES.ACCOUNT ? 'Address' : 'Shipping Address';
+    rest.checkoutVersion && rest.checkoutVersion === 2
+      ? 'Objective Secure Checkout'
+      : formType === FORM_TYPES.ACCOUNT
+        ? 'Address'
+        : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(
@@ -308,8 +330,8 @@ const AddressForm = ({
   };
 
   const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
-    <Form>
-      <Box display="flex" mb={xs ? 3 : 4} className="justify-content">
+    <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
+      <Box display="block" mb={xs ? 3 : 4} className="justify-content">
         <Typography
           color="#231f20"
           variant="h5"
@@ -321,15 +343,17 @@ const AddressForm = ({
 
         {!currentUser.data.account_jwt && (
           <>
-            <Box>
+            <Box style={{ float: 'left' }}>
               <Typography
                 variant="body1"
                 className={xs ? classes.mobileLogin : classes.subTitle}
               >
-                <NavLink
-                  to={`/login${window.location.pathname}`}
+                Already have an account?
+                <MenuLink
+                  onClick={rest.switchToLogin}
                   children="LOG IN"
                   underline="always"
+                  className={classes.subTitleLink}
                 />
               </Typography>
             </Box>
@@ -391,6 +415,11 @@ const AddressForm = ({
               label="Street Address"
               component={InputField}
               autoComplete="address-line1"
+              helperText={
+                rest.checkoutVersion && rest.checkoutVersion === 2
+                  ? '*No PO Boxes or APO/FPO addresses'
+                  : false
+              }
             />
           </div>
         </Grid>
@@ -402,7 +431,11 @@ const AddressForm = ({
             autoComplete="address-line2"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid
+          item
+          xs={12}
+          sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}
+        >
           <div ref={fieldRefs.city}>
             <Field
               name="address.city"
@@ -412,17 +445,25 @@ const AddressForm = ({
             />
           </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid
+          item
+          xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+          sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 2 : 6}
+        >
           <div ref={fieldRefs.state}>
             <Field
               name="address.state"
               label="State"
               component={SelectField}
-              options={STATE_OPTIONS}
+              options={rest.checkoutVersion && rest.checkoutVersion === 2 ? STATE_OPTIONS_ABBR : STATE_OPTIONS}
             />
           </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid
+          item
+          xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+          sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 4 : 6}
+        >
           <div ref={fieldRefs.zipcode}>
             <Field
               name="address.zipcode"
@@ -439,146 +480,170 @@ const AddressForm = ({
             component={InputField}
             type="tel"
             autoComplete="tel"
+            helperText={
+              rest.checkoutVersion && rest.checkoutVersion === 2
+                ? 'In case we need to contact you about your order'
+                : false
+            }
           />
         </Grid>
         {!currentUser.data.account_jwt && (
           <Grid item xs={12}>
             <div ref={fieldRefs.email}>
-            <Field
-              name="address.email"
-              label="Email"
-              component={InputField}
-              type="email"
-              autoComplete="email"
-            />
+              <Field
+                name="address.email"
+                label="Email"
+                component={InputField}
+                type="email"
+                autoComplete="email"
+                helperText={
+                  rest.checkoutVersion && rest.checkoutVersion === 2
+                    ? "We do not sell your information. We'll confirm your order to this e-mail."
+                    : false }
+                    />
             </div>
           </Grid>
-        )}
-        <Grid item xs={12}>
-          <Field
-            name="address.country"
-            label="Country"
-            component={SelectField}
-            options={COUNTRY_OPTIONS}
-            disabled
-          />
-        </Grid>
-        {allowFlyMode && currentUser.data.account_jwt && (
-          <Grid item xs={12}>
-            <Field
-              name="shouldSaveData"
-              label="Save details in account"
-              component={CheckboxField}
-            />
-          </Grid>
-        )}
-        {allowFlyMode && !currentUser.data.account_jwt && (
-          <Grid item xs={12}>
-            <Field
-              name="address.shouldSubscribe"
-              label="Keep me updated with exclusive offers and product launches"
-              component={CheckboxField}
-            />
-          </Grid>
-        )}
-        {formType === FORM_TYPES.CHECKOUT && (
-          <Grid item xs={12}>
-            <Box
-              component={Typography}
-              color="#231f20"
-              variant="h5"
-              children={bottomTitle}
-              fontSize={xs ? 24 : 30}
-              mb={xs ? 3 : 4}
-            />
-            <Box border="1px solid rgb(0, 0, 0, 0.23)" p="14px" mb="29px">
-              <Box
-                component={Typography}
-                color="#231f20"
-                variant="body2"
-                children="Standard Shipping"
-                fontSize={18}
-                lineHeight={1.69}
-              />
-              <Box
-                component={Typography}
-                color="#979797"
-                variant="body2"
-                children="USPS Priority 3-5 days"
-                fontSize={16}
-                lineHeight={1.69}
-              />
-            </Box>
-          </Grid>
-        )}
-        <Grid item xs={12}>
-          <ButtonGroup fullWidth>
-            {onBack && (
-              <Button
-                color="secondary"
-                type="button"
-                onClick={onBack}
-                children={backLabel}
-                mr={2}
-              />
             )}
-            <Button
-              type="submit"
-              children={submitLabel}
-              loading={isSubmitting}
-            />
-          </ButtonGroup>
-        </Grid>
-      </Grid>
+        <Grid
+              item
+              xs={12}
+              style={
+                rest.checkoutVersion && rest.checkoutVersion === 2
+                  ? { display: 'none' }
+                  : {}
+              }
+            >
+              <Field
+                name="address.country"
+                label="Country"
+                component={SelectField}
+                options={COUNTRY_OPTIONS}
+                disabled
+              />
+            </Grid>
+            {allowFlyMode && currentUser.data.account_jwt && (
+              <Grid item xs={12}>
+                <Field
+                  name="shouldSaveData"
+                  label="Save details in account"
+                  component={CheckboxField}
+                />
+              </Grid>
+            )}
+            {allowFlyMode && !currentUser.data.account_jwt && (
+              <Grid
+                item
+                xs={12}
+                style={{ paddingTop: '0px', paddingLeft: '3px'}}
+              >
+                <Field
+                  name="address.shouldSubscribe"
+                  label="Keep me updated with exclusive offers and product launches"
+                  component={CheckboxField}
+                  style={{ paddingLeft: '3px' }}
+                />
+              </Grid>
+            )}
+            {formType === FORM_TYPES.CHECKOUT && (
+              <Grid item xs={12}>
+                <Box
+                  component={Typography}
+                  color="#231f20"
+                  variant="h5"
+                  children={bottomTitle}
+                  fontSize={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 24 : 26) : (xs ? 24 : 30)}
+                  mb={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 2 : 3) : (xs ? 3 : 4)}
+                />
+                <Box border={rest.checkoutVersion && rest.checkoutVersion === 2 ? '1px solid #231f20' : '1px solid rgb(0, 0, 0, 0.23)'} p="14px" mb="29px">
+                  <Box
+                    component={Typography}
+                    color="#231f20"
+                    variant="body2"
+                    children="Standard Shipping"
+                    fontSize={18}
+                    lineHeight={1.69}
+                  />
+                  <Box
+                    component={Typography}
+                    color="#979797"
+                    variant="body2"
+                    children="USPS Priority 3-5 days"
+                    fontSize={16}
+                    lineHeight={1.69}
+                  />
+                </Box>
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <ButtonGroup fullWidth>
+                {onBack &&
+                  currentUser.data.addressBook &&
+                  currentUser.data.addressBook.length > 0 && (
+                    <Button
+                      color="secondary"
+                      type="button"
+                      onClick={onBack}
+                      children={backLabel}
+                      mr={2}
+                    />
+                  )}
+                <Button
+                  type="submit"
+                  children={submitLabel}
+                  loading={isSubmitting}
+                />
+              </ButtonGroup>
+            </Grid>
+          </Grid>
     </Form>
-  );
-
-  return (
+      );
+    
+      return (
     <>
-      {addressSuggestionEnabled ? (
-        <AddressValidation
-          origAddress={originalAddress}
-          suggAddress={suggestedAddress}
-          actions={formActions}
-          onSubmit={onSubmit}
-          onExited={() => {
-            handleDialogExit(formActions);
-          }}
+        {addressSuggestionEnabled ? (
+          <AddressValidation
+            origAddress={originalAddress}
+            suggAddress={suggestedAddress}
+            actions={formActions}
+            onSubmit={onSubmit}
+            onExited={() => {
+              handleDialogExit(formActions);
+            }}
+          />
+        ) : null}
+        <Formik
+          initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
+          onSubmit={handleSubmit}
+          render={renderForm}
+          enableReinitialize
         />
-      ) : null}
-      <Formik
-        initialValues={getInitialValues(INITIAL_VALUES, defaultValues)}
-        onSubmit={handleSubmit}
-        render={renderForm}
-        enableReinitialize
-      />
-    </>
-  );
-};
-
+      </>
+      );
+    };
+    
 AddressForm.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-  formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
-  seedEnabled: PropTypes.bool,
-  addressSeed: PropTypes.object,
-  useSeedLabel: PropTypes.string,
-  defaultValues: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-  clearPatchAccountError: PropTypes.func.isRequired,
-  onBack: PropTypes.func,
-  submitLabel: PropTypes.string,
-  backLabel: PropTypes.string,
-  allowFlyMode: PropTypes.bool
-};
-
+        currentUser: PropTypes.object.isRequired,
+      formType: PropTypes.oneOf(Object.values(FORM_TYPES)),
+      seedEnabled: PropTypes.bool,
+      addressSeed: PropTypes.object,
+      useSeedLabel: PropTypes.string,
+      defaultValues: PropTypes.object,
+      onSubmit: PropTypes.func.isRequired,
+      clearPatchAccountError: PropTypes.func.isRequired,
+      onBack: PropTypes.func,
+      submitLabel: PropTypes.string,
+      backLabel: PropTypes.string,
+      allowFlyMode: PropTypes.bool
+    };
+    
 AddressForm.defaultProps = {
-  formType: FORM_TYPES.ACCOUNT,
-  seedEnabled: false,
+        formType: FORM_TYPES.ACCOUNT,
+      seedEnabled: false,
   addressSeed: {},
   defaultValues: {},
-  submitLabel: 'Save',
-  backLabel: 'Cancel',
-  allowFlyMode: false
-};
-
-export default AddressForm;
+      submitLabel: 'Save',
+      backLabel: 'Cancel',
+      allowFlyMode: false
+    };
+    
+    export default AddressForm;

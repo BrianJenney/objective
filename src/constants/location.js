@@ -61,6 +61,11 @@ export const STATE_OPTIONS = [
   { label: 'Wyoming', value: 'WY' }
 ];
 
+export const STATE_OPTIONS_ABBR = STATE_OPTIONS.map(option => {
+         option.label = option.value;
+         return option;
+       });
+
 export const COUNTRY_OPTIONS = [
   { label: 'Afghanistan', value: 'AF' },
   { label: 'Åland Islands', value: 'AX' },
