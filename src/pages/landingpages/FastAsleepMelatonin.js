@@ -41,6 +41,19 @@ const FastAsleepMelatonin = ({ location }) => {
     const selectedVariant = catalog.variants.find(item => item.slug === 'fast-asleep');
     setTimeout(() => {
       addToCart(cart, selectedVariant, 1);
+      window.analytics.track('Product Clicked', {
+        brand: 'OBJ',
+        cart_id: cart._id,
+        coupon: 'SLUMBER15',
+        image_url: selectedVariant.assets.thumbnail,
+        name: selectedVariant.name,
+        price: selectedVariant.effectivePrice,
+        product_id: selectedVariant.product_id,
+        quantity: 1,
+        site_location: 'Fast Asleep Melatonin Landing Page',
+        sku: selectedVariant.sku,
+        url: window.location.href
+      });
       setProdAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
@@ -54,19 +67,6 @@ const FastAsleepMelatonin = ({ location }) => {
 
   const handleClick = useCallback(() => {
     handleAddToCart();
-    window.analytics.track('Product Clicked', {
-      brand: 'OBJ',
-      cart_id: cart._id,
-      coupon: 'SLUMBER15',
-      image_url: targetObject.assets.thumbnail,
-      name: targetObject.name,
-      price: targetObject.effectivePrice,
-      product_id: targetObject.product_id,
-      quantity: 1,
-      site_location: 'Fast Asleep Melatonin Landing Page',
-      sku: targetObject.sku,
-      url: window.location.href
-    });
   }, [cart, catalog, dispatch]);
 
   useEffect(() => {

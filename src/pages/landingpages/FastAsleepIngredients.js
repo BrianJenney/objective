@@ -55,19 +55,6 @@ const FastAsleepIngredients = ({ location }) => {
 
   const handleClick = useCallback(() => {
     handleAddToCart();
-    window.analytics.track('Product Clicked', {
-      brand: 'OBJ',
-      cart_id: cart._id,
-      coupon: 'SLUMBER15',
-      image_url: targetObject.assets.thumbnail,
-      name: targetObject.name,
-      price: targetObject.effectivePrice,
-      product_id: targetObject.product_id,
-      quantity: 1,
-      site_location: 'Fast Asleep Melatonin Landing Page',
-      sku: targetObject.sku,
-      url: window.location.href
-    });
   }, [cart, catalog, dispatch]);
 
   useEffect(() => {
