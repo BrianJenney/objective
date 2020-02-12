@@ -286,6 +286,7 @@ const Checkout = ({
   useEffect(() => {
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
+      dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
     }
   }, [activeStep, payload.shippingAddress]);
 
