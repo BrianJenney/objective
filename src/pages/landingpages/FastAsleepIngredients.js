@@ -54,7 +54,7 @@ const FastAsleepIngredients = ({ location }) => {
   };
 
   return (
-    <>
+    <div className="fast-asleep-lp">
       <div className="landing-header">
         <Container>
           <div className="link-holder">
@@ -405,8 +405,8 @@ const FastAsleepIngredients = ({ location }) => {
                 Get the deep restorative sleep you need <br />
                 with Saffron & GABA Chocolates
               </div>
-              <NavLink onClick={handleClick}>
-                <div className="green-btn">GET 25% OFF</div>
+              <NavLink onClick={handleClick} className="green-btn">
+                GET 25% OFF
               </NavLink>
             </div>
           </Grid>
@@ -496,16 +496,22 @@ const FastAsleepIngredients = ({ location }) => {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={12} md={10} className="smaller-container">
-            <div className="big-banner">
+          <Grid item xs={12} md={10} className="smaller-container hidden-xs">
+            <div className="big-banner hidden-xs">
               there’s a simple, way to get the deep, <br />
               restorative, high-quality sleep you need
             </div>
           </Grid>
         </Grid>
+      </Container>
+      <div className="big-banner xs-only">
+        there’s a simple, way to get the deep, <br />
+        restorative, high-quality sleep you need
+      </div>
+      <Container>
         <Grid container>
           <Grid item xs={12} md={8} className="smaller-container">
-            <h2>Better nights = better days = better health</h2>
+            <h2 className="mt-0">Better nights = better days = better health</h2>
             <p>
               The fact is your whole body runs better after a good night of sleep. And help is here—and it completely
               bucks the system when it comes to typical sleep solutions.<sup>*</sup>
@@ -521,7 +527,9 @@ const FastAsleepIngredients = ({ location }) => {
                 dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
                 the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
               </p>
-              <div className="blue-btn">Try fast asleep risk-free</div>
+              <NavLink onClick={handleClick} className="blue-btn">
+                Try fast asleep risk-free
+              </NavLink>
             </div>
             <hr />
             <h2>Your sweetest (naturally sugar-free) sleep ever </h2>
@@ -571,7 +579,7 @@ const FastAsleepIngredients = ({ location }) => {
           <Grid item xs={12} md={10} className="smaller-container">
             <div className="floating">
               <img
-                className="chocos float-right"
+                className="chocos float-right hidden-xs"
                 src="https://images.ctfassets.net/mj9bpefl6wof/6f3UWTGXIM58ZiUHDOcVVS/9f7a51b10686ac92e567f5696423a3fa/chocolates.jpg?h=290"
               />
               <ul className="ml-ul">
@@ -606,7 +614,10 @@ const FastAsleepIngredients = ({ location }) => {
         <Grid container>
           <Grid item xs={12} md={10} className="smaller-container">
             <div className="wake-up-box">
-              <img src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/d02235ff6215ff8ba83029abb4d7a964/FA_-_desktop.png?w=556" />
+              <img
+                className="hidden-xs"
+                src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/d02235ff6215ff8ba83029abb4d7a964/FA_-_desktop.png?w=556"
+              />
               <div className="box-right">
                 <div className="title">Wake Up Refreshed with Fast Asleep</div>
                 <div className="subtitle">SAFFRON SLEEP CHOCOLATES</div>
@@ -615,8 +626,14 @@ const FastAsleepIngredients = ({ location }) => {
                   <li>Saffron keeps you sound asleep all night</li>
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
-                <div className="black-btn">GET 25% off your first order</div>
+                <NavLink onClick={handleClick} className="black-btn">
+                  GET 25% off your first order
+                </NavLink>
               </div>
+              <img
+                className="xs-only w-100"
+                src="https://images.ctfassets.net/mj9bpefl6wof/5O8nVlccj8maU669xXds6O/e6536f0e297a8c0ee4dad7ec428aaeaf/FA_mobile.png?w=450"
+              />
             </div>
           </Grid>
         </Grid>
@@ -648,7 +665,7 @@ const FastAsleepIngredients = ({ location }) => {
           </Grid>
         </Grid>
       </Container>
-    </>
+    </div>
   );
 };
 
