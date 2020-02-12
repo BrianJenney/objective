@@ -20,7 +20,6 @@ import { setCartNotification } from '../modules/utils/actions';
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
-import LandingHeader from './LandingHeader';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 import { paramsToObject, isAcqDiscount } from '../utils/misc';
 const jwt = require('jsonwebtoken');
