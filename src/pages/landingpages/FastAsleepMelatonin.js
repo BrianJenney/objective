@@ -349,8 +349,7 @@ const FastAsleepMelatonin = ({ location }) => {
         </Grid>
       </Container>
       <div className="big-banner xs-only">
-        there’s a simple, way to get the deep, <br />
-        restorative, high-quality sleep you need
+        there’s a simple, way to get the deep, restorative, high-quality sleep you need
       </div>
       <Container>
         <Grid container>
@@ -642,9 +641,8 @@ const FastAsleepMelatonin = ({ location }) => {
               it—just let us know and we’ll refund your money. No need to return it, give it to a friend to try.
             </p>
             <h2 className="text-center">
-              Get the deep, restorative sleep you need to <br />
-              wake up feeling like your best self&mdash;
-              <br /> or get your money back
+              Get the deep, restorative sleep you need to wake up feeling like your best self&mdash; or get your money
+              back
             </h2>
           </Grid>
         </Grid>
