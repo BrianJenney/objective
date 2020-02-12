@@ -67,7 +67,7 @@ const FastAsleepIngredients = ({ location }) => {
 
   const handleClick = useCallback(() => {
     handleAddToCart();
-    handleAddCoupon();
+    //handleAddCoupon();
   }, [cart, catalog, dispatch]);
 
   useEffect(() => {
