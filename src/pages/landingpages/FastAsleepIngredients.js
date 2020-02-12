@@ -206,9 +206,11 @@ const FastAsleepIngredients = ({ location }) => {
                   src="https://images.ctfassets.net/mj9bpefl6wof/Wm45kKU1MtkRH2TfA54r1/79443bdd3c20acf18247e28f1701d845/gaba.png?h=215"
                 />
                 <em>
-                  GABA reduces the activity of nerve cells throughout your nervous system and helps your mind move from
-                  the wakeful state to the sleeping state
-                  <sup>*</sup>
+                  <b>
+                    GABA reduces the activity of nerve cells throughout your nervous system and helps your mind move
+                    from the wakeful state to the sleeping state
+                    <sup>*</sup>
+                  </b>
                 </em>
               </div>
               <p>
@@ -359,7 +361,9 @@ const FastAsleepIngredients = ({ location }) => {
                   className="w-100"
                   src="https://images.ctfassets.net/mj9bpefl6wof/45PqaEUbsmjZZNVqNUs7zp/1fe492148f9c23360e5f285df8bc98ac/saffron.png?h=250"
                 />
-                <em>Saffron flowers collected by hand</em>
+                <em>
+                  <b>Saffron flowers collected by hand</b>
+                </em>
               </div>
               <p>
                 Saffr’ACTIV® is the real deal. It’s made from Crocus sativa saffron flowers grown in North Africa,
@@ -422,7 +426,7 @@ const FastAsleepIngredients = ({ location }) => {
                 with Saffron & GABA Chocolates
               </div>
               <NavLink onClick={handleClick} className="green-btn">
-                GET 15% OFF
+                get 15% off — Buy Now
               </NavLink>
             </div>
           </Grid>
@@ -535,7 +539,7 @@ const FastAsleepIngredients = ({ location }) => {
             <div className="floating">
               <img
                 className="float-right fast-asleep"
-                src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/d02235ff6215ff8ba83029abb4d7a964/FA_-_desktop.png?h=244"
+                src="https://images.ctfassets.net/mj9bpefl6wof/6RPrVLqZzKHgJeyNbDMnl2/6c30c6081cafe7ee2f90a20b1307775a/fast_asleep.png?h=244"
               />
               <p>
                 <a href="/products/fast-asleep">Fast Asleep</a> is a revolutionary new way to get the high-quality sleep
@@ -544,7 +548,7 @@ const FastAsleepIngredients = ({ location }) => {
                 the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
               </p>
               <NavLink onClick={handleClick} className="blue-btn">
-                Try fast asleep risk-free
+                get 15% off — Buy Now
               </NavLink>
             </div>
             <hr />
@@ -632,18 +636,22 @@ const FastAsleepIngredients = ({ location }) => {
             <div className="wake-up-box">
               <img
                 className="hidden-xs"
-                src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/d02235ff6215ff8ba83029abb4d7a964/FA_-_desktop.png?w=556"
+                src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/84419a8e8d6d348b56b505c1aacedb89/FA_-_desktop.png?w=900"
               />
               <div className="box-right">
                 <div className="title">Wake Up Refreshed with Fast Asleep</div>
                 <div className="subtitle">SAFFRON SLEEP CHOCOLATES</div>
+                <div className="price-holder">
+                  <div className="price">$30</div>
+                  <div className="variant">/ 30 chocolates</div>
+                </div>
                 <ul>
                   <li>GABA relaxes your mind to lull you to sleep</li>
                   <li>Saffron keeps you sound asleep all night</li>
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
                 <NavLink onClick={handleClick} className="black-btn">
-                  GET 15% off your first order
+                  get 15% off — Buy Now
                 </NavLink>
               </div>
               <img
