@@ -217,6 +217,8 @@ const AccountAddresses = ({
             setEditedIndex(-1);
           }}
           allowFlyMode={allowFlyMode}
+          checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
+          switchToLogin = {rest.switchToLogin ? rest.switchToLogin : false}
         />
       ) : (
         <>

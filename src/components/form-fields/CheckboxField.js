@@ -9,7 +9,8 @@ const useStyles = makeStyles(theme => ({
   text: {
     fontFamily: 'p22-underground',
     fontSize: '16px',
-    color: '#231f20'
+    color: '#231f20',
+    lineHeight: 'normal'
   }
 }));
 const CheckboxField = ({ field, form, disabled, label, ...rest }) => {
