@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
@@ -21,6 +21,8 @@ const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
 const FastAsleepMelatonin = ({ location }) => {
   const cart = useSelector(state => state.cart);
   const catalog = useSelector(state => state.catalog);
+  const [prodAdded, setProdAdded] = useState(false);
+  const [couponAdded, setCouponAdded] = useState(false);
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
