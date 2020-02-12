@@ -25,7 +25,7 @@ import {
   RadioGroupField
 } from '../form-fields';
 import { Button, AlertPanel, NavLink } from '../common';
-import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
+import { COUNTRY_OPTIONS, STATE_OPTIONS, STATE_OPTIONS_ABBR } from '../../constants/location';
 import {
   PAYMENT_METHODS,
   PAYMENT_METHOD_OPTIONS
@@ -61,6 +61,21 @@ const useStyles = makeStyles(theme => ({
   mobileLogin: {
     fontSize: '16px',
     fontFamily: 'p22-underground'
+  },
+  root : {
+    '& .MuiInputLabel-root': {
+      fontSize: '16px'
+    },
+    '& .MuiInputBase-root' : {
+      fontSize: '16px'
+    },
+    '& .MuiFormHelperText-root' : {
+      fontSize: '11px',
+      color : '#231f20'
+    },
+    '& .MuiOutlinedInput-notchedOutline' : {
+      borderColor: '#231f20'
+    }
   }
 }));
 
@@ -253,7 +268,7 @@ const PaymentForm = ({
               client: clientInstance,
               styles: {
                 input: {
-                  'font-size': '18px',
+                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '18px',
                   'font-family': 'p22-underground, sans-serif',
                   'font-weight': 'lighter',
                   color: '#585858',
@@ -269,16 +284,16 @@ const PaymentForm = ({
                   color: '#000'
                 },
                 '::-webkit-input-placeholder': {
-                  'font-size': '1rem'
+                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
                 },
                 ':-moz-placeholder': {
-                  'font-size': '1rem'
+                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
                 },
                 '::-moz-placeholder': {
-                  'font-size': '1rem'
+                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
                 },
                 ':-ms-input-placeholder': {
-                  'font-size': '1rem'
+                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
                 }
               },
               fields: {
@@ -445,7 +460,7 @@ const PaymentForm = ({
   };
   /* eslint-disable */
   const renderForm = ({ values, setValues, isSubmitting }) => {preRenderBillingAddress(values, setValues); return(
-    <Form>
+    <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}> 
       {rest.checkoutVersion && rest.checkoutVersion === 2 && (
               <Box display="block" mb={xs ? 2 : 3} className="justify-content">
               <Typography
@@ -519,6 +534,7 @@ const PaymentForm = ({
                 position="relative"
                 className="bt-payment-holder"
                 id="bt-payment-holder"
+                style={rest.checkoutVersion && rest.checkoutVersion === 2 ? {border:'1px solid #231f20'} : {}}
               >
                 <Grid item xs={6}>
                   <div id="bt-cardNumber" ref={fieldRefs.number} />
@@ -672,7 +688,7 @@ const PaymentForm = ({
                   name="billingAddress.state"
                   label="State"
                   component={SelectField}
-                  options={STATE_OPTIONS}
+                  options={rest.checkoutVersion && rest.checkoutVersion === 2 ? STATE_OPTIONS_ABBR : STATE_OPTIONS}
                 />
               </div>
             </Grid>

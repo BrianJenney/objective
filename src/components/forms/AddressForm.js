@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import { InputField, SelectField, CheckboxField } from '../form-fields';
 import { Button, AlertPanel, NavLink, MenuLink } from '../common';
-import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
+import { COUNTRY_OPTIONS, STATE_OPTIONS, STATE_OPTIONS_ABBR } from '../../constants/location';
 import {
   getInitialValues,
   getErrorMessage,
@@ -33,8 +33,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'right',
     fontSize: '16px',
     fontWeight: 'normal',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
-    paddingTop: '5px'
+    fontFamily: 'p22-underground, Helvetica, sans-serif'
   },
   subTitleLink: {
     fontWeight: 600,
@@ -45,7 +44,22 @@ const useStyles = makeStyles(theme => ({
     fontSize: '14px',
     fontWeight: 'normal'
   },
-  mobileBox: {}
+  mobileBox: {},
+  root : {
+    '& .MuiInputLabel-root': {
+      fontSize: '16px'
+    },
+    '& .MuiInputBase-root' : {
+      fontSize: '16px'
+    },
+    '& .MuiFormHelperText-root' : {
+      fontSize: '11px',
+      color : '#231f20'
+    },
+    '& .MuiOutlinedInput-notchedOutline' : {
+      borderColor: '#231f20'
+    }
+  }
 }));
 
 export const FORM_TYPES = {
@@ -316,7 +330,7 @@ const AddressForm = ({
   };
 
   const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
-    <Form>
+    <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
       <Box display="block" mb={xs ? 3 : 4} className="justify-content">
         <Typography
           color="#231f20"
@@ -441,7 +455,7 @@ const AddressForm = ({
               name="address.state"
               label="State"
               component={SelectField}
-              options={STATE_OPTIONS}
+              options={rest.checkoutVersion && rest.checkoutVersion === 2 ? STATE_OPTIONS_ABBR : STATE_OPTIONS}
             />
           </div>
         </Grid>
@@ -537,10 +551,10 @@ const AddressForm = ({
                   color="#231f20"
                   variant="h5"
                   children={bottomTitle}
-                  fontSize={xs ? 24 : 30}
-                  mb={xs ? 3 : 4}
+                  fontSize={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 24 : 26) : (xs ? 24 : 30)}
+                  mb={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 2 : 3) : (xs ? 3 : 4)}
                 />
-                <Box border="1px solid rgb(0, 0, 0, 0.23)" p="14px" mb="29px">
+                <Box border={rest.checkoutVersion && rest.checkoutVersion === 2 ? '1px solid #231f20' : '1px solid rgb(0, 0, 0, 0.23)'} p="14px" mb="29px">
                   <Box
                     component={Typography}
                     color="#231f20"
