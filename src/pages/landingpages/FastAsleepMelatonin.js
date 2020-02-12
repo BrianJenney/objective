@@ -7,6 +7,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { GalleryStore } from '../../contexts/GalleryContext';
 import Products from '../gallery/Products';
+
 import { CartMergeNotification, CartNotification } from '../../components/cart';
 import { addCoupon, removeCoupon, addToCart } from '../../modules/cart/functions';
 import { setCartNotification } from '../../modules/utils/actions';
