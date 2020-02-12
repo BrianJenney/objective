@@ -45,7 +45,7 @@ const FastAsleepMelatonin = ({ location }) => {
     console.log('targetObject:', targetObject);
     //atc
     addToCart(cart._id, targetObject, 1);
-    console.log('1');
+    console.log('this console 1');
     //add coupon
     addCoupon(cart._id, 'voucherify.io-sandbox-04');
     console.log('2');
@@ -188,6 +188,176 @@ const FastAsleepMelatonin = ({ location }) => {
                 yet gentle, clinically studied ingredients help counteract the negative effects of stress to promote
                 deep, restorative sleep.<sup>3-16*</sup>
               </p>
+            </div>
+            <h2>
+              OK, But Why <em>Not</em> Melatonin?
+            </h2>
+            <p>
+              From weird, disturbing dreams and morning grogginess to interfering with your body’s sleep-wake rhythm,
+              the sleep-inducing hormone melatonin has some pretty significant drawbacks.<sup>2*</sup>
+            </p>
+            <p>
+              GABA and saffron, on the other hand, offer side effect-free, non-habit-forming sleep support. And they
+              come with powerful mood-boosting, stress-relieving benefits that increase over time, which means sleep
+              that gets better and better—and days that get brighter and more productive.<sup>3-16*</sup>
+            </p>
+            <div className="beige-box w-100 two-boxes">
+              <div className="w-50">
+                <div className="box-header">Melatonin</div>
+                <div className="ul-holder">
+                  <ul>
+                    <li>Causes intense dreams in some people</li>
+                    <li>Can lead to morning grogginess</li>
+                    <li>A hormone that alters sleep-wake rhythm</li>
+                    <li>Loses effectiveness over time</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="w-50">
+                <div className="box-header">GABA + Saffron</div>
+                <div className="ul-holder">
+                  <ul>
+                    <li>Free of side effects</li>
+                    <li>Eases stress and feelings of anxiousness</li>
+                    <li>Non-hormonal and non-habit-forming</li>
+                    <li>Increases in effectiveness over time</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12} md={6} className="smaller-container">
+            <div className="cta-holder">
+              <div className="text">
+                Get the deep restorative sleep you need <br />
+                with Saffron & GABA Chocolates
+              </div>
+              <NavLink onClick={handleClick} className="green-btn">
+                GET 15% OFF
+              </NavLink>
+            </div>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12} md={8} className="smaller-container">
+            <h2>
+              Sleep <em>Quality</em> Really Matters
+            </h2>
+            <div className="floating">
+              <img
+                className="float-right sleeping-lady"
+                src="https://images.ctfassets.net/mj9bpefl6wof/69BsY8f5sLsHSu8LFlkZYW/0b6946c8ce19d2582d69f28e878ce675/sleep_quality.png?w=285"
+              />
+              <p>
+                If you’re like most of us, balancing busy work schedules with kids’ schedules, maintaining a household
+                and doing your best to exercise and take care of your body, chances are you don’t have more time to
+                allocate for sleep. (When was the last time you took a nap?) So getting as much high-quality sleep as
+                possible during the hours you have for sleep is critical to feeling your best during the day.
+                <sup>*</sup>
+              </p>
+              <p>
+                That means when bedtime rolls around, you need to be able to wind down and fall asleep fast—and stay
+                sleeping soundly through the night—so that when you get up in the morning, you feel fully recharged and
+                ready for whatever your day holds.<sup>*</sup>
+              </p>
+              <p>So what’s keeping you from getting this kind of sleep?</p>
+              <p>
+                STRESS.<sup>*</sup>
+              </p>
+            </div>
+            <h2>Stress Is the #1 Enemy of Good Sleep</h2>
+            <p>
+              Life today is stressful. The stress makes it hard to sleep, and the lack of sleep makes it hard to stay
+              positive and on top of all the things we have to juggle each day, which, in turn, leads to—you guessed
+              it—more stress.<sup>*</sup>
+            </p>
+            <p>It’s a vicious cycle most of us know all too well. </p>
+            <p>
+              Stress causes a state of hyperarousal that keeps your brain and body “on alert,” which can make it
+              difficult to “power down” your brain at night when it’s time to relax and fall asleep. It can also make it
+              hard to stay asleep or fall back to sleep after waking up in the middle of the night.<sup>*</sup>
+            </p>
+            <p>
+              To make matters worse, our schedules are often at odds with the natural rhythms of day and night and light
+              and dark that our bodies were originally designed for. Artificial light and caffeine often have us
+              working, playing, thinking and scrolling around the clock, which layers on even more physical stress.
+              <sup>*</sup>
+            </p>
+            <h2 ref={myRefThree}>7 signs you aren’t getting Enough High-Quality sleep</h2>
+            <p>
+              Everyone’s sleep needs are different, but most adults do best with 7-9 solid hours a night. Unfortunately,
+              many of us are burning the candle at both ends and struggling to sleep well in the hours in between,
+              resulting in a slow accumulation of sleep debt that takes its toll on our health, performance and
+              appearance. Here are seven signs you aren’t getting enough high-quality sleep:<sup>17-20*</sup>
+            </p>
+            <p>
+              <strong>1. Daytime drowsiness:</strong> This one might seem obvious, but it can be serious and can even
+              lead to impaired driving.<sup>*</sup>
+            </p>
+            <p>
+              <strong>2. Dark under-eye circles:</strong> Missing sleep can cause fluid to accumulate below your eyes,
+              leading to circles, swelling and puffiness.<sup>*</sup>
+            </p>
+            <p>
+              <strong>3. Brain fog:</strong> Lack of sleep can cause lack of focus and decreased productivity. Studies
+              have even linked it to memory issues.<sup>*</sup>
+            </p>
+            <p>
+              <strong>4. Low mood:</strong> Lack of sleep can severely dampen your mental outlook, making it harder to
+              handle the stresses of daily life.<sup>*</sup>
+            </p>
+            <p>
+              <strong>5. Hunger pangs:</strong> Not sleeping can increase levels of hormones that control appetite,
+              resulting in cravings that can be hard to control.<sup>*</sup>
+            </p>
+            <p>
+              <strong>6. Impaired immune function:</strong> Your immune system works while you sleep, and not getting
+              the sleep you need makes it harder for it to do its job.<sup>*</sup>
+            </p>
+            <p>
+              <strong>7. Heart health concerns:</strong> Ongoing lack of sleep has been linked to cardiovascular
+              concerns.
+              <sup>*</sup>
+            </p>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12} md={10} className="smaller-container hidden-xs">
+            <div className="big-banner hidden-xs">
+              there’s a simple, way to get the deep, <br />
+              restorative, high-quality sleep you need
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
+      <div className="big-banner xs-only">
+        there’s a simple, way to get the deep, <br />
+        restorative, high-quality sleep you need
+      </div>
+      <Container>
+        <Grid container>
+          <Grid item xs={12} md={8} className="smaller-container">
+            <h2 className="mt-0">Better nights = better days = better health</h2>
+            <p>
+              The fact is your whole body runs better after a good night of sleep. And help is here—and it completely
+              bucks the system when it comes to typical sleep solutions.<sup>*</sup>
+            </p>
+            <div className="floating mb-100">
+              <img
+                className="float-right fast-asleep"
+                src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/d02235ff6215ff8ba83029abb4d7a964/FA_-_desktop.png?h=244"
+              />
+              <p>
+                <a href="/products/fast-asleep">Fast Asleep</a> is a revolutionary new way to get the high-quality sleep
+                you need to be the best version of yourself. It’s not a pill, and it’s not melatonin—it’s a delightful
+                dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
+                the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
+              </p>
+              <NavLink onClick={handleClick} className="blue-btn">
+                Try fast asleep risk-free
+              </NavLink>
             </div>
             <hr />
             <h2 ref={myRef}>GABA: The calming neurotransmitter</h2>
@@ -376,176 +546,10 @@ const FastAsleepMelatonin = ({ location }) => {
               </p>
             </div>
             <hr />
-            <h2>Why GABA and Saffron Instead of Melatonin?</h2>
-            <p>
-              From weird, disturbing dreams and morning grogginess to interfering with your body’s sleep-wake rhythm,
-              the sleep-inducing hormone melatonin has some pretty significant drawbacks.<sup>2*</sup>
-            </p>
-            <p>
-              GABA and saffron, on the other hand, offer side effect-free, non-habit-forming sleep support. And they
-              come with powerful mood-boosting, stress-relieving benefits that increase over time, which means sleep
-              that gets better and better—and days that get brighter and more productive.<sup>3-16*</sup>
-            </p>
-            <div className="beige-box w-100 two-boxes">
-              <div className="w-50">
-                <div className="box-header">Melatonin</div>
-                <div className="ul-holder">
-                  <ul>
-                    <li>Causes intense dreams in some people</li>
-                    <li>Can lead to morning grogginess</li>
-                    <li>A hormone that alters sleep-wake rhythm</li>
-                    <li>Loses effectiveness over time</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="w-50">
-                <div className="box-header">GABA + Saffron</div>
-                <div className="ul-holder">
-                  <ul>
-                    <li>Free of side effects</li>
-                    <li>Eases stress and feelings of anxiousness</li>
-                    <li>Non-hormonal and non-habit-forming</li>
-                    <li>Increases in effectiveness over time</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12} md={6} className="smaller-container">
-            <div className="cta-holder">
-              <div className="text">
-                Get the deep restorative sleep you need <br />
-                with Saffron & GABA Chocolates
-              </div>
-              <NavLink onClick={handleClick} className="green-btn">
-                GET 25% OFF
-              </NavLink>
-            </div>
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={12} md={8} className="smaller-container">
-            <hr />
-            <h2>
-              Sleep <em>Quality</em> Really Matters
-            </h2>
-            <div className="floating">
-              <img
-                className="float-right sleeping-lady"
-                src="https://images.ctfassets.net/mj9bpefl6wof/69BsY8f5sLsHSu8LFlkZYW/0b6946c8ce19d2582d69f28e878ce675/sleep_quality.png?w=285"
-              />
-              <p>
-                If you’re like most of us, balancing busy work schedules with kids’ schedules, maintaining a household
-                and doing your best to exercise and take care of your body, chances are you don’t have more time to
-                allocate for sleep. (When was the last time you took a nap?) So getting as much high-quality sleep as
-                possible during the hours you have for sleep is critical to feeling your best during the day.
-                <sup>*</sup>
-              </p>
-              <p>
-                That means when bedtime rolls around, you need to be able to wind down and fall asleep fast—and stay
-                sleeping soundly through the night—so that when you get up in the morning, you feel fully recharged and
-                ready for whatever your day holds.<sup>*</sup>
-              </p>
-              <p>So what’s keeping you from getting this kind of sleep?</p>
-              <p>
-                STRESS.<sup>*</sup>
-              </p>
-            </div>
-            <h2>Stress Is the #1 Enemy of Good Sleep</h2>
-            <p>
-              Life today is stressful. The stress makes it hard to sleep, and the lack of sleep makes it hard to stay
-              positive and on top of all the things we have to juggle each day, which, in turn, leads to—you guessed
-              it—more stress.<sup>*</sup>
-            </p>
-            <p>It’s a vicious cycle most of us know all too well. </p>
-            <p>
-              Stress causes a state of hyperarousal that keeps your brain and body “on alert,” which can make it
-              difficult to “power down” your brain at night when it’s time to relax and fall asleep. It can also make it
-              hard to stay asleep or fall back to sleep after waking up in the middle of the night.<sup>*</sup>
-            </p>
-            <p>
-              To make matters worse, our schedules are often at odds with the natural rhythms of day and night and light
-              and dark that our bodies were originally designed for. Artificial light and caffeine often have us
-              working, playing, thinking and scrolling around the clock, which layers on even more physical stress.
-              <sup>*</sup>
-            </p>
-            <h2 ref={myRefThree}>7 signs you aren’t getting Enough High-Quality sleep</h2>
-            <p>
-              Everyone’s sleep needs are different, but most adults do best with 7-9 solid hours a night. Unfortunately,
-              many of us are burning the candle at both ends and struggling to sleep well in the hours in between,
-              resulting in a slow accumulation of sleep debt that takes its toll on our health, performance and
-              appearance. Here are seven signs you aren’t getting enough high-quality sleep:<sup>17-20*</sup>
-            </p>
-            <p>
-              <strong>1. Daytime drowsiness:</strong> This one might seem obvious, but it can be serious and can even
-              lead to impaired driving.<sup>*</sup>
-            </p>
-            <p>
-              <strong>2. Dark under-eye circles:</strong> Missing sleep can cause fluid to accumulate below your eyes,
-              leading to circles, swelling and puffiness.<sup>*</sup>
-            </p>
-            <p>
-              <strong>3. Brain fog:</strong> Lack of sleep can cause lack of focus and decreased productivity. Studies
-              have even linked it to memory issues.<sup>*</sup>
-            </p>
-            <p>
-              <strong>4. Low mood:</strong> Lack of sleep can severely dampen your mental outlook, making it harder to
-              handle the stresses of daily life.<sup>*</sup>
-            </p>
-            <p>
-              <strong>5. Hunger pangs:</strong> Not sleeping can increase levels of hormones that control appetite,
-              resulting in cravings that can be hard to control.<sup>*</sup>
-            </p>
-            <p>
-              <strong>6. Impaired immune function:</strong> Your immune system works while you sleep, and not getting
-              the sleep you need makes it harder for it to do its job.<sup>*</sup>
-            </p>
-            <p>
-              <strong>7. Heart health concerns:</strong> Ongoing lack of sleep has been linked to cardiovascular
-              concerns.
-              <sup>*</sup>
-            </p>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={12} md={10} className="smaller-container hidden-xs">
-            <div className="big-banner hidden-xs">
-              there’s a simple, way to get the deep, <br />
-              restorative, high-quality sleep you need
-            </div>
-          </Grid>
-        </Grid>
-      </Container>
-      <div className="big-banner xs-only">
-        there’s a simple, way to get the deep, <br />
-        restorative, high-quality sleep you need
-      </div>
-      <Container>
-        <Grid container>
-          <Grid item xs={12} md={8} className="smaller-container">
-            <h2 className="mt-0">Better nights = better days = better health</h2>
-            <p>
-              The fact is your whole body runs better after a good night of sleep. And help is here—and it completely
-              bucks the system when it comes to typical sleep solutions.<sup>*</sup>
-            </p>
-            <div className="floating">
-              <img
-                className="float-right fast-asleep"
-                src="https://images.ctfassets.net/mj9bpefl6wof/4pOZp8G5Qk4w8uP6x47Aqs/d02235ff6215ff8ba83029abb4d7a964/FA_-_desktop.png?h=244"
-              />
-              <p>
-                <a href="/products/fast-asleep">Fast Asleep</a> is a revolutionary new way to get the high-quality sleep
-                you need to be the best version of yourself. It’s not a pill, and it’s not melatonin—it’s a delightful
-                dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
-                the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
-              </p>
-              <NavLink onClick={handleClick} className="blue-btn">
-                Try fast asleep risk-free
-              </NavLink>
-            </div>
-            <hr />
             <h2>Your sweetest (naturally sugar-free) sleep ever </h2>
             <p>
               Now, thanks to recent scientific advances in our understanding of stress and sleep and innovations in how
@@ -580,7 +584,6 @@ const FastAsleepMelatonin = ({ location }) => {
               We work exclusively with manufacturers who adhere to the Food and Drug Administration’s (FDA) Current Good
               Manufacturing Procedures (cGMP). These facilities are regularly inspected and certified by the FDA.
             </p>
-            <hr />
             <h2 ref={myRefFour}>Better sleep, guaranteed. Try it today—risk-free!</h2>
             <p>
               The great news about Fast Asleep is that it often starts working the first night you take it. Depending on
@@ -641,7 +644,7 @@ const FastAsleepMelatonin = ({ location }) => {
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
                 <NavLink onClick={handleClick} className="black-btn">
-                  GET 25% off your first order
+                  GET 15% off your first order
                 </NavLink>
               </div>
               <img
