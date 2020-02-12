@@ -286,6 +286,7 @@ const Checkout = ({
   useEffect(() => {
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
+      dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
     }
   }, [activeStep, payload.shippingAddress]);
 
@@ -443,7 +444,7 @@ const Checkout = ({
                       to="/gallery"
                       children=" < Continue Shopping"
                       underline="always"
-                      style={{ padding: '40px 20px 20px' }}
+                      style={{ fontSize:'14px', padding: '30px 20px 12px' }}
                     />
                   ) : null}
                   <Grid
