@@ -18,7 +18,12 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { InputField, SelectField, CheckboxField, RadioGroupField } from '../form-fields';
+import {
+  InputField,
+  SelectField,
+  CheckboxField,
+  RadioGroupField
+} from '../form-fields';
 import { Button, AlertPanel, NavLink } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS } from '../../constants/location';
 import {
@@ -46,11 +51,16 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'normal',
     fontFamily: 'p22-underground, Helvetica, sans-serif',
     marginLeft: '3px',
-    marginBottom:'16px',
+    marginBottom: '16px',
     marginTop: '8px'
   },
-  formControlLabel : {
-    fontSize: '20px'
+  formControlLabel: {
+    fontSize: '20px',
+    fontFamily: 'p22-underground'
+  },
+  mobileLogin: {
+    fontSize: '16px',
+    fontFamily: 'p22-underground'
   }
 }));
 
@@ -184,7 +194,9 @@ const PaymentForm = ({
     }
   };
 
-  const [billingAddressMode, setBillingAddressMode] = useState('sameAsShipping');
+  const [billingAddressMode, setBillingAddressMode] = useState(
+    'sameAsShipping'
+  );
   const [initialRender, setInitialRender] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
@@ -196,20 +208,25 @@ const PaymentForm = ({
   );
 
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(
-    currentUser.patchAccountError
-  );
+  const errorMessage = getErrorMessage(currentUser.patchAccountError);
 
   const handleSetBillingAddressMode = (event, values, setValues) => {
-    if(event.target.value === 'sameAsShipping'){
-      handleUseAddressSeedToggle({target:{checked:true}},values,setValues);
-    }else{
-      handleUseAddressSeedToggle({target:{checked:false}},values,setValues);
+    if (event.target.value === 'sameAsShipping') {
+      handleUseAddressSeedToggle(
+        { target: { checked: true } },
+        values,
+        setValues
+      );
+    } else {
+      handleUseAddressSeedToggle(
+        { target: { checked: false } },
+        values,
+        setValues
+      );
     }
 
     setBillingAddressMode(event.target.value);
   };
-  
 
   useEffect(() => {
     if (errorMessage) {
@@ -338,7 +355,7 @@ const PaymentForm = ({
       checkedFields.findIndex(field => field === 'password')
     ];
     delete formikFields[checkedFields.findIndex(field => field === 'password')];
-    delete formikValueFieldsMap['password'];
+    delete formikValueFieldsMap.password;
     delete INITIAL_VALUES.billingAddress.password;
   }
   const handleSubmit = async (values, actions) => {
@@ -408,9 +425,16 @@ const PaymentForm = ({
     };
     onSubmit(payload, actions);
   };
-  
+
   const preRenderBillingAddress = (values, setValues) => {
-    if (!initialRender && billingAddressMode==='sameAsShipping' && Object.keys(addressSeed).length > 0 && seedEnabled && rest.checkoutVersion && rest.checkoutVersion === 2) {
+    if (
+      !initialRender &&
+      billingAddressMode === 'sameAsShipping' &&
+      Object.keys(addressSeed).length > 0 &&
+      seedEnabled &&
+      rest.checkoutVersion &&
+      rest.checkoutVersion === 2
+    ) {
       handleSetBillingAddressMode(
         { target: { value: 'sameAsShipping' } },
         values,
@@ -418,7 +442,7 @@ const PaymentForm = ({
       );
       setInitialRender(true);
     }
-  }
+  };
   /* eslint-disable */
   const renderForm = ({ values, setValues, isSubmitting }) => {preRenderBillingAddress(values, setValues); return(
     <Form>
@@ -526,6 +550,7 @@ const PaymentForm = ({
                 color="#231f20"
                 variant="h5"
                 children="Billing Address"
+                style={{ fontFamily: 'CanelaText'}}
                 fontSize={xs ? 24 : 30}
                 mb={1}
               />

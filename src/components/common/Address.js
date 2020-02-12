@@ -15,13 +15,12 @@ const useStyles = makeStyles(theme => ({
 
 const Address = ({ address, email = null, phone = null }) => {
   const classes = useStyles();
-  const Phone = ({ phone }) => {
-    return phone ? (
+  const Phone = ({ phone }) =>
+    phone ? (
       <Typography className={classes.text}>
         ({phone.substr(0, 3)}) {phone.substr(3, 3)}-{phone.substr(6)}
       </Typography>
     ) : null;
-  };
   if (!address) return null;
   return (
     <>

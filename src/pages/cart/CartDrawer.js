@@ -74,7 +74,8 @@ const Cart = ({
   location,
   activeStep,
   restrictionMessage,
-  restrictedProduct
+  restrictedProduct,
+  checkoutVersion
 }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
@@ -516,7 +517,7 @@ const Cart = ({
               <StyledEstimatedTotal
                 style={xsBreakpoint ? { fontSize: '20px' } : {}}
               >
-                {xsBreakpoint ? 'Total' : 'Estimated Total'}
+                {xsBreakpoint || checkoutVersion === 2 ? 'Total' : 'Estimated Total'}
               </StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>

@@ -65,7 +65,7 @@ const getPanelTitleContent = (
   let payloadSummary = null;
 
   if (!isNil(payload)) {
-      if (step === 0) {
+    if (step === 0) {
       payloadSummary = <AddressSummary noDefault values={payload} />;
     } else if (step === 1) {
       payloadSummary = <PaymentSummary noDefault values={payload} />;
@@ -107,8 +107,11 @@ const Checkout = ({
 }) => {
   const [payload, setPayload] = useState({});
   const [resetFormMode, setResetFormMode] = useState(false);
-  const [authMode, setAuthMode] = useState("shipping");
-  const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
+  const [authMode, setAuthMode] = useState('shipping');
+  const [
+    resetPaymentDetailsFormMode,
+    setResetPaymentDetailsFormMode
+  ] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
@@ -116,7 +119,11 @@ const Checkout = ({
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const { account_jwt, email: currentUserEmail, paymentMethods } = currentUser.data;
+  const {
+    account_jwt,
+    email: currentUserEmail,
+    paymentMethods
+  } = currentUser.data;
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
@@ -164,7 +171,7 @@ const Checkout = ({
       total: cart.total ? Number.parseFloat(cart.total) : 0
     });
   };
-  //Set step 1 to active if there were any signup errors
+  // Set step 1 to active if there were any signup errors
   useEffect(() => {
     if (!accountCreated && currentUser.signupError) {
       if (currentUser.signupError.errorMessage) {
@@ -176,7 +183,7 @@ const Checkout = ({
     }
   }, [currentUser.signupError]);
 
-  //Set step 2 to active if there are any patch account errors
+  // Set step 2 to active if there are any patch account errors
   useEffect(() => {
     if (
       accountCreated &&
@@ -201,38 +208,39 @@ const Checkout = ({
   }, [paymentMethods]);
 
   useEffect(() => {
-    if(accountCreated && account_jwt && !paymentDetailsUpdated){
-      //Update payment details
-      let paymentDetailsPayload = payload.paymentDetails;
-      let creditCardNonce = paymentDetailsPayload.nonce;
+    if (accountCreated && account_jwt && !paymentDetailsUpdated) {
+      // Update payment details
+      const paymentDetailsPayload = payload.paymentDetails;
+      const creditCardNonce = paymentDetailsPayload.nonce;
       delete paymentDetailsPayload.billingAddress.password;
       delete paymentDetailsPayload.billingAddress.email;
       delete paymentDetailsPayload.nonce;
-      let requestPayload = {newCreditCard:{...paymentDetailsPayload},nonce:creditCardNonce};
+      const requestPayload = {
+        newCreditCard: { ...paymentDetailsPayload },
+        nonce: creditCardNonce
+      };
       requestPatchAccount(account_jwt, requestPayload);
-
     }
   }, [accountCreated]);
 
   useEffect(() => {
-    if(!accountCreated && currentUser.data.account_jwt && activeStep===2){
-      //Update payment details
+    if (!accountCreated && currentUser.data.account_jwt && activeStep === 2) {
+      // Update payment details
       setAccountCreated(true);
     }
-  },[currentUser.data.account_jwt]);
+  }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
- if(activeStep===2 && !account_jwt){
-   //Create user here...
-   requestCreateAccount({
-     firstName: payload.paymentDetails.billingAddress.firstName,
-     lastName: payload.paymentDetails.billingAddress.lastName,
-     email: payload.shippingAddress.email,
-     password: payload.paymentDetails.billingAddress.password,
-     newsletter: payload.shippingAddress.shouldSubscribe
-   });
-
- }
+    if (activeStep === 2 && !account_jwt) {
+      // Create user here...
+      requestCreateAccount({
+        firstName: payload.paymentDetails.billingAddress.firstName,
+        lastName: payload.paymentDetails.billingAddress.lastName,
+        email: payload.shippingAddress.email,
+        password: payload.paymentDetails.billingAddress.password,
+        newsletter: payload.shippingAddress.shouldSubscribe
+      });
+    }
   }, [activeStep]);
 
   useEffect(() => {
@@ -253,9 +261,15 @@ const Checkout = ({
     }
 
     if (xs && currentUser.data.account_jwt) {
-      if (!currentUser.data.addressBook || currentUser.data.addressBook.length === 0) {
+      if (
+        !currentUser.data.addressBook ||
+        currentUser.data.addressBook.length === 0
+      ) {
         setCurrentStep(0);
-      } else if (!currentUser.data.paymentMethods || currentUser.data.paymentMethods.length === 0) {
+      } else if (
+        !currentUser.data.paymentMethods ||
+        currentUser.data.paymentMethods.length === 0
+      ) {
         setCurrentStep(1);
       } else {
         setCurrentStep(2);
@@ -263,20 +277,17 @@ const Checkout = ({
     }
   }, [currentUser.data.account_jwt]);
 
-  useEffect(() =>{
-    if(account_jwt && authMode==='login' && activeStep===0){
-        setAuthMode("shipping");
+  useEffect(() => {
+    if (account_jwt && authMode === 'login' && activeStep === 0) {
+      setAuthMode('shipping');
     }
-  }, [currentUser.data.account_jwt])
+  }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
     if (activeStep === 1) {
-       setShippingAddressActive(payload.shippingAddress);
+      setShippingAddressActive(payload.shippingAddress);
     }
-  }, [
-    activeStep,
-    payload.shippingAddress
-  ]);
+  }, [activeStep, payload.shippingAddress]);
 
   useEffect(() => {
     trackCheckoutStarted();
@@ -292,7 +303,7 @@ const Checkout = ({
     }
   }, [cart.shipping]);
 
-  //Cart is empty, go to Home page
+  // Cart is empty, go to Home page
   useEffect(() => {
     if (cartCount === 0 && cart._id) {
       history.push('/');
@@ -305,7 +316,7 @@ const Checkout = ({
   };
 
   const handleAddressesAndCardSteps = async values => {
-    const NEW_STEP_KEYS = STEP_KEYS.slice(1,4);
+    const NEW_STEP_KEYS = STEP_KEYS.slice(1, 4);
     const key = NEW_STEP_KEYS[activeStep];
 
     setPayload({ ...payload, [key]: values });
@@ -318,8 +329,8 @@ const Checkout = ({
   };
 
   const handleReviewStep = values => {
-    //Review step should only progress on Click event
-    if (!values['nativeEvent']) {
+    // Review step should only progress on Click event
+    if (!values.nativeEvent) {
       return false;
     }
 
@@ -398,10 +409,10 @@ const Checkout = ({
   };
 
   const onPanelChange = (expanded, panelIndex) => {
-    const NEW_STEP_KEYS = STEP_KEYS.slice(1,4);
+    const NEW_STEP_KEYS = STEP_KEYS.slice(1, 4);
     const shippingKey = NEW_STEP_KEYS[0];
     const paymentKey = NEW_STEP_KEYS[1];
-    
+
     if (
       !expanded ||
       activeStep === 0 ||
@@ -411,7 +422,7 @@ const Checkout = ({
       return false;
     }
     trackCheckoutStepCompleted(panelIndex);
-    if(panelIndex===0){
+    if (panelIndex === 0) {
       setResetFormMode(true);
     }
     return setCurrentStep(panelIndex);
@@ -422,176 +433,178 @@ const Checkout = ({
       {loading ? (
         <Loader />
       ) : (
-        <Box bgcolor="rgba(252, 248, 244, 0.5)">
-          <Container>
-            <Box py={10} className="checkout-wrapper">
-              <CssBaseline />
-              <Grid container spacing={4}>
-                <Grid
-                  item
-                  flex={1}
-                  xs={12}
-                  md={8}
-                  style={xs ? { padding: 0 } : {}}
-                  className="right-side"
-                >
-                  <Panel
-                    title={getPanelTitleContent(
-                      xs,
-                      0,
-                      activeStep,
-                      null,
-                      payload.shippingAddress
-                    )}
-                    collapsible
-                    expanded={activeStep === 0}
-                    onChange={e => onPanelChange(e, 0)}
+          <Box bgcolor="rgba(252, 248, 244, 0.5)">
+            <Container>
+              <Box py={10} className="checkout-wrapper">
+                <CssBaseline />
+                <Grid container spacing={4} style={{ 'margin-top': '50px' }}>
+                  <Grid
+                    item
+                    flex={1}
+                    xs={12}
+                    md={8}
+                    style={xs ? { padding: 0 } : {}}
+                    className="right-side"
                   >
-                    <div ref={stepRefs[0]}>
-                      {authMode === 'shipping' ? (
-                        <AccountAddresses
+                    <Panel
+                      title={getPanelTitleContent(
+                        xs,
+                        0,
+                        activeStep,
+                        null,
+                        payload.shippingAddress
+                      )}
+                      collapsible
+                      expanded={activeStep === 0}
+                      onChange={e => onPanelChange(e, 0)}
+                    >
+                      <div ref={stepRefs[0]}>
+                        {authMode === 'shipping' ? (
+                          <AccountAddresses
+                            checkoutVersion={2}
+                            currentUser={currentUser}
+                            cart={cart}
+                            setRestrictionMessage={setRestrictionMessage}
+                            setRestrictedProduct={setRestrictedProduct}
+                            requestPatchAccount={requestPatchAccount}
+                            clearPatchAccountError={clearPatchAccountError}
+                            formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                            onSubmit={handleNext}
+                            selectionEnabled
+                            allowFlyMode
+                            resetFormMode={resetFormMode}
+                            shippingAddressActive={shippingAddressActive}
+                            switchToLogin={() => setAuthMode('login')}
+                            mt={4}
+                            mx={10}
+                            mb={5}
+                          />
+                        ) : (
+                            <Login
+                              requestLogin={requestLogin}
+                              clearLoginError={clearLoginError}
+                              switchToSignup={() => setAuthMode('shipping')}
+                            />
+                          )}
+                      </div>
+                    </Panel>
+                    {xs && activeStep === 1 && restrictionMessage ? (
+                      <StateRestrictionsDialog
+                        product_name={restrictedProduct}
+                        cartCount={cartCount}
+                        onExited={closeShippingRestrictionsDialog}
+                      />
+                    ) : null}
+                    <Panel
+                      title={getPanelTitleContent(
+                        xs,
+                        1,
+                        activeStep,
+                        null,
+                        payload.paymentDetails
+                      )}
+                      collapsible
+                      expanded={activeStep === 1}
+                      onChange={e => onPanelChange(e, 1)}
+                    >
+                      <div ref={stepRefs[1]}>
+                        <AccountPaymentDetails
                           checkoutVersion={2}
                           currentUser={currentUser}
-                          cart={cart}
-                          setRestrictionMessage={setRestrictionMessage}
-                          setRestrictedProduct={setRestrictedProduct}
                           requestPatchAccount={requestPatchAccount}
                           clearPatchAccountError={clearPatchAccountError}
-                          formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                          formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                          onBack={handleBack}
                           onSubmit={handleNext}
                           selectionEnabled
+                          seedEnabled
+                          addressSeed={payload.shippingAddress}
+                          useSeedLabel="Use shipping address"
                           allowFlyMode
-                          resetFormMode={resetFormMode}
-                          shippingAddressActive={shippingAddressActive}
-                          switchToLogin={() => setAuthMode('login')}
                           mt={4}
                           mx={10}
                           mb={5}
+                          backLabel="Cancel"
+                          submitLabel="Review Order"
+                          resetFormMode={resetPaymentDetailsFormMode}
                         />
-                      ) : (
-                        <Login
-                          requestLogin={requestLogin}
-                          clearLoginError={clearLoginError}
-                          switchToSignup={() => setAuthMode('shipping')}
-                        />
-                      )}
-                    </div>
-                  </Panel>
-                  {xs && activeStep === 1 && restrictionMessage ? (
-                    <StateRestrictionsDialog
-                      product_name={restrictedProduct}
-                      cartCount={cartCount}
-                      onExited={closeShippingRestrictionsDialog}
-                    />
-                  ) : null}
-                  <Panel
-                    title={getPanelTitleContent(
-                      xs,
-                      1,
-                      activeStep,
-                      null,
-                      payload.paymentDetails
-                    )}
-                    collapsible
-                    expanded={activeStep === 1}
-                    onChange={e => onPanelChange(e, 1)}
-                  >
-                    <div ref={stepRefs[1]}>
-                      <AccountPaymentDetails
-                        checkoutVersion={2}
-                        currentUser={currentUser}
-                        requestPatchAccount={requestPatchAccount}
-                        clearPatchAccountError={clearPatchAccountError}
-                        formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                        onBack={handleBack}
-                        onSubmit={handleNext}
-                        selectionEnabled
-                        seedEnabled
-                        addressSeed={payload.shippingAddress}
-                        useSeedLabel="Use shipping address"
-                        allowFlyMode
-                        mt={4}
-                        mx={10}
-                        mb={5}
-                        backLabel="Cancel"
-                        submitLabel="Review Order"
-                        resetFormMode={resetPaymentDetailsFormMode}
-                      />
-                    </div>
-                  </Panel>
-                  <Panel
-                    title={getPanelTitleContent(xs, 2, activeStep, null, {})}
-                    collapsible
-                    hideExpandIcon
-                    expanded={activeStep === 2}
-                    onChange={e => onPanelChange(e, 2)}
-                    className="lastPanel"
-                  >
-                    <div ref={stepRefs[2]}>
-                      {xs && (
-                        <CartDrawer
-                          disableItemEditing
-                          hideCheckoutProceedLink
-                          hideTaxLabel
-                          showOrderSummaryText
+                      </div>
+                    </Panel>
+                    <Panel
+                      title={getPanelTitleContent(xs, 2, activeStep, null, {})}
+                      collapsible
+                      hideExpandIcon
+                      expanded={activeStep === 2}
+                      onChange={e => onPanelChange(e, 2)}
+                      className="lastPanel"
+                    >
+                      <div ref={stepRefs[2]}>
+                        {xs && (
+                          <CartDrawer
+                            checkoutVersion={2}
+                            disableItemEditing
+                            hideCheckoutProceedLink
+                            hideTaxLabel
+                            showOrderSummaryText
+                            xsBreakpoint={xs}
+                            activeStep={activeStep}
+                            restrictionMessage={restrictionMessage}
+                            restrictedProduct={restrictedProduct}
+                          />
+                        )}
+                        <CheckoutReviewForm
                           xsBreakpoint={xs}
-                          activeStep={activeStep}
-                          restrictionMessage={restrictionMessage}
-                          restrictedProduct={restrictedProduct}
+                          onSubmit={handleNext}
                         />
-                      )}
-                      <CheckoutReviewForm
-                        xsBreakpoint={xs}
-                        onSubmit={handleNext}
-                      />
-                    </div>
-                  </Panel>
-                </Grid>
-                {!xs && currentUser ? (
-                  <Grid item xs={12} md={4} className="left-side">
-                    <CartDrawer
-                      disableItemEditing
-                      hideCheckoutProceedLink
-                      hideTaxLabel
-                      showOrderSummaryText={false}
-                      xsBreakpoint={xs}
-                      activeStep={activeStep}
-                      restrictionMessage={restrictionMessage}
-                      restrictedProduct={restrictedProduct}
-                    />
+                      </div>
+                    </Panel>
                   </Grid>
-                ) : (
-                  ''
-                )}
-              </Grid>
-              <Dialog
-                className="transaction-dialog-container"
-                open={checkoutDialogOpen}
-                onClose={handleCheckoutDialogClose}
-                closeAfterTransition
-              >
-                {orderError ? (
-                  <IconButton
-                    aria-label="close"
-                    style={{
-                      position: 'absolute',
-                      right: theme.spacing(1),
-                      top: theme.spacing(1),
-                      color: theme.palette.grey[500]
-                    }}
-                    onClick={handleCheckoutDialogClose}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                ) : null}
-                <MuiDialogContent>
-                  <TransactionMessage orderError={orderError} />
-                </MuiDialogContent>
-              </Dialog>
-            </Box>
-          </Container>
-        </Box>
-      )}
+                  {!xs && currentUser ? (
+                    <Grid item xs={12} md={4} className="left-side">
+                      <CartDrawer
+                        checkoutVersion={2}
+                        disableItemEditing
+                        hideCheckoutProceedLink
+                        hideTaxLabel
+                        showOrderSummaryText={false}
+                        xsBreakpoint={xs}
+                        activeStep={activeStep}
+                        restrictionMessage={restrictionMessage}
+                        restrictedProduct={restrictedProduct}
+                      />
+                    </Grid>
+                  ) : (
+                      ''
+                    )}
+                </Grid>
+                <Dialog
+                  className="transaction-dialog-container"
+                  open={checkoutDialogOpen}
+                  onClose={handleCheckoutDialogClose}
+                  closeAfterTransition
+                >
+                  {orderError ? (
+                    <IconButton
+                      aria-label="close"
+                      style={{
+                        position: 'absolute',
+                        right: theme.spacing(1),
+                        top: theme.spacing(1),
+                        color: theme.palette.grey[500]
+                      }}
+                      onClick={handleCheckoutDialogClose}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ) : null}
+                  <MuiDialogContent>
+                    <TransactionMessage orderError={orderError} />
+                  </MuiDialogContent>
+                </Dialog>
+              </Box>
+            </Container>
+          </Box>
+        )}
     </>
   );
 };

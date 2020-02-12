@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import HttpsOutlined from '@material-ui/icons/HttpsOutlined';
 import { Button, NavLink } from '../common';
-
 const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
   <Box
     display="flex"
@@ -21,14 +21,19 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
         children="Please take a moment to review your order."
       />
     ) : (
-      ''
-    )}
+        ''
+      )}
     <Box width={532} mb={2} className="button-holder-mobile">
       <Button
         type="button"
         onClick={onSubmit}
         children="Place order"
         size="large"
+        startIcon={
+          xsBreakpoint ? null : (
+            <HttpsOutlined style={{ 'padding-bottom': '5px' }} />
+          )
+        }
         fullWidth
       />
     </Box>
@@ -57,12 +62,11 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
       <Typography variant="body2" style={{ fontSize: '11px' }}>
         &nbsp;and
       </Typography>
-      <Box
-        mx={1}
-      >
-        <a style={{ fontSize: '11px', color: '#000000' }}
-           href="https://www.thecloroxcompany.com/privacy/"
-           target="_blank"
+      <Box mx={1}>
+        <a
+          style={{ fontSize: '11px', color: '#000000' }}
+          href="https://www.thecloroxcompany.com/privacy/"
+          target="_blank"
         >
           Privacy Policy
         </a>
