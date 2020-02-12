@@ -20,9 +20,6 @@
   .mt-0 {
     margin-top: 0;
   }
-  .mb-100 {
-    margin-bottom: 100px;
-  }
   .hero-image {
     margin-bottom: 45px;
   }
@@ -77,7 +74,7 @@
     text-transform: uppercase;
   }
   p {
-    font-family: FreightTextProBook;
+    font-family: freight-text-pro;
     font-size: 18px;
     font-weight: normal;
     font-stretch: normal;
@@ -92,15 +89,15 @@
     }
   }
   hr {
-    border-color: #b9b9b9;
     margin: 35px 0;
+    border-top: 1px solid #b9b9b9;
   }
   ul {
     padding: 0 0 0 23px;
     margin: 10px 0 0;
     list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/5Hv6wfbtbWEbfQSaGra8us/eec68bbf2409fb295a9b09babcdf76fe/checkmark.svg?h=9');
     li {
-      font-family: FreightTextProMedium;
+      font-family: freight-text-pro;
       font-size: 18px;
       font-weight: normal;
       font-stretch: normal;
@@ -108,17 +105,13 @@
       line-height: 1.28;
       letter-spacing: normal;
       color: #333333;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       &:last-of-type {
         margin-bottom: 0;
       }
     }
     &.ml-ul {
       margin: 30px 0px 35px 255px;
-      line-height: 1.5;
-      li {
-        margin-bottom: 20px;
-      }
     }
   }
   .beige-box {
@@ -154,10 +147,9 @@
       margin-left: 25px;
       padding: 30px 25px;
       ul {
-        margin: 35px 0 0;
+        margin: 25px 0 0;
         li {
           font-size: 20px;
-          margin-bottom: 25px;
         }
       }
     }
@@ -172,15 +164,13 @@
       .w-50 {
         ul {
           li {
-            font-family: FreightTextProMedium;
+            font-family: freight-text-pro;
             font-size: 18px;
             font-weight: normal;
             font-stretch: normal;
             font-style: normal;
-            line-height: 1.67;
             letter-spacing: normal;
             color: #333333;
-            margin-bottom: 20px;
             &:last-of-type {
               margin-bottom: 10px;
             }
@@ -211,7 +201,7 @@
       margin-bottom: 12px;
     }
     em {
-      font-family: FreightTextPro;
+      font-family: freight-text-pro;
       font-size: 14px;
       font-weight: 500;
       font-stretch: normal;
@@ -229,7 +219,7 @@
       margin-bottom: 12px;
     }
     em {
-      font-family: FreightTextPro;
+      font-family: freight-text-pro;
       font-size: 16px;
       font-weight: 500;
       font-stretch: normal;
@@ -247,7 +237,7 @@
     text-align: center;
     justify-content: center;
     .text {
-      font-family: FreightTextPro;
+      font-family: freight-text-pro;
       font-size: 22px;
       font-weight: bold;
       font-stretch: normal;
@@ -257,7 +247,7 @@
       color: #000000;
     }
     .green-btn {
-      width: 185px;
+      width: 265px;
       height: 50px;
       background-color: #4fa96d;
       color: #fff;
@@ -308,15 +298,16 @@
     color: #ffffff;
     padding: 15px 65px;
     text-align: center;
-    margin-top: 35px;
+    margin-top: 45px;
     text-decoration: none;
+    display: block;
   }
   .wake-up-box {
     width: 100%;
     border: solid 1px #000000;
     display: flex;
     margin: 60px 0 40px;
-    height: 509px;
+    height: auto;
     img {
       height: 100%;
       width: 50%;
@@ -351,10 +342,6 @@
       ul {
         margin: 25px 0 40px;
         list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/3HZYclltbiH9vpFn6OPZIb/269d7184d896a24886cbd24bd4a5ff84/checkmark-black.svg?h=9');
-        li {
-          line-height: 1.5;
-          margin-bottom: 20px;
-        }
       }
       .black-btn {
         width: 100%;
@@ -372,11 +359,12 @@
         color: #ffffff;
         padding: 15px 68px;
         text-decoration: none;
+        display: block;
       }
     }
   }
   .sf {
-    font-family: FreightTextProBook;
+    font-family: freight-text-pro;
     font-size: 18px;
     font-weight: normal;
     font-stretch: normal;
@@ -388,7 +376,7 @@
   ol {
     margin-top: 0;
     li {
-      font-family: FreightTextProBook;
+      font-family: freight-text-pro;
       font-size: 14px;
       font-weight: normal;
       font-stretch: normal;
@@ -396,6 +384,20 @@
       line-height: 1.93;
       letter-spacing: normal;
       color: #333333;
+    }
+  }
+  .price-holder {
+    display: flex;
+    margin: 35px 0;
+    .price {
+      font-family: p22-underground, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+    }
+    .variant {
+      font-family: p22-underground, Helvetica, sans-serif;
+      font-size: 18px;
+      margin-left: 5px;
     }
   }
   .landing-header {
@@ -524,6 +526,10 @@
             border-top: 1px solid #000;
           }
         }
+      }
+      &.adds {
+        width: 100%;
+        margin-right: 0;
       }
     }
     .saffron-flowers {
