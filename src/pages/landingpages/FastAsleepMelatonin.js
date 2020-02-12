@@ -36,22 +36,24 @@ const FastAsleepMelatonin = ({ location }) => {
   useEffect(() => {
     window.analytics.page('FastAsleepMelatonin');
   }, []);
-  const handleClick = () => {
-    console.log('HANDLE CLICK');
-    console.log(catalog);
-    console.log(catalog.variants);
-    const vts = catalog.variants;
-    const targetObject = vts.find(item => item.slug == 'fast-asleep');
-    console.log('targetObject:', targetObject);
-    //atc
-    addToCart(cart._id, targetObject, 1);
-    console.log('this console 1');
-    //add coupon
-    addCoupon(cart._id, 'voucherify.io-sandbox-04');
-    console.log('2');
-    //redirect
-    //window.location.href = '/checkout';
-    //Segment tracking
+
+  const handleAddToCart = useCallback(() => {
+    const selectedVariant = catalog.variants.find(item => item.slug === 'fast-asleep');
+    setTimeout(() => {
+      addToCart(cart, selectedVariant, 1);
+      setProdAdded(true);
+    }, 500);
+  }, [cart, catalog, dispatch]);
+
+  const handleAddCoupon = useCallback(() => {
+    setTimeout(() => {
+      addCoupon(cart._id, 'voucherify.io-sandbox-04');
+      setCouponAdded(true);
+    }, 500);
+  }, [cart, catalog, dispatch]);
+
+  const handleClick = useCallback(() => {
+    handleAddToCart();
     window.analytics.track('Product Clicked', {
       brand: 'OBJ',
       cart_id: cart._id,
@@ -65,7 +67,19 @@ const FastAsleepMelatonin = ({ location }) => {
       sku: targetObject.sku,
       url: window.location.href
     });
-  };
+  }, [cart, catalog, dispatch]);
+
+  useEffect(() => {
+    if (prodAdded && couponAdded) {
+      window.location.href = '/checkout';
+    }
+  }, [prodAdded, couponAdded]);
+
+  useEffect(() => {
+    if (cart.items.length > 0 && couponAdded === false) {
+      handleAddCoupon();
+    }
+  }, [cart]);
 
   return (
     <div className="fast-asleep-lp">
