@@ -5,7 +5,7 @@ import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Grid, Card, CardMedia } from '@material-ui/core';
-import { AlertPanel, NavLink } from '../../components/common';
+import { AlertPanel, NavLink, MenuLink } from '../../components/common';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
@@ -61,6 +61,21 @@ const useStyles = makeStyles(() => ({
     letterSpacing: '1.06px',
     textTransform: 'uppercase',
     paddingBottom: '30px'
+  },
+  editCart: {
+    marginTop: '4px',
+    fontFamily: 'p22-Underground',
+    fontSize: '16px',
+    fontWeight: 600,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '1.06px'
+  },
+  editCartMobile: {
+    fontFamily: 'p22-Underground',
+    fontSize: '16px',
+    paddingLeft: '24px'
   }
 }));
 
@@ -100,6 +115,11 @@ const Cart = ({
   const handleCheckout = useCallback(() => {
     dispatch(setCartDrawerOpened(false, false));
     history.push('/checkout');
+  }, [dispatch, history]);
+
+  const handleEditCart = useCallback(() => {
+    dispatch(setCartDrawerOpened(true, true));
+    history.push('/gallery');
   }, [dispatch, history]);
 
   if (!cart) {
@@ -152,8 +172,17 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartMerged && isCheckoutPage ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+              {cartMerged && isCheckoutPage ? (
+                <CartMergeNotification isCheckoutPage={isCheckoutPage} />
+              ) : null}
             </Grid>
+            {!xsBreakpoint && checkoutVersion === 2 ? (
+              <MenuLink
+                onClick={handleEditCart}
+                underline="always"
+                className={classes.editCart}
+                children="EDIT CART"
+            />) : null}
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
                 <StyledProceedCheckout
@@ -193,8 +222,8 @@ const Cart = ({
                 CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
                 cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-                                                  state soon!
-            </Typography>
+                state soon!
+              </Typography>
               {cartCount === 0 && (
                 <NavLink
                   to="/gallery"
@@ -202,7 +231,7 @@ const Cart = ({
                   className={classes.link}
                 >
                   Continue shopping
-              </NavLink>
+                </NavLink>
               )}
             </>
           ) : null}
@@ -319,7 +348,7 @@ const Cart = ({
                             disabled={item.quantity < 2}
                           >
                             -
-                        </StyledCounterButton>
+                          </StyledCounterButton>
                           <StyledSmallCaps style={{ fontSize: '18px' }}>
                             {item.quantity}
                           </StyledSmallCaps>
@@ -335,7 +364,7 @@ const Cart = ({
                             value={index}
                           >
                             +
-                        </StyledCounterButton>
+                          </StyledCounterButton>
                         </StyledCardActions>
                       )}
                   </Grid>
@@ -517,7 +546,9 @@ const Cart = ({
               <StyledEstimatedTotal
                 style={xsBreakpoint ? { fontSize: '20px' } : {}}
               >
-                {xsBreakpoint || checkoutVersion === 2 ? 'Total' : 'Estimated Total'}
+                {xsBreakpoint || checkoutVersion === 2
+                  ? 'Total'
+                  : 'Estimated Total'}
               </StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
@@ -530,6 +561,15 @@ const Cart = ({
               </StyledProductPrice>
             </Grid>
           </Grid>
+        ) : null}
+        {xsBreakpoint ? (
+          <Typography className={classes.editCartMobile}>
+            Need to make a change? &nbsp;
+            <MenuLink 
+              onClick={handleEditCart}
+              underline="always"
+              children="Edit your cart"/>
+          </Typography>
         ) : null}
         {cart.items.length > 0 && !hideTaxLabel && (
           <Grid container>
