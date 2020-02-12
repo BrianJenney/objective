@@ -71,6 +71,11 @@ const useStyles = makeStyles(() => ({
     fontStyle: 'normal',
     lineHeight: 'normal',
     letterSpacing: '1.06px'
+  },
+  editCartMobile: {
+    fontFamily: 'p22-Underground',
+    fontSize: '16px',
+    paddingLeft: '24px'
   }
 }));
 
@@ -171,7 +176,7 @@ const Cart = ({
                 <CartMergeNotification isCheckoutPage={isCheckoutPage} />
               ) : null}
             </Grid>
-            { checkoutVersion === 2 ? (
+            {!xsBreakpoint && checkoutVersion === 2 ? (
               <MenuLink
                 onClick={handleEditCart}
                 underline="always"
@@ -556,6 +561,15 @@ const Cart = ({
               </StyledProductPrice>
             </Grid>
           </Grid>
+        ) : null}
+        {xsBreakpoint ? (
+          <Typography className={classes.editCartMobile}>
+            Need to make a change? &nbsp;
+            <MenuLink 
+              onClick={handleEditCart}
+              underline="always"
+              children="Edit your cart"/>
+          </Typography>
         ) : null}
         {cart.items.length > 0 && !hideTaxLabel && (
           <Grid container>
