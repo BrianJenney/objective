@@ -26,9 +26,6 @@ const jwt = require('jsonwebtoken');
 
 export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
-  console.log('this cart', cart);
-  console.log('this produc', product);
-  console.log('this quantity', quantity);
   const params = {
     cart,
     product,

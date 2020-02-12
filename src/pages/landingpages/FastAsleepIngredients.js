@@ -37,18 +37,6 @@ const FastAsleepIngredients = ({ location }) => {
   useEffect(() => {
     window.analytics.page('FastAsleepIngredients');
   }, []);
-  // const handleClick = () => {
-  //   const targetObject = catalog.variants.find(item => item.slug === 'fast-asleep');
-  //   console.log('this targetObject:', targetObject);
-  //   //atc
-  //   addToCart(cart, targetObject, 1);
-  //   console.log('this 1');
-  //   //add coupon
-  //   addCoupon(cart._id, 'voucherify.io-sandbox-04');
-  //   console.log('this 2');
-  //   //redirect
-  //   //window.location.href = '/checkout';
-  // };
 
   const handleAddToCart = useCallback(() => {
     const selectedVariant = catalog.variants.find(item => item.slug === 'fast-asleep');
@@ -67,7 +55,6 @@ const FastAsleepIngredients = ({ location }) => {
 
   const handleClick = useCallback(() => {
     handleAddToCart();
-    //handleAddCoupon();
   }, [cart, catalog, dispatch]);
 
   useEffect(() => {
