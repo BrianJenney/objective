@@ -55,11 +55,7 @@ const DialogTitle = withStyles(styles)(props => {
     <MuiDialogTitle disableTypography className={classes.root}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -112,19 +108,13 @@ const NeedHelpDialog = () => {
         <DialogTitle id="customized-dialog-title" onClose={handleClose} />
         <DialogContent>
           <Box textAlign="center">
-            <Grid
-              container
-              spacing={0}
-              style={{ borderBottom: '1px solid #979797' }}
-            >
+            <Grid container spacing={0} style={{ borderBottom: '1px solid #979797' }}>
               <Grid item>
                 <Box textAlign="center">
                   <ContactPhone />
                 </Box>
                 <Box textAlign="center" pb={2}>
-                  <Typography variant="h2">
-                    Need help? Give us a call for immediate assistance:
-                  </Typography>
+                  <Typography variant="h2">Need help? Give us a call for immediate assistance:</Typography>
                   <Typography>(800) 270-5771</Typography>
                 </Box>
               </Grid>
@@ -133,8 +123,7 @@ const NeedHelpDialog = () => {
               <Grid item>
                 <Box textAlign="center" px={3}>
                   <Typography variant="h3">
-                    or send us an email and will get back to you as soon as
-                    possible:
+                    or send us an email and will get back to you as soon as possible:
                   </Typography>
                   <Typography variant="h4">
                     <Link
@@ -207,7 +196,7 @@ const Footer = ({ location, currentUser }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
-
+  const isLanding = matchPath(location.pathname, { path: '/landing' });
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
   const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
   const handleSubmit = useCallback(
@@ -244,7 +233,7 @@ const Footer = ({ location, currentUser }) => {
 
   return (
     <>
-      {xs && !isCheckoutPage && !isOrderPage ? (
+      {xs && !isCheckoutPage && !isOrderPage && !isLanding ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -263,13 +252,10 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
                 <Grid item xs={12}>
                   <p>
-                    Behind every Objective supplement are studies, endless hours
-                    of research and a team with over 50 years of combined
-                    experience formulating dietary supplements. And the one
-                    thing we know for sure? Everybody's different. Every body is
-                    different. It's possible that what works wonders for your
-                    best friend might not do a thing for you. So let us know and
-                    we'll refund your money. It's that simple.
+                    Behind every Objective supplement are studies, endless hours of research and a team with over 50
+                    years of combined experience formulating dietary supplements. And the one thing we know for sure?
+                    Everybody's different. Every body is different. It's possible that what works wonders for your best
+                    friend might not do a thing for you. So let us know and we'll refund your money. It's that simple.
                   </p>
                 </Grid>
               </Grid>
@@ -280,11 +266,7 @@ const Footer = ({ location, currentUser }) => {
                       <LogoShort />
                     </StyledBox>
                   </Grid>
-                  <Grid
-                    item
-                    xs={6}
-                    className="border-bottom border-left row1 copy-mobile"
-                  >
+                  <Grid item xs={6} className="border-bottom border-left row1 copy-mobile">
                     <StyledBox>
                       <div className="rotate">Copyright 2019</div>
                     </StyledBox>
@@ -292,27 +274,18 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/about_us"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/about_us">
                           About
                         </NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink
-                            onClick={segmentTrackNavigationClick}
-                            to="/contact"
-                          >
+                          <NavLink onClick={segmentTrackNavigationClick} to="/contact">
                             Contact Us
                           </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink
-                            onClick={segmentTrackNavigationClick}
-                            to="/faq"
-                          >
+                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                             FAQs
                           </NavLink>
                         </ListItem>
@@ -322,27 +295,18 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="row2 border-bottom border-left">
                     <Grid container spacing={0}>
                       <Grid item xs={12} className="title">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/faq"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                           HELP
                         </NavLink>
                       </Grid>
                       <StyledList className="links">
                         <ListItem>
-                          <NavLink
-                            onClick={segmentTrackNavigationClick}
-                            to={gotoUrl('/account', '/login/account')}
-                          >
+                          <NavLink onClick={segmentTrackNavigationClick} to={gotoUrl('/account', '/login/account')}>
                             My Account
                           </NavLink>
                         </ListItem>
                         <ListItem>
-                          <NavLink
-                            onClick={segmentTrackNavigationClick}
-                            to="/faq"
-                          >
+                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                             Shipping &amp; Returns
                           </NavLink>
                         </ListItem>
@@ -397,18 +361,9 @@ const Footer = ({ location, currentUser }) => {
                           validationSchema={schema}
                           render={({ errors }) => (
                             <Form>
-                              <Field
-                                name="email"
-                                label=""
-                                placeholder="Your Email"
-                                component={InputField}
-                              />
+                              <Field name="email" label="" placeholder="Your Email" component={InputField} />
                               <Button type="submit">
-                                <img
-                                  src={arrowImage}
-                                  className="mobile-arrow"
-                                  alt="arrow"
-                                />
+                                <img src={arrowImage} className="mobile-arrow" alt="arrow" />
                               </Button>
                             </Form>
                           )}
@@ -417,11 +372,7 @@ const Footer = ({ location, currentUser }) => {
                     )}
                   </Grid>
                   <Grid item xs={6} className="border-bottom icon">
-                    <Link
-                      href="https://www.instagram.com/objective_wellness"
-                      target="_blank"
-                      rel="noopener"
-                    >
+                    <Link href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
                       <img src={igIcon} alt="instagram" />
                     </Link>
                   </Grid>
@@ -436,9 +387,7 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                   <Grid container item xs={12} className="legal">
                     <StyledList>
-                      <ListItem className="text-center">
-                        Objective &bull; All rights reserved
-                      </ListItem>
+                      <ListItem className="text-center">Objective &bull; All rights reserved</ListItem>
                     </StyledList>
                   </Grid>
                   <Grid container xs={12} className="legal">
@@ -450,19 +399,12 @@ const Footer = ({ location, currentUser }) => {
                         >
                           Privacy Policy
                         </NavLink>  */}
-                        <a
-                          href="https://www.thecloroxcompany.com/privacy/"
-                          target="_blank"
-                        >
+                        <a href="https://www.thecloroxcompany.com/privacy/" target="_blank">
                           Privacy Policy
                         </a>
                       </ListItem>
                       <ListItem className="text-center">
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/terms"
-                          target="_blank"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/terms" target="_blank">
                           Terms of use
                         </NavLink>
                       </ListItem>
@@ -471,23 +413,17 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
                   <Typography className="disclaimer-text">
-                    * Statements on this website have not been evaluated by the
-                    Food and Drug Administration. Any products discussed or
-                    advertised are not intended to diagnose, treat, cure or
-                    prevent any disease. Testimonial results are not typical.
+                    * Statements on this website have not been evaluated by the Food and Drug Administration. Any
+                    products discussed or advertised are not intended to diagnose, treat, cure or prevent any disease.
+                    Testimonial results are not typical.
                   </Typography>
                   <Typography className="disclaimer-text">
-                    Objective is committed to making its website accessible for
-                    all users, and will continue to take all steps necessary to
-                    ensure compliance with applicable laws.
+                    Objective is committed to making its website accessible for all users, and will continue to take all
+                    steps necessary to ensure compliance with applicable laws.
                   </Typography>
-                  <Typography
-                    className="disclaimer-text"
-                    style={{ marginBottom: 0 }}
-                  >
-                    If you have difficulty accessing any content, feature or
-                    functionality on our website or on our other electronic
-                    platforms, please email us at{' '}
+                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                    If you have difficulty accessing any content, feature or functionality on our website or on our
+                    other electronic platforms, please email us at{' '}
                     <Link
                       style={{
                         borderBottom: '1px solid #fff',
@@ -497,20 +433,12 @@ const Footer = ({ location, currentUser }) => {
                     >
                       Help@objectivewellness.com
                     </Link>{' '}
-                    or call us at 800-270-5771 so that we can provide you access
-                    through an alternative method.
+                    or call us at 800-270-5771 so that we can provide you access through an alternative method.
                   </Typography>
                 </Grid>
                 <div className="ccpa-footer">
-                  <a
-                    href="https://thecloroxcompany.com/brands"
-                    target="_blank"
-                    rel="external"
-                  >
-                    <img
-                      src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg"
-                      alt="CLX"
-                    />
+                  <a href="https://thecloroxcompany.com/brands" target="_blank" rel="external">
+                    <img src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg" alt="CLX" />
                     <span>Member of the CLX family of brands</span>
                   </a>
                 </div>
@@ -518,7 +446,7 @@ const Footer = ({ location, currentUser }) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : !isCheckoutPage && !isOrderPage ? (
+      ) : !isCheckoutPage && !isOrderPage && !isLanding ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -537,13 +465,10 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
                 <Grid item xs={12}>
                   <p>
-                    Behind every Objective supplement are studies, endless hours
-                    of research and a team with over 50 years of combined
-                    experience formulating dietary supplements. And the one
-                    thing we know for sure? Everybody's different. Every body is
-                    different. It's possible that what works wonders for your
-                    best friend might not do a thing for you. So let us know and
-                    we'll refund your money. It's that simple.
+                    Behind every Objective supplement are studies, endless hours of research and a team with over 50
+                    years of combined experience formulating dietary supplements. And the one thing we know for sure?
+                    Everybody's different. Every body is different. It's possible that what works wonders for your best
+                    friend might not do a thing for you. So let us know and we'll refund your money. It's that simple.
                   </p>
                 </Grid>
               </Grid>
@@ -551,10 +476,7 @@ const Footer = ({ location, currentUser }) => {
                 <Grid container item xs={12} className="footer-main">
                   <Grid item xs={5} className="title border-bottom">
                     <StyledBox>
-                      <NavLink
-                        onClick={segmentTrackNavigationClick}
-                        to="/about_us"
-                      >
+                      <NavLink onClick={segmentTrackNavigationClick} to="/about_us">
                         About
                       </NavLink>
                     </StyledBox>
@@ -566,11 +488,7 @@ const Footer = ({ location, currentUser }) => {
                       </NavLink>
                     </StyledBox>
                   </Grid>
-                  <Grid
-                    item
-                    xs={1}
-                    className="border-bottom logo border-left copy"
-                  >
+                  <Grid item xs={1} className="border-bottom logo border-left copy">
                     <StyledBox>
                       <LogoShort />
                     </StyledBox>
@@ -578,18 +496,12 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={5} className="border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/contact"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/contact">
                           Contact Us
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/faq"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                           FAQs
                         </NavLink>
                       </ListItem>
@@ -598,26 +510,17 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={6} className="border-left border-bottom">
                     <StyledList className="links">
                       <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to={gotoUrl('/account', '/login/account')}
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to={gotoUrl('/account', '/login/account')}>
                           My Account
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/faq"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                           Shipping &amp; Returns
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink
-                          to={gotoUrl('/account/orders', '/login/order')}
-                          onClick={segmentTrackNavigationClick}
-                        >
+                        <NavLink to={gotoUrl('/account/orders', '/login/order')} onClick={segmentTrackNavigationClick}>
                           Track an Order
                         </NavLink>
                       </ListItem>
@@ -668,18 +571,9 @@ const Footer = ({ location, currentUser }) => {
                           validationSchema={schema}
                           render={() => (
                             <Form>
-                              <Field
-                                name="email"
-                                label=""
-                                placeholder="Your Email"
-                                component={InputField}
-                              />
+                              <Field name="email" label="" placeholder="Your Email" component={InputField} />
                               <Button type="submit">
-                                <img
-                                  src={arrowImage}
-                                  className="signup-arrow"
-                                  alt="arrow"
-                                />
+                                <img src={arrowImage} className="signup-arrow" alt="arrow" />
                               </Button>
                             </Form>
                           )}
@@ -691,19 +585,11 @@ const Footer = ({ location, currentUser }) => {
                   <Grid item xs={3}>
                     <Grid container className="h-100">
                       <Grid item xs={6} className="border-left icon">
-                        <Link
-                          href="https://www.instagram.com/objective_wellness"
-                          target="_blank"
-                          rel="noopener"
-                        >
+                        <Link href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
                           <img src={igIcon} alt="instagram" />
                         </Link>
                       </Grid>
-                      <Grid
-                        item
-                        xs={6}
-                        className="border-left icon border-right"
-                      >
+                      <Grid item xs={6} className="border-left icon border-right">
                         <Link
                           href="https://www.facebook.com/Objective_Wellness-114299813287253/"
                           target="_blank"
@@ -724,19 +610,12 @@ const Footer = ({ location, currentUser }) => {
                         >
                           Privacy Policy
                         </NavLink> */}
-                        <a
-                          href="https://www.thecloroxcompany.com/privacy/"
-                          target="_blank"
-                        >
+                        <a href="https://www.thecloroxcompany.com/privacy/" target="_blank">
                           Privacy Policy
                         </a>
                       </ListItem>
                       <ListItem>
-                        <NavLink
-                          onClick={segmentTrackNavigationClick}
-                          to="/terms"
-                          target="_blank"
-                        >
+                        <NavLink onClick={segmentTrackNavigationClick} to="/terms" target="_blank">
                           Terms of use
                         </NavLink>
                       </ListItem>
@@ -745,23 +624,17 @@ const Footer = ({ location, currentUser }) => {
                 </Grid>
                 <Grid item xs={12} className="disclaimer-container">
                   <Typography className="disclaimer-text">
-                    * Statements on this website have not been evaluated by the
-                    Food and Drug Administration. Any products discussed or
-                    advertised are not intended to diagnose, treat, cure or
-                    prevent any disease. Testimonial results are not typical.
+                    * Statements on this website have not been evaluated by the Food and Drug Administration. Any
+                    products discussed or advertised are not intended to diagnose, treat, cure or prevent any disease.
+                    Testimonial results are not typical.
                   </Typography>
                   <Typography className="disclaimer-text">
-                    Objective is committed to making its website accessible for
-                    all users, and will continue to take all steps necessary to
-                    ensure compliance with applicable laws.
+                    Objective is committed to making its website accessible for all users, and will continue to take all
+                    steps necessary to ensure compliance with applicable laws.
                   </Typography>
-                  <Typography
-                    className="disclaimer-text"
-                    style={{ marginBottom: 0 }}
-                  >
-                    If you have difficulty accessing any content, feature or
-                    functionality on our website or on our other electronic
-                    platforms, please email us at{' '}
+                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                    If you have difficulty accessing any content, feature or functionality on our website or on our
+                    other electronic platforms, please email us at{' '}
                     <Link
                       style={{
                         cursor: 'pointer',
@@ -772,20 +645,12 @@ const Footer = ({ location, currentUser }) => {
                     >
                       Help@objectivewellness.com
                     </Link>{' '}
-                    or call us at 800-270-5771 so that we can provide you access
-                    through an alternative method.
+                    or call us at 800-270-5771 so that we can provide you access through an alternative method.
                   </Typography>
                 </Grid>
                 <div className="ccpa-footer">
-                  <a
-                    href="https://thecloroxcompany.com/brands"
-                    target="_blank"
-                    rel="external"
-                  >
-                    <img
-                      src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg"
-                      alt="CLX"
-                    />
+                  <a href="https://thecloroxcompany.com/brands" target="_blank" rel="external">
+                    <img src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg" alt="CLX" />
                     <span>Member of the CLX family of brands</span>
                   </a>
                 </div>
