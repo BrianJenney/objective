@@ -74,11 +74,12 @@
     text-transform: uppercase;
   }
   p {
-    font-family: freight-text-pro;
+    font-family: freight-text-pro, serif;
+    font-style: normal;
+    font-weight: 400;
     font-size: 18px;
     font-weight: normal;
     font-stretch: normal;
-    font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
     color: #333333;
@@ -97,9 +98,9 @@
     margin: 10px 0 0;
     list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/5Hv6wfbtbWEbfQSaGra8us/eec68bbf2409fb295a9b09babcdf76fe/checkmark.svg?h=9');
     li {
-      font-family: freight-text-pro;
+      font-family: freight-text-pro, serif;
       font-size: 18px;
-      font-weight: normal;
+      font-weight: 400;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.28;
@@ -164,7 +165,8 @@
       .w-50 {
         ul {
           li {
-            font-family: freight-text-pro;
+            font-family: freight-text-pro, serif;
+            font-weight: 400;
             font-size: 18px;
             font-weight: normal;
             font-stretch: normal;
@@ -201,9 +203,9 @@
       margin-bottom: 12px;
     }
     em {
-      font-family: freight-text-pro;
+      font-family: freight-text-pro, serif;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
       font-stretch: normal;
       font-style: italic;
       line-height: 1.5;
@@ -219,9 +221,9 @@
       margin-bottom: 12px;
     }
     em {
-      font-family: freight-text-pro;
+      font-family: freight-text-pro, serif;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 400;
       font-stretch: normal;
       font-style: italic;
       line-height: 2;
@@ -237,9 +239,9 @@
     text-align: center;
     justify-content: center;
     .text {
-      font-family: freight-text-pro;
+      font-family: freight-text-pro, serif;
       font-size: 22px;
-      font-weight: bold;
+      font-weight: 400;
       font-stretch: normal;
       font-style: italic;
       line-height: normal;
@@ -364,9 +366,9 @@
     }
   }
   .sf {
-    font-family: freight-text-pro;
+    font-family: freight-text-pro, serif;
     font-size: 18px;
-    font-weight: normal;
+    font-weight: 400;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.93;
@@ -376,9 +378,9 @@
   ol {
     margin-top: 0;
     li {
-      font-family: freight-text-pro;
+      font-family: freight-text-pro, serif;
       font-size: 14px;
-      font-weight: normal;
+      font-weight: 400;
       font-stretch: normal;
       font-style: normal;
       line-height: 1.93;
