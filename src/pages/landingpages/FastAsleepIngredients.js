@@ -36,7 +36,6 @@ const FastAsleepIngredients = ({ location }) => {
   const executeScrollFour = () => scrollToRef(myRefFour);
 
   const handleScroll = e => {
-    console.log('this scrollY', window.scrollY);
     if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1700) {
       section.current.a = true;
       trackLPSection('Fast Asleep Ingredients', 'GABA: The Calming Neurotransmitter', 'TGSS-1BOT-CHO');
