@@ -1,18 +1,11 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-import { GalleryStore } from '../../contexts/GalleryContext';
-import Products from '../gallery/Products';
-import { CartMergeNotification, CartNotification } from '../../components/cart';
-import { addCoupon, removeCoupon, addToCart } from '../../modules/cart/functions';
-import { setCartNotification } from '../../modules/utils/actions';
+import { Container, Grid, useMediaQuery, Box } from '@material-ui/core';
+import { addCoupon, addToCart } from '../../modules/cart/functions';
+import { trackLPSection } from '../../utils/misc';
 import Logo from '../../components/common/Icons/Logo/Logo';
-import { Container, Grid } from '@material-ui/core';
-
 import './fast-asleep.scss';
 
 const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
@@ -22,6 +15,14 @@ const FastAsleepIngredients = ({ location }) => {
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
   const [couponAdded, setCouponAdded] = useState(false);
+  const section = useRef({
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false
+  });
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
@@ -34,14 +35,60 @@ const FastAsleepIngredients = ({ location }) => {
   const myRefFour = useRef(null);
   const executeScrollFour = () => scrollToRef(myRefFour);
 
-  useEffect(() => {
-    window.analytics.page('FastAsleepIngredients');
-  }, []);
+  const handleScroll = e => {
+    console.log('this scrollY', window.scrollY);
+    if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1700) {
+      section.current.a = true;
+      trackLPSection('Fast Asleep Ingredients', 'GABA: The Calming Neurotransmitter', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.b === false && window.scrollY >= 2251 && window.scrollY < 2900) {
+      section.current.b = true;
+      trackLPSection(
+        'Fast Asleep Ingredients',
+        'Saffron: The Natural Sleep Aid Worth Its Weight In Gold',
+        'TGSS-1BOT-CHO'
+      );
+    }
+
+    if (section.current.c === false && window.scrollY >= 4050 && window.scrollY < 4900) {
+      section.current.c = true;
+      trackLPSection('Fast Asleep Ingredients', 'Why GABA And Saffron Instead Of Melatonin?', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.d === false && window.scrollY >= 6294 && window.scrollY < 7000) {
+      section.current.d = true;
+      trackLPSection('Fast Asleep Ingredients', 'Better Nights = Better Days = Better Health', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.e === false && window.scrollY >= 7700 && window.scrollY < 8200) {
+      section.current.e = true;
+      trackLPSection('Fast Asleep Ingredients', 'Better Sleep, Guaranteed. Try It Today—Risk-Free!', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.f === false && window.scrollY >= 8440 && window.scrollY < 9200) {
+      section.current.f = true;
+      trackLPSection('Fast Asleep Ingredients', 'Wake Up Refreshed with Fast Asleep', 'TGSS-1BOT-CHO');
+    }
+  };
 
   const handleAddToCart = useCallback(() => {
     const selectedVariant = catalog.variants.find(item => item.slug === 'fast-asleep');
     setTimeout(() => {
       addToCart(cart, selectedVariant, 1);
+      window.analytics.track('Product Clicked', {
+        brand: 'OBJ',
+        cart_id: cart._id,
+        coupon: 'SLUMBER15',
+        image_url: selectedVariant.assets.thumbnail,
+        name: selectedVariant.name,
+        price: selectedVariant.effectivePrice,
+        product_id: selectedVariant.product_id,
+        quantity: 1,
+        site_location: 'Fast Asleep Ingredients Landing Page',
+        sku: selectedVariant.sku,
+        url: window.location.href
+      });
       setProdAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
@@ -68,6 +115,14 @@ const FastAsleepIngredients = ({ location }) => {
       handleAddCoupon();
     }
   }, [cart]);
+
+  useEffect(() => {
+    window.analytics.page('FastAsleepIngredients');
+    document.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="fast-asleep-lp">
