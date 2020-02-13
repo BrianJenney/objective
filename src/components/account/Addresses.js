@@ -100,13 +100,7 @@ const AccountAddresses = ({
     let currentIndex = editedIndex;
     // Validate new address against cart_items at Checkout only
     if (formType === 'checkout') {
-      if(!account_jwt){
-        actions.setSubmitting(false);
-        setIsEditing(false);
-        setFormModeEnabled(false);
-        setEditedIndex(-1);
-        return onSubmit(pureValues);
-      }
+
       const restrictions = new VariantRestrictions(cart.items);
       const restrictionValidations = restrictions.validate(
         values,
@@ -119,6 +113,14 @@ const AccountAddresses = ({
           setRestrictedProduct(item.item_name);
           removeFromCart(cart, item.key);
         });
+      }
+
+      if(!account_jwt){
+        actions.setSubmitting(false);
+        setIsEditing(false);
+        setFormModeEnabled(false);
+        setEditedIndex(-1);
+        return onSubmit(pureValues);
       }
     }
 
