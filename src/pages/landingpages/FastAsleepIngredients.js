@@ -695,7 +695,7 @@ const FastAsleepIngredients = ({ location }) => {
                 <div className="title">Wake Up Refreshed with Fast Asleep</div>
                 <div className="subtitle">SAFFRON SLEEP CHOCOLATES</div>
                 <div className="price-holder">
-                  <div className="price">$30</div>
+                  <div className="price">$40</div>
                   <div className="variant">/ 30 chocolates</div>
                 </div>
                 <ul>
