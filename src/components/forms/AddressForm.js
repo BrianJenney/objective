@@ -86,7 +86,8 @@ let INITIAL_VALUES = {
     zipcode: '',
     phone: '',
     country: 'US',
-    email: ''
+    email: '',
+    shouldSubscribe: true
   },
   isDefault: false,
   shouldSaveData: true
@@ -189,7 +190,8 @@ const AddressForm = ({
         zipcode,
         phone,
         country,
-        email
+        email,
+        shouldSubscribe: true
       },
       isDefault,
       shouldSaveData: true
@@ -388,7 +390,7 @@ const AddressForm = ({
             </Box>
           </Grid>
         )}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
           <div ref={fieldRefs.firstName}>
             <Field
               name="address.firstName"
@@ -398,7 +400,7 @@ const AddressForm = ({
             />
           </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
           <div ref={fieldRefs.lastName}>
             <Field
               name="address.lastName"
@@ -492,7 +494,7 @@ const AddressForm = ({
             <div ref={fieldRefs.email}>
               <Field
                 name="address.email"
-                label="Email"
+                label="Email Address"
                 component={InputField}
                 type="email"
                 autoComplete="email"
