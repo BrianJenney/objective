@@ -1,18 +1,11 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-import { GalleryStore } from '../../contexts/GalleryContext';
-import Products from '../gallery/Products';
-
-import { CartMergeNotification, CartNotification } from '../../components/cart';
-import { addCoupon, removeCoupon, addToCart } from '../../modules/cart/functions';
-import { setCartNotification } from '../../modules/utils/actions';
+import { useMediaQuery, Container, Grid } from '@material-ui/core';
+import { addCoupon, addToCart } from '../../modules/cart/functions';
+import { trackLPSection } from '../../utils/misc';
 import Logo from '../../components/common/Icons/Logo/Logo';
-import { Container, Grid } from '@material-ui/core';
 
 import './fast-asleep.scss';
 
@@ -23,6 +16,15 @@ const FastAsleepMelatonin = ({ location }) => {
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
   const [couponAdded, setCouponAdded] = useState(false);
+  const section = useRef({
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+    g: false
+  });
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
@@ -35,9 +37,45 @@ const FastAsleepMelatonin = ({ location }) => {
   const myRefFour = useRef(null);
   const executeScrollFour = () => scrollToRef(myRefFour);
 
-  useEffect(() => {
-    window.analytics.page('FastAsleepMelatonin');
-  }, []);
+  const handleScroll = e => {
+    if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1800) {
+      section.current.a = true;
+      trackLPSection('Fast Asleep Melatonin', 'OK, But Why Not Melatonin?', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.b === false && window.scrollY >= 2740 && window.scrollY < 3200) {
+      section.current.b = true;
+      trackLPSection('Fast Asleep Melatonin', '7 Signs you are not sleeping well', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.c === false && window.scrollY >= 3600 && window.scrollY < 4100) {
+      section.current.c = true;
+      trackLPSection('Fast Asleep Melatonin', 'Better Nights = Better Days = Better Health', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.d === false && window.scrollY >= 4150 && window.scrollY < 4700) {
+      section.current.d = true;
+      trackLPSection('Fast Asleep Melatonin', 'GABA: The Calming Neurotransmitter', 'TGSS-1BOT-CHO');
+    }
+
+    if (section.current.e === false && window.scrollY >= 5550 && window.scrollY < 5920) {
+      section.current.e = true;
+      trackLPSection(
+        'Fast Asleep Melatonin',
+        'Saffron: The Natural Sleep Aid Worth Its Weight In Gold',
+        'TGSS-1BOT-CHO'
+      );
+    }
+
+    if (section.current.f === false && window.scrollY >= 8376 && window.scrollY < 8770) {
+      section.current.f = true;
+      trackLPSection('Fast Asleep Melatonin', 'Better Sleep, Guaranteed. Try It', 'TGSS-1BOT-CHO');
+    }
+    if (section.current.g === false && window.scrollY >= 9116 && window.scrollY < 9800) {
+      section.current.g = true;
+      trackLPSection('Fast Asleep Melatonin', 'Wake Up Refreshed with Fast Asleep', 'TGSS-1BOT-CHO');
+    }
+  };
 
   const handleAddToCart = useCallback(() => {
     const selectedVariant = catalog.variants.find(item => item.slug === 'fast-asleep');
@@ -82,6 +120,14 @@ const FastAsleepMelatonin = ({ location }) => {
       handleAddCoupon();
     }
   }, [cart]);
+
+  useEffect(() => {
+    window.analytics.page('FastAsleepMelatonin');
+    document.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="fast-asleep-lp">
