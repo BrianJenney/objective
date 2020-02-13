@@ -24,10 +24,7 @@ const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 const jwt = require('jsonwebtoken');
 
-export const requestAddToCart = (cart, product, quantity) => async (
-  dispatch,
-  getState
-) => {
+export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     cart,
@@ -42,7 +39,7 @@ export const requestAddToCart = (cart, product, quantity) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -66,10 +63,7 @@ export const requestAddToCart = (cart, product, quantity) => async (
   });
 };
 
-export const requestRemoveFromCart = (cart, product) => async (
-  dispatch,
-  getState
-) => {
+export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     cart,
@@ -81,7 +75,7 @@ export const requestRemoveFromCart = (cart, product) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -106,10 +100,7 @@ export const requestRemoveFromCart = (cart, product) => async (
   });
 };
 
-export const requestUpdateQuantity = (cart, product, quantity) => async (
-  dispatch,
-  getState
-) => {
+export const requestUpdateQuantity = (cart, product, quantity) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     cart,
@@ -122,7 +113,7 @@ export const requestUpdateQuantity = (cart, product, quantity) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -147,7 +138,7 @@ export const requestFetchCart = cartId => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -184,7 +175,7 @@ export const requestCreateCart = () => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -199,10 +190,7 @@ export const receivedCreateCart = cart => ({
   payload: cart
 });
 
-export const requestUpdateCart = (cartId, updates) => async (
-  dispatch,
-  getState
-) => {
+export const requestUpdateCart = (cartId, updates) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -218,7 +206,7 @@ export const requestUpdateCart = (cartId, updates) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -233,10 +221,7 @@ export const receivedUpdateCart = cart => ({
   payload: cart
 });
 
-export const requestPatchCart = (cartId, patches) => async (
-  dispatch,
-  getState
-) => {
+export const requestPatchCart = (cartId, patches) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: cartId,
@@ -248,7 +233,7 @@ export const requestPatchCart = (cartId, patches) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -287,10 +272,7 @@ export const setCartDrawerOpened = (open, trackCartDismissed = true) => (dispatc
       if (!cart.cartDrawerOpened) {
         window.analytics.track('Cart Viewed', {
           cart_id: cart._id,
-          num_products: cart.items.reduce(
-            (acc, item) => acc + item.quantity,
-            0
-          ),
+          num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
           products: orderItemsTransformed
         });
       }
@@ -300,10 +282,7 @@ export const setCartDrawerOpened = (open, trackCartDismissed = true) => (dispatc
         if (trackCartDismissed) {
           window.analytics.track('Cart Dismissed', {
             cart_id: cart._id,
-            num_products: cart.items.reduce(
-              (acc, item) => acc + item.quantity,
-              0
-            ),
+            num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
             products: orderItemsTransformed
           });
         }
@@ -336,7 +315,7 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -346,10 +325,7 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
   });
 };
 
-export const requestMergeCarts = (cartId, accountId) => async (
-  dispatch,
-  getState
-) => {
+export const requestMergeCarts = (cartId, accountId) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     cartId,
@@ -362,7 +338,7 @@ export const requestMergeCarts = (cartId, accountId) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -373,10 +349,7 @@ export const requestMergeCarts = (cartId, accountId) => async (
   });
 };
 
-export const requestAddCoupon = (cartId, promoCode) => async (
-  dispatch,
-  getState
-) => {
+export const requestAddCoupon = (cartId, promoCode) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     cartId,
@@ -389,7 +362,7 @@ export const requestAddCoupon = (cartId, promoCode) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -401,11 +374,11 @@ export const requestAddCoupon = (cartId, promoCode) => async (
 };
 
 /*
-* @description - Tracks Coupon Applied Segment event when 
-* cart microservice applies coupon to cart and sends back a response to front end
-* @return - void
-*/
-export const segmentAddCouponReceived = (cart) => {
+ * @description - Tracks Coupon Applied Segment event when
+ * cart microservice applies coupon to cart and sends back a response to front end
+ * @return - void
+ */
+export const segmentAddCouponReceived = cart => {
   window.analytics.track('Coupon Applied', {
     cart_id: cart._id,
     coupon_id: cart.promo && cart.promo.code ? cart.promo.code : '',
@@ -413,14 +386,14 @@ export const segmentAddCouponReceived = (cart) => {
     discount: cart.discount,
     order_id: cart.accountId
   });
-}
+};
 
 /*
-* @description - Tracks Coupon Removed Segment event when 
-* cart microservice removes coupon from cart and sends back a response to front end
-* @return - void
-*/
-export const segmentRemoveCouponReceived = (cart) => {
+ * @description - Tracks Coupon Removed Segment event when
+ * cart microservice removes coupon from cart and sends back a response to front end
+ * @return - void
+ */
+export const segmentRemoveCouponReceived = cart => {
   window.analytics.track('Coupon Removed', {
     cart_id: cart._id,
     coupon_id: cart.promo && cart.promo.code ? cart.promo.code : '',
@@ -428,7 +401,7 @@ export const segmentRemoveCouponReceived = (cart) => {
     discount: cart.discount,
     order_id: cart.accountId ? cart.accountId : ''
   });
-}
+};
 
 export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
@@ -442,7 +415,7 @@ export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );
@@ -453,10 +426,7 @@ export const requestRemoveCoupon = cartId => async (dispatch, getState) => {
   });
 };
 
-export const requestSetShippingAddress = (cartId, address) => async (
-  dispatch,
-  getState
-) => {
+export const requestSetShippingAddress = (cartId, address) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     cartId,
@@ -469,7 +439,7 @@ export const requestSetShippingAddress = (cartId, address) => async (
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      'token': localStorageClient.get('olympusToken')
+      token: localStorageClient.get('olympusToken')
     },
     obj
   );

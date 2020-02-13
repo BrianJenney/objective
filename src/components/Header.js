@@ -66,6 +66,7 @@ const Header = ({ currentUser, location }) => {
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
+  const isLanding = matchPath(location.pathname, { path: '/landing' });
   const { account_jwt, firstName } = currentUser.data;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
@@ -135,6 +136,8 @@ const Header = ({ currentUser, location }) => {
     <>
       {isCheckoutPage || isOrderPage ? (
         <CheckoutHeader />
+      ) : isLanding ? (
+        <></>
       ) : (
         <Grid container item={true} xs={12} className="headerContainer">
           <Grid container item={true} xs={12} spacing={0}>

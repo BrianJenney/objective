@@ -229,3 +229,13 @@ export const isAcqDiscount = obj => {
   }
   return false;
 };
+
+export const trackLPSection = (lp, section_name, sku) => {
+  window.analytics.track('Percent Scrolled', {
+    brand: 'OBJ',
+    site_location: lp + ' Landing Page',
+    section_name,
+    sku,
+    url: window.location.href
+  });
+};
