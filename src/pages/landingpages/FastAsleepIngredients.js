@@ -48,7 +48,7 @@ const FastAsleepIngredients = ({ location }) => {
 
   const handleAddCoupon = useCallback(() => {
     setTimeout(() => {
-      addCoupon(cart._id, 'voucherify.io-sandbox-04');
+      addCoupon(cart._id, 'SLUMBER15');
       setCouponAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
