@@ -115,6 +115,7 @@ const Checkout = ({
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
+  const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -198,6 +199,15 @@ const Checkout = ({
   }, [currentUser.patchAccountError]);
 
   useEffect(() => {
+    if(accountCreated && paymentDetailsUpdated && !addressBookUpdated){
+        requestPatchAccount(account_jwt, {
+          addressBook: [payload.shippingAddress]
+        });
+        setAddressBookUpdated(true);
+    }
+  }, [paymentDetailsUpdated]);
+
+  useEffect(() => {
     if (accountCreated && !paymentDetailsUpdated) {
       setPayload({
         ...payload,
@@ -215,6 +225,8 @@ const Checkout = ({
       delete paymentDetailsPayload.billingAddress.password;
       delete paymentDetailsPayload.billingAddress.email;
       delete paymentDetailsPayload.nonce;
+      payload.shippingAddress.isDefault = true;
+      payload.paymentDetails.isDefault = true;
       const requestPayload = {
         newCreditCard: { ...paymentDetailsPayload },
         nonce: creditCardNonce
