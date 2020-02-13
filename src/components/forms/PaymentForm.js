@@ -617,7 +617,7 @@ const PaymentForm = ({
             
             {(billingAddressMode==='differentShipping' || (!rest.checkoutVersion || (rest.checkoutVersion && rest.checkoutVersion === 1))) && (
             <>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
               <div ref={fieldRefs.firstName}>
                 <Field
                   name="billingAddress.firstName"
@@ -627,7 +627,7 @@ const PaymentForm = ({
                 />
               </div>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
               <div ref={fieldRefs.lastName}>
                 <Field
                   name="billingAddress.lastName"
