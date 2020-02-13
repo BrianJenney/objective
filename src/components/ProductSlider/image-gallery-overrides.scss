@@ -36,7 +36,7 @@
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
-  font-size: 36px;
+  font-size: 86px;
   text-transform: none;
   text-rendering: auto;
   line-height: 1;
@@ -51,12 +51,54 @@
   -o-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  margin-bottom: 40px;
 }
 
-@media (max-width: 768px) {
-  .image-gallery {
-    margin-bottom: 0;
+.pdp-slider {
+  position: relative;
+
+  .pdp-slider-thumbnails-nav {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+
+    .pdp-slider-thumbnails-bottom {
+      .nav-left {
+        top: 404px;
+        left: 0;
+      }
+      .nav-right {
+        top: 404px;
+        left: 345px;
+      }
+    }
+
+    .pdp-slider-thumbnails-left {
+      .nav-left,
+      .nav-right {
+        transform: rotate(90deg);
+      }
+      .nav-left {
+        top: 0;
+        left: 27px;
+      }
+      .nav-right {
+        top: 460px;
+        left: 27px;
+      }
+    }
+
+    .nav-left,
+    .nav-right {
+      padding: 0;
+      color: #777;
+      position: absolute;
+
+      svg.MuiSvgIcon-root {
+        width: 32px;
+        height: 32px;
+      }
+    }
   }
 }
 
@@ -134,13 +176,6 @@
   text-shadow: 0 2px 2px #1a1a1a;
   transition: color 0.2s ease-out;
 }
-
-/* .image-gallery-fullscreen-button:hover::before,
-.image-gallery-play-button:hover::before,
-.image-gallery-left-nav:hover::before,
-.image-gallery-right-nav:hover::before {
-  color: #337ab7;
-} */
 
 @media (max-width: 768px) {
   .image-gallery-fullscreen-button:hover::before,
@@ -418,30 +453,6 @@
   margin-left: 5px;
 }
 
-@media (min-width: 768px) {
-  .image-gallery-left-nav {
-    transform: rotate(90deg);
-    top: -8px;
-    left: -67px;
-    font-size: 1em;
-    padding: 0;
-  }
-
-  .image-gallery-right-nav {
-    transform: rotate(90deg);
-    top: 467px;
-    left: -67px;
-    font-size: 1em;
-    padding: 0;
-  }
-
-  .image-gallery-right-nav:before,
-  .image-gallery-left-nav:before {
-    color: #231f20;
-    text-shadow: none;
-  }
-}
-
 @media (max-width: 768px) {
   .image-gallery-thumbnails-wrapper.left {
     margin-right: 3px;
@@ -475,7 +486,7 @@
   }
   .image-gallery-thumbnail {
     border: 10px solid transparent;
-    width: 71px;
+    width: 66px;
   }
 }
 

@@ -1,18 +1,21 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import ImageGallery from 'react-image-gallery';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
 import { useTheme } from '@material-ui/core/styles';
 import ProductContext from '../../contexts/ProductContext';
-import './image-gallery-overrides.css';
+import './image-gallery-overrides.scss';
 import styles from './overrides.module.scss';
 
 const PDPSlider = props => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  let { images } = props;
-  const productContext = useContext(ProductContext);
-  const { product } = productContext;
+  const { product } = useContext(ProductContext);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const galleryRef = useRef(null);
+  let { images } = props;
 
   if (!images) {
     images = [
@@ -120,18 +123,48 @@ const PDPSlider = props => {
       });
       return carouselImages;
     });
+    const thumbnailsPanelPositionClassName = xs
+      ? 'pdp-slider-thumbnails-bottom'
+      : 'pdp-slider-thumbnails-left';
 
     return (
-      <ImageGallery
-        showNav
-        additionalClass={styles['set-gallery-width']}
-        showFullscreenButton={false}
-        showPlayButton={false}
-        items={carouselImages}
-        thumbnailPosition={xs ? 'bottom' : 'left'}
-        showThumbnails
-        onSlide={handleSegmentBrowsedEvent}
-      />
+      <div className="pdp-slider">
+        <ImageGallery
+          ref={galleryRef}
+          showNav
+          additionalClass={styles['set-gallery-width']}
+          showFullscreenButton={false}
+          showPlayButton={false}
+          items={carouselImages}
+          thumbnailPosition={xs ? 'bottom' : 'left'}
+          showThumbnails
+          onSlide={handleSegmentBrowsedEvent}
+        />
+        <div className="pdp-slider-thumbnails-nav">
+          <div className={thumbnailsPanelPositionClassName}>
+            <IconButton
+              className="nav-left"
+              onClick={() => {
+                galleryRef.current.slideToIndex(
+                  galleryRef.current.getCurrentIndex() - 1
+                );
+              }}
+            >
+              <ChevronLeft />
+            </IconButton>
+            <IconButton
+              className="nav-right"
+              onClick={() => {
+                galleryRef.current.slideToIndex(
+                  galleryRef.current.getCurrentIndex() + 1
+                );
+              }}
+            >
+              <ChevronRight />
+            </IconButton>
+          </div>
+        </div>
+      </div>
     );
   };
 
