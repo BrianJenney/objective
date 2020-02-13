@@ -531,15 +531,16 @@ const FastAsleepIngredients = ({ location }) => {
         <Grid container>
           <Grid item xs={12} md={8} className="smaller-container">
             <h2 className="mt-0">Better nights = better days = better health</h2>
-            <p>
-              The fact is your whole body runs better after a good night of sleep. And help is here—and it completely
-              bucks the system when it comes to typical sleep solutions.<sup>*</sup>
-            </p>
+
             <div className="floating">
               <img
                 className="float-right fast-asleep"
-                src="https://images.ctfassets.net/mj9bpefl6wof/6RPrVLqZzKHgJeyNbDMnl2/6c30c6081cafe7ee2f90a20b1307775a/fast_asleep.png?h=244"
+                src="https://images.ctfassets.net/mj9bpefl6wof/6RPrVLqZzKHgJeyNbDMnl2/6c30c6081cafe7ee2f90a20b1307775a/fast_asleep.png?h=300"
               />
+              <p>
+                The fact is your whole body runs better after a good night of sleep. And help is here—and it completely
+                bucks the system when it comes to typical sleep solutions.<sup>*</sup>
+              </p>
               <p>
                 <a href="/products/fast-asleep">Fast Asleep</a> is a revolutionary new way to get the high-quality sleep
                 you need to be the best version of yourself. It’s not a pill, and it’s not melatonin—it’s a delightful
