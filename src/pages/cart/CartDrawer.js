@@ -43,7 +43,7 @@ import CartMergeNotification from '../../components/cart/CartMergeNotification';
 
 const { MEDIUM_GRAY } = colorPalette;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   cartRestricted: {
     fontFamily: 'p22-underground',
     fontSize: '14px',
@@ -70,12 +70,12 @@ const useStyles = makeStyles(() => ({
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 'normal',
-    letterSpacing: '1.06px'
-  },
-  editCartMobile: {
-    fontFamily: 'p22-Underground',
-    fontSize: '16px',
-    paddingLeft: '24px'
+    letterSpacing: '1.06px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px',
+      letterSpacing: '0.93px',
+      paddingTop: '8px'
+    }
   }
 }));
 
@@ -176,13 +176,13 @@ const Cart = ({
                 <CartMergeNotification isCheckoutPage={isCheckoutPage} />
               ) : null}
             </Grid>
-            {!xsBreakpoint && checkoutVersion === 2 ? (
+            {checkoutVersion === 2 ? (
               <MenuLink
                 onClick={handleEditCart}
                 underline="always"
                 className={classes.editCart}
                 children="EDIT CART"
-            />) : null}
+              />) : null}
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
                 <StyledProceedCheckout
@@ -222,7 +222,7 @@ const Cart = ({
                 CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
                 cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-                state soon!
+                  state soon!
               </Typography>
               {cartCount === 0 && (
                 <NavLink
@@ -561,15 +561,6 @@ const Cart = ({
               </StyledProductPrice>
             </Grid>
           </Grid>
-        ) : null}
-        {xsBreakpoint ? (
-          <Typography className={classes.editCartMobile}>
-            Need to make a change? &nbsp;
-            <MenuLink 
-              onClick={handleEditCart}
-              underline="always"
-              children="Edit your cart"/>
-          </Typography>
         ) : null}
         {cart.items.length > 0 && !hideTaxLabel && (
           <Grid container>
