@@ -9,23 +9,34 @@ import Button from './Button';
 
 const Dialog = ({ title, onClose, actions, children, open, ...rest }) => (
   <MuiDialog onClose={onClose} open={open} {...rest}>
-    <Box display="flex" justifyContent="flex-end">
+    <Box
+      display="flex"
+      justifyContent="flex-end"
+      position="absolute"
+      width={1}
+      height="51.5px"
+      zIndex={1}
+    >
       <IconButton onClick={onClose}>
         <CloseIcon />
       </IconButton>
     </Box>
-    {title && <MuiDialogTitle id="dialog-title">{title}</MuiDialogTitle>}
-    {children}
-    <Box display="flex" alignItems="center" justifyContent="flex-end">
-      {actions.map((action, index) => (
-        <Button
-          key={`btn_${index.toString()}`}
-          className={action.className}
-          onClick={action.onClick}
-        >
-          {action.label}
-        </Button>
-      ))}
+    <Box mt="51.5px">
+      {title && <MuiDialogTitle id="dialog-title">{title}</MuiDialogTitle>}
+      {children}
+      {!!actions.length && (
+        <Box display="flex" alignItems="center" justifyContent="flex-end">
+          {actions.map((action, index) => (
+            <Button
+              key={`btn_${index.toString()}`}
+              className={action.className}
+              onClick={action.onClick}
+            >
+              {action.label}
+            </Button>
+          ))}
+        </Box>
+      )}
     </Box>
   </MuiDialog>
 );
