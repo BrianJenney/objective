@@ -82,13 +82,14 @@ const ProductAccordion = ({ content }) => {
             onClose={closeClinicalResultsImageModal}
             open={imageModalOpen}
           >
-            <Box mx={4} p={5}>
+            <Box mt="-51.5px">
               {clinicalResultsEnlargedImage && (
                 <img
                   src={clinicalResultsEnlargedImage.fields.file.url}
                   alt=""
                   width="100%"
                   height="auto"
+                  style={{ marginBottom: -4 }}
                 />
               )}
             </Box>
