@@ -23,7 +23,7 @@ const PromoCodeView = () => {
         <StyledProductTotal style={{ 'font-size': '18px' }}>{displayMoney(cart.discount)}</StyledProductTotal>
       </Grid>
       <StyledFinePrint component="p">
-        {cart.promo.code !== 'SAVE25' ? cart.promo.code : ''}
+        {cart.promo.code !== 'voucherify.io-sandbox-02' ? cart.promo.code : ''}
         <br />
         <Link
           onClick={e => removeCoupon(cart._id)}
