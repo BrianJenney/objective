@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import ProductContext from '../../contexts/ProductContext';
@@ -11,16 +12,24 @@ import { scrollToRef } from '../../utils/misc';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    paddingTop: '20px',
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
   },
   keyObjective: {
+    padding: '20px 0',
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
     position: 'relative'
+  },
+  keyObjectiveImage: {
+    width: '300px',
+    position: 'absolute',
+    top: 20
   },
   heading: {
     marginTop: '70px',
@@ -55,25 +64,9 @@ const useStyles = makeStyles(theme => ({
       maxWidth: '304px'
     }
   },
-  keyObjectiveImage: {
-    width: '300px',
-    position: 'absolute',
-    top: 0,
-    [theme.breakpoints.down('sm')]: {
-      width: '56px'
-    }
-  },
   howItWorksBlocks: {
     padding: '0 16px',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-      overflowX: 'auto',
-      overflowY: 'hidden'
-    },
 
     '& img': {
       width: '100%',
@@ -107,6 +100,25 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
+  howItWorksBlocksContentWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+      overflowX: 'scroll',
+      overflowY: 'hidden',
+      scrollSnapType: 'x mandatory',
+      '&::-webkit-scrollbar': {
+        height: '2px'
+      },
+      '&::-webkit-scrollbar-track': {
+        background: '#f1f1f1'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: '#1f396d'
+      }
+    }
+  },
   howItWorksBlocksContent: {
     marginTop: '20px',
     width: '1000px',
@@ -137,6 +149,8 @@ const ProductOutline = ({ scrollToTabs }) => {
   const { product, variants, prices, content } = useContext(ProductContext);
   const containerRef = useRef(null);
   const classes = useStyles();
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (product && variants.length && content) {
@@ -148,12 +162,25 @@ const ProductOutline = ({ scrollToTabs }) => {
 
   if (!product || !content) return null;
 
-  const { keyObjectiveImages } = content;
+  const {
+    keyObjectiveBackgroundImage,
+    keyObjectiveImages,
+    keyObjective,
+    howItWorksBlock1,
+    howItWorksBlock2
+  } = content;
+  const keyObjectiveBackgroundStyle = sm
+    ? { backgroundImage: `url(${keyObjectiveBackgroundImage.url})` }
+    : {};
 
   return (
     <div className={classes.root} ref={containerRef}>
-      <Box className={classes.keyObjective} width={1}>
-        {keyObjectiveImages && keyObjectiveImages.length === 2 && (
+      <Box
+        className={classes.keyObjective}
+        style={keyObjectiveBackgroundStyle}
+        width={1}
+      >
+        {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
             <img
               src={keyObjectiveImages[0].url}
@@ -167,17 +194,17 @@ const ProductOutline = ({ scrollToTabs }) => {
           <Typography className={classes.heading} variant="h3" align="center">
             Key Objective
           </Typography>
-          <Box>
-            <Typography
-              className={classes.keyObjectiveHeading}
-              variant="h3"
-              align="center"
-            >
-              {content.keyObjective}
-            </Typography>
-          </Box>
         </Box>
-        {keyObjectiveImages && keyObjectiveImages.length === 2 && (
+        <Box>
+          <Typography
+            className={classes.keyObjectiveHeading}
+            variant="h3"
+            align="center"
+          >
+            {keyObjective}
+          </Typography>
+        </Box>
+        {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
             <img
               src={keyObjectiveImages[1].url}
@@ -188,25 +215,21 @@ const ProductOutline = ({ scrollToTabs }) => {
           </Box>
         )}
       </Box>
-      <Box mt={2} className={classes.howItWorksBlocks}>
+      <Box className={classes.howItWorksBlocks}>
         <Typography className={classes.heading} variant="h3" align="center">
           How It Works
         </Typography>
-        <Box className={classes.howItWorksBlocksContent}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              {documentToReactComponents(
-                content.howItWorksBlock1,
-                contentfulOptions
-              )}
+        <Box className={classes.howItWorksBlocksContentWrapper}>
+          <Box className={classes.howItWorksBlocksContent}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                {documentToReactComponents(howItWorksBlock1, contentfulOptions)}
+              </Grid>
+              <Grid item xs={6}>
+                {documentToReactComponents(howItWorksBlock2, contentfulOptions)}
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              {documentToReactComponents(
-                content.howItWorksBlock2,
-                contentfulOptions
-              )}
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
       </Box>
     </div>
