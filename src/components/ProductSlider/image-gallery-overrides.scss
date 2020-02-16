@@ -284,6 +284,10 @@
     font-size: 1.4em;
     padding: 0 15px;
   }
+  .image-gallery-left-nav:before,
+  .image-gallery-right-nav:before {
+    font-size: 48px;
+  }
 }
 
 .image-gallery-left-nav {
