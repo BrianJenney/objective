@@ -169,9 +169,10 @@ const ProductOutline = ({ scrollToTabs }) => {
     howItWorksBlock1,
     howItWorksBlock2
   } = content;
-  const keyObjectiveBackgroundStyle = sm
-    ? { backgroundImage: `url(${keyObjectiveBackgroundImage.url})` }
-    : {};
+  const keyObjectiveBackgroundStyle =
+    sm && keyObjectiveBackgroundImage
+      ? { backgroundImage: `url(${keyObjectiveBackgroundImage.url})` }
+      : {};
 
   return (
     <div className={classes.root} ref={containerRef}>
