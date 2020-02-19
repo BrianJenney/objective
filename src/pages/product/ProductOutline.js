@@ -159,14 +159,18 @@ const ProductOutline = ({ scrollToTabs }) => {
 
   const { keyObjectiveBackgroundImage, keyObjectiveImages, keyObjective, howItWorksBlock1, howItWorksBlock2 } = content;
   const keyObjectiveBackgroundStyle =
-    sm && keyObjectiveBackgroundImage ? { backgroundImage: `url(${keyObjectiveBackgroundImage.url})` } : {};
+    sm && keyObjectiveBackgroundImage
+      ? {
+          backgroundImage: `url(${keyObjectiveBackgroundImage.fields.file.url})`
+        }
+      : {};
 
   return (
     <div className={classes.root} ref={containerRef}>
       <Box className={classes.keyObjective} style={keyObjectiveBackgroundStyle} width={1}>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
-            <img src={keyObjectiveImages[0].url} alt="" width="100%" height="auto" />
+            <img src={keyObjectiveImages[0].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
         <Box>
@@ -181,7 +185,7 @@ const ProductOutline = ({ scrollToTabs }) => {
         </Box>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
-            <img src={keyObjectiveImages[1].url} alt="" width="100%" height="auto" />
+            <img src={keyObjectiveImages[1].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
       </Box>
