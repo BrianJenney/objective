@@ -37,24 +37,24 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
         fullWidth
       />
     </Box>
-    <Box display="flex" alignItems="center" justifyContent="center">
-      <Typography variant="body2" style={{ fontSize: '11px' }}>
-        By placing this order I agree to the
-      </Typography>
-    </Box>
+
     <Box
       display="flex"
       alignItems="center"
       justifyContent="center"
       style={{ width: '100%', margin: '0px auto', maxWidth: '430px' }}
     >
+          <Box display="flex" alignItems="center" justifyContent="center">
+      <Typography variant="body2" style={{ fontSize: '11px' }}>
+        By placing this order I agree to the
+      </Typography>
+    </Box>
       <Box
         component={NavLink}
         to="/terms"
         underline="always"
         fontSize={11}
-        mx={1}
-        style={{ width: 'auto', marginRight: '3px', fontSize: '11px' }}
+        style={{ width: 'auto', marginLeft: '3px', fontSize: '11px' }}
         target="_blank"
       >
         Terms &amp; Conditions
@@ -62,7 +62,9 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
       <Typography variant="body2" style={{ fontSize: '11px' }}>
         &nbsp;and
       </Typography>
-      <Box mx={1}>
+      <Box
+        style={{marginBottom: '3px', marginLeft: '3px'}}
+      >
         <a
           style={{ fontSize: '11px', color: '#000000' }}
           href="https://www.thecloroxcompany.com/privacy/"

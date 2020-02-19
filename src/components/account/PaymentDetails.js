@@ -281,6 +281,7 @@ const AccountPaymentDetails = ({
                           title=""
                           defaultValues={creditCardEntity}
                           Summary={PaymentSummary}
+                          checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
                           onRemove={() =>
                             deleteCreditCard(creditCardEntity.token)
                           }
