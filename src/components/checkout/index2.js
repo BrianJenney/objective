@@ -66,9 +66,9 @@ const getPanelTitleContent = (
 
   if (!isNil(payload)) {
     if (step === 0) {
-      payloadSummary = <AddressSummary noDefault values={payload} />;
+      payloadSummary = <AddressSummary checkoutVersion={2} noDefault values={payload} />;
     } else if (step === 1) {
-      payloadSummary = <PaymentSummary noDefault values={payload} />;
+      payloadSummary = <PaymentSummary checkoutVersion={2} noDefault values={payload} />;
     }
   }
 
