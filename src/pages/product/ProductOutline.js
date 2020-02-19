@@ -171,7 +171,9 @@ const ProductOutline = ({ scrollToTabs }) => {
   } = content;
   const keyObjectiveBackgroundStyle =
     sm && keyObjectiveBackgroundImage
-      ? { backgroundImage: `url(${keyObjectiveBackgroundImage.url})` }
+      ? {
+          backgroundImage: `url(${keyObjectiveBackgroundImage.fields.file.url})`
+        }
       : {};
 
   return (
@@ -184,7 +186,7 @@ const ProductOutline = ({ scrollToTabs }) => {
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
             <img
-              src={keyObjectiveImages[0].url}
+              src={keyObjectiveImages[0].fields.file.url}
               alt=""
               width="100%"
               height="auto"
@@ -208,7 +210,7 @@ const ProductOutline = ({ scrollToTabs }) => {
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
             <img
-              src={keyObjectiveImages[1].url}
+              src={keyObjectiveImages[1].fields.file.url}
               alt=""
               width="100%"
               height="auto"
