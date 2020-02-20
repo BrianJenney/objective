@@ -400,8 +400,10 @@ const Checkout = ({
 
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
-    scrollToRef(stepRefs[stepIndex]);
     trackCheckoutStepStarted(stepIndex);
+    setTimeout(() => {
+        scrollToRef(stepRefs[stepIndex]);
+    }, 400);
   };
 
   const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
@@ -446,27 +448,28 @@ const Checkout = ({
       {loading ? (
         <Loader />
       ) : (
-          <Box bgcolor="rgba(252, 248, 244, 0.5)">
-            <Container>
-              <Box py={10} className="checkout-wrapper">
-                <CssBaseline />
-                <Grid container spacing={4}>
-                  {xs ? (
-                    <MenuLink
-                      to="/gallery"
-                      children=" < Continue Shopping"
-                      underline="always"
-                      style={{ fontSize:'14px', padding: '30px 20px 12px' }}
-                    />
-                  ) : null}
-                  <Grid
-                    item
-                    flex={1}
-                    xs={12}
-                    md={8}
-                    style={xs ? { padding: 0 } : {}}
-                    className="right-side"
-                  >
+        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Container>
+            <Box py={10} className="checkout-wrapper">
+              <CssBaseline />
+              <Grid container spacing={4}>
+                {xs ? (
+                  <MenuLink
+                    to="/gallery"
+                    children=" < Continue Shopping"
+                    underline="always"
+                    style={{ fontSize: '14px', padding: '30px 20px 12px' }}
+                  />
+                ) : null}
+                <Grid
+                  item
+                  flex={1}
+                  xs={12}
+                  md={8}
+                  style={xs ? { padding: 0 } : {}}
+                  className="right-side"
+                >
+                  <div ref={stepRefs[0]}>
                     <Panel
                       title={getPanelTitleContent(
                         xs,
@@ -479,43 +482,43 @@ const Checkout = ({
                       expanded={activeStep === 0}
                       onChange={e => onPanelChange(e, 0)}
                     >
-                      <div ref={stepRefs[0]}>
-                        {authMode === 'shipping' ? (
-                          <AccountAddresses
-                            checkoutVersion={2}
-                            currentUser={currentUser}
-                            cart={cart}
-                            setRestrictionMessage={setRestrictionMessage}
-                            setRestrictedProduct={setRestrictedProduct}
-                            requestPatchAccount={requestPatchAccount}
-                            clearPatchAccountError={clearPatchAccountError}
-                            formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                            onSubmit={handleNext}
-                            selectionEnabled
-                            allowFlyMode
-                            resetFormMode={resetFormMode}
-                            shippingAddressActive={shippingAddressActive}
-                            switchToLogin={() => setAuthMode('login')}
-                            mt={4}
-                            mx={10}
-                            mb={5}
-                          />
-                        ) : (
-                            <Login
-                              requestLogin={requestLogin}
-                              clearLoginError={clearLoginError}
-                              switchToSignup={() => setAuthMode('shipping')}
-                            />
-                          )}
-                      </div>
+                      {authMode === 'shipping' ? (
+                        <AccountAddresses
+                          checkoutVersion={2}
+                          currentUser={currentUser}
+                          cart={cart}
+                          setRestrictionMessage={setRestrictionMessage}
+                          setRestrictedProduct={setRestrictedProduct}
+                          requestPatchAccount={requestPatchAccount}
+                          clearPatchAccountError={clearPatchAccountError}
+                          formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                          onSubmit={handleNext}
+                          selectionEnabled
+                          allowFlyMode
+                          resetFormMode={resetFormMode}
+                          shippingAddressActive={shippingAddressActive}
+                          switchToLogin={() => setAuthMode('login')}
+                          mt={4}
+                          mx={10}
+                          mb={5}
+                        />
+                      ) : (
+                        <Login
+                          requestLogin={requestLogin}
+                          clearLoginError={clearLoginError}
+                          switchToSignup={() => setAuthMode('shipping')}
+                        />
+                      )}
                     </Panel>
-                    {xs && activeStep === 1 && restrictionMessage ? (
-                      <StateRestrictionsDialog
-                        product_name={restrictedProduct}
-                        cartCount={cartCount}
-                        onExited={closeShippingRestrictionsDialog}
-                      />
-                    ) : null}
+                  </div>
+                  {xs && activeStep === 1 && restrictionMessage ? (
+                    <StateRestrictionsDialog
+                      product_name={restrictedProduct}
+                      cartCount={cartCount}
+                      onExited={closeShippingRestrictionsDialog}
+                    />
+                  ) : null}
+                  <div ref={stepRefs[1]}>
                     <Panel
                       title={getPanelTitleContent(
                         xs,
@@ -528,29 +531,29 @@ const Checkout = ({
                       expanded={activeStep === 1}
                       onChange={e => onPanelChange(e, 1)}
                     >
-                      <div ref={stepRefs[1]}>
-                        <AccountPaymentDetails
-                          checkoutVersion={2}
-                          currentUser={currentUser}
-                          requestPatchAccount={requestPatchAccount}
-                          clearPatchAccountError={clearPatchAccountError}
-                          formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                          onBack={handleBack}
-                          onSubmit={handleNext}
-                          selectionEnabled
-                          seedEnabled
-                          addressSeed={payload.shippingAddress}
-                          useSeedLabel="Use shipping address"
-                          allowFlyMode
-                          mt={4}
-                          mx={10}
-                          mb={5}
-                          backLabel="Cancel"
-                          submitLabel="Review Order"
-                          resetFormMode={resetPaymentDetailsFormMode}
-                        />
-                      </div>
+                      <AccountPaymentDetails
+                        checkoutVersion={2}
+                        currentUser={currentUser}
+                        requestPatchAccount={requestPatchAccount}
+                        clearPatchAccountError={clearPatchAccountError}
+                        formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                        onBack={handleBack}
+                        onSubmit={handleNext}
+                        selectionEnabled
+                        seedEnabled
+                        addressSeed={payload.shippingAddress}
+                        useSeedLabel="Use shipping address"
+                        allowFlyMode
+                        mt={4}
+                        mx={10}
+                        mb={5}
+                        backLabel="Cancel"
+                        submitLabel="Review Order"
+                        resetFormMode={resetPaymentDetailsFormMode}
+                      />
                     </Panel>
+                  </div>
+                  <div ref={stepRefs[2]}>
                     <Panel
                       title={getPanelTitleContent(xs, 2, activeStep, null, {})}
                       collapsible
@@ -559,73 +562,72 @@ const Checkout = ({
                       onChange={e => onPanelChange(e, 2)}
                       className="lastPanel"
                     >
-                      <div ref={stepRefs[2]}>
-                        {xs && (
-                          <CartDrawer
-                            checkoutVersion={2}
-                            disableItemEditing
-                            hideCheckoutProceedLink
-                            hideTaxLabel
-                            showOrderSummaryText
-                            xsBreakpoint={xs}
-                            activeStep={activeStep}
-                            restrictionMessage={restrictionMessage}
-                            restrictedProduct={restrictedProduct}
-                          />
-                        )}
-                        <CheckoutReviewForm
+                      {xs && (
+                        <CartDrawer
+                          checkoutVersion={2}
+                          disableItemEditing
+                          hideCheckoutProceedLink
+                          hideTaxLabel
+                          showOrderSummaryText
                           xsBreakpoint={xs}
-                          onSubmit={handleNext}
+                          activeStep={activeStep}
+                          restrictionMessage={restrictionMessage}
+                          restrictedProduct={restrictedProduct}
                         />
-                      </div>
-                    </Panel>
-                  </Grid>
-                  {!xs && currentUser ? (
-                    <Grid item xs={12} md={4} className="left-side">
-                      <CartDrawer
-                        checkoutVersion={2}
-                        disableItemEditing
-                        hideCheckoutProceedLink
-                        hideTaxLabel
-                        showOrderSummaryText={false}
+                      )}
+                      <CheckoutReviewForm
                         xsBreakpoint={xs}
-                        activeStep={activeStep}
-                        restrictionMessage={restrictionMessage}
-                        restrictedProduct={restrictedProduct}
+                        onSubmit={handleNext}
                       />
-                    </Grid>
-                  ) : (
-                      ''
-                    )}
+                    </Panel>
+                  </div>
                 </Grid>
-                <Dialog
-                  className="transaction-dialog-container"
-                  open={checkoutDialogOpen}
-                  onClose={handleCheckoutDialogClose}
-                  closeAfterTransition
-                >
-                  {orderError ? (
-                    <IconButton
-                      aria-label="close"
-                      style={{
-                        position: 'absolute',
-                        right: theme.spacing(1),
-                        top: theme.spacing(1),
-                        color: theme.palette.grey[500]
-                      }}
-                      onClick={handleCheckoutDialogClose}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  ) : null}
-                  <MuiDialogContent>
-                    <TransactionMessage orderError={orderError} />
-                  </MuiDialogContent>
-                </Dialog>
-              </Box>
-            </Container>
-          </Box>
-        )}
+                {!xs && currentUser ? (
+                  <Grid item xs={12} md={4} className="left-side">
+                    <CartDrawer
+                      checkoutVersion={2}
+                      disableItemEditing
+                      hideCheckoutProceedLink
+                      hideTaxLabel
+                      showOrderSummaryText={false}
+                      xsBreakpoint={xs}
+                      activeStep={activeStep}
+                      restrictionMessage={restrictionMessage}
+                      restrictedProduct={restrictedProduct}
+                    />
+                  </Grid>
+                ) : (
+                  ''
+                )}
+              </Grid>
+              <Dialog
+                className="transaction-dialog-container"
+                open={checkoutDialogOpen}
+                onClose={handleCheckoutDialogClose}
+                closeAfterTransition
+              >
+                {orderError ? (
+                  <IconButton
+                    aria-label="close"
+                    style={{
+                      position: 'absolute',
+                      right: theme.spacing(1),
+                      top: theme.spacing(1),
+                      color: theme.palette.grey[500]
+                    }}
+                    onClick={handleCheckoutDialogClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ) : null}
+                <MuiDialogContent>
+                  <TransactionMessage orderError={orderError} />
+                </MuiDialogContent>
+              </Dialog>
+            </Box>
+          </Container>
+        </Box>
+      )}
     </>
   );
 };

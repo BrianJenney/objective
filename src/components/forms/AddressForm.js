@@ -221,16 +221,21 @@ const AddressForm = ({
 
   const topTitle =
     rest.checkoutVersion && rest.checkoutVersion === 2
-      ? 'Objective Secure Checkout'
+      ? currentUser.data.account_jwt
+        ? 'Shipping Address'
+        : 'Objective Secure Checkout'
       : formType === FORM_TYPES.ACCOUNT
-        ? 'Address'
-        : 'Shipping Address';
+      ? 'Address'
+      : 'Shipping Address';
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(
-    currentUser.patchAccountError,
-    scrollToRef(errRef)
-  );
+  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+
+  useEffect(() => {
+    if (errorMessage) {
+      scrollToRef(errRef);
+    }
+  }, [currentUser.patchAccountError]);
 
   useEffect(() => {
     clearPatchAccountError();

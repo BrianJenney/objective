@@ -39,12 +39,12 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
     </Box>
 
     <Box
-      display="flex"
+      display="block"
       alignItems="center"
       justifyContent="center"
-      style={{ width: '100%', margin: '0px auto', maxWidth: '430px' }}
+      style={{textAlign: 'center', width: '100%', margin: '0px auto', maxWidth: '430px' }}
     >
-          <Box display="flex" alignItems="center" justifyContent="center">
+          <Box style={{float: 'left', display: 'block', }} display="flex">
       <Typography variant="body2" style={{ fontSize: '11px' }}>
         By placing this order I agree to the
       </Typography>
@@ -54,16 +54,16 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
         to="/terms"
         underline="always"
         fontSize={11}
-        style={{ width: 'auto', marginLeft: '3px', fontSize: '11px' }}
+        style={{ width: 'auto', marginLeft: '3px', fontSize: '11px', float: 'left' }}
         target="_blank"
       >
         Terms &amp; Conditions
       </Box>
-      <Typography variant="body2" style={{ fontSize: '11px' }}>
+      <Typography variant="body2" style={{ fontSize: '11px', float: 'left' }}>
         &nbsp;and
       </Typography>
       <Box
-        style={{marginBottom: '3px', marginLeft: '3px'}}
+        style={{marginBottom: '3px', marginLeft: '3px', float: 'left', display: 'block', position: 'relative', bottom: '3px'}}
       >
         <a
           style={{ fontSize: '11px', color: '#000000' }}
