@@ -1,6 +1,5 @@
 import paypal from 'paypal-checkout';
 import braintreePaypalCheckout from 'braintree-web/paypal-checkout';
-import braintreeDataCollector from 'braintree-web/data-collector';
 import { env } from './config';
 import createClient from './client';
 
@@ -23,13 +22,6 @@ export const sendPaypalCheckoutRequest = async (amount, shippingAddress) => {
 
   try {
     const client = await createClient();
-
-    if (flow === 'vault') {
-      const dataCollector = await braintreeDataCollector.create({
-        client,
-        paypal: true
-      });
-    }
 
     const paypalCheckout = await braintreePaypalCheckout.create({ client });
 
