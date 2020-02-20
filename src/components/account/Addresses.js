@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,6 +13,7 @@ import { AddressForm } from '../forms';
 import { FORM_TYPES } from '../forms/AddressForm';
 import VariantRestrictions from '../../utils/product/variant.restriction.class';
 import { removeFromCart } from '../../modules/cart/functions';
+import { scrollToRef } from '../../utils/misc';
 const AccountAddresses = ({
   currentUser,
   cart,
@@ -39,6 +40,7 @@ const AccountAddresses = ({
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
+  const errRef = useRef(null);
   useEffect(() => {
     if(rest.resetFormMode && addressBook.length===0 && !formModeEnabled && !account_jwt){
       setFormModeEnabled(true);
@@ -66,6 +68,15 @@ const AccountAddresses = ({
       window.analytics.page('Account Addresses');
     }
   }, []);
+
+  useEffect(() => {
+    if(currentUser.signupError && currentUser.signupError.errorMessage){
+      setTimeout(() => {
+        scrollToRef(errRef);
+      }, 400);
+      
+    }
+  }, [currentUser.signupError]);
 
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
@@ -195,12 +206,14 @@ const AccountAddresses = ({
   
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      {currentUser.signupError && currentUser.signupError.errorMessage && (
+      {currentUser.signupError && currentUser.signupError.errorMessage && !currentUser.data.account_jwt && (
+        <div ref={errRef}>
         <AlertPanel
           mb={2}
           type="error"
           text={`${currentUser.signupError.errorMessage}`}
         />
+      </div>
       )}
       {formModeEnabled ? (
         <AddressForm
