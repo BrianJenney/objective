@@ -221,10 +221,8 @@ export const paramsToObject = url => {
 
 export const isAcqDiscount = obj => {
   if (typeof obj != 'undefined') {
-    if (obj.hasOwnProperty('utm_source') && obj.hasOwnProperty('utm_source') && obj.hasOwnProperty('utm_content')) {
-      if (obj.utm_source === 'facebook' && obj.utm_medium === 'social' && obj.utm_content.includes('25off')) {
-        return true;
-      }
+    if (obj.hasOwnProperty('utm_content') && obj.utm_content.includes('25off')) {
+      return true;
     }
   }
   return false;
