@@ -294,7 +294,6 @@ const Checkout = ({
 
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
-    //scrollToRef(stepRefs[stepIndex]);
     trackCheckoutStepStarted(stepIndex);
     setTimeout(() => {
       scrollToRef(stepRefs[stepIndex]);
