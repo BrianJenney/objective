@@ -142,7 +142,7 @@ const useStyles = makeStyles(theme => ({
   },
   subHeadTitle: {
     fontFamily: $brandSerif,
-    fontSize: '48px',
+    fontSize: '38px',
     fontWeight: 'normal',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -258,7 +258,7 @@ const NeedHelpDialog = () => {
             </StyledContainerBackgroundAlt>
           </Container>
         </DialogContent>
-        <Container         className="checkout-contact-container">
+        <Container className="checkout-contact-container">
         <DialogContentMobile>
           <Box textAlign="center">
             <Grid
@@ -272,7 +272,7 @@ const NeedHelpDialog = () => {
                 </Box>
                 <Box textAlign="center" pb={2}>
                   <Typography variant="h2">
-                    Need help? Give us a call for assistance:
+                    Need help? Give us a call for assistance.
                   </Typography>
                   <Typography variant="h4">
                      <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
