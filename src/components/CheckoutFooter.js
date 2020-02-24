@@ -18,8 +18,6 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { Button, NavLink } from './common';
-import ScrollToTop from './common/ScrollToTop';
 import ContactPhone from './common/Icons/ContactPhone/ContactPhone';
 import ContactMail from '../components/common/Icons/ContactMail/ContactMail';
 
