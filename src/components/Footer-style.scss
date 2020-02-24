@@ -597,7 +597,7 @@
     }
     h3 {
       font-family: 'Canela Text Web';
-      font-size: 20px;
+      font-size: 18px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -609,7 +609,7 @@
     }
     h4 {
       font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -617,6 +617,7 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
+      padding-bottom: 20px;
     }
     @media only screen and (min-width: 600px) {
       svg:nth-child(1) {

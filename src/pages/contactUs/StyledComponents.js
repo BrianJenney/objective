@@ -22,7 +22,7 @@ export const StyledContainerBackground = withStyles(theme => ({
   root: {
     margin: 'auto',
     width: 884,
-    height: 503,
+    height: 643,
     backgroundColor: '#FFF',
     [theme.breakpoints.down('xs')]: {
       padding: '59px 36px',
@@ -69,6 +69,31 @@ export const StyledSubHeader = withStyles(theme => ({
     lineHeight: 1.38,
     letterSpacing: 'normal',
     color: '#231f20',
+    padding: '0px 20px 20px 20px',
+    [theme.breakpoints.down('xs')]: {
+      fontFamily: 'FreightTextProBook',
+      fontSize: '16px',
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 1.38,
+      letterSpacing: 'normal',
+      color: '#231f20',
+      padding: '0px 20px 41px 20px'
+    }
+  }
+}))(Typography);
+
+export const StyledHours = withStyles(theme => ({
+  root: {
+    fontFamily: $brandSans,
+    fontSize: '18px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontWtyle: 'normal',
+    lineHeight: 0.83,
+    letterSpacing: 'normal',
+    color: '#333333',
     padding: '0px 20px 40px 20px',
     [theme.breakpoints.down('xs')]: {
       fontFamily: 'FreightTextProBook',
@@ -163,6 +188,29 @@ export const StyledPhoneNumber = withStyles(theme => ({
   }
 }))(Typography);
 
+export const StyledMoreQuestions = withStyles(theme => ({
+  root: {
+    fontFamily: $brandSerif,
+    fontSize: '22px',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#231f20',
+    padding: '50px 0px 0px 0px',
+    [theme.breakpoints.down('xs')]: {
+    fontFamily: $brandSerif,
+      fontSize: '20px',
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 'normal',
+      letterSpacing: 'normal',
+      paddingBottom: 36,
+    }
+  }
+}))(Typography);
 export const StyledEmail = withStyles(theme => ({
   root: {
     fontFamily: $brandSans,
@@ -185,3 +233,4 @@ export const StyledEmail = withStyles(theme => ({
     }
   }
 }))(Typography);
+
