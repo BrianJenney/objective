@@ -133,16 +133,16 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const mobileDrawerPadding = window.screen.width < 768 ? '24px 20px' : '0';
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+  const isCheckoutPage =
+    matchPath(location.pathname, { path: '/checkout' }) ||
+    matchPath(location.pathname, { path: '/checkout2' });
   return (
     <Grid
       container
       style={{
         width: '100%',
         minWidth: '90%',
-        margin: '0 auto',
-        padding: mobileDrawerPadding
+        margin: '0 auto'
       }}
       className="cart-drawer"
     >
@@ -182,7 +182,8 @@ const Cart = ({
                 underline="always"
                 className={classes.editCart}
                 children="EDIT CART"
-              />) : null}
+              />
+            ) : null}
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
                 <StyledProceedCheckout
@@ -222,8 +223,8 @@ const Cart = ({
                 CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
                 cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-                  state soon!
-              </Typography>
+                state soon!
+            </Typography>
               {cartCount === 0 && (
                 <NavLink
                   to="/gallery"
@@ -231,7 +232,7 @@ const Cart = ({
                   className={classes.link}
                 >
                   Continue shopping
-                </NavLink>
+              </NavLink>
               )}
             </>
           ) : null}
@@ -348,7 +349,7 @@ const Cart = ({
                             disabled={item.quantity < 2}
                           >
                             -
-                          </StyledCounterButton>
+                        </StyledCounterButton>
                           <StyledSmallCaps style={{ fontSize: '18px' }}>
                             {item.quantity}
                           </StyledSmallCaps>
@@ -364,7 +365,7 @@ const Cart = ({
                             value={index}
                           >
                             +
-                          </StyledCounterButton>
+                        </StyledCounterButton>
                         </StyledCardActions>
                       )}
                   </Grid>
@@ -423,7 +424,7 @@ const Cart = ({
             container
             direction="row"
             justify="space-between"
-            style={{ margin: '20px 0px 0px' }}
+            style={{ margin: '10px 0px 0px' }}
           >
             <Grid item xs={6}>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
@@ -493,7 +494,7 @@ const Cart = ({
             container
             direction="row"
             justify="space-between"
-            style={{ margin: '20px 0' }}
+            style={{ margin: '20px 0 0' }}
           >
             <Grid item xs={6}>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
@@ -531,14 +532,14 @@ const Cart = ({
                 ? {
                   marginBottom: '0',
                   borderTop: `solid 2px ${MEDIUM_GRAY}`,
-                  paddingTop: '29px',
-                  marginTop: '30px'
+                  paddingTop: '25px',
+                  marginTop: '23px'
                 }
                 : {
                   marginBottom: '0',
                   borderTop: `solid 2px ${MEDIUM_GRAY}`,
-                  paddingTop: '21px',
-                  marginTop: '30px'
+                  paddingTop: '10px',
+                  marginTop: '10px'
                 }
             }
           >
