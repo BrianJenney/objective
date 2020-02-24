@@ -1,9 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
+
+import ContactMail from '../components/common/Icons/ContactMail/ContactMail';
+import ContactPhone from '../components/common/Icons/ContactPhone/ContactPhone';
 import {
   StyledBackground,
   StyledTitle,
@@ -18,7 +28,71 @@ import {
   StyledLink
 } from './faq/StyledComponents';
 
+
+
+import {
+  StyledContainerBackground,
+  StyledHeader,
+  StyledSubHeader,
+  StyledHours,
+  StyledParagraph1,
+  StyledParagraph2,
+  StyledPhoneNumber,
+  StyledEmail,
+  StyledMoreQuestions
+} from './contactUs/StyledComponents';
+
+
+const useStyles = makeStyles(theme => ({
+  box: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: 270,
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'auto'
+    }
+  },
+  phoneGrid: {
+    borderRight: '1px solid #979797',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '600px',
+    [theme.breakpoints.down('xs')]: {
+      width: 'auto',
+      borderRight: 'none',
+      borderBottom: '1px solid #979797',
+      marginBottom: 33.9
+    }
+  },
+  mailGrid: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '600px',
+    paddingTop: 10,
+    [theme.breakpoints.down('xs')]: {
+      width: 'auto'
+    }
+  }
+}));
+
+const StyledBackgroundContactUs = withStyles(theme => ({
+  root: {
+    backgroundColor: 'rgba(252, 248, 244, 0.5)',
+    padding: '20px 0px',
+    [theme.breakpoints.down('xs')]: {
+      padding: '0px',
+      backgroundColor: '#FFF'
+    }
+  }
+}))(Box);
+
 const FAQ = ({ location }) => {
+  const classes = useStyles();
+
   window.analytics.page('FAQ');
   const seoMap = useSelector(state => state.storefront.seoMap);
   const { title, description } = seoMap[location.pathname.substring(1)];
@@ -183,28 +257,102 @@ const FAQ = ({ location }) => {
                         this information, Proposition 65 enables Californians to
                         make informed decisions about protecting themselves from
                         exposure to these chemicals.
+
+
+                        <Box style={{ marginTop: 20 }}>
+                        The Office of Environmental Health Hazard Assessment
+                        (OEHHA) administers the Proposition 65 program. OEHHA,
+                        which is part of the California Environmental Protection
+                        Agency (Cal/EPA), also evaluates all currently available
+                        scientific information on substances considered for
+                        placement on the Proposition 65 list.
+                        </Box>
+
+
+                        <Box style={{ marginTop: 20 }}>
+                        For more information visit:{' '}
+                        <StyledLink href="https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language">
+                          https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language
+                        </StyledLink>
+                        </Box>
                       </StyledAnswers>
                     </StyledAnswerContainer>
-                    <StyledText style={{ marginBottom: 30 }}>
-                      The Office of Environmental Health Hazard Assessment
-                      (OEHHA) administers the Proposition 65 program. OEHHA,
-                      which is part of the California Environmental Protection
-                      Agency (Cal/EPA), also evaluates all currently available
-                      scientific information on substances considered for
-                      placement on the Proposition 65 list.
-                    </StyledText>
                   </QAContainer>
-                  <StyledText>
-                    For more information visit:{' '}
-                    <StyledLink href="https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language">
-                      https://oehha.ca.gov/proposition-65/general-info/proposition-65-plain-language
-                    </StyledLink>
-                  </StyledText>
                 </Box>
               </Grid>
             </Box>
           </StyledContainer>
         </StyledBackground>
+
+
+        <StyledBackgroundContactUs>
+          <Container>
+            <StyledContainerBackground>
+              <Grid>
+                <Box textAlign="center">
+                  <StyledHeader>Still Have Questions?</StyledHeader>
+                </Box>
+                <Box textAlign="center">
+                  <StyledSubHeader>
+                    We'd love to hear from you. You can reach us by phone or email.
+                  </StyledSubHeader>
+                </Box>
+                <Box textAlign="center">
+                  <StyledHours>
+                   <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
+                  </StyledHours>
+                </Box>
+              </Grid>
+              <Box className={classes.box}>
+                <Grid className={classes.phoneGrid}>
+                  <Box textAlign="center">
+                    <ContactPhone />
+                  </Box>
+                  <Box textAlign="center">
+                    <StyledParagraph1>
+                      Give us a call for immediate assistance and chat with one
+                      of our customer care specialists.
+                    </StyledParagraph1>
+                    <StyledPhoneNumber>
+                      <Link
+                        href="tel:800-270-5771"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        (800) 270-5771
+                      </Link>
+                    </StyledPhoneNumber>
+                  </Box>
+                </Grid>
+                <Grid className={classes.mailGrid}>
+                  <Box textAlign="center">
+                    <ContactMail />
+                  </Box>
+                  <Box textAlign="center">
+                    <StyledParagraph2>
+                      Email our customer care department. We'll respond as soon
+                      as possible.
+                    </StyledParagraph2>
+                    <StyledEmail>
+                      <Link
+                        style={{
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #000',
+                          paddingBottom: '1.5px',
+                          textDecoration: 'none'
+                        }}
+                        href="mailto:help@objectivewellness.com"
+                      >
+                        help@objectivewellness.com
+                      </Link>
+                    </StyledEmail>
+                  </Box>
+                </Grid>
+              </Box>
+            </StyledContainerBackground>
+          </Container>
+        </StyledBackgroundContactUs>
+
+
       </ScrollToTop>
     </>
   );
