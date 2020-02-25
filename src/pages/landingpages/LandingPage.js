@@ -23,10 +23,9 @@ const LandingPage = ({ match }) => {
   const myRefFour = useRef(null);
   const executeScrollFour = () => scrollToRef(myRefFour);
 
-
   const fetchData = async () => {
     const lpData = await fetchLP(landingSlug);
-    //console.log('this lpData fields', lpData.fields);
+    console.log('this lpData fields', lpData);
   };
   useEffect(() => {
     fetchData();
@@ -198,9 +197,7 @@ const LandingPage = ({ match }) => {
                 Get the deep restorative sleep you need <br />
                 with Saffron & GABA Chocolates
               </div>
-              <NavLink className="green-btn">
-                get 15% off — Buy Now
-              </NavLink>
+              <NavLink className="green-btn">get 15% off — Buy Now</NavLink>
             </div>
           </Grid>
         </Grid>
@@ -318,9 +315,7 @@ const LandingPage = ({ match }) => {
                 dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
                 the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
               </p>
-              <NavLink className="blue-btn">
-                get 15% off — Buy Now
-              </NavLink>
+              <NavLink className="blue-btn">get 15% off — Buy Now</NavLink>
             </div>
             <hr />
             <h2 ref={myRef}>GABA: The calming neurotransmitter</h2>
@@ -613,9 +608,7 @@ const LandingPage = ({ match }) => {
                   <li>Saffron keeps you sound asleep all night</li>
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
-                <NavLink className="black-btn">
-                  get 15% off — Buy Now
-                </NavLink>
+                <NavLink className="black-btn">get 15% off — Buy Now</NavLink>
               </div>
               <img
                 className="xs-only w-100"
