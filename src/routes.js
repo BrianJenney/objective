@@ -31,11 +31,13 @@ import {
 } from './pages';
 
 import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pages/Login';
-
-import NewYear from './pages/landingpages/NewYear';
-import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
-import FastAsleepMelatonin from './pages/landingpages/FastAsleepMelatonin';
-import FastAsleepLifestyle from './pages/landingpages/FastAsleepLifestyle';
+import {
+  NewYear,
+  FastAsleepIngredients,
+  FastAsleepMelatonin,
+  FastAsleepLifestyle,
+  LandingPage
+} from './pages/landingpages';
 
 export default [
   { path: '/', exact: true, component: HomePage },
@@ -142,6 +144,7 @@ export default [
   { path: '/landing/fastasleep-ingredients', exact: true, component: FastAsleepIngredients },
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
   { path: '/landing/fastasleep-lifestyle', exact: true, component: FastAsleepLifestyle },
+  { path: '/landing/:landingSlug', exact: true, component: LandingPage },
   { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
 ];
