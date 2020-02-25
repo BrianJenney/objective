@@ -48,9 +48,10 @@ const RouteWithSubRoutes = ({
     Component = () => <Redirect to={redirectPath} />;
   }
 
-  if (currentUser.fetchAccountLoading === null) {
+  if (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) {
     return <Loader />;
   }
+
   return <Route path={path} exact={exact} render={props => <Component {...currentUserProp} {...props} {...rest} />} />;
 };
 
