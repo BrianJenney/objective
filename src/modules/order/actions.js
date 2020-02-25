@@ -38,6 +38,9 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     cart.catalogId = getState().storefront.catalogId;
     cart.storeCode = getState().storefront.code;
     cart.email = getState().account.data.email;
+    if(getState().account.data["isGuest"] && getState().account.data["guestEmail"]){
+      cart.email = getState().account.data["guestEmail"];
+    }
   }
 
   const params = {

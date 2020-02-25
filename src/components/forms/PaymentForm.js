@@ -399,10 +399,15 @@ const PaymentForm = ({
           requiredField
         );
       } else {
+        //If password field is empty, disregard. This makes the password optional
+        if(requiredField === 'password' && values.billingAddress[requiredField].length===0){
+          
+        }else{
         fieldErrors.billingAddress[requiredField] = validateRequiredField(
           values.billingAddress[requiredField],
           requiredField
         );
+        }
       }
     });
     actions.setErrors(omit(fieldErrors, ['number', 'expirationDate', 'cvv']));

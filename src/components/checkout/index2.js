@@ -248,13 +248,16 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2 && !account_jwt) {
+        const isGuest = payload.paymentDetails.billingAddress.password.length === 0;
       // Create user here...
       requestCreateAccount({
         firstName: payload.paymentDetails.billingAddress.firstName,
         lastName: payload.paymentDetails.billingAddress.lastName,
-        email: payload.shippingAddress.email,
-        password: payload.paymentDetails.billingAddress.password,
-        newsletter: payload.shippingAddress.shouldSubscribe
+        email: !isGuest ? payload.shippingAddress.email : `guest-client-${cart._id}-${payload.shippingAddress.email}`,
+        password: !isGuest ? payload.paymentDetails.billingAddress.password : `p-${cart._id}`,
+        newsletter: payload.shippingAddress.shouldSubscribe,
+        isGuest: isGuest,
+        guestEmail: isGuest ? payload.shippingAddress.email : ''
       });
     }
   }, [activeStep]);

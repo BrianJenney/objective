@@ -40,7 +40,9 @@ export const requestCreateAccount = account => (dispatch, getState) => {
       lastName,
       email,
       password,
-      newsletter
+      newsletter,
+      isGuest: account.isGuest ? account.isGuest : false,
+      guestEmail: account.guestEmail ? account.guestEmail : ''   
     }
   };
 
@@ -139,6 +141,11 @@ export const requestFetchAccount = id => (dispatch, getState) => {
 };
 
 export const receivedFetchAccountSuccess = account => dispatch => {
+
+  //If user and user is a guest, so let's show their email as their guestEmail
+  if(account && account.guestEmail && account.guestEmail!==''){
+    account.email = account.guestEmail;
+  }
   dispatch({
     type: RECEIVED_FETCH_ACCOUNT_SUCCESS,
     payload: account
@@ -200,6 +207,10 @@ export const requestPatchAccount = (authToken, patches, actions) => (
 };
 
 export const receivedPatchAccountSuccess = account => dispatch => {
+    //If user and user is a guest, so let's show their email as their guestEmail
+    if(account && account.guestEmail && account.guestEmail!==''){
+      account.email = account.guestEmail;
+    }
   dispatch({
     type: RECEIVED_PATCH_ACCOUNT_SUCCESS,
     payload: account
