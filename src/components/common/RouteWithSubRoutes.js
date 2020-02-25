@@ -5,6 +5,8 @@ import { compose } from 'redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { withCurrentUser } from '../../hoc';
 
+import Loader from '../common/Loader';
+
 const RouteWithSubRoutes = ({
   location,
   injectCurrentUser,
@@ -57,16 +59,16 @@ const RouteWithSubRoutes = ({
     }
     Component = () => <Redirect to={redirectPath} />;
   }
+
   useEffect(() => {
-    window.gtag('config', 'UA-148808963-1', { 'page_path': window.location.pathname })
+    window.gtag('config', 'UA-148808963-1', { page_path: window.location.pathname });
   }, [window.location.pathname]);
-  return (
-    <Route
-      path={path}
-      exact={exact}
-      render={props => <Component {...currentUserProp} {...props} {...rest} />}
-    />
-  );
+
+  if (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) {
+    return <Loader />;
+  }
+
+  return <Route path={path} exact={exact} render={props => <Component {...currentUserProp} {...props} {...rest} />} />;
 };
 
 RouteWithSubRoutes.propTypes = {
@@ -86,7 +88,4 @@ RouteWithSubRoutes.defaultProps = {
   exact: false
 };
 
-export default compose(
-  withRouter,
-  withCurrentUser
-)(RouteWithSubRoutes);
+export default compose(withRouter, withCurrentUser)(RouteWithSubRoutes);
