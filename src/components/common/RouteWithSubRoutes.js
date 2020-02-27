@@ -48,7 +48,10 @@ const RouteWithSubRoutes = ({
     Component = () => <Redirect to={redirectPath} />;
   }
 
-  if (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) {
+  if (
+    (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) ||
+    (location.pathname.startsWith('/orders') && currentUser.fetchAccountLoading === null)
+  ) {
     return <Loader />;
   }
 
