@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 import ProductContext from '../../contexts/ProductContext';
 
 import PostItem from '../blog/PostItem';
+import '../blog/blog-styles.scss';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,9 +64,9 @@ const ProductLearnMore = () => {
         Want to Learn More?
       </Typography>
       <Box className={classes.learnMoreContent}>
-        <Grid container spacing={2}>
-          {renderPosts(relatedArticles)}
-        </Grid>
+        <Container>
+          <div className="list">{renderPosts(relatedArticles)}</div>
+        </Container>
       </Box>
     </Box>
   );
