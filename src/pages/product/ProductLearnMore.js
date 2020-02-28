@@ -63,11 +63,13 @@ const ProductLearnMore = () => {
       <Typography className={classes.heading} variant="h4" align="center">
         Want to Learn More?
       </Typography>
-      <Box className={classes.learnMoreContent}>
-        <Container>
-          <div className="list">{renderPosts(relatedArticles)}</div>
-        </Container>
-      </Box>
+      <div className="journal-gallery">
+        <Box className="content" py={8}>
+          <Container>
+            <div className="list">{renderPosts(relatedArticles)}</div>
+          </Container>
+        </Box>
+      </div>
     </Box>
   );
 };
