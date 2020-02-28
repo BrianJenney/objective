@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ProductContext from '../../contexts/ProductContext';
 
-import FeaturedItem from './blog/FeaturedItem';
+import FeaturedItem from '../blog/FeaturedItem';
 import '../blog/blog-styles.scss';
 
 const useStyles = makeStyles(theme => ({
