@@ -199,8 +199,7 @@ export const isAcqDiscount = obj => {
 
 export const trackLPSection = (lp, section_name, sku) => {
   window.analytics.track('Percent Scrolled', {
-    brand: 'OBJ',
-    site_location: lp + ' Landing Page',
+    page_type: lp + ' Landing Page',
     section_name,
     sku,
     url: window.location.href
