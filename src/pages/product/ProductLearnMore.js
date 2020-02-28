@@ -61,7 +61,7 @@ const ProductLearnMore = () => {
         Want to Learn More?
       </Typography>
       <div className="journal-gallery">
-        <Box className="content" py={8}>
+        <Box className="content">
           <Grid container spacing={4} className="calloutSmall">
             {renderPosts(relatedArticles)}
           </Grid>
