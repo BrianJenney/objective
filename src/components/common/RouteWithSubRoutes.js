@@ -63,7 +63,10 @@ const RouteWithSubRoutes = ({
     window.gtag('config', 'UA-148808963-1', { page_path: window.location.pathname });
   }, [window.location.pathname]);
 
-  if (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) {
+  if (
+    (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) ||
+    (location.pathname.startsWith('/orders') && currentUser.fetchAccountLoading === null)
+  ) {
     return <Loader />;
   }
 
