@@ -62,7 +62,7 @@ const ProductLearnMore = () => {
       </Typography>
       <div className="journal-gallery">
         <Box className="content">
-          <Grid container spacing={4} className="calloutSmall">
+          <Grid container spacing={4}>
             {renderPosts(relatedArticles)}
           </Grid>
         </Box>
