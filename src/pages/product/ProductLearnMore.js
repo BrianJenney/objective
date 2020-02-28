@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import ProductContext from '../../contexts/ProductContext';
 
-import PostItem from '../blog/PostItem';
+import FeaturedItem from './blog/FeaturedItem';
 import '../blog/blog-styles.scss';
 
 const useStyles = makeStyles(theme => ({
@@ -39,14 +39,11 @@ const useStyles = makeStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: '1.28px'
     }
-  },
-  learnMoreContent: {
-    maxWidth: '1200px'
   }
 }));
 
 const renderPosts = posts =>
-  posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
+  posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
 
 const ProductLearnMore = () => {
   const { content } = useContext(ProductContext);
@@ -65,9 +62,9 @@ const ProductLearnMore = () => {
       </Typography>
       <div className="journal-gallery">
         <Box className="content" py={8}>
-          <Container>
-            <div className="list">{renderPosts(relatedArticles)}</div>
-          </Container>
+          <Grid container spacing={4} className="calloutSmall">
+            {renderPosts(relatedArticles)}
+          </Grid>
         </Box>
       </div>
     </Box>
