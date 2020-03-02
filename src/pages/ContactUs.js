@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Hidden from '@material-ui/core/Hidden';
 import ContactMail from '../components/common/Icons/ContactMail/ContactMail';
 import ContactPhone from '../components/common/Icons/ContactPhone/ContactPhone';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -15,10 +16,12 @@ import {
   StyledContainerBackground,
   StyledHeader,
   StyledSubHeader,
+  StyledHours,
   StyledParagraph1,
   StyledParagraph2,
   StyledPhoneNumber,
-  StyledEmail
+  StyledEmail,
+  StyledMoreQuestions
 } from './contactUs/StyledComponents';
 
 const useStyles = makeStyles(theme => ({
@@ -75,9 +78,13 @@ const ContactUs = ({ location }) => {
                 </Box>
                 <Box textAlign="center">
                   <StyledSubHeader>
-                    We'd love to hear from you. You can reach us by phone or
-                    email.
+                    We'd love to hear from you. You can reach us by phone or email.
                   </StyledSubHeader>
+                </Box>
+                <Box textAlign="center">
+                  <StyledHours>
+                   <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
+                  </StyledHours>
                 </Box>
               </Grid>
               <Box className={classes.box}>
@@ -125,6 +132,28 @@ const ContactUs = ({ location }) => {
                   </Box>
                 </Grid>
               </Box>
+              <Grid>
+                <Box textAlign="center">
+                  <StyledMoreQuestions>
+                    More questions?
+                    <Hidden smUp>
+                    <br/>
+                    </Hidden>
+                    <Hidden xsDown>
+                    &nbsp;
+                    </Hidden>
+                    Check out our <Link
+                        style={{
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #000',
+                          paddingBottom: '1.5px',
+                          textDecoration: 'none'
+                        }}
+                        href="/faq"
+                      >FAQ page.</Link>
+                  </StyledMoreQuestions>
+                </Box>
+              </Grid>
             </StyledContainerBackground>
           </Container>
         </StyledBackground>

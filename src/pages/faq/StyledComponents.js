@@ -163,7 +163,9 @@ export const StyledAnswers = withStyles(theme => ({
 
 export const QAContainer = withStyles(theme => ({
   root: {
-    marginBottom: 40
+    marginBottom: 20,
+    paddingBottom: 20,
+    borderBottom: '1px solid grey'
   }
 }))(Grid);
 
