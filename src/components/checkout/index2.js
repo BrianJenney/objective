@@ -184,6 +184,12 @@ const Checkout = ({
         setResetFormMode(true);
         scrollToRef(stepRefs[0]);
         setActiveStep(0);
+
+        window.analytics.track('Email Capture Failed', {
+          email: payload.shippingAddress.email,
+          error_message: currentUser.signupError.errorMessage,
+          site_location: 'checkout'
+        });
       }
     }
   }, [currentUser.signupError]);
@@ -236,6 +242,11 @@ const Checkout = ({
         nonce: creditCardNonce
       };
       requestPatchAccount(account_jwt, requestPayload);
+
+      window.analytics.track('Email Capture Successful', {
+        email: currentUser.data.email,
+        site_location: 'checkout'
+      });
     }
   }, [accountCreated]);
 
@@ -255,6 +266,11 @@ const Checkout = ({
         email: payload.shippingAddress.email,
         password: payload.paymentDetails.billingAddress.password,
         newsletter: payload.shippingAddress.shouldSubscribe
+      });
+
+      window.analytics.track('Email Capture Completed', {
+        email: payload.shippingAddress.email,
+        site_location: 'checkout'
       });
     }
   }, [activeStep]);
@@ -308,6 +324,7 @@ const Checkout = ({
 
   useEffect(() => {
     trackCheckoutStarted();
+    trackCheckoutStepStarted(0);
     scrollToRef(stepRefs[0]);
   }, []);
 
@@ -385,20 +402,23 @@ const Checkout = ({
     return true;
   };
 
+  const checkoutStepNames = ['Shipping', 'Payment', 'Review'];
   /*
   @description - Tracks Segment Analytics 'Checkout Step Completed' event
   */
   const trackCheckoutStepCompleted = step => {
     window.analytics.track('Checkout Step Completed', {
       cart_id: cart._id,
-      step: step + 1
+      step: step + 1,
+      step_name: checkoutStepNames[step]
     });
   };
 
   const trackCheckoutStepStarted = step => {
     window.analytics.track('Checkout Step Started', {
       cart_id: cart._id,
-      step: step + 1
+      step: step + 1,
+      step_name: checkoutStepNames[step]
     });
   };
 

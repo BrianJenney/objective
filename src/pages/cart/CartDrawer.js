@@ -143,7 +143,7 @@ const Cart = ({
         width: '100%',
         minWidth: '90%',
         margin: '0 auto',
-        padding: mobileDrawerPadding
+        padding: isCheckoutPage ? '0' : mobileDrawerPadding
       }}
       className="cart-drawer"
     >
