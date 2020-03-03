@@ -323,10 +323,12 @@ const Checkout = ({
   }, [activeStep, payload.shippingAddress]);
 
   useEffect(() => {
+    if(cart && cart._id){
     trackCheckoutStarted();
     trackCheckoutStepStarted(0);
     scrollToRef(stepRefs[0]);
-  }, []);
+    }
+  }, [cart]);
 
   useEffect(() => {
     if (cart.shipping) {
