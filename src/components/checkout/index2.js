@@ -328,7 +328,7 @@ const Checkout = ({
     trackCheckoutStepStarted(0);
     scrollToRef(stepRefs[0]);
     }
-  }, [cart]);
+  }, [cart._id]);
 
   useEffect(() => {
     if (cart.shipping) {
