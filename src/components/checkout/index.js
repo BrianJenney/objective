@@ -164,15 +164,9 @@ const Checkout = ({
     }
 
     if (xs && currentUser.data.account_jwt) {
-      if (
-        !currentUser.data.addressBook ||
-        currentUser.data.addressBook.length === 0
-      ) {
+      if (!currentUser.data.addressBook || currentUser.data.addressBook.length === 0) {
         setCurrentStep(1);
-      } else if (
-        !currentUser.data.paymentMethods ||
-        currentUser.data.paymentMethods.length === 0
-      ) {
+      } else if (!currentUser.data.paymentMethods || currentUser.data.paymentMethods.length === 0) {
         setCurrentStep(2);
       } else {
         setCurrentStep(3);
@@ -438,56 +432,43 @@ const Checkout = ({
                         hideTaxLabel
                         showOrderSummaryText={false}
                         xsBreakpoint={xs}
-                        onSubmit={handleNext}
+                        activeStep={activeStep}
+                        restrictionMessage={restrictionMessage}
+                        restrictedProduct={restrictedProduct}
                       />
-                    </div>
-                  </Panel>
+                    </Grid>
+                  ) : (
+                      ''
+                    )}
                 </Grid>
-              {!xs && currentUser ? (
-                <Grid item xs={12} md={4} className="left-side">
-                  <CartDrawer
-                    disableItemEditing
-                    hideCheckoutProceedLink
-                    hideTaxLabel
-                    showOrderSummaryText={false}
-                    xsBreakpoint={xs}
-                    activeStep={activeStep}
-                    restrictionMessage={restrictionMessage}
-                    restrictedProduct={restrictedProduct}
-                  />
-                </Grid>
-              ) : (
-                  ''
-                )}
-              </Grid>
-            <Dialog
-              className="transaction-dialog-container"
-              open={checkoutDialogOpen}
-              onClose={handleCheckoutDialogClose}
-              closeAfterTransition
-            >
-              {orderError ? (
-                <IconButton
-                  aria-label="close"
-                  style={{
-                    position: 'absolute',
-                    right: theme.spacing(1),
-                    top: theme.spacing(1),
-                    color: theme.palette.grey[500]
-                  }}
-                  onClick={handleCheckoutDialogClose}
+                <Dialog
+                  className="transaction-dialog-container"
+                  open={checkoutDialogOpen}
+                  onClose={handleCheckoutDialogClose}
+                  closeAfterTransition
                 >
-                  <CloseIcon />
-                </IconButton>
-              ) : null}
-              <MuiDialogContent>
-                <TransactionMessage orderError={orderError} />
-              </MuiDialogContent>
-            </Dialog>
+                  {orderError ? (
+                    <IconButton
+                      aria-label="close"
+                      style={{
+                        position: 'absolute',
+                        right: theme.spacing(1),
+                        top: theme.spacing(1),
+                        color: theme.palette.grey[500]
+                      }}
+                      onClick={handleCheckoutDialogClose}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ) : null}
+                  <MuiDialogContent>
+                    <TransactionMessage orderError={orderError} />
+                  </MuiDialogContent>
+                </Dialog>
+              </Box>
+            </Container>
           </Box>
-          </Container>
-        </Box >
-      )}
+        )}
     </>
   );
 };
