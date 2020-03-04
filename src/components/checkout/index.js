@@ -116,7 +116,7 @@ const Checkout = ({
     setCloseShippingRestrictions(true);
   }, [setCloseShippingRestrictions]);
 
-  setTimeout(function() {
+  setTimeout(function () {
     setLoading(false);
   }, 300);
 
@@ -311,178 +311,96 @@ const Checkout = ({
       {loading ? (
         <Loader />
       ) : (
-        <Box bgcolor="rgba(252, 248, 244, 0.5)">
-          <Container>
-            <Box py={10} className="checkout-wrapper">
-              <CssBaseline />
-              <Grid container spacing={4}>
-<<<<<<< HEAD
-                <Grid
-                  item
-                  flex={1}
-                  xs={12}
-                  md={8}
-                  style={xs ? { padding: 0 } : {}}
-                  className="right-side"
-                >
-                  <div ref={stepRefs[0]}>
+          <Box bgcolor="rgba(252, 248, 244, 0.5)">
+            <Container>
+              <Box py={10} className="checkout-wrapper">
+                <CssBaseline />
+                <Grid container spacing={4}>
+                  <Grid item flex={1} xs={12} md={8} style={xs ? { padding: 0 } : {}} className="right-side">
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        0,
-                        activeStep,
-                        signupConfirmation,
-                        {
-                          email: currentUserEmail
-                        }
-                      )}
+                      title={getPanelTitleContent(xs, 0, activeStep, signupConfirmation, {
+                        email: currentUserEmail
+                      })}
                       collapsible
                       hideExpandIcon
                       expanded={activeStep === 0}
                       onChange={() => null}
                       className="firstPanel"
                     >
-=======
-                <Grid item flex={1} xs={12} md={8} style={xs ? { padding: 0 } : {}} className="right-side">
-                  <Panel
-                    title={getPanelTitleContent(xs, 0, activeStep, signupConfirmation, {
-                      email: currentUserEmail
-                    })}
-                    collapsible
-                    hideExpandIcon
-                    expanded={activeStep === 0}
-                    onChange={() => null}
-                    className="firstPanel"
-                  >
-                    <div ref={stepRefs[0]}>
->>>>>>> DC-1042-fix-checkout-segment-event
-                      <CheckoutAuth
-                        currentUser={currentUser}
-                        requestCreateAccount={requestCreateAccount}
-                        clearCreateAccountError={clearCreateAccountError}
-                        requestLogin={requestLogin}
-                        clearLoginError={clearLoginError}
-                        handleNext={() => {
-                          if (activeStep === 0) {
-                            setCurrentStep(1);
-                            trackCheckoutStepCompleted(0);
-                          }
-                        }}
-<<<<<<< HEAD
-                      />
+                      <div ref={stepRefs[0]}>
+                        <CheckoutAuth
+                          currentUser={currentUser}
+                          requestCreateAccount={requestCreateAccount}
+                          clearCreateAccountError={clearCreateAccountError}
+                          requestLogin={requestLogin}
+                          clearLoginError={clearLoginError}
+                          handleNext={() => {
+                            if (activeStep === 0) {
+                              setCurrentStep(1);
+                              trackCheckoutStepCompleted(0);
+                            }
+                          }}
+                        />
+                      </div>
                     </Panel>
-                  </div>
-                  <div ref={stepRefs[1]}>
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        1,
-                        activeStep,
-                        null,
-                        payload.shippingAddress
-                      )}
+                      title={getPanelTitleContent(xs, 1, activeStep, null, payload.shippingAddress)}
                       collapsible
                       expanded={activeStep === 1}
                       onChange={e => onPanelChange(e, 1)}
                     >
-                      <AccountAddresses
-                        currentUser={currentUser}
-                        cart={cart}
-                        setRestrictionMessage={setRestrictionMessage}
-                        setRestrictedProduct={setRestrictedProduct}
-                        requestPatchAccount={requestPatchAccount}
-                        clearPatchAccountError={clearPatchAccountError}
-                        formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                        onSubmit={handleNext}
-                        selectionEnabled
-                        allowFlyMode
-                        mt={4}
-                        mx={10}
-                        mb={5}
-                      />
+                      <div ref={stepRefs[1]}>
+                        <AccountAddresses
+                          currentUser={currentUser}
+                          cart={cart}
+                          setRestrictionMessage={setRestrictionMessage}
+                          setRestrictedProduct={setRestrictedProduct}
+                          requestPatchAccount={requestPatchAccount}
+                          clearPatchAccountError={clearPatchAccountError}
+                          formType={ADDRESS_FORM_TYPES.CHECKOUT}
+                          onSubmit={handleNext}
+                          selectionEnabled
+                          allowFlyMode
+                          mt={4}
+                          mx={10}
+                          mb={5}
+                        />
+                      </div>
                     </Panel>
-                  </div>
-=======
+                    {xs && activeStep === 2 && restrictionMessage ? (
+                      <StateRestrictionsDialog
+                        product_name={restrictedProduct}
+                        cartCount={cartCount}
+                        onExited={closeShippingRestrictionsDialog}
                       />
-                    </div>
-                  </Panel>
-                  <Panel
-                    title={getPanelTitleContent(xs, 1, activeStep, null, payload.shippingAddress)}
-                    collapsible
-                    expanded={activeStep === 1}
-                    onChange={e => onPanelChange(e, 1)}
-                  >
-                    <div ref={stepRefs[1]}>
-                      <AccountAddresses
-                        currentUser={currentUser}
-                        cart={cart}
-                        setRestrictionMessage={setRestrictionMessage}
-                        setRestrictedProduct={setRestrictedProduct}
-                        requestPatchAccount={requestPatchAccount}
-                        clearPatchAccountError={clearPatchAccountError}
-                        formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                        onSubmit={handleNext}
-                        selectionEnabled
-                        allowFlyMode
-                        mt={4}
-                        mx={10}
-                        mb={5}
-                      />
-                    </div>
-                  </Panel>
->>>>>>> DC-1042-fix-checkout-segment-event
-                  {xs && activeStep === 2 && restrictionMessage ? (
-                    <StateRestrictionsDialog
-                      product_name={restrictedProduct}
-                      cartCount={cartCount}
-                      onExited={closeShippingRestrictionsDialog}
-                    />
-                  ) : null}
-<<<<<<< HEAD
-                  <div ref={stepRefs[2]}>
+                    ) : null}
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        2,
-                        activeStep,
-                        null,
-                        payload.paymentDetails
-                      )}
+                      title={getPanelTitleContent(xs, 2, activeStep, null, payload.paymentDetails)}
                       collapsible
                       expanded={activeStep === 2}
                       onChange={e => onPanelChange(e, 2)}
                     >
-=======
-                  <Panel
-                    title={getPanelTitleContent(xs, 2, activeStep, null, payload.paymentDetails)}
-                    collapsible
-                    expanded={activeStep === 2}
-                    onChange={e => onPanelChange(e, 2)}
-                  >
-                    <div ref={stepRefs[2]}>
->>>>>>> DC-1042-fix-checkout-segment-event
-                      <AccountPaymentDetails
-                        currentUser={currentUser}
-                        requestPatchAccount={requestPatchAccount}
-                        clearPatchAccountError={clearPatchAccountError}
-                        formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                        onBack={handleBack}
-                        onSubmit={handleNext}
-                        selectionEnabled
-                        seedEnabled
-                        addressSeed={payload.shippingAddress}
-                        useSeedLabel="Use shipping address"
-                        allowFlyMode
-                        mt={4}
-                        mx={10}
-                        mb={5}
-                        backLabel="Cancel"
-                        submitLabel="Review Order"
-                      />
-<<<<<<< HEAD
+                      <div ref={stepRefs[2]}>
+                        <AccountPaymentDetails
+                          currentUser={currentUser}
+                          requestPatchAccount={requestPatchAccount}
+                          clearPatchAccountError={clearPatchAccountError}
+                          formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                          onBack={handleBack}
+                          onSubmit={handleNext}
+                          selectionEnabled
+                          seedEnabled
+                          addressSeed={payload.shippingAddress}
+                          useSeedLabel="Use shipping address"
+                          allowFlyMode
+                          mt={4}
+                          mx={10}
+                          mb={5}
+                          backLabel="Cancel"
+                          submitLabel="Review Order"
+                        />
+                      </div>
                     </Panel>
-                  </div>
-                  <div ref={stepRefs[3]}>
                     <Panel
                       title={getPanelTitleContent(xs, 3, activeStep, null, {})}
                       collapsible
@@ -491,89 +409,68 @@ const Checkout = ({
                       onChange={e => onPanelChange(e, 3)}
                       className="lastPanel"
                     >
-=======
-                    </div>
-                  </Panel>
-                  <Panel
-                    title={getPanelTitleContent(xs, 3, activeStep, null, {})}
-                    collapsible
-                    hideExpandIcon
-                    expanded={activeStep === 3}
-                    onChange={e => onPanelChange(e, 3)}
-                    className="lastPanel"
-                  >
-                    <div ref={stepRefs[3]}>
->>>>>>> DC-1042-fix-checkout-segment-event
-                      {xs && (
-                        <CartDrawer
-                          disableItemEditing
-                          hideCheckoutProceedLink
-                          hideTaxLabel
-                          showOrderSummaryText
-                          xsBreakpoint={xs}
-                          activeStep={activeStep}
-                          restrictionMessage={restrictionMessage}
-                          restrictedProduct={restrictedProduct}
-                        />
-                      )}
-<<<<<<< HEAD
-                      <CheckoutReviewForm
-                        xsBreakpoint={xs}
-                        onSubmit={handleNext}
-                      />
+                      <div ref={stepRefs[3]}>
+                        {xs && (
+                          <CartDrawer
+                            disableItemEditing
+                            hideCheckoutProceedLink
+                            hideTaxLabel
+                            showOrderSummaryText
+                            xsBreakpoint={xs}
+                            activeStep={activeStep}
+                            restrictionMessage={restrictionMessage}
+                            restrictedProduct={restrictedProduct}
+                          />
+                        )}
+                        <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
+                      </div>
                     </Panel>
-                  </div>
-=======
-                      <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
-                    </div>
-                  </Panel>
->>>>>>> DC-1042-fix-checkout-segment-event
-                </Grid>
-                {!xs && currentUser ? (
-                  <Grid item xs={12} md={4} className="left-side">
-                    <CartDrawer
-                      disableItemEditing
-                      hideCheckoutProceedLink
-                      hideTaxLabel
-                      showOrderSummaryText={false}
-                      xsBreakpoint={xs}
-                      activeStep={activeStep}
-                      restrictionMessage={restrictionMessage}
-                      restrictedProduct={restrictedProduct}
-                    />
                   </Grid>
-                ) : (
-                  ''
-                )}
-              </Grid>
-              <Dialog
-                className="transaction-dialog-container"
-                open={checkoutDialogOpen}
-                onClose={handleCheckoutDialogClose}
-                closeAfterTransition
-              >
-                {orderError ? (
-                  <IconButton
-                    aria-label="close"
-                    style={{
-                      position: 'absolute',
-                      right: theme.spacing(1),
-                      top: theme.spacing(1),
-                      color: theme.palette.grey[500]
-                    }}
-                    onClick={handleCheckoutDialogClose}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                ) : null}
-                <MuiDialogContent>
-                  <TransactionMessage orderError={orderError} />
-                </MuiDialogContent>
-              </Dialog>
-            </Box>
-          </Container>
-        </Box>
-      )}
+                  {!xs && currentUser ? (
+                    <Grid item xs={12} md={4} className="left-side">
+                      <CartDrawer
+                        disableItemEditing
+                        hideCheckoutProceedLink
+                        hideTaxLabel
+                        showOrderSummaryText={false}
+                        xsBreakpoint={xs}
+                        activeStep={activeStep}
+                        restrictionMessage={restrictionMessage}
+                        restrictedProduct={restrictedProduct}
+                      />
+                    </Grid>
+                  ) : (
+                      ''
+                    )}
+                </Grid>
+                <Dialog
+                  className="transaction-dialog-container"
+                  open={checkoutDialogOpen}
+                  onClose={handleCheckoutDialogClose}
+                  closeAfterTransition
+                >
+                  {orderError ? (
+                    <IconButton
+                      aria-label="close"
+                      style={{
+                        position: 'absolute',
+                        right: theme.spacing(1),
+                        top: theme.spacing(1),
+                        color: theme.palette.grey[500]
+                      }}
+                      onClick={handleCheckoutDialogClose}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ) : null}
+                  <MuiDialogContent>
+                    <TransactionMessage orderError={orderError} />
+                  </MuiDialogContent>
+                </Dialog>
+              </Box>
+            </Container>
+          </Box>
+        )}
     </>
   );
 };
