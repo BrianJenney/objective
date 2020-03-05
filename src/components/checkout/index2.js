@@ -268,10 +268,6 @@ const Checkout = ({
         newsletter: payload.shippingAddress.shouldSubscribe
       });
 
-      window.analytics.track('Email Capture Completed', {
-        email: payload.shippingAddress.email,
-        site_location: 'checkout'
-      });
     }
   }, [activeStep]);
 
@@ -319,6 +315,13 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
+      
+      if(payload.shippingAddress.shouldSubscribe){
+        window.analytics.track('Email Capture Completed', {
+          email: payload.shippingAddress.email,
+          site_location: 'checkout'
+        });
+      }
     }
   }, [activeStep, payload.shippingAddress]);
 
@@ -344,7 +347,7 @@ const Checkout = ({
     if (cartCount === 0 && cart._id) {
       history.push('/');
     }
-  }, [cart.items]);
+  }, [cart._id]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);

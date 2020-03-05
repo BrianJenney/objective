@@ -199,11 +199,15 @@ const Cart = ({
         )}
       </div>
       <Grid container>
-        {isCheckoutPage && (activeStep === 2 || activeStep === 3) && restrictionMessage ? (
-          <>
-            <Typography className={classes.cartRestricted}>
-              CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this product is not
-              available in the state you selected. We hope to be able to offer {restrictedProduct} in your state soon!
+        {isCheckoutPage &&
+          (activeStep === 2 || activeStep === 3 || (checkoutVersion === 2 && activeStep === 1)) &&
+          restrictionMessage ? (
+            <>
+              <Typography className={classes.cartRestricted}>
+                CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
+                cart because this product is not available in the state you
+              selected. We hope to be able to offer {restrictedProduct} in your
+                state soon!
             </Typography>
             {cartCount === 0 && (
               <NavLink to="/gallery" underline="always" className={classes.link}>
