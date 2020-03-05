@@ -32,13 +32,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
 
-const getPanelTitleContent = (
-  xs,
-  step,
-  activeStep,
-  signupConfirmation,
-  payload
-) => {
+const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -65,12 +59,7 @@ const getPanelTitleContent = (
 
   if (!isNil(payload)) {
     if (step === 0) {
-      payloadSummary = (
-        <AccountSummary
-          values={payload}
-          signupConfirmation={signupConfirmation}
-        />
-      );
+      payloadSummary = <AccountSummary values={payload} signupConfirmation={signupConfirmation} />;
     } else if (step === 1) {
       payloadSummary = <AddressSummary noDefault values={payload} />;
     } else if (step === 2) {
@@ -80,13 +69,7 @@ const getPanelTitleContent = (
 
   const payloadView =
     payloadSummary && !isActiveStep ? (
-      <Box
-        width={1}
-        px={xs ? 8 : 14}
-        py={xs ? 3 : 4}
-        bgcolor="rgba(252, 248, 244, 0.5)"
-        color="#231f20"
-      >
+      <Box width={1} px={xs ? 8 : 14} py={xs ? 3 : 4} bgcolor="rgba(252, 248, 244, 0.5)" color="#231f20">
         {payloadSummary}
       </Box>
     ) : null;
@@ -123,9 +106,7 @@ const Checkout = ({
   const [loading, setLoading] = useState(true);
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(
-    false
-  );
+  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
 
@@ -197,17 +178,14 @@ const Checkout = ({
     if (activeStep === 2) {
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
     }
-  }, [
-    activeStep,
-    payload.shippingAddress,
-    dispatch,
-    requestSetShippingAddress
-  ]);
+  }, [activeStep, payload.shippingAddress, dispatch, requestSetShippingAddress]);
 
   useEffect(() => {
-    trackCheckoutStarted();
-    scrollToRef(stepRefs[0]);
-  }, []);
+    if (cart && cart._id) {
+      trackCheckoutStarted();
+      scrollToRef(stepRefs[0]);
+    }
+  }, [cart._id]);
 
   useEffect(() => {
     if (cart.shipping) {
@@ -252,16 +230,10 @@ const Checkout = ({
     }
 
     if (paymentMethodNonce && cart.items.length) {
-      requestCreateOrder(
-        { ...cart, ...payload, account_jwt },
-        { paymentMethodNonce }
-      );
+      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
     }
     if (paymentMethodToken && cart.items.length) {
-      requestCreateOrder(
-        { ...cart, ...payload, account_jwt },
-        { paymentMethodToken }
-      );
+      requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
     }
 
     if (orderIsLoading === true || orderError === null) return null;
@@ -323,8 +295,7 @@ const Checkout = ({
     if (
       !expanded ||
       activeStep === 0 ||
-      ([2, 3].includes(panelIndex) &&
-        (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
+      ([2, 3].includes(panelIndex) && (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
       return false;
     }
@@ -343,24 +314,11 @@ const Checkout = ({
               <Box py={10} className="checkout-wrapper">
                 <CssBaseline />
                 <Grid container spacing={4}>
-                  <Grid
-                    item
-                    flex={1}
-                    xs={12}
-                    md={8}
-                    style={xs ? { padding: 0 } : {}}
-                    className="right-side"
-                  >
+                  <Grid item flex={1} xs={12} md={8} style={xs ? { padding: 0 } : {}} className="right-side">
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        0,
-                        activeStep,
-                        signupConfirmation,
-                        {
-                          email: currentUserEmail
-                        }
-                      )}
+                      title={getPanelTitleContent(xs, 0, activeStep, signupConfirmation, {
+                        email: currentUserEmail
+                      })}
                       collapsible
                       hideExpandIcon
                       expanded={activeStep === 0}
@@ -384,13 +342,7 @@ const Checkout = ({
                       </div>
                     </Panel>
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        1,
-                        activeStep,
-                        null,
-                        payload.shippingAddress
-                      )}
+                      title={getPanelTitleContent(xs, 1, activeStep, null, payload.shippingAddress)}
                       collapsible
                       expanded={activeStep === 1}
                       onChange={e => onPanelChange(e, 1)}
@@ -421,13 +373,7 @@ const Checkout = ({
                       />
                     ) : null}
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        2,
-                        activeStep,
-                        null,
-                        payload.paymentDetails
-                      )}
+                      title={getPanelTitleContent(xs, 2, activeStep, null, payload.paymentDetails)}
                       collapsible
                       expanded={activeStep === 2}
                       onChange={e => onPanelChange(e, 2)}
@@ -474,10 +420,7 @@ const Checkout = ({
                             restrictedProduct={restrictedProduct}
                           />
                         )}
-                        <CheckoutReviewForm
-                          xsBreakpoint={xs}
-                          onSubmit={handleNext}
-                        />
+                        <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
                       </div>
                     </Panel>
                   </Grid>
