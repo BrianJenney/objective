@@ -218,7 +218,7 @@ const Cart = ({
       </div>
       <Grid container>
         {isCheckoutPage &&
-          (activeStep === 2 || activeStep === 3) &&
+          (activeStep === 2 || activeStep === 3 || (checkoutVersion === 2 && activeStep === 1)) &&
           restrictionMessage ? (
             <>
               <Typography className={classes.cartRestricted}>
