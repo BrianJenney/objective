@@ -5,6 +5,8 @@ import { compose } from 'redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { withCurrentUser } from '../../hoc';
 
+import Loader from '../common/Loader';
+
 const RouteWithSubRoutes = ({
   location,
   injectCurrentUser,
@@ -46,13 +48,14 @@ const RouteWithSubRoutes = ({
     Component = () => <Redirect to={redirectPath} />;
   }
 
-  return (
-    <Route
-      path={path}
-      exact={exact}
-      render={props => <Component {...currentUserProp} {...props} {...rest} />}
-    />
-  );
+  if (
+    (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) ||
+    (location.pathname.startsWith('/orders') && currentUser.fetchAccountLoading === null)
+  ) {
+    return <Loader />;
+  }
+
+  return <Route path={path} exact={exact} render={props => <Component {...currentUserProp} {...props} {...rest} />} />;
 };
 
 RouteWithSubRoutes.propTypes = {
@@ -72,7 +75,4 @@ RouteWithSubRoutes.defaultProps = {
   exact: false
 };
 
-export default compose(
-  withRouter,
-  withCurrentUser
-)(RouteWithSubRoutes);
+export default compose(withRouter, withCurrentUser)(RouteWithSubRoutes);
