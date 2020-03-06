@@ -37,15 +37,14 @@ const BlogCategory = ({ computedMatch, location }) => {
         results.posts.map(post => {
           if (post.fields.featuredCategories && post.fields.featuredCategories[0].includes('Sleep')) {
             let featuredPosition = post.fields.featuredCategories[0].slice(-1);
-            
-            if(featuredPosition == 1) {
+            if (featuredPosition == 1) {
               setFeaturedMain(post);
             } else {
               featuredPostHolder.push(post);
             }
           }
-        })
-        setFeaturedPosts(featuredPostHolder );
+        });
+        setFeaturedPosts(featuredPostHolder);
       }
       setBlogTitle(results.title);
       setPosts(results.posts);
@@ -68,15 +67,12 @@ const BlogCategory = ({ computedMatch, location }) => {
 
   const renderFeaturedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => (
-        <FeaturedItem post={item} key={item.sys.id} />
-      ));
+      return posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
-  
-  const renderPosts = posts =>
-    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
+
+  const renderPosts = posts => posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
     posts.length && (
@@ -121,7 +117,6 @@ const BlogCategory = ({ computedMatch, location }) => {
               </Box>
             </div>
           )}
-          
         </ScrollToTop>
       </>
     )
