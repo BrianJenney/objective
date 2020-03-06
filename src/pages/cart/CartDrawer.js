@@ -133,7 +133,7 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const mobileDrawerPadding = window.screen.width < 768 ? '24px 20px' : '0';
+  const mobileDrawerPadding = window.screen.width > 768 ? '24px 20px' : '0';
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   return (
@@ -143,7 +143,7 @@ const Cart = ({
         width: '100%',
         minWidth: '90%',
         margin: '0 auto',
-        padding: isCheckoutPage ? '0' : mobileDrawerPadding
+        padding: mobileDrawerPadding
       }}
       className="cart-drawer"
     >
