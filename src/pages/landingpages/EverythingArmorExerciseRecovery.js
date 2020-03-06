@@ -72,6 +72,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
   };
 
   const handleAddToCart = useCallback(() => {
+    console.log('catalog', catalog);
     console.log('variants', catalog.variants);
     const selectedVariant = catalog.variants.find(item => item.slug === 'everything-armor');
     setTimeout(() => {
@@ -387,7 +388,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
           <Grid item xs={12} md={8} className="smaller-container">
             <h2 className="mt-0">Everything Armor Makes <em>Everything</em> Better</h2>
             <div className="floating">
-              <div class="float-right gif-cta cta-holder">
+              <div className="float-right gif-cta cta-holder">
                 <img
                   className="float-right"
                   src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?h=305"
