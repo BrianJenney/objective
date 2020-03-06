@@ -337,8 +337,8 @@ const Checkout = ({
         });
 
         window.analytics.identify({
-          firstName: payload.shippingAddress.firstName,
-          lastName: payload.shippingAddress.lastName,
+          first_name: payload.shippingAddress.firstName,
+          last_name: payload.shippingAddress.lastName,
           email: payload.shippingAddress.email
         });
       }
