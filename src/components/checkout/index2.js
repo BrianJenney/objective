@@ -316,10 +316,30 @@ const Checkout = ({
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
       
-      if(payload.shippingAddress.shouldSubscribe && payload.shippingAddress.email && !account_jwt){
+      if (
+        payload.shippingAddress.shouldSubscribe &&
+        payload.shippingAddress.email &&
+        !account_jwt
+      ) {
         window.analytics.track('Email Capture Completed', {
           email: payload.shippingAddress.email,
           site_location: 'checkout'
+        });
+
+        window.analytics.track('Subscribed', {
+          email: payload.shippingAddress.email,
+          site_location: 'checkout'
+        });
+
+        window.analytics.track('Subscribed Listrak Auto', {
+          email: payload.shippingAddress.email,
+          site_location: 'checkout'
+        });
+
+        window.analytics.identify({
+          firstName: payload.shippingAddress.firstName,
+          lastName: payload.shippingAddress.lastName,
+          email: payload.shippingAddress.email
         });
       }
     }
