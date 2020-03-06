@@ -316,7 +316,7 @@ const Checkout = ({
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
       
-      if(payload.shippingAddress.shouldSubscribe){
+      if(payload.shippingAddress.shouldSubscribe && payload.shippingAddress.email && !account_jwt){
         window.analytics.track('Email Capture Completed', {
           email: payload.shippingAddress.email,
           site_location: 'checkout'
