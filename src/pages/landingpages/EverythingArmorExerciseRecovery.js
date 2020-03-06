@@ -38,36 +38,36 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
   const handleScroll = e => {
     if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1700) {
       section.current.a = true;
-      trackLPSection('Fast Asleep Ingredients', 'GABA: The Calming Neurotransmitter', 'TGSS-1BOT-CHO');
+      trackLPSection('Everything Armor Exercise Recovery', 'GABA: The Calming Neurotransmitter', 'TPZU-1BOT-GELS');
     }
 
     if (section.current.b === false && window.scrollY >= 2251 && window.scrollY < 2900) {
       section.current.b = true;
       trackLPSection(
-        'Fast Asleep Ingredients',
+        'Everything Armor Exercise Recovery',
         'Saffron: The Natural Sleep Aid Worth Its Weight In Gold',
-        'TGSS-1BOT-CHO'
+        'TPZU-1BOT-GELS'
       );
     }
 
     if (section.current.c === false && window.scrollY >= 4050 && window.scrollY < 4900) {
       section.current.c = true;
-      trackLPSection('Fast Asleep Ingredients', 'Why GABA And Saffron Instead Of Melatonin?', 'TGSS-1BOT-CHO');
+      trackLPSection('Everything Armor Exercise Recovery', 'Why GABA And Saffron Instead Of Melatonin?', 'TPZU-1BOT-GELS');
     }
 
     if (section.current.d === false && window.scrollY >= 6294 && window.scrollY < 7000) {
       section.current.d = true;
-      trackLPSection('Fast Asleep Ingredients', 'Better Nights = Better Days = Better Health', 'TGSS-1BOT-CHO');
+      trackLPSection('Everything Armor Exercise Recovery', 'Better Nights = Better Days = Better Health', 'TPZU-1BOT-GELS');
     }
 
     if (section.current.e === false && window.scrollY >= 7700 && window.scrollY < 8200) {
       section.current.e = true;
-      trackLPSection('Fast Asleep Ingredients', 'Better Sleep, Guaranteed. Try It Today—Risk-Free!', 'TGSS-1BOT-CHO');
+      trackLPSection('Everything Armor Exercise Recovery', 'Better Sleep, Guaranteed. Try It Today—Risk-Free!', 'TPZU-1BOT-GELS');
     }
 
     if (section.current.f === false && window.scrollY >= 8440 && window.scrollY < 9200) {
       section.current.f = true;
-      trackLPSection('Fast Asleep Ingredients', 'Wake Up Refreshed with Fast Asleep', 'TGSS-1BOT-CHO');
+      trackLPSection('Everything Armor Exercise Recovery', 'Wake Up Refreshed with Fast Asleep', 'TPZU-1BOT-GELS');
     }
   };
 
@@ -80,13 +80,13 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
       window.analytics.track('Product Clicked', {
         brand: 'OBJ',
         cart_id: cart._id,
-        coupon: 'DEFENSE15',
+        coupon: 'voucherify.io-sandbox-04',
         image_url: selectedVariant.assets.thumbnail,
         name: selectedVariant.name,
         price: selectedVariant.effectivePrice,
         product_id: selectedVariant.product_id,
         quantity: 1,
-        site_location: 'Fast Asleep Ingredients Landing Page',
+        site_location: 'Everything Armor Exercise Recovery',
         sku: selectedVariant.sku,
         url: window.location.href
       });
@@ -96,7 +96,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
 
   const handleAddCoupon = useCallback(() => {
     setTimeout(() => {
-      addCoupon(cart._id, 'SLUMBER15');
+      addCoupon(cart._id, 'voucherify.io-sandbox-04');
       setCouponAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
@@ -178,16 +178,16 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
             <div className="xs-only link-holder-mobile">
               <ul>
                 <li>
-                  <NavLink onClick={executeScroll}>GABA: THE CALMING NEUROTRANSMITTER</NavLink>
+                  <NavLink onClick={executeScroll}>NEW HELP FOR EXERCISE RECOVERY</NavLink>
                 </li>
                 <li>
-                  <NavLink onClick={executeScrollTwo}>SAFFRON: THE SPICE WITH A 100% SUCCESS RATE</NavLink>
+                  <NavLink onClick={executeScrollTwo}>WHY ANTIOXIDANTS MATTER</NavLink>
                 </li>
                 <li>
-                  <NavLink onClick={executeScrollThree}>7 SIGNS YOU’RE NOT SLEEPING WELL</NavLink>
+                  <NavLink onClick={executeScrollThree}>12 WAYS ASTAXANTHIN HELPS YOU HEAD-TO-TOE</NavLink>
                 </li>
                 <li>
-                  <NavLink onClick={executeScrollFour}>BETTER SLEEP—Guaranteed</NavLink>
+                  <NavLink onClick={executeScrollFour}>BETTER HEALTH—Guaranteed</NavLink>
                 </li>
               </ul>
             </div>
@@ -258,25 +258,36 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                 is linked to DNA damage and age-related concerns affecting the skin, eyes, brain, blood vessels and
                 other sensitive tissues in the body.
               </p>
+              <div className="beige-box float-right num1 xs-only w-100">
+                <div className="box-header">
+                  THE ANTIOXIDANT THAT’S UP TO 800X MORE POWERFUL THAN CoQ10 and 6,000X MORE POWERFUL THAN VITAMIN C
+                </div>
+                <p>
+                  In a test that specifically measured its ability to neutralize a particularly unstable and destructive
+                  type of free radical called singlet oxygen, astaxanthin was shown to be up to:
+                </p>
+                <ul>
+                  <li>800x stronger than CoQ10</li>
+                  <li>6,000x stronger than vitamin C</li>
+                  <li>40x stronger than beta-carotene</li>
+                  <li>100x stronger than vitamin E</li>
+                </ul>
+                <div className="cta-holder">
+                  <div className="text">
+                    Feel the amazing power of
+                    <br />
+                    astaxanthin for yourself!
+                  </div>
+                  <NavLink onClick={handleClick} className="green-btn">
+                    get 15% off — Buy Now
+                  </NavLink>
+                </div>
+              </div>
               <p>
                 Basically, astaxanthin is one of those rare ingredients that works hard for you NOW (easing post-workout
                 joint and muscles aches) and works hard for your future health (so you can dance at your kids’
                 weddings…and their kids’ weddings).
               </p>
-              <div className="beige-box w-100 benefits xs-only">
-                <div className="box-header">BENEFITS TO DEEP, RESTORATIVE SLEEP</div>
-                <ul>
-                  <li>More energy during the day</li>
-                  <li>Enhanced mental clarity</li>
-                  <li>Increased productivity</li>
-                  <li>Brighter moods</li>
-                  <li>Faster muscle recovery</li>
-                  <li>A stronger immune system</li>
-                  <li>Better hormone balance</li>
-                  <li>Reduced food cravings</li>
-                  <li>Improved cardiovascular health</li>
-                </ul>
-              </div>
             </div>
             <hr />
             <h2 ref={myRefTwo}>Here’s Why Antioxidants Matter</h2>
@@ -388,7 +399,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
           <Grid item xs={12} md={8} className="smaller-container">
             <h2 className="mt-0">Everything Armor Makes <em>Everything</em> Better</h2>
             <div className="floating">
-              <div className="float-right gif-cta cta-holder">
+              <div className="float-right gif-cta cta-holder hidden-xs">
                 <img
                   className="float-right"
                   src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?h=305"
@@ -405,6 +416,16 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                 With study after study demonstrating astaxanthin’s extraordinary head-to-toe benefits, it became clear to the Objective R & D team that astaxanthin was not just a passing health trend. So we went to work sourcing a pure, effective astaxanthin—and figuring out how to fit 12 mg of it into a single softgel. We call it <a href="/products/everything-armor">Everything Armor</a>, and we love it because it works!
               </p>
               <p>Featuring a research-based 12 mg dose of high-quality, concentrated astaxanthin, Everything Armor is here to make exercise easier—and to help your body perform at its best, whether for today’s workouts or tomorrow’s heart, brain and vision health.</p>
+              <div className="w-100 gif-cta cta-holder xs-only">
+                <img
+                  className=""
+                  src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?w=450"
+                />
+                <NavLink onClick={handleClick} className="green-btn">
+                  get 15% off — Buy Now
+              </NavLink>
+                <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
+              </div>
             </div>
             <hr />
             <h2>Going to the Original Source for Exceptional Quality</h2>
