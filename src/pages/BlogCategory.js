@@ -27,12 +27,26 @@ const BlogCategory = ({ computedMatch, location }) => {
   const seoMap = useSelector(state => state.storefront.seoMap);
   const { title, description } = seoMap[category_slug];
   const isSleep = matchPath(location.pathname, { path: '/journal/category/sleep' });
-  console.log('isSleep', isSleep);
 
   useEffect(() => {
     async function fetchData() {
       const results = await fetchPostsByCategory(category_slug);
 
+      if (isSleep) {
+        let featuredPostHolder = [];
+        results.posts.map(post => {
+          if (post.fields.featuredCategories && post.fields.featuredCategories[0].includes('Sleep')) {
+            let featuredPosition = post.fields.featuredCategories[0].slice(-1);
+            
+            if(featuredPosition == 1) {
+              setFeaturedMain(post);
+            } else {
+              featuredPostHolder.push(post);
+            }
+          }
+        })
+        setFeaturedPosts(featuredPostHolder );
+      }
       setBlogTitle(results.title);
       setPosts(results.posts);
     }
@@ -60,6 +74,7 @@ const BlogCategory = ({ computedMatch, location }) => {
     }
     return <></>;
   };
+  
   const renderPosts = posts =>
     posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
