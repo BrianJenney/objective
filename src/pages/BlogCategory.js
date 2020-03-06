@@ -83,8 +83,8 @@ const BlogCategory = ({ computedMatch, location }) => {
             <div className="journal-gallery">
               <Box className="header" py={8}>
                 <Container className="container">
-                  <h1>Sleep</h1>
-                  {/* <p>Lifestyle tips, recipes, deep dives into study results and more...to make good health easy </p> */}
+                  <h1>Sleep Month 2020</h1>
+                  <p>Sleep Well, Live Well</p>
                 </Container>
               </Box>
               <Box className="content" py={8}>
@@ -99,7 +99,7 @@ const BlogCategory = ({ computedMatch, location }) => {
                   )}
                   <Divider />
                   <h1>All Posts</h1>
-                  <div className="list">{renderPosts(posts)}</div>
+                  <div className="list">{renderPosts(posts.reverse())}</div>
                 </Container>
               </Box>
             </div>
