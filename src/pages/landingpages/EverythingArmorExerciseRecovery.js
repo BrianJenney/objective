@@ -80,7 +80,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
       window.analytics.track('Product Clicked', {
         brand: 'OBJ',
         cart_id: cart._id,
-        coupon: 'DEFENSE15',
+        coupon: 'voucherify.io-sandbox-04',
         image_url: selectedVariant.assets.thumbnail,
         name: selectedVariant.name,
         price: selectedVariant.effectivePrice,
