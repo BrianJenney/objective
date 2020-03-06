@@ -416,15 +416,17 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                 With study after study demonstrating astaxanthin’s extraordinary head-to-toe benefits, it became clear to the Objective R & D team that astaxanthin was not just a passing health trend. So we went to work sourcing a pure, effective astaxanthin—and figuring out how to fit 12 mg of it into a single softgel. We call it <a href="/products/everything-armor">Everything Armor</a>, and we love it because it works!
               </p>
               <p>Featuring a research-based 12 mg dose of high-quality, concentrated astaxanthin, Everything Armor is here to make exercise easier—and to help your body perform at its best, whether for today’s workouts or tomorrow’s heart, brain and vision health.</p>
-              <div className="w-100 gif-cta cta-holder xs-only">
-                <img
-                  className=""
-                  src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?w=450"
-                />
-                <NavLink onClick={handleClick} className="green-btn">
-                  get 15% off — Buy Now
+              <div className="xs-only">
+                <div className="w-100 gif-cta cta-holder">
+                  <img
+                    className=""
+                    src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?w=450"
+                  />
+                  <NavLink onClick={handleClick} className="green-btn">
+                    get 15% off — Buy Now
               </NavLink>
-                <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
+                  <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
+                </div>
               </div>
             </div>
             <hr />
