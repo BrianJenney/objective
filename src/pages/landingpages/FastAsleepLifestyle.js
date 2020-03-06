@@ -130,7 +130,7 @@ const FastAsleepLifestyle = ({ location }) => {
   }, []);
 
   return (
-    <div className="fast-asleep-lp">
+    <div className="landing-page-design">
       <div className="landing-header">
         <Container>
           <div className="link-holder">
