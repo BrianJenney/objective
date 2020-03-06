@@ -780,5 +780,60 @@
         color: #333333;
       }
     }
+    .link-holder-mobile {
+      ul {
+        list-style-image: none;
+        li {
+          color: #003833;
+          font-size: 12px;
+          font-weight: 900;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: 1.5px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    @media (max-width: 500px) {
+      .beige-box {
+        &.num1 {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+      .gaba-img-and-desc,
+      .dose-img,
+      .steps {
+        width: 50%;
+        margin-left: 15px;
+        em {
+          font-size: 12px;
+        }
+      }
+      ul {
+        &.large-ul {
+          li {
+            margin-bottom: 20px;
+          }
+        }
+      }
+      .gif-cta {
+        max-width: 100%;
+        margin-left: 0;
+        img {
+          width: 100%;
+        }
+      }
+      .steps {
+        .one, .two {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+      .box-right {
+        padding: 20px 15px 30px;
+      }
+    }
   }
 }
