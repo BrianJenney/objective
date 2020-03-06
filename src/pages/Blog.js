@@ -99,16 +99,7 @@ const Blog = ({ location }) => {
               )}
               <Divider />
               <h1>All Posts</h1>
-              <div className="list">
-                {renderPosts(posts)}
-                {/*
-              <div className="load">
-                <Button variant="contained" color="primary">
-                  Load More
-                </Button>
-              </div>
-              */}
-              </div>
+              <div className="list">{renderPosts(posts)}</div>
             </Container>
           </Box>
         </div>
