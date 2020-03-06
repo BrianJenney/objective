@@ -166,7 +166,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                          Limited Time: Free Shipping for All New Customers
+                          SLEEP MONTH 2020! $10 OFF FAST ASLEEP WITH CODE SLEEP30 + SITEWIDE FREE SHIPPING
                         </NavLink>
                         <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
                       </StyledBox>
@@ -183,7 +183,7 @@ const Header = ({ currentUser, location }) => {
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
                             <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                              Limited Time: Free Shipping for All New Customers
+                              SLEEP MONTH 2020! $10 OFF FAST ASLEEP WITH CODE SLEEP30 + SITEWIDE FREE SHIPPING
                             </NavLink>
                             <div className="closeIcon" onClick={handlePromoClose}>
                               Close
