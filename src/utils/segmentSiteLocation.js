@@ -9,6 +9,8 @@ const returnSiteLocation = () => {
   let path = window.location.pathname;
   const locationMap = [
     { path: '/', exact: true, strict: false, location: 'home' },
+    { path: '/checkout', exact: true, strict: false, location: 'checkout' },
+    { path: '/checkout2', exact: true, strict: false, location: 'checkout' },
     { path: '/gallery', exact: true, strict: false, location: 'gallery' },
     {
       path: '/products/:product_slug',
