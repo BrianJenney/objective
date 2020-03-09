@@ -4,6 +4,7 @@ import { handleBootstrapResponse } from './modules/bootstrap/responses';
 import { handleAccountResponse } from './modules/account/responses';
 import { handleCartResponse } from './modules/cart/responses';
 import { handleOrderResponse } from './modules/order/responses';
+import { handlePageResponse } from './modules/static/responses';
 
 const msgpack = require('msgpack-lite');
 
@@ -17,20 +18,20 @@ export default body => {
     case 'bootstrap-orchestration':
       handleBootstrapResponse(status, data, fields, properties);
       break;
-
     case 'cart':
       handleCartResponse(status, data, fields, properties);
       break;
-
     case 'account':
       handleAccountResponse(status, data, fields, properties);
       break;
-
     case 'order':
     case 'transaction':
       handleOrderResponse(status, data, fields, properties);
       break;
-
+    case 'content':
+      console.log('this responses main');
+      handlePageResponse(status, data, fields, properties);
+      break;
     default:
       EventEmitter.emit(fields.routingKey, {
         status: status,

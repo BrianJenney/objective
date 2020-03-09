@@ -1,0 +1,2 @@
+export const REQUEST_PAGE = 'REQUEST_PAGE';
+export const RECEIVED_PAGE = 'RECEIVED_PAGE';
