@@ -38,42 +38,35 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
   const handleScroll = e => {
     if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1700) {
       section.current.a = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'GABA: The Calming Neurotransmitter', 'TPZU-1BOT-GELS');
+      trackLPSection('Everything Armor Exercise Recovery', 'Meet Astaxanthin, Possibly the Most Powerful Antioxidant You’ve Never Heard Of', 'TPZU-1BOT-GELS');
     }
 
     if (section.current.b === false && window.scrollY >= 2251 && window.scrollY < 2900) {
       section.current.b = true;
       trackLPSection(
         'Everything Armor Exercise Recovery',
-        'Saffron: The Natural Sleep Aid Worth Its Weight In Gold',
+        'Here’s Why Antioxidants Matter',
         'TPZU-1BOT-GELS'
       );
     }
 
     if (section.current.c === false && window.scrollY >= 4050 && window.scrollY < 4900) {
       section.current.c = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Why GABA And Saffron Instead Of Melatonin?', 'TPZU-1BOT-GELS');
+      trackLPSection('Everything Armor Exercise Recovery', '12 For 12: 12 Ways 12 Mg Of Astaxanthin Helps You, Head-To-Toe', 'TPZU-1BOT-GELS');
     }
 
     if (section.current.d === false && window.scrollY >= 6294 && window.scrollY < 7000) {
       section.current.d = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Better Nights = Better Days = Better Health', 'TPZU-1BOT-GELS');
+      trackLPSection('Everything Armor Exercise Recovery', 'Better Everything, Guaranteed. Try It Today—Risk-Free!', 'TPZU-1BOT-GELS');
     }
 
-    if (section.current.e === false && window.scrollY >= 7700 && window.scrollY < 8200) {
+    if (section.current.e === false && window.scrollY >= 7200 && window.scrollY < 7700) {
       section.current.e = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Better Sleep, Guaranteed. Try It Today—Risk-Free!', 'TPZU-1BOT-GELS');
-    }
-
-    if (section.current.f === false && window.scrollY >= 8440 && window.scrollY < 9200) {
-      section.current.f = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Wake Up Refreshed with Fast Asleep', 'TPZU-1BOT-GELS');
+      trackLPSection('Everything Armor Exercise Recovery', 'Better Workouts, Better Health, Better Everything', 'TPZU-1BOT-GELS');
     }
   };
 
   const handleAddToCart = useCallback(() => {
-    console.log('catalog', catalog);
-    console.log('variants', catalog.variants);
     const selectedVariant = catalog.variants.find(item => item.slug === 'everything-armor');
     setTimeout(() => {
       addToCart(cart, selectedVariant, 1);
