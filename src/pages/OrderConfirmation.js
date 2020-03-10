@@ -92,22 +92,42 @@ const OrderConfirmation = ({ history }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
+  let orderItemsTransformedGA = [];
+
+  if (order) {
+    order.items.map(item => {
+      orderItemsTransformedGA.push({
+        id: item.variant_id,
+        name: item.variant_name,
+        brand: order.storeCode,
+        variant: item.sku,
+        quantity: item.quantity,
+        price: item.unit_price
+      });
+    });
+  }
+  useEffect(() => {
+    if (order) {
+      window.analytics.page('Order Confirmation');
+      window.gtag('event', 'purchase', {
+        transaction_id: order.orderNumber,
+        affiliation: order.storeCode,
+        value: order.total,
+        currency: 'USD',
+        tax: order.tax,
+        shipping: order.shippingMethod.price,
+        items: orderItemsTransformedGA
+      });
+    }
+  }, []);
 
   if (!order) {
     return null;
   }
 
-  let orderItemsTransformedGA = [];
-  order.items.map(item => {
-    orderItemsTransformedGA.push({
-      id: item.variant_id,
-      name: item.variant_name,
-      brand: order.storeCode,
-      variant: item.sku,
-      quantity: item.quantity,
-      price: item.unit_price
-    });
-  });
+  
+
+
 
 
 
@@ -126,18 +146,7 @@ const OrderConfirmation = ({ history }) => {
       },
       [history, order._id]
     );
-    useEffect(()=>{
-      window.analytics.page("Order Confirmation");
-      window.gtag('event', 'purchase', {
-        transaction_id: order.orderNumber,
-        affiliation: order.storeCode,
-        value: order.total,
-        currency: 'USD',
-        tax: order.tax,
-        shipping: order.shippingMethod.price,
-        items: orderItemsTransformedGA
-      });
-    },[])
+
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>

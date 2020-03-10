@@ -5,7 +5,7 @@ import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Grid, Card, CardMedia } from '@material-ui/core';
-import { AlertPanel, NavLink } from '../../components/common';
+import { AlertPanel, NavLink, MenuLink } from '../../components/common';
 import RightArrow from '../../components/common/Icons/Keyboard-Right-Arrow/ShoppingBag';
 import { PromoCodeForm } from '../../components/forms';
 import PromoCodeView from './PromoCodeView';
@@ -43,7 +43,7 @@ import CartMergeNotification from '../../components/cart/CartMergeNotification';
 
 const { MEDIUM_GRAY } = colorPalette;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   cartRestricted: {
     fontFamily: 'p22-underground',
     fontSize: '14px',
@@ -61,6 +61,21 @@ const useStyles = makeStyles(() => ({
     letterSpacing: '1.06px',
     textTransform: 'uppercase',
     paddingBottom: '30px'
+  },
+  editCart: {
+    marginTop: '4px',
+    fontFamily: 'p22-Underground',
+    fontSize: '16px',
+    fontWeight: 600,
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: '1.06px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px',
+      letterSpacing: '0.93px',
+      paddingTop: '8px'
+    }
   }
 }));
 
@@ -74,7 +89,8 @@ const Cart = ({
   location,
   activeStep,
   restrictionMessage,
-  restrictedProduct
+  restrictedProduct,
+  checkoutVersion
 }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
@@ -101,6 +117,11 @@ const Cart = ({
     history.push('/checkout');
   }, [dispatch, history]);
 
+  const handleEditCart = useCallback(() => {
+    dispatch(setCartDrawerOpened(true, true));
+    history.push('/gallery');
+  }, [dispatch, history]);
+
   if (!cart) {
     return <AlertPanel type="info" text="No Cart" />;
   }
@@ -112,8 +133,10 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const mobileDrawerPadding = window.screen.width < 768 ? '24px 20px' : '0';
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
+  const mobileDrawerPadding = window.screen.width > 768 ? '24px 20px' : '0';
+  const isCheckoutPage =
+    matchPath(location.pathname, { path: '/checkout' }) ||
+    matchPath(location.pathname, { path: '/checkout2' });
   return (
     <Grid
       container
@@ -151,8 +174,18 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartMerged && isCheckoutPage ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+              {cartMerged && isCheckoutPage ? (
+                <CartMergeNotification isCheckoutPage={isCheckoutPage} />
+              ) : null}
             </Grid>
+            {checkoutVersion === 2 ? (
+              <MenuLink
+                onClick={handleEditCart}
+                underline="always"
+                className={classes.editCart}
+                children="EDIT CART"
+              />
+            ) : null}
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
                 <StyledProceedCheckout
@@ -185,14 +218,14 @@ const Cart = ({
       </div>
       <Grid container>
         {isCheckoutPage &&
-          (activeStep === 2 || activeStep === 3) &&
+          (activeStep === 2 || activeStep === 3 || (checkoutVersion === 2 && activeStep === 1)) &&
           restrictionMessage ? (
             <>
               <Typography className={classes.cartRestricted}>
                 CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
                 cart because this product is not available in the state you
               selected. We hope to be able to offer {restrictedProduct} in your
-                                                  state soon!
+                state soon!
             </Typography>
               {cartCount === 0 && (
                 <NavLink
@@ -393,7 +426,7 @@ const Cart = ({
             container
             direction="row"
             justify="space-between"
-            style={{ margin: '20px 0px 0px' }}
+            style={{ margin: '10px 0px 0px' }}
           >
             <Grid item xs={6}>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
@@ -463,7 +496,7 @@ const Cart = ({
             container
             direction="row"
             justify="space-between"
-            style={{ margin: '20px 0' }}
+            style={{ margin: '20px 0 0' }}
           >
             <Grid item xs={6}>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
@@ -501,14 +534,14 @@ const Cart = ({
                 ? {
                   marginBottom: '0',
                   borderTop: `solid 2px ${MEDIUM_GRAY}`,
-                  paddingTop: '29px',
-                  marginTop: '30px'
+                  paddingTop: '25px',
+                  marginTop: '23px'
                 }
                 : {
                   marginBottom: '0',
                   borderTop: `solid 2px ${MEDIUM_GRAY}`,
-                  paddingTop: '21px',
-                  marginTop: '30px'
+                  paddingTop: '10px',
+                  marginTop: '10px'
                 }
             }
           >
@@ -516,7 +549,9 @@ const Cart = ({
               <StyledEstimatedTotal
                 style={xsBreakpoint ? { fontSize: '20px' } : {}}
               >
-                {xsBreakpoint ? 'Total' : 'Estimated Total'}
+                {xsBreakpoint || checkoutVersion === 2
+                  ? 'Total'
+                  : 'Estimated Total'}
               </StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>

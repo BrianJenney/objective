@@ -40,6 +40,18 @@ const RouteWithSubRoutes = ({
       case '/login/shipping':
         redirectPath = '/shipping';
         break;
+      case '/login/checkout':
+        redirectPath = '/checkout';
+        break;
+      case '/login/checkout2':
+        redirectPath = '/checkout2';
+        break;
+      case '/login/checkout/':
+        redirectPath = '/checkout';
+        break;
+      case '/login/checkout2/':
+        redirectPath = '/checkout2';
+        break;
       default:
         if (!redirectPath) {
           redirectPath = '/gallery';

@@ -25,7 +25,7 @@ import {
   REQUEST_SIGNUP_EMAIL
 } from './types';
 import EventEmitter from '../../events';
-
+import returnSiteLocation from '../../utils/segmentSiteLocation';
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
@@ -311,7 +311,7 @@ export const requestLogin = ({ email, password }, { setSubmitting }) => (
 
   window.analytics.track('Sign In Completed', {
     email,
-    site_location: ''
+    site_location: returnSiteLocation()
   });
 };
 
@@ -328,7 +328,7 @@ export const receivedLoginSuccess = (account, token) => dispatch => {
 
   window.analytics.track('Sign In Successful', {
     method: 'email',
-    site_location: '',
+    site_location: returnSiteLocation(),
     username: account.email
   });
 };

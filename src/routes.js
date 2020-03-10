@@ -13,6 +13,7 @@ import {
   AccountPaymentDetailsPage,
   AccountProfilePage,
   CheckoutPage,
+  CheckoutPage2,
   ForgotPassword,
   ConfirmPassword,
   ResetPassword,
@@ -30,7 +31,12 @@ import {
   NotFoundPage
 } from './pages';
 
-import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage } from './pages/Login';
+import {
+  LoginToOrderPage,
+  LoginToShippingPage,
+  LoginToAccountPage,
+  LoginToCheckoutPage
+} from './pages/Login';
 
 import NewYear from './pages/landingpages/NewYear';
 import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
@@ -58,6 +64,18 @@ export default [
     nonAuth: true,
     component: LoginToShippingPage
   },
+  {
+    path: '/login/checkout',
+    exact: true,
+    nonAuth: true,
+    component: LoginToCheckoutPage
+  },
+  {
+    path: '/login/checkout2',
+    exact: true,
+    nonAuth: true,
+    component: LoginToCheckoutPage
+  },
   { path: '/signup', exact: true, nonAuth: true, component: SignupPage },
   { path: '/gallery', exact: true, component: GalleryPage },
   { path: '/contact', exact: true, component: ContactUsPage },
@@ -83,6 +101,12 @@ export default [
     exact: true,
     injectCurrentUser: true,
     component: CheckoutPage
+  },
+  {
+    path: '/checkout2',
+    exact: true,
+    injectCurrentUser: true,
+    component: CheckoutPage2
   },
   {
     path: '/account',
