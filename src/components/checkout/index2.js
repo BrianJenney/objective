@@ -288,21 +288,6 @@ const Checkout = ({
       history.push('/');
     }
 
-    if (xs && currentUser.data.account_jwt) {
-      if (
-        !currentUser.data.addressBook ||
-        currentUser.data.addressBook.length === 0
-      ) {
-        setCurrentStep(0);
-      } else if (
-        !currentUser.data.paymentMethods ||
-        currentUser.data.paymentMethods.length === 0
-      ) {
-        setCurrentStep(1);
-      } else {
-        setCurrentStep(2);
-      }
-    }
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
