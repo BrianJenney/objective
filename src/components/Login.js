@@ -13,7 +13,7 @@ import { MenuLink, NavLink } from './common';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '48px',
+    fontSize: '30px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -49,7 +49,7 @@ const Login = ({
       <Box component={Paper}>
         <Box textAlign="center">
           <Typography className={classes.title}>
-            {loginTitle ? loginTitle : 'Log in to your Account'}
+            {loginTitle || 'Log in to your Account'}
           </Typography>
           <Box pt={4}>
             <LoginForm
@@ -69,13 +69,13 @@ const Login = ({
               {switchToSignup ? (
                 <MenuLink onClick={switchToSignup} children="Sign up!" />
               ) : (
-                <NavLink
-                  to="/signup"
-                  children="Sign up!"
-                  replace
-                  underline="always"
-                />
-              )}
+                  <NavLink
+                    to="/signup"
+                    children="Sign up!"
+                    replace
+                    underline="always"
+                  />
+                )}
             </Typography>
           </Box>
         </Box>

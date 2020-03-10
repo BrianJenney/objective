@@ -178,7 +178,7 @@ export const StyledTotalWrapper = withStyles(theme => ({
   root: {
     marginBottom: 0,
     borderTop: $thin1pxRuler_gray,
-    paddingTop: '29px'
+    paddingTop: '20px'
   }
 }))(Grid);
 
@@ -316,7 +316,7 @@ export const StyledBadge = withStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[900]
-    }`
+      }`
   }
 }))(Badge);
 

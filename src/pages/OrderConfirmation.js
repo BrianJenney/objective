@@ -162,13 +162,13 @@ const OrderConfirmation = ({ history }) => {
             </Grid>
           </Grid>
         ) : (
-          <Button
-            type="button"
-            onClick={handleOrderDetail}
-            children="Check Order Status"
-            className={classes.button}
-          />
-        )}
+            <Button
+              type="button"
+              onClick={handleOrderDetail}
+              children="Check Order Status"
+              className={classes.button}
+            />
+          )}
         <Box
           display="flex"
           flexDirection={xs ? 'column' : 'row'}

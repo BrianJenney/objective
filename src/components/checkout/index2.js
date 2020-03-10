@@ -66,9 +66,13 @@ const getPanelTitleContent = (
 
   if (!isNil(payload)) {
     if (step === 0) {
-      payloadSummary = <AddressSummary noDefault values={payload} />;
+      payloadSummary = (
+        <AddressSummary checkoutVersion={2} noDefault values={payload} />
+      );
     } else if (step === 1) {
-      payloadSummary = <PaymentSummary noDefault values={payload} />;
+      payloadSummary = (
+        <PaymentSummary checkoutVersion={2} noDefault values={payload} />
+      );
     }
   }
 
@@ -180,6 +184,12 @@ const Checkout = ({
         setResetFormMode(true);
         scrollToRef(stepRefs[0]);
         setActiveStep(0);
+
+        window.analytics.track('Email Capture Failed', {
+          email: payload.shippingAddress.email,
+          error_message: currentUser.signupError.errorMessage,
+          site_location: 'checkout'
+        });
       }
     }
   }, [currentUser.signupError]);
@@ -199,11 +209,11 @@ const Checkout = ({
   }, [currentUser.patchAccountError]);
 
   useEffect(() => {
-    if(accountCreated && paymentDetailsUpdated && !addressBookUpdated){
-        requestPatchAccount(account_jwt, {
-          addressBook: [payload.shippingAddress]
-        });
-        setAddressBookUpdated(true);
+    if (accountCreated && paymentDetailsUpdated && !addressBookUpdated) {
+      requestPatchAccount(account_jwt, {
+        addressBook: [payload.shippingAddress]
+      });
+      setAddressBookUpdated(true);
     }
   }, [paymentDetailsUpdated]);
 
@@ -232,6 +242,11 @@ const Checkout = ({
         nonce: creditCardNonce
       };
       requestPatchAccount(account_jwt, requestPayload);
+
+      window.analytics.track('Email Capture Successful', {
+        email: currentUser.data.email,
+        site_location: 'checkout'
+      });
     }
   }, [accountCreated]);
 
@@ -252,6 +267,7 @@ const Checkout = ({
         password: payload.paymentDetails.billingAddress.password,
         newsletter: payload.shippingAddress.shouldSubscribe
       });
+
     }
   }, [activeStep]);
 
@@ -272,21 +288,6 @@ const Checkout = ({
       history.push('/');
     }
 
-    if (xs && currentUser.data.account_jwt) {
-      if (
-        !currentUser.data.addressBook ||
-        currentUser.data.addressBook.length === 0
-      ) {
-        setCurrentStep(0);
-      } else if (
-        !currentUser.data.paymentMethods ||
-        currentUser.data.paymentMethods.length === 0
-      ) {
-        setCurrentStep(1);
-      } else {
-        setCurrentStep(2);
-      }
-    }
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
@@ -299,13 +300,43 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
+      
+      if (
+        payload.shippingAddress.shouldSubscribe &&
+        payload.shippingAddress.email &&
+        !account_jwt
+      ) {
+        window.analytics.track('Email Capture Completed', {
+          email: payload.shippingAddress.email,
+          site_location: 'checkout'
+        });
+
+        window.analytics.track('Subscribed', {
+          email: payload.shippingAddress.email,
+          site_location: 'checkout'
+        });
+
+        window.analytics.track('Subscribed Listrak Auto', {
+          email: payload.shippingAddress.email,
+          site_location: 'checkout'
+        });
+
+        window.analytics.identify({
+          first_name: payload.shippingAddress.firstName,
+          last_name: payload.shippingAddress.lastName,
+          email: payload.shippingAddress.email
+        });
+      }
     }
   }, [activeStep, payload.shippingAddress]);
 
   useEffect(() => {
+    if(cart && cart._id){
     trackCheckoutStarted();
+    trackCheckoutStepStarted(0);
     scrollToRef(stepRefs[0]);
-  }, []);
+    }
+  }, [cart._id]);
 
   useEffect(() => {
     if (cart.shipping) {
@@ -321,7 +352,7 @@ const Checkout = ({
     if (cartCount === 0 && cart._id) {
       history.push('/');
     }
-  }, [cart.items]);
+  }, [cart._id]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
@@ -381,27 +412,32 @@ const Checkout = ({
     return true;
   };
 
+  const checkoutStepNames = ['Shipping', 'Payment', 'Review'];
   /*
   @description - Tracks Segment Analytics 'Checkout Step Completed' event
   */
   const trackCheckoutStepCompleted = step => {
     window.analytics.track('Checkout Step Completed', {
       cart_id: cart._id,
-      step: step + 1
+      step: step + 1,
+      step_name: checkoutStepNames[step]
     });
   };
 
   const trackCheckoutStepStarted = step => {
     window.analytics.track('Checkout Step Started', {
       cart_id: cart._id,
-      step: step + 1
+      step: step + 1,
+      step_name: checkoutStepNames[step]
     });
   };
 
   const setCurrentStep = stepIndex => {
     setActiveStep(stepIndex);
-    scrollToRef(stepRefs[stepIndex]);
     trackCheckoutStepStarted(stepIndex);
+    setTimeout(() => {
+      scrollToRef(stepRefs[stepIndex]);
+    }, 400);
   };
 
   const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
@@ -456,7 +492,7 @@ const Checkout = ({
                       to="/gallery"
                       children=" < Continue Shopping"
                       underline="always"
-                      style={{ fontSize:'14px', padding: '30px 20px 12px' }}
+                      style={{ fontSize: '14px', padding: '50px 20px 12px' }}
                     />
                   ) : null}
                   <Grid
@@ -467,19 +503,19 @@ const Checkout = ({
                     style={xs ? { padding: 0 } : {}}
                     className="right-side"
                   >
-                    <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        0,
-                        activeStep,
-                        null,
-                        payload.shippingAddress
-                      )}
-                      collapsible
-                      expanded={activeStep === 0}
-                      onChange={e => onPanelChange(e, 0)}
-                    >
-                      <div ref={stepRefs[0]}>
+                    <div ref={stepRefs[0]}>
+                      <Panel
+                        title={getPanelTitleContent(
+                          xs,
+                          0,
+                          activeStep,
+                          null,
+                          payload.shippingAddress
+                        )}
+                        collapsible
+                        expanded={activeStep === 0}
+                        onChange={e => onPanelChange(e, 0)}
+                      >
                         {authMode === 'shipping' ? (
                           <AccountAddresses
                             checkoutVersion={2}
@@ -507,8 +543,8 @@ const Checkout = ({
                               switchToSignup={() => setAuthMode('shipping')}
                             />
                           )}
-                      </div>
-                    </Panel>
+                      </Panel>
+                    </div>
                     {xs && activeStep === 1 && restrictionMessage ? (
                       <StateRestrictionsDialog
                         product_name={restrictedProduct}
@@ -516,19 +552,19 @@ const Checkout = ({
                         onExited={closeShippingRestrictionsDialog}
                       />
                     ) : null}
-                    <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        1,
-                        activeStep,
-                        null,
-                        payload.paymentDetails
-                      )}
-                      collapsible
-                      expanded={activeStep === 1}
-                      onChange={e => onPanelChange(e, 1)}
-                    >
-                      <div ref={stepRefs[1]}>
+                    <div ref={stepRefs[1]}>
+                      <Panel
+                        title={getPanelTitleContent(
+                          xs,
+                          1,
+                          activeStep,
+                          null,
+                          payload.paymentDetails
+                        )}
+                        collapsible
+                        expanded={activeStep === 1}
+                        onChange={e => onPanelChange(e, 1)}
+                      >
                         <AccountPaymentDetails
                           checkoutVersion={2}
                           currentUser={currentUser}
@@ -549,17 +585,17 @@ const Checkout = ({
                           submitLabel="Review Order"
                           resetFormMode={resetPaymentDetailsFormMode}
                         />
-                      </div>
-                    </Panel>
-                    <Panel
-                      title={getPanelTitleContent(xs, 2, activeStep, null, {})}
-                      collapsible
-                      hideExpandIcon
-                      expanded={activeStep === 2}
-                      onChange={e => onPanelChange(e, 2)}
-                      className="lastPanel"
-                    >
-                      <div ref={stepRefs[2]}>
+                      </Panel>
+                    </div>
+                    <div ref={stepRefs[2]}>
+                      <Panel
+                        title={getPanelTitleContent(xs, 2, activeStep, null, {})}
+                        collapsible
+                        hideExpandIcon
+                        expanded={activeStep === 2}
+                        onChange={e => onPanelChange(e, 2)}
+                        className="lastPanel"
+                      >
                         {xs && (
                           <CartDrawer
                             checkoutVersion={2}
@@ -577,8 +613,8 @@ const Checkout = ({
                           xsBreakpoint={xs}
                           onSubmit={handleNext}
                         />
-                      </div>
-                    </Panel>
+                      </Panel>
+                    </div>
                   </Grid>
                   {!xs && currentUser ? (
                     <Grid item xs={12} md={4} className="left-side">

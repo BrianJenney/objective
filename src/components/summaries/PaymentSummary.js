@@ -17,17 +17,31 @@ const getValuesWithoutLabels = ({ name, cardType, last4, expirationDate }) => [
   name
 ];
 
-const PaymentSummary = ({ withLabels, values, children, ...rest }) => {
+const getValuesWithoutLabels2 = ({ cardType, last4, expirationDate }) => [
+  `${cardType} ${last4}`,
+  `Expires ${expirationDate}`
+];
+
+const PaymentSummary = ({ withLabels, values, children, ...rest}) => {
   const neededValues = pick(values, PAYMENT_FIELDS);
   let pairs = null;
-
+  let PAYMENT_FIELDS_ITEMS = null;
+  if (rest.checkoutVersion && rest.checkoutVersion === 2) {
+    PAYMENT_FIELDS_ITEMS = PAYMENT_FIELDS.filter(f => f !== 'name');
+  } else {
+    PAYMENT_FIELDS_ITEMS = PAYMENT_FIELDS;
+  }
   if (withLabels) {
-    pairs = PAYMENT_FIELDS.map(key => ({
+    pairs = PAYMENT_FIELDS_ITEMS.map(key => ({
       label: labelsMap[key],
       value: neededValues[key]
     }));
   } else {
-    pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
+    if (rest.checkoutVersion && rest.checkoutVersion === 2) {
+      pairs = getValuesWithoutLabels2(neededValues).map(value => ({ value }));
+    } else {
+      pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
+    }
   }
 
   return (
