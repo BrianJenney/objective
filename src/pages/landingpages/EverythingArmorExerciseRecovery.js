@@ -335,7 +335,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
               <ul className="large-ul">
                 <li>Astaxanthin has been shown to <b>help deliver oxygen to muscle cells that need it during exercise.</b></li>
                 <li>Astaxanthin enhances the energy-producing capacity of your cells’ mitochondria, helping to <b>boost your energy during exercise and throughout the day.</b></li>
-                <li>Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to 'feel the burn') during exercise by <b>28.6</b>%.</li>
+                <li>Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to “feel the burn”) during exercise by <b>28.6</b>%.</li>
                 <li>Astaxanthin increased muscle endurance in men, enabling them to perform <b>62% more knee bends</b> while carrying a 90-pound weight!</li>
                 <li>Astaxanthin improved the cycling performance of competitive male endurance cyclists, <b>shaving two minutes off their time</b> in a 20-kilometer trial!</li>
               </ul>
