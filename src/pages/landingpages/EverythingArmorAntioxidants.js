@@ -256,7 +256,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
               </p>
               <p>
                 Believed to give salmon their almost supernatural ability to achieve marathon swimming feats, like
-                traveling against the current for days and leaping up waterfalls, astaxanthin (as-ta-zan-thin] is a
+                traveling against the current for days and leaping up waterfalls, astaxanthin (as-ta-zan-thin) is a
                 little-known antioxidant found exclusively in a species of microalgae called H. pluvialis.
               </p>
               <p>
@@ -330,9 +330,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
               </p>
               <p>
                 Once your workout is over, your body surges with these free radicals. This is not a problem if you have
-                the antioxidant resources available to deal with the oxidative stress. But if you don’t … you’ll
-                experience muscle soreness, fatigue—and if you don’t allow your body to recover fully—potentially even
-                lasting harm to your joints or other tissues.
+                the antioxidant resources available to deal with the oxidative stress; but if you don't, you'll experience muscle soreness and fatigue, and if you don't allow your body to recover fully, there is potential for lasting harm to your joints or other tissues.
               </p>
               <p>
                 The truth is exercising without enough antioxidant firepower is like putting yourself on an aging
@@ -360,7 +358,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
                   energy-producing capacity of your cells’ mitochondria, resulting in <b>increased energy and stamina</b> during exercise and throughout the day.
                 </li>
                 <li>
-                  Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to "feel the burn”)
+                  Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to “feel the burn”)
                   during exercise by 28.6%, adding up to the welcome benefit of <b>reduced post-exercise soreness.</b>
                 </li>
                 <li>
