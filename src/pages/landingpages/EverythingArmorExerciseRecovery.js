@@ -73,7 +73,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
       window.analytics.track('Product Clicked', {
         brand: 'OBJ',
         cart_id: cart._id,
-        coupon: 'voucherify.io-sandbox-04',
+        coupon: 'DEFENSE15',
         image_url: selectedVariant.assets.thumbnail,
         name: selectedVariant.name,
         price: selectedVariant.effectivePrice,
@@ -89,7 +89,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
 
   const handleAddCoupon = useCallback(() => {
     setTimeout(() => {
-      addCoupon(cart._id, 'voucherify.io-sandbox-04');
+      addCoupon(cart._id, 'DEFENSE15');
       setCouponAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
@@ -149,14 +149,14 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
         <Grid container>
           <Grid item xs={12} md={8} className="smaller-container">
             <h1>The Unexpected, Easy Way to Bounce Back Faster After Exercise</h1>
-            <h3>PLUS IMPRESSIVE PROTECTION FOR YOUR HEART, BRAIN, SKIN AND VISION</h3>
+            <h3>PLUS, IMPRESSIVE PROTECTION FOR YOUR HEART, BRAIN, SKIN AND VISION</h3>
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={12} md={10} className="smaller-container">
             <img
               className="w-100 hero-image hidden-xs"
-              src="https://images.ctfassets.net/mj9bpefl6wof/1YBAi9u5fEhWyEnfeBiHMJ/8eca6d8847b3f72e4c2e5832544c17b5/group_plank.png"
+              src="https://images.ctfassets.net/mj9bpefl6wof/1YBAi9u5fEhWyEnfeBiHMJ/8eca6d8847b3f72e4c2e5832544c17b5/group_plank.png?w=1114"
             />
           </Grid>
         </Grid>
@@ -190,7 +190,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
             </p>
             <p>
               And while “feeling the burn” might be gratifying to some extent, this post-exercise soreness can make it
-              hard to bounce back and stay consistent with your workouts—especially as you hit your 40’s.
+              hard to bounce back and stay consistent with your workouts—especially as you hit your 40s.
             </p>
             <p>
               No matter how much you rest, stretch and try to foam roll the pain away, your muscles and joints might
@@ -231,7 +231,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
               </div>
               <p>
                 Believed to give salmon their almost supernatural ability to achieve marathon swimming feats, like
-                traveling against the current for days and leaping up waterfalls, astaxanthin (as-ta-zan-thin] is a
+                traveling against the current for days and leaping up waterfalls, astaxanthin (as-ta-zan-thin) is a
                 little-known antioxidant found exclusively in a species of microalgae called H. pluvialis.
               </p>
               <p>
@@ -312,9 +312,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
               </p>
               <p>
                 Once your workout is over, your body surges with these free radicals. This is not a problem if you have
-                the antioxidant resources available to deal with the oxidative stress. But if you don’t … you’ll
-                experience muscle soreness, fatigue—and if you don’t allow your body to recover fully—potentially even
-                lasting harm to your joints or other tissues.
+                the antioxidant resources available to deal with the oxidative stress; but if you don't, you'll experience muscle soreness and fatigue, and if you don't allow your body to recover fully, there is potential for lasting harm to your joints or other tissues.
               </p>
               <p>
                 The truth is exercising without enough antioxidant firepower is like putting yourself on an aging
@@ -337,7 +335,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
               <ul className="large-ul">
                 <li>Astaxanthin has been shown to <b>help deliver oxygen to muscle cells that need it during exercise.</b></li>
                 <li>Astaxanthin enhances the energy-producing capacity of your cells’ mitochondria, helping to <b>boost your energy during exercise and throughout the day.</b></li>
-                <li>Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to "feel the burn”) during exercise by <b>28.6</b>%.</li>
+                <li>Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to 'feel the burn') during exercise by <b>28.6</b>%.</li>
                 <li>Astaxanthin increased muscle endurance in men, enabling them to perform <b>62% more knee bends</b> while carrying a 90-pound weight!</li>
                 <li>Astaxanthin improved the cycling performance of competitive male endurance cyclists, <b>shaving two minutes off their time</b> in a 20-kilometer trial!</li>
               </ul>
