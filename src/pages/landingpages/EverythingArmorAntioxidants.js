@@ -85,7 +85,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
       window.analytics.track('Product Clicked', {
         brand: 'OBJ',
         cart_id: cart._id,
-        coupon: 'voucherify.io-sandbox-04',
+        coupon: 'DEFENSE15',
         image_url: selectedVariant.assets.thumbnail,
         name: selectedVariant.name,
         price: selectedVariant.effectivePrice,
@@ -101,7 +101,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
 
   const handleAddCoupon = useCallback(() => {
     setTimeout(() => {
-      addCoupon(cart._id, 'voucherify.io-sandbox-04');
+      addCoupon(cart._id, 'DEFENSE15');
       setCouponAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
