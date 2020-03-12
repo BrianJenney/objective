@@ -98,7 +98,7 @@ export default [
     path: '/checkout',
     exact: true,
     injectCurrentUser: true,
-    component: CheckoutPage
+    component: CheckoutPage2
   },
   {
     path: '/checkout2',
