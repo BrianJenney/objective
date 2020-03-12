@@ -365,7 +365,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
                   Astaxanthin helped lower levels of C-reactive protein (CRP), a marker of inflammation, by 20% in just eight weeks, making it an ally for a <b>normal inflammatory response, healthy joints and optimal cardiovascular wellness.</b>
                 </li>
                 <li>
-                  Astaxanthin <b>enhanced cognitive performance</b> in older adults, helping them score notably higher on two of the top tests used today. Astaxanthin is widely considered a "brain-friendly" antioxidant, due to its ability to cross the blood-brain barrier.
+                  Astaxanthin <b>enhanced cognitive performance</b> in older adults, helping them score notably higher on two of the top tests used today. Astaxanthin is widely considered a “brain-friendly” antioxidant, due to its ability to cross the blood-brain barrier.
                 </li>
                 <li>
                   Astaxanthin was shown to be five times more effective than the carotenoid lutein at promoting <b>healthy vision.</b> It crosses the blood-retina barrier to neutralize free radicals in the eyes, easing eyestrain and promoting better <b>overall eye health.</b>
@@ -484,7 +484,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
               </p>
               <p>
                 With study after study demonstrating astaxanthin’s extraordinary head-to-toe benefits, it became clear
-                to the Objective R & D team that astaxanthin was not just a passing health trend. So we went to work
+                to the Objective R&D team that astaxanthin was not just a passing health trend. So we went to work
                 sourcing a pure, effective astaxanthin—and figuring out how to fit 12 mg of it into a single softgel. We
                 call it <a href="/products/everything-armor">Everything Armor</a>, and we love it because it works!
               </p>
@@ -542,7 +542,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
                 </li>
                 <li>
                   Lastly, the astaxanthin is extracted using proprietary Deep Extract® supercritical CO2 technology at
-                  an organic certified facility in Florida.
+                  an organic-certified facility in Florida.
                 </li>
               </ul>
               <h4>QUALITY, PURITY AND EFFECTIVENESS YOU CAN TRUST</h4>
@@ -570,7 +570,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
               <ul className="ml-ul">
                 <li>A big boost in your energy, stamina and muscle endurance</li>
                 <li>Less soreness and fatigue for faster exercise recovery</li>
-                <li>Reduced joint pain and support healthy, flexible joints</li>
+                <li>Reduced joint pain and support for healthy, flexible joints</li>
                 <li>Support for healthy circulation and overall cardiovascular health</li>
                 <li>Improved mood, focus, memory and overall cognitive health</li>
                 <li>Support for overall eye health and relief from eye strain</li>
@@ -585,7 +585,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
             <p>
               Everything Armor is backed by our industry-leading money-back guarantee. And for a limited time, you can
               try it risk-free with free shipping. If it doesn’t work, just let us know and we’ll refund your money. No
-              need to return it, give it to a friend to try.
+              need to return it&mdash;give it to a friend to try.
             </p>
             <h2 className="text-center">
               Feel the Everything Armor Difference— <br className="hidden-xs" />
