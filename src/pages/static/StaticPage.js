@@ -9,7 +9,7 @@ const StaticPage = ({ location }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(requestPage('test-static'));
+    dispatch(requestPage('staticpage'));
     console.log('this results');
   }, []);
 

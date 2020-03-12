@@ -14,7 +14,6 @@ export const handlePageResponse = (status, data, fields, properties) => {
       if (status === 'success') {
         store.dispatch(receivedPage(data));
       } else {
-        //store.dispatch(receivedCreateOrderFailure(data));
         console.log('THIS FAILED');
       }
       break;
