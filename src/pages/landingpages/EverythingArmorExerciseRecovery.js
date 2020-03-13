@@ -73,7 +73,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
       window.analytics.track('Product Clicked', {
         brand: 'OBJ',
         cart_id: cart._id,
-        coupon: 'DEFENSE15',
+        coupon: 'SAVE25',
         image_url: selectedVariant.assets.thumbnail,
         name: selectedVariant.name,
         price: selectedVariant.effectivePrice,
@@ -89,7 +89,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
 
   const handleAddCoupon = useCallback(() => {
     setTimeout(() => {
-      addCoupon(cart._id, 'DEFENSE15');
+      addCoupon(cart._id, 'SAVE25');
       setCouponAdded(true);
     }, 500);
   }, [cart, catalog, dispatch]);
@@ -225,7 +225,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                     astaxanthin for yourself!
                   </div>
                   <NavLink onClick={handleClick} className="green-btn">
-                    get 15% off — Buy Now
+                    get 25% off — Buy Now
                   </NavLink>
                 </div>
               </div>
@@ -272,7 +272,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                     astaxanthin for yourself!
                   </div>
                   <NavLink onClick={handleClick} className="green-btn">
-                    get 15% off — Buy Now
+                    get 25% off — Buy Now
                   </NavLink>
                 </div>
               </div>
@@ -396,7 +396,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                   src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?h=305"
                 />
                 <NavLink onClick={handleClick} className="green-btn">
-                  get 15% off — Buy Now
+                  get 25% off — Buy Now
               </NavLink>
                 <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
               </div>
@@ -414,7 +414,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                     src="https://images.ctfassets.net/mj9bpefl6wof/IQFEY5tX7fI8VG8zHzyiU/255be541df836f63f3876e5a693c0e79/20_01_14_EA_1080x1080.gif?w=450"
                   />
                   <NavLink onClick={handleClick} className="green-btn">
-                    get 15% off — Buy Now
+                    get 25% off — Buy Now
               </NavLink>
                   <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
                 </div>
@@ -493,7 +493,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                   <li>Eases post-exercise muscle and joint soreness</li>
                 </ul>
                 <NavLink onClick={handleClick} className="black-btn">
-                  get 15% off — Buy Now
+                  get 25% off — Buy Now
                 </NavLink>
               </div>
               <img
