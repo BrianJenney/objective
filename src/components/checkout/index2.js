@@ -193,6 +193,14 @@ const Checkout = ({
       }
     }
   }, [currentUser.signupError]);
+  
+  //Reset signupError & patchError upon component unmount
+  useEffect(() => {
+    return () => {
+      clearPatchAccountError();
+      clearCreateAccountError();
+    };
+  }, []);
 
   // Set step 2 to active if there are any patch account errors
   useEffect(() => {
@@ -258,7 +266,7 @@ const Checkout = ({
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
-    if (activeStep === 2 && !account_jwt) {
+    if (activeStep === 2 && !account_jwt && !accountCreated) {
       // Create user here...
       requestCreateAccount({
         firstName: payload.paymentDetails.billingAddress.firstName,
