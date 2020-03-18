@@ -6,6 +6,7 @@ import '../../landingpages/fast-asleep.scss';
 
 import mockData from '../sample_data';
 import Header from './Header.js';
+import LPTitle from './LPTitle.js';
 
 const Template1 = ({ match }) => {
   const mockComponents = mockData.sampleContentful.components;
@@ -14,9 +15,14 @@ const Template1 = ({ match }) => {
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
-    <div className="fast-asleep-lp">
+    <Grid>
       <Header data={mockComponents} />
-    </div>
+      <Container>
+        <Grid xs={12} md={8} container>
+          <LPTitle data={mockComponents} />
+        </Grid>
+      </Container>
+    </Grid>
   );
 };
 
