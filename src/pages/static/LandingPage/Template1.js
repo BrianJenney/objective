@@ -6,8 +6,9 @@ import '../../landingpages/fast-asleep.scss';
 
 import mockData from '../sample_data';
 import Header from './Header.js';
-import Title from './LPTitle.js';
-import Subtitle from './LPSubtitle.js';
+import Title from '../Title.js';
+import Subtitle from '../Subtitle.js';
+import Hero from '../Hero.js';
 
 const Template1 = ({ match }) => {
   const mockComponents = mockData.sampleContentful.components;
@@ -20,8 +21,12 @@ const Template1 = ({ match }) => {
       <Header data={mockComponents} />
       <Container>
         <Grid xs={12} md={8} container>
+          {/* TODO: add the margins to the below components! */}
           <Title data={mockComponents} />
           <Subtitle data={mockComponents} />
+        </Grid>
+        <Grid>
+          <Hero data={mockComponents} />
         </Grid>
       </Container>
     </Grid>
