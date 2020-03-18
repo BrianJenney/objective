@@ -59,15 +59,35 @@ module.exports.sampleContentful = {
           fontWeight: 900,
           fontSize: '24px',
           lineHeight: 1.5,
-          fontFamily: 'p22-underground'
+          fontFamily: 'p22-underground',
+          textTransform: 'uppercase'
         },
         mobile: {
           fontColor: '#1f396d',
           fontWeight: 900,
           fontSize: '18px',
           lineHeight: 1.5,
-          fontFamily: 'p22-underground'
+          fontFamily: 'p22-underground',
+          textTransform: 'uppercase'
         }
+      }
+    },
+    {
+      type: 'heroDesktop',
+      value:
+        'https://images.ctfassets.net/mj9bpefl6wof/51FdlvcsHxRRpuQBsIRzzr/1339a2ade8cf32cba9f9857577e88cff/Hero_-_desktop.png',
+      style: {
+        display: 'block',
+        width: '100%'
+      }
+    },
+    {
+      type: 'heroMobile',
+      value:
+        'https://images.ctfassets.net/mj9bpefl6wof/3B4lfG6Aus493ToyiTGd3N/ef8cdfbd7abe160beaa0caf06374961a/hero_-_mobile.png?w=450',
+      style: {
+        display: 'block',
+        width: '100%'
       }
     }
   ]
