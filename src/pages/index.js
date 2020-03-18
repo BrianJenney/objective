@@ -23,3 +23,4 @@ export { default as PrivacyPolicyPage } from './PrivacyPolicy';
 export { default as StaticPageOne } from './static/StaticPage';
 export { default as TermsPage } from './Terms';
 export { default as NotFoundPage } from './notfound/NotFound';
+export { default as Template1 } from './static/LandingPage/Template1';
