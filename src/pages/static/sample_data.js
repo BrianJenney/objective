@@ -39,14 +39,14 @@ module.exports.sampleContentful = {
           fontWeight: 400,
           fontSize: '52px',
           lineHeight: 1.23,
-          fontFamily: 'canela'
+          fontFamily: 'Canela Text Web'
         },
         mobile: {
           fontColor: '#000000',
           fontWeight: 400,
           fontSize: '36px',
           lineHeight: 1.23,
-          fontFamily: 'canela'
+          fontFamily: 'Canela Text Web'
         }
       }
     },
