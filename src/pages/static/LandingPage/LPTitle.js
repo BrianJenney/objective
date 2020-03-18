@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: props.desktop.fontSize,
     lineHeight: props.desktop.lineHeight,
     fontFamily: props.desktop.fontFamily,
+    margin: '55px 0 15px',
     [theme.breakpoints.down('sm')]: {
       color: props.mobile.fontColor,
       fontWeight: props.mobile.fontWeight,
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Title = ({ data }) => {
+const LPTitle = ({ data }) => {
   const title = data.filter(item => item.type === 'title')[0];
   const style = title.style;
   const classes = useStyles(style);
@@ -32,4 +33,4 @@ const Title = ({ data }) => {
   );
 };
 
-export default Title;
+export default LPTitle;
