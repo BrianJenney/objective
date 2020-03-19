@@ -5,28 +5,28 @@ import { Box, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-    color: props.desktop.fontColor,
-    fontWeight: props.desktop.fontWeight,
-    fontSize: props.desktop.fontSize,
-    lineHeight: props.desktop.lineHeight,
-    fontFamily: props.desktop.fontFamily,
-    fontFamily: props.desktop.fontFamily,
-    textTransform: props.desktop.textTransform,
+    color: props.desktopStyle.fontColor,
+    fontWeight: props.desktopStyle.fontWeight,
+    fontSize: props.desktopStyle.fontSize,
+    lineHeight: props.desktopStyle.lineHeight,
+    fontFamily: props.desktopStyle.fontFamily,
+    fontFamily: props.desktopStyle.fontFamily,
+    textTransform: props.desktopStyle.textTransform,
     letterSpacing: '1.5px',
     [theme.breakpoints.down('sm')]: {
-      color: props.mobile.fontColor,
-      fontWeight: props.mobile.fontWeight,
-      fontSize: props.mobile.fontSize,
-      lineHeight: props.mobile.lineHeight,
-      fontFamily: props.mobile.fontFamily,
-      textTransform: props.desktop.textTransform
+      color: props.mobileStyle.fontColor,
+      fontWeight: props.mobileStyle.fontWeight,
+      fontSize: props.mobileStyle.fontSize,
+      lineHeight: props.mobileStyle.lineHeight,
+      fontFamily: props.mobileStyle.fontFamily,
+      textTransform: props.mobileStyle.textTransform
     }
   })
 }));
 
 const Subtitle = ({ data }) => {
   const subtitle = data.filter(item => item.type === 'subtitle')[0];
-  const style = subtitle.style;
+  const style = subtitle;
   const classes = useStyles(style);
 
   return (

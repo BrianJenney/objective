@@ -3,20 +3,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-    color: props.desktop.fontColor,
-    fontWeight: props.desktop.fontWeight,
-    fontSize: props.desktop.fontSize,
-    lineHeight: props.desktop.lineHeight,
-    fontFamily: props.desktop.fontFamily,
+    color: props.desktopStyle.fontColor,
+    fontWeight: props.desktopStyle.fontWeight,
+    fontSize: props.desktopStyle.fontSize,
+    lineHeight: props.desktopStyle.lineHeight,
+    fontFamily: props.desktopStyle.fontFamily,
     [theme.breakpoints.down('sm')]: {
-      fontSize: props.mobile.fontSize
+      fontSize: props.mobileStyle.fontSize
     }
   })
 }));
 
 const Paragraph = ({ data }) => {
   const paragraph = data.value.components.filter(item => item.type === 'paragraph')[0];
-  const style = paragraph.style;
+  const style = paragraph;
   const classes = useStyles(style);
 
   return (

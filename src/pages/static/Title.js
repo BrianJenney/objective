@@ -5,24 +5,24 @@ import { Box, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-    color: props.desktop.fontColor,
-    fontWeight: props.desktop.fontWeight,
-    fontSize: props.desktop.fontSize,
-    lineHeight: props.desktop.lineHeight,
-    fontFamily: props.desktop.fontFamily,
+    color: props.desktopStyle.fontColor,
+    fontWeight: props.desktopStyle.fontWeight,
+    fontSize: props.desktopStyle.fontSize,
+    lineHeight: props.desktopStyle.lineHeight,
+    fontFamily: props.desktopStyle.fontFamily,
     [theme.breakpoints.down('sm')]: {
-      color: props.mobile.fontColor,
-      fontWeight: props.mobile.fontWeight,
-      fontSize: props.mobile.fontSize,
-      lineHeight: props.mobile.lineHeight,
-      fontFamily: props.mobile.fontFamily
+      color: props.mobileStyle.fontColor,
+      fontWeight: props.mobileStyle.fontWeight,
+      fontSize: props.mobileStyle.fontSize,
+      lineHeight: props.mobileStyle.lineHeight,
+      fontFamily: props.mobileStyle.fontFamily
     }
   })
 }));
 
 const Title = ({ data }) => {
   const title = data.filter(item => item.type === 'title')[0];
-  const style = title.style;
+  const style = title;
   const classes = useStyles(style);
 
   return (
