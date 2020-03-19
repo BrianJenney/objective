@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
     borderColor: props.desktopStyle.borderColor,
     display: props.desktopStyle.display,
     width: props.desktopStyle.width,
+    float: props.desktopStyle.float,
     [theme.breakpoints.down('sm')]: {
       width: props.mobileStyle.width
     }
