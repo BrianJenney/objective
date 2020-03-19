@@ -42,19 +42,19 @@ const useStyles = makeStyles(theme => ({
   link: props => ({
     textDecoration: 'underline',
     letterSpacing: '1.5px',
-    color: props.desktop.fontColor,
-    fontWeight: props.desktop.fontWeight,
-    fontSize: props.desktop.fontSize,
-    fontFamily: props.desktop.fontFamily,
-    lineHeight: props.desktop.lineHeight,
-    textTransform: props.desktop.textTransform,
-    width: props.desktop.width
+    color: props.desktopStyle.fontColor,
+    fontWeight: props.desktopStyle.fontWeight,
+    fontSize: props.desktopStyle.fontSize,
+    fontFamily: props.desktopStyle.fontFamily,
+    lineHeight: props.desktopStyle.lineHeight,
+    textTransform: props.desktopStyle.textTransform,
+    width: props.desktopStyle.width
   })
 }));
 
 const Header = ({ data }) => {
-  const navlink = data.filter(item => item.type === 'navlink')[0];
-  const style = navlink.style;
+  const nav = data.filter(item => item.type === 'navigation')[0];
+  const style = nav;
   const classes = useStyles(style);
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -67,10 +67,10 @@ const Header = ({ data }) => {
             <NavLink to="/">
               <Logo />
             </NavLink>
-            {navlink.value.map(val => {
+            {nav.value.map(val => {
               return (
-                <Link href={val.link} className={classes.link}>
-                  {val.value}
+                <Link href={val.scroll} className={classes.link}>
+                  {val.label}
                 </Link>
               );
             })}
