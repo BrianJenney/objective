@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BoxTitle = ({ data }) => {
-  const boxTitle = data.value.components.filter(item => item.type === 'boxTitle')[0];
+  const boxTitle = data.components.filter(item => item.type === 'boxTitle')[0];
   const style = boxTitle.style;
   const classes = useStyles(style);
 
