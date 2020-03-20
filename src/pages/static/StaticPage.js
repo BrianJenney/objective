@@ -58,14 +58,31 @@ const StaticPage = ({ location }) => {
       entries.content.map(entry => transformTitle(store, entry));
     }
     if (entries.value) {
-      store.push(entries.value);
+      store.value = entries.value;
     }
     return store;
   };
 
+  const transformHero = (store, entries) => {
+    if (!entries.content) {
+    } else {
+      entries.content.map(entry => transformHero(store, entry));
+    }
+    if (entries.nodeType === 'embedded-asset-block') {
+      const { title } = entries.data.target.fields;
+      const imgURL = entries.data.target.fields.file.url;
+      if (title.toLowerCase().includes('desktop')) {
+        store.desktopImg = `https:${imgURL}`;
+      }
+      if (title.toLowerCase().includes('mobile')) {
+        store.mobileImg = `https:${imgURL}`;
+      }
+    }
+    return store;
+  };
   // START
   if (contentfulEntries) {
-    let currentStore = {};
+    const currentStore = {};
     const { template, slug, content } = contentfulEntries[0].fields;
     dataObj = {
       template,
@@ -73,7 +90,7 @@ const StaticPage = ({ location }) => {
       components: []
     };
     const mainContent = content.map(({ fields }) => {
-      // log('testing-fields', fields);
+      log('testing-fields', fields);
       const metaDataSection = transformMetadata(fields.metadata);
       // log('testing-METADATA', metaDataSection);
       if (metaDataSection.type === 'navigation') {
@@ -90,14 +107,20 @@ const StaticPage = ({ location }) => {
           ...metaDataSection
         });
       }
-      currentStore = {};
       if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle') {
-        const titleData = transformTitle([], fields.content);
-        currentStore.value = titleData;
+        const titleData = transformTitle({}, fields.content);
         dataObj.components.push({
-          ...currentStore,
+          ...titleData,
           ...metaDataSection
         });
+      }
+      if (metaDataSection.type === 'hero') {
+        const heroData = transformHero({}, fields.content);
+        dataObj.components.push({
+          ...heroData,
+          ...metaDataSection
+        });
+        // log('testing-HERO', heroData);
       }
     });
   }
