@@ -146,11 +146,6 @@ const StaticPage = ({ location }) => {
       const paragraphData = transformParagraph([], fields.content);
       storage.value = paragraphData;
       columnOneObj.value.components.push({ ...storage, ...metaDataSection });
-
-      dataObj.components.push({
-        ...columnOneObj,
-        ...metaDataSection
-      });
     }
     if (metaDataSection.type === 'oneColumn') {
       transformOneColumn({}, fields.content, metaDataSection);
@@ -166,8 +161,8 @@ const StaticPage = ({ location }) => {
       components: []
     };
 
-    const CHECK = content.map(({ fields }) => {
-      const RES = transformContent(fields);
+    content.map(({ fields }) => {
+      transformContent(fields);
     });
   }
   log('+++TESTING+++', dataObj);
