@@ -9,7 +9,7 @@ const StaticPage = ({ location }) => {
   const dispatch = useDispatch();
   const contentfulEntries = useSelector(state => state.page.items);
   let dataObj = {};
-  const columnOneObj = { value: { components: [] } };
+  let columnOneObj = { value: { components: [] } };
   let storage = {};
   const transformMetadata = metaEntries => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
@@ -147,6 +147,7 @@ const StaticPage = ({ location }) => {
       storage.value = paragraphData;
       columnOneObj.value.components.push({ ...storage, ...metaDataSection });
     }
+    columnOneObj = { value: { components: [] } };
     if (metaDataSection.type === 'oneColumn') {
       transformOneColumn({}, fields.content, metaDataSection);
     }
