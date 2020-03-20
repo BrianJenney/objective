@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 
 import BoxTitle from './BoxTitle.js';
-import List from '../List.js';
+import List from '../components/List.js';
 
 const useStyles = makeStyles(theme => ({
   border: props => ({

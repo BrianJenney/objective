@@ -21,14 +21,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Title = ({ data }) => {
-  const title = data.filter(item => item.type === 'title')[0];
-  const style = title;
+  //const title = data.filter(item => item.type === 'title')[0];
+  //const style = title;
 
-  const classes = useStyles(style);
+  const classes = useStyles(data);
 
   return (
     <Box>
-      <Typography className={classes.root}>{title.value}</Typography>
+      <Typography className={classes.root}>{data.value}</Typography>
     </Box>
   );
 };

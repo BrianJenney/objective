@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
@@ -10,27 +10,30 @@ const useStyles = makeStyles(theme => ({
     fontSize: props.desktopStyle.fontSize,
     lineHeight: props.desktopStyle.lineHeight,
     fontFamily: props.desktopStyle.fontFamily,
+    fontFamily: props.desktopStyle.fontFamily,
+    textTransform: props.desktopStyle.textTransform,
+    letterSpacing: '1.5px',
     [theme.breakpoints.down('sm')]: {
       color: props.mobileStyle.fontColor,
       fontWeight: props.mobileStyle.fontWeight,
       fontSize: props.mobileStyle.fontSize,
       lineHeight: props.mobileStyle.lineHeight,
-      fontFamily: props.mobileStyle.fontFamily
+      fontFamily: props.mobileStyle.fontFamily,
+      textTransform: props.mobileStyle.textTransform
     }
   })
 }));
 
-const Title = ({ data }) => {
-  const title = data.filter(item => item.type === 'title')[0];
-  const style = title;
-
-  const classes = useStyles(style);
+const Subtitle = ({ data }) => {
+  //const subtitle = data.filter(item => item.type === 'subtitle')[0];
+  //const style = subtitle;
+  const classes = useStyles(data);
 
   return (
     <Box>
-      <Typography className={classes.root}>{title.value}</Typography>
+      <Typography className={classes.root}>{data.value}</Typography>
     </Box>
   );
 };
 
-export default Title;
+export default Subtitle;

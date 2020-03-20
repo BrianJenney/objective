@@ -14,9 +14,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Image = ({ data }) => {
-  const image = data.value.components.filter(item => item.type === 'image')[0];
-  const style = image;
-  const classes = useStyles(style);
+  //const image = data.value.components.filter(item => item.type === 'image')[0];
+  //const style = image;
+  const classes = useStyles(data);
 
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -24,9 +24,9 @@ const Image = ({ data }) => {
   return (
     <div>
       {!sm ? (
-        <img src={image.desktopImg} className={classes.root}></img>
+        <img src={data.desktopImg} className={classes.root}></img>
       ) : (
-        <img src={image.mobileImg} className={data.root}></img>
+        <img src={data.mobileImg} className={classes.root}></img>
       )}
     </div>
   );
