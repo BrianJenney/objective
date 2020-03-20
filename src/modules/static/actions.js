@@ -6,7 +6,6 @@ const ObjectId = require('bson-objectid');
 
 export const requestPage = slug => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
-  console.log('this request page ', slug);
   const params = {
     params: {
       query: {

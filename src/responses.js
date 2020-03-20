@@ -29,7 +29,6 @@ export default body => {
       handleOrderResponse(status, data, fields, properties);
       break;
     case 'content':
-      console.log('this responses main');
       handlePageResponse(status, data, fields, properties);
       break;
     default:
