@@ -167,8 +167,6 @@ const StaticPage = ({ match }) => {
     }
   }, [page]);
 
-  const RenderPage = ({ components }) => components.map((component, i) => <div key={i}>{component}</div>);
-
   if (page) {
     return buildPage(page);
   } else {
