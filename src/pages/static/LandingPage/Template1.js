@@ -56,10 +56,10 @@ const Template1 = ({ match }) => {
         <Grid item md={10} className={`${classes.margin} ${classes.image}`}>
           <Hero data={mockComponents} />
         </Grid>
-        {/* <Grid item xs={8} className={classes.margin}>
-          <Paragraph data={mockComponents[4]} />
+        <Grid item xs={12} md={8} className={classes.margin}>
           <LPBox data={mockComponents[4]} />
-        </Grid> */}
+          <Paragraph data={mockComponents[4]} />
+        </Grid>
         <Grid item xs={12} md={8} className={classes.margin}>
           <Title data={mockComponents[5].value.components} />
           <Image data={mockComponents[5]} />
