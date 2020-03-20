@@ -5,16 +5,10 @@ import { requestPage } from '../../modules/static/actions';
 
 const StaticPage = ({ location }) => {
   // const [featuredMain, setFeaturedMain] = useState({});
+  const { log } = console;
   const dispatch = useDispatch();
   const contentfulEntries = useSelector(state => state.page.items);
-
-  const dataObj = {
-    template: 'Template-1',
-    slug: 'staticpage',
-    components: []
-  };
-  const { log } = console;
-
+  let dataObj = {};
   const transformMetadata = metaEntries => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
       const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
@@ -59,8 +53,14 @@ const StaticPage = ({ location }) => {
 
   // START
   if (contentfulEntries) {
-    const currentStore = {};
-    const mainContent = contentfulEntries[0].fields.content.map(({ fields }) => {
+    let currentStore = {};
+    const { template, slug, content } = contentfulEntries[0].fields;
+    dataObj = {
+      template,
+      slug,
+      components: []
+    };
+    const mainContent = content.map(({ fields }) => {
       // log('testing-fields', fields);
       const metaDataSection = transformMetadata(fields.metadata);
       // log('testing-METADATA', metaDataSection);
@@ -78,6 +78,7 @@ const StaticPage = ({ location }) => {
           ...metaDataSection
         });
       }
+      currentStore = {};
     });
   }
   // log('TESTING---', dataObj);
