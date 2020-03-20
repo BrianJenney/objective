@@ -24,10 +24,10 @@ const StaticPage = ({ location }) => {
           metaObj.type = value;
         }
         if (key === 'pageName') {
-          if (value.includes('Desktop')) {
+          if (value.toLowerCase().includes('desktop')) {
             metaObj.desktopStyle = { ...metaData };
           }
-          if (value.includes('Mobile')) {
+          if (value.toLowerCase().includes('mobile')) {
             metaObj.mobileStyle = { ...metaData };
           }
         }
@@ -36,13 +36,18 @@ const StaticPage = ({ location }) => {
     }, {});
     return metaFields;
   };
+
+  const transformData = entries => {
+    const currentEntries = entries;
+    // log('testing+++', currentEntries); // {data:{}. content:[], nodeType: ''}
+  };
   // START
   if (contentfulEntries) {
     const object = {};
-    const mainContent = contentfulEntries[0].fields.content.map(entry => {
-      const metaDataSection = transformMetadata(entry.fields.metadata);
-      // log('testing-METADATA', metaDataSection);
-      // const sectionValue = transformData(entry.fields
+    const mainContent = contentfulEntries[0].fields.content.map(({ fields }) => {
+      const metaDataSection = transformMetadata(fields.metadata);
+      // const sectionValue = transformData(fields.content);
+      log('testing', fields);
     });
   }
 
