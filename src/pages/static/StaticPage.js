@@ -101,7 +101,10 @@ const StaticPage = ({ location }) => {
     }
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
-      columnOneObj.type = meta.type;
+      dataObj.components.push({
+        ...meta,
+        ...columnOneObj
+      });
       transformContent(fields);
     }
   };
@@ -143,7 +146,7 @@ const StaticPage = ({ location }) => {
       const paragraphData = transformParagraph([], fields.content);
       storage.value = paragraphData;
       columnOneObj.value.components.push({ ...storage, ...metaDataSection });
-      log('testing-PARA', columnOneObj);
+
       dataObj.components.push({
         ...columnOneObj,
         ...metaDataSection
@@ -153,6 +156,7 @@ const StaticPage = ({ location }) => {
       transformOneColumn({}, fields.content, metaDataSection);
     }
   };
+
   // START
   if (contentfulEntries) {
     const { template, slug, content } = contentfulEntries[0].fields;
@@ -166,7 +170,7 @@ const StaticPage = ({ location }) => {
       const RES = transformContent(fields);
     });
   }
-  // log('+++TESTING+++', dataObj);
+  log('+++TESTING+++', dataObj);
 
   useEffect(() => {
     dispatch(requestPage('staticpage'));
