@@ -103,10 +103,6 @@ const StaticPage = ({ location }) => {
       const { fields } = entries.data.target;
       columnOneObj.type = meta.type;
       transformContent(fields);
-      dataObj.components.push({
-        ...meta,
-        ...columnOneObj
-      });
     }
   };
 
@@ -151,6 +147,10 @@ const StaticPage = ({ location }) => {
     // columnOneObj = { value: { components: [] } };
     if (metaDataSection.type === 'oneColumn') {
       transformOneColumn({}, fields.content, metaDataSection);
+      dataObj.components.push({
+        ...metaDataSection,
+        ...columnOneObj
+      });
     }
   };
   // START
