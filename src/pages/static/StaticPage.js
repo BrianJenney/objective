@@ -26,9 +26,10 @@ const StaticPage = ({ location }) => {
         if (key === 'pageName') {
           if (value.toLowerCase().includes('desktop')) {
             metaObj.desktopStyle = { ...metaData };
-          }
-          if (value.toLowerCase().includes('mobile')) {
+          } else if (value.toLowerCase().includes('mobile')) {
             metaObj.mobileStyle = { ...metaData };
+          } else {
+            metaObj.style = { ...metaData };
           }
         }
       }
@@ -72,9 +73,9 @@ const StaticPage = ({ location }) => {
       components: []
     };
     const mainContent = content.map(({ fields }) => {
-      // log('testing-fields', fields);
+      log('testing-fields', fields);
       const metaDataSection = transformMetadata(fields.metadata);
-
+      log('testing-METADATA', metaDataSection);
       if (metaDataSection.type === 'navigation') {
         if (fields.name.toLowerCase().includes('mobile')) {
           const navLinkData = transformNavLink(fields.name, [], fields.content);
