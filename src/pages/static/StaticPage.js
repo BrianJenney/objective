@@ -73,9 +73,9 @@ const StaticPage = ({ location }) => {
       components: []
     };
     const mainContent = content.map(({ fields }) => {
-      log('testing-fields', fields);
+      // log('testing-fields', fields);
       const metaDataSection = transformMetadata(fields.metadata);
-      log('testing-METADATA', metaDataSection);
+      // log('testing-METADATA', metaDataSection);
       if (metaDataSection.type === 'navigation') {
         if (fields.name.toLowerCase().includes('mobile')) {
           const navLinkData = transformNavLink(fields.name, [], fields.content);
@@ -91,7 +91,7 @@ const StaticPage = ({ location }) => {
         });
       }
       currentStore = {};
-      if (metaDataSection.type === 'title') {
+      if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle') {
         const titleData = transformTitle([], fields.content);
         currentStore.value = titleData;
         dataObj.components.push({
