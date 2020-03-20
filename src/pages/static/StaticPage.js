@@ -9,7 +9,7 @@ const StaticPage = ({ location }) => {
   const dispatch = useDispatch();
   const contentfulEntries = useSelector(state => state.page.items);
   let dataObj = {};
-  let columnOneObj = { value: { components: [] } };
+  const columnOneObj = { value: { components: [] } };
   let storage = {};
   const transformMetadata = metaEntries => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
@@ -103,6 +103,10 @@ const StaticPage = ({ location }) => {
       const { fields } = entries.data.target;
       columnOneObj.type = meta.type;
       transformContent(fields);
+      dataObj.components.push({
+        ...meta,
+        ...columnOneObj
+      });
     }
   };
 
@@ -143,13 +147,8 @@ const StaticPage = ({ location }) => {
       const paragraphData = transformParagraph([], fields.content);
       storage.value = paragraphData;
       columnOneObj.value.components.push({ ...storage, ...metaDataSection });
-      log('testing-PARA', columnOneObj);
-      dataObj.components.push({
-        ...columnOneObj,
-        ...metaDataSection
-      });
     }
-    columnOneObj = { value: { components: [] } };
+    // columnOneObj = { value: { components: [] } };
     if (metaDataSection.type === 'oneColumn') {
       transformOneColumn({}, fields.content, metaDataSection);
     }
@@ -163,11 +162,11 @@ const StaticPage = ({ location }) => {
       components: []
     };
 
-    const CHECK = content.map(({ fields }) => {
-      const RES = transformContent(fields);
+    content.map(({ fields }) => {
+      transformContent(fields);
     });
   }
-  // log('+++TESTING+++', dataObj);
+  log('+++TESTING+++', dataObj);
 
   useEffect(() => {
     dispatch(requestPage('staticpage'));
