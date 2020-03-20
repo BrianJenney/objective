@@ -145,7 +145,7 @@ export default [
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
   { path: '/landing/fastasleep-lifestyle', exact: true, component: FastAsleepLifestyle },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },
-  { path: '/landing/:landingSlug', exact: true, component: Template1 },
+  //{ path: '/landing/:landingSlug', exact: true, component: Template1 },
   { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
 ];
