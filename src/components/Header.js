@@ -166,7 +166,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                          SLEEP MONTH 2020! $10 OFF FAST ASLEEP WITH CODE SLEEP30 + SITEWIDE FREE SHIPPING
+                          $10 OFF FAST ASLEEP WITH CODE SLEEP30 + SITEWIDE FREE SHIPPING
                         </NavLink>
                         <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
                       </StyledBox>
