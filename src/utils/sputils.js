@@ -89,7 +89,7 @@ export const GenerateOneColumn = (comps, template) => {
       case 'image':
         components.push(
           <>
-            <Image data={obj} />
+            <Image data={obj} template={template} variant={obj.type} />
           </>
         );
         break;
