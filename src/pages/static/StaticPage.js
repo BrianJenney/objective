@@ -56,7 +56,6 @@ const StaticPage = ({ location }) => {
   };
 
   const transformHero = (store, entries) => {
-    // log('testing-HERO-ENTRY', entries);
     if (!entries.content) {
     } else {
       entries.content.map(entry => transformHero(store, entry));
@@ -116,6 +115,8 @@ const StaticPage = ({ location }) => {
 
   const transformContent = (fields, storeContent, storeContainer) => {
     // log('++TESTING++CONTENT++', fields);
+    columnComponent = { value: { components: [] } };
+    storage = {};
     const metaDataSection = transformMetadata(fields.metadata);
 
     if (metaDataSection.type === 'navigation') {
@@ -131,7 +132,6 @@ const StaticPage = ({ location }) => {
         ...storage,
         ...metaDataSection
       });
-      storage = {};
     }
 
     if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle') {
@@ -153,7 +153,6 @@ const StaticPage = ({ location }) => {
       }
       return { ...heroData, ...metaDataSection };
     }
-    storage = {};
 
     if (
       metaDataSection.type === 'paragraph' ||
@@ -161,14 +160,14 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'boxTitle' ||
       metaDataSection.type === 'sectionTitle'
     ) {
-      const paragraphData = transformParagraph([], fields.content);
-      // log('TESTING++DATA', paragraphData);
+      let paragraphData = transformParagraph([], fields.content);
+      if (metaDataSection.type === 'boxTitle' || metaDataSection.type === 'sectionTitle') {
+        paragraphData = paragraphData.toString();
+      }
       storeContent = { value: paragraphData, ...metaDataSection };
-      // log('testing-STORE-CONTENT', storeContent, storeContainer);
       return storeContent;
     }
-    columnComponent = { value: { components: [] } };
-    storage = {};
+
     if (metaDataSection.type === 'oneColumn' || metaDataSection.type === 'box') {
       columnComponent = { ...metaDataSection, ...columnComponent };
       // log('testing-META', metaDataSection, columnComponent);
