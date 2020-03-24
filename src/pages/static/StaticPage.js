@@ -122,13 +122,10 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
-
       if (store) {
         prevStore.value.components.push(store);
-        log('testing-AFTER', prevStore);
       }
     }
-    log('testing-MAKESURE', prevStore);
     return prevStore;
   };
 
@@ -182,13 +179,22 @@ const StaticPage = ({ location }) => {
       return storeContent;
     }
     columnComponent = { value: { components: [] } };
+    storage = {};
     if (metaDataSection.type === 'oneColumn' || metaDataSection.type === 'box') {
       columnComponent = { ...metaDataSection, ...columnComponent };
       // log('testing-META', metaDataSection, columnComponent);
       const columnData = transformOneColumn({}, fields.content, columnComponent);
+      if (columnData.type === 'box') {
+        storage = columnData;
+      }
+      if (columnData.type === 'oneColumn') {
+        columnComponent = columnData;
+        columnComponent.value.components.push(storage);
+        if (storeContent.components) {
+          storeContent.components.push(columnComponent);
+        }
+      }
     }
-    // log('testing-columnComponent', columnComponent);
-    // log('testing-columndata', storeContent);
   };
   // START
   if (contentfulEntries) {
