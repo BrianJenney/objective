@@ -8,9 +8,10 @@ const StaticPage = ({ location }) => {
   const { log } = console;
   const dispatch = useDispatch();
   const contentfulEntries = useSelector(state => state.page.items);
-  let dataObj = {};
-  const columnOneObj = { value: { components: [] } };
+  let mainDataObj = {};
   let storage = {};
+  let columnComponent = { value: { components: [] } };
+  // let columnOneObj = {};
   const transformMetadata = metaEntries => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
       const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
@@ -40,13 +41,13 @@ const StaticPage = ({ location }) => {
     return metaFields;
   };
 
-  const transformNavLink = (name, store, entries) => {
+  const transformNavLink = (store, entries) => {
     if (!entries.content) {
     } else {
-      entries.content.map(entry => transformNavLink(name, store, entry));
+      entries.content.map(entry => transformNavLink(store, entry));
     }
     if (entries.nodeType === 'hyperlink') {
-      store.push({
+      return store.push({
         scroll: entries.data.uri,
         label: entries.content[0].value
       });
@@ -63,10 +64,10 @@ const StaticPage = ({ location }) => {
       const { title } = entries.data.target.fields;
       const imgURL = entries.data.target.fields.file.url;
       if (title.toLowerCase().includes('desktop')) {
-        store.desktopImg = `https:${imgURL}`;
+        return (store.desktopImg = `https:${imgURL}`);
       }
       if (title.toLowerCase().includes('mobile')) {
-        store.mobileImg = `https:${imgURL}`;
+        return (store.mobileImg = `https:${imgURL}`);
       }
     }
     return store;
@@ -78,95 +79,131 @@ const StaticPage = ({ location }) => {
       entries.content.map(entry => transformTitle(store, entry));
     }
     if (entries.value) {
-      store.value = entries.value;
+      return (store.value = entries.value);
     }
     return store;
   };
 
-  const transformParagraph = (store, entries) => {
+  const transformParagraph = (store, entries, length) => {
+    // log('testing-PARA-ENTRY', entries, store);
     if (!entries.content) {
     } else {
-      entries.content.map(entry => transformParagraph(store, entry));
+      entries.content.map(entry => transformParagraph(store, entry, length));
     }
+
     if (entries.value) {
-      store.push(entries.value);
+      return store.push(entries.value);
     }
     return store;
   };
 
-  const transformOneColumn = (store, entries, meta) => {
+  // const transformBox = (store, entries, container) => {
+  //   // log('testing-BOX-ENTRY', entries);
+  //   if (!entries.content) {
+  //   } else {
+  //     entries.content.map(entry => transformBox(store, entry, container));
+  //   }
+  //   if (entries.nodeType === 'embedded-entry-block') {
+  //     const { fields } = entries.data.target;
+  //     const entryContent = transformContent(fields, store);
+  //     container.value.components.push(entryContent);
+  //     return container;
+  //   }
+  //   // return container;
+  // };
+
+  const transformOneColumn = (store, entries, prevStore) => {
     if (!entries.content) {
-    } else {
-      entries.content.map(entry => transformOneColumn(store, entry, meta));
+      return null;
     }
+    entries.content.map(entry => transformOneColumn(store, entry, prevStore));
+
+    // log('testing-ENTRIES', entries);
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
-      columnOneObj.type = meta.type;
-      transformContent(fields);
+      store = transformContent(fields, {});
+
+      if (store) {
+        prevStore.value.components.push(store);
+        log('testing-AFTER', prevStore);
+      }
     }
+    log('testing-MAKESURE', prevStore);
+    return prevStore;
   };
 
-  const transformContent = fields => {
+  const transformContent = (fields, storeContent, storeContainer) => {
     // log('++TESTING++CONTENT++', fields);
     const metaDataSection = transformMetadata(fields.metadata);
 
     if (metaDataSection.type === 'navigation') {
       if (fields.name.toLowerCase().includes('mobile')) {
-        const navLinkData = transformNavLink(fields.name, [], fields.content);
+        const navLinkData = transformNavLink([], fields.content);
         storage.value = navLinkData;
       }
       if (fields.name.toLowerCase().includes('desktop')) {
-        const navLinkData = transformNavLink(fields.name, [], fields.content);
+        const navLinkData = transformNavLink([], fields.content);
         storage.value = navLinkData;
       }
-      dataObj.components.push({
+      storeContent.components.push({
         ...storage,
         ...metaDataSection
       });
+      storage = {};
     }
+
     if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle') {
       const titleData = transformTitle({}, fields.content);
-      dataObj.components.push({
+      // log('testing-TITLE-DATA', titleData);
+      // log('testing-STORECONTENT', storeContent);
+      storeContent.components.push({
         ...titleData,
         ...metaDataSection
       });
     }
     if (metaDataSection.type === 'hero') {
       const heroData = transformHero({}, fields.content);
-      dataObj.components.push({
+      storeContent.components.push({
         ...heroData,
         ...metaDataSection
       });
     }
-    storage = {};
-    if (metaDataSection.type === 'paragraph') {
+
+    if (
+      metaDataSection.type === 'paragraph' ||
+      metaDataSection.type === 'list' ||
+      metaDataSection.type === 'boxTitle' ||
+      metaDataSection.type === 'sectionTitle'
+    ) {
       const paragraphData = transformParagraph([], fields.content);
-      storage.value = paragraphData;
-      columnOneObj.value.components.push({ ...storage, ...metaDataSection });
+      // log('TESTING++DATA', paragraphData);
+      storeContent = { value: paragraphData, ...metaDataSection };
+      // log('testing-STORE-CONTENT', storeContent, storeContainer);
+      return storeContent;
     }
-    // columnOneObj = { value: { components: [] } };
-    if (metaDataSection.type === 'oneColumn') {
-      transformOneColumn({}, fields.content, metaDataSection);
-      dataObj.components.push({
-        ...metaDataSection,
-        ...columnOneObj
-      });
+    columnComponent = { value: { components: [] } };
+    if (metaDataSection.type === 'oneColumn' || metaDataSection.type === 'box') {
+      columnComponent = { ...metaDataSection, ...columnComponent };
+      // log('testing-META', metaDataSection, columnComponent);
+      const columnData = transformOneColumn({}, fields.content, columnComponent);
     }
+    // log('testing-columnComponent', columnComponent);
+    // log('testing-columndata', storeContent);
   };
   // START
   if (contentfulEntries) {
     const { template, slug, content } = contentfulEntries[0].fields;
-    dataObj = {
+    mainDataObj = {
       template,
       slug,
       components: []
     };
 
     content.map(({ fields }) => {
-      transformContent(fields);
+      transformContent(fields, mainDataObj);
     });
   }
-  log('+++TESTING+++', dataObj);
+  log('+++TESTING+++', mainDataObj);
 
   useEffect(() => {
     dispatch(requestPage('staticpage'));
