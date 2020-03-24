@@ -21,26 +21,8 @@ export const GenerateTemplate = ({ data, header }) => {
 
 export const GeneratePageComponents = (comps, template) => {
   const useStyles = makeStyles(theme => ({
-    title: {
-      margin: '55px 0 15px',
-      [theme.breakpoints.down('sm')]: {
-        margin: '15px 0 5px'
-      }
-    },
-    subtitle: {
-      margin: '0 0 45px;',
-      [theme.breakpoints.down('sm')]: {
-        margin: '0 0 10px'
-      }
-    },
     margin: {
       margin: '0 auto'
-    },
-    image: {
-      marginBottom: 45,
-      [theme.breakpoints.down('sm')]: {
-        marginBottom: 25
-      }
     }
   }));
   const classes = useStyles();
@@ -69,8 +51,8 @@ export const GeneratePageComponents = (comps, template) => {
       case 'hero':
         components.push(
           <>
-            <Grid item md={10} className={`${classes.margin} ${classes.image}`}>
-              <Hero data={obj} />
+            <Grid item md={10} className={`${classes.margin}`}>
+              <Hero data={obj} template={template} variant={obj.type} />
             </Grid>
           </>
         );
