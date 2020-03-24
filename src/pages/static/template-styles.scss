@@ -5,4 +5,10 @@
       margin: 15px 0 5px;
     }
   }
+  .pageSubTitle {
+    margin: 0 0 45px;
+    @media only screen and (max-width: 600px) {
+      margin: 0 0 10px;
+    }
+  }
 }
