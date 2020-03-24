@@ -42,7 +42,7 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'title',
+        type: 'pageTitle',
         value: 'Fall asleep faster. Stay asleep longer. Wake up feeling amazing.',
         desktopStyle: {
           fontColor: '#000000',
@@ -60,7 +60,7 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'subtitle',
+        type: 'pageSubTitle',
         value: 'Get the sweetest sleep of your life—with the new non-melatonin sleep solution',
         desktopStyle: {
           fontColor: '#1f396d',
@@ -95,7 +95,7 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumn',
+        type: 'oneColumnBox',
         value: {
           components: [
             {
@@ -120,11 +120,11 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumn',
+        type: 'oneColumnBox',
         value: {
           components: [
             {
-              type: 'title',
+              type: 'sectionTitle',
               value: 'Sleep Quality Really Matters',
               desktopStyle: {
                 fontColor: '#1f396d',
@@ -178,11 +178,11 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumn',
+        type: 'oneColumnBox',
         value: {
           components: [
             {
-              type: 'title',
+              type: 'sectionTitle',
               value: 'The Clinical Results Are Solid (Gold)',
               desktopStyle: {
                 fontColor: '#1f396d',
@@ -220,11 +220,11 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumn',
+        type: 'oneColumnBox',
         value: {
           components: [
             {
-              type: 'title',
+              type: 'sectionTitle',
               value: 'Stress Is The #1 Enemy Of Good Sleep',
               desktopStyle: {
                 fontColor: '#1f396d',
@@ -274,6 +274,56 @@ const StaticPage = ({ match }) => {
               mobileStyle: {
                 fontSize: '18px'
               }
+            }
+          ]
+        }
+      },
+      {
+        type: 'oneColumnBox',
+        value: {
+          components: [
+            {
+              type: 'sectionTitle',
+              value: 'Button section title ',
+              desktopStyle: {
+                fontColor: '#1f396d',
+                fontWeight: 400,
+                fontSize: '28px !important',
+                fontFamily: 'Canela Text Web',
+                textTransform: 'capitalize'
+              },
+              mobileStyle: {
+                fontColor: '#1f396d',
+                fontWeight: 400,
+                fontSize: '28px !important',
+                fontFamily: 'Canela Text Web',
+                textTransform: 'capitalize'
+              }
+            },
+            {
+              type: 'paragraph',
+              value: [
+                'Life today is stressful. The stress makes it hard to sleep, and the lack of sleep makes it hard to stay positive and on top of all the things we have to juggle each day, which, in turn, leads to—you guessed it—more stress.*'
+              ],
+              desktopStyle: {
+                fontColor: '#000000',
+                fontWeight: 400,
+                fontSize: '20px',
+                lineHeight: 1.5,
+                fontFamily: 'FreightTextProBook'
+              },
+              mobileStyle: {
+                fontSize: '18px'
+              }
+            },
+            {
+              type: 'button',
+              value: 'Get 15% off - Buy now',
+              skuAndQty: ['TMNO-1BOT-CAP;2', 'TGSS-1BOT-CHO;1'],
+              coupon: 'SLUMBER15',
+              URL: '/checkout',
+              desktopStyle: {},
+              mobileStyle: {}
             }
           ]
         }

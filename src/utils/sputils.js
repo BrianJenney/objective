@@ -4,14 +4,22 @@ import { Hero, Image, Paragraph, Title, Subtitle, Header } from '../pages/static
 import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
-  if (page.template === 'Template-1') {
-    let tmpComps = GenerateComponents(page.components, page.template);
-
-    return <GenerateTemplate data={tmpComps} header={page.components.filter(c => c.type === 'navigation')[0]} />;
-  }
+  let tmpComps = GeneratePageComponents(page.components, page.template);
+  return <GenerateTemplate data={tmpComps} header={page.components.filter(c => c.type === 'navigation')[0]} />;
 };
 
-export const GenerateComponents = (comps, template) => {
+export const GenerateTemplate = ({ data, header }) => {
+  return (
+    <div>
+      <Header data={header} />
+      <Container>
+        <RenderComponents components={data} />
+      </Container>
+    </div>
+  );
+};
+
+export const GeneratePageComponents = (comps, template) => {
   const useStyles = makeStyles(theme => ({
     title: {
       margin: '55px 0 15px',
@@ -40,7 +48,7 @@ export const GenerateComponents = (comps, template) => {
 
   comps.map(obj => {
     switch (obj.type) {
-      case 'title':
+      case 'pageTitle':
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
@@ -51,7 +59,7 @@ export const GenerateComponents = (comps, template) => {
           </>
         );
         break;
-      case 'subtitle':
+      case 'pageSubTitle':
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
@@ -71,11 +79,11 @@ export const GenerateComponents = (comps, template) => {
           </>
         );
         break;
-      case 'oneColumn':
+      case 'oneColumnBox':
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
-              <RenderPage components={GenerateOneColumn(obj.value.components)} />
+              <RenderComponents components={GenerateOneColumn(obj.value.components)} />
             </Grid>
           </>
         );
@@ -88,23 +96,12 @@ export const GenerateComponents = (comps, template) => {
   return components;
 };
 
-export const GenerateTemplate = ({ data, header }) => {
-  return (
-    <div>
-      <Header data={header} />
-      <Container>
-        <RenderPage components={data} />
-      </Container>
-    </div>
-  );
-};
-
 export const GenerateOneColumn = comps => {
   let components = [];
 
   comps.map(obj => {
     switch (obj.type) {
-      case 'title':
+      case 'sectionTitle':
         components.push(
           <>
             <Title data={obj} />
@@ -133,34 +130,4 @@ export const GenerateOneColumn = comps => {
   return components;
 };
 
-export const RenderPage = ({ components }) => components.map((component, i) => <>{component}</>);
-
-export const Template1 = () => {
-  const useStyles = makeStyles(theme => ({
-    title: {
-      margin: '55px 0 15px',
-      [theme.breakpoints.down('sm')]: {
-        margin: '15px 0 5px'
-      }
-    },
-    subtitle: {
-      margin: '0 0 45px;',
-      [theme.breakpoints.down('sm')]: {
-        margin: '0 0 10px'
-      }
-    },
-    margin: {
-      margin: '0 auto'
-    },
-    image: {
-      marginBottom: 45,
-      [theme.breakpoints.down('sm')]: {
-        marginBottom: 25
-      }
-    }
-  }));
-
-  const classes = useStyles();
-
-  return classes;
-};
+export const RenderComponents = ({ components }) => components.map((component, i) => <>{component}</>);
