@@ -86,10 +86,10 @@ const StaticPage = ({ location }) => {
     return store;
   };
 
-  const transformParagraph = (store, entries, length) => {
+  const transformText = (store, entries, length) => {
     if (!entries.content) {
     } else {
-      entries.content.map(entry => transformParagraph(store, entry, length));
+      entries.content.map(entry => transformText(store, entry, length));
     }
     if (entries.value) {
       return store.push(entries.value);
@@ -114,7 +114,7 @@ const StaticPage = ({ location }) => {
   };
 
   const transformContent = (fields, storeContent, storeContainer) => {
-    // log('++TESTING++CONTENT++', fields);
+    log('++TESTING++CONTENT++', fields);
     columnComponent = { value: { components: [] } };
     storage = {};
     const metaDataSection = transformMetadata(fields.metadata);
@@ -134,7 +134,7 @@ const StaticPage = ({ location }) => {
       });
     }
 
-    if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle') {
+    if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle' || metaDataSection.type === 'banner') {
       const titleData = transformTitle({}, fields.content);
       if (storeContent.components) {
         storeContent.components.push({
@@ -160,7 +160,7 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'boxTitle' ||
       metaDataSection.type === 'sectionTitle'
     ) {
-      let paragraphData = transformParagraph([], fields.content);
+      let paragraphData = transformText([], fields.content);
       if (metaDataSection.type === 'boxTitle' || metaDataSection.type === 'sectionTitle') {
         paragraphData = paragraphData.toString();
       }
