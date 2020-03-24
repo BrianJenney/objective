@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Title = ({ data, template, variant }) => {
+const Title = ({ data, template, type }) => {
   const classes = useStyles(data);
 
   return (
     <>
       {template ? (
         <Box className={template}>
-          <Typography className={`${classes.root} ${variant}`}>{data.value}</Typography>
+          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
         </Box>
       ) : (
         <Box>

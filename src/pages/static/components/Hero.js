@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Hero = ({ data, template, variant }) => {
+const Hero = ({ data, template, type }) => {
   //const hero = data.filter(item => item.type === 'hero')[0];
   //const style = hero;
   const classes = useStyles(data);
@@ -28,9 +28,9 @@ const Hero = ({ data, template, variant }) => {
       {template ? (
         <Box className={template}>
           {!sm ? (
-            <img src={data.desktopImg} className={`${classes.root} ${variant}`}></img>
+            <img src={data.desktopImg} className={`${classes.root} ${type}`}></img>
           ) : (
-            <img src={data.mobileImg} className={`${classes.root} ${variant}`}></img>
+            <img src={data.mobileImg} className={`${classes.root} ${type}`}></img>
           )}
         </Box>
       ) : (

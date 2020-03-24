@@ -34,7 +34,7 @@ export const GeneratePageComponents = (comps, template) => {
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
-              <Title data={obj} template={template} variant={obj.type} />
+              <Title data={obj} template={template} type={obj.type} />
             </Grid>
           </>
         );
@@ -43,7 +43,7 @@ export const GeneratePageComponents = (comps, template) => {
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
-              <Subtitle data={obj} template={template} variant={obj.type} />
+              <Subtitle data={obj} template={template} type={obj.type} />
             </Grid>
           </>
         );
@@ -52,7 +52,7 @@ export const GeneratePageComponents = (comps, template) => {
         components.push(
           <>
             <Grid item md={10} className={`${classes.margin}`}>
-              <Hero data={obj} template={template} variant={obj.type} />
+              <Hero data={obj} template={template} type={obj.type} />
             </Grid>
           </>
         );
@@ -82,14 +82,14 @@ export const GenerateOneColumn = (comps, template) => {
       case 'sectionTitle':
         components.push(
           <>
-            <Title data={obj} template={template} variant={obj.type} />
+            <Title data={obj} template={template} type={obj.type} />
           </>
         );
         break;
       case 'image':
         components.push(
           <>
-            <Image data={obj} template={template} variant={obj.type} />
+            <Image data={obj} template={template} type={obj.type} />
           </>
         );
         break;
