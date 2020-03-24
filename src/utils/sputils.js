@@ -61,9 +61,7 @@ export const GeneratePageComponents = (comps, template) => {
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
-              <Grid className={classes.subtitle}>
-                <Subtitle data={obj} />
-              </Grid>
+              <Subtitle data={obj} template={template} variant={obj.type} />
             </Grid>
           </>
         );
