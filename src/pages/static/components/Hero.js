@@ -4,6 +4,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import './template-styles.scss';
+
 const useStyles = makeStyles(theme => ({
   root: props => ({
     display: props.desktopStyle.display,
