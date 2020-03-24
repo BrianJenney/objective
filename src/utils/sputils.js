@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMediaQuery, Container, Grid } from '@material-ui/core';
-import { Hero, Image, Paragraph, Title, Subtitle, Header } from '../pages/static/components';
+import { Hero, Image, Paragraph, Title, Subtitle, Header, SPButton } from '../pages/static/components';
 import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
@@ -97,6 +97,13 @@ export const GenerateOneColumn = (comps, template) => {
         components.push(
           <>
             <Paragraph data={obj} />
+          </>
+        );
+        break;
+      case 'button':
+        components.push(
+          <>
+            <SPButton data={obj} template={template} type={obj.type} />
           </>
         );
         break;
