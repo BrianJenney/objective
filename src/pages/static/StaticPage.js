@@ -11,7 +11,7 @@ const StaticPage = ({ location }) => {
   let mainDataObj = {};
   let storage = {};
   let columnComponent = { value: { components: [] } };
-  // let columnOneObj = {};
+
   const transformMetadata = metaEntries => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
       const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
@@ -56,6 +56,7 @@ const StaticPage = ({ location }) => {
   };
 
   const transformHero = (store, entries) => {
+    // log('testing-HERO-ENTRY', entries);
     if (!entries.content) {
     } else {
       entries.content.map(entry => transformHero(store, entry));
@@ -63,12 +64,14 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'embedded-asset-block') {
       const { title } = entries.data.target.fields;
       const imgURL = entries.data.target.fields.file.url;
+
       if (title.toLowerCase().includes('desktop')) {
         return (store.desktopImg = `https:${imgURL}`);
       }
       if (title.toLowerCase().includes('mobile')) {
         return (store.mobileImg = `https:${imgURL}`);
       }
+      return (store.img = `https: ${imgURL}`);
     }
     return store;
   };
@@ -85,32 +88,15 @@ const StaticPage = ({ location }) => {
   };
 
   const transformParagraph = (store, entries, length) => {
-    // log('testing-PARA-ENTRY', entries, store);
     if (!entries.content) {
     } else {
       entries.content.map(entry => transformParagraph(store, entry, length));
     }
-
     if (entries.value) {
       return store.push(entries.value);
     }
     return store;
   };
-
-  // const transformBox = (store, entries, container) => {
-  //   // log('testing-BOX-ENTRY', entries);
-  //   if (!entries.content) {
-  //   } else {
-  //     entries.content.map(entry => transformBox(store, entry, container));
-  //   }
-  //   if (entries.nodeType === 'embedded-entry-block') {
-  //     const { fields } = entries.data.target;
-  //     const entryContent = transformContent(fields, store);
-  //     container.value.components.push(entryContent);
-  //     return container;
-  //   }
-  //   // return container;
-  // };
 
   const transformOneColumn = (store, entries, prevStore) => {
     if (!entries.content) {
@@ -118,7 +104,6 @@ const StaticPage = ({ location }) => {
     }
     entries.content.map(entry => transformOneColumn(store, entry, prevStore));
 
-    // log('testing-ENTRIES', entries);
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
@@ -151,20 +136,24 @@ const StaticPage = ({ location }) => {
 
     if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle') {
       const titleData = transformTitle({}, fields.content);
-      // log('testing-TITLE-DATA', titleData);
-      // log('testing-STORECONTENT', storeContent);
-      storeContent.components.push({
-        ...titleData,
-        ...metaDataSection
-      });
+      if (storeContent.components) {
+        storeContent.components.push({
+          ...titleData,
+          ...metaDataSection
+        });
+      }
     }
-    if (metaDataSection.type === 'hero') {
+    if (metaDataSection.type === 'hero' || metaDataSection.type === 'image') {
       const heroData = transformHero({}, fields.content);
-      storeContent.components.push({
-        ...heroData,
-        ...metaDataSection
-      });
+      if (storeContent.components) {
+        storeContent.components.push({
+          ...heroData,
+          ...metaDataSection
+        });
+      }
+      return { ...heroData, ...metaDataSection };
     }
+    storage = {};
 
     if (
       metaDataSection.type === 'paragraph' ||
