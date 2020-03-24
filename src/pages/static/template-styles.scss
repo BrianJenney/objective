@@ -1,0 +1,8 @@
+.Template-1 {
+  .pageTitle {
+    margin: 55px 0 15px;
+    @media only screen and (max-width: 600px) {
+      margin: 15px 0 5px;
+    }
+  }
+}
