@@ -136,12 +136,12 @@ const Products = () => {
               </div>
             </Grid>
             <CategorySummary
-              key="newyear"
-              products={productCategoriesToProducts.newyear}
+              key="sleepimmunity"
+              products={productCategoriesToProducts.sleepimmunity}
               category={{
                 title: 'Skin & Beauty',
                 description: 'Some description',
-                slug: 'newyear'
+                slug: 'sleepimmunity'
               }}
               styleMap={{
                 container: {
