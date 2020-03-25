@@ -46,6 +46,7 @@ const StaticPage = ({ location }) => {
     } else {
       entries.content.map(entry => transformNavLink(store, entry));
     }
+
     if (entries.nodeType === 'hyperlink') {
       return store.push({
         scroll: entries.data.uri,
@@ -102,7 +103,7 @@ const StaticPage = ({ location }) => {
       return null;
     }
     entries.content.map(entry => transformOneColumn(store, entry, prevStore));
-
+    // log('testing-ENTRY@@@', entries);
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
@@ -114,12 +115,12 @@ const StaticPage = ({ location }) => {
   };
 
   const transformContent = (fields, storeContent, storeContainer) => {
-    log('++TESTING++CONTENT++', fields);
+    // log('++TESTING++CONTENT++', fields);
     columnComponent = { value: { components: [] } };
     storage = {};
     const metaDataSection = transformMetadata(fields.metadata);
 
-    if (metaDataSection.type === 'navigation') {
+    if (metaDataSection.type === 'navigation' || metaDataSection.type === 'button') {
       if (fields.name.toLowerCase().includes('mobile')) {
         const navLinkData = transformNavLink([], fields.content);
         storage.value = navLinkData;
@@ -128,10 +129,14 @@ const StaticPage = ({ location }) => {
         const navLinkData = transformNavLink([], fields.content);
         storage.value = navLinkData;
       }
-      storeContent.components.push({
-        ...storage,
-        ...metaDataSection
-      });
+      const navLinkData = transformNavLink([], fields.content);
+      if (storeContent.components) {
+        storeContent.components.push({
+          ...storage,
+          ...metaDataSection
+        });
+      }
+      return { ...navLinkData, ...metaDataSection };
     }
 
     if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle' || metaDataSection.type === 'banner') {
