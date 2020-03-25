@@ -33,27 +33,21 @@ export const GeneratePageComponents = (comps, template) => {
       case 'pageTitle':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={classes.margin}>
-              <Title data={obj} template={template} type={obj.type} />
-            </Grid>
+            <Title data={obj} template={template} type={obj.type} />
           </>
         );
         break;
       case 'pageSubTitle':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={classes.margin}>
-              <Subtitle data={obj} template={template} type={obj.type} />
-            </Grid>
+            <Subtitle data={obj} template={template} type={obj.type} />
           </>
         );
         break;
       case 'hero':
         components.push(
           <>
-            <Grid item md={10} className={`${classes.margin}`}>
-              <Hero data={obj} template={template} type={obj.type} />
-            </Grid>
+            <Hero data={obj} template={template} type={obj.type} />
           </>
         );
         break;
