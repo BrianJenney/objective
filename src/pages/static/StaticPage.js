@@ -11,7 +11,7 @@ const StaticPage = ({ location }) => {
   let mainDataObj = {};
   let storage = {};
   let columnComponent = { value: { components: [] } };
-
+  const tableComponent = [];
   const transformMetadata = metaEntries => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
       const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
@@ -110,7 +110,7 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
-
+      // log('testing-COLUMN', store);
       if (store) {
         prevStore.value.components.push(store);
       }
@@ -167,7 +167,8 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'banner' ||
       metaDataSection.type === 'sectionTitle' ||
       metaDataSection.type === 'boxTitle' ||
-      metaDataSection.type === 'imageCaption'
+      metaDataSection.type === 'imageCaption' ||
+      metaDataSection.type === 'tableHead'
     ) {
       const titleData = transformTitle({}, fields.content);
 
@@ -190,7 +191,11 @@ const StaticPage = ({ location }) => {
       return { ...heroData, ...metaDataSection };
     }
 
-    if (metaDataSection.type === 'paragraph' || metaDataSection.type === 'list') {
+    if (
+      metaDataSection.type === 'paragraph' ||
+      metaDataSection.type === 'list' ||
+      metaDataSection.type === 'tableBody'
+    ) {
       const paragraphData = transformText([], fields.content);
       storeContent = { value: paragraphData, ...metaDataSection };
       return storeContent;
@@ -199,15 +204,24 @@ const StaticPage = ({ location }) => {
     if (
       metaDataSection.type === 'oneColumn' ||
       metaDataSection.type === 'box' ||
-      metaDataSection.type === 'container'
+      metaDataSection.type === 'container' ||
+      metaDataSection.type === 'table' ||
+      metaDataSection.type === 'tableContainer'
     ) {
       columnComponent = { ...metaDataSection, ...columnComponent };
-      // log('testing-META', metaDataSection, columnComponent);
+      // log('testing-META', metaDataSection);
       const columnData = transformOneColumn({}, fields.content, columnComponent);
+      // log('testing-CONTENT', columnData);
       if (columnData.type === 'box' || columnData.type === 'container') {
         storage = columnData;
       }
-
+      if (columnData.type === 'table') {
+        storage = { value: { components: tableComponent }, ...metaDataSection };
+        return storage;
+      }
+      if (columnData.type === 'tableContainer') {
+        tableComponent.push(columnData);
+      }
       if (columnData.type === 'oneColumn') {
         columnComponent = columnData;
         columnComponent.value.components.push(storage);
