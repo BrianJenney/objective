@@ -70,7 +70,9 @@ const StaticPage = ({ location }) => {
       if (title.toLowerCase().includes('mobile')) {
         return (store.mobileImg = `https:${imgURL}`);
       }
-      return (store.img = `https: ${imgURL}`);
+      store.desktopImg = `https: ${imgURL}`;
+      store.mobileImg = `https: ${imgURL}`;
+      return store;
     }
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
@@ -110,7 +112,6 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
-      // log('testing-COLUMN', store);
       if (store) {
         prevStore.value.components.push(store);
       }
@@ -210,9 +211,9 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'tableContainer'
     ) {
       columnComponent = { ...metaDataSection, ...columnComponent };
-      // log('testing-META', metaDataSection);
+
       const columnData = transformOneColumn({}, fields.content, columnComponent);
-      // log('testing-CONTENT', columnData);
+
       if (columnData.type === 'box' || columnData.type === 'container') {
         storage = columnData;
       }
