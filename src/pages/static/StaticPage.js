@@ -5,7 +5,6 @@ import { requestPage } from '../../modules/static/actions';
 
 const StaticPage = ({ location }) => {
   // const [featuredMain, setFeaturedMain] = useState({});
-  const { log } = console;
   const dispatch = useDispatch();
   const contentfulEntries = useSelector(state => state.page.items);
   let mainDataObj = {};
@@ -104,7 +103,6 @@ const StaticPage = ({ location }) => {
   };
 
   const transformOneColumn = (store, entries, prevStore) => {
-    // log('testing-ENTRY@@@', entries);
     if (!entries.content) {
       return null;
     }
@@ -120,7 +118,6 @@ const StaticPage = ({ location }) => {
   };
 
   const transformContent = (fields, storeContent, storeContainer) => {
-    // log('++TESTING++CONTENT++', fields);
     columnComponent = { value: { components: [] } };
     storage = {};
     const metaDataSection = transformMetadata(fields.metadata);
@@ -232,7 +229,7 @@ const StaticPage = ({ location }) => {
       }
     }
   };
-  // START
+
   if (contentfulEntries) {
     const { template, slug, content } = contentfulEntries[0].fields;
     mainDataObj = {
@@ -242,11 +239,9 @@ const StaticPage = ({ location }) => {
     };
 
     content.map(({ fields }) => {
-      log('TESTING@@@@@@****', fields);
       transformContent(fields, mainDataObj);
     });
   }
-  log('+++TESTING+++', mainDataObj);
 
   useEffect(() => {
     dispatch(requestPage('staticpage'));
