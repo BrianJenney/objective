@@ -32,6 +32,7 @@ export const getPrices = prices => {
 */
 export const getProductCategories = products => {
   const isNewYearPage = window.location.pathname.includes('newyear');
+  const isSleepImmunityPage = window.location.pathname.includes('sleepandimmunity');
   const productCategoriesMap = new Map();
   const productCategories = [];
   if (isNewYearPage) {
@@ -42,6 +43,19 @@ export const getProductCategories = products => {
         product.id == '5ceebfdca686a03bccfa67c0'
       ) {
         product.productCategory = 'newyear';
+      }
+      if (!productCategoriesMap.has(product.productCategory)) {
+        productCategoriesMap.set(product.productCategory, true);
+        productCategories.push(product.productCategory);
+      }
+    });
+  } else if (isSleepImmunityPage) {
+    products.map(product => {
+      if (
+        product.id == '5d8bb528f5005515a437d4c5' || 
+        product.id == '5ceec52ba686a03bccfa67c5'
+      ) {
+        product.productCategory = 'sleepimmunity';
       }
       if (!productCategoriesMap.has(product.productCategory)) {
         productCategoriesMap.set(product.productCategory, true);
