@@ -3,6 +3,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 
+import Title from './Title';
+import List from './List';
+
 const useStyles = makeStyles(theme => ({
   border: props => ({
     border: '1px solid',
@@ -27,19 +30,34 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const SPBox = ({ data, template, type }) => {
+const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
   const border = data.border === 'yes';
+  console.log(comps);
 
   return (
     <div>
       {border ? (
         <Box className={classes.border}>
-          <div>TEST</div>
+          {comps.map(obj => {
+            switch (obj.type) {
+              case 'boxTitle':
+                return <Title data={obj} template={template} type={obj.type} />;
+              case 'list':
+                return <List data={obj} template={template} type={obj.type} />;
+            }
+          })}
         </Box>
       ) : (
         <Box className={classes.noBorder}>
-          <div>TEST</div>
+          {comps.map(obj => {
+            switch (obj.type) {
+              case 'boxTitle':
+                return <Title data={obj} template={template} type={obj.type} />;
+              case 'list':
+                return <List data={obj} template={template} type={obj.type} />;
+            }
+          })}
         </Box>
       )}
     </div>
