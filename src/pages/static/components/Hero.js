@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Hero = ({ data }) => {
+const Hero = ({ data, template, variant }) => {
   //const hero = data.filter(item => item.type === 'hero')[0];
   //const style = hero;
   const classes = useStyles(data);
@@ -24,7 +24,19 @@ const Hero = ({ data }) => {
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box>{!sm ? <img src={data.desktopImg} className={classes.root}></img> : <img src={data.mobileImg}></img>}</Box>
+    <>
+      {template ? (
+        <Box className={template}>
+          {!sm ? (
+            <img src={data.desktopImg} className={`${classes.root} ${variant}`}></img>
+          ) : (
+            <img src={data.mobileImg} className={`${classes.root} ${variant}`}></img>
+          )}
+        </Box>
+      ) : (
+        <Box>{!sm ? <img src={data.desktopImg} className={classes.root}></img> : <img src={data.mobileImg}></img>}</Box>
+      )}
+    </>
   );
 };
 
