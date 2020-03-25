@@ -124,22 +124,45 @@ const StaticPage = ({ location }) => {
       if (fields.name.toLowerCase().includes('mobile')) {
         const navLinkData = transformNavLink([], fields.content);
         storage.value = navLinkData;
-      }
-      if (fields.name.toLowerCase().includes('desktop')) {
+      } else if (fields.name.toLowerCase().includes('desktop')) {
         const navLinkData = transformNavLink([], fields.content);
         storage.value = navLinkData;
       }
-      const navLinkData = transformNavLink([], fields.content);
+      if (metaDataSection.type === 'button') {
+        const navButton = transformNavLink([], fields.content);
+        const btnStyle = Object.keys(metaDataSection.style).filter(
+          key => key !== 'productSkuAndQty' && key !== 'coupon' && key !== 'url'
+        );
+        const metaDataBtn = btnStyle.reduce((metaObj, key) => {
+          if (!metaObj[key]) {
+            metaObj[key] = metaDataSection.style[key];
+          }
+          return metaObj;
+        }, {});
+
+        storage = {
+          value: navButton[0].label,
+          skuAndQty: metaDataSection.style.productSkuAndQty,
+          coupon: metaDataSection.style.coupon,
+          URL: metaDataSection.style.url,
+          style: metaDataBtn
+        };
+      }
       if (storeContent.components) {
         storeContent.components.push({
           ...storage,
           ...metaDataSection
         });
       }
-      return { ...navLinkData, ...metaDataSection };
     }
 
-    if (metaDataSection.type === 'title' || metaDataSection.type === 'subTitle' || metaDataSection.type === 'banner') {
+    if (
+      metaDataSection.type === 'title' ||
+      metaDataSection.type === 'subTitle' ||
+      metaDataSection.type === 'banner' ||
+      metaDataSection.type === 'sectionTitle' ||
+      metaDataSection.type === 'boxTitle'
+    ) {
       const titleData = transformTitle({}, fields.content);
       if (storeContent.components) {
         storeContent.components.push({
@@ -147,6 +170,7 @@ const StaticPage = ({ location }) => {
           ...metaDataSection
         });
       }
+      return { ...titleData, ...metaDataSection };
     }
     if (metaDataSection.type === 'hero' || metaDataSection.type === 'image') {
       const heroData = transformHero({}, fields.content);
@@ -159,12 +183,7 @@ const StaticPage = ({ location }) => {
       return { ...heroData, ...metaDataSection };
     }
 
-    if (
-      metaDataSection.type === 'paragraph' ||
-      metaDataSection.type === 'list' ||
-      metaDataSection.type === 'boxTitle' ||
-      metaDataSection.type === 'sectionTitle'
-    ) {
+    if (metaDataSection.type === 'paragraph' || metaDataSection.type === 'list') {
       let paragraphData = transformText([], fields.content);
       if (metaDataSection.type === 'boxTitle' || metaDataSection.type === 'sectionTitle') {
         paragraphData = paragraphData.toString();
