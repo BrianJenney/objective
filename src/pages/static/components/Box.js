@@ -36,15 +36,43 @@ const SPBox = ({ data, template, type, comps }) => {
   console.log(comps);
 
   return (
-    <div>
-      {border ? (
+    <>
+      {template ? (
+        border ? (
+          <div className={template}>
+            <Box className={`${classes.border} ${type}`}>
+              {comps.map(obj => {
+                switch (obj.type) {
+                  case 'boxTitle':
+                    return <Title data={obj} template={template} type={obj.type} />;
+                  case 'list':
+                    return <List data={obj} template={template} type={obj.type} symbol={obj.bulletSymbol} />;
+                }
+              })}
+            </Box>
+          </div>
+        ) : (
+          <div className={template}>
+            <Box className={`${classes.noBorder} ${type}`}>
+              {comps.map(obj => {
+                switch (obj.type) {
+                  case 'boxTitle':
+                    return <Title data={obj} template={template} type={obj.type} />;
+                  case 'list':
+                    return <List data={obj} template={template} type={obj.type} />;
+                }
+              })}
+            </Box>
+          </div>
+        )
+      ) : border ? (
         <Box className={classes.border}>
           {comps.map(obj => {
             switch (obj.type) {
               case 'boxTitle':
                 return <Title data={obj} template={template} type={obj.type} />;
               case 'list':
-                return <List data={obj} template={template} type={obj.type} />;
+                return <List data={obj} template={template} type={obj.type} symbol={obj.bulletSymbol} />;
             }
           })}
         </Box>
@@ -60,7 +88,7 @@ const SPBox = ({ data, template, type, comps }) => {
           })}
         </Box>
       )}
-    </div>
+    </>
   );
 };
 

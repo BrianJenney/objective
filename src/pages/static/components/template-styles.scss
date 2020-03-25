@@ -1,6 +1,6 @@
 .Template-1 {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  // display: grid;
+  // grid-template-columns: repeat(12, 1fr);
   .pageTitle {
     grid-column: 3/11;
     margin: 55px 0 15px;
@@ -48,5 +48,8 @@
     @media only screen and (max-width: 600px) {
       grid-column: 1/-1;
     }
+  }
+  .box {
+    padding: 25px;
   }
 }
