@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 
-import '../template-styles.scss';
+import './template-styles.scss';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Title = ({ data, template, variant }) => {
+const Title = ({ data, template, type }) => {
   const classes = useStyles(data);
 
   return (
     <>
       {template ? (
         <Box className={template}>
-          <Typography className={`${classes.root} ${variant}`}>{data.value}</Typography>
+          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
         </Box>
       ) : (
         <Box>

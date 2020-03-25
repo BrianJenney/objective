@@ -322,8 +322,23 @@ const StaticPage = ({ match }) => {
               skuAndQty: ['TMNO-1BOT-CAP;2', 'TGSS-1BOT-CHO;1'],
               coupon: 'SLUMBER15',
               URL: '/checkout',
-              desktopStyle: {},
-              mobileStyle: {}
+              desktopStyle: {
+                backgroundColor: '#1f396d',
+                display: 'block',
+                float: 'left',
+                fontColor: '#fff',
+                fontWeight: '900',
+                fontSize: '16px',
+                lineHeight: '1.88',
+                fontFamily: 'p22-underground',
+                textTransform: 'uppercase',
+                width: '385px',
+                height: '60px'
+              },
+              mobileStyle: {
+                display: 'block',
+                width: '100%'
+              }
             }
           ]
         }

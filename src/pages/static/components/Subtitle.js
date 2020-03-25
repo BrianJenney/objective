@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 
-import '../template-styles.scss';
+import './template-styles.scss';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Subtitle = ({ data, template, variant }) => {
+const Subtitle = ({ data, template, type }) => {
   //const subtitle = data.filter(item => item.type === 'subtitle')[0];
   //const style = subtitle;
   const classes = useStyles(data);
@@ -35,7 +35,7 @@ const Subtitle = ({ data, template, variant }) => {
     <>
       {template ? (
         <Box className={template}>
-          <Typography className={`${classes.root} ${variant}`}>{data.value}</Typography>
+          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
         </Box>
       ) : (
         <Box>
