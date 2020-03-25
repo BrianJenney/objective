@@ -156,7 +156,6 @@ const StaticPage = ({ location }) => {
           ...metaDataSection
         });
       }
-      return storage;
     }
 
     if (
@@ -226,6 +225,7 @@ const StaticPage = ({ location }) => {
         if (storeContent.components) {
           storeContent.components.push(columnComponent);
         }
+        storage = columnComponent;
       }
     }
   };
