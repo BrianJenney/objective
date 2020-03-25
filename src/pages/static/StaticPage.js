@@ -206,7 +206,6 @@ const StaticPage = ({ location }) => {
     if (
       metaDataSection.type === 'oneColumn' ||
       metaDataSection.type === 'box' ||
-      metaDataSection.type === 'container' ||
       metaDataSection.type === 'table' ||
       metaDataSection.type === 'tableContainer'
     ) {
@@ -214,7 +213,7 @@ const StaticPage = ({ location }) => {
 
       const columnData = transformOneColumn({}, fields.content, columnComponent);
 
-      if (columnData.type === 'box' || columnData.type === 'container') {
+      if (columnData.type === 'box') {
         storage = columnData;
       }
       if (columnData.type === 'table') {
