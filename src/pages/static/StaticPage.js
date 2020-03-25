@@ -73,6 +73,10 @@ const StaticPage = ({ location }) => {
       }
       return (store.img = `https: ${imgURL}`);
     }
+    if (entries.nodeType === 'embedded-entry-block') {
+      const { fields } = entries.data.target;
+      return (store.caption = transformContent(fields, {}));
+    }
     return store;
   };
 
@@ -99,14 +103,15 @@ const StaticPage = ({ location }) => {
   };
 
   const transformOneColumn = (store, entries, prevStore) => {
+    // log('testing-ENTRY@@@', entries);
     if (!entries.content) {
       return null;
     }
     entries.content.map(entry => transformOneColumn(store, entry, prevStore));
-    // log('testing-ENTRY@@@', entries);
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
+
       if (store) {
         prevStore.value.components.push(store);
       }
@@ -155,7 +160,10 @@ const StaticPage = ({ location }) => {
         });
       }
     }
-
+    if (metaDataSection.type === 'imageCaption') {
+      const imgCap = transformTitle({}, fields.content);
+      return { ...imgCap, ...metaDataSection };
+    }
     if (
       metaDataSection.type === 'title' ||
       metaDataSection.type === 'subTitle' ||
@@ -164,6 +172,7 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'boxTitle'
     ) {
       const titleData = transformTitle({}, fields.content);
+
       if (storeContent.components) {
         storeContent.components.push({
           ...titleData,
@@ -184,10 +193,7 @@ const StaticPage = ({ location }) => {
     }
 
     if (metaDataSection.type === 'paragraph' || metaDataSection.type === 'list') {
-      let paragraphData = transformText([], fields.content);
-      if (metaDataSection.type === 'boxTitle' || metaDataSection.type === 'sectionTitle') {
-        paragraphData = paragraphData.toString();
-      }
+      const paragraphData = transformText([], fields.content);
       storeContent = { value: paragraphData, ...metaDataSection };
       return storeContent;
     }
@@ -218,6 +224,7 @@ const StaticPage = ({ location }) => {
     };
 
     content.map(({ fields }) => {
+      log('TESTING@@@@@@****', fields);
       transformContent(fields, mainDataObj);
     });
   }
