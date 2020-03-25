@@ -168,7 +168,8 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'sectionTitle' ||
       metaDataSection.type === 'boxTitle' ||
       metaDataSection.type === 'imageCaption' ||
-      metaDataSection.type === 'tableHead'
+      metaDataSection.type === 'tableHead' ||
+      metaDataSection.type === 'sectionSubTitle'
     ) {
       const titleData = transformTitle({}, fields.content);
 
