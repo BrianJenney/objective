@@ -158,7 +158,6 @@ class Home extends Component {
             }
           });
         }
-        console.log('bestsellers', bestsellers);
       }
     } else {
       return null;
@@ -167,7 +166,6 @@ class Home extends Component {
     const bps = this.props.products.filter(product =>
       bestsellers.includes(product.sku.split('-')[0])
     );
-    console.log('bps', bps);
 
     console.log(bps);
     return (
