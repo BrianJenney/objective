@@ -7,3 +7,4 @@ export { default as Paragraph } from './Paragraph';
 export { default as Header } from './Header';
 export { default as SPButton } from './Button';
 export { default as SPBox } from './Box';
+export { default as Banner } from './Banner';
