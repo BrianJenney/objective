@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
-  const border = data.border === 'yes';
+  const border = data.border;
 
   return (
     <>
