@@ -59,8 +59,25 @@ const SPButton = ({ data, template, type, align }) => {
     }, 500);
   }, [cart, dispatch]);
 
+  const handleAddCoupon = useCallback(() => {
+    setTimeout(() => {
+      addCoupon(cart._id, data.coupon);
+      setCouponAdded(true);
+    }, 500);
+  }, [cart, products, dispatch]);
+
   useEffect(() => {
-    if (prodAdded && data.url) {
+    if (data.coupon && cart.items.length > 0 && couponAdded === false) {
+      handleAddCoupon();
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    if (data.coupon && prodAdded && couponAdded && data.url) {
+      window.location.href = data.url;
+    }
+
+    if (!data.coupon && prodAdded && data.url) {
       window.location.href = data.url;
     }
   }, [prodAdded, couponAdded]);

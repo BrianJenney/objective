@@ -95,7 +95,8 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumnBox',
+        type: 'oneColSection',
+        id: 'id001',
         value: {
           components: [
             {
@@ -182,7 +183,8 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumnBox',
+        type: 'oneColSection',
+        id: 'id002',
         value: {
           components: [
             {
@@ -240,7 +242,8 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumnBox',
+        type: 'oneColSection',
+        id: 'id003',
         value: {
           components: [
             {
@@ -282,7 +285,7 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumnBox',
+        type: 'oneColSection',
         value: {
           components: [
             {
@@ -356,7 +359,8 @@ const StaticPage = ({ match }) => {
         }
       },
       {
-        type: 'oneColumnBox',
+        type: 'oneColSection',
+        id: 'id004',
         value: {
           components: [
             {
@@ -397,7 +401,7 @@ const StaticPage = ({ match }) => {
               type: 'button',
               value: 'Get 15% off - Buy now',
               skuAndQty: ['TMNO-1BOT-CAPS;2'],
-              coupon: 'SLUMBER15',
+              coupon: 'voucherify.io-10-percent-off',
               url: '/checkout',
               desktopStyle: {
                 align: 'left',
