@@ -319,7 +319,7 @@ const StaticPage = ({ match }) => {
             {
               type: 'button',
               value: 'Get 15% off - Buy now',
-              skuAndQty: ['TMNO-1BOT-CAP;2', 'TGSS-1BOT-CHO;1'],
+              skuAndQty: ['TMNO-1BOT-CAPS;2'],
               coupon: 'SLUMBER15',
               URL: '/checkout',
               desktopStyle: {
