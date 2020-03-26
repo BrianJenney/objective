@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 
 import './template-styles.scss';
 
@@ -29,14 +29,18 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const SPButton = ({ data, template, type }) => {
+const SPButton = ({ data, template, type, align }) => {
   const classes = useStyles(data);
-
+  console.log(`${type}-${align}`);
   return (
     <>
       {template ? (
         <div className={template}>
-          <Button className={`${classes.root}`}>{data.value}</Button>
+          <Grid className={type}>
+            <Grid className={`${type}-${align}`}>
+              <Button className={`${classes.root}`}>{data.value}</Button>
+            </Grid>
+          </Grid>
         </div>
       ) : (
         <div>

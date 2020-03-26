@@ -44,9 +44,18 @@
       margin-right: 15px;
     }
   }
-  button {
-    @media only screen and (max-width: 600px) {
-      grid-column: 1/-1;
+  .button {
+    .button-left {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .button-right {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .button-center {
+      display: flex;
+      justify-content: center;
     }
   }
   .box {
