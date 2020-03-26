@@ -100,7 +100,7 @@ const StaticPage = ({ match }) => {
           components: [
             {
               type: 'box',
-              border: 'yes',
+              border: true,
               desktopStyle: {
                 backgroundColor: '#fcf8f4',
                 borderColor: '#000000',
@@ -338,6 +338,21 @@ const StaticPage = ({ match }) => {
               }
             }
           ]
+        }
+      },
+      {
+        type: 'banner',
+        value: "THERE'S A SIMPLE WAY TO GET THE DEEP, RESTORATIVE, HIGH-QUALITY SLEEP YOU NEED",
+        desktopStyle: {
+          align: 'center',
+          border: true,
+          borderPlacement: 'borderTopandBottom',
+          borderColor: '#1f396d',
+          fontColor: '#1f396d',
+          fontWeight: 600,
+          fontSize: '33px',
+          fontFamily: 'p22-underground',
+          textTransform: 'uppercase'
         }
       },
       {
