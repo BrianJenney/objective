@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
 const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
   const border = data.border === 'yes';
-  console.log(comps);
 
   return (
     <>
