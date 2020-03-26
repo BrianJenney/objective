@@ -153,8 +153,12 @@ class Home extends Component {
         if (carousel[key].fields.identifier === 'bestsellers') {
           carousel[key].fields.products.map(product => {
             bestsellers.push(product.fields.sku);
+            if (bestsellers.length >= 4) {
+              bestsellers.pop();
+            }
           });
         }
+        console.log('bestsellers', bestsellers);
       }
     } else {
       return null;
@@ -163,6 +167,7 @@ class Home extends Component {
     const bps = this.props.products.filter(product =>
       bestsellers.includes(product.sku.split('-')[0])
     );
+    console.log('bps', bps);
 
     console.log(bps);
     return (
@@ -203,6 +208,9 @@ class Home extends Component {
         if (carousel[key].fields.identifier === 'solutions_whole_family') {
           carousel[key].fields.products.map(product => {
             family.push(product.fields.sku);
+            if (family.length >= 4) {
+              family.pop();
+            }
           });
         }
       }
