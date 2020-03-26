@@ -80,28 +80,34 @@
     letter-spacing: 2px;
   }
   .banner {
-    letter-spacing: 4px;
-    margin: 40px 0;
-    padding: 30px 0;
-    @media only screen and (max-width: 600px) {
-      text-align: left;
-      font-size: 26px;
-      padding: 0;
+    .banner-text {
+      letter-spacing: 4px;
+      padding: 30px 0;
+      @media only screen and (max-width: 600px) {
+        text-align: left;
+        font-size: 26px;
+        padding: 25px 0;
+      }
     }
     .borderTopandBottom {
+      margin: 40px 0;
       border-top: 4px solid;
       border-bottom: 4px solid;
     }
     .borderTop {
+      margin: 40px 0;
       border-top: 4px solid;
     }
     .borderBottom {
+      margin: 40px 0;
       border-bottom: 4px solid;
     }
     .borderLeft {
+      margin: 40px 0;
       border-left: 4px solid;
     }
     .borderRight {
+      margin: 40px 0;
       border-right: 4px solid;
     }
   }

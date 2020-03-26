@@ -28,7 +28,7 @@ const Banner = ({ data, template, type, borderPlacement }) => {
           <div className={template}>
             <Grid className={type}>
               <Box className={borderPlacement} style={{ borderColor: `${borderColor}` }}>
-                <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
+                <Typography className={`${classes.root} ${type}-text`}>{data.value}</Typography>
               </Box>
             </Grid>
           </div>
