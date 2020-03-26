@@ -196,12 +196,16 @@ const Footer = ({ location, currentUser }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
-  const isLanding = matchPath(location.pathname, { path: '/landing' });
+  let isLandingSmallFooter = matchPath(location.pathname, { path: '/landing' });
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
   const gotoUrl = (url, login) => (currentUser.data.account_jwt ? url : login);
+  let isLandingWithFooter = false;
+  if (window.location.pathname == '/landing/sleepandimmunity') {
+    isLandingWithFooter = true;
+    isLandingSmallFooter = null;
+  }
   const handleSubmit = useCallback(
     ({ email }) => {
-      console.log('SUBMIT SUCCEED!!!', email);
       window.analytics.track('Email Capture Completed', {
         email,
         site_location: 'footer'
@@ -233,7 +237,7 @@ const Footer = ({ location, currentUser }) => {
 
   return (
     <>
-      {xs && !isCheckoutPage && !isOrderPage && !isLanding ? (
+      {xs && !isCheckoutPage && !isOrderPage && !isLandingSmallFooter ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>
@@ -446,7 +450,7 @@ const Footer = ({ location, currentUser }) => {
             </Grid>
           </Container>
         </StyledBox>
-      ) : !isCheckoutPage && !isOrderPage && !isLanding ? (
+      ) : !isCheckoutPage && !isOrderPage && !isLandingSmallFooter ? (
         <StyledBox className="footer-container">
           <Container>
             <Grid container spacing={0}>

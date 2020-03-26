@@ -122,7 +122,7 @@ const Products = () => {
                     <h3>Sleep &amp; Immune Support Made Easy</h3>
                     <Divider variant="fullWidth" />
                     <p>
-                      Pair our Fast Asleep chocolate mints with Immune + Wellness gummies to get the deep restorative rest you need at night and the extra immune support you could probably use during the day.*
+                      Pair our Fast Asleep chocolate mints with Immune + Wellness gummies to get the deep restorative rest you need at night and the extra immune support you need during the day.*
                     </p>
                   </Grid>
                   <Grid item xs={12} md={7}>
