@@ -400,9 +400,8 @@ const StaticPage = ({ match }) => {
               coupon: 'SLUMBER15',
               URL: '/checkout',
               desktopStyle: {
+                align: 'left',
                 backgroundColor: '#1f396d',
-                display: 'block',
-                float: 'left',
                 fontColor: '#fff',
                 fontWeight: '900',
                 fontSize: '16px',
