@@ -11,7 +11,7 @@ const StaticPage = ({ location }) => {
   let storage = {};
   let columnComponent = { value: { components: [] } };
   const tableComponent = [];
-  const transformMetadata = metaEntries => {
+  const transformMetadata = (metaEntries, id = null) => {
     const metaFields = metaEntries.reduce((metaObj, { fields }) => {
       const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
       const metaData = metaStyles.reduce((obj, each) => {
@@ -31,9 +31,12 @@ const StaticPage = ({ location }) => {
           } else if (value.toLowerCase().includes('mobile')) {
             metaObj.mobileStyle = { ...metaData };
           } else {
-            metaObj.style = { ...metaData };
+            metaObj.desktopStyle = { ...metaData };
           }
         }
+      }
+      if (id) {
+        metaObj.id = id;
       }
       return metaObj;
     }, {});
@@ -69,8 +72,8 @@ const StaticPage = ({ location }) => {
       if (title.toLowerCase().includes('mobile')) {
         return (store.mobileImg = `https:${imgURL}`);
       }
-      store.desktopImg = `https: ${imgURL}`;
-      store.mobileImg = `https: ${imgURL}`;
+      store.desktopImg = `https:${imgURL}`;
+      store.mobileImg = `https:${imgURL}`;
       return store;
     }
     if (entries.nodeType === 'embedded-entry-block') {
@@ -120,7 +123,7 @@ const StaticPage = ({ location }) => {
   const transformContent = (fields, storeContent, storeContainer) => {
     columnComponent = { value: { components: [] } };
     storage = {};
-    const metaDataSection = transformMetadata(fields.metadata);
+    const metaDataSection = transformMetadata(fields.metadata, fields.id);
 
     if (metaDataSection.type === 'navigation' || metaDataSection.type === 'button') {
       if (fields.name.toLowerCase().includes('mobile')) {
@@ -131,23 +134,40 @@ const StaticPage = ({ location }) => {
         storage.value = navLinkData;
       }
       if (metaDataSection.type === 'button') {
+        let btnDesktopStyle;
+        let btnMobileStyle;
         const navButton = transformNavLink([], fields.content);
-        const btnStyle = Object.keys(metaDataSection.style).filter(
-          key => key !== 'productSkuAndQty' && key !== 'coupon' && key !== 'url'
-        );
-        const metaDataBtn = btnStyle.reduce((metaObj, key) => {
-          if (!metaObj[key]) {
-            metaObj[key] = metaDataSection.style[key];
-          }
-          return metaObj;
-        }, {});
+        if (metaDataSection.desktopStyle) {
+          const metaDesktop = Object.keys(metaDataSection.desktopStyle).filter(
+            key => key !== 'productSkuAndQty' && key !== 'coupon' && key !== 'url'
+          );
+          btnDesktopStyle = metaDesktop.reduce((metaObj, key) => {
+            if (!metaObj[key]) {
+              metaObj[key] = metaDataSection.desktopStyle[key];
+            }
+            return metaObj;
+          }, {});
+        }
+        if (metaDataSection.mobileStyle) {
+          const metaMobile = Object.keys(metaDataSection.mobileStyle).filter(
+            key => key !== 'productSkuAndQty' && key !== 'coupon' && key !== 'url'
+          );
+          btnMobileStyle = metaMobile.reduce((metaObj, key) => {
+            if (!metaObj[key]) {
+              metaObj[key] = metaDataSection.mobileStyle[key];
+            }
+            return metaObj;
+          }, {});
+        }
 
         storage = {
+          type: metaDataSection.type,
           value: navButton[0].label,
-          skuAndQty: metaDataSection.style.productSkuAndQty,
-          coupon: metaDataSection.style.coupon,
-          URL: metaDataSection.style.url,
-          style: metaDataBtn
+          skuAndQty: metaDataSection.desktopStyle.productSkuAndQty,
+          coupon: metaDataSection.desktopStyle.coupon,
+          URL: metaDataSection.desktopStyle.url,
+          desktopStyle: btnDesktopStyle,
+          mobileStyle: btnMobileStyle
         };
       }
       if (storeContent.components) {
@@ -159,8 +179,8 @@ const StaticPage = ({ location }) => {
     }
 
     if (
-      metaDataSection.type === 'title' ||
-      metaDataSection.type === 'subTitle' ||
+      metaDataSection.type === 'pageTitle' ||
+      metaDataSection.type === 'pageSubTitle' ||
       metaDataSection.type === 'banner' ||
       metaDataSection.type === 'sectionTitle' ||
       metaDataSection.type === 'boxTitle' ||
@@ -200,7 +220,7 @@ const StaticPage = ({ location }) => {
     }
 
     if (
-      metaDataSection.type === 'oneColumn' ||
+      metaDataSection.type === 'oneColSection' ||
       metaDataSection.type === 'box' ||
       metaDataSection.type === 'table' ||
       metaDataSection.type === 'tableContainer'
@@ -219,7 +239,7 @@ const StaticPage = ({ location }) => {
       if (columnData.type === 'tableContainer') {
         tableComponent.push(columnData);
       }
-      if (columnData.type === 'oneColumn') {
+      if (columnData.type === 'oneColSection') {
         columnComponent = columnData;
         columnComponent.value.components.push(storage);
         if (storeContent.components) {
@@ -242,6 +262,7 @@ const StaticPage = ({ location }) => {
       transformContent(fields, mainDataObj);
     });
   }
+  console.log('TESTING@@@', mainDataObj);
 
   useEffect(() => {
     dispatch(requestPage('staticpage'));
