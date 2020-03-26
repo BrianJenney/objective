@@ -398,7 +398,7 @@ const StaticPage = ({ match }) => {
               value: 'Get 15% off - Buy now',
               skuAndQty: ['TMNO-1BOT-CAPS;2'],
               coupon: 'SLUMBER15',
-              URL: '/checkout',
+              url: '/checkout',
               desktopStyle: {
                 align: 'left',
                 backgroundColor: '#1f396d',

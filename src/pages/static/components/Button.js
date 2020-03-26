@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 const SPButton = ({ data, template, type, align }) => {
   const classes = useStyles(data);
   const [prodAdded, setProdAdded] = useState(false);
+  const [couponAdded, setCouponAdded] = useState(false);
   const products = useSelector(state => state.catalog.variants);
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
@@ -46,21 +47,24 @@ const SPButton = ({ data, template, type, align }) => {
 
   const handleAddToCart = useCallback(() => {
     setTimeout(() => {
-      if (data.skuAndQty.length > 0) {
-        data.skuAndQty.map(key => {
-          let arr = key.split(';');
-          addToCart(
-            cart,
-            products.find(p => p.sku === arr[0]),
-            arr[1]
-          );
-        });
+      if (data.skuAndQty.length === 1) {
+        const [sku, qty] = data.skuAndQty[0].split(';');
+        addToCart(
+          cart,
+          products.find(p => p.sku === sku),
+          qty
+        );
       }
       setProdAdded(true);
     }, 500);
   }, [cart, dispatch]);
 
-  console.log(`${type}-${align}`);
+  useEffect(() => {
+    if (prodAdded && data.url) {
+      window.location.href = data.url;
+    }
+  }, [prodAdded, couponAdded]);
+
   return (
     <>
       {template ? (
