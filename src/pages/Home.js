@@ -153,6 +153,9 @@ class Home extends Component {
         if (carousel[key].fields.identifier === 'bestsellers') {
           carousel[key].fields.products.map(product => {
             bestsellers.push(product.fields.sku);
+            if (bestsellers.length >= 4) {
+              bestsellers.pop();
+            }
           });
         }
       }
@@ -202,6 +205,9 @@ class Home extends Component {
         if (carousel[key].fields.identifier === 'solutions_whole_family') {
           carousel[key].fields.products.map(product => {
             family.push(product.fields.sku);
+            if (family.length >= 4) {
+              family.pop();
+            }
           });
         }
       }
