@@ -20,6 +20,7 @@ const Products = () => {
   const products = useContext(GalleryContext);
   const [seconds, setSeconds] = useState(0);
   const isNewYearPage = window.location.pathname.includes('newyear');
+  const isSleepImmunityPage = window.location.pathname.includes('sleepandimmunity');
 
   useEffect(() => {
     // track seconds for products to load
@@ -110,7 +111,49 @@ const Products = () => {
             </Grid>
           </Container>
         </Box>
-      ) : (
+      ) : isSleepImmunityPage ? (
+        <Box py={5} className="newyear">
+        <Container>
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+              <div className="opt1">
+                <Grid container className="gallery-content-blurb">
+                  <Grid item xs={12} md={5} className="leftside">
+                    <h3>Sleep &amp; Immune Support Made Easy</h3>
+                    <Divider variant="fullWidth" />
+                    <p>
+                      Pair our Fast Asleep chocolate mints with Immune + Wellness gummies to get the deep restorative rest you need at night and the extra immune support you could probably use during the day.*
+                    </p>
+                  </Grid>
+                  <Grid item xs={12} md={7}>
+                    <img
+                      src="https://images.ctfassets.net/mj9bpefl6wof/3em8ZTzi8oQRt7IJbXEUMv/ac36b66189554face41a335e22b1f565/DrinkingCoffee-706x1000px.png"
+                      alt=""
+                      className="blurb-img"
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            <CategorySummary
+              key="sleepimmunity"
+              products={productCategoriesToProducts.sleepimmunity}
+              category={{
+                title: 'Skin & Beauty',
+                description: 'Some description',
+                slug: 'sleepimmunity'
+              }}
+              styleMap={{
+                container: {
+                  borderColor: productCategoriesToProducts.core[0].color
+                },
+                text: { color: productCategoriesToProducts.core[0].color }
+              }}
+            />
+          </Grid>
+        </Container>
+      </Box>
+      ): (
         <>
           <Box py={5} className="corehealth">
             <Container>

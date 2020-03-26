@@ -66,7 +66,7 @@ const Header = ({ currentUser, location }) => {
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
-  const isLanding = matchPath(location.pathname, { path: '/landing' });
+  const isLandingNoHeader = matchPath(location.pathname, { path: '/landing' });
   const { account_jwt, firstName } = currentUser.data;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
@@ -74,6 +74,10 @@ const Header = ({ currentUser, location }) => {
   const cartMerged = useSelector(state => state.cart.cartMerged);
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
+  let isLandingWithHeader = false;
+  if (window.location.pathname == '/landing/sleepandimmunity') {
+    isLandingWithHeader = true;
+  }
 
   useEffect(() => {
     if (
@@ -131,12 +135,12 @@ const Header = ({ currentUser, location }) => {
       site_location: segmentSiteLocation()
     });
   };
-
+  
   return (
     <>
       {isCheckoutPage || isOrderPage ? (
         <CheckoutHeader />
-      ) : isLanding ? (
+      ) : isLandingNoHeader  && !isLandingWithHeader ? (
         <></>
       ) : (
         <Grid container item={true} xs={12} className="headerContainer">

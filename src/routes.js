@@ -39,6 +39,7 @@ import {
 } from './pages/Login';
 
 import NewYear from './pages/landingpages/NewYear';
+import SleepImmunity from './pages/landingpages/SleepImmunity';
 import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
 import FastAsleepMelatonin from './pages/landingpages/FastAsleepMelatonin';
 import FastAsleepLifestyle from './pages/landingpages/FastAsleepLifestyle';
@@ -166,6 +167,7 @@ export default [
   { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
   { path: '/journal', exact: true, component: Blog },
   { path: '/newyear', exact: true, component: NewYear },
+  { path: '/landing/sleepandimmunity', exact: true, component: SleepImmunity},
   { path: '/landing/fastasleep-ingredients', exact: true, component: FastAsleepIngredients },
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
   { path: '/landing/fastasleep-lifestyle', exact: true, component: FastAsleepLifestyle },
