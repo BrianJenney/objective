@@ -117,7 +117,7 @@ export const GenerateOneColumn = (comps, template) => {
       case 'button':
         components.push(
           <>
-            <SPButton data={obj} template={template} type={obj.type} />
+            <SPButton data={obj} template={template} type={obj.type} align={obj.desktopStyle.align} />
           </>
         );
         break;
