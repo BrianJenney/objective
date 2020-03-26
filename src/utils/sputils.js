@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMediaQuery, Container, Grid } from '@material-ui/core';
-import { Hero, Image, Paragraph, Title, Subtitle, Header, SPButton, SPBox } from '../pages/static/components';
+import { Hero, Image, Paragraph, Title, Subtitle, Header, SPButton, SPBox, Banner } from '../pages/static/components';
 import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
@@ -33,21 +33,41 @@ export const GeneratePageComponents = (comps, template) => {
       case 'pageTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} />
+            <Grid item xs={12} md={8} className={classes.margin}>
+              <Title data={obj} template={template} type={obj.type} />
+            </Grid>
           </>
         );
         break;
       case 'pageSubTitle':
         components.push(
           <>
-            <Subtitle data={obj} template={template} type={obj.type} />
+            <Grid item xs={12} md={8} className={classes.margin}>
+              <Subtitle data={obj} template={template} type={obj.type} />
+            </Grid>
           </>
         );
         break;
       case 'hero':
         components.push(
           <>
-            <Hero data={obj} template={template} type={obj.type} />
+            <Grid item xs={12} md={10} className={classes.margin}>
+              <Hero data={obj} template={template} type={obj.type} />
+            </Grid>
+          </>
+        );
+        break;
+      case 'banner':
+        components.push(
+          <>
+            <Grid item xs={12} md={10} className={classes.margin}>
+              <Banner
+                data={obj}
+                template={template}
+                type={obj.type}
+                borderPlacement={obj.desktopStyle.borderPlacement}
+              />
+            </Grid>
           </>
         );
         break;
