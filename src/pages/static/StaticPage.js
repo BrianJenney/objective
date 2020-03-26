@@ -99,6 +99,68 @@ const StaticPage = ({ match }) => {
         value: {
           components: [
             {
+              type: 'box',
+              border: true,
+              desktopStyle: {
+                backgroundColor: '#fcf8f4',
+                borderColor: '#000000',
+                display: 'block',
+                float: 'right',
+                width: '285px'
+              },
+              mobileStyle: {
+                width: '100%'
+              },
+              value: {
+                components: [
+                  {
+                    type: 'boxTitle',
+                    value: 'BENEFITS TO DEEP, RESTORATIVE SLEEP',
+                    desktopStyle: {
+                      fontColor: '#1f396d',
+                      fontWeight: 900,
+                      fontSize: '18px',
+                      lineHeight: 1.28,
+                      fontFamily: 'p22-underground',
+                      textTransform: 'uppercase'
+                    },
+                    mobileStyle: {
+                      fontColor: '#1f396d',
+                      fontWeight: 900,
+                      fontSize: '18px',
+                      lineHeight: 1.28,
+                      fontFamily: 'p22-underground',
+                      textTransform: 'uppercase'
+                    }
+                  },
+                  {
+                    type: 'list',
+                    value: [
+                      'More energy during the day',
+                      'Enhanced mental clarity',
+                      'Increased productivity',
+                      'Brighter moods'
+                    ],
+                    bulletSymbol: 'blueCheckmark',
+                    desktopStyle: {
+                      fontColor: '#333',
+                      fontWeight: 400,
+                      fontSize: '18px',
+                      lineHeight: 1.28,
+                      fontFamily: 'FreightTextProBook'
+                    },
+                    mobileStyle: {
+                      fontColor: '#333',
+                      fontWeight: 400,
+                      fontSize: '18px',
+                      lineHeight: 1.28,
+                      fontFamily: 'FreightTextProBook'
+                    }
+                  }
+                ]
+              }
+            },
+            {
               type: 'paragraph',
               value: [
                 'There’s no way around it: You need to sleep—and you need to sleep well—to feel well, perform at your best during the day and, yes, even look good doing it.*',
@@ -279,6 +341,21 @@ const StaticPage = ({ match }) => {
         }
       },
       {
+        type: 'banner',
+        value: "THERE'S A SIMPLE WAY TO GET THE DEEP, RESTORATIVE, HIGH-QUALITY SLEEP YOU NEED",
+        desktopStyle: {
+          align: 'center',
+          border: true,
+          borderPlacement: 'borderTopandBottom',
+          borderColor: '#1f396d',
+          fontColor: '#1f396d',
+          fontWeight: 600,
+          fontSize: '33px',
+          fontFamily: 'p22-underground',
+          textTransform: 'uppercase'
+        }
+      },
+      {
         type: 'oneColumnBox',
         value: {
           components: [
@@ -323,9 +400,8 @@ const StaticPage = ({ match }) => {
               coupon: 'SLUMBER15',
               URL: '/checkout',
               desktopStyle: {
+                align: 'left',
                 backgroundColor: '#1f396d',
-                display: 'block',
-                float: 'left',
                 fontColor: '#fff',
                 fontWeight: '900',
                 fontSize: '16px',

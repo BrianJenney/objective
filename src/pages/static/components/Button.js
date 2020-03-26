@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addCoupon, addToCart } from '../../../modules/cart/functions';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 
 import './template-styles.scss';
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const SPButton = ({ data, template, type }) => {
+const SPButton = ({ data, template, type, align }) => {
   const classes = useStyles(data);
   const [prodAdded, setProdAdded] = useState(false);
   const products = useSelector(state => state.catalog.variants);
@@ -60,17 +60,24 @@ const SPButton = ({ data, template, type }) => {
     }, 500);
   }, [cart, dispatch]);
 
+  console.log(`${type}-${align}`);
   return (
     <>
       {template ? (
         <div className={template}>
-          <Button className={`${classes.root}`} onClick={handleClick}>
-            {data.value}
-          </Button>
+          <Grid className={type}>
+            <Grid className={`${type}-${align}`}>
+              <Button className={`${classes.root}`} onClick={handleClick}>
+                {data.value}
+              </Button>
+            </Grid>
+          </Grid>
         </div>
       ) : (
         <div>
-          <Button className={classes.root}>{data.value}</Button>
+          <Button className={classes.root} onClick={handleClick}>
+            {data.value}
+          </Button>
         </div>
       )}
     </>

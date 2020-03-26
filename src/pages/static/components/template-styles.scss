@@ -1,21 +1,35 @@
 .Template-1 {
-  margin: 0 auto;
+  // display: grid;
+  // grid-template-columns: repeat(12, 1fr);
   .pageTitle {
+    grid-column: 3/11;
     margin: 55px 0 15px;
     @media only screen and (max-width: 600px) {
+      grid-column: 1/-1;
       margin: 15px 0 5px;
+      max-width: 100%;
     }
   }
   .pageSubTitle {
+    grid-column: 3/11;
     margin: 0 0 45px;
     @media only screen and (max-width: 600px) {
+      grid-column: 1/-1;
       margin: 0 0 10px;
     }
   }
   .hero {
+    grid-column: 2/12;
     margin-bottom: 45px;
     @media only screen and (max-width: 600px) {
+      grid-column: 1/-1;
       margin-bottom: 25px;
+    }
+  }
+  .sectionTitle {
+    grid-column: 1/8;
+    @media only screen and (max-width: 600px) {
+      grid-column: 1/-1;
     }
   }
   .image-right {
@@ -28,6 +42,82 @@
     margin-right: 25px;
     @media only screen and (max-width: 600px) {
       margin-right: 15px;
+    }
+  }
+  .button {
+    .button-left {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .button-right {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .button-center {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .box {
+    padding: 20px 25px;
+    margin-left: 25px;
+    @media only screen and (max-width: 600px) {
+      margin-left: 0;
+    }
+  }
+  .list {
+    margin-left: -1.2em;
+    .blueCheckmark {
+      list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/5Hv6wfbtbWEbfQSaGra8us/eec68bbf2409fb295a9b09babcdf76fe/checkmark.svg?h=9');
+      margin-bottom: 14px;
+    }
+    .greenCheckmark {
+      list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/7hIrYYtuJcJ9pVIlbiUb0o/e1daf46ec91cce5c3849649fb4d64dce/checkmark-green.svg?h=12');
+      margin-bottom: 14px;
+    }
+    .checkmark {
+      list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/3HZYclltbiH9vpFn6OPZIb/269d7184d896a24886cbd24bd4a5ff84/checkmark-black.svg?h=9');
+      margin-bottom: 14px;
+    }
+    .crossmark {
+      list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/ss2YbqmorcVrsmtzo7ePI/92e6f174ba9dce1bf2fb43401e0e04cf/x.svg?h=12');
+      margin-bottom: 14px;
+    }
+  }
+  .boxTitle {
+    line-height: 1.28;
+    letter-spacing: 2px;
+  }
+  .banner {
+    .banner-text {
+      letter-spacing: 4px;
+      padding: 30px 0;
+      @media only screen and (max-width: 600px) {
+        text-align: left;
+        font-size: 26px;
+        padding: 25px 0;
+      }
+    }
+    .borderTopandBottom {
+      margin: 40px 0;
+      border-top: 4px solid;
+      border-bottom: 4px solid;
+    }
+    .borderTop {
+      margin: 40px 0;
+      border-top: 4px solid;
+    }
+    .borderBottom {
+      margin: 40px 0;
+      border-bottom: 4px solid;
+    }
+    .borderLeft {
+      margin: 40px 0;
+      border-left: 4px solid;
+    }
+    .borderRight {
+      margin: 40px 0;
+      border-right: 4px solid;
     }
   }
 }
