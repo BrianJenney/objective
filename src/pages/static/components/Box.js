@@ -3,13 +3,14 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 
+import './template-styles.css';
+
 import Title from './Title';
 import List from './List';
 
 const useStyles = makeStyles(theme => ({
   border: props => ({
-    border: '1px solid',
-    backgroundColor: props.desktopStyle.backgroundColor,
+    backgroundColor: props.desktopStyle.bgColor,
     borderColor: props.desktopStyle.borderColor,
     display: props.desktopStyle.display,
     width: props.desktopStyle.width,
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     }
   }),
   noBorder: props => ({
-    backgroundColor: props.desktopStyle.backgroundColor,
+    backgroundColor: props.desktopStyle.bgColor,
     borderColor: props.desktopStyle.borderColor,
     display: props.desktopStyle.display,
     width: props.desktopStyle.width,
@@ -32,40 +33,13 @@ const useStyles = makeStyles(theme => ({
 
 const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
-  const border = data.border;
+  const border = data.desktopStyle.border;
+  const float = data.desktopStyle.float;
 
   return (
     <>
-      {template ? (
-        border ? (
-          <div className={template}>
-            <Box className={`${classes.border} ${type}`}>
-              {comps.map(obj => {
-                switch (obj.type) {
-                  case 'boxTitle':
-                    return <Title data={obj} template={template} type={obj.type} />;
-                  case 'list':
-                    return <List data={obj} template={template} type={obj.type} symbol={obj.bulletSymbol} />;
-                }
-              })}
-            </Box>
-          </div>
-        ) : (
-          <div className={template}>
-            <Box className={`${classes.noBorder} ${type}`}>
-              {comps.map(obj => {
-                switch (obj.type) {
-                  case 'boxTitle':
-                    return <Title data={obj} template={template} type={obj.type} />;
-                  case 'list':
-                    return <List data={obj} template={template} type={obj.type} />;
-                }
-              })}
-            </Box>
-          </div>
-        )
-      ) : border ? (
-        <Box className={classes.border}>
+      {border ? (
+        <Box className={`${classes.border} ${template}-${type} ${template}-${type}-${float}`}>
           {comps.map(obj => {
             switch (obj.type) {
               case 'boxTitle':
@@ -76,7 +50,7 @@ const SPBox = ({ data, template, type, comps }) => {
           })}
         </Box>
       ) : (
-        <Box className={classes.noBorder}>
+        <Box className={`${classes.noBorder} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`}>
           {comps.map(obj => {
             switch (obj.type) {
               case 'boxTitle':
