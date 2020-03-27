@@ -225,7 +225,10 @@ export const receivedCancelOrderSuccess = order => async (dispatch, getState) =>
   });
 
   window.analytics.track('Order Cancelled', {
-    affiliation: order.storeCode,
+    billing_city: order.billingAddress.city,
+    billing_country: order.billingAddress.country,
+    billing_state: order.billingAddress.state,
+    billing_zip: order.billingAddress.zipcode,
     coupon: order.promo && order.promo.code ? order.promo.code : '',
     currency: 'USD',
     discount: order.discount,
@@ -239,6 +242,10 @@ export const receivedCancelOrderSuccess = order => async (dispatch, getState) =>
     payment_method_detail: order.paymentData.cardType,
     products: orderItemsTransformed,
     shipping: order.shippingMethod.price,
+    shipping_city: order.shippingAddress.city,
+    shipping_country: order.shippingAddress.country,
+    shipping_state: order.shippingAddress.state,
+    shipping_zip: order.shippingAddress.zipcode,
     subtotal: order.subtotal,
     tax: order.tax,
     total: order.total
