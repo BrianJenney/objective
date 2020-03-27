@@ -5,7 +5,7 @@ import { addCoupon, addToCart } from '../../../modules/cart/functions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
 
-import './template-styles.scss';
+import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
