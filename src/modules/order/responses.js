@@ -1,11 +1,5 @@
 import store from '../../store';
-import {
-  receivedCreateOrderSuccess,
-  receivedCreateOrderFailure,
-  receivedCancelOrderSuccess,
-  receivedCancelOrderFailure,
-  receivedGetOrder
-} from './actions';
+import { receivedCreateOrderSuccess, receivedCreateOrderFailure, receivedGetOrder } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
 import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
 import { debugRabbitResponse } from '../../utils/misc';
@@ -35,11 +29,7 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       break;
     case 'order.request.cancelorder':
       debugRabbitResponse('Order Cancel Response', status, data, fields, properties);
-      if (status === 'success') {
-        store.dispatch(receivedCancelOrderSuccess(data));
-      } else {
-        store.dispatch(receivedCancelOrderFailure(data));
-      }
+      store.dispatch(receivedGetOrder(data));
       break;
     case 'order.request.find':
       debugRabbitResponse('Find Order by Account Response', status, data, fields, properties);

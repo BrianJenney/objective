@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -81,6 +81,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+
 const OrderConfirmation = ({ history }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
@@ -123,6 +125,12 @@ const OrderConfirmation = ({ history }) => {
     return null;
   }
 
+  
+
+
+
+
+
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
   };
@@ -143,10 +151,14 @@ const OrderConfirmation = ({ history }) => {
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
         <Typography className={classes.text1} gutterBottom>
-          Your order has been placed and a confirmation email has been sent to: {email}.
+          Your order has been placed and a confirmation email has been sent to:{' '}
+          {email}.
         </Typography>
         <Typography className={classes.text1}>
-          Your order number: <strong>{order.orderNumber}</strong>
+          Your order number:{' '}
+          <strong>
+            {order.orderNumber}
+          </strong>
         </Typography>
         {xs ? (
           <Grid container style={{ overflow: 'hidden' }}>
@@ -160,7 +172,12 @@ const OrderConfirmation = ({ history }) => {
             </Grid>
           </Grid>
         ) : (
-          <Button type="button" onClick={handleOrderDetail} children="Check Order Status" className={classes.button} />
+          <Button
+            type="button"
+            onClick={handleOrderDetail}
+            children="Check Order Status"
+            className={classes.button}
+          />
         )}
         <Box
           display="flex"
@@ -169,16 +186,29 @@ const OrderConfirmation = ({ history }) => {
           borderBottom="1px solid #979797"
         >
           <Grid item xs={addressesWidth}>
-            <Box borderRight={xs ? 0 : '1px solid #979797'} paddingBottom={xs ? '25px' : '35px'}>
-              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
+            <Box
+              borderRight={xs ? 0 : '1px solid #979797'}
+              paddingBottom={xs ? '25px' : '35px'}
+            >
+              <Typography
+                className={classes.text2}
+                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
+              >
                 Billing Information
               </Typography>
               <Address address={billingAddress} email={email} />
             </Box>
           </Grid>
           <Grid item xs={addressesWidth}>
-            <Box paddingLeft={xs ? 0 : 3} borderTop={xs ? '1px solid #979797' : 0} paddingBottom={xs ? '25px' : '35px'}>
-              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
+            <Box
+              paddingLeft={xs ? 0 : 3}
+              borderTop={xs ? '1px solid #979797' : 0}
+              paddingBottom={xs ? '25px' : '35px'}
+            >
+              <Typography
+                className={classes.text2}
+                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
+              >
                 Shipping Information
               </Typography>
               <Address address={shippingAddress} email={email} />
@@ -186,7 +216,10 @@ const OrderConfirmation = ({ history }) => {
           </Grid>
         </Box>
         <Grid item xs={addressesWidth}>
-          <Typography className={classes.text2} style={{ padding: '24px 0 16px' }}>
+          <Typography
+            className={classes.text2}
+            style={{ padding: '24px 0 16px' }}
+          >
             Payment
           </Typography>
           <Typography className={classes.subText}>
