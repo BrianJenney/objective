@@ -75,12 +75,8 @@ const useStyles = makeStyles(theme => ({
 
 const getStatusStepper = statusStepper => {
   const processedDate = formatDateTime(statusStepper.processedDate, false);
-  const shippedDate = statusStepper.shippedDate
-    ? formatDateTime(statusStepper.shippedDate, false)
-    : '';
-  const deliveredDate = statusStepper.deliveredDate
-    ? formatDateTime(statusStepper.deliveredDate, false)
-    : '';
+  const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
+  const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
   const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
   return {
     Processed: processedDate,
@@ -92,23 +88,6 @@ const getStatusStepper = statusStepper => {
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-<<<<<<< HEAD
-  return (
-    <Typography className={classes.text} pt={2}>
-      Tracking #:{' '}
-      {tracking && (
-        <Link
-          href={tracking.url}
-          style={{ color: 'black' }}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {tracking.number}
-        </Link>
-      )}
-    </Typography>
-  );
-=======
   return tracking.map(tracking => {
     return (
       <>
@@ -122,11 +101,9 @@ const TrackingInfo = ({ tracking }) => {
       </>
     );
   });
->>>>>>> DC-933_Prevent_Cancel_Order_Double_CLicks
 };
 
-const OrderCartSummary = ({ order }) =>
-  order ? <CartSummary order={order} /> : null;
+const OrderCartSummary = ({ order }) => (order ? <CartSummary order={order} /> : null);
 
 const cancelOrder = (orderId, orderNumber, dispatch) => {
   dispatch(requestCancelOrder(orderId, orderNumber));
@@ -208,16 +185,12 @@ const OrderSummary = ({
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>Shipping Information</StyledSmallCaps>
             <Address address={shippingAddress} />
             {tracking && (
-<<<<<<< HEAD
-              <TrackingInfo className={classes.text} tracking={tracking} />
-=======
               <>
                 <Typography className={classes.text} pt={2}>
                   Tracking #:
                 </Typography>
                 <TrackingInfo className={classes.text} tracking={tracking} />
               </>
->>>>>>> DC-933_Prevent_Cancel_Order_Double_CLicks
             )}
           </Box>
         </Grid>
