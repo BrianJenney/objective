@@ -128,20 +128,7 @@ const OrderConfirmation = ({ history }) => {
           Your order has been placed and a confirmation email has been sent to: {email}.
         </Typography>
         <Typography className={classes.text1}>
-<<<<<<< HEAD
-          Your order number:{' '}
-          <strong>
-            {`${order.orderId.substring(0, 3)}-${order.orderId.substring(
-              3,
-              6
-            )}-${order.orderId.substring(6, 10)}-${order.orderId.substring(
-              10,
-              16
-            )}-${order.orderId.substring(16)}`}
-          </strong>
-=======
           Your order number: <strong>{order.orderNumber}</strong>
->>>>>>> DC-933_Double_Click_Cancel_Blank_Page
         </Typography>
         {xs ? (
           <Grid container style={{ overflow: 'hidden' }}>
@@ -155,18 +142,8 @@ const OrderConfirmation = ({ history }) => {
             </Grid>
           </Grid>
         ) : (
-<<<<<<< HEAD
-            <Button
-              type="button"
-              onClick={handleOrderDetail}
-              children="Check Order Status"
-              className={classes.button}
-            />
-          )}
-=======
           <Button type="button" onClick={handleOrderDetail} children="Check Order Status" className={classes.button} />
         )}
->>>>>>> DC-933_Double_Click_Cancel_Blank_Page
         <Box
           display="flex"
           flexDirection={xs ? 'column' : 'row'}
