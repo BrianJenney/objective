@@ -94,19 +94,9 @@ const OrderConfirmation = ({ history }) => {
     return null;
   }
 
-  const orderItemsTransformedGA = [];
-  order.items.map(item => {
-    orderItemsTransformedGA.push({
-      id: item.variant_id,
-      name: item.variant_name,
-      brand: order.storeCode,
-      variant: item.sku,
-      quantity: item.quantity,
-      price: item.unit_price
-    });
-  });
-
-  const OrderCartSummary = () => <CartSummary order={order} />;
+  const OrderCartSummary = () => {
+    return <CartSummary order={order} />;
+  };
 
   const OrderDetail = () => {
     const { cardType, last4 } = order.paymentData;
@@ -135,10 +125,10 @@ const OrderConfirmation = ({ history }) => {
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
         <Typography className={classes.text1} gutterBottom>
-          Your order has been placed and a confirmation email has been sent to:{' '}
-          {email}.
+          Your order has been placed and a confirmation email has been sent to: {email}.
         </Typography>
         <Typography className={classes.text1}>
+<<<<<<< HEAD
           Your order number:{' '}
           <strong>
             {`${order.orderId.substring(0, 3)}-${order.orderId.substring(
@@ -149,6 +139,9 @@ const OrderConfirmation = ({ history }) => {
               16
             )}-${order.orderId.substring(16)}`}
           </strong>
+=======
+          Your order number: <strong>{order.orderNumber}</strong>
+>>>>>>> DC-933_Double_Click_Cancel_Blank_Page
         </Typography>
         {xs ? (
           <Grid container style={{ overflow: 'hidden' }}>
@@ -162,6 +155,7 @@ const OrderConfirmation = ({ history }) => {
             </Grid>
           </Grid>
         ) : (
+<<<<<<< HEAD
             <Button
               type="button"
               onClick={handleOrderDetail}
@@ -169,6 +163,10 @@ const OrderConfirmation = ({ history }) => {
               className={classes.button}
             />
           )}
+=======
+          <Button type="button" onClick={handleOrderDetail} children="Check Order Status" className={classes.button} />
+        )}
+>>>>>>> DC-933_Double_Click_Cancel_Blank_Page
         <Box
           display="flex"
           flexDirection={xs ? 'column' : 'row'}
@@ -176,29 +174,16 @@ const OrderConfirmation = ({ history }) => {
           borderBottom="1px solid #979797"
         >
           <Grid item xs={addressesWidth}>
-            <Box
-              borderRight={xs ? 0 : '1px solid #979797'}
-              paddingBottom={xs ? '25px' : '35px'}
-            >
-              <Typography
-                className={classes.text2}
-                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
-              >
+            <Box borderRight={xs ? 0 : '1px solid #979797'} paddingBottom={xs ? '25px' : '35px'}>
+              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
                 Billing Information
               </Typography>
               <Address address={billingAddress} email={email} />
             </Box>
           </Grid>
           <Grid item xs={addressesWidth}>
-            <Box
-              paddingLeft={xs ? 0 : 3}
-              borderTop={xs ? '1px solid #979797' : 0}
-              paddingBottom={xs ? '25px' : '35px'}
-            >
-              <Typography
-                className={classes.text2}
-                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
-              >
+            <Box paddingLeft={xs ? 0 : 3} borderTop={xs ? '1px solid #979797' : 0} paddingBottom={xs ? '25px' : '35px'}>
+              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
                 Shipping Information
               </Typography>
               <Address address={shippingAddress} email={email} />
@@ -206,10 +191,7 @@ const OrderConfirmation = ({ history }) => {
           </Grid>
         </Box>
         <Grid item xs={addressesWidth}>
-          <Typography
-            className={classes.text2}
-            style={{ padding: '24px 0 16px' }}
-          >
+          <Typography className={classes.text2} style={{ padding: '24px 0 16px' }}>
             Payment
           </Typography>
           <Typography className={classes.subText}>
