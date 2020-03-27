@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Box, Typography } from '@material-ui/core';
 
-import './template-styles.scss';
+import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
