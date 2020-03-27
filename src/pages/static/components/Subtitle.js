@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
-import './template-styles.scss';
+import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     fontFamily: props.desktopStyle.fontFamily,
     fontFamily: props.desktopStyle.fontFamily,
     textTransform: props.desktopStyle.textTransform,
-    letterSpacing: '1.5px',
     [theme.breakpoints.down('sm')]: {
       color: props.mobileStyle.fontColor,
       fontWeight: props.mobileStyle.fontWeight,
@@ -27,22 +26,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Subtitle = ({ data, template, type }) => {
-  //const subtitle = data.filter(item => item.type === 'subtitle')[0];
-  //const style = subtitle;
   const classes = useStyles(data);
+  console.log(type);
 
   return (
-    <>
-      {template ? (
-        <Box className={template}>
-          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
-        </Box>
-      ) : (
-        <Box>
-          <Typography className={classes.root}>{data.value}</Typography>
-        </Box>
-      )}
-    </>
+    <Box className={template}>
+      <div className={`${classes.root} ${template}-${type}`}>{data.value}</div>
+    </Box>
   );
 };
 

@@ -31,6 +31,17 @@
   color: #1f396d;
   text-transform: uppercase;
 }
+.LP-Template-1-pageSubTitle {
+  font-size: 24px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 2px;
+  color: #1f396d;
+  text-transform: uppercase;
+  margin: 0 0 45px;
+}
 @media only screen and (max-width: 600px) {
   .LP-Template-1-pageTitle {
     font-size: 36px;
@@ -39,5 +50,8 @@
   .LP-Template-1-sectionTitle {
     letter-spacing: 0.22px;
     margin: 25px 0 10px;
+  }
+  .LP-Template-1-pageSubTitle {
+    margin: 0 0 10px;
   }
 }
