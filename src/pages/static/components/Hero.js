@@ -9,17 +9,15 @@ import './template-styles.css';
 const useStyles = makeStyles(theme => ({
   root: props => ({
     display: props.desktopStyle.display,
-    width: props.desktopStyle.width
-    // [theme.breakpoints.down('sm')]: {
-    //   display: props.mobileStyle.display,
-    //   width: props.mobileStyle.width
-    // }
+    width: props.desktopStyle.width,
+    [theme.breakpoints.down('sm')]: {
+      display: props.mobileStyle.display,
+      width: props.mobileStyle.width
+    }
   })
 }));
 
 const Hero = ({ data, template, type }) => {
-  //const hero = data.filter(item => item.type === 'hero')[0];
-  //const style = hero;
   const classes = useStyles(data);
 
   const theme = useTheme();
