@@ -1,0 +1,43 @@
+.LP-Template-1-pageTitle {
+  font-family: 'Canela Text Web';
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  font-size: 52px;
+  line-height: 1.23;
+  letter-spacing: normal;
+  color: #000;
+  margin: 55px 0 15px;
+}
+.LP-Template-1-sectionTitle {
+  font-size: 28px;
+  font-family: Canela Text Web;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.28px;
+  color: #1f396d;
+  margin: 25px 0 15px;
+  text-transform: capitalize;
+}
+.LP-Template-1-boxTitle {
+  font-size: 18px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.28;
+  letter-spacing: 2px;
+  color: #1f396d;
+  text-transform: uppercase;
+}
+@media only screen and (max-width: 600px) {
+  .LP-Template-1-pageTitle {
+    font-size: 36px;
+    margin: 15px 0 5px;
+  }
+  .LP-Template-1-sectionTitle {
+    letter-spacing: 0.22px;
+    margin: 25px 0 10px;
+  }
+}

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 
-import './template-styles.scss';
+import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -26,17 +26,9 @@ const Title = ({ data, template, type }) => {
   const classes = useStyles(data);
 
   return (
-    <>
-      {template ? (
-        <Box className={template}>
-          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
-        </Box>
-      ) : (
-        <Box>
-          <Typography className={classes.root}>{data.value}</Typography>
-        </Box>
-      )}
-    </>
+    <Box>
+      <div className={`${classes.root} ${template}-${type}`}>{data.value}</div>
+    </Box>
   );
 };
 
