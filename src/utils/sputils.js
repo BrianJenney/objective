@@ -4,7 +4,7 @@ import { Hero, Image, Paragraph, Title, Subtitle, Header, SPButton, SPBox, Banne
 import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
-  let tmpComps = GeneratePageComponents(page.components, page.template);
+  let tmpComps = GeneratePageComponents(page.components, page.template, page.name);
   return <GenerateTemplate data={tmpComps} header={page.components.filter(c => c.type === 'navigation')[0]} />;
 };
 
@@ -19,7 +19,7 @@ export const GenerateTemplate = ({ data, header }) => {
   );
 };
 
-export const GeneratePageComponents = (comps, template) => {
+export const GeneratePageComponents = (comps, template, pageName) => {
   const useStyles = makeStyles(theme => ({
     margin: {
       margin: '0 auto'
@@ -34,7 +34,7 @@ export const GeneratePageComponents = (comps, template) => {
         components.push(
           <>
             <Grid item xs={12} md={8} className={classes.margin}>
-              <Title data={obj} template={template} type={obj.type} />
+              <Title data={obj} template={template} type={obj.type} pageName={pageName} />
             </Grid>
           </>
         );
@@ -75,7 +75,7 @@ export const GeneratePageComponents = (comps, template) => {
         components.push(
           <>
             <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`}>
-              <RenderComponents components={GenerateOneColumn(obj.value.components, template)} />
+              <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
             </Grid>
           </>
         );
@@ -88,7 +88,7 @@ export const GeneratePageComponents = (comps, template) => {
   return components;
 };
 
-export const GenerateOneColumn = (comps, template) => {
+export const GenerateOneColumn = (comps, template, pageName) => {
   let components = [];
 
   comps.map(obj => {
@@ -96,7 +96,7 @@ export const GenerateOneColumn = (comps, template) => {
       case 'sectionTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} />
+            <Title data={obj} template={template} type={obj.type} pageName={pageName} />
           </>
         );
         break;
