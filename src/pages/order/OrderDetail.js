@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
-    fontWeight: 'normal',
     paddingBottom: theme.spacing(4),
     [theme.breakpoints.down('xs')]: {
       fontSize: 40
