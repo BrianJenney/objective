@@ -84,7 +84,30 @@
   margin-right: 25px;
   width: 300px;
 }
-
+.LP-Template-1-list {
+  margin-left: -1em;
+  font-family: freight-text-pro, serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.28;
+  letter-spacing: normal;
+  color: #333;
+  margin-bottom: 14px;
+}
+.LP-Template-1-list-blueCheckmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/5Hv6wfbtbWEbfQSaGra8us/eec68bbf2409fb295a9b09babcdf76fe/checkmark.svg?h=9');
+}
+.LP-Template-1-list-greenCheckmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/7hIrYYtuJcJ9pVIlbiUb0o/e1daf46ec91cce5c3849649fb4d64dce/checkmark-green.svg?h=12');
+}
+.LP-Template-1-list-checkmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/3HZYclltbiH9vpFn6OPZIb/269d7184d896a24886cbd24bd4a5ff84/checkmark-black.svg?h=9');
+}
+.LP-Template-1-list-crossmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/ss2YbqmorcVrsmtzo7ePI/92e6f174ba9dce1bf2fb43401e0e04cf/x.svg?h=12');
+}
 @media only screen and (max-width: 600px) {
   .LP-Template-1-pageTitle {
     font-size: 36px;

@@ -45,7 +45,7 @@ const SPBox = ({ data, template, type, comps }) => {
               case 'boxTitle':
                 return <Title data={obj} template={template} type={obj.type} />;
               case 'list':
-                return <List data={obj} template={template} type={obj.type} symbol={obj.bulletSymbol} />;
+                return <List data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />;
             }
           })}
         </Box>

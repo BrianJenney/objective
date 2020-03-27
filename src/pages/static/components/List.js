@@ -2,6 +2,8 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import './template-styles.css';
+
 const useStyles = makeStyles(theme => ({
   root: props => ({
     color: props.desktopStyle.fontColor,
@@ -16,23 +18,11 @@ const List = ({ data, template, type, symbol }) => {
   const classes = useStyles(data);
 
   return (
-    <>
-      {template ? (
-        <div className={template}>
-          <ul className={type}>
-            {data.value.map(item => {
-              return <li className={`${classes.root} ${symbol}`}>{item}</li>;
-            })}
-          </ul>
-        </div>
-      ) : (
-        <ul>
-          {data.value.map(item => {
-            return <li className={classes.root}>{item}</li>;
-          })}
-        </ul>
-      )}
-    </>
+    <ul>
+      {data.value.map(item => {
+        return <li className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}>{item}</li>;
+      })}
+    </ul>
   );
 };
 
