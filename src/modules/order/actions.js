@@ -3,9 +3,9 @@ import {
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_CANCEL_ORDER,
-  RECEIVED_CANCEL_ORDER_SUCCESS,
-  RECEIVED_CANCEL_ORDER_FAILURE,
+  RECEIVED_CANCEL_ORDER,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
+  RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
   RECEIVED_GET_ORDER,
   RESET_ORDER_STATE
@@ -15,7 +15,10 @@ const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getState) => {
+export const requestCreateOrder = (cart, nonceOrToken) => async (
+  dispatch,
+  getState
+) => {
   dispatch({
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
@@ -56,13 +59,13 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
       jwt: account_jwt,
-      token: localStorageClient.get('olympusToken')
+      'token': localStorageClient.get('olympusToken'),
     },
     payload
   );
   // @segment - Order Submitted Event
   window.analytics.track('Order Submitted', {
-    cart_id: cart._id
+    'cart_id': cart._id
   });
 };
 
@@ -77,35 +80,35 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
   let orderItemsTransformed = [];
   order.items.map(item => {
     orderItemsTransformed.push({
-      brand: order.storeCode,
-      image_url: 'https:' + item.variant_img,
-      name: item.variant_name,
-      price: item.unit_price,
-      product_id: item.variant_id,
-      quantity: item.quantity,
-      sku: item.sku,
-      variant: item.variant_name
+      'brand': order.storeCode,
+      'image_url': 'https:' + item.variant_img,
+      'name': item.variant_name,
+      'price': item.unit_price,
+      'product_id': item.variant_id,
+      'quantity': item.quantity,
+      'sku': item.sku,
+      'variant': item.variant_name
     });
   });
 
   window.analytics.track('Order Completed', {
-    affiliation: order.storeCode,
-    coupon: order.promo && order.promo.code ? order.promo.code : '',
-    currency: 'USD',
-    discount: order.discount,
-    email: order.email,
-    est_ship_date: order.shippingMethod.deliveryEstimate,
-    item_count: order.items.length,
-    order_date: order.transactions.transactionDate,
-    order_id: order.orderNumber,
-    order_link: 'https://objectivewellness.com/orders/' + order._id,
-    payment_method: 'Credit Card',
-    payment_method_detail: order.paymentData.cardType,
-    products: orderItemsTransformed,
-    shipping: order.shippingMethod.price,
-    subtotal: order.subtotal,
-    tax: order.tax,
-    total: order.total
+    'affiliation': order.storeCode,
+    'coupon': order.promo && order.promo.code ? order.promo.code : '',
+    'currency': 'USD',
+    'discount': order.discount,
+    'email': order.email,
+    'est_ship_date': order.shippingMethod.deliveryEstimate,
+    'item_count': order.items.length,
+    'order_date': order.transactions.transactionDate,
+    'order_id': order.orderNumber,
+    'order_link': 'https://objectivewellness.com/orders/' + order._id,
+    'payment_method': 'Credit Card',
+    'payment_method_detail': order.paymentData.cardType,
+    'products': orderItemsTransformed,
+    'shipping': order.shippingMethod.price,
+    'subtotal': order.subtotal,
+    'tax': order.tax,
+    'total': order.total
   });
 };
 
@@ -116,41 +119,36 @@ export const receivedCreateOrderFailure = order => async (dispatch, getState) =>
   });
   // @segment - Order Failed Event
   window.analytics.track('Order Failed', {
-    cart_id: localStorage.cartId,
-    error_message: order
+    'cart_id': localStorage.cartId,
+    'error_message': order
   });
 };
 
-export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, getState) => {
+export const requestCancelOrder = orderId => async (dispatch, getState) => {
   dispatch({
     type: REQUEST_CANCEL_ORDER,
     payload: { isLoading: true }
   });
+
   const { client: stompClient, replyTo } = getState().stomp;
-  const { account_jwt } = getState().account.data;
+  const account_jwt = getState().account.data.account_jwt;
   const params = {
     data: { orderId },
     params: { account_jwt }
   };
   const payload = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
-    '/exchange/order/order.request.cancelorder',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      jwt: account_jwt,
-      token: localStorageClient.get('olympusToken')
-    },
-    payload
-  );
-
-  // @segment - Cancel Order Submitted Event
-  window.analytics.track('Order Cancel Submitted', {
-    order_id: orderNumber
-  });
+  stompClient.send('/exchange/order/order.request.cancelorder', {
+    'reply-to': replyTo,
+    'correlation-id': ObjectId(),
+    jwt: account_jwt,
+    'token': localStorageClient.get('olympusToken')
+  }, payload);
 };
 
-export const requestFindOrdersByAccount = accountJwt => (dispatch, getState) => {
+export const requestFindOrdersByAccount = accountJwt => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -166,7 +164,7 @@ export const requestFindOrdersByAccount = accountJwt => (dispatch, getState) => 
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token: localStorageClient.get('olympusToken')
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
@@ -176,7 +174,10 @@ export const requestFindOrdersByAccount = accountJwt => (dispatch, getState) => 
   });
 };
 
-export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
+export const requestGetOrder = (accountJwt, orderId) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   dispatch({
     type: REQUEST_GET_ORDER,
@@ -195,72 +196,10 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      token: localStorageClient.get('olympusToken')
+      'token': localStorageClient.get('olympusToken')
     },
     payload
   );
-};
-
-export const receivedCancelOrderSuccess = order => async (dispatch, getState) => {
-  dispatch({
-    type: RECEIVED_CANCEL_ORDER_SUCCESS,
-    payload: order
-  });
-
-  // @segment Cancel Order Completed Event
-  // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
-  const orderItemsTransformed = [];
-  order.items.map(item => {
-    orderItemsTransformed.push({
-      brand: order.storeCode,
-      image_url: 'https:' + item.variant_img,
-      name: item.variant_name,
-      price: item.unit_price,
-      product_id: item.variant_id,
-      quantity: item.quantity,
-      sku: item.sku,
-      variant: item.variant_name
-    });
-  });
-
-  window.analytics.track('Order Cancelled', {
-    billing_city: order.billingAddress.city,
-    billing_country: order.billingAddress.country,
-    billing_state: order.billingAddress.state,
-    billing_zip: order.billingAddress.zipcode,
-    coupon: order.promo && order.promo.code ? order.promo.code : '',
-    currency: 'USD',
-    discount: order.discount,
-    email: order.email,
-    est_ship_date: order.shippingMethod.deliveryEstimate,
-    item_count: order.items.length,
-    order_date: order.transactions.transactionDate,
-    order_id: order.orderNumber,
-    order_link: `https://objectivewellness.com/orders/${order._id}`,
-    payment_method: 'Credit Card',
-    payment_method_detail: order.paymentData.cardType,
-    products: orderItemsTransformed,
-    shipping: order.shippingMethod.price,
-    shipping_city: order.shippingAddress.city,
-    shipping_country: order.shippingAddress.country,
-    shipping_state: order.shippingAddress.state,
-    shipping_zip: order.shippingAddress.zipcode,
-    subtotal: order.subtotal,
-    tax: order.tax,
-    total: order.total
-  });
-};
-
-export const receivedCancelOrderFailure = order => async (dispatch, getState) => {
-  dispatch({
-    type: RECEIVED_CANCEL_ORDER_FAILURE,
-    payload: order
-  });
-  // @segment - Cancel Order Failed Event
-  window.analytics.track('Order Cancel Failed', {
-    order_id: order.orderNumber,
-    error_message: order
-  });
 };
 
 export const receivedGetOrder = order => (dispatch, getState) => {
@@ -272,6 +211,6 @@ export const receivedGetOrder = order => (dispatch, getState) => {
 
 export const resetOrderState = () => {
   return {
-    type: RESET_ORDER_STATE
+    type: RESET_ORDER_STATE,
   };
 };
