@@ -42,6 +42,11 @@
   text-transform: uppercase;
   margin: 0 0 45px;
 }
+.LP-Template-1-hero {
+  margin-bottom: 45px;
+  width: 100%;
+  display: block;
+}
 @media only screen and (max-width: 600px) {
   .LP-Template-1-pageTitle {
     font-size: 36px;
@@ -52,6 +57,13 @@
     margin: 25px 0 10px;
   }
   .LP-Template-1-pageSubTitle {
+    font-size: 18px;
     margin: 0 0 10px;
+  }
+  .LP-Template-1-hero {
+    font-size: 18px;
+    margin: 0 0 10px;
+    width: 100%;
+    display: block;
   }
 }

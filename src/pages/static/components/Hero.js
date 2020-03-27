@@ -4,16 +4,16 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import './template-styles.scss';
+import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
     display: props.desktopStyle.display,
-    width: props.desktopStyle.width,
-    [theme.breakpoints.down('sm')]: {
-      display: props.mobileStyle.display,
-      width: props.mobileStyle.width
-    }
+    width: props.desktopStyle.width
+    // [theme.breakpoints.down('sm')]: {
+    //   display: props.mobileStyle.display,
+    //   width: props.mobileStyle.width
+    // }
   })
 }));
 
@@ -26,19 +26,13 @@ const Hero = ({ data, template, type }) => {
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <>
-      {template ? (
-        <Box className={template}>
-          {!sm ? (
-            <img src={data.desktopImg} className={`${classes.root} ${type}`}></img>
-          ) : (
-            <img src={data.mobileImg} className={`${classes.root} ${type}`}></img>
-          )}
-        </Box>
+    <Box>
+      {!sm ? (
+        <img src={data.desktopImg} className={`${classes.root} ${template}-${type}`}></img>
       ) : (
-        <Box>{!sm ? <img src={data.desktopImg} className={classes.root}></img> : <img src={data.mobileImg}></img>}</Box>
+        <img src={data.mobileImg} className={`${classes.root} ${template}-${type}`}></img>
       )}
-    </>
+    </Box>
   );
 };
 
