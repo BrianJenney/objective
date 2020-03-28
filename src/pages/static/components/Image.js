@@ -21,7 +21,7 @@ const Image = ({ data, template, type }) => {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
-  console.log(`${template}-${type}-${float}`);
+
   return (
     <div>
       {!sm ? (
