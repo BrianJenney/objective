@@ -128,6 +128,13 @@ export const GenerateOneColumn = (comps, template) => {
           </>
         );
         break;
+      case 'sectionSubTitle':
+        components.push(
+          <>
+            <Title data={obj} template={template} type={obj.type} />
+          </>
+        );
+        break;
       default:
         break;
     }
