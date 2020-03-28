@@ -40,23 +40,25 @@ const SPBox = ({ data, template, type, comps }) => {
     <>
       {border ? (
         <Box className={`${classes.border} ${template}-${type} ${template}-${type}-${float}`}>
-          {comps.map(obj => {
+          {comps.map((obj, i) => {
             switch (obj.type) {
               case 'boxTitle':
-                return <Title data={obj} template={template} type={obj.type} />;
+                return <Title key={i} data={obj} template={template} type={obj.type} />;
               case 'list':
-                return <List data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />;
+                return (
+                  <List key={i} data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />
+                );
             }
           })}
         </Box>
       ) : (
         <Box className={`${classes.noBorder} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`}>
-          {comps.map(obj => {
+          {comps.map((obj, i) => {
             switch (obj.type) {
               case 'boxTitle':
-                return <Title data={obj} template={template} type={obj.type} />;
+                return <Title key={i} data={obj} template={template} type={obj.type} />;
               case 'list':
-                return <List data={obj} template={template} type={obj.type} />;
+                return <List key={i} data={obj} template={template} type={obj.type} />;
             }
           })}
         </Box>
