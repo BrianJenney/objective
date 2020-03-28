@@ -54,18 +54,10 @@
   width: 300px;
 }
 .LP-Template-1-box-right {
-  border: 1px solid #000;
-  background-color: #fcf8f4;
-  padding: 20px 25px;
   margin-left: 25px;
-  width: 300px;
 }
 .LP-Template-1-box-left {
-  border: 1px solid #000;
-  background-color: #fcf8f4;
-  padding: 20px 25px;
   margin-right: 25px;
-  width: 300px;
 }
 .LP-Template-1-box-noBorder {
   background-color: #fcf8f4;
@@ -73,16 +65,10 @@
   width: 300px;
 }
 .LP-Template-1-box-noBorder-right {
-  background-color: #fcf8f4;
-  padding: 20px 25px;
   margin-left: 25px;
-  width: 300px;
 }
 .LP-Template-1-box-noBorder-left {
-  background-color: #fcf8f4;
-  padding: 20px 25px;
   margin-right: 25px;
-  width: 300px;
 }
 .LP-Template-1-list {
   margin-left: -1em;
