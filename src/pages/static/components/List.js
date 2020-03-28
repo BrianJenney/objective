@@ -21,14 +21,22 @@ const List = ({ data, template, type, symbol }) => {
     <>
       {symbol ? (
         <ul>
-          {data.value.map(item => {
-            return <li className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}>{item}</li>;
+          {data.value.map((item, i) => {
+            return (
+              <li key={i} className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}>
+                {item}
+              </li>
+            );
           })}
         </ul>
       ) : (
         <ol>
-          {data.value.map(item => {
-            return <li className={`${classes.root} ${template}-${type}-ol`}>{item}</li>;
+          {data.value.map((item, i) => {
+            return (
+              <li key={i} className={`${classes.root} ${template}-${type}-ol`}>
+                {item}
+              </li>
+            );
           })}
         </ol>
       )}
