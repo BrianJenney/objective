@@ -16,34 +16,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Image = ({ data, template, type }) => {
-  //const image = data.value.components.filter(item => item.type === 'image')[0];
-  //const style = image;
   const classes = useStyles(data);
 
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
-  const float = data.desktopStyle.float && data.mobileStyle.float;
-
+  const float = data.desktopStyle.float || data.mobileStyle.float;
+  console.log(`${template}-${type}-${float}`);
   return (
-    <>
-      {template ? (
-        <div className={template}>
-          {!sm ? (
-            <img src={data.desktopImg} className={`${classes.root} ${type}-${float}`}></img>
-          ) : (
-            <img src={data.mobileImg} className={`${classes.root} ${type}-${float}`}></img>
-          )}
-        </div>
+    <div>
+      {!sm ? (
+        <img src={data.desktopImg} className={`${classes.root} ${template}-${type}-${float}`}></img>
       ) : (
-        <div>
-          {!sm ? (
-            <img src={data.desktopImg} className={classes.root}></img>
-          ) : (
-            <img src={data.mobileImg} className={classes.root}></img>
-          )}
-        </div>
+        <img src={data.mobileImg} className={`${classes.root} ${template}-${type}-${float}`}></img>
       )}
-    </>
+    </div>
   );
 };
 

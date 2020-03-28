@@ -138,6 +138,14 @@
 .LP-Template-1-banner-borderRight {
   border-right: 4px solid #1f396d;
 }
+.LP-Template-1-image-left {
+  margin-right: 25px;
+  float: right;
+}
+.LP-Template-1-image-right {
+  margin-left: 25px;
+  float: left;
+}
 @media only screen and (max-width: 600px) {
   .LP-Template-1-pageTitle {
     font-size: 36px;
@@ -171,5 +179,13 @@
   .LP-Template-1-banner {
     font-size: 26px !important;
     text-align: left !important;
+  }
+  .LP-Template-1-image-left {
+    margin-right: 15px;
+    float: left;
+  }
+  .LP-Template-1-image-right {
+    margin-left: 15px;
+    float: right;
   }
 }
