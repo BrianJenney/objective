@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
 
 const Subtitle = ({ data, template, type }) => {
   const classes = useStyles(data);
-  console.log(type);
 
   return (
     <Box className={template}>
