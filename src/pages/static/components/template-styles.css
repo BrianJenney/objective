@@ -181,4 +181,8 @@
     margin-left: 15px;
     float: right;
   }
+  .LP-Template-1-list-ol {
+    font-size: 10px !important;
+    word-wrap: break-word;
+  }
 }
