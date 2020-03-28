@@ -21,36 +21,14 @@ const Banner = ({ data, template, type, borderPlacement }) => {
   const border = data.desktopStyle.border;
   const borderColor = data.desktopStyle.borderColor;
 
-  return (
-    <>
-      {template ? (
-        border ? (
-          <div className={template}>
-            <Grid className={type}>
-              <Box className={borderPlacement} style={{ borderColor: `${borderColor}` }}>
-                <Typography className={`${classes.root} ${type}-text`}>{data.value}</Typography>
-              </Box>
-            </Grid>
-          </div>
-        ) : (
-          <div className={template}>
-            <Grid className={type}>
-              <Box>
-                <Typography className={classes.root}>{data.value}</Typography>
-              </Box>
-            </Grid>
-          </div>
-        )
-      ) : border ? (
-        <Box>
-          <Typography className={classes.root}>{data.value}</Typography>
-        </Box>
-      ) : (
-        <Box>
-          <Typography className={classes.root}>{data.value}</Typography>
-        </Box>
-      )}
-    </>
+  return border ? (
+    <Box className={`${template}-${type}-${borderPlacement}`} style={{ borderColor: `${borderColor}` }}>
+      <Typography className={`${classes.root} ${template}-${type}`}>{data.value}</Typography>
+    </Box>
+  ) : (
+    <Box>
+      <Typography className={classes.root}>{data.value}</Typography>
+    </Box>
   );
 };
 
