@@ -21,8 +21,12 @@ const Paragraph = ({ data }) => {
 
   return (
     <div>
-      {data.value.map(text => {
-        return <p className={classes.root}>{text}</p>;
+      {data.value.map((text, i) => {
+        return (
+          <p key={i} className={classes.root}>
+            {text}
+          </p>
+        );
       })}
     </div>
   );
