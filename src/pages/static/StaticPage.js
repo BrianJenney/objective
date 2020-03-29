@@ -95,13 +95,18 @@ const StaticPage = ({ location }) => {
   };
 
   const transformText = (store, entries, length) => {
+    if (entries.nodeType === 'hyperlink') {
+      return store.push({ value: entries.content[0].value, url: entries.data.uri });
+    }
     if (!entries.content) {
     } else {
       entries.content.map(entry => transformText(store, entry, length));
     }
+
     if (entries.value) {
       return store.push(entries.value);
     }
+
     return store;
   };
 
@@ -215,6 +220,7 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'tableBody'
     ) {
       const paragraphData = transformText([], fields.content);
+
       storeContent = { value: paragraphData, ...metaDataSection };
       return storeContent;
     }
@@ -230,7 +236,7 @@ const StaticPage = ({ location }) => {
       const columnData = transformOneColumn({}, fields.content, columnComponent);
 
       if (columnData.type === 'box') {
-        storage = columnData;
+        return columnData;
       }
       if (columnData.type === 'table') {
         storage = { value: { components: tableComponent }, ...metaDataSection };
@@ -259,10 +265,11 @@ const StaticPage = ({ location }) => {
     };
 
     content.map(({ fields }) => {
+      // console.log('testing-FIELDS', fields);
       transformContent(fields, mainDataObj);
     });
   }
-  console.log('TESTING@@@', mainDataObj);
+  // console.log('TESTING@@@', mainDataObj);
 
   useEffect(() => {
     dispatch(requestPage('staticpage'));
