@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect, useRef } from 'react';
 import TrackVisibility from 'react-on-screen';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 import './template-styles.css';
 
@@ -44,15 +44,9 @@ const Title = ({ data, template, type, pageName }) => {
       <TrackVisibility once>
         <ComponentToTrack />
       </TrackVisibility>
-      {template ? (
-        <Box className={template}>
-          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
-        </Box>
-      ) : (
-        <Box>
-          <Typography className={classes.root}>{data.value}</Typography>
-        </Box>
-      )}
+      <Box className={template}>
+        <div className={`${classes.root} ${template}-${type}`}>{data.value}</div>
+      </Box>
     </>
   );
 };
