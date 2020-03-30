@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
+import TrackVisibility from 'react-on-screen';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
@@ -22,13 +23,37 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Title = ({ data, template, type }) => {
+const Title = ({ data, template, type, pageName }) => {
+  const [tracked, setTracked] = useState(false);
   const classes = useStyles(data);
 
+  const ComponentToTrack = ({ isVisible }) => {
+    if (isVisible && tracked === false && type === 'sectionTitle') {
+      setTracked(true);
+      window.analytics.track('Percent Scrolled', {
+        page_type: `LP: ${pageName}`,
+        section_name: data.value,
+        url: window.location.href
+      });
+    }
+    return null;
+  };
+
   return (
-    <Box>
-      <div className={`${classes.root} ${template}-${type}`}>{data.value}</div>
-    </Box>
+    <>
+      <TrackVisibility once>
+        <ComponentToTrack />
+      </TrackVisibility>
+      {template ? (
+        <Box className={template}>
+          <Typography className={`${classes.root} ${type}`}>{data.value}</Typography>
+        </Box>
+      ) : (
+        <Box>
+          <Typography className={classes.root}>{data.value}</Typography>
+        </Box>
+      )}
+    </>
   );
 };
 
