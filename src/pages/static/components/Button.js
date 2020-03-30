@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addCoupon, addToCart } from '../../../modules/cart/functions';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Button } from '@material-ui/core';
 
 import './template-styles.css';
 
@@ -13,8 +12,6 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: props.desktopStyle.bgColor
     },
-    display: props.desktopStyle.display,
-    float: props.desktopStyle.float,
     color: props.desktopStyle.fontColor,
     fontWeight: props.desktopStyle.fontWeight,
     fontSize: props.desktopStyle.fontSize,
@@ -23,7 +20,6 @@ const useStyles = makeStyles(theme => ({
     textTransform: props.desktopStyle.textTransform,
     width: props.desktopStyle.width,
     height: props.desktopStyle.height,
-    letterSpacing: 1.33,
     [theme.breakpoints.down('sm')]: {
       display: props.mobileStyle.display,
       width: props.mobileStyle.width
@@ -83,11 +79,11 @@ const SPButton = ({ data, template, type, align }) => {
   }, [prodAdded, couponAdded]);
 
   return (
-    <Grid className={`${type}-${align}`}>
-      <Button className={`${classes.root}`} onClick={handleClick}>
+    <div className={`${template}-${type}-${align}`}>
+      <button className={`${classes.root} ${template}-${type}`} onClick={handleClick}>
         {data.value}
-      </Button>
-    </Grid>
+      </button>
+    </div>
   );
 };
 

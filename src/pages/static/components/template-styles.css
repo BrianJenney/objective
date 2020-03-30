@@ -139,6 +139,33 @@
   color: #1f396d;
   text-transform: uppercase;
 }
+.LP-Template-1-button {
+  width: 385px;
+  height: 60px;
+  background-color: #1f396d;
+  text-transform: uppercase;
+  font-family: p22-underground, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: 1.33px;
+  color: #fff;
+  text-align: center;
+}
+.LP-Template-1-button-left {
+  display: flex;
+  justify-content: flex-start;
+}
+.LP-Template-1-button-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.LP-Template-1-button-center {
+  display: flex;
+  justify-content: center;
+}
 @media only screen and (max-width: 600px) {
   .LP-Template-1-pageTitle {
     font-size: 36px;
