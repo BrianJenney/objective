@@ -23,7 +23,7 @@ const Paragraph = ({ data }) => {
       {data.value.map((text, i) => {
         if (typeof text === 'object') {
           return (
-            <NavLink to={text.url} className={classes.root}>
+            <NavLink to={text.url} className={classes.root} underline="always">
               {' '}
               {text.value}
             </NavLink>
