@@ -8,6 +8,7 @@ import accountReducer from './modules/account/reducers';
 import orderReducer from './modules/order/reducers';
 import catalogReducer from './modules/catalog/reducers';
 import utilsReducer from './modules/utils/reducers';
+import staticReducers from './modules/static/reducers';
 
 const rootReducer = combineReducers({
   stomp: stompReducer,
@@ -16,13 +17,11 @@ const rootReducer = combineReducers({
   account: accountReducer,
   order: orderReducer,
   catalog: catalogReducer,
-  utils: utilsReducer
+  utils: utilsReducer,
+  page: staticReducers
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(reduxThunk))
-);
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(reduxThunk)));
 
 export default store;
