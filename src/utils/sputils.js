@@ -149,7 +149,7 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'list':
         components.push(
           <>
-            <List data={obj} template={template} type={obj.type} />
+            <List data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />
           </>
         );
         break;

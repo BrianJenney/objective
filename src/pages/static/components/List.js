@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 const List = ({ data, template, type, symbol }) => {
   const classes = useStyles(data);
-
+  console.log(symbol);
   return (
     <>
       {symbol ? (
