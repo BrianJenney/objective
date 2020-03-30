@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from '../../../components/common';
+
 const useStyles = makeStyles(theme => ({
   root: props => ({
     color: props.desktopStyle.fontColor,
@@ -11,36 +12,60 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       fontSize: props.mobileStyle.fontSize
     }
-  })
+  }),
+  nav: {
+    color: '#551A8B'
+  }
 }));
 
 const Paragraph = ({ data }) => {
-  // const paragraph = data.value.components.filter(item => item.type === 'paragraph')[0];
-  // const style = paragraph;
   const classes = useStyles(data);
-  return data.type === 'list' ? (
+  const { value } = data;
+  const [context, setContext] = useState([]);
+  useEffect(() => {
+    const results = transformPara(value);
+    setContext(results);
+  }, []);
+
+  const transformPara = content => {
+    const final = [];
+    for (let i = 0; i < content.length; i++) {
+      if (typeof content[i] === 'object') {
+        const para = {
+          par1: { value: content[i].value, url: content[i].url },
+          par2: content[i + 1]
+        };
+        final.push(para);
+        i += 1;
+      } else {
+        final.push(content[i]);
+      }
+    }
+    return final;
+  };
+
+  return (
     <div>
-      <ul style={{ listStyleType: 'decimal' }}>
-        {data.value.map(text => (
-          <li className={classes.root}>{text}</li>
-        ))}
-      </ul>
-    </div>
-  ) : (
-      <div>
-        {data.value.map(text => {
-          if (typeof text === 'object') {
-            return (
-              <NavLink to={text.url} className={classes.root}>
+      {context.map((text, key) => {
+        if (typeof text === 'object') {
+          return (
+            <p className={classes.root}>
+              <NavLink underline="always" to={text.url} className={classes.nav}>
                 {' '}
-                {text.value}
+                {text.par1.value}
               </NavLink>
-            );
-          }
-          return <p className={classes.root}>{text}</p>;
-        })}
-      </div>
-    );
+              {text.par2}
+            </p>
+          );
+        }
+        return (
+          <p key={key} className={classes.root}>
+            {text}
+          </p>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Paragraph;
