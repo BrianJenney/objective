@@ -55,9 +55,13 @@
 }
 .LP-Template-1-box-right {
   margin-left: 25px;
+  display: block;
+  float: right;
 }
 .LP-Template-1-box-left {
   margin-right: 25px;
+  display: block;
+  float: left;
 }
 .LP-Template-1-box-noBorder {
   background-color: #fcf8f4;
