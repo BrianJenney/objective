@@ -114,7 +114,7 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'image':
         components.push(
           <>
-            <Image data={obj} template={template} type={obj.type} />
+            <Image data={obj} template={template} type={obj.type} caption={obj.caption} />
           </>
         );
         break;

@@ -136,6 +136,36 @@
   margin-left: 25px;
   float: right;
 }
+.LP-Template-1-image-caption-left {
+  float: left;
+  width: 320px;
+  padding-right: 20px;
+  margin-top: 10px;
+  border: transparent solid 2px;
+  font-family: freight-text-pro, serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
+}
+.LP-Template-1-image-caption-right {
+  float: right;
+  width: 320px;
+  padding-left: 20px;
+  margin-top: 10px;
+  border: transparent solid 2px;
+  font-family: freight-text-pro, serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
+}
 .LP-Template-1-sectionSubTitle {
   font-size: 16px;
   font-weight: 600;
