@@ -59,11 +59,7 @@ const Paragraph = ({ data }) => {
             </p>
           );
         }
-        return (
-          <p key={key} className={classes.root}>
-            {text}
-          </p>
-        );
+        return <p key={key} className={classes.root} dangerouslySetInnerHTML={{ __html: text }}></p>;
       })}
     </div>
   );
