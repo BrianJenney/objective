@@ -49,9 +49,10 @@ const SPButton = ({ data, template, type, align }) => {
           products.find(p => p.sku === sku),
           qty
         );
+        setProdAdded(true);
       }
-      setProdAdded(true);
     }, 500);
+    handleAddCoupon();
   }, [cart, dispatch]);
 
   const handleAddCoupon = useCallback(() => {
@@ -61,21 +62,29 @@ const SPButton = ({ data, template, type, align }) => {
     }, 500);
   }, [cart, products, dispatch]);
 
+  // useEffect(() => {
+  //   if (data.coupon && prodAdded && couponAdded === false) {
+  //     handleAddCoupon();
+  //   }
+  // }, [prodAdded, dispatch]);
+
   useEffect(() => {
-    if (data.coupon && cart.items.length > 0 && couponAdded === false) {
-      handleAddCoupon();
+    console.log('this here 1');
+    const [sku, qty] = data.skuAndQty[0].split(';');
+
+    if (!data.coupon && cart.items.find(p => p.sku === sku)) {
+      console.log('this here 2222');
+      window.location.href = data.URL;
+    }
+
+    if (data.coupon && cart.items.find(p => p.sku === sku) && cart.promo) {
+      window.location.href = data.URL;
+      console.log('this here 333');
     }
   }, [cart]);
 
-  useEffect(() => {
-    if (data.coupon && prodAdded && couponAdded && data.url) {
-      window.location.href = data.url;
-    }
-
-    if (!data.coupon && prodAdded && data.url) {
-      window.location.href = data.url;
-    }
-  }, [prodAdded, couponAdded]);
+  console.log('this prodAdded', prodAdded);
+  console.log('this couponAdded', couponAdded);
 
   return (
     <div className={`${template}-${type}-${align}`}>

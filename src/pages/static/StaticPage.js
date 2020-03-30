@@ -15,7 +15,7 @@ const StaticPage = ({ match }) => {
 
   console.log('this page ', page);
   useEffect(() => {
-    dispatch(requestPage(slug));
+    if (pageLoaded === false) dispatch(requestPage(slug));
   }, []);
 
   useEffect(() => {
@@ -30,11 +30,6 @@ const StaticPage = ({ match }) => {
     }
   }, [page]);
 
-  // if (pageLoaded) {
-  //   buildPage(page);
-  // } else {
-  //   return null;
-  // }
   let FinalPage = null;
   if (pageLoaded) {
     FinalPage = () => {
