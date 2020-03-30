@@ -1,23 +1,21 @@
 import React from 'react';
 import { useMediaQuery, Container, Grid } from '@material-ui/core';
-import { Hero, Image, Paragraph, Title, Subtitle, Header, SPButton, SPBox, Banner } from '../pages/static/components';
 import { makeStyles } from '@material-ui/core/styles';
+import { Hero, Image, Paragraph, Title, Subtitle, Header, SPButton, SPBox, Banner } from '../pages/static/components';
 
 export const buildPage = page => {
-  let tmpComps = GeneratePageComponents(page.components, page.template, page.name);
+  const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
   return <GenerateTemplate data={tmpComps} header={page.components.filter(c => c.type === 'navigation')[0]} />;
 };
 
-export const GenerateTemplate = ({ data, header }) => {
-  return (
-    <div>
-      <Header data={header} />
-      <Container>
-        <RenderComponents components={data} />
-      </Container>
-    </div>
-  );
-};
+export const GenerateTemplate = ({ data, header }) => (
+  <div>
+    <Header data={header} />
+    <Container>
+      <RenderComponents components={data} />
+    </Container>
+  </div>
+);
 
 export const GeneratePageComponents = (comps, template, pageName) => {
   const useStyles = makeStyles(theme => ({
@@ -26,7 +24,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
     }
   }));
   const classes = useStyles();
-  let components = [];
+  const components = [];
 
   comps.map(obj => {
     switch (obj.type) {
@@ -89,7 +87,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
 };
 
 export const GenerateOneColumn = (comps, template, pageName) => {
-  let components = [];
+  const components = [];
 
   comps.map(obj => {
     switch (obj.type) {
@@ -125,6 +123,13 @@ export const GenerateOneColumn = (comps, template, pageName) => {
         components.push(
           <>
             <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} />
+          </>
+        );
+        break;
+      case 'list':
+        components.push(
+          <>
+            <Paragraph data={obj} />
           </>
         );
         break;

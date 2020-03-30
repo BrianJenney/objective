@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addCoupon, addToCart } from '../../../modules/cart/functions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
+import { NavLink } from '../../../components/common';
+import { addCoupon, addToCart } from '../../../modules/cart/functions';
 
 import './template-styles.scss';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-    backgroundColor: props.desktopStyle.backgroundColor,
-    '&:hover': {
-      backgroundColor: props.desktopStyle.backgroundColor
-    },
+    backgroundColor: props.desktopStyle.bgColor,
     display: props.desktopStyle.display,
     float: props.desktopStyle.float,
     color: props.desktopStyle.fontColor,
@@ -38,7 +36,7 @@ const SPButton = ({ data, template, type, align }) => {
   const products = useSelector(state => state.catalog.variants);
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
-
+  console.log('testing-button', data, type, align);
   const handleClick = useCallback(() => {
     if (cart && products) {
       handleAddToCart();
@@ -88,19 +86,19 @@ const SPButton = ({ data, template, type, align }) => {
         <div className={template}>
           <Grid className={type}>
             <Grid className={`${type}-${align}`}>
-              <Button className={`${classes.root}`} onClick={handleClick}>
+              <Button className={classes.root} onClick={handleClick}>
                 {data.value}
               </Button>
             </Grid>
           </Grid>
         </div>
       ) : (
-        <div>
-          <Button className={classes.root} onClick={handleClick}>
-            {data.value}
-          </Button>
-        </div>
-      )}
+          <div>
+            <Button className={classes.root} onClick={handleClick}>
+              {data.value}
+            </Button>
+          </div>
+        )}
     </>
   );
 };
