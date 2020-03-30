@@ -11,7 +11,6 @@ export const setCartNotification = (booleanVal, variant = null) => dispatch => {
 };
 
 export const setLpProdAdded = booleanVal => dispatch => {
-  console.log('this setLpProdAdded', booleanVal);
   dispatch({
     type: SET_LP_PROD_ADDED,
     payload: {
@@ -21,7 +20,6 @@ export const setLpProdAdded = booleanVal => dispatch => {
 };
 
 export const setLpCouponAdded = booleanVal => dispatch => {
-  console.log('this setLpCouponAdded', booleanVal);
   dispatch({
     type: SET_LP_COUPON_ADDED,
     payload: {
