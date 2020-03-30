@@ -31,6 +31,7 @@ const Paragraph = ({ data }) => {
     const final = [];
     for (let i = 0; i < content.length; i++) {
       if (typeof content[i] === 'object') {
+        console.log('testing-URL', content[i].url);
         const para = {
           par1: { value: content[i].value, url: content[i].url },
           par2: content[i + 1]
@@ -50,7 +51,7 @@ const Paragraph = ({ data }) => {
         if (typeof text === 'object') {
           return (
             <p className={classes.root}>
-              <NavLink underline="always" to={text.url} className={classes.nav}>
+              <NavLink underline="always" to={text.par1.url} className={classes.nav}>
                 {' '}
                 {text.par1.value}
               </NavLink>
