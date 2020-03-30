@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -22,7 +23,9 @@ const Paragraph = ({ data }) => {
   return (
     <div>
       {data.value.map((text, i) => {
-        return (
+        return text.value ? (
+          <a href={text.url}>{text.value}</a>
+        ) : (
           <p key={i} className={classes.root}>
             {text}
           </p>
