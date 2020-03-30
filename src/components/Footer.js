@@ -194,7 +194,8 @@ const Footer = ({ location, currentUser }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+  const isCheckoutPage =
+    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   let isLandingSmallFooter = matchPath(location.pathname, { path: '/landing' });
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
