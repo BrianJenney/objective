@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCoupon, addToCart } from '../../../modules/cart/functions';
-
+import { setLpProdAdded, setLpCouponAdded } from '../../../modules/utils/actions';
 import { makeStyles } from '@material-ui/core/styles';
 
 import './template-styles.css';
@@ -28,10 +28,10 @@ const useStyles = makeStyles(theme => ({
 
 const SPButton = ({ data, template, type, align }) => {
   const classes = useStyles(data);
-  const [prodAdded, setProdAdded] = useState(false);
-  const [couponAdded, setCouponAdded] = useState(false);
   const products = useSelector(state => state.catalog.variants);
   const cart = useSelector(state => state.cart);
+  const prodAdded = useSelector(state => state.utils.lpProdAdded);
+  const couponAdded = useSelector(state => state.utils.lpCouponAdded);
   const dispatch = useDispatch();
 
   const handleClick = useCallback(() => {
@@ -49,42 +49,35 @@ const SPButton = ({ data, template, type, align }) => {
           products.find(p => p.sku === sku),
           qty
         );
-        setProdAdded(true);
+        dispatch(setLpProdAdded(true));
       }
     }, 500);
-    handleAddCoupon();
   }, [cart, dispatch]);
 
   const handleAddCoupon = useCallback(() => {
     setTimeout(() => {
       addCoupon(cart._id, data.coupon);
-      setCouponAdded(true);
+      dispatch(setLpCouponAdded(true));
     }, 500);
   }, [cart, products, dispatch]);
 
-  // useEffect(() => {
-  //   if (data.coupon && prodAdded && couponAdded === false) {
-  //     handleAddCoupon();
-  //   }
-  // }, [prodAdded, dispatch]);
+  useEffect(() => {
+    if (data.coupon && prodAdded && couponAdded === false) {
+      handleAddCoupon();
+    }
+  }, [prodAdded, dispatch]);
 
   useEffect(() => {
-    console.log('this here 1');
     const [sku, qty] = data.skuAndQty[0].split(';');
 
-    if (!data.coupon && cart.items.find(p => p.sku === sku)) {
-      console.log('this here 2222');
+    if (prodAdded && !data.coupon) {
       window.location.href = data.URL;
     }
 
-    if (data.coupon && cart.items.find(p => p.sku === sku) && cart.promo) {
+    if (prodAdded && couponAdded) {
       window.location.href = data.URL;
-      console.log('this here 333');
     }
-  }, [cart]);
-
-  console.log('this prodAdded', prodAdded);
-  console.log('this couponAdded', couponAdded);
+  }, [prodAdded, couponAdded]);
 
   return (
     <div className={`${template}-${type}-${align}`}>
