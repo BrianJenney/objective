@@ -126,11 +126,11 @@
 }
 .LP-Template-1-image-left {
   margin-right: 25px;
-  float: right;
+  float: left;
 }
 .LP-Template-1-image-right {
   margin-left: 25px;
-  float: left;
+  float: right;
 }
 .LP-Template-1-sectionSubTitle {
   font-size: 16px;
