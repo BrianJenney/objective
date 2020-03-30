@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from '@material-ui/core';
+import { NavLink } from '../../../components/common';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -16,20 +16,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Paragraph = ({ data }) => {
-  //const paragraph = data.value.components.filter(item => item.type === 'paragraph')[0];
-  //const style = paragraph;
   const classes = useStyles(data);
 
   return (
     <div>
       {data.value.map((text, i) => {
-        return text.value ? (
-          <a href={text.url}>{text.value}</a>
-        ) : (
-          <p key={i} className={classes.root}>
-            {text}
-          </p>
-        );
+        if (typeof text === 'object') {
+          return (
+            <NavLink to={text.url} className={classes.root}>
+              {' '}
+              {text.value}
+            </NavLink>
+          );
+        }
+        return <p className={classes.root}>{text}</p>;
       })}
     </div>
   );
