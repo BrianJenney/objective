@@ -1,0 +1,258 @@
+.LP-Template-1-pageTitle {
+  font-family: 'Canela Text Web';
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  font-size: 52px;
+  line-height: 1.23;
+  letter-spacing: normal;
+  color: #000;
+  margin: 55px 0 15px;
+}
+.LP-Template-1-sectionTitle {
+  font-size: 28px;
+  font-family: Canela Text Web;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.28px;
+  color: #1f396d;
+  margin: 25px 0 15px;
+  text-transform: capitalize;
+}
+.LP-Template-1-boxTitle {
+  font-size: 18px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.28;
+  letter-spacing: 2px;
+  color: #1f396d;
+  text-transform: uppercase;
+}
+.LP-Template-1-pageSubTitle {
+  font-size: 24px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 2px;
+  color: #1f396d;
+  text-transform: uppercase;
+  margin: 0 0 45px;
+}
+.LP-Template-1-hero {
+  margin-bottom: 45px;
+  width: 100%;
+  display: block;
+}
+.LP-Template-1-box {
+  border: 1px solid #000;
+  background-color: #fcf8f4;
+  padding: 20px 25px;
+  width: 300px;
+}
+.LP-Template-1-box-right {
+  margin-left: 25px;
+  display: block;
+  float: right;
+}
+.LP-Template-1-box-left {
+  margin-right: 25px;
+  display: block;
+  float: left;
+}
+.LP-Template-1-box-noBorder {
+  background-color: #fcf8f4;
+  padding: 20px 25px;
+  width: 300px;
+}
+.LP-Template-1-box-noBorder-right {
+  margin-left: 25px;
+}
+.LP-Template-1-box-noBorder-left {
+  margin-right: 25px;
+}
+.LP-Template-1-list {
+  margin-left: -1em;
+  font-family: freight-text-pro, serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.28;
+  letter-spacing: normal;
+  color: #333;
+  margin-bottom: 14px;
+}
+.LP-Template-1-list-blueCheckmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/5Hv6wfbtbWEbfQSaGra8us/eec68bbf2409fb295a9b09babcdf76fe/checkmark.svg?h=9');
+}
+.LP-Template-1-list-greenCheckmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/7hIrYYtuJcJ9pVIlbiUb0o/e1daf46ec91cce5c3849649fb4d64dce/checkmark-green.svg?h=12');
+}
+.LP-Template-1-list-checkmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/3HZYclltbiH9vpFn6OPZIb/269d7184d896a24886cbd24bd4a5ff84/checkmark-black.svg?h=9');
+}
+.LP-Template-1-list-crossmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/ss2YbqmorcVrsmtzo7ePI/92e6f174ba9dce1bf2fb43401e0e04cf/x.svg?h=12');
+}
+.LP-Template-1-banner {
+  font-size: 33px;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  font-style: normal;
+  font-family: p22-underground, Helvetica, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #1f396d;
+  padding: 30px 0;
+  text-align: center;
+  margin: 40px 0;
+}
+.LP-Template-1-banner-borderTopandBottom {
+  border-top: 4px solid #1f396d;
+  border-bottom: 4px solid #1f396d;
+}
+.LP-Template-1-banner-borderTop {
+  border-top: 4px solid #1f396d;
+}
+.LP-Template-1-banner-borderBottom {
+  border-bottom: 4px solid #1f396d;
+}
+.LP-Template-1-banner-borderLeft {
+  border-left: 4px solid #1f396d;
+}
+.LP-Template-1-banner-borderRight {
+  border-right: 4px solid #1f396d;
+}
+.LP-Template-1-image-left {
+  margin-right: 25px;
+  float: left;
+}
+.LP-Template-1-image-right {
+  margin-left: 25px;
+  float: right;
+}
+.LP-Template-1-image-caption-left {
+  float: left;
+  width: 320px;
+  padding-right: 20px;
+  margin-top: 10px;
+  border: transparent solid 2px;
+  font-family: freight-text-pro, serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
+}
+.LP-Template-1-image-caption-right {
+  float: right;
+  width: 320px;
+  padding-left: 20px;
+  margin-top: 10px;
+  border: transparent solid 2px;
+  font-family: freight-text-pro, serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
+}
+.LP-Template-1-sectionSubTitle {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: p22-underground, Helvetica, sans-serif;
+  color: #1f396d;
+  text-transform: uppercase;
+}
+.LP-Template-1-button {
+  width: 385px;
+  height: 60px;
+  background-color: #1f396d;
+  text-transform: uppercase;
+  font-family: p22-underground, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: 1.33px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+.LP-Template-1-button-left {
+  display: flex;
+  justify-content: flex-start;
+}
+.LP-Template-1-button-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.LP-Template-1-button-center {
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 600px) {
+  .LP-Template-1-pageTitle {
+    font-size: 36px;
+    margin: 15px 0 5px;
+  }
+  .LP-Template-1-sectionTitle {
+    letter-spacing: 0.22px;
+    margin: 25px 0 10px;
+  }
+  .LP-Template-1-pageSubTitle {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+  .LP-Template-1-hero {
+    font-size: 18px;
+    margin: 0 0 10px;
+    width: 100%;
+    display: block;
+  }
+  .LP-Template-1-box {
+    border: 1px solid #000;
+    background-color: #fcf8f4;
+    padding: 20px 25px;
+    width: 100%;
+  }
+  .LP-Template-1-box {
+    background-color: #fcf8f4;
+    padding: 20px 25px;
+    width: 100%;
+  }
+  .LP-Template-1-banner {
+    font-size: 26px !important;
+    text-align: left !important;
+  }
+  .LP-Template-1-image-left {
+    margin-right: 15px;
+    float: left;
+  }
+  .LP-Template-1-image-right {
+    margin-left: 15px;
+    float: right;
+  }
+  .LP-Template-1-list-ol {
+    font-size: 10px !important;
+    word-wrap: break-word;
+  }
+  .LP-Template-1-image-caption-left {
+    width: 170px;
+    padding-right: 10px;
+  }
+  .LP-Template-1-image-caption-right {
+    width: 170px;
+    padding-left: 10px;
+  }
+}

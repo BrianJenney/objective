@@ -1,35 +1,25 @@
 .Template-1 {
-  // display: grid;
-  // grid-template-columns: repeat(12, 1fr);
   .pageTitle {
-    grid-column: 3/11;
     margin: 55px 0 15px;
     @media only screen and (max-width: 600px) {
-      grid-column: 1/-1;
       margin: 15px 0 5px;
       max-width: 100%;
     }
   }
   .pageSubTitle {
-    grid-column: 3/11;
     margin: 0 0 45px;
     @media only screen and (max-width: 600px) {
-      grid-column: 1/-1;
       margin: 0 0 10px;
     }
   }
   .hero {
-    grid-column: 2/12;
     margin-bottom: 45px;
     @media only screen and (max-width: 600px) {
-      grid-column: 1/-1;
       margin-bottom: 25px;
     }
   }
   .sectionTitle {
-    grid-column: 1/8;
     @media only screen and (max-width: 600px) {
-      grid-column: 1/-1;
     }
   }
   .image-right {
