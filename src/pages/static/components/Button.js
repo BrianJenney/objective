@@ -9,9 +9,9 @@ import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-    backgroundColor: props.desktopStyle.backgroundColor,
+    backgroundColor: props.desktopStyle.bgColor,
     '&:hover': {
-      backgroundColor: props.desktopStyle.backgroundColor
+      backgroundColor: props.desktopStyle.bgColor
     },
     display: props.desktopStyle.display,
     float: props.desktopStyle.float,
@@ -83,25 +83,11 @@ const SPButton = ({ data, template, type, align }) => {
   }, [prodAdded, couponAdded]);
 
   return (
-    <>
-      {template ? (
-        <div className={template}>
-          <Grid className={type}>
-            <Grid className={`${type}-${align}`}>
-              <Button className={`${classes.root}`} onClick={handleClick}>
-                {data.value}
-              </Button>
-            </Grid>
-          </Grid>
-        </div>
-      ) : (
-        <div>
-          <Button className={classes.root} onClick={handleClick}>
-            {data.value}
-          </Button>
-        </div>
-      )}
-    </>
+    <Grid className={`${type}-${align}`}>
+      <Button className={`${classes.root}`} onClick={handleClick}>
+        {data.value}
+      </Button>
+    </Grid>
   );
 };
 
