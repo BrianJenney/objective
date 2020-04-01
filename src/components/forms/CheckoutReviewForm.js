@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import HttpsOutlined from '@material-ui/icons/HttpsOutlined';
 import { Button, NavLink } from '../common';
+import Checkbox from '@material-ui/core/Checkbox';
 const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
   <Box
     display="flex"
@@ -19,21 +20,29 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
         variant="h5"
         fontFamily="Canela Text Web"
         children="Please take a moment to review your order."
+        style={{ fontSize:'32px' }}
       />
     ) : (
-        ''
-      )}
-    <Box width={532} mb={2} className="button-holder-mobile">
+      ''
+    )}
+
+    <Box display="flex" alignItems="center">
+      <Checkbox id="useAddressSeedToggle" size="small" color="default" checked/>
+      <Typography
+        variant="body2"
+        children={'Keep me updated with exclusive offers and new product launches'}
+        style={{ color: '#231f20', fontSize: '16px' }}
+      />
+    </Box>
+
+    <Box width={384} mb={2} className="button-holder-mobile">
       <Button
         type="button"
         onClick={onSubmit}
         children="Place order"
         size="large"
-        startIcon={
-          xsBreakpoint ? null : (
-            <HttpsOutlined style={{ 'padding-bottom': '5px' }} />
-          )
-        }
+        startIcon={xsBreakpoint ? null : <HttpsOutlined style={{ 'padding-bottom': '5px' }} />}
+        style={{ height: '55px', padding: '0px' }}
         fullWidth
       />
     </Box>
@@ -44,10 +53,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
       justifyContent="center"
       style={{ textAlign: 'center', margin: '0px auto', maxWidth: '430px' }}
     >
-      <Box
-        style={{ float: xsBreakpoint ? 'inherit' : 'left', display: 'block' }}
-        display="flex"
-      >
+      <Box style={{ float: xsBreakpoint ? 'inherit' : 'left', display: 'block' }} display="flex">
         <Typography variant="body2" style={{ fontSize: '11px' }}>
           By placing this order I agree to the
         </Typography>

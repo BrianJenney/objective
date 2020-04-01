@@ -136,7 +136,14 @@ const OrderConfirmation = ({ history }) => {
   };
 
   const OrderDetail = () => {
-    const { cardType, last4 } = order.paymentData;
+    const paymentMethod = order.paymentData && order.paymentData.method ? order.paymentData.method : 'creditCard';
+    const cardType =
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.cardType
+        ? order.paymentData.cardType
+        : '';
+    const last4 =
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.last4 ? order.paymentData.last4 : '';
+    const paymentEmail = 'paypal' && order.paymentData && order.paymentData.email ? order.paymentData.email : '';
     const { shippingAddress, billingAddress } = order;
     const { email } = account.data;
     const handleOrderDetail = useCallback(
@@ -185,7 +192,7 @@ const OrderConfirmation = ({ history }) => {
           borderTop="1px solid #979797"
           borderBottom="1px solid #979797"
         >
-          <Grid item xs={addressesWidth}>
+          <Grid item xs={addressesWidth} style={{ display: paymentMethod!=='paypal' ? 'block' : 'none' }}>
             <Box
               borderRight={xs ? 0 : '1px solid #979797'}
               paddingBottom={xs ? '25px' : '35px'}
@@ -201,7 +208,7 @@ const OrderConfirmation = ({ history }) => {
           </Grid>
           <Grid item xs={addressesWidth}>
             <Box
-              paddingLeft={xs ? 0 : 3}
+              paddingLeft={xs ? 0 : paymentMethod!=='paypal' ? 3 : 0}
               borderTop={xs ? '1px solid #979797' : 0}
               paddingBottom={xs ? '25px' : '35px'}
             >
@@ -223,7 +230,8 @@ const OrderConfirmation = ({ history }) => {
             Payment
           </Typography>
           <Typography className={classes.subText}>
-            {cardType} - ***{last4}
+            {paymentMethod === 'creditCard' ? `${cardType} - ***${last4}` : ''}
+            {paymentMethod === 'paypal' ? `PayPal: ${paymentEmail}` : ''}
           </Typography>
         </Grid>
       </Box>

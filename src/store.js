@@ -8,6 +8,7 @@ import accountReducer from './modules/account/reducers';
 import orderReducer from './modules/order/reducers';
 import catalogReducer from './modules/catalog/reducers';
 import utilsReducer from './modules/utils/reducers';
+import paypalReducer from './modules/paypal/reducers';
 
 const rootReducer = combineReducers({
   stomp: stompReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   account: accountReducer,
   order: orderReducer,
   catalog: catalogReducer,
-  utils: utilsReducer
+  utils: utilsReducer,
+  paypal: paypalReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

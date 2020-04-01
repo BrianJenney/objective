@@ -64,15 +64,6 @@ const AccountAddresses = ({
     }
   }, []);
 
-  useEffect(() => {
-    if(currentUser.signupError && currentUser.signupError.errorMessage){
-      setTimeout(() => {
-        scrollToRef(errRef);
-      }, 400);
-      
-    }
-  }, [currentUser.signupError]);
-
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
     setSelectedIndex(index);
@@ -201,15 +192,6 @@ const AccountAddresses = ({
   
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      {currentUser.signupError && currentUser.signupError.errorMessage && !currentUser.data.account_jwt && (
-        <div ref={errRef}>
-        <AlertPanel
-          mb={2}
-          type="error"
-          text={`${currentUser.signupError.errorMessage}`}
-        />
-      </div>
-      )}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}

@@ -126,7 +126,14 @@ const OrderSummary = ({
   orderStatus
 }) => {
 
-  const { cardType, last4 } = paymentData;
+  const paymentMethod = paymentData && paymentData.method ? paymentData.method : 'creditCard';
+  const cardType =
+    paymentMethod === 'creditCard' && paymentData && paymentData.cardType
+      ? paymentData.cardType
+      : '';
+  const last4 =
+    paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
+  const paymentEmail = 'paypal' && paymentData && paymentData.email ? paymentData.email : '';
   const { email } = account.data;
   const { phone } = billingAddress;
   const dispatch = useDispatch();
@@ -183,7 +190,7 @@ const OrderSummary = ({
         borderTop={1}
         borderBottom={1}
       >
-        <Grid item xs={addressesWidth}>
+        <Grid item xs={addressesWidth} style={{ display: paymentMethod!=='paypal' ? 'block' : 'none' }}>
           <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>
               Billing Information
@@ -197,7 +204,7 @@ const OrderSummary = ({
         </Grid>
         <Grid item xs={addressesWidth}>
           <Box
-            paddingLeft={xs ? 0 : 3}
+            paddingLeft={xs ? 0 : paymentMethod!=='paypal' ? 3 : 0}
             borderTop={xs ? 1 : 0}
             paddingBottom={3}
           >
@@ -224,7 +231,8 @@ const OrderSummary = ({
           Payment
         </StyledSmallCaps>
         <Typography className={classes.text}>
-          {cardType} - ***{last4}
+            {paymentMethod === 'creditCard' ? `${cardType} - ***${last4}` : ''}
+            {paymentMethod === 'paypal' ? `PayPal: ${paymentEmail}` : ''}
         </Typography>
       </Grid>
     </Box>

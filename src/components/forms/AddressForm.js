@@ -337,8 +337,39 @@ const AddressForm = ({
   };
 
   const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
-    <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
+    <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>   
       <Box display="block" mb={xs ? 3 : 4} className="justify-content">
+        {!currentUser.data.account_jwt && (
+          <>
+           <Typography
+          color="#231f20"
+          variant="h5"
+          fontSize={xs ? 24 : 30}
+          className={xs ? classes.mobileTitle : classes.title}
+        >
+          Express Checkout
+          <Grid container alignItems={'left'} style={{marginTop : '11px'}}>
+          <div id="paypal-checkout-button" style={{width : '187px'}}></div>
+          </Grid>
+        </Typography>
+
+        <Grid container spacing={1} alignItems={'center'} style={{marginTop : '23px', marginBottom : '23px'}}>
+          <Grid item xs>
+            <hr style={{border : 'solid 1px #231f20'}}></hr>
+          </Grid>
+          <Grid item xs={1} style={{textAlign : 'center'}}>
+          <Typography
+                variant="body2"
+                children={"or"}
+                style={{ color: '#231f20', fontWeight : '500', fontSize : '22px' }}
+              />
+          </Grid>
+          <Grid item xs>
+            <hr style={{border : 'solid 1px #231f20'}}></hr>
+          </Grid>
+        </Grid>
+          </>
+        )}
         <Typography
           color="#231f20"
           variant="h5"
@@ -592,12 +623,14 @@ const AddressForm = ({
                       onClick={onBack}
                       children={backLabel}
                       mr={2}
+                      style={ { height: '55px', padding: '0px' } }
                     />
                   )}
                 <Button
                   type="submit"
                   children={submitLabel}
                   loading={isSubmitting}
+                  style={ { height: '55px', padding: '0px'} }
                 />
               </ButtonGroup>
             </Grid>
