@@ -52,9 +52,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const Header = ({ data }) => {
-  //const nav = data.filter(item => item.type === 'navigation')[0];
-  //const style = nav;
+const Header = ({ data, template, type }) => {
   const classes = useStyles(data);
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -69,7 +67,7 @@ const Header = ({ data }) => {
             </NavLink>
             {data.value.map(val => {
               return (
-                <Link href={val.scroll} className={classes.link}>
+                <Link href={val.scroll} className={`${classes.link} ${template}-${type}`}>
                   {val.label}
                 </Link>
               );

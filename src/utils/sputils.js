@@ -16,13 +16,19 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
   let tmpComps = GeneratePageComponents(page.components, page.template, page.name);
-  return <GenerateTemplate data={tmpComps} header={page.components.filter(c => c.type === 'navigation')[0]} />;
+  return (
+    <GenerateTemplate
+      data={tmpComps}
+      template={page.template}
+      header={page.components.filter(c => c.type === 'navigation')[0]}
+    />
+  );
 };
 
-export const GenerateTemplate = ({ data, header }) => {
+export const GenerateTemplate = ({ data, header, template }) => {
   return (
     <div>
-      <Header data={header} />
+      <Header data={header} template={template} type={header.type} />
       <Container>
         <RenderComponents components={data} />
       </Container>
