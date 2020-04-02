@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Logo from '../../../components/common/Icons/Logo/Logo';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Container, Grid, Link } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles(theme => ({
@@ -40,8 +40,6 @@ const useStyles = makeStyles(theme => ({
     }
   },
   link: props => ({
-    textDecoration: 'underline',
-    letterSpacing: '1.5px',
     color: props.desktopStyle.fontColor,
     fontWeight: props.desktopStyle.fontWeight,
     fontSize: props.desktopStyle.fontSize,
@@ -67,9 +65,9 @@ const Header = ({ data, template, type }) => {
             </NavLink>
             {data.value.map(val => {
               return (
-                <Link href={val.scroll} className={`${classes.link} ${template}-${type}`}>
+                <a href={val.scroll} className={`${classes.link} ${template}-${type}`}>
                   {val.label}
-                </Link>
+                </a>
               );
             })}
           </Grid>

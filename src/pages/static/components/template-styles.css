@@ -1,3 +1,16 @@
+.LP-Template-1-navigation {
+  font-family: p22-underground, Helvetica, sans-serif;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.28;
+  letter-spacing: 1.5px;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: underline;
+  width: 20%;
+}
 .LP-Template-1-pageTitle {
   font-family: 'Canela Text Web';
   font-weight: 400;
