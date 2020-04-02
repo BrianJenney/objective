@@ -126,7 +126,6 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
     type: REQUEST_CANCEL_ORDER,
     payload: { isLoading: true }
   });
-
   const { client: stompClient, replyTo } = getState().stomp;
   const { account_jwt } = getState().account.data;
   const params = {

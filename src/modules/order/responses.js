@@ -40,7 +40,6 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       } else {
         store.dispatch(receivedCancelOrderFailure(data));
       }
-
       break;
     case 'order.request.find':
       debugRabbitResponse('Find Order by Account Response', status, data, fields, properties);
