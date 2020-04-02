@@ -12,7 +12,7 @@
   width: 20%;
 }
 .LP-Template-1-pageTitle {
-  font-family: 'Canela Text Web';
+  font-family: Canela Text Web;
   font-weight: 400;
   font-stretch: normal;
   font-style: normal;
@@ -33,6 +33,16 @@
   color: #1f396d;
   margin: 25px 0 15px;
   text-transform: capitalize;
+}
+.LP-Template-1-paragraph {
+  font-size: 20px;
+  font-family: freight-text-pro, serif;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
 }
 .LP-Template-1-boxTitle {
   font-size: 18px;
@@ -222,6 +232,9 @@
   .LP-Template-1-sectionTitle {
     letter-spacing: 0.22px;
     margin: 25px 0 10px;
+  }
+  .LP-Template-1-paragraph {
+    font-size: 18px;
   }
   .LP-Template-1-pageSubTitle {
     font-size: 18px;
