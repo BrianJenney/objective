@@ -127,7 +127,7 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'paragraph':
         components.push(
           <>
-            <Paragraph data={obj} />
+            <Paragraph data={obj} template={template} type={obj.type} />
           </>
         );
         break;
