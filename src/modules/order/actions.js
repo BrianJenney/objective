@@ -75,7 +75,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
   // @segment Order Completed Event
   // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
   let orderItemsTransformed = [];
-  order.items.map(item => {
+  order.items.forEach(item => {
     orderItemsTransformed.push({
       brand: order.storeCode,
       image_url: `https:${item.variant_img}`,
