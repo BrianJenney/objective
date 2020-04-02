@@ -77,12 +77,12 @@
   width: 300px;
 }
 .LP-Template-1-box-right {
-  margin-left: 25px;
+  margin: 12px 0 10px 25px;
   display: block;
   float: right;
 }
 .LP-Template-1-box-left {
-  margin-right: 25px;
+  margin: 12px 25px 10px 0;
   display: block;
   float: left;
 }
@@ -92,10 +92,10 @@
   width: 300px;
 }
 .LP-Template-1-box-noBorder-right {
-  margin-left: 25px;
+  margin: 12px 0 10px 25px;
 }
 .LP-Template-1-box-noBorder-left {
-  margin-right: 25px;
+  margin: 12px 25px 10px 0;
 }
 .LP-Template-1-list {
   margin-left: -1em;
@@ -251,11 +251,13 @@
     background-color: #fcf8f4;
     padding: 20px 25px;
     width: 100%;
+    margin-bottom: 10px;
   }
   .LP-Template-1-box {
     background-color: #fcf8f4;
     padding: 20px 25px;
     width: 100%;
+    margin-bottom: 10px;
   }
   .LP-Template-1-banner {
     font-size: 26px !important;
