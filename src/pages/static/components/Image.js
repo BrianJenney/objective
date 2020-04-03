@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     }
   }),
   captionImage: {
-    marginBottom: 10
+    marginBottom: 10,
+    maxWidth: 300
   },
   captionImageMobile: {
     width: '100%',

@@ -1,5 +1,18 @@
+.LP-Template-1-navigation {
+  font-family: p22-underground, Helvetica, sans-serif;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.28;
+  letter-spacing: 1.5px;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: underline;
+  width: 20%;
+}
 .LP-Template-1-pageTitle {
-  font-family: 'Canela Text Web';
+  font-family: Canela Text Web;
   font-weight: 400;
   font-stretch: normal;
   font-style: normal;
@@ -20,6 +33,16 @@
   color: #1f396d;
   margin: 25px 0 15px;
   text-transform: capitalize;
+}
+.LP-Template-1-paragraph {
+  font-size: 20px;
+  font-family: freight-text-pro, serif;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #000;
 }
 .LP-Template-1-boxTitle {
   font-size: 18px;
@@ -54,12 +77,12 @@
   width: 300px;
 }
 .LP-Template-1-box-right {
-  margin-left: 25px;
+  margin: 12px 0 10px 25px;
   display: block;
   float: right;
 }
 .LP-Template-1-box-left {
-  margin-right: 25px;
+  margin: 12px 25px 10px 0;
   display: block;
   float: left;
 }
@@ -69,10 +92,10 @@
   width: 300px;
 }
 .LP-Template-1-box-noBorder-right {
-  margin-left: 25px;
+  margin: 12px 0 10px 25px;
 }
 .LP-Template-1-box-noBorder-left {
-  margin-right: 25px;
+  margin: 12px 25px 10px 0;
 }
 .LP-Template-1-list {
   margin-left: -1em;
@@ -202,6 +225,18 @@
   justify-content: center;
 }
 @media only screen and (max-width: 600px) {
+  .LP-Template-1-navigation {
+    font-family: p22-underground, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 1.5px;
+    color: #1f396d;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
   .LP-Template-1-pageTitle {
     font-size: 36px;
     margin: 15px 0 5px;
@@ -209,6 +244,9 @@
   .LP-Template-1-sectionTitle {
     letter-spacing: 0.22px;
     margin: 25px 0 10px;
+  }
+  .LP-Template-1-paragraph {
+    font-size: 18px;
   }
   .LP-Template-1-pageSubTitle {
     font-size: 18px;
@@ -225,11 +263,13 @@
     background-color: #fcf8f4;
     padding: 20px 25px;
     width: 100%;
+    margin-bottom: 10px;
   }
   .LP-Template-1-box {
     background-color: #fcf8f4;
     padding: 20px 25px;
     width: 100%;
+    margin-bottom: 10px;
   }
   .LP-Template-1-banner {
     font-size: 26px !important;

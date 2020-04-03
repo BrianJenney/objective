@@ -83,7 +83,7 @@ const BlogCategory = ({ computedMatch, location }) => {
             <div className="journal-gallery">
               <Box className="header" py={8}>
                 <Container className="container">
-                  <h1>Sleep Month 2020</h1>
+                  <h1>Sleep</h1>
                   <p>Sleep Well, Live Well</p>
                 </Container>
               </Box>

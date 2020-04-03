@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Paragraph = ({ data }) => {
+const Paragraph = ({ data, template, type }) => {
   const classes = useStyles(data);
 
   const { value } = data;
@@ -50,7 +50,7 @@ const Paragraph = ({ data }) => {
       {context.map((text, key) => {
         if (typeof text === 'object') {
           return (
-            <p className={classes.root}>
+            <p className={`${classes.root} ${template}-${type}`}>
               <NavLink underline="always" to={text.par1.url} className={classes.nav}>
                 {' '}
                 {text.par1.value}
@@ -59,7 +59,9 @@ const Paragraph = ({ data }) => {
             </p>
           );
         }
-        return <p key={key} className={classes.root} dangerouslySetInnerHTML={{ __html: text }}></p>;
+        return (
+          <p key={key} className={`${classes.root} ${template}-${type}`} dangerouslySetInnerHTML={{ __html: text }}></p>
+        );
       })}
     </div>
   );
