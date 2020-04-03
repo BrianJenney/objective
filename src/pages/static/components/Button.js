@@ -8,6 +8,7 @@ import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
+    border: 0,
     backgroundColor: props.desktopStyle.bgColor,
     '&:hover': {
       backgroundColor: props.desktopStyle.bgColor
