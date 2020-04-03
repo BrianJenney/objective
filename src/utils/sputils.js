@@ -142,7 +142,7 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'sectionSubTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} />
+            <Title data={obj} template={template} type={obj.type} pageName={pageName} />
           </>
         );
         break;
