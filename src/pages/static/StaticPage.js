@@ -99,6 +99,24 @@ const StaticPage = ({ location }) => {
   };
 
   const transformText = (store, entries, length) => {
+    // console.log('testing-PARA-ENBTRIES', entries);
+    if (entries.nodeType === 'paragraph' && entries.content.length >= 2) {
+      console.log('testing-HELLO', entries);
+      let sameLinkPara = {};
+      for (let i = 0; i < entries.content.length; i++) {
+        if (entries.content[i].marks.length) {
+          sameLinkPara = {
+            par1: {
+              type: entries.content[i].marks[0].type,
+              value: entries.content[i].value
+            },
+            par2: entries.content[i + 1] ? entries.content[i + 1].value : null
+          };
+        }
+        i += 1;
+      }
+      return store.push(sameLinkPara);
+    }
     if (entries.nodeType === 'hyperlink') {
       return store.push({ value: entries.content[0].value, url: entries.data.uri });
     }
@@ -120,7 +138,6 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
-      console.log('TESTINF-STOREEEEE', prevStore);
       if (store) {
         prevStore.value.components.push(store);
       }
@@ -225,6 +242,7 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'tableBody'
     ) {
       const paragraphData = transformText([], fields.content);
+      console.log('testing-PARA-RESULT', paragraphData);
       storeContent = { value: paragraphData, ...metaDataSection };
       return storeContent;
     }
@@ -278,7 +296,7 @@ const StaticPage = ({ location }) => {
     };
 
     content.map(({ fields }) => {
-      console.log('TESTING-FIELDS', fields);
+      // console.log('TESTING-FIELDS', fields);
       transformContent(fields, mainDataObj);
     });
   }
