@@ -7,39 +7,43 @@ const StaticPage = ({ location }) => {
   // const [featuredMain, setFeaturedMain] = useState({});
   const dispatch = useDispatch();
   const contentfulEntries = useSelector(state => state.page.items);
+
   let mainDataObj = {};
   let storage = {};
   let columnComponent = { value: { components: [] } };
   const tableComponent = [];
-  const transformMetadata = (metaEntries, id = null) => {
-    const metaFields = metaEntries.reduce((metaObj, { fields }) => {
-      const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
-      const metaData = metaStyles.reduce((obj, each) => {
-        if (!obj[each]) {
-          obj[each] = fields[each];
-        }
-        return obj;
-      }, {});
+  const transformMetadata = (metaEntries, name = null) => {
+    const metaFields = metaEntries.reduce(
+      (metaObj, { fields }) => {
+        const metaStyles = Object.keys(fields).filter(each => each !== 'contentType' && each !== 'pageName');
+        const metaData = metaStyles.reduce((obj, each) => {
+          if (!obj[each]) {
+            obj[each] = fields[each];
+          }
+          return obj;
+        }, {});
 
-      for (const [key, value] of Object.entries(fields)) {
-        if (key === 'contentType') {
-          metaObj.type = value;
-        }
-        if (key === 'pageName') {
-          if (value.toLowerCase().includes('desktop')) {
-            metaObj.desktopStyle = { ...metaData };
-          } else if (value.toLowerCase().includes('mobile')) {
-            metaObj.mobileStyle = { ...metaData };
-          } else {
-            metaObj.desktopStyle = { ...metaData };
+        for (const [key, value] of Object.entries(fields)) {
+          if (key === 'contentType') {
+            metaObj.type = value;
+          }
+          if (key === 'pageName') {
+            if (value.toLowerCase().includes('desktop')) {
+              metaObj.desktopStyle = { ...metaData };
+            } else if (value.toLowerCase().includes('mobile')) {
+              metaObj.mobileStyle = { ...metaData };
+            } else {
+              metaObj.desktopStyle = { ...metaData };
+            }
           }
         }
-      }
-      if (id) {
-        metaObj.id = id;
-      }
-      return metaObj;
-    }, {});
+        if (name) {
+          metaObj.name = name;
+        }
+        return metaObj;
+      },
+      { desktopStyle: {}, mobileStyle: {} }
+    );
     return metaFields;
   };
 
@@ -102,11 +106,9 @@ const StaticPage = ({ location }) => {
     } else {
       entries.content.map(entry => transformText(store, entry, length));
     }
-
     if (entries.value) {
       return store.push(entries.value);
     }
-
     return store;
   };
 
@@ -118,6 +120,7 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'embedded-entry-block') {
       const { fields } = entries.data.target;
       store = transformContent(fields, {});
+      console.log('TESTINF-STOREEEEE', prevStore);
       if (store) {
         prevStore.value.components.push(store);
       }
@@ -128,7 +131,7 @@ const StaticPage = ({ location }) => {
   const transformContent = (fields, storeContent, storeContainer) => {
     columnComponent = { value: { components: [] } };
     storage = {};
-    const metaDataSection = transformMetadata(fields.metadata, fields.id);
+    const metaDataSection = transformMetadata(fields.properties, fields.name);
 
     if (metaDataSection.type === 'navigation' || metaDataSection.type === 'button') {
       if (fields.name.toLowerCase().includes('mobile')) {
@@ -175,12 +178,14 @@ const StaticPage = ({ location }) => {
           mobileStyle: btnMobileStyle
         };
       }
+
       if (storeContent.components) {
         storeContent.components.push({
           ...storage,
           ...metaDataSection
         });
       }
+      return { ...storage, ...metaDataSection };
     }
 
     if (
@@ -189,12 +194,12 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'banner' ||
       metaDataSection.type === 'sectionTitle' ||
       metaDataSection.type === 'boxTitle' ||
+      metaDataSection.type === 'boxSubTitle' ||
       metaDataSection.type === 'imageCaption' ||
       metaDataSection.type === 'tableHead' ||
       metaDataSection.type === 'sectionSubTitle'
     ) {
       const titleData = transformTitle({}, fields.content);
-
       if (storeContent.components) {
         storeContent.components.push({
           ...titleData,
@@ -220,7 +225,6 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'tableBody'
     ) {
       const paragraphData = transformText([], fields.content);
-
       storeContent = { value: paragraphData, ...metaDataSection };
       return storeContent;
     }
@@ -229,13 +233,15 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'oneColSection' ||
       metaDataSection.type === 'box' ||
       metaDataSection.type === 'table' ||
-      metaDataSection.type === 'tableContainer'
+      metaDataSection.type === 'tableContainer' ||
+      metaDataSection.type === 'container' ||
+      metaDataSection.type === 'twoColSection'
     ) {
       columnComponent = { ...metaDataSection, ...columnComponent };
 
       const columnData = transformOneColumn({}, fields.content, columnComponent);
 
-      if (columnData.type === 'box') {
+      if (columnData.type === 'box' || columnData.type === 'container') {
         return columnData;
       }
       if (columnData.type === 'table') {
@@ -253,27 +259,34 @@ const StaticPage = ({ location }) => {
         }
         storage = columnComponent;
       }
+      if (columnData.type === 'twoColSection') {
+        columnComponent = columnData;
+        if (storeContent.components) {
+          storeContent.components.push(columnComponent);
+        }
+      }
     }
   };
 
   if (contentfulEntries) {
-    const { template, slug, content } = contentfulEntries[0].fields;
+    const { template, slug, content, name } = contentfulEntries[0].fields;
     mainDataObj = {
+      name,
       template,
       slug,
       components: []
     };
 
     content.map(({ fields }) => {
-      // console.log('testing-FIELDS', fields);
+      console.log('TESTING-FIELDS', fields);
       transformContent(fields, mainDataObj);
     });
   }
-  // console.log('TESTING@@@', mainDataObj);
+  console.log('TESTING@@@', mainDataObj);
 
   useEffect(() => {
-    dispatch(requestPage('staticpage'));
-    console.log('this results');
+    dispatch(requestPage('jen-test-page'));
+    // console.log('this results');
   }, []);
 
   return (
