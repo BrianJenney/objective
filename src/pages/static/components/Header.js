@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
 import Logo from '../../../components/common/Icons/Logo/Logo';
+import Scrollchor from 'react-scrollchor';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Container, Grid } from '@material-ui/core';
@@ -65,9 +65,9 @@ const Header = ({ data, template, type }) => {
             </NavLink>
             {data.value.map(val => {
               return (
-                <a href={val.scroll} className={`${classes.link} ${template}-${type}`}>
+                <Scrollchor to={`#${val.scroll}`} className={`${classes.link} ${template}-${type}`}>
                   {val.label}
-                </a>
+                </Scrollchor>
               );
             })}
           </Grid>
