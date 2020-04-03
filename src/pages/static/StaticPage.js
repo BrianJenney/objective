@@ -99,27 +99,24 @@ const StaticPage = ({ location }) => {
   };
 
   const transformText = (store, entries, length) => {
-    // console.log('testing-PARA-ENBTRIES', entries);
     if (entries.nodeType === 'paragraph' && entries.content.length >= 2) {
-      console.log('testing-HELLO', entries);
-      let sameLinkPara = {};
+      const sameLinkPara = {};
       for (let i = 0; i < entries.content.length; i++) {
-        if (entries.content[i].marks.length) {
-          sameLinkPara = {
-            par1: {
-              type: entries.content[i].marks[0].type,
-              value: entries.content[i].value
-            },
-            par2: entries.content[i + 1] ? entries.content[i + 1].value : null
-          };
+        const name = `para${i}`;
+        if (entries.content[i].nodeType === 'hyperlink') {
+          sameLinkPara[name] = { value: entries.content[i].content[0].value, url: entries.content[i].data.uri };
         }
-        i += 1;
+        if (entries.content[i].nodeType === 'text' && entries.content[i].value.length) {
+          if (entries.content[i].marks.length) {
+            sameLinkPara[name] = { type: entries.content[i].marks[0].type, value: entries.content[i].value };
+          } else {
+            sameLinkPara[name] = { value: entries.content[i].value };
+          }
+        }
       }
       return store.push(sameLinkPara);
     }
-    if (entries.nodeType === 'hyperlink') {
-      return store.push({ value: entries.content[0].value, url: entries.data.uri });
-    }
+
     if (!entries.content) {
     } else {
       entries.content.map(entry => transformText(store, entry, length));
@@ -242,9 +239,14 @@ const StaticPage = ({ location }) => {
       metaDataSection.type === 'tableBody'
     ) {
       const paragraphData = transformText([], fields.content);
-      console.log('testing-PARA-RESULT', paragraphData);
-      storeContent = { value: paragraphData, ...metaDataSection };
-      return storeContent;
+
+      if (storeContent.components) {
+        storeContent.components.push({
+          value: paragraphData,
+          ...metaDataSection
+        });
+      }
+      return { value: paragraphData, ...metaDataSection };
     }
 
     if (
@@ -271,7 +273,11 @@ const StaticPage = ({ location }) => {
       }
       if (columnData.type === 'oneColSection') {
         columnComponent = columnData;
-        columnComponent.value.components.push(storage);
+        // console.log('testing-ONE-COL-columnComponent', columnComponent);
+        // console.log('testing-one-COL-STORAGE', storage);
+        if (storage.length) {
+          columnComponent.value.components.push(storage);
+        }
         if (storeContent.components) {
           storeContent.components.push(columnComponent);
         }
