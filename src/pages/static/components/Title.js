@@ -28,7 +28,7 @@ const Title = ({ data, template, type, pageName }) => {
   const classes = useStyles(data);
 
   const ComponentToTrack = ({ isVisible }) => {
-    if (isVisible && tracked === false && type === 'sectionTitle') {
+    if (isVisible && tracked === false && (type === 'sectionTitle' || type === 'sectionSubTitle')) {
       setTracked(true);
       window.analytics.track('Percent Scrolled', {
         page_type: `LP: ${pageName}`,
