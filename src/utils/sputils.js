@@ -7,6 +7,7 @@ import {
   Title,
   Subtitle,
   Header,
+  HeaderMobile,
   SPButton,
   SPBox,
   Banner,
@@ -66,10 +67,14 @@ export const GeneratePageComponents = (comps, template, pageName) => {
         );
         break;
       case 'hero':
+        const nav = comps.filter(obj => obj.type === 'navigation');
         components.push(
           <>
             <Grid item xs={12} md={10} className={classes.margin}>
               <Hero data={obj} template={template} type={obj.type} />
+            </Grid>
+            <Grid item xs={12} md={10} className={classes.margin}>
+              <HeaderMobile data={nav} template={template} />
             </Grid>
           </>
         );
