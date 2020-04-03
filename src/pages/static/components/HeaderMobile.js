@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Scrollchor from 'react-scrollchor';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -44,17 +44,17 @@ const HeaderMobile = ({ data, template }) => {
               return nav.name.toLowerCase().includes('mobile')
                 ? nav.value.map(val => (
                     <li className={classes.list}>
-                      <a href={val.scroll} className={`${classes.link} ${template}-${nav.type}`}>
+                      <Scrollchor to={`#${val.scroll}`} className={`${classes.link} ${template}-${nav.type}`}>
                         {val.label}
-                      </a>
+                      </Scrollchor>
                     </li>
                   ))
                 : data.length <= 1 && nav.name.toLowerCase().includes('desktop')
                 ? nav.value.map(val => (
                     <li className={classes.list}>
-                      <a href={val.scroll} className={`${template}-${nav.type}`}>
+                      <Scrollchor to={`#${val.scroll}`} className={`${template}-${nav.type}`}>
                         {val.label}
-                      </a>
+                      </Scrollchor>
                     </li>
                   ))
                 : null;

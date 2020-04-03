@@ -23,7 +23,7 @@ const StaticPage = ({ match }) => {
     if (page.hasOwnProperty('template')) {
       // check for components here.
       setPageLoaded(true);
-      if (tracked === false) {
+      if (tracked === false && page.name) {
         setTracked(true);
         window.analytics.page(`LP: ${page.name}`);
       }

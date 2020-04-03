@@ -51,7 +51,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'pageTitle':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={classes.margin}>
+            <Grid item xs={12} md={8} className={classes.margin} id={`${obj.name}`}>
               <Title data={obj} template={template} type={obj.type} pageName={pageName} />
             </Grid>
           </>
@@ -60,7 +60,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'pageSubTitle':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={classes.margin}>
+            <Grid item xs={12} md={8} className={classes.margin} id={`${obj.name}`}>
               <Subtitle data={obj} template={template} type={obj.type} />
             </Grid>
           </>
@@ -88,6 +88,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
                 template={template}
                 type={obj.type}
                 borderPlacement={obj.desktopStyle.borderPlacement}
+                id={`${obj.name}`}
               />
             </Grid>
           </>
@@ -96,7 +97,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'oneColSection':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`}>
+            <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`} id={`${obj.name}`}>
               <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
             </Grid>
           </>
@@ -118,49 +119,61 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'sectionTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} pageName={pageName} />
+            <Title data={obj} template={template} type={obj.type} pageName={pageName} id={`${obj.name}`} />
           </>
         );
         break;
       case 'image':
         components.push(
           <>
-            <Image data={obj} template={template} type={obj.type} caption={obj.caption} />
+            <Image data={obj} template={template} type={obj.type} caption={obj.caption} id={`${obj.name}`} />
           </>
         );
         break;
       case 'paragraph':
         components.push(
           <>
-            <Paragraph data={obj} template={template} type={obj.type} />
+            <Paragraph data={obj} template={template} type={obj.type} id={`${obj.name}`} />
           </>
         );
         break;
       case 'button':
         components.push(
           <>
-            <SPButton data={obj} template={template} type={obj.type} align={obj.desktopStyle.align} />
+            <SPButton
+              data={obj}
+              template={template}
+              type={obj.type}
+              align={obj.desktopStyle.align}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
       case 'box':
         components.push(
           <>
-            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} />
+            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
           </>
         );
         break;
       case 'sectionSubTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} />
+            <Title data={obj} template={template} type={obj.type} pageName={pageName} id={`${obj.name}`} />
           </>
         );
         break;
       case 'list':
         components.push(
           <>
-            <List data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />
+            <List
+              data={obj}
+              template={template}
+              type={obj.type}
+              symbol={obj.desktopStyle.bulletSymbol}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
