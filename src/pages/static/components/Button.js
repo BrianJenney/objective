@@ -48,7 +48,7 @@ const SPButton = ({ data, template, type, align }) => {
         addToCart(
           cart,
           products.find(p => p.sku === sku),
-          qty
+          parseInt(qty)
         );
         dispatch(setLpProdAdded(true));
       }
