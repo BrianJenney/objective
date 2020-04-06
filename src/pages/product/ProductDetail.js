@@ -162,8 +162,7 @@ const ProductDetail = () => {
 
   const handleWindowScroll = evt => {
     const OFFSET = 80;
-    const scrollingElement =
-      evt.target.scrollingElement || evt.target.document.scrollingElement;
+    const scrollingElement = evt.target.scrollingElement || evt.target.document.scrollingElement;
     const { scrollTop } = scrollingElement;
 
     if (atcRef.current && contentRef.current) {
@@ -265,7 +264,7 @@ const ProductDetail = () => {
                   {!ATCEnabled && <Quantity />}
                 </Box>
               </CardContent>
-              {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
+              {ATCEnabled && variant.inventory.quantityInStock >= 50 && (
                 <CardActions className={classes.maxWidth}>
                   <Box className="pdp-atc-container" width={1}>
                     <Box className="atc-btn" ref={atcRef}>
@@ -308,7 +307,7 @@ const ProductDetail = () => {
                   </Box>
                 </CardActions>
               )}
-              {variant.inventory.quantityInStock < 200 && (
+              {variant.inventory.quantityInStock < 50 && (
                 <>
                   <OutOfStockPDP
                     maxWidth={classes.maxWidth}
