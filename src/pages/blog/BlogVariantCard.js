@@ -131,11 +131,7 @@ const BlogVariantCard = ({ product, variant, key }) => {
             });
           }}
         >
-          <CardMedia
-            image={variant.assets.imgs}
-            title={variant.name}
-            className="gallery-card"
-          />
+          <CardMedia image={variant.assets.imgs} title={variant.name} className="gallery-card" />
         </NavLink>
         <CardContent className="card-content">
           <NavLink
@@ -169,7 +165,7 @@ const BlogVariantCard = ({ product, variant, key }) => {
         </CardContent>
 
         <div>
-          {ATCEnabled && variant.inStock >= 200 && (
+          {ATCEnabled && variant.inStock >= 50 && (
             <CardActions className="card-button">
               <ATC
                 onClick={handleAddToCart}
@@ -181,7 +177,7 @@ const BlogVariantCard = ({ product, variant, key }) => {
             </CardActions>
           )}
 
-          {variant.inStock < 200 && (
+          {variant.inStock < 50 && (
             <>
               <OutOfStock
                 onClick={handleOpenOutOfStockDialog}

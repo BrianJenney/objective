@@ -58,11 +58,7 @@ export const HomeVariantCard = ({ variant }) => {
 
   return (
     <Grid item xs={12} md={4}>
-      <Card
-        className="tile"
-        ref={ref}
-        style={{ border: `1px solid ${variant.color}` }}
-      >
+      <Card className="tile" ref={ref} style={{ border: `1px solid ${variant.color}` }}>
         <NavLink
           to={`/products/${slug}`}
           onClick={() => {
@@ -80,11 +76,7 @@ export const HomeVariantCard = ({ variant }) => {
             });
           }}
         >
-          <CardMedia
-            style={{ height: 430, width: '100%' }}
-            image={assets.imgs + '&q=50'}
-            className="tile-img"
-          />
+          <CardMedia style={{ height: 430, width: '100%' }} image={assets.imgs + '&q=50'} className="tile-img" />
         </NavLink>
         <NavLink
           to={`/products/${slug}`}
@@ -132,14 +124,14 @@ export const HomeVariantCard = ({ variant }) => {
             </div>
             <div className="variant-info">
               <div>
-                <strong>${parseFloat(effectivePrice).toFixed(2)}</strong>{' '}
-                &mdash; {`${variantInfo.size} ${variantInfo.prodType}`}
+                <strong>${parseFloat(effectivePrice).toFixed(2)}</strong> &mdash;{' '}
+                {`${variantInfo.size} ${variantInfo.prodType}`}
               </div>
             </div>
           </CardContent>
         </NavLink>
         <div className="cta-area">
-          {variant.inStock >= 200 && (
+          {variant.inStock >= 50 && (
             <CardActions className="home-atc">
               <ATC
                 onClick={handleAddToCart}
@@ -150,7 +142,7 @@ export const HomeVariantCard = ({ variant }) => {
               />
             </CardActions>
           )}
-          {variant.inStock < 200 && (
+          {variant.inStock < 50 && (
             <>
               <CardActions>
                 <OutOfStock
