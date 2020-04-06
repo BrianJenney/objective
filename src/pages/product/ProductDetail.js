@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  useCallback,
-  useEffect,
-  useRef
-} from 'react';
+import React, { useState, useContext, useCallback, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
@@ -22,11 +16,7 @@ import LogoShort from '../../components/common/Icons/LogoShort/LogoShort';
 import PDPSlider from '../../components/ProductSlider/PDPSlider';
 import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
-import {
-  getPrices,
-  getVariantMap,
-  getDefaultSkuByProduct
-} from '../../utils/product';
+import { getPrices, getVariantMap, getDefaultSkuByProduct } from '../../utils/product';
 import { ATC, OutOfStockPDP } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
 import ProductAccordion from './ProductAccordion';
@@ -91,12 +81,7 @@ const ProductVariant = ({ productVariant }) => {
   }, []);
 
   return productVariant ? (
-    <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="flex-start"
-      className="pdp-product-variant"
-    >
+    <Box display="flex" flexDirection="row" alignItems="flex-start" className="pdp-product-variant">
       <div className="pdp-price-description">
         {productVariant.variantInfo.size} {productVariant.variantInfo.prodType}
       </div>
@@ -177,18 +162,11 @@ const ProductDetail = () => {
 
   const handleWindowScroll = evt => {
     const OFFSET = 80;
-    const scrollingElement =
-      evt.target.scrollingElement || evt.target.document.scrollingElement;
+    const scrollingElement = evt.target.scrollingElement || evt.target.document.scrollingElement;
     const { scrollTop } = scrollingElement;
 
     if (atcRef.current && contentRef.current) {
-      if (
-        scrollTop >
-        OFFSET +
-          contentRef.current.offsetTop +
-          contentRef.current.offsetHeight -
-          windowSize.height
-      ) {
+      if (scrollTop > OFFSET + contentRef.current.offsetTop + contentRef.current.offsetHeight - windowSize.height) {
         atcRef.current.style.position = 'static';
         atcRef.current.style.boxShadow = 'none';
       } else {
@@ -249,13 +227,7 @@ const ProductDetail = () => {
     return <LoadingSpinner loadingMessage="Loading product" page="pdp" />;
   }
 
-  const {
-    productImages,
-    productTitle,
-    shortPurposeHeadline,
-    shortDescription,
-    productBenefits = []
-  } = content;
+  const { productImages, productTitle, shortPurposeHeadline, shortDescription, productBenefits = [] } = content;
 
   return (
     <Box className={classes.root}>
@@ -271,19 +243,14 @@ const ProductDetail = () => {
                   <Typography variant="h1" className="pdp-header">
                     {productTitle}
                   </Typography>
-                  <ProductVariant
-                    productVariant={variantMap.get(selectedVariantSku)}
-                  />
+                  <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
                   <Box className="pdp-subtitle">{shortPurposeHeadline}</Box>
                   <Box className="pdp-description">{shortDescription}</Box>
                   <Box className="pdp-benefits">
                     {productBenefits.map((benefit, index) => (
                       <Box className="benefit" key={index.toString()}>
                         <Box className="icon">
-                          <img
-                            src={benefit.fields.icon.fields.file.url}
-                            alt=""
-                          />
+                          <img src={benefit.fields.icon.fields.file.url} alt="" />
                         </Box>
                         <Box className="text">
                           <Box>{benefit.fields.benefitText}</Box>
@@ -297,14 +264,12 @@ const ProductDetail = () => {
                   {!ATCEnabled && <Quantity />}
                 </Box>
               </CardContent>
-              {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
+              {ATCEnabled && variant.inventory.quantityInStock >= 50 && (
                 <CardActions className={classes.maxWidth}>
                   <Box className="pdp-atc-container" width={1}>
                     <Box className="atc-btn" ref={atcRef}>
                       <ATC
-                        price={
-                          variantMap.get(selectedVariantSku).effectivePrice
-                        }
+                        price={variantMap.get(selectedVariantSku).effectivePrice}
                         maxWidth={classes.maxWidth}
                         onClick={handleAddToCart}
                         variantSku={selectedVariantSku}
@@ -312,18 +277,11 @@ const ProductDetail = () => {
                         ATCAdding={ATCAdding}
                       />
                     </Box>
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
+                    <Box display="flex" justifyContent="center" alignItems="center">
                       <Box width={320}>
                         <Typography className="atc-note">
-                          Our{' '}
-                          <MenuLink onClick={openPromiseModal}>
-                            Objective Promise
-                          </MenuLink>{' '}
-                          ensures you’re making a risk-free purchase
+                          Our <MenuLink onClick={openPromiseModal}>Objective Promise</MenuLink> ensures you’re making a
+                          risk-free purchase
                         </Typography>
                       </Box>
                     </Box>
@@ -333,22 +291,15 @@ const ProductDetail = () => {
                           <Box className="diamond">
                             <LogoShort />
                           </Box>
-                          <Typography
-                            variant="h4"
-                            gutterBottom
-                            className="uppercase promise-title"
-                          >
+                          <Typography variant="h4" gutterBottom className="uppercase promise-title">
                             THE OBJECTIVE PROMISE
                           </Typography>
                           <Typography className="promise-description">
-                            Behind every Objective supplement are studies,
-                            endless hours of research and a team with over 50
-                            years of combined experience formulating dietary
-                            supplements. And the one thing we know for sure?
-                            Everybody's different. Every body is different. It's
-                            possible that what works wonders for your best
-                            friend might not do a thing for you. So let us know
-                            and we'll refund your money. It's that simple.
+                            Behind every Objective supplement are studies, endless hours of research and a team with
+                            over 50 years of combined experience formulating dietary supplements. And the one thing we
+                            know for sure? Everybody's different. Every body is different. It's possible that what works
+                            wonders for your best friend might not do a thing for you. So let us know and we'll refund
+                            your money. It's that simple.
                           </Typography>
                         </Box>
                       </Box>
@@ -356,7 +307,7 @@ const ProductDetail = () => {
                   </Box>
                 </CardActions>
               )}
-              {variant.inventory.quantityInStock < 200 && (
+              {variant.inventory.quantityInStock < 50 && (
                 <>
                   <OutOfStockPDP
                     maxWidth={classes.maxWidth}

@@ -104,7 +104,7 @@ const VariantCard = ({ variant, styleMap }) => {
       >
         <CardMedia
           style={{ height: 500, width: 324 }}
-          image={variant.assets.imgs + "&q=50"}
+          image={variant.assets.imgs + '&q=50'}
           title={variant.name}
           className="gallery-prod-img"
         />
@@ -142,7 +142,7 @@ const VariantCard = ({ variant, styleMap }) => {
       </CardContent>
 
       <div className="cta-area">
-        {ATCEnabled && variant.inStock >= 200 && (
+        {ATCEnabled && variant.inStock >= 50 && (
           <CardActions className="gallery-atc">
             <ATC
               onClick={handleAddToCart}
@@ -154,7 +154,7 @@ const VariantCard = ({ variant, styleMap }) => {
           </CardActions>
         )}
 
-        {variant.inStock < 200 && (
+        {variant.inStock < 50 && (
           <>
             <OutOfStock
               onClick={handleOpenOutOfStockDialog}
