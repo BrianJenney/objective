@@ -20,6 +20,10 @@ import {
   RECEIVED_CHANGE_PASSWORD_SUCCESS,
   RECEIVED_CHANGE_PASSWORD_FAILURE,
   CLEAR_CHANGE_PASSWORD_ERROR,
+  REQUEST_PASSWORD_RESET,
+  RECEIVED_PASSWORD_RESET_SUCCESS,
+  RECEIVED_PASSWORD_RESET_FAILURE,
+  CLEAR_PASSWORD_RESET_ERROR,
   REQUEST_LOGOUT
 } from './types';
 const localStorageClient = require('store');
@@ -30,11 +34,13 @@ const INITIAL_STATE = {
   fetchAccountError: null,
   patchAccountError: null,
   changePasswordError: null,
+  resetPasswordError: null,
   loginSubmitting: null,
   signupSubmitting: null,
   fetchAccountLoading: null,
   patchAccountSubmitting: null,
   changePasswordSubmitting: null,
+  resetPasswordSubmitting: null,
   signupConfirmation: false,
   onLoginSuccess: null,
   onLoginFailure: null,
@@ -210,12 +216,43 @@ export default (state = INITIAL_STATE, action) => {
         fetchAccountError: false,
         patchAccountError: false,
         changePasswordError: false,
+        resetPasswordError: false,
+        resetPasswordError: false,
         loginSubmitting: false,
         signupSubmitting: false,
         fetchAccountLoading: false,
         patchAccountSubmitting: false,
         changePasswordSubmitting: false,
+        resetPasswordSubmitting: false,
         data: {}
+      };
+    case REQUEST_PASSWORD_RESET:
+      return {
+        ...state,
+        resetError: false,
+        resetSubmitting: true
+      };
+    case RECEIVED_PASSWORD_RESET_SUCCESS:
+      return {
+        ...state,
+        resetError: false,
+        resetSubmitting: false,
+        resetConfirmation: true,
+        data: {
+          ...state.data,
+          ...action.payload
+        }
+      };
+    case RECEIVED_PASSWORD_RESET_FAILURE:
+      return {
+        ...state,
+        resetError: action.payload,
+        resetSubmitting: false
+      };
+    case CLEAR_PASSWORD_RESET_ERROR:
+      return {
+        ...state,
+        resetError: false
       };
     default:
       return state;
