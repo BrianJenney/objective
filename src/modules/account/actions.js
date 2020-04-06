@@ -22,7 +22,10 @@ import {
   CLEAR_CHANGE_PASSWORD_ERROR,
   REQUEST_LOGOUT,
   REQUEST_FORGOT_PASSWORD,
-  REQUEST_SIGNUP_EMAIL
+  REQUEST_SIGNUP_EMAIL,
+  REQUEST_PASSWORD_RESET,
+  RECEIVED_PASSWORD_RESET_SUCCESS,
+  RECEIVED_PASSWORD_RESET_FAILURE
 } from './types';
 import EventEmitter from '../../events';
 import returnSiteLocation from '../../utils/segmentSiteLocation';
@@ -158,10 +161,7 @@ export const clearFetchAccountError = () => dispatch => {
   });
 };
 
-export const requestPatchAccount = (authToken, patches, actions) => (
-  dispatch,
-  getState
-) => {
+export const requestPatchAccount = (authToken, patches, actions) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: authToken,
@@ -219,11 +219,7 @@ export const clearPatchAccountError = () => dispatch => {
   });
 };
 
-export const requestChangePassword = (
-  authToken,
-  patches,
-  { setSubmitting }
-) => (dispatch, getState) => {
+export const requestChangePassword = (authToken, patches, { setSubmitting }) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: authToken,
@@ -273,10 +269,7 @@ export const clearChangePasswordError = () => dispatch => {
   });
 };
 
-export const requestLogin = ({ email, password }, { setSubmitting }) => (
-  dispatch,
-  getState
-) => {
+export const requestLogin = ({ email, password }, { setSubmitting }) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -428,5 +421,68 @@ export const requestSignupEmail = email => (dispatch, getState) => {
   dispatch({
     type: REQUEST_SIGNUP_EMAIL,
     payload: {}
+  });
+};
+
+export const requestPasswordReset = (authToken, patches, actions) => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    id: authToken,
+    data: patches,
+    params: {
+      account_jwt: authToken
+    }
+  };
+
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/account/account.request.resetpassword',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: authToken
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_PASSWORD_RESET,
+    payload: {},
+    onSuccess: () => {
+      if (actions) {
+        actions.setSubmitting(false);
+      }
+    },
+    onFailure: () => {
+      if (actions) {
+        actions.setSubmitting(false);
+      }
+    }
+  });
+};
+
+export const receivedPasswordResetSuccess = (account, token) => dispatch => {
+  dispatch({
+    type: RECEIVED_PASSWORD_RESET_SUCCESS,
+    payload: account
+  });
+
+  // EventEmitter.emit('user.logged.in', {
+  //   account,
+  //   token
+  // });
+
+  // window.analytics.track('Sign In Successful', {
+  //   method: 'email',
+  //   site_location: returnSiteLocation(),
+  //   username: account.email
+  // });
+};
+
+export const receivedPasswordResetFailure = resetError => dispatch => {
+  dispatch({
+    type: RECEIVED_PASSWORD_RESET_FAILURE,
+    payload: resetError
   });
 };

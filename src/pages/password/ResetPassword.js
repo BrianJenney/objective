@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button, NavLink } from '../../components/common';
-import { requestPatchAccount } from '../../modules/account/actions';
+import { requestPasswordReset } from '../../modules/account/actions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { InputField } from '../../components/form-fields';
@@ -101,11 +101,7 @@ const ResetPassword = ({ history, location }) => {
                       component="button"
                       underline="always"
                       onClick={event => toggleFirstPassword(event)}
-                      children={
-                        firstNewPasswordVisible
-                          ? 'HIDE PASSWORD'
-                          : 'SHOW PASSWORD'
-                      }
+                      children={firstNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                     ></NavLink>
                   </Box>
                 )
@@ -140,11 +136,7 @@ const ResetPassword = ({ history, location }) => {
                       component="button"
                       underline="always"
                       onClick={event => toggleSecondPassword(event)}
-                      children={
-                        secondNewPasswordVisible
-                          ? 'HIDE PASSWORD'
-                          : 'SHOW PASSWORD'
-                      }
+                      children={secondNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                     ></NavLink>
                   </Box>
                 )
@@ -164,8 +156,7 @@ const ResetPassword = ({ history, location }) => {
   const handleSubmit = values => {
     const urlParams = new URLSearchParams(location.search);
     const token = urlParams.getAll('tk').toString();
-
-    dispatch(requestPatchAccount(token, values));
+    dispatch(requestPasswordReset(token, values));
     const localStorageClient = require('store');
     localStorageClient.remove('token');
     history.replace('/password/success');
@@ -176,9 +167,7 @@ const ResetPassword = ({ history, location }) => {
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
         <Typography className={classes.title}>Reset your password</Typography>
-        <Typography className={classes.subTitle}>
-          Enter your new password below.
-        </Typography>
+        <Typography className={classes.subTitle}>Enter your new password below.</Typography>
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
