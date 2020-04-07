@@ -100,7 +100,6 @@ const StaticPage = ({ location }) => {
 
   const addStyles = (styles, value) => {
     let paraWithMultiStyles = '';
-    console.log('testing-STYLESSS', styles, value);
     styles.forEach(each => {
       if (!paraWithMultiStyles) {
         paraWithMultiStyles = value;
@@ -124,30 +123,17 @@ const StaticPage = ({ location }) => {
       let paraWithStyle = '';
 
       for (let i = 0; i < entries.content.length; i++) {
-        console.log('testing-PARA-ENTRIES---', entries.content);
         if (entries.content[i].nodeType === 'hyperlink') {
-          paraWithStyle = `<a href=${entries.content[i].data.uri}>${entries.content[i].content[0].value}</a>`;
+          if (entries.content[i].content[0].marks.length > 0) {
+            paraWithStyle = addStyles(entries.content[i].content[0].marks, entries.content[i].content[0].value);
+          }
+          paraWithStyle = `<a href=${entries.content[i].data.uri}>${paraWithStyle}</a>`;
           sameLinePara.push(paraWithStyle);
         }
         if (entries.content[i].nodeType === 'text' && entries.content[i].value.length) {
           if (entries.content[i].marks.length) {
-            if (entries.content[i].marks.length > 1) {
-              paraWithStyle = addStyles(entries.content[i].marks, entries.content[i].value);
-              sameLinePara.push(paraWithStyle);
-            } else {
-              if (entries.content[i].marks[0].type === 'bold') {
-                paraWithStyle = `<b>${entries.content[i].value}</b>`;
-                sameLinePara.push(paraWithStyle);
-              }
-              if (entries.content[i].marks[0].type === 'italic') {
-                paraWithStyle = `<i>${entries.content[i].value}</i>`;
-                sameLinePara.push(paraWithStyle);
-              }
-              if (entries.content[i].marks[0].type === 'underline') {
-                paraWithStyle = `<u>${entries.content[i].value}</u>`;
-                sameLinePara.push(paraWithStyle);
-              }
-            }
+            paraWithStyle = addStyles(entries.content[i].marks, entries.content[i].value);
+            sameLinePara.push(paraWithStyle);
           } else {
             sameLinePara.push(entries.content[i].value);
           }
@@ -338,7 +324,6 @@ const StaticPage = ({ location }) => {
     };
 
     content.map(({ fields }) => {
-      console.log('TESTING-FIELDS', fields);
       transformContent(fields, mainDataObj);
     });
   }
@@ -346,7 +331,6 @@ const StaticPage = ({ location }) => {
 
   useEffect(() => {
     dispatch(requestPage('jen-test-page'));
-    // console.log('this results');
   }, []);
 
   return (
