@@ -21,7 +21,7 @@ const Paragraph = ({ data, template, type }) => {
   return (
     <div>
       {data.value.map((text, key) => (
-        <p key={key} className={classes.root} dangerouslySetInnerHTML={{ __html: text }}></p>
+        <p key={key} className={`${classes.root} ${template}-${type}`} dangerouslySetInnerHTML={{ __html: text }}></p>
       ))}
     </div>
   );
