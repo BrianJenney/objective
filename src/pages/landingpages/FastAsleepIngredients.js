@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, useMediaQuery, Box } from '@material-ui/core';
 import { addCoupon, addToCart } from '../../modules/cart/functions';
@@ -10,7 +10,7 @@ import './fast-asleep.scss';
 
 const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
 
-const FastAsleepIngredients = ({ location }) => {
+const FastAsleepIngredients = ({ history, location }) => {
   const cart = useSelector(state => state.cart);
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
@@ -105,7 +105,7 @@ const FastAsleepIngredients = ({ location }) => {
 
   useEffect(() => {
     if (prodAdded && couponAdded) {
-      window.location.href = '/checkout';
+      history.push('/checkout');
     }
   }, [prodAdded, couponAdded]);
 

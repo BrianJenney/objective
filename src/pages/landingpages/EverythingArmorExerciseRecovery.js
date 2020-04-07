@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, useMediaQuery, Box } from '@material-ui/core';
 import { addCoupon, addToCart } from '../../modules/cart/functions';
@@ -10,7 +10,7 @@ import './fast-asleep.scss';
 
 const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
 
-const EverythingArmorExerciseRecovery = ({ location }) => {
+const EverythingArmorExerciseRecovery = ({ history, location }) => {
   const cart = useSelector(state => state.cart);
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
@@ -38,31 +38,43 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
   const handleScroll = e => {
     if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1700) {
       section.current.a = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Meet Astaxanthin, Possibly the Most Powerful Antioxidant You’ve Never Heard Of', 'TPZU-1BOT-GELS');
-    }
-
-    if (section.current.b === false && window.scrollY >= 2251 && window.scrollY < 2900) {
-      section.current.b = true;
       trackLPSection(
         'Everything Armor Exercise Recovery',
-        'Here’s Why Antioxidants Matter',
+        'Meet Astaxanthin, Possibly the Most Powerful Antioxidant You’ve Never Heard Of',
         'TPZU-1BOT-GELS'
       );
     }
 
+    if (section.current.b === false && window.scrollY >= 2251 && window.scrollY < 2900) {
+      section.current.b = true;
+      trackLPSection('Everything Armor Exercise Recovery', 'Here’s Why Antioxidants Matter', 'TPZU-1BOT-GELS');
+    }
+
     if (section.current.c === false && window.scrollY >= 4050 && window.scrollY < 4900) {
       section.current.c = true;
-      trackLPSection('Everything Armor Exercise Recovery', '12 For 12: 12 Ways 12 Mg Of Astaxanthin Helps You, Head-To-Toe', 'TPZU-1BOT-GELS');
+      trackLPSection(
+        'Everything Armor Exercise Recovery',
+        '12 For 12: 12 Ways 12 Mg Of Astaxanthin Helps You, Head-To-Toe',
+        'TPZU-1BOT-GELS'
+      );
     }
 
     if (section.current.d === false && window.scrollY >= 6294 && window.scrollY < 7000) {
       section.current.d = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Better Everything, Guaranteed. Try It Today—Risk-Free!', 'TPZU-1BOT-GELS');
+      trackLPSection(
+        'Everything Armor Exercise Recovery',
+        'Better Everything, Guaranteed. Try It Today—Risk-Free!',
+        'TPZU-1BOT-GELS'
+      );
     }
 
     if (section.current.e === false && window.scrollY >= 7200 && window.scrollY < 7700) {
       section.current.e = true;
-      trackLPSection('Everything Armor Exercise Recovery', 'Better Workouts, Better Health, Better Everything', 'TPZU-1BOT-GELS');
+      trackLPSection(
+        'Everything Armor Exercise Recovery',
+        'Better Workouts, Better Health, Better Everything',
+        'TPZU-1BOT-GELS'
+      );
     }
   };
 
@@ -100,7 +112,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
 
   useEffect(() => {
     if (prodAdded && couponAdded) {
-      window.location.href = '/checkout';
+      history.push('/checkout');
     }
   }, [prodAdded, couponAdded]);
 
@@ -312,7 +324,9 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
               </p>
               <p>
                 Once your workout is over, your body surges with these free radicals. This is not a problem if you have
-                the antioxidant resources available to deal with the oxidative stress; but if you don't, you'll experience muscle soreness and fatigue, and if you don't allow your body to recover fully, there is potential for lasting harm to your joints or other tissues.
+                the antioxidant resources available to deal with the oxidative stress; but if you don't, you'll
+                experience muscle soreness and fatigue, and if you don't allow your body to recover fully, there is
+                potential for lasting harm to your joints or other tissues.
               </p>
               <p>
                 The truth is exercising without enough antioxidant firepower is like putting yourself on an aging
@@ -325,7 +339,9 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
             </div>
             <h2>The Clinical Results Are In: Astaxanthin Can Do Amazing Things for Your Health</h2>
             <p>
-              The anecdote about how astaxanthin helps salmon swim upstream is interesting, but what does it really mean for you? According to these gold-standard clinical studies, it means more energy, strength and stamina, and less soreness. Here’s just a small sampling of the results:
+              The anecdote about how astaxanthin helps salmon swim upstream is interesting, but what does it really mean
+              for you? According to these gold-standard clinical studies, it means more energy, strength and stamina,
+              and less soreness. Here’s just a small sampling of the results:
             </p>
           </Grid>
         </Grid>
@@ -333,11 +349,25 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
           <Grid item xs={12} md={6} className="smaller-container">
             <div className="large-checklist">
               <ul className="large-ul">
-                <li>Astaxanthin has been shown to <b>help deliver oxygen to muscle cells that need it during exercise.</b></li>
-                <li>Astaxanthin enhances the energy-producing capacity of your cells’ mitochondria, helping to <b>boost your energy during exercise and throughout the day.</b></li>
-                <li>Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to “feel the burn”) during exercise by <b>28.6</b>%.</li>
-                <li>Astaxanthin increased muscle endurance in men, enabling them to perform <b>62% more knee bends</b> while carrying a 90-pound weight!</li>
-                <li>Astaxanthin improved the cycling performance of competitive male endurance cyclists, <b>shaving two minutes off their time</b> in a 20-kilometer trial!</li>
+                <li>
+                  Astaxanthin has been shown to <b>help deliver oxygen to muscle cells that need it during exercise.</b>
+                </li>
+                <li>
+                  Astaxanthin enhances the energy-producing capacity of your cells’ mitochondria, helping to{' '}
+                  <b>boost your energy during exercise and throughout the day.</b>
+                </li>
+                <li>
+                  Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to “feel the burn”)
+                  during exercise by <b>28.6</b>%.
+                </li>
+                <li>
+                  Astaxanthin increased muscle endurance in men, enabling them to perform <b>62% more knee bends</b>{' '}
+                  while carrying a 90-pound weight!
+                </li>
+                <li>
+                  Astaxanthin improved the cycling performance of competitive male endurance cyclists,{' '}
+                  <b>shaving two minutes off their time</b> in a 20-kilometer trial!
+                </li>
               </ul>
             </div>
           </Grid>
@@ -347,30 +377,72 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
             <h2>What’s the Ideal Dose?</h2>
             <div className="floating">
               <div className="float-right dose-img">
-                <img className="w-100" src="https://images.ctfassets.net/mj9bpefl6wof/4qLfXhoqxVcRNQyn2lhifh/a7d74ce741207e7cb0304bda84f664bd/perfect_dose_1.png?h=220" />
+                <img
+                  className="w-100"
+                  src="https://images.ctfassets.net/mj9bpefl6wof/4qLfXhoqxVcRNQyn2lhifh/a7d74ce741207e7cb0304bda84f664bd/perfect_dose_1.png?h=220"
+                />
               </div>
-              <p>While 4 mg was considered the ideal daily astaxanthin dose for years, recent research has revealed what was once a closely guarded secret among elite athletes and marathon runners, who have credited larger doses—of up to 12 mg—with helping them reach previously unthought-of feats of endurance and stamina.</p>
-              <p>At the 12 mg daily dosage, astaxanthin has been shown to go above and beyond other antioxidants to deliver powerful support for a healthy inflammatory response, which has body-wide implications.</p>
+              <p>
+                While 4 mg was considered the ideal daily astaxanthin dose for years, recent research has revealed what
+                was once a closely guarded secret among elite athletes and marathon runners, who have credited larger
+                doses—of up to 12 mg—with helping them reach previously unthought-of feats of endurance and stamina.
+              </p>
+              <p>
+                At the 12 mg daily dosage, astaxanthin has been shown to go above and beyond other antioxidants to
+                deliver powerful support for a healthy inflammatory response, which has body-wide implications.
+              </p>
             </div>
-            <hr/>
+            <hr />
             <h2 ref={myRefThree}>12 for 12: 12 Ways 12 mg of Astaxanthin Helps You, Head-to-Toe</h2>
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={12} md={6} className="smaller-container">
             <div className="num-list">
-              <p><span className="p22-list">1.</span> Neutralizes free radicals to protect cells, reduce DNA damage and <b>fight aging</b></p>
-              <p><span className="p22-list">2.</span> Promotes a <b>normal inflammatory response</b> body-wide</p>
-              <p><span className="p22-list">3.</span> <b>Boosts energy</b> by protecting your cells’ energy-producing mitochondria</p>
-              <p><span className="p22-list">4.</span> Improves stamina, muscle endurance and <b>exercise performance</b></p>
-              <p><span className="p22-list">5.</span> Significantly reduces muscle soreness and fatigue for <b>faster exercise recovery</b></p>
-              <p><span className="p22-list">6.</span> Helps <b>reduce joint pain</b> and supports healthy, flexible joints</p>
-              <p><span className="p22-list">7.</span> Supports healthy circulation and overall <b>cardiovascular health</b></p>
-              <p><span className="p22-list">8.</span> Helps maintain normal triglycerides and <b>cholesterol levels</b></p>
-              <p><span className="p22-list">9.</span> <b>Improves short-term memory</b> and supports brain and nervous system function</p>
-              <p><span className="p22-list">10.</span> Relieves eye strain and fatigue and <b>supports optimal vision and eye health</b></p>
-              <p><span className="p22-list">11.</span> Reduces dryness and the appearance of <b>fine lines and wrinkles</b></p>
-              <p><span className="p22-list">12.</span> Helps support a <b>healthy immune system</b> and response</p>
+              <p>
+                <span className="p22-list">1.</span> Neutralizes free radicals to protect cells, reduce DNA damage and{' '}
+                <b>fight aging</b>
+              </p>
+              <p>
+                <span className="p22-list">2.</span> Promotes a <b>normal inflammatory response</b> body-wide
+              </p>
+              <p>
+                <span className="p22-list">3.</span> <b>Boosts energy</b> by protecting your cells’ energy-producing
+                mitochondria
+              </p>
+              <p>
+                <span className="p22-list">4.</span> Improves stamina, muscle endurance and <b>exercise performance</b>
+              </p>
+              <p>
+                <span className="p22-list">5.</span> Significantly reduces muscle soreness and fatigue for{' '}
+                <b>faster exercise recovery</b>
+              </p>
+              <p>
+                <span className="p22-list">6.</span> Helps <b>reduce joint pain</b> and supports healthy, flexible
+                joints
+              </p>
+              <p>
+                <span className="p22-list">7.</span> Supports healthy circulation and overall{' '}
+                <b>cardiovascular health</b>
+              </p>
+              <p>
+                <span className="p22-list">8.</span> Helps maintain normal triglycerides and <b>cholesterol levels</b>
+              </p>
+              <p>
+                <span className="p22-list">9.</span> <b>Improves short-term memory</b> and supports brain and nervous
+                system function
+              </p>
+              <p>
+                <span className="p22-list">10.</span> Relieves eye strain and fatigue and{' '}
+                <b>supports optimal vision and eye health</b>
+              </p>
+              <p>
+                <span className="p22-list">11.</span> Reduces dryness and the appearance of{' '}
+                <b>fine lines and wrinkles</b>
+              </p>
+              <p>
+                <span className="p22-list">12.</span> Helps support a <b>healthy immune system</b> and response
+              </p>
             </div>
           </Grid>
         </Grid>
@@ -388,7 +460,9 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
       <Container>
         <Grid container>
           <Grid item xs={12} md={8} className="smaller-container">
-            <h2 className="mt-0">Everything Armor Makes <em>Everything</em> Better</h2>
+            <h2 className="mt-0">
+              Everything Armor Makes <em>Everything</em> Better
+            </h2>
             <div className="floating">
               <div className="float-right gif-cta cta-holder hidden-xs">
                 <img
@@ -397,16 +471,25 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                 />
                 <NavLink onClick={handleClick} className="green-btn">
                   get 25% off — Buy Now
-              </NavLink>
+                </NavLink>
                 <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
               </div>
               <p>
-                Due to astaxanthin’s recent surge in popularity, the market has been flooded with subpar supplements, many of which are made with synthetic astaxanthin and contain a mere fraction of the 12 mg dose shown in the studies to provide all the benefits listed above.
+                Due to astaxanthin’s recent surge in popularity, the market has been flooded with subpar supplements,
+                many of which are made with synthetic astaxanthin and contain a mere fraction of the 12 mg dose shown in
+                the studies to provide all the benefits listed above.
               </p>
               <p>
-                With study after study demonstrating astaxanthin’s extraordinary head-to-toe benefits, it became clear to the Objective R & D team that astaxanthin was not just a passing health trend. So we went to work sourcing a pure, effective astaxanthin—and figuring out how to fit 12 mg of it into a single softgel. We call it <a href="/products/everything-armor">Everything Armor</a>, and we love it because it works!
+                With study after study demonstrating astaxanthin’s extraordinary head-to-toe benefits, it became clear
+                to the Objective R & D team that astaxanthin was not just a passing health trend. So we went to work
+                sourcing a pure, effective astaxanthin—and figuring out how to fit 12 mg of it into a single softgel. We
+                call it <a href="/products/everything-armor">Everything Armor</a>, and we love it because it works!
               </p>
-              <p>Featuring a research-based 12 mg dose of high-quality, concentrated astaxanthin, Everything Armor is here to make exercise easier—and to help your body perform at its best, whether for today’s workouts or tomorrow’s heart, brain and vision health.</p>
+              <p>
+                Featuring a research-based 12 mg dose of high-quality, concentrated astaxanthin, Everything Armor is
+                here to make exercise easier—and to help your body perform at its best, whether for today’s workouts or
+                tomorrow’s heart, brain and vision health.
+              </p>
               <div className="xs-only">
                 <div className="w-100 gif-cta cta-holder">
                   <img
@@ -415,7 +498,7 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
                   />
                   <NavLink onClick={handleClick} className="green-btn">
                     get 25% off — Buy Now
-              </NavLink>
+                  </NavLink>
                   <div className="text">Enjoy the amazing “now and later” benefits of astaxanthin</div>
                 </div>
               </div>
@@ -424,25 +507,57 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
             <h2>Going to the Original Source for Exceptional Quality</h2>
             <div className="floating new-h4">
               <div className="float-right steps">
-                <img className="one" src="https://images.ctfassets.net/mj9bpefl6wof/4wF3AyvZ8jzDAaXhzFzxXr/7aa5c46e3b5fb511c41d36d1acfd049b/step_1_astaxanthin.png?h=230"/>
-                <img className="two" src="https://images.ctfassets.net/mj9bpefl6wof/3Q0y1FK5quFkHq1auYXmBR/74210808c7e257335a1af00a19e91871/step_2_astaxanthin.png?h=230" />
-                <em>Top photo: algae ponds before sun exposure; bottom photo: a pond after sun exposure, when the astaxanthin has been activated.</em>
+                <img
+                  className="one"
+                  src="https://images.ctfassets.net/mj9bpefl6wof/4wF3AyvZ8jzDAaXhzFzxXr/7aa5c46e3b5fb511c41d36d1acfd049b/step_1_astaxanthin.png?h=230"
+                />
+                <img
+                  className="two"
+                  src="https://images.ctfassets.net/mj9bpefl6wof/3Q0y1FK5quFkHq1auYXmBR/74210808c7e257335a1af00a19e91871/step_2_astaxanthin.png?h=230"
+                />
+                <em>
+                  Top photo: algae ponds before sun exposure; bottom photo: a pond after sun exposure, when the
+                  astaxanthin has been activated.
+                </em>
               </div>
-              <p>The green microalgae H. pluvialis, which produces bright red astaxanthin as a protective survival mechanism when its water supply dries up, is the ONLY source of true astaxanthin. And luckily, we found a supplier that spent years developing a sophisticated 4-step process for producing astaxanthin in Chile’s remote, pristine Elqui Valley.</p>
+              <p>
+                The green microalgae H. pluvialis, which produces bright red astaxanthin as a protective survival
+                mechanism when its water supply dries up, is the ONLY source of true astaxanthin. And luckily, we found
+                a supplier that spent years developing a sophisticated 4-step process for producing astaxanthin in
+                Chile’s remote, pristine Elqui Valley.
+              </p>
               <h4>AN ADVANCED 4-STEP PRODUCTION PROCESS</h4>
               <ul>
                 <li>First, H. pluvialis is cultivated in carefully controlled greenhouses.</li>
-                <li>Then, the algae biomass moves through a series of cascaded open ponds to stimulate the production of astaxanthin.</li>
-                <li>The astaxanthin-rich algae biomass is then harvested, concentrated and preserved through a special drying process.</li>
-                <li>Lastly, the astaxanthin is extracted using proprietary Deep Extract® supercritical CO2 technology at an organic certified facility in Florida.</li>
+                <li>
+                  Then, the algae biomass moves through a series of cascaded open ponds to stimulate the production of
+                  astaxanthin.
+                </li>
+                <li>
+                  The astaxanthin-rich algae biomass is then harvested, concentrated and preserved through a special
+                  drying process.
+                </li>
+                <li>
+                  Lastly, the astaxanthin is extracted using proprietary Deep Extract® supercritical CO2 technology at
+                  an organic certified facility in Florida.
+                </li>
               </ul>
               <h4>QUALITY, PURITY AND EFFECTIVENESS YOU CAN TRUST</h4>
-              <p>The result is the super clean, super potent, amazingly effective astaxanthin that goes into every Everything Armor softgel. We test and validate the finished products once they are complete to ensure that they meet the highest quality standards. And we work exclusively with manufacturers who adhere to the Food and Drug Administration’s (FDA) Current Good Manufacturing Procedures (cGMP). These facilities are regularly inspected and certified by the FDA.</p>
+              <p>
+                The result is the super clean, super potent, amazingly effective astaxanthin that goes into every
+                Everything Armor softgel. We test and validate the finished products once they are complete to ensure
+                that they meet the highest quality standards. And we work exclusively with manufacturers who adhere to
+                the Food and Drug Administration’s (FDA) Current Good Manufacturing Procedures (cGMP). These facilities
+                are regularly inspected and certified by the FDA.
+              </p>
             </div>
             <hr />
             <h2 ref={myRefFour}>Better Everything, guaranteed. Try it today—risk-free!</h2>
             <p>
-              Hundreds of studies have documented the powerful, wide-ranging health benefits of astaxanthin, and now, you can experience them for yourself. Once <a href="/products/everything-armor">Everything Armor</a> builds up in your body to clinically beneficial levels, there's no mistaking that it’s working. Here's what you can expect:
+              Hundreds of studies have documented the powerful, wide-ranging health benefits of astaxanthin, and now,
+              you can experience them for yourself. Once <a href="/products/everything-armor">Everything Armor</a>{' '}
+              builds up in your body to clinically beneficial levels, there's no mistaking that it’s working. Here's
+              what you can expect:
             </p>
           </Grid>
         </Grid>
@@ -465,10 +580,13 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
           <Grid item xs={12} md={8} className="smaller-container">
             <p>And the results get better and better with time!</p>
             <p>
-              Everything Armor is backed by our industry-leading money-back guarantee. And for a limited time, you can try it risk-free with free shipping. If it doesn’t work, just let us know and we’ll refund your money. No need to return it, give it to a friend to try.
+              Everything Armor is backed by our industry-leading money-back guarantee. And for a limited time, you can
+              try it risk-free with free shipping. If it doesn’t work, just let us know and we’ll refund your money. No
+              need to return it, give it to a friend to try.
             </p>
             <h2 className="text-center">
-              Feel the Everything Armor Difference— <br className="hidden-xs"/>Or Get Your Money Back
+              Feel the Everything Armor Difference— <br className="hidden-xs" />
+              Or Get Your Money Back
             </h2>
           </Grid>
         </Grid>
@@ -507,23 +625,71 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
           <Grid item xs={12} md={8} className="smaller-container">
             <div className="sf">Scientific References</div>
             <ul className="sr">
-              <li>Kidd P. Astaxanthin, cell membrane nutrient with diverse clinical benefits and anti-aging potential. Alt Med Rev 2011;16(4):355-64.</li>
-              <li>Capelli B et al. Chapter 48: Role of Astaxanthin in Sports Nutrition. Nutrition and Enhanced Sports Performance 2013;pp 465-71.</li>
-              <li>Naguib YM. Antioxidant activities of astaxanthin and related carotenoids. J Agric Food Chem 2000;4(4):1150-4.</li>
-              <li>Nishida Y et al. Quenching activities of common hydrophilic and lipophilic antioxidants against singlet oxygen using chemiluminescence detection system. Carotenoid Science 2007;11:16-20</li>
-              <li>Naguib Y. Antioxidant activities of astaxanthin and related carotenoids. J Agric Food Chem 2000;48:1150-4.</li>
+              <li>
+                Kidd P. Astaxanthin, cell membrane nutrient with diverse clinical benefits and anti-aging potential. Alt
+                Med Rev 2011;16(4):355-64.
+              </li>
+              <li>
+                Capelli B et al. Chapter 48: Role of Astaxanthin in Sports Nutrition. Nutrition and Enhanced Sports
+                Performance 2013;pp 465-71.
+              </li>
+              <li>
+                Naguib YM. Antioxidant activities of astaxanthin and related carotenoids. J Agric Food Chem
+                2000;4(4):1150-4.
+              </li>
+              <li>
+                Nishida Y et al. Quenching activities of common hydrophilic and lipophilic antioxidants against singlet
+                oxygen using chemiluminescence detection system. Carotenoid Science 2007;11:16-20
+              </li>
+              <li>
+                Naguib Y. Antioxidant activities of astaxanthin and related carotenoids. J Agric Food Chem
+                2000;48:1150-4.
+              </li>
               <li>Shen H et al. FASEB J 2009;23:1958-68.</li>
-              <li>Camera E et al. Astaxanthin, canthaxanthin and beta carotene differentially affect UVA-induced oxidative damage and expression of oxidative stress-response enzymes. Exp Dermatol 2009;18(3):222-31.</li>
-              <li>Wolf A et al. Astaxanthin protects mitochondrial redox state and functional integrity against oxidative stress. J Nutr Biochem 2010;21:381-9.</li>
-              <li>Nakagawa K et al. Antioxidant effect of astaxanthin on phospholipid peroxidation in human erythrocytes. Br J Nutr 2011;105(11):1563-71.</li>
-              <li>Iwabayashi M et al. Efficacy and safety of eight-week treatment with astaxanthin in individuals screened for increased oxidative stress burden. Anti-Aging Med 2009;6(4):15-21.</li>
-              <li>Shiratori K et al. Effect of astaxanthin on accommodation and asthenopia-efficacy identification study in healthy volunteers. J Clin Ther Med 2005;21(6):637-50.</li>
-              <li>Nagaki Y et al. The supplementation effect of astaxanthin on accommodation and asthenopia. J Clin Ther Med 2006;22(1):41-54.</li>
-              <li>Katagiri M et al. Effects of astaxanthin-rich Haematococcus pluvialis extract on cognitive function: a randomized, double-blind, placebo-controlled study. J Clin Biochem Nutr 2012;51(2):102-7.</li>
-              <li>Yamashita E. The effects of a dietary supplement containing astaxanthin on skin condition. Carotenoid Science 2006;10:91-5.</li>
-              <li>Earnest CP et al. Effects of astaxanthin on cycling time trial performance. Int J Sports Med 2011;32(11):882-8.</li>
-              <li>Malmsten C and A Lignell. Dietary supplementation with astaxanthin-rich algal meal improves strength endurance-a double-blind, placebo-controlled study on male students. Carotenoid Science 2008;13:20-22.</li>
-              <li>Park JS et al. Astaxanthin decreased oxidative stress and enhanced immune response in humans. Nutr Metab (Lond) 2010;7:18</li>
+              <li>
+                Camera E et al. Astaxanthin, canthaxanthin and beta carotene differentially affect UVA-induced oxidative
+                damage and expression of oxidative stress-response enzymes. Exp Dermatol 2009;18(3):222-31.
+              </li>
+              <li>
+                Wolf A et al. Astaxanthin protects mitochondrial redox state and functional integrity against oxidative
+                stress. J Nutr Biochem 2010;21:381-9.
+              </li>
+              <li>
+                Nakagawa K et al. Antioxidant effect of astaxanthin on phospholipid peroxidation in human erythrocytes.
+                Br J Nutr 2011;105(11):1563-71.
+              </li>
+              <li>
+                Iwabayashi M et al. Efficacy and safety of eight-week treatment with astaxanthin in individuals screened
+                for increased oxidative stress burden. Anti-Aging Med 2009;6(4):15-21.
+              </li>
+              <li>
+                Shiratori K et al. Effect of astaxanthin on accommodation and asthenopia-efficacy identification study
+                in healthy volunteers. J Clin Ther Med 2005;21(6):637-50.
+              </li>
+              <li>
+                Nagaki Y et al. The supplementation effect of astaxanthin on accommodation and asthenopia. J Clin Ther
+                Med 2006;22(1):41-54.
+              </li>
+              <li>
+                Katagiri M et al. Effects of astaxanthin-rich Haematococcus pluvialis extract on cognitive function: a
+                randomized, double-blind, placebo-controlled study. J Clin Biochem Nutr 2012;51(2):102-7.
+              </li>
+              <li>
+                Yamashita E. The effects of a dietary supplement containing astaxanthin on skin condition. Carotenoid
+                Science 2006;10:91-5.
+              </li>
+              <li>
+                Earnest CP et al. Effects of astaxanthin on cycling time trial performance. Int J Sports Med
+                2011;32(11):882-8.
+              </li>
+              <li>
+                Malmsten C and A Lignell. Dietary supplementation with astaxanthin-rich algal meal improves strength
+                endurance-a double-blind, placebo-controlled study on male students. Carotenoid Science 2008;13:20-22.
+              </li>
+              <li>
+                Park JS et al. Astaxanthin decreased oxidative stress and enhanced immune response in humans. Nutr Metab
+                (Lond) 2010;7:18
+              </li>
             </ul>
           </Grid>
         </Grid>
@@ -532,4 +698,4 @@ const EverythingArmorExerciseRecovery = ({ location }) => {
   );
 };
 
-export default EverythingArmorExerciseRecovery;
+export default withRouter(EverythingArmorExerciseRecovery);
