@@ -467,17 +467,6 @@ export const receivedPasswordResetSuccess = (account, token) => dispatch => {
     type: RECEIVED_PASSWORD_RESET_SUCCESS,
     payload: account
   });
-
-  // EventEmitter.emit('user.logged.in', {
-  //   account,
-  //   token
-  // });
-
-  // window.analytics.track('Sign In Successful', {
-  //   method: 'email',
-  //   site_location: returnSiteLocation(),
-  //   username: account.email
-  // });
 };
 
 export const receivedPasswordResetFailure = resetError => dispatch => {
