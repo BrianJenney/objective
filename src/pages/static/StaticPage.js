@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
 import { requestPage } from '../../modules/static/actions';
 import { buildPage } from '../../utils/sputils';
-
-import Box from '@material-ui/core/Box';
 
 const StaticPage = ({ match }) => {
   const { slug } = match.params;
@@ -13,7 +12,6 @@ const StaticPage = ({ match }) => {
   const [tracked, setTracked] = useState(false);
   const page = useSelector(state => state.page);
 
-  console.log('this page ', page);
   useEffect(() => {
     if (pageLoaded === false) dispatch(requestPage(slug));
   }, []);
@@ -32,16 +30,13 @@ const StaticPage = ({ match }) => {
 
   let FinalPage = null;
   if (pageLoaded) {
-    FinalPage = () => {
-      return buildPage(page);
-    };
+    FinalPage = () => buildPage(page);
   }
 
   if (FinalPage) {
     return <FinalPage />;
-  } else {
-    return null;
   }
+  return null;
 };
 
 export default withRouter(StaticPage);
