@@ -36,6 +36,7 @@ const contentfulOptions = {
 };
 
 const ProductAccordion = ({ content }) => {
+  console.log('HERE', content);
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const onPanelChange = (expanded, panelIndex) => {
@@ -54,7 +55,7 @@ const ProductAccordion = ({ content }) => {
     clinicalResults,
     clinicalResultsEnlargedImage,
     ingredients,
-    directions = { summary: '', details: [] },
+    directions = [],
     frequentlyAskedQuestions,
     supplementFactsIngredientsParagraph = null,
     supplementFactsIngredients = [],
@@ -62,6 +63,7 @@ const ProductAccordion = ({ content }) => {
     supplementFactsOtherIngredients = [],
     supplementFactsImportant = []
   } = content;
+
   const accordionItems = [
     {
       title: 'Clinical Results',
@@ -107,14 +109,13 @@ const ProductAccordion = ({ content }) => {
       className: 'directions',
       content: (
         <>
-          <Box className="summary">{directions.summary}</Box>
           <Box className="details">
-            {directions.details.map((detail, index) => (
+            {directions.map((detail, index) => (
               <Box className="entry" key={`entry_${index.toString()}`}>
                 <Box className="icon">
-                  <img src={detail.icon} alt="" />
+                  <img src={detail.fields.icon.fields.file.url} alt="" />
                 </Box>
-                <Box className="text">{detail.label}</Box>
+                <Box className="text">{detail.fields.benefitText}</Box>
               </Box>
             ))}
           </Box>
