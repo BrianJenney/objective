@@ -59,7 +59,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       break;
     case 'account.request.resetpassword':
       debugRabbitResponse('Account Reset Password Response', status, data, fields, properties);
-      console.log(status, data, fields, properties);
       if (status === 'success') {
         store.dispatch(receivedPasswordResetSuccess(data));
       } else {
