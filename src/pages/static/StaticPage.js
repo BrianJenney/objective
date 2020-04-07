@@ -98,12 +98,33 @@ const StaticPage = ({ location }) => {
     return store;
   };
 
+  const addStyles = (styles, value) => {
+    let paraWithMultiStyles = '';
+    console.log('testing-STYLESSS', styles, value);
+    styles.forEach(each => {
+      if (!paraWithMultiStyles) {
+        paraWithMultiStyles = value;
+      }
+      if (each.type === 'bold') {
+        paraWithMultiStyles = `<b>${paraWithMultiStyles}</b>`;
+      }
+      if (each.type === 'italic') {
+        paraWithMultiStyles = `<i>${paraWithMultiStyles}</i>`;
+      }
+      if (each.type === 'underline') {
+        paraWithMultiStyles = `<u>${paraWithMultiStyles}</u>`;
+      }
+    });
+    return paraWithMultiStyles;
+  };
+
   const transformText = (store, entries, length) => {
     if (entries.nodeType === 'paragraph' && entries.content.length >= 2) {
       const sameLinePara = [];
       let paraWithStyle = '';
-      let paraWithMultiStyles = '';
+
       for (let i = 0; i < entries.content.length; i++) {
+        console.log('testing-PARA-ENTRIES---', entries.content);
         if (entries.content[i].nodeType === 'hyperlink') {
           paraWithStyle = `<a href=${entries.content[i].data.uri}>${entries.content[i].content[0].value}</a>`;
           sameLinePara.push(paraWithStyle);
@@ -111,21 +132,8 @@ const StaticPage = ({ location }) => {
         if (entries.content[i].nodeType === 'text' && entries.content[i].value.length) {
           if (entries.content[i].marks.length) {
             if (entries.content[i].marks.length > 1) {
-              entries.content[i].marks.forEach(each => {
-                if (!paraWithMultiStyles) {
-                  paraWithMultiStyles = entries.content[i].value;
-                }
-                if (each.type === 'bold') {
-                  paraWithMultiStyles = `<b>${paraWithMultiStyles}</b>`;
-                }
-                if (each.type === 'italic') {
-                  paraWithMultiStyles = `<i>${paraWithMultiStyles}</i>`;
-                }
-                if (each.type === 'underline') {
-                  paraWithMultiStyles = `<u>${paraWithMultiStyles}</u>`;
-                }
-              });
-              sameLinePara.push(paraWithMultiStyles);
+              paraWithStyle = addStyles(entries.content[i].marks, entries.content[i].value);
+              sameLinePara.push(paraWithStyle);
             } else {
               if (entries.content[i].marks[0].type === 'bold') {
                 paraWithStyle = `<b>${entries.content[i].value}</b>`;
