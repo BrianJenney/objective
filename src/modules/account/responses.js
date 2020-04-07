@@ -9,7 +9,9 @@ import {
   receivedPatchAccountSuccess,
   receivedPatchAccountFailure,
   receivedChangePasswordSuccess,
-  receivedChangePasswordFailure
+  receivedChangePasswordFailure,
+  receivedPasswordResetSuccess,
+  receivedPasswordResetFailure
 } from './actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
@@ -53,6 +55,14 @@ export const handleAccountResponse = (status, data, fields, properties) => {
         store.dispatch(receivedLoginSuccess(data.account.data[0], data.token));
       } else {
         store.dispatch(receivedLoginFailure(data));
+      }
+      break;
+    case 'account.request.resetpassword':
+      debugRabbitResponse('Account Reset Password Response', status, data, fields, properties);
+      if (status === 'success') {
+        store.dispatch(receivedPasswordResetSuccess(data));
+      } else {
+        store.dispatch(receivedPasswordResetFailure(data));
       }
       break;
     default:
