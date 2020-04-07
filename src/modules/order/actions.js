@@ -179,16 +179,19 @@ export const requestGetOrder = (accountJwt, orderId) => (
   getState
 ) => {
   const { client: stompClient, replyTo } = getState().stomp;
+  const { account_jwt } = getState().account.data;
   dispatch({
     type: REQUEST_GET_ORDER,
     payload: { isLoading: true }
   });
+
   const getParams = {
     id: orderId,
     params: {
-      account_jwt: accountJwt
+      account_jwt
     }
   };
+
   const payload = JSON.stringify(msgpack.encode(getParams));
 
   stompClient.send(

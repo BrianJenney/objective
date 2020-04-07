@@ -145,7 +145,7 @@ const OrderConfirmation = ({ history }) => {
       paymentMethod === 'creditCard' && order.paymentData && order.paymentData.last4 ? order.paymentData.last4 : '';
     const paymentEmail = 'paypal' && order.paymentData && order.paymentData.email ? order.paymentData.email : '';
     const { shippingAddress, billingAddress } = order;
-    const { email } = account.data;
+    const { email } = order;
     const handleOrderDetail = useCallback(
       e => {
         e.preventDefault();
