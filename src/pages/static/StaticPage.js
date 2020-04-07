@@ -102,6 +102,7 @@ const StaticPage = ({ location }) => {
     if (entries.nodeType === 'paragraph' && entries.content.length >= 2) {
       const sameLinePara = [];
       let paraWithStyle = '';
+      let paraWithMultiStyles = '';
       for (let i = 0; i < entries.content.length; i++) {
         if (entries.content[i].nodeType === 'hyperlink') {
           paraWithStyle = `<a href=${entries.content[i].data.uri}>${entries.content[i].content[0].value}</a>`;
@@ -109,24 +110,42 @@ const StaticPage = ({ location }) => {
         }
         if (entries.content[i].nodeType === 'text' && entries.content[i].value.length) {
           if (entries.content[i].marks.length) {
-            if (entries.content[i].marks[0].type === 'bold') {
-              paraWithStyle = `<b>${entries.content[i].value}</b>`;
-              sameLinePara.push(paraWithStyle);
-            }
-            if (entries.content[i].marks[0].type === 'italic') {
-              paraWithStyle = `<i>${entries.content[i].value}</i>`;
-              sameLinePara.push(paraWithStyle);
-            }
-            if (entries.content[i].marks[0].type === 'underline') {
-              paraWithStyle = `<u>${entries.content[i].value}</u>`;
-              sameLinePara.push(paraWithStyle);
+            if (entries.content[i].marks.length > 1) {
+              entries.content[i].marks.forEach(each => {
+                if (!paraWithMultiStyles) {
+                  paraWithMultiStyles = entries.content[i].value;
+                }
+                if (each.type === 'bold') {
+                  paraWithMultiStyles = `<b>${paraWithMultiStyles}</b>`;
+                }
+                if (each.type === 'italic') {
+                  paraWithMultiStyles = `<i>${paraWithMultiStyles}</i>`;
+                }
+                if (each.type === 'underline') {
+                  paraWithMultiStyles = `<u>${paraWithMultiStyles}</u>`;
+                }
+              });
+              sameLinePara.push(paraWithMultiStyles);
+            } else {
+              if (entries.content[i].marks[0].type === 'bold') {
+                paraWithStyle = `<b>${entries.content[i].value}</b>`;
+                sameLinePara.push(paraWithStyle);
+              }
+              if (entries.content[i].marks[0].type === 'italic') {
+                paraWithStyle = `<i>${entries.content[i].value}</i>`;
+                sameLinePara.push(paraWithStyle);
+              }
+              if (entries.content[i].marks[0].type === 'underline') {
+                paraWithStyle = `<u>${entries.content[i].value}</u>`;
+                sameLinePara.push(paraWithStyle);
+              }
             }
           } else {
             sameLinePara.push(entries.content[i].value);
           }
         }
       }
-      return store.push(sameLinePara.join(' '));
+      return store.push(sameLinePara.join(''));
     }
     if (!entries.content) {
     } else {
