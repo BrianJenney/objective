@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, useMediaQuery, Box } from '@material-ui/core';
 import { addCoupon, addToCart } from '../../modules/cart/functions';
@@ -10,7 +10,7 @@ import './fast-asleep.scss';
 
 const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
 
-const EverythingArmorAntioxidants = ({ location }) => {
+const EverythingArmorAntioxidants = ({ location, history }) => {
   const cart = useSelector(state => state.cart);
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
@@ -112,7 +112,7 @@ const EverythingArmorAntioxidants = ({ location }) => {
 
   useEffect(() => {
     if (prodAdded && couponAdded) {
-      window.location.href = '/checkout';
+      history.push('/checkout');
     }
   }, [prodAdded, couponAdded]);
 
@@ -330,7 +330,9 @@ const EverythingArmorAntioxidants = ({ location }) => {
               </p>
               <p>
                 Once your workout is over, your body surges with these free radicals. This is not a problem if you have
-                the antioxidant resources available to deal with the oxidative stress; but if you don't, you'll experience muscle soreness and fatigue, and if you don't allow your body to recover fully, there is potential for lasting harm to your joints or other tissues.
+                the antioxidant resources available to deal with the oxidative stress; but if you don't, you'll
+                experience muscle soreness and fatigue, and if you don't allow your body to recover fully, there is
+                potential for lasting harm to your joints or other tissues.
               </p>
               <p>
                 The truth is exercising without enough antioxidant firepower is like putting yourself on an aging
@@ -355,22 +357,33 @@ const EverythingArmorAntioxidants = ({ location }) => {
               <ul className="large-ul">
                 <li>
                   Astaxanthin has been shown to help deliver oxygen to muscle cells during exercise while enhancing the
-                  energy-producing capacity of your cells’ mitochondria, resulting in <b>increased energy and stamina</b> during exercise and throughout the day.
+                  energy-producing capacity of your cells’ mitochondria, resulting in{' '}
+                  <b>increased energy and stamina</b> during exercise and throughout the day.
                 </li>
                 <li>
                   Astaxanthin reduced levels of lactic acid (the metabolite that really causes you to “feel the burn”)
                   during exercise by 28.6%, adding up to the welcome benefit of <b>reduced post-exercise soreness.</b>
                 </li>
                 <li>
-                  Astaxanthin helped lower levels of C-reactive protein (CRP), a marker of inflammation, by 20% in just eight weeks, making it an ally for a <b>normal inflammatory response, healthy joints and optimal cardiovascular wellness.</b>
+                  Astaxanthin helped lower levels of C-reactive protein (CRP), a marker of inflammation, by 20% in just
+                  eight weeks, making it an ally for a{' '}
+                  <b>normal inflammatory response, healthy joints and optimal cardiovascular wellness.</b>
                 </li>
                 <li>
-                  Astaxanthin <b>enhanced cognitive performance</b> in older adults, helping them score notably higher on two of the top tests used today. Astaxanthin is widely considered a “brain-friendly” antioxidant, due to its ability to cross the blood-brain barrier.
+                  Astaxanthin <b>enhanced cognitive performance</b> in older adults, helping them score notably higher
+                  on two of the top tests used today. Astaxanthin is widely considered a “brain-friendly” antioxidant,
+                  due to its ability to cross the blood-brain barrier.
                 </li>
                 <li>
-                  Astaxanthin was shown to be five times more effective than the carotenoid lutein at promoting <b>healthy vision.</b> It crosses the blood-retina barrier to neutralize free radicals in the eyes, easing eyestrain and promoting better <b>overall eye health.</b>
+                  Astaxanthin was shown to be five times more effective than the carotenoid lutein at promoting{' '}
+                  <b>healthy vision.</b> It crosses the blood-retina barrier to neutralize free radicals in the eyes,
+                  easing eyestrain and promoting better <b>overall eye health.</b>
                 </li>
-                <li>Astaxanthin’s free radical fighting power helps keep skin healthy on a cellular level. Studies have shown it enhances cell repair and collagen production for increased moisture and <b>firmer, smoother, more youthful-looking skin.</b></li>
+                <li>
+                  Astaxanthin’s free radical fighting power helps keep skin healthy on a cellular level. Studies have
+                  shown it enhances cell repair and collagen production for increased moisture and{' '}
+                  <b>firmer, smoother, more youthful-looking skin.</b>
+                </li>
               </ul>
             </div>
           </Grid>
@@ -701,4 +714,4 @@ const EverythingArmorAntioxidants = ({ location }) => {
   );
 };
 
-export default EverythingArmorAntioxidants;
+export default withRouter(EverythingArmorAntioxidants);
