@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCoupon, addToCart } from '../../../modules/cart/functions';
 import { setLpProdAdded, setLpCouponAdded } from '../../../modules/utils/actions';
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-const SPButton = ({ data, template, type, align }) => {
+const SPButton = ({ history, data, template, type, align }) => {
   const classes = useStyles(data);
   const products = useSelector(state => state.catalog.variants);
   const cart = useSelector(state => state.cart);
@@ -72,11 +73,11 @@ const SPButton = ({ data, template, type, align }) => {
     const [sku, qty] = data.skuAndQty[0].split(';');
 
     if (prodAdded && !data.coupon) {
-      window.location.href = data.URL;
+      history.push(data.URL);
     }
 
     if (prodAdded && couponAdded) {
-      window.location.href = data.URL;
+      history.push(data.URL);
     }
   }, [prodAdded, couponAdded]);
 
@@ -89,4 +90,4 @@ const SPButton = ({ data, template, type, align }) => {
   );
 };
 
-export default SPButton;
+export default withRouter(SPButton);
