@@ -100,23 +100,34 @@ const StaticPage = ({ location }) => {
 
   const transformText = (store, entries, length) => {
     if (entries.nodeType === 'paragraph' && entries.content.length >= 2) {
-      const sameLinkPara = {};
+      const sameLinePara = [];
+      let paraWithStyle = '';
       for (let i = 0; i < entries.content.length; i++) {
-        const name = `para${i}`;
         if (entries.content[i].nodeType === 'hyperlink') {
-          sameLinkPara[name] = { value: entries.content[i].content[0].value, url: entries.content[i].data.uri };
+          paraWithStyle = `<a href=${entries.content[i].data.uri}>${entries.content[i].content[0].value}</a>`;
+          sameLinePara.push(paraWithStyle);
         }
         if (entries.content[i].nodeType === 'text' && entries.content[i].value.length) {
           if (entries.content[i].marks.length) {
-            sameLinkPara[name] = { type: entries.content[i].marks[0].type, value: entries.content[i].value };
+            if (entries.content[i].marks[0].type === 'bold') {
+              paraWithStyle = `<b>${entries.content[i].value}</b>`;
+              sameLinePara.push(paraWithStyle);
+            }
+            if (entries.content[i].marks[0].type === 'italic') {
+              paraWithStyle = `<i>${entries.content[i].value}</i>`;
+              sameLinePara.push(paraWithStyle);
+            }
+            if (entries.content[i].marks[0].type === 'underline') {
+              paraWithStyle = `<u>${entries.content[i].value}</u>`;
+              sameLinePara.push(paraWithStyle);
+            }
           } else {
-            sameLinkPara[name] = { value: entries.content[i].value };
+            sameLinePara.push(entries.content[i].value);
           }
         }
       }
-      return store.push(sameLinkPara);
+      return store.push(sameLinePara.join(' '));
     }
-
     if (!entries.content) {
     } else {
       entries.content.map(entry => transformText(store, entry, length));
@@ -273,8 +284,6 @@ const StaticPage = ({ location }) => {
       }
       if (columnData.type === 'oneColSection') {
         columnComponent = columnData;
-        // console.log('testing-ONE-COL-columnComponent', columnComponent);
-        // console.log('testing-one-COL-STORAGE', storage);
         if (storage.length) {
           columnComponent.value.components.push(storage);
         }
@@ -302,7 +311,7 @@ const StaticPage = ({ location }) => {
     };
 
     content.map(({ fields }) => {
-      // console.log('TESTING-FIELDS', fields);
+      console.log('TESTING-FIELDS', fields);
       transformContent(fields, mainDataObj);
     });
   }
