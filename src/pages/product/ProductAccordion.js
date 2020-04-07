@@ -36,7 +36,6 @@ const contentfulOptions = {
 };
 
 const ProductAccordion = ({ content }) => {
-  console.log('HERE', content);
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const onPanelChange = (expanded, panelIndex) => {
