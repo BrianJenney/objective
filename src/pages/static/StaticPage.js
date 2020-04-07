@@ -127,7 +127,7 @@ const StaticPage = ({ location }) => {
           if (entries.content[i].content[0].marks.length > 0) {
             paraWithStyle = addStyles(entries.content[i].content[0].marks, entries.content[i].content[0].value);
           }
-          paraWithStyle = `<a href=${entries.content[i].data.uri}>${paraWithStyle}</a>`;
+          paraWithStyle = `<a href='${entries.content[i].data.uri}'>${paraWithStyle}</a>`;
           sameLinePara.push(paraWithStyle);
         }
         if (entries.content[i].nodeType === 'text' && entries.content[i].value.length) {
@@ -327,7 +327,6 @@ const StaticPage = ({ location }) => {
       transformContent(fields, mainDataObj);
     });
   }
-  console.log('TESTING@@@', mainDataObj);
 
   useEffect(() => {
     dispatch(requestPage('jen-test-page'));
