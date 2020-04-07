@@ -16,18 +16,11 @@ import { useQuantity, useWindowSize } from '../../hooks';
 import Carousel from '../../components/ProductSlider/PDPSlider';
 import './overrides.css';
 import { addToCart } from '../../modules/cart/functions';
-import {
-  getPrices,
-  getVariantMap,
-  getDefaultSkuByProduct
-} from '../../utils/product';
+import { getPrices, getVariantMap, getDefaultSkuByProduct } from '../../utils/product';
 
 import { ATC, OutOfStockPDP } from '../../components/atcOutOfStock';
 import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
-import {
-  ShippingRestrictionMobile,
-  ShippingRestriction
-} from './ShippingRestrictions';
+import { ShippingRestrictionMobile, ShippingRestriction } from './ShippingRestrictions';
 import ShippingRestrictionsDialog from './ShippingRestrictionsDialog';
 import './PDP-style.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -79,12 +72,7 @@ const ProductVariant = ({ productVariant }) => {
     analyticsTracked = true;
   }
   return productVariant ? (
-    <Box
-      display="flex"
-      flexDirection="row"
-      alignItems="flex-start"
-      className="pdp-product-variant"
-    >
+    <Box display="flex" flexDirection="row" alignItems="flex-start" className="pdp-product-variant">
       <div className="pdp-price">${productVariant.effectivePrice}</div>
       <div className="pdp-price-dash">&mdash;</div>
       <div className="pdp-price-description">
@@ -105,9 +93,7 @@ const ProductDetail = () => {
   const [ATCAdding, setATCAdding] = useState(false);
   const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
   const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
-  const [openShippingRestrictions, setOpenShippingRestrictions] = useState(
-    false
-  );
+  const [openShippingRestrictions, setOpenShippingRestrictions] = useState(false);
   const windowSize = useWindowSize();
   const defaultSku = getDefaultSkuByProduct(product);
   const [selectedVariantSku, setSelectedVariantSku] = useState(null);
@@ -127,10 +113,7 @@ const ProductDetail = () => {
     [cart, selectedVariantSku, variantMap, dispatch]
   );
 
-  const [quantity, setQuantity, Quantity] = useQuantity(
-    updateQuantityToCart,
-    'QTY'
-  );
+  const [quantity, setQuantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
     setATCAdded(true);
@@ -199,9 +182,7 @@ const ProductDetail = () => {
         selectedVariantSku == null
       ) {
         clearInterval(interval);
-        alert(
-          'Something wrong just happened, please refresh your browser and try again'
-        );
+        alert('Something wrong just happened, please refresh your browser and try again');
       }
     }
 
@@ -222,9 +203,7 @@ const ProductDetail = () => {
 
   const variant = variantMap.get(selectedVariantSku);
 
-  const restrictedStates = variant.restrictions
-    ? variant.restrictions[variant.restrictions.definitions].label
-    : [];
+  const restrictedStates = variant.restrictions ? variant.restrictions[variant.restrictions.definitions].label : [];
 
   return (
     <>
@@ -235,34 +214,18 @@ const ProductDetail = () => {
             <Grid container justify="space-between">
               <Grid item xs={12} sm={5}>
                 <Card className={classes.box}>
-                  <CardContent
-                    className={classes.cardRootOverrides}
-                    className="pdp-content"
-                  >
+                  <CardContent className={classes.cardRootOverrides} className="pdp-content">
                     <div className="mobile-padding">
-                      <h1
-                        className="pdp-header"
-                        style={{ color: product.color }}
-                      >
+                      <h1 className="pdp-header" style={{ color: product.color }}>
                         {content.productTitle}
                       </h1>
-                      <ProductVariant
-                        productVariant={variantMap.get(selectedVariantSku)}
-                      />
+                      <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
                     </div>
-                    <div className="pdp-subtitle">
-                      {content.shortPurposeHeadline}
-                    </div>
+                    <div className="pdp-subtitle">{content.shortPurposeHeadline}</div>
                     <div className="mobile-padding">
-                      <Typography className="pdp-description">
-                        {content.shortDescription}
-                      </Typography>
-                      <Typography className="pdp-direction">
-                        DIRECTIONS
-                      </Typography>
-                      <Typography className="pdp-direction-description">
-                        {content.shortDirections}
-                      </Typography>
+                      <Typography className="pdp-description">{content.shortDescription}</Typography>
+                      <Typography className="pdp-direction">DIRECTIONS</Typography>
+                      <Typography className="pdp-direction-description">{content.shortDirections}</Typography>
                     </div>
                     {/* <ProductVariantType
                   isMobile={isMobile}
@@ -272,7 +235,7 @@ const ProductDetail = () => {
                     {!ATCEnabled && <Quantity />}
                   </CardContent>
                   {/* ATC component */}
-                  {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
+                  {ATCEnabled && variant.inventory.quantityInStock >= 50 && (
                     <Grid className="mobile-padding-small">
                       <CardActions className={classes.maxWidth}>
                         <ATC
@@ -286,7 +249,7 @@ const ProductDetail = () => {
                     </Grid>
                   )}
                   {/* Out of stock component */}
-                  {variant.inventory.quantityInStock < 200 && (
+                  {variant.inventory.quantityInStock < 50 && (
                     <Grid>
                       <OutOfStockPDP
                         maxWidth={classes.maxWidth}
@@ -295,9 +258,7 @@ const ProductDetail = () => {
                         product_img={product.assets.img_front}
                         product_name={product.name}
                         openOutOfStockDialog={openOutOfStockDialog}
-                        handleOpenEmailConfirmation={
-                          handleOpenEmailConfirmation
-                        }
+                        handleOpenEmailConfirmation={handleOpenEmailConfirmation}
                       />
 
                       {openEmailConfirmation && (
@@ -309,11 +270,7 @@ const ProductDetail = () => {
                       )}
                     </Grid>
                   )}
-                  {variant.restrictions && (
-                    <ShippingRestrictionMobile
-                      onClick={handleShippingRestrictions}
-                    />
-                  )}
+                  {variant.restrictions && <ShippingRestrictionMobile onClick={handleShippingRestrictions} />}
                   {openShippingRestrictions && (
                     <ShippingRestrictionsDialog
                       product_name={variant.name}
@@ -336,31 +293,15 @@ const ProductDetail = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Card className={classes.box}>
-                    <CardContent
-                      className={classes.cardRootOverrides}
-                      className="pdp-content"
-                    >
-                      <h1
-                        className="pdp-header"
-                        style={{ color: product.color }}
-                      >
+                    <CardContent className={classes.cardRootOverrides} className="pdp-content">
+                      <h1 className="pdp-header" style={{ color: product.color }}>
                         {content.productTitle}
                       </h1>
-                      <ProductVariant
-                        productVariant={variantMap.get(selectedVariantSku)}
-                      />
-                      <div className="pdp-subtitle">
-                        {content.shortPurposeHeadline}
-                      </div>
-                      <Typography className="pdp-description">
-                        {content.shortDescription}
-                      </Typography>
-                      <Typography className="pdp-direction">
-                        DIRECTIONS
-                      </Typography>
-                      <Typography className="pdp-direction-description">
-                        {content.shortDirections}
-                      </Typography>
+                      <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
+                      <div className="pdp-subtitle">{content.shortPurposeHeadline}</div>
+                      <Typography className="pdp-description">{content.shortDescription}</Typography>
+                      <Typography className="pdp-direction">DIRECTIONS</Typography>
+                      <Typography className="pdp-direction-description">{content.shortDirections}</Typography>
 
                       {/* <ProductVariantType
                   isMobile={isMobile}
@@ -369,7 +310,7 @@ const ProductDetail = () => {
                 /> */}
                       {!ATCEnabled && <Quantity />}
                     </CardContent>
-                    {ATCEnabled && variant.inventory.quantityInStock >= 200 && (
+                    {ATCEnabled && variant.inventory.quantityInStock >= 50 && (
                       <Grid>
                         <CardActions className={classes.maxWidth}>
                           <ATC
@@ -382,7 +323,7 @@ const ProductDetail = () => {
                         </CardActions>
                       </Grid>
                     )}
-                    {variant.inventory.quantityInStock < 200 && (
+                    {variant.inventory.quantityInStock < 50 && (
                       <Grid>
                         <OutOfStockPDP
                           maxWidth={classes.maxWidth}
@@ -396,9 +337,7 @@ const ProductDetail = () => {
                           product_variant={product.defaultVariantSku}
                           product_url={`/products/${product.slug}`}
                           openOutOfStockDialog={openOutOfStockDialog}
-                          handleOpenEmailConfirmation={
-                            handleOpenEmailConfirmation
-                          }
+                          handleOpenEmailConfirmation={handleOpenEmailConfirmation}
                         />
 
                         {openEmailConfirmation && (
@@ -415,11 +354,7 @@ const ProductDetail = () => {
                         )}
                       </Grid>
                     )}
-                    {variant.restrictions && (
-                      <ShippingRestriction
-                        onClick={handleShippingRestrictions}
-                      />
-                    )}
+                    {variant.restrictions && <ShippingRestriction onClick={handleShippingRestrictions} />}
                     {openShippingRestrictions && (
                       <ShippingRestrictionsDialog
                         product_name={variant.name}
