@@ -8,7 +8,7 @@ import './template-styles.css';
 const useStyles = makeStyles(theme => ({
   root: props => ({
     float: props.desktopStyle.float,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       float: props.mobileStyle.float,
       width: props.mobileStyle.width
     }
@@ -39,7 +39,10 @@ const Image = ({ data, template, type, caption }) => {
             <div className={classes.caption}>{caption.value}</div>
           </div>
         ) : (
-          <img src={data.desktopImg} className={`${classes.root} ${template}-${type}-${float}`}></img>
+          <img
+            src={data.desktopImg}
+            className={`${classes.root} ${template}-${type} ${template}-${type}-${float}`}
+          ></img>
         )
       ) : caption ? (
         <div className={`${template}-${type}-caption-${float}`}>
@@ -47,7 +50,7 @@ const Image = ({ data, template, type, caption }) => {
           <div className={classes.caption}>{caption.value}</div>
         </div>
       ) : (
-        <img src={data.mobileImg} className={`${classes.root} ${template}-${type}-${float}`}></img>
+        <img src={data.mobileImg} className={`${classes.root} ${template}-${type} ${template}-${type}-${float}`}></img>
       )}
     </div>
   );
