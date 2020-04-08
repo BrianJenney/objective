@@ -151,6 +151,21 @@
 .LP-Template-1-banner-borderRight {
   border-right: 4px solid #1f396d;
 }
+.LP-Template-1-image {
+  width: 315px;
+  height: 260px;
+  object-fit: cover;
+}
+@media only screen and (max-width: 960px) {
+  .LP-Template-1-image {
+    width: 315px;
+    height: 220px;
+    object-fit: cover;
+  }
+  .LP-Template-1-image-caption {
+    max-width: 215px !important;
+  }
+}
 .LP-Template-1-image-left {
   margin-right: 25px;
   float: left;
@@ -161,7 +176,6 @@
 }
 .LP-Template-1-image-caption-left {
   float: left;
-  width: 320px;
   padding-right: 20px;
   margin-top: 10px;
   border: transparent solid 2px;
@@ -176,7 +190,6 @@
 }
 .LP-Template-1-image-caption-right {
   float: right;
-  width: 320px;
   padding-left: 20px;
   margin-top: 10px;
   border: transparent solid 2px;
@@ -274,6 +287,9 @@
   .LP-Template-1-banner {
     font-size: 26px !important;
     text-align: left !important;
+  }
+  .LP-Template-1-image {
+    height: auto;
   }
   .LP-Template-1-image-left {
     margin-right: 15px;
