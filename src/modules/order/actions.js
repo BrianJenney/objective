@@ -23,9 +23,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
   });
-  // The account JWT needs to be passed in as its own argument
-  const account_jwt = cart.account_jwt;
-  delete cart.account_jwt;
+
   const { client: stompClient, replyTo } = getState().stomp;
   const { merchantAccountId } = getState().storefront;
 
@@ -40,10 +38,9 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     cart.email = getState().account.data.email;
   }
 
-  const params = {
+  let params = {
     data: { cart },
     params: {
-      account_jwt,
       nonceOrToken,
       merchantAccountId,
       ...(localStorageClient.get('clickId') && {
@@ -52,13 +49,22 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (
     }
   };
 
+  if(cart.account_jwt){
+    const account_jwt = cart.account_jwt;
+    params.params.account_jwt = account_jwt;
+    delete cart.account_jwt;
+  } else if(cart.accountInfo){
+    const accountInfo = cart.accountInfo;
+    params.params.accountInfo = accountInfo;
+    delete cart.accountInfo;
+  }
+
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/order/order.request.createorder',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      jwt: account_jwt,
       'token': localStorageClient.get('olympusToken'),
     },
     payload

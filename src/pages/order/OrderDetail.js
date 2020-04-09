@@ -117,6 +117,7 @@ const OrderSummary = ({
   paymentData,
   classes,
   orderId,
+  orderEmail,
   orderRef,
   createdAt,
   addressesWidth,
@@ -134,7 +135,7 @@ const OrderSummary = ({
   const last4 =
     paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
   const paymentEmail = 'paypal' && paymentData && paymentData.email ? paymentData.email : '';
-  const { email } = account.data;
+
   const { phone } = billingAddress;
   const dispatch = useDispatch();
 
@@ -197,7 +198,7 @@ const OrderSummary = ({
             </StyledSmallCaps>
             <Address
               address={billingAddress}
-              email={email}
+              email={orderEmail}
               phone={phone || null}
             />
           </Box>
@@ -266,6 +267,7 @@ const OrderDetail = () => {
                 account={account}
                 orderId={order.orderNumber}
                 orderRef={order._id}
+                orderEmail={order.email}
                 createdAt={formatDateTime(order.createdAt, false)}
                 shippingAddress={order.shippingAddress}
                 billingAddress={order.billingAddress}

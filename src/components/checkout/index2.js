@@ -159,40 +159,6 @@ const Checkout = ({
       total: cart.total ? Number.parseFloat(cart.total) : 0
     });
   };
-  useEffect(() => {
-    const fetchAccountSubscription = EventEmitter.once('account.request.find', data => {
-      if (!accountCreated && currentUser.signupError && data.account !== null) {
-        delete data.account.passwordHashed;
-        data.account.paymentMethods = [];
-        data.account.addressBook = [];
-        data.account.isGuest = true;
-        //Dispatch guest account.
-        receivedFetchAccountSuccess(data.account);
-        clearPatchAccountError();
-        clearCreateAccountError();
-      }
-      fetchAccountSubscription.remove();
-    });
-  }, [accountCreated, currentUser.signupError]);
-
-  // Set step 1 to active if there were any signup errors
-  useEffect(() => {
-    if (!accountCreated && currentUser.signupError) {
-      if (currentUser.signupError.errorMessage) {
-        //If duplicate email signup, do a special request to fetch existing account as guest..
-        if (payload.shippingAddress && payload.shippingAddress.email) {
-          requestFetchAccount({ query: { email: payload.shippingAddress.email } }, true);
-        }
-
-
-        window.analytics.track('Email Capture Failed', {
-          email: payload.shippingAddress.email,
-          error_message: currentUser.signupError.errorMessage,
-          site_location: 'checkout'
-        });
-      }
-    }
-  }, [currentUser.signupError]);
 
   //Reset signupError, patchError, and PayPal state upon component unmount
   useEffect(() => {
@@ -285,17 +251,22 @@ const Checkout = ({
           ? true
           : false;
       setGuestMode(isGuest);
-      // Create user here...
-      requestCreateAccount({
+      const accountInfoPayload = {
         firstName: payload.paymentDetails.billingAddress.firstName,
         lastName: payload.paymentDetails.billingAddress.lastName,
         email: payload.shippingAddress.email,
         password: !isGuest ? payload.paymentDetails.billingAddress.password : `p-${cart._id}`,
         isGuest: isGuest,
+        storeCode: cart.storeCode,
         newsletter:
           payload.shippingAddress && payload.shippingAddress.shouldSubscribe
             ? payload.shippingAddress.shouldSubscribe
             : false
+      };
+
+      setPayload({
+        ...payload,
+        accountInfo: accountInfoPayload
       });
     }
   }, [activeStep]);
