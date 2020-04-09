@@ -39,10 +39,7 @@ const Image = ({ data, template, type, caption }) => {
       ? `?w=${desktopWidth}&h=230`
       : desktopHeight && !desktopWidth
       ? `?w=315&h=${desktopHeight}`
-      : null;
-  // `?w=${desktopWidth}&h=${desktopHeight}`
-
-  console.log(desktopParams);
+      : `?w=${desktopWidth}&h=${desktopHeight}`;
 
   return (
     <div>
