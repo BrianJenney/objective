@@ -30,6 +30,13 @@ const Image = ({ data, template, type, caption }) => {
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
+  const desktopWidth = data.desktopStyle.width;
+  const desktopHeight = data.desktopStyle.height;
+  const desktopParams = !desktopWidth && !desktopHeight ? `?w=315&h=230` : null;
+  // `?w=${desktopWidth}&h=${desktopHeight}`
+
+  console.log(desktopParams);
+
   return (
     <div>
       {!sm ? (
@@ -39,7 +46,10 @@ const Image = ({ data, template, type, caption }) => {
             <div className={classes.caption}>{caption.value}</div>
           </div>
         ) : (
-          <img src={data.desktopImg} className={`${classes.root} ${template}-${type}-${float}`}></img>
+          <img
+            src={`${data.desktopImg}${desktopParams}`}
+            className={`${classes.root} ${template}-${type}-${float}`}
+          ></img>
         )
       ) : caption ? (
         <div className={`${template}-${type}-caption-${float}`}>
