@@ -13,10 +13,6 @@ const useStyles = makeStyles(theme => ({
       width: props.mobileStyle.width
     }
   }),
-  captionImage: {
-    marginBottom: 10,
-    maxWidth: 300
-  },
   captionImageMobile: {
     width: '100%',
     marginBottom: 10
@@ -46,7 +42,7 @@ const Image = ({ data, template, type, caption }) => {
       {!sm ? (
         caption ? (
           <div className={`${template}-${type}-caption-${float}`}>
-            <img src={data.desktopImg} className={classes.captionImage} />
+            <img src={`${data.desktopImg}${desktopParams}`} />
             <div className={classes.caption}>{caption.value}</div>
           </div>
         ) : (

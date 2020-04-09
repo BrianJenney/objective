@@ -161,9 +161,7 @@
 }
 .LP-Template-1-image-caption-left {
   float: left;
-  width: 320px;
   padding-right: 20px;
-  margin-top: 10px;
   border: transparent solid 2px;
   font-family: freight-text-pro, serif;
   font-size: 14px;
@@ -176,9 +174,7 @@
 }
 .LP-Template-1-image-caption-right {
   float: right;
-  width: 320px;
   padding-left: 20px;
-  margin-top: 10px;
   border: transparent solid 2px;
   font-family: freight-text-pro, serif;
   font-size: 14px;
