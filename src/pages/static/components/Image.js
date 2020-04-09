@@ -8,7 +8,7 @@ import './template-styles.css';
 const useStyles = makeStyles(theme => ({
   root: props => ({
     float: props.desktopStyle.float,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       float: props.mobileStyle.float,
       width: props.mobileStyle.width
     }
@@ -23,7 +23,7 @@ const Image = ({ data, template, type, caption }) => {
   const classes = useStyles(data);
 
   const theme = useTheme();
-  const sm = useMediaQuery(theme.breakpoints.down('sm'));
+  const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
   let defaultParams;
@@ -31,11 +31,11 @@ const Image = ({ data, template, type, caption }) => {
   switch (template) {
     case 'LP-Template-1':
       if (data.desktopImg) {
-        defaultParams = '?w=315&h=230';
+        defaultParams = '?w=315&h=275';
       }
       break;
     default:
-      defaultParams = '?w=315&h=230';
+      defaultParams = '?w=315&h=275';
   }
 
   const desktopWidth = data.desktopStyle.width;
@@ -44,7 +44,7 @@ const Image = ({ data, template, type, caption }) => {
     !desktopWidth && !desktopHeight
       ? defaultParams
       : desktopWidth && !desktopHeight
-      ? `?w=${desktopWidth}&h=230`
+      ? `?w=${desktopWidth}&h=275`
       : desktopHeight && !desktopWidth
       ? `?w=315&h=${desktopHeight}`
       : `?w=${desktopWidth}&h=${desktopHeight}`;
