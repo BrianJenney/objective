@@ -26,23 +26,23 @@ const Image = ({ data, template, type, caption }) => {
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
-  let test;
+  let defaultParams;
 
   switch (template) {
     case 'LP-Template-1':
       if (data.desktopImg) {
-        test = '?w=315&h=230';
+        defaultParams = '?w=315&h=230';
       }
       break;
     default:
-      test = '?w=315&h=230';
+      defaultParams = '?w=315&h=230';
   }
 
   const desktopWidth = data.desktopStyle.width;
   const desktopHeight = data.desktopStyle.height;
   const desktopParams =
     !desktopWidth && !desktopHeight
-      ? test
+      ? defaultParams
       : desktopWidth && !desktopHeight
       ? `?w=${desktopWidth}&h=230`
       : desktopHeight && !desktopWidth
