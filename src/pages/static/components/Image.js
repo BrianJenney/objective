@@ -32,7 +32,14 @@ const Image = ({ data, template, type, caption }) => {
 
   const desktopWidth = data.desktopStyle.width;
   const desktopHeight = data.desktopStyle.height;
-  const desktopParams = !desktopWidth && !desktopHeight ? `?w=315&h=230` : null;
+  const desktopParams =
+    !desktopWidth && !desktopHeight
+      ? `?w=315&h=230`
+      : desktopWidth && !desktopHeight
+      ? `?w=${desktopWidth}&h=230`
+      : desktopHeight && !desktopWidth
+      ? `?w=315&h=${desktopHeight}`
+      : null;
   // `?w=${desktopWidth}&h=${desktopHeight}`
 
   console.log(desktopParams);
