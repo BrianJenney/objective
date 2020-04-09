@@ -81,6 +81,7 @@ export default [
   { path: '/faq', exact: true, component: FAQPage },
   { path: '/about_us', exact: true, component: AboutUs },
   { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
+  { path: '/privacypolicy/:subtopic', exact: true, component: PrivacyPolicyPage },
   { path: '/terms', exact: true, component: TermsPage },
   {
     path: '/order',
