@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
+import Scrollchor from 'react-scrollchor';
 import {
   StyledBackground,
   StyledTitle,
@@ -17,47 +18,44 @@ import {
 
 import './privacyPolicyAndTerms/style.scss';
 
+var parse = require('html-react-parser');
+
 class PrivacyPolicy extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {htmlData: 'loading...', subtopic: props.computedMatch.params.subtopic};  // get response text
+    this.state = {
+      subtopic: props.computedMatch.params.subtopic,
+      htmlRaw: "Loading..."
+    };
   }
 
   componentDidMount = () => {
     let path = this.state.subtopic;
     if (!path) {
       path = '';
-  }
+    }
 
     const searchUrl = `https://cors-anywhere.herokuapp.com/https://www.thecloroxcompany.com/privacy/` + path + `?ccl-extract=main`;
-    const regex = /privacy/g;
-    console.log(searchUrl);
 
     fetch(searchUrl, {headers: {Origin: "https://www.objectivewellness.com"}})
        .then(response => response.text())
        .then(text => {
-          let page = text
+          const page = text
             .replace('<a href="/brands/">', '<a href="https://www.thecloroxcompany.com/brands/" target=_blank>')
             .replace(/<a href="\/privacy(\/[a-z0-9-]+)\/"/g, '<a href="/privacypolicy$1"')
-            .replace('<a href="/privacy/"', '<a href="/privacypolicy"')
-            .replace('<a href="#', '<a href="'+ window.location.pathname + '#');
-
-          this.setState({ htmlData: page });
+            .replace('<a href="/privacy/"', '<a href="/privacypolicy"');
+          this.setState({htmlRaw: page});
         })
   }
 
   render() {
-    const htmlData = this.htmlData;
-
     return (
     <>
-      <ScrollToTop>
         <StyledBackground>
           <StyledContainer className="privacypolicy-container">
-            <Grid dangerouslySetInnerHTML={{ __html: this.state.htmlData }}></Grid>
+            { parse(this.state.htmlRaw) }
           </StyledContainer>
         </StyledBackground>
-      </ScrollToTop>
     </>
     )
   }
