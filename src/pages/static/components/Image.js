@@ -40,7 +40,7 @@ const Image = ({ data, template, type, caption }) => {
           <img
             src={`${data.desktopImg}${ResizeImage(template, data)}`}
             className={`${classes.root} ${template}-${type}-${float}`}
-          ></img>
+          />
         )
       ) : caption ? (
         <div className={`${template}-${type}-caption-${float}`}>
@@ -48,7 +48,7 @@ const Image = ({ data, template, type, caption }) => {
           <div className={classes.caption}>{caption.value}</div>
         </div>
       ) : (
-        <img src={data.mobileImg} className={`${classes.root} ${template}-${type}-${float}`}></img>
+        <img src={data.mobileImg} className={`${classes.root} ${template}-${type}-${float}`} />
       )}
     </div>
   );
