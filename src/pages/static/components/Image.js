@@ -3,6 +3,8 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import { ResizeImage } from '../../../utils/sputils';
+
 import './template-styles.css';
 
 const useStyles = makeStyles(theme => ({
@@ -26,40 +28,17 @@ const Image = ({ data, template, type, caption }) => {
   const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
-  let defaultParams;
-
-  switch (template) {
-    case 'LP-Template-1':
-      if (data.desktopImg) {
-        defaultParams = '?w=315&h=275';
-      }
-      break;
-    default:
-      defaultParams = '?w=315&h=275';
-  }
-
-  const desktopWidth = data.desktopStyle.width;
-  const desktopHeight = data.desktopStyle.height;
-  const desktopParams =
-    !desktopWidth && !desktopHeight
-      ? defaultParams
-      : desktopWidth && !desktopHeight
-      ? `?w=${desktopWidth}&h=275`
-      : desktopHeight && !desktopWidth
-      ? `?w=315&h=${desktopHeight}`
-      : `?w=${desktopWidth}&h=${desktopHeight}`;
-
   return (
     <div>
       {!sm ? (
         caption ? (
           <div className={`${template}-${type}-caption-${float}`}>
-            <img src={`${data.desktopImg}${desktopParams}`} />
+            <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
             <div className={classes.caption}>{caption.value}</div>
           </div>
         ) : (
           <img
-            src={`${data.desktopImg}${desktopParams}`}
+            src={`${data.desktopImg}${ResizeImage(template, data)}`}
             className={`${classes.root} ${template}-${type}-${float}`}
           ></img>
         )
