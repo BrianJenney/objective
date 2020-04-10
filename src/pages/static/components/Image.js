@@ -11,13 +11,11 @@ const useStyles = makeStyles(theme => ({
   root: props => ({
     float: props.desktopStyle.float,
     [theme.breakpoints.down('xs')]: {
-      float: props.mobileStyle.float,
-      width: props.mobileStyle.width
+      float: props.mobileStyle.float
     }
   }),
   captionImageMobile: {
-    width: '100%',
-    marginBottom: 10
+    width: '100%'
   }
 }));
 
@@ -44,11 +42,14 @@ const Image = ({ data, template, type, caption }) => {
         )
       ) : caption ? (
         <div className={`${template}-${type}-caption-${float}`}>
-          <img src={data.mobileImg} className={classes.captionImageMobile} />
+          <img src={`${data.mobileImg}${ResizeImage(template, data)}`} className={classes.captionImageMobile} />
           <div className={classes.caption}>{caption.value}</div>
         </div>
       ) : (
-        <img src={data.mobileImg} className={`${classes.root} ${template}-${type}-${float}`} />
+        <img
+          src={`${data.mobileImg}${ResizeImage(template, data)}`}
+          className={`${classes.root} ${template}-${type}-${float}`}
+        />
       )}
     </div>
   );
