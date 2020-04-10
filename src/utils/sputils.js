@@ -186,3 +186,31 @@ export const GenerateOneColumn = (comps, template, pageName) => {
 };
 
 export const RenderComponents = ({ components }) => components.map((component, i) => <>{component}</>);
+
+export const ResizeImage = (template, data) => {
+  let defaultParams;
+
+  switch (template) {
+    case 'LP-Template-1':
+      if (data.desktopImg) {
+        defaultParams = '?w=315&h=275';
+      }
+      break;
+    default:
+      defaultParams = '?w=315&h=275';
+  }
+
+  const desktopWidth = data.desktopStyle.width;
+  const desktopHeight = data.desktopStyle.height;
+
+  const params =
+    !desktopWidth && !desktopHeight
+      ? defaultParams
+      : desktopWidth && !desktopHeight
+      ? `?w=${desktopWidth}`
+      : desktopHeight && !desktopWidth
+      ? `?h=${desktopHeight}`
+      : `?w=${desktopWidth}&h=${desktopHeight}`;
+
+  return params;
+};
