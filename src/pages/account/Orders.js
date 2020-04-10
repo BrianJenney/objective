@@ -12,7 +12,6 @@ import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
-
 const columns = [
   {
     name: '_id',
@@ -47,8 +46,7 @@ const columns = [
       filter: false,
       sort: false,
       sortDirection: 'desc',
-      customBodyRender: (value, tableMeta, updateValue) =>
-        formatDateTime(value, false)
+      customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, false)
     }
   },
   /*
@@ -97,20 +95,15 @@ const columns = [
       customBodyRender: (value, tableMeta, updateValue) => {
         const rowData = tableMeta.rowData;
         const trackings = getTracking(rowData[4], rowData[3]);
-        return trackings ?
-          (trackings.map(tracking =>
-            <>
-              <Link
-                href={tracking.url}
-                style={{ color: 'black' }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {tracking.number}
-              </Link>
-              <br />
-            </>
-          ))
+        return trackings
+          ? trackings.map(tracking => (
+              <>
+                <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">
+                  {tracking.number}
+                </Link>
+                <br />
+              </>
+            ))
           : null;
       }
     }
@@ -149,7 +142,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
     window.analytics.page('Account Orders');
   }, []);
 
-  for (let key in data.orders) {
+  for (const key in data.orders) {
     if (order && data.orders[key]._id === order._id) {
       data.orders[key].status = order.status;
     }
@@ -163,9 +156,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
         container
         direction="column"
         spacing={3}
-        className={
-          xs ? 'account-orders account-orders-mobile-table' : 'account-orders'
-        }
+        className={xs ? 'account-orders account-orders-mobile-table' : 'account-orders'}
       >
         <Grid item sm={12} md={12} lg={12}>
           {xs ? (
@@ -181,9 +172,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
                       <td>
                         <Grid container direction="row">
                           <Grid item xs>
-                            <Typography className="order-meta-title-item">
-                              ORDER NUMBER
-                            </Typography>
+                            <Typography className="order-meta-title-item">ORDER NUMBER</Typography>
                             <Typography className="order-meta-item-info">
                               <Button
                                 color="primary"
@@ -198,41 +187,29 @@ const AccountOrders = ({ currentUser: { data } }) => {
 
                         <Grid container direction="row">
                           <Grid item xs>
-                            <Typography className="order-meta-title-item">
-                              ORDER DATE
-                            </Typography>
-                            <Typography className="order-meta-item-info">
-                              {formatDateTime(
-                                data.orders[dataIndex].createdAt,
-                                false
-                              )}
+                            <Typography className="order-meta-title-item">ORDER DATE</Typography>
+                            <Typography className="order-meta-item-info" style={{ verticalAlign: 'top' }}>
+                              {formatDateTime(data.orders[dataIndex].createdAt, false)}
                             </Typography>
                           </Grid>
                         </Grid>
 
                         <Grid container direction="row">
                           <Grid item xs>
-                            <Typography className="order-meta-title-item">
-                              STATUS
-                            </Typography>
-                            <Typography className="order-meta-item-info">
-                              {data.orders[dataIndex].status}
-                            </Typography>
+                            <Typography className="order-meta-title-item">STATUS</Typography>
+                            <Typography className="order-meta-item-info">{data.orders[dataIndex].status}</Typography>
                           </Grid>
                         </Grid>
 
                         <Grid container direction="row">
                           <Grid item xs>
-                            <Typography className="order-meta-title-item">
-                              TRACKING INFORMATION
-                            </Typography>
+                            <Typography className="order-meta-title-item">TRACKING INFORMATION</Typography>
                             <Typography className="order-meta-item-info">
                               <Button
                                 color="primary"
                                 component={AdapterLink}
                                 to={`/transactions/${data.orders[dataIndex]._id}`}
                               />
-
                             </Typography>
                           </Grid>
                         </Grid>
@@ -243,16 +220,11 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-              <DataTable
-                title={xs ? '' : 'Your Orders'}
-                data={data.orders}
-                columns={columns}
-                isLoading={isLoading}
-              />
-            )}
+            <DataTable title={xs ? '' : 'Your Orders'} data={data.orders} columns={columns} isLoading={isLoading} />
+          )}
         </Grid>
       </Grid>
-    </ScrollToTop >
+    </ScrollToTop>
   );
 };
 

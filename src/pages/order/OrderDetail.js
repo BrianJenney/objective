@@ -60,6 +60,9 @@ const useStyles = makeStyles(theme => ({
   textFreight: {
     fontSize: 18
   },
+  textTracking: {
+    marginTop: '16px'
+  },
   button: {
     margin: theme.spacing(3, 0, 4)
   },
@@ -93,7 +96,12 @@ const TrackingInfo = ({ tracking }) => {
       <>
         <Typography className={classes.text} pt={2}>
           {tracking && (
-            <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={tracking.url}
+              style={{ color: 'black', textDecoration: 'underline' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {tracking.number}
             </Link>
           )}
@@ -187,12 +195,10 @@ const OrderSummary = ({
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>Shipping Information</StyledSmallCaps>
             <Address address={shippingAddress} />
             {tracking && (
-              <>
-                <Typography className={classes.text} pt={2}>
-                  Tracking #:
-                </Typography>
+              <Box className={classes.textTracking}>
+                <Typography className={classes.text}>Tracking #:</Typography>
                 <TrackingInfo className={classes.text} tracking={tracking} />
-              </>
+              </Box>
             )}
           </Box>
         </Grid>
