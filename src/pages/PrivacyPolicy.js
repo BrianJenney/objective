@@ -2,9 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
-import Scrollchor from 'react-scrollchor';
 import {
   StyledBackground,
   StyledTitle,

@@ -1,0 +1,112 @@
+h1, h2 {
+
+    font-family: 'Canela Text Web';
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: center;
+    text-transform: none;
+    margin: 5px 0 60px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px !important;
+}
+
+.privacypolicy-container {
+min-height: 1400px;
+
+ a, a:visited, a strong, a strong:visited {
+   color: black;
+ }
+ p, li {
+    font-family: FreightTextProBook;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+
+     }
+  li {
+    padding: 9px 0px;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 2px;
+  }
+  .table-bluesy {
+      border: 1px solid #acb9bd;
+      table-layout: fixed;
+  }
+
+  .table-bluesy td, .table-bluesy th {
+      border-left: 1px solid #acb9bd;
+      vertical-align: top;
+  }
+
+  .table-bluesy thead tr td, .table-bluesy thead tr th {
+      color: #267197;
+      vertical-align: top;
+  }
+
+  .table-bluesy thead tr {
+      background-color: #E8ECED;
+      border-top: 1px solid #acb9bd;
+  }
+
+  .table-bluesy td:last-child, .table-bluesy th:last-child {
+      border-right: 1px solid #acb9bd;
+  }
+
+  .table-bluesy td p, .table-bluesy td ul li, .table-bluesy th p, .table-bluesy th ul li {
+      font-size: 14px;
+    /*  font-size: .875rem; */
+      line-height: normal;
+  }
+
+  .table-bluesy tbody tr:nth-child(2n) {
+      background-color: #F4F4F4;
+  }
+
+  .table-bluesy td, table th {
+      padding: 9px 10px;
+      text-align: left;
+  }
+
+  @media (min-width: 768px){
+    .hide-for-xlarge {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px){
+    .show-for-xlarge {
+      display: none;
+    }
+  }
+
+  .privacy_copy  a {
+      text-decoration: underline!important;
+  }
+
+  .privacy_copy {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+.terms-container {
+  li {
+    padding: 9px 0px;
+  }
+}

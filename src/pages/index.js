@@ -20,7 +20,7 @@ export { default as Blog } from './Blog';
 export { default as BlogPost } from './BlogPost';
 export { default as BlogCategory } from './BlogCategory';
 export { default as BlogTag } from './BlogTag';
-export { default as PrivacyPolicyPage } from './PrivacyPolicy';
+export { default as PrivacyPolicyPage } from './static/PrivacyPage';
 export { default as StaticPageOne } from './static/StaticPage';
 export { default as TermsPage } from './Terms';
 export { default as NotFoundPage } from './notfound/NotFound';
