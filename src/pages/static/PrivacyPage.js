@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { requestPrivacy } from '../../modules/static/actions';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import parse, { domToReact } from 'html-react-parser';
 import {
   StyledBackground,
@@ -14,7 +15,6 @@ const PrivacyPage = ({ match }) => {
   const { slug } = match.params;
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [tracked, setTracked] = useState(false);
   const page = useSelector(state => state.page);
 
   useEffect(() => {
@@ -29,49 +29,30 @@ const PrivacyPage = ({ match }) => {
     if (page.hasOwnProperty('html')) {
       // check for components here.
       setPageLoaded(true);
-      if (tracked === false) {
-        setTracked(true);
-        window.analytics.page(`Privacy: ${slug}`);
-      }
     }
   }, [page]);
 
-  let FinalPage = null;
+  let FinalPage = () =>
+      <>
+        <StyledBackground>
+          <StyledContainer className="privacypolicy-container">
+            <LoadingSpinner loadingMessage="Loading ..." page="gallery" />
+          </StyledContainer>
+        </StyledBackground>
+      </>
+
   if (pageLoaded) {
-    console.log("Builing privacy page");
-
-    // This code replaces the links by react links to avoid page reload
-    const options = {
-      replace: ({ attribs, children }) => {
-        if (!attribs) return;
-        if (attribs.class === 'privacyLink') {
-          return (
-            <Link to={attribs.href} activeClassName="active">{domToReact(children, options)}</Link>
-          );
-        }
-      }
-    };
-
     FinalPage = () =>
       <>
         <StyledBackground>
           <StyledContainer className="privacypolicy-container">
-            { parse(page.html, options) }
+            { parse(page.html) }
           </StyledContainer>
         </StyledBackground>
       </>
   }
 
-  if (FinalPage) {
-    return <FinalPage />;
-  }
-  return (
-      <>
-        <StyledBackground>
-          <StyledContainer className="privacypolicy-container">
-          </StyledContainer>
-        </StyledBackground>
-      </>  )
+  return <FinalPage />;
 };
 
 export default withRouter(PrivacyPage);
