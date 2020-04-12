@@ -175,7 +175,7 @@ const SignupForm = ({
                 Privacy Policy
               </NavLink> */}
               <a
-                href="https://www.thecloroxcompany.com/privacy/"
+                href="/privacypolicy"
                 target="_blank"
                 style={{ color: '#000000' }}
               >
