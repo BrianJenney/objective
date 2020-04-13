@@ -322,7 +322,7 @@ const Terms = ({location}) => {
                             Privacy Statement
                           </StyledLink> */}
                           <StyledLink
-                            href="https://www.thecloroxcompany.com/privacy/"
+                            href="/privacypolicy"
                             target="_blank"
                           >
                             Privacy Statement
@@ -557,7 +557,7 @@ const Terms = ({location}) => {
                       Privacy Statement
                     </StyledLink> */}
                     <StyledLink
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                     >
                       Privacy Statement
@@ -567,7 +567,7 @@ const Terms = ({location}) => {
                       Privacy Statement
                     </StyledLink> */}
                     <StyledLink
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                     >
                       Privacy Statement
@@ -896,7 +896,7 @@ const Terms = ({location}) => {
                       Privacy Statement
                     </StyledLink> */}
                     <StyledLink
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                     >
                       Privacy Statement
@@ -908,7 +908,7 @@ const Terms = ({location}) => {
                       Privacy Statement
                     </StyledLink> */}
                     <StyledLink
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                     >
                       Privacy Statement
@@ -1109,7 +1109,7 @@ const Terms = ({location}) => {
                         Privacy Statement
                       </StyledLink> */}
                       <StyledLink
-                        href="https://www.thecloroxcompany.com/privacy/"
+                        href="/privacypolicy"
                         target="_blank"
                       >
                         Privacy Statement
@@ -1162,7 +1162,7 @@ const Terms = ({location}) => {
                       Privacy Statement
                     </StyledLink> */}
                     <StyledLink
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                     >
                       Privacy Statement
@@ -1183,7 +1183,7 @@ const Terms = ({location}) => {
                       Privacy Statement
                     </StyledLink> */}
                     <StyledLink
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                     >
                       Privacy Statement

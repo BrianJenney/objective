@@ -399,7 +399,7 @@ const Footer = ({ location, currentUser }) => {
                         >
                           Privacy Policy
                         </NavLink>  */}
-                        <a href="https://www.thecloroxcompany.com/privacy/" target="_blank">
+                        <a href="/privacypolicy" target="_blank">
                           Privacy Policy
                         </a>
                       </ListItem>
@@ -610,7 +610,7 @@ const Footer = ({ location, currentUser }) => {
                         >
                           Privacy Policy
                         </NavLink> */}
-                        <a href="https://www.thecloroxcompany.com/privacy/" target="_blank">
+                        <a href="/privacypolicy" target="_blank">
                           Privacy Policy
                         </a>
                       </ListItem>
