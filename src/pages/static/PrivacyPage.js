@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { requestPrivacy } from '../../modules/static/actions';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import parse, { domToReact } from 'html-react-parser';
+import NotFound from '../notfound/NotFound'
 import {
   StyledBackground,
   StyledContainer,
@@ -15,6 +16,7 @@ const PrivacyPage = ({ match }) => {
   const { slug } = match.params;
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [pageError, setPageError] = useState(false);
   const page = useSelector(state => state.page);
 
   useEffect(() => {
@@ -26,7 +28,10 @@ const PrivacyPage = ({ match }) => {
 
   useEffect(() => {
     // check this when we have real content from content ms
-    if (page.hasOwnProperty('html')) {
+    if (page.hasOwnProperty('error')) {
+      setPageError(true);
+    }
+    else if (page.hasOwnProperty('html')) {
       // check for components here.
       setPageLoaded(true);
     }
@@ -40,6 +45,11 @@ const PrivacyPage = ({ match }) => {
           </StyledContainer>
         </StyledBackground>
       </>
+
+  if (pageError) {
+    FinalPage = () =>
+      <NotFound />
+  }
 
   if (pageLoaded) {
     FinalPage = () =>
