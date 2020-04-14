@@ -1,4 +1,40 @@
+h1, h2 {
+
+    font-family: 'Canela Text Web';
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.17;
+    letter-spacing: normal;
+    text-align: center;
+    text-transform: none;
+    margin: 5px 0 60px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px !important;
+}
+
 .privacypolicy-container {
+min-height: 1400px;
+
+ a, a:visited, a strong, a strong:visited {
+   color: black;
+ }
+ p, li {
+    font-family: FreightTextProBook;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+
+     }
   li {
     padding: 9px 0px;
   }
