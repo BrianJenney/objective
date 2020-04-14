@@ -92,7 +92,7 @@ export default function PdpTabs({ scrollToTabs }) {
   }
 
   if (!product) return null;
-  console.log('TESTING THERE', content);
+
   return (
     <Container className="tabSection">
       <Grid spacing={0} xs={12}>
@@ -113,7 +113,7 @@ export default function PdpTabs({ scrollToTabs }) {
                   className={classes.tabs}
                   style={{ borderLeft: 'none' }}
                 />
-                {content.supplementFactsTitle ? (
+                {content && content.supplementFactsTitle ? (
                   <Tab
                     variant="smallHeader"
                     label={content.supplementFactsTitle}
