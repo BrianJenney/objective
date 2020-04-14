@@ -89,11 +89,7 @@ export default function SupplementFactsTab() {
 
   return (
     <div className="label-info-wrapper">
-      {content && content.supplementFactsTitle ? (
-        <h2>{content.supplementFactsTitle}</h2>
-      ) : (
-          <h2>Supplement FactsSSSS</h2>
-        )}
+      {content && content.supplementFactsTitle ? <h2>{content.supplementFactsTitle}</h2> : <h2>Supplement Facts</h2>}
       <div className="top-block" style={{ borderTop: border2 }}>
         <div className="flex-desktop">
           <div className="card facts-text">
