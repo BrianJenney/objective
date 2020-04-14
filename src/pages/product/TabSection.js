@@ -92,7 +92,7 @@ export default function PdpTabs({ scrollToTabs }) {
   }
 
   if (!product) return null;
-
+  console.log('TESTING THERE', content);
   return (
     <Container className="tabSection">
       <Grid spacing={0} xs={12}>
@@ -113,37 +113,22 @@ export default function PdpTabs({ scrollToTabs }) {
                   className={classes.tabs}
                   style={{ borderLeft: 'none' }}
                 />
-                {product.sku == 'TFPR' ? (
+                {content.supplementFactsTitle ? (
                   <Tab
                     variant="smallHeader"
-                    label="Drug Facts"
+                    label={content.supplementFactsTitle}
                     {...a11yProps(1)}
                     className={classes.tabs}
                   />
                 ) : (
-                  <Tab
-                    variant="smallHeader"
-                    label="Supplement Facts"
-                    {...a11yProps(1)}
-                    className={classes.tabs}
-                  />
-                )}
+                    <Tab variant="smallHeader" label="Supplement Facts" {...a11yProps(1)} className={classes.tabs} />
+                  )}
               </Tabs>
             </AppBar>
-            <TabPanel
-              value={value}
-              index={0}
-              dir={theme.direction}
-              className="tabpanel"
-            >
+            <TabPanel value={value} index={0} dir={theme.direction} className="tabpanel">
               <HowItWorksTab />
             </TabPanel>
-            <TabPanel
-              value={value}
-              index={1}
-              dir={theme.direction}
-              className="tabpanel"
-            >
+            <TabPanel value={value} index={1} dir={theme.direction} className="tabpanel">
               <SupplementFactsTab />
             </TabPanel>
           </div>

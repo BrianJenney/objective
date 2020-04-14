@@ -4,7 +4,7 @@ import ProductContext from '../../contexts/ProductContext';
 
 const ServingList = ({ data }) => {
   if (data) {
-    let servings = data.map(serving => <li>{serving}</li>);
+    const servings = data.map(serving => <li>{serving}</li>);
 
     return (
       <div>
@@ -19,7 +19,7 @@ const ServingList = ({ data }) => {
 
 const ServingNotes = ({ data }) => {
   if (data) {
-    let notes = data.map(note => <li>{note.replace(/\|/g, ',')}</li>);
+    const notes = data.map(note => <li>{note.replace(/\|/g, ',')}</li>);
 
     return <ul className="fineprint">{notes}</ul>;
   }
@@ -29,9 +29,7 @@ const ServingNotes = ({ data }) => {
 
 const OtherIngredients = ({ data }) => {
   if (data) {
-    let otherIngredients = data.map(otherIngredient => (
-      <p>{otherIngredient.replace(/\|/g, ',')}</p>
-    ));
+    const otherIngredients = data.map(otherIngredient => <p>{otherIngredient.replace(/\|/g, ',')}</p>);
 
     return (
       <>
@@ -46,7 +44,7 @@ const OtherIngredients = ({ data }) => {
 
 const ImportantNotes = ({ data }) => {
   if (data) {
-    let importantNotes = data.map(note => <li>{note.replace(/\|/g, ',')}</li>);
+    const importantNotes = data.map(note => <li>{note.replace(/\|/g, ',')}</li>);
 
     return (
       <>
@@ -61,7 +59,7 @@ const ImportantNotes = ({ data }) => {
 
 export default function SupplementFactsTab() {
   const { content, product } = useContext(ProductContext);
-
+  console.log('testing@@', content);
   if (!content) {
     return null;
   }
@@ -72,10 +70,7 @@ export default function SupplementFactsTab() {
   if (!content.supplementFactsIngredientsParagraph) {
     ingredientList = content.supplementFactsIngredients.map(ingredient => (
       <tr>
-        <td
-          dangerouslySetInnerHTML={{ __html: ingredient.ingredient }}
-          style={{ border: border1 }}
-        ></td>
+        <td dangerouslySetInnerHTML={{ __html: ingredient.ingredient }} style={{ border: border1 }}></td>
         <td align="center" style={{ border: border1 }}>
           {ingredient.amount}
         </td>
@@ -94,7 +89,7 @@ export default function SupplementFactsTab() {
 
   return (
     <div className="label-info-wrapper">
-      {product.sku == 'TFPR' ? <h2>Drug Facts</h2> : <h2>Supplement Facts</h2>}
+      {content.supplementFactsTitle ? <h2>{content.supplementFactsTitle}</h2> : <h2>Supplement Facts</h2>}
       <div className="top-block" style={{ borderTop: border2 }}>
         <div className="flex-desktop">
           <div className="card facts-text">
@@ -111,29 +106,26 @@ export default function SupplementFactsTab() {
           {content.supplementFactsIngredientsParagraph ? (
             ingredientList
           ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th style={{ border: border1 }}>Each Serving Contains</th>
-                  <th align="center" style={{ border: border1 }}>
-                    Amount
+              <table>
+                <thead>
+                  <tr>
+                    <th style={{ border: border1 }}>Each Serving Contains</th>
+                    <th align="center" style={{ border: border1 }}>
+                      Amount
                   </th>
-                  <th align="center" style={{ border: border1 }}>
-                    % Daily Value
+                    <th align="center" style={{ border: border1 }}>
+                      % Daily Value
                   </th>
-                </tr>
-              </thead>
-              <tbody>{ingredientList}</tbody>
-            </table>
-          )}
+                  </tr>
+                </thead>
+                <tbody>{ingredientList}</tbody>
+              </table>
+            )}
           <ServingNotes data={content.supplementFactsServingNotes} />
         </div>
       </div>
       <div className="bottom-block" style={{ borderTop: border1 }}>
-        <div
-          className="card other-ingredients"
-          style={{ borderRight: border1 }}
-        >
+        <div className="card other-ingredients" style={{ borderRight: border1 }}>
           <OtherIngredients data={content.supplementFactsOtherIngredients} />
         </div>
         <div className="card important">
