@@ -56,6 +56,7 @@ const ProductAccordion = ({ content }) => {
     ingredients,
     directions = [],
     frequentlyAskedQuestions,
+    supplementFactsTitle,
     supplementFactsIngredientsParagraph = null,
     supplementFactsIngredients = [],
     supplementFactsNotes,
@@ -130,7 +131,7 @@ const ProductAccordion = ({ content }) => {
       )
     },
     {
-      title: 'Supplement Facts',
+      title: supplementFactsTitle || 'Supplement Facts',
       className: 'supplement-facts',
       content: (
         <>
@@ -140,29 +141,29 @@ const ProductAccordion = ({ content }) => {
                 {supplementFactsIngredientsParagraph}
               </Box>
             ) : (
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Each serving contains</TableCell>
-                    <TableCell width="87px">Amount</TableCell>
-                    <TableCell width="90px">% Daily Value</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {supplementFactsIngredients.map((ingredient, index) => (
-                    <TableRow key={`tr_${index.toString()}`}>
-                      <TableCell
-                        dangerouslySetInnerHTML={{
-                          __html: ingredient.ingredient
-                        }}
-                      />
-                      <TableCell>{ingredient.amount}</TableCell>
-                      <TableCell>{ingredient.daily_value}</TableCell>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Each serving contains</TableCell>
+                      <TableCell width="87px">Amount</TableCell>
+                      <TableCell width="90px">% Daily Value</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
+                  </TableHead>
+                  <TableBody>
+                    {supplementFactsIngredients.map((ingredient, index) => (
+                      <TableRow key={`tr_${index.toString()}`}>
+                        <TableCell
+                          dangerouslySetInnerHTML={{
+                            __html: ingredient.ingredient
+                          }}
+                        />
+                        <TableCell>{ingredient.amount}</TableCell>
+                        <TableCell>{ingredient.daily_value}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
           </Box>
           <Box className="notes">
             {documentToReactComponents(supplementFactsNotes, contentfulOptions)}
