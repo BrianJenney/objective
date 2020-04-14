@@ -110,7 +110,7 @@ const FastAsleepIngredients = ({ history, location }) => {
   }, [prodAdded, couponAdded]);
 
   useEffect(() => {
-    if (cart.items.length > 0 && couponAdded === false) {
+    if (prodAdded && couponAdded === false) {
       handleAddCoupon();
     }
   }, [cart]);
