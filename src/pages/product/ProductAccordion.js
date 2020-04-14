@@ -169,7 +169,9 @@ const ProductAccordion = ({ content }) => {
             {documentToReactComponents(supplementFactsNotes, contentfulOptions)}
           </Box>
           <Box className="other-ingredients">
-            <Typography variant="h4">Other Ingredients</Typography>
+            {supplementFactsOtherIngredients.length ? (
+              <Typography variant="h4">Other Ingredients</Typography>
+            ) : null}
             <List disablePadding>
               {supplementFactsOtherIngredients.map((otherIngredient, index) => (
                 <ListItem
@@ -184,7 +186,9 @@ const ProductAccordion = ({ content }) => {
             </List>
           </Box>
           <Box className="important">
-            <Typography variant="h4">Important</Typography>
+            {supplementFactsImportant.length ? (
+              <Typography variant="h4">Important</Typography>
+            ) : null}
             <List disablePadding>
               {supplementFactsImportant.map((important, index) => (
                 <ListItem key={`important-${index.toString()}`} disableGutters>
