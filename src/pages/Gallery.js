@@ -7,6 +7,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import HeadTags from '../components/common/HeadTags';
 import { GalleryStore } from '../contexts/GalleryContext';
 import Products from './gallery/Products';
+import { ScrollToTop } from '../components/common';
 
 const Gallery = ({ location }) => {
   const catalog = useSelector(state => state.catalog);
@@ -22,6 +23,7 @@ const Gallery = ({ location }) => {
   return (
     <>
       <HeadTags title={title} description={description} />
+      <ScrollToTop>
       <Box className="gallery-page">
         <Box className="hero-holder">
           {mobile ? (
@@ -42,6 +44,7 @@ const Gallery = ({ location }) => {
           <Products></Products>
         </GalleryStore>
       </Box>
+      </ScrollToTop>
     </>
   );
 };
