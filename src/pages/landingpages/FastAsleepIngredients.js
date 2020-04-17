@@ -4,6 +4,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, useMediaQuery, Box } from '@material-ui/core';
 import { addCoupon, addToCart } from '../../modules/cart/functions';
+import { ATC, OutOfStockLP, OutOfStock } from '../../components/atcOutOfStock';
+import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmedLP';
 import { trackLPSection } from '../../utils/misc';
 import Logo from '../../components/common/Icons/Logo/Logo';
 import './fast-asleep.scss';
@@ -15,6 +17,58 @@ const FastAsleepIngredients = ({ history, location }) => {
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
   const [couponAdded, setCouponAdded] = useState(false);
+
+  // Out of stock modal states
+  const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
+  const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
+
+  const [state, setState] = useState({
+    product_img: '',
+    product_name: '',
+    product_category: '',
+    product_id: '',
+    product_sku: '',
+    product_variant: '',
+    product_url: ''
+  })
+
+  const getSelectVariant = useCallback(() => {
+    const variant = catalog.variants.find(item => item.slug === 'fast-asleep');
+
+    setState(prevState => ({
+      ...prevState,
+      product_img: variant.assets.thumbnail,
+      product_name: variant.name,
+      product_category: variant.productCategory,
+      product_id: variant.id,
+      product_sku: variant.sku.slice(0, 4),
+      product_variant: variant.sku,
+      product_url: `/products/${variant.slug}`
+    }))
+
+    handleOpenOutOfStockDialog();
+  })
+
+
+  // Out of stock functions
+
+  const handleOpenOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(true);
+  }, [setOpenOutOfStockDialog]);
+
+  const closeOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(false);
+  }, [setOpenOutOfStockDialog]);
+
+  /* Out Of Stock email confirmation */
+  const handleOpenEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(true);
+  }, [setOpenEmailConfirmation]);
+  const closeEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(false);
+  }, [setOpenEmailConfirmation]);
+
+
   const section = useRef({
     a: false,
     b: false,
@@ -479,9 +533,36 @@ const FastAsleepIngredients = ({ history, location }) => {
                 Get the deep restorative sleep you need <br />
                 with Saffron & GABA Chocolates
               </div>
-              <NavLink onClick={handleClick} className="green-btn">
+              <OutOfStockLP
+                onClick={getSelectVariant}
+                onExited={closeOutOfStockDialog}
+                buttonClass="green-btn"
+                product_img={state.product_img}
+                product_name={state.product_name}
+                product_category={state.product_category}
+                product_id={state.product_id}
+                product_sku={state.product_sku}
+                product_variant={state.product_variant}
+                product_url={state.product_url}
+                openOutOfStockDialog={openOutOfStockDialog}
+                handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+              />
+              {openEmailConfirmation && (
+                <ConfirmEmail
+                  onExited={closeEmailConfirmation}
+                  product_img={state.product_img}
+                  product_name={state.product_name}
+                  product_category={state.product_category}
+                  product_id={state.product_id}
+                  product_sku={state.product_sku}
+                  product_variant={state.product_variant}
+                  product_url={state.product_url}
+                />
+              )}
+
+              {/* <NavLink onClick={handleClick} className="green-btn">
                 get 15% off — Buy Now
-              </NavLink>
+              </NavLink> */}
             </div>
           </Grid>
         </Grid>
@@ -601,9 +682,36 @@ const FastAsleepIngredients = ({ history, location }) => {
                 dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
                 the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
               </p>
-              <NavLink onClick={handleClick} className="blue-btn">
+              <OutOfStockLP
+                onClick={getSelectVariant}
+                onExited={closeOutOfStockDialog}
+                buttonClass="blue-btn"
+                product_img={state.product_img}
+                product_name={state.product_name}
+                product_category={state.product_category}
+                product_id={state.product_id}
+                product_sku={state.product_sku}
+                product_variant={state.product_variant}
+                product_url={state.product_url}
+                openOutOfStockDialog={openOutOfStockDialog}
+                handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+              />
+              {openEmailConfirmation && (
+                <ConfirmEmail
+                  onExited={closeEmailConfirmation}
+                  product_img={state.product_img}
+                  product_name={state.product_name}
+                  product_category={state.product_category}
+                  product_id={state.product_id}
+                  product_sku={state.product_sku}
+                  product_variant={state.product_variant}
+                  product_url={state.product_url}
+                />
+              )}
+
+              {/* <NavLink onClick={handleClick} className="blue-btn">
                 get 15% off — Buy Now
-              </NavLink>
+              </NavLink> */}
             </div>
             <hr />
             <h2>Your sweetest (naturally sugar-free) sleep ever </h2>
@@ -703,9 +811,38 @@ const FastAsleepIngredients = ({ history, location }) => {
                   <li>Saffron keeps you sound asleep all night</li>
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
-                <NavLink onClick={handleClick} className="black-btn">
+
+                <OutOfStockLP
+                onClick={getSelectVariant}
+                onExited={closeOutOfStockDialog}
+                buttonClass="black-btn"
+                product_img={state.product_img}
+                product_name={state.product_name}
+                product_category={state.product_category}
+                product_id={state.product_id}
+                product_sku={state.product_sku}
+                product_variant={state.product_variant}
+                product_url={state.product_url}
+                openOutOfStockDialog={openOutOfStockDialog}
+                handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+              />
+              {openEmailConfirmation && (
+                <ConfirmEmail
+                  onExited={closeEmailConfirmation}
+                  product_img={state.product_img}
+                  product_name={state.product_name}
+                  product_category={state.product_category}
+                  product_id={state.product_id}
+                  product_sku={state.product_sku}
+                  product_variant={state.product_variant}
+                  product_url={state.product_url}
+                />
+              )}
+
+
+                {/* <NavLink onClick={handleClick} className="black-btn">
                   get 15% off — Buy Now
-                </NavLink>
+                </NavLink> */}
               </div>
               <img
                 className="xs-only w-100"

@@ -2,6 +2,7 @@ import React from 'react';
 import CardActions from '@material-ui/core/CardActions';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import { NavLink } from 'react-router-dom';
 
 import { Button } from '../common';
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
@@ -153,3 +154,37 @@ export const OutOfStock = ({
     </>
   );
 };
+
+export const OutOfStockLP = ({
+  onClick,
+  onExited,
+  buttonClass,
+  product_img,
+  product_name,
+  product_category,
+  product_id,
+  product_sku,
+  product_variant,
+  openOutOfStockDialog,
+  handleOpenEmailConfirmation,
+}) => {
+  return (
+    <>
+      <NavLink onClick={onClick} className={buttonClass}>get 15% off — Buy Now
+      </NavLink>
+      {openOutOfStockDialog && (
+        <ProductOutOfStockDialog
+          onExited={onExited}
+          product_img={product_img}
+          product_name={product_name}
+          product_category={product_category}
+          product_id={product_id}
+          product_sku={product_sku}
+          product_variant={product_variant}
+          handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+        />
+      )}
+      
+    </>
+  )
+}
