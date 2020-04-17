@@ -63,23 +63,22 @@ const ConfirmEmail = ({ product_img, product_name }) => {
       <CssBaseline />
       <Grid container xs={12} direction="row" justify="center" align="center">
         <Grid item xs={12}>
-          <Typography className={classes.title}>
+          <Typography className={classes.title} style={{paddingBottom: '1rem'}}>
             Perfect, email confirmed!
           </Typography>
         </Grid>
         <Grid item xs={7}>
           <Typography className={classes.subTitle}>
-            Thanks for reaching out! We’ll get in touch with you when we have
-            this available again.
+            We'll get in touch with you when we have this available again. In the meantime, check out more targeted heath solutions from Objective.
           </Typography>
-          <CardMedia image={product_img} className={classes.bigAvatar} />
-          <Typography className={classes.name}>{product_name}</Typography>
+          {/* <CardMedia image={product_img} className={classes.bigAvatar} />
+          <Typography className={classes.name}>{product_name}</Typography> */}
           <NavLink to="/gallery">
           <Button
           fullWidth
           type="submit"
-          children="Shop All"
-          style={{marginBottom: '3rem'}}/>
+          children="Show Me More"
+          style={{margin: '2rem 0 3rem 0'}}/>
           </NavLink>
         </Grid>
       </Grid>
