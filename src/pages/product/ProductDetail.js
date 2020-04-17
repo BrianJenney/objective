@@ -350,3 +350,5 @@ const ProductDetail = () => {
 };
 
 export default withRouter(ProductDetail);
+
+console.log('Test')
