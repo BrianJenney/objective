@@ -316,8 +316,9 @@ const ProductDetail = () => {
                     maxWidth={classes.maxWidth}
                     onClick={handleOpenOutOfStockDialog}
                     onExited={closeOutOfStockDialog}
-                    product_img={product.assets.img_front}
-                    product_name={product.name}
+                    product_img={variant.assets.imgs}
+                    product_name={variant.name}
+                    product_color={product.color}
                     product_category={product.category}
                     product_id={product._id}
                     product_sku={product.sku}
@@ -350,5 +351,3 @@ const ProductDetail = () => {
 };
 
 export default withRouter(ProductDetail);
-
-console.log('Test')
