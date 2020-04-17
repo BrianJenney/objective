@@ -84,6 +84,7 @@ export const OutOfStockPDP = ({
   onExited,
   product_img,
   product_name,
+  product_color,
   product_category,
   product_id,
   product_sku,
@@ -103,6 +104,7 @@ export const OutOfStockPDP = ({
       {openOutOfStockDialog && (
         <ProductOutOfStockDialog
           onExited={onExited}
+          product_color={product_color}
           product_img={product_img}
           product_name={product_name}
           product_category={product_category}
