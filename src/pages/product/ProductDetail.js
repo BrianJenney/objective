@@ -275,6 +275,9 @@ const ProductDetail = () => {
                         variantSku={selectedVariantSku}
                         ATCAdded={ATCAdded}
                         ATCAdding={ATCAdding}
+                        product_img={variant.assets.imgs}
+                        product_name={variant.name}
+                        product_color={product.color}
                       />
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center">
