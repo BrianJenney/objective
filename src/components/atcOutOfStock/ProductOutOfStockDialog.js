@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
     }
   },
   name: {
-    color: '#003732',
     fontSize: '30px',
     fontFamily: 'Canela Text Web',
     paddingBottom: '20px',
@@ -75,6 +74,7 @@ const ProductOutOfStockForm = ({
   closeDialog,
   product_img,
   product_name,
+  product_color,
   product_category,
   product_id,
   product_sku,
@@ -146,7 +146,9 @@ const ProductOutOfStockForm = ({
             </Typography>
 
             <CardMedia image={product_img} className={classes.bigAvatar} />
-            <Typography className={classes.name}>{product_name}</Typography>
+            <Typography 
+              style={{ color: product_color }}
+              className={classes.name}>{product_name}</Typography>
           </Box>
           <Box align="start">
             <Field
