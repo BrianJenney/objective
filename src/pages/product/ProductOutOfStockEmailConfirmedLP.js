@@ -56,35 +56,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// const ConfirmEmail = ({ product_img, product_name }) => {
-//   const classes = useStyles();
-//   return (
-//     <Container component="main" maxWidth="lg">
-//       <CssBaseline />
-//       <Grid container xs={12} direction="row" justify="center" align="center">
-//         <Grid item xs={12}>
-//           <Typography className={classes.title} style={{paddingBottom: '1rem'}}>
-//             Perfect, email confirmed!
-//           </Typography>
-//         </Grid>
-//         <Grid item xs={7}>
-//           <Typography className={classes.subTitle}>
-//             We'll get in touch with you when we have this available again. In the meantime, check out more targeted heath solutions from Objective.
-//           </Typography>
-//           <NavLink to="/gallery">
-//           <Button
-//           fullWidth
-//           type="submit"
-//           children="Show Me More"
-//           style={{margin: '2rem 0 3rem 0'}}/>
-//           </NavLink>
-//         </Grid>
-//       </Grid>
-//     </Container>
-//   );
-// };
-
-
 const ConfirmEmail = () => {
   const classes = useStyles();
   
