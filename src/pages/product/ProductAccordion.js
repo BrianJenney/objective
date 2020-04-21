@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -36,6 +37,7 @@ const contentfulOptions = {
 };
 
 const ProductAccordion = ({ content }) => {
+  console.log('CONTENT', content);
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const onPanelChange = (expanded, panelIndex) => {
@@ -61,7 +63,8 @@ const ProductAccordion = ({ content }) => {
     supplementFactsIngredients = [],
     supplementFactsNotes,
     supplementFactsOtherIngredients = [],
-    supplementFactsImportant = []
+    supplementFactsImportant = [],
+    supplementFactsServing = []
   } = content;
 
   const accordionItems = [
@@ -135,35 +138,51 @@ const ProductAccordion = ({ content }) => {
       className: 'supplement-facts',
       content: (
         <>
+          <Grid className="serving-direction">
+            <Box className="serving">
+              {supplementFactsServing.length ? (
+                <Typography variant="h4">Serving</Typography>
+              ) : null}
+              <List disablePadding>
+                {supplementFactsServing.map((serving, index) => (
+                  <ListItem key={`serving-${index.toString()}`} disableGutters>
+                    <Typography component="span">
+                      {serving.replace(/\|/g, ',')}
+                    </Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Grid>
           <Box className="ingredients">
             {supplementFactsIngredientsParagraph ? (
               <Box className="ingredients-pg">
                 {supplementFactsIngredientsParagraph}
               </Box>
             ) : (
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Each serving contains</TableCell>
-                      <TableCell width="87px">Amount</TableCell>
-                      <TableCell width="90px">% Daily Value</TableCell>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Each serving contains</TableCell>
+                    <TableCell width="87px">Amount</TableCell>
+                    <TableCell width="90px">% Daily Value</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {supplementFactsIngredients.map((ingredient, index) => (
+                    <TableRow key={`tr_${index.toString()}`}>
+                      <TableCell
+                        dangerouslySetInnerHTML={{
+                          __html: ingredient.ingredient
+                        }}
+                      />
+                      <TableCell>{ingredient.amount}</TableCell>
+                      <TableCell>{ingredient.daily_value}</TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {supplementFactsIngredients.map((ingredient, index) => (
-                      <TableRow key={`tr_${index.toString()}`}>
-                        <TableCell
-                          dangerouslySetInnerHTML={{
-                            __html: ingredient.ingredient
-                          }}
-                        />
-                        <TableCell>{ingredient.amount}</TableCell>
-                        <TableCell>{ingredient.daily_value}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </Box>
           <Box className="notes">
             {documentToReactComponents(supplementFactsNotes, contentfulOptions)}
