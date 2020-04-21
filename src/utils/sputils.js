@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMediaQuery, Container, Grid } from '@material-ui/core';
+import { useMediaQuery, Container, Grid, useTheme } from '@material-ui/core';
 import {
   Hero,
   Image,
@@ -186,3 +186,43 @@ export const GenerateOneColumn = (comps, template, pageName) => {
 };
 
 export const RenderComponents = ({ components }) => components.map((component, i) => <>{component}</>);
+
+export const ResizeImage = (template, data) => {
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.down('xs'));
+  let defaultParams;
+
+  switch (template) {
+    case 'LP-Template-1':
+      if (data.desktopImg) {
+        defaultParams = '?w=315&h=275';
+      }
+      break;
+    default:
+      defaultParams = '?w=315&h=275';
+  }
+
+  const desktopWidth = data.desktopStyle.width;
+  const desktopHeight = data.desktopStyle.height;
+
+  const mobileWidth = data.mobileStyle.width;
+  const mobileHeight = data.mobileStyle.height;
+
+  const params = !sm
+    ? !desktopWidth && !desktopHeight
+      ? defaultParams
+      : desktopWidth && !desktopHeight
+      ? `?w=${desktopWidth}`
+      : desktopHeight && !desktopWidth
+      ? `?h=${desktopHeight}`
+      : `?w=${desktopWidth}&h=${desktopHeight}`
+    : !mobileWidth && !mobileHeight
+    ? '?w=150'
+    : mobileWidth && !mobileHeight
+    ? `?w=${mobileWidth}`
+    : mobileHeight && !mobileWidth
+    ? `?h=${mobileHeight}`
+    : `?w=${mobileWidth}&h=${mobileHeight}`;
+
+  return params;
+};
