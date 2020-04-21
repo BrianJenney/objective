@@ -12,6 +12,7 @@ import '../blog/blog-styles.scss';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    maxWidth: '1200px',
     marginTop: '20px',
     padding: '10px 16px 100px',
     backgroundColor: '#fdfbf9',
