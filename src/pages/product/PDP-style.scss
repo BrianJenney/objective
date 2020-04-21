@@ -192,9 +192,14 @@ html,
         }
       }
       .supplement-facts {
-        .serving-direction {
+        .serving-directions {
           margin-bottom: 12px;
-          .serving {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          .serving,
+          .supplement-facts-directions {
+            width: 180px;
             h4 {
               font-family: p22-underground, sans-serif;
               font-size: 15px;
@@ -205,14 +210,15 @@ html,
               text-transform: uppercase;
               margin: 0;
             }
-            ul {
-              span {
-                font-family: freight-text-pro, serif;
-                font-size: 16px;
-                line-height: 1.25;
-                color: #000000;
-                width: calc(100% - 22px);
-              }
+            span {
+              font-family: freight-text-pro, serif;
+              font-size: 16px;
+              line-height: 1.25;
+              color: #000000;
+              width: calc(100% - 22px);
+            }
+            .directions {
+              margin-bottom: 7px;
             }
           }
         }
