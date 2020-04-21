@@ -1,112 +1,135 @@
-h1, h2 {
-
-    font-family: 'Canela Text Web';
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.17;
-    letter-spacing: normal;
-    text-align: center;
-    text-transform: none;
-    margin: 5px 0 60px;
-}
-
-h1 {
-    font-size: 40px;
-}
-
-h2 {
-    font-size: 30px !important;
-}
-
 .privacypolicy-container {
-min-height: 1400px;
-
- a, a:visited, a strong, a strong:visited {
-   color: black;
- }
- p, li {
-    font-family: FreightTextProBook;
-    font-size: 20px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.6;
-    letter-spacing: normal;
-
-     }
-  li {
-    padding: 9px 0px;
-  }
-
-  table {
-    border-collapse: collapse;
-    border-spacing: 2px;
-  }
-  .table-bluesy {
-      border: 1px solid #acb9bd;
-      table-layout: fixed;
-  }
-
-  .table-bluesy td, .table-bluesy th {
-      border-left: 1px solid #acb9bd;
-      vertical-align: top;
-  }
-
-  .table-bluesy thead tr td, .table-bluesy thead tr th {
-      color: #267197;
-      vertical-align: top;
-  }
-
-  .table-bluesy thead tr {
-      background-color: #E8ECED;
-      border-top: 1px solid #acb9bd;
-  }
-
-  .table-bluesy td:last-child, .table-bluesy th:last-child {
-      border-right: 1px solid #acb9bd;
-  }
-
-  .table-bluesy td p, .table-bluesy td ul li, .table-bluesy th p, .table-bluesy th ul li {
-      font-size: 14px;
-    /*  font-size: .875rem; */
-      line-height: normal;
-  }
-
-  .table-bluesy tbody tr:nth-child(2n) {
-      background-color: #F4F4F4;
-  }
-
-  .table-bluesy td, table th {
-      padding: 9px 10px;
-      text-align: left;
-  }
-
-  @media (min-width: 768px){
-    .hide-for-xlarge {
-      display: none;
+    min-height: 1400px;
+    h1, h2 {
+        font-family: 'Canela Text Web';
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.17;
+        letter-spacing: normal;
+        text-align: center;
+        text-transform: none;
+        margin: 5px 0 60px;
     }
-  }
-
-  @media (max-width: 767px){
-    .show-for-xlarge {
-      display: none;
+    h1 {
+        font-size: 40px;
     }
-  }
+    h2 {
+        margin-top: 52px;
+        margin-bottom: 52px;
+        font-size: 30px !important;
+    }
+    hr {
+        margin-top: 50px;
+    }
+    a, a:visited, a strong, a strong:visited {
+        color: black;
+    }
+    p, li {
+        font-family: FreightTextProBook;
+        font-size: 20px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.6;
+        letter-spacing: normal;
+    }
+    li {
+        padding: 9px 0px;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 2px;
+    }
+    .table-bluesy {
+        border: 1px solid #acb9bd;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+    .table-bluesy td, .table-bluesy th {
+        border-left: 1px solid #acb9bd;
+        vertical-align: top;
+    }
+    .table-bluesy thead tr td, .table-bluesy thead tr th {
+        color: #267197;
+        vertical-align: top;
+    }
+    .table-bluesy thead tr {
+        background-color: #E8ECED;
+        border-top: 1px solid #acb9bd;
+    }
+    .table-bluesy td:last-child, .table-bluesy th:last-child {
+        border-right: 1px solid #acb9bd;
+    }
+    .table-bluesy td p, .table-bluesy td ul li, .table-bluesy th p, .table-bluesy th ul li {
+        // font-size: 20px;
+        line-height: normal;
+    }
+    .table-bluesy tbody tr:nth-child(2n) {
+        background-color: #F4F4F4;
+    }
+    .table-bluesy td, table th {
+        padding: 9px 10px;
+        text-align: left;
+    }
+    @media (min-width:768px) {
+        .hide-for-xlarge {
+            display: none;
+        }
+    }
+    @media (max-width:767px) {
+        .show-for-xlarge {
+            display: none;
+        }
+    }
+    .privacy_copya {
+        text-decoration: underline!important;
+    }
+    .privacy_copy {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    @media screen and (max-width:64em) and (min-width:0) {
 
-  .privacy_copy  a {
-      text-decoration: underline!important;
-  }
+        .table-bluesy td p {
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+        .table-bluesy  td:first-child p {
+          font-weight: bold;
+        }
 
-  .privacy_copy {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+        .stack-repetitive {
+            display: block;
+        }
+        .stack-repetitive thead, .stack-repetitive tbody, .stack-repetitive th, .stack-repetitive td, .stack-repetitive tr {
+            display: block;
+            border: 0 !important;
+        }
+        .stack-repetitive thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        .stack-repetitive thead, .stack-repetitive tbody, .stack-repetitive th, .stack-repetitive td, .stack-repetitive tr {
+            display: block;
+            border: 0 !important;
+        }
+        h1 {
+            font-size: 32px;
+            margin-top: 20px;
+            margin-bottom: 32px;
+        }
 
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+    }
 }
 
 .terms-container {
-  li {
-    padding: 9px 0px;
-  }
+    li {
+        padding: 9px 0px;
+    }
 }
