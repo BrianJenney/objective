@@ -26,11 +26,12 @@ import {
   BlogCategory,
   BlogTag,
   AboutUs,
-  PrivacyPolicyPage,
   TermsPage,
   NotFoundPage,
   StaticPageOne
 } from './pages';
+
+import { default as PrivacyPolicyPage } from './pages/static/PrivacyPage';
 
 import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage, LoginToCheckoutPage } from './pages/Login';
 
