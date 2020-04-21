@@ -39,9 +39,6 @@ const useStyles = makeStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: '1.28px'
     }
-  }, 
-  journalGallery: {
-    maxWidth: '1200px'
   }
 }));
 
@@ -63,7 +60,7 @@ const ProductLearnMore = () => {
       <Typography className={classes.heading} variant="h4" align="center">
         Want to Learn More?
       </Typography>
-      <div className={classes.journalGallery}>
+      <div className="journal-gallery pdp-journal-gallery">
         <Box className="content">
           <Grid container spacing={4}>
             {renderPosts(relatedArticles)}
