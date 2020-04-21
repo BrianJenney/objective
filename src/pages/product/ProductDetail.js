@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   containerRoot: {
+    maxWidth: '1200px !important',
     [theme.breakpoints.down('xs')]: {
       padding: 0
     }

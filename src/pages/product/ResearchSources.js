@@ -8,6 +8,7 @@ import ProductContext from '../../contexts/ProductContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    maxWidth: '1200px !important',
     marginTop: '65px',
     marginBottom: '65px',
     display: 'flex',
