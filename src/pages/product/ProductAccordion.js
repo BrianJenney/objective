@@ -37,7 +37,6 @@ const contentfulOptions = {
 };
 
 const ProductAccordion = ({ content }) => {
-  console.log('CONTENT', content);
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const onPanelChange = (expanded, panelIndex) => {
@@ -64,7 +63,8 @@ const ProductAccordion = ({ content }) => {
     supplementFactsNotes,
     supplementFactsOtherIngredients = [],
     supplementFactsImportant = [],
-    supplementFactsServing = []
+    supplementFactsServing = [],
+    supplementFactsDirections
   } = content;
 
   const accordionItems = [
@@ -138,7 +138,7 @@ const ProductAccordion = ({ content }) => {
       className: 'supplement-facts',
       content: (
         <>
-          <Grid className="serving-direction">
+          <Grid className="serving-directions">
             <Box className="serving">
               {supplementFactsServing.length ? (
                 <Typography variant="h4">Serving</Typography>
@@ -152,6 +152,16 @@ const ProductAccordion = ({ content }) => {
                   </ListItem>
                 ))}
               </List>
+            </Box>
+            <Box className="supplement-facts-directions">
+              {supplementFactsDirections ? (
+                <Typography variant="h4" className="directions">
+                  Directions
+                </Typography>
+              ) : null}
+              <Typography component="span">
+                {supplementFactsDirections}
+              </Typography>
             </Box>
           </Grid>
           <Box className="ingredients">
@@ -259,6 +269,7 @@ ProductAccordion.propTypes = {
     }),
     frequentlyAskedQuestions: PropTypes.any,
     supplementFactsServing: PropTypes.arrayOf(PropTypes.string),
+    supplementFactsDirections: PropTypes.any,
     supplementFactsIngredientsParagraph: PropTypes.any,
     supplementFactsIngredients: PropTypes.arrayOf(
       PropTypes.shape({
