@@ -192,6 +192,30 @@ html,
         }
       }
       .supplement-facts {
+        .serving-direction {
+          margin-bottom: 12px;
+          .serving {
+            h4 {
+              font-family: p22-underground, sans-serif;
+              font-size: 15px;
+              font-weight: 900;
+              line-height: 2;
+              letter-spacing: 1.13px;
+              color: #000000;
+              text-transform: uppercase;
+              margin: 0;
+            }
+            ul {
+              span {
+                font-family: freight-text-pro, serif;
+                font-size: 16px;
+                line-height: 1.25;
+                color: #000000;
+                width: calc(100% - 22px);
+              }
+            }
+          }
+        }
         .ingredients {
           table {
             border: 1px solid #003833;
