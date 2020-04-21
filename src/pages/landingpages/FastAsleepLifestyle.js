@@ -32,8 +32,9 @@ const FastAsleepLifestyle = ({ history, location }) => {
     product_id: '',
     product_sku: '',
     product_variant: '',
-    product_url: ''
-  })
+    product_url: '',
+    product_stock: null
+  });
 
   const getSelectVariant = useCallback(() => {
     const variant = catalog.variants.find(item => item.slug === 'fast-asleep');
@@ -46,11 +47,20 @@ const FastAsleepLifestyle = ({ history, location }) => {
       product_id: variant.id,
       product_sku: variant.sku.slice(0, 4),
       product_variant: variant.sku,
-      product_url: `/products/${variant.slug}`
-    }))
+      product_url: `/products/${variant.slug}`,
+      product_stock: variant.inStock
+    }));
+  });
 
-    handleOpenOutOfStockDialog();
-  })
+  useEffect(() => {
+    if (state.product_stock) {
+      if (state.product_stock >= 50) {
+        handleAddToCart();
+      } else {
+        handleOpenOutOfStockDialog();
+      }
+    }
+  }, [state]);
 
 
   // Out of stock functions
@@ -422,36 +432,46 @@ const FastAsleepLifestyle = ({ history, location }) => {
                 dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
                 the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
               </p>
-              <OutOfStockLP
-                onClick={getSelectVariant}
-                onExited={closeOutOfStockDialog}
-                buttonClass="blue-btn"
-                product_img={state.product_img}
-                product_name={state.product_name}
-                product_category={state.product_category}
-                product_id={state.product_id}
-                product_sku={state.product_sku}
-                product_variant={state.product_variant}
-                product_url={state.product_url}
-                openOutOfStockDialog={openOutOfStockDialog}
-                handleOpenEmailConfirmation={handleOpenEmailConfirmation}
-              />
-              {openEmailConfirmation && (
-                <ConfirmEmail
-                  onExited={closeEmailConfirmation}
-                  product_img={state.product_img}
-                  product_name={state.product_name}
-                  product_category={state.product_category}
-                  product_id={state.product_id}
-                  product_sku={state.product_sku}
-                  product_variant={state.product_variant}
-                  product_url={state.product_url}
-                />
+              {/* If product in stock, add to cart */}
+              {state.product_stock >= 50 && (
+                <NavLink onClick={getSelectVariant} className="blue-btn">
+                  get 15% off — Buy Now
+                </NavLink>
               )}
 
-              {/* <NavLink onClick={handleClick} className="blue-btn">
-                get 15% off — Buy Now
-              </NavLink> */}
+              {/* If product low/out of stock, notify customer */}
+              
+              {state.product_stock < 50 && (
+                <>
+                  <OutOfStockLP
+                    onClick={getSelectVariant}
+                    onExited={closeOutOfStockDialog}
+                    buttonClass="blue-btn"
+                    product_img={state.product_img}
+                    product_name={state.product_name}
+                    product_category={state.product_category}
+                    product_id={state.product_id}
+                    product_sku={state.product_sku}
+                    product_variant={state.product_variant}
+                    product_url={state.product_url}
+                    openOutOfStockDialog={openOutOfStockDialog}
+                    handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+                  />
+
+                  {openEmailConfirmation && (
+                    <ConfirmEmail
+                      onExited={closeEmailConfirmation}
+                      product_img={state.product_img}
+                      product_name={state.product_name}
+                      product_category={state.product_category}
+                      product_id={state.product_id}
+                      product_sku={state.product_sku}
+                      product_variant={state.product_variant}
+                      product_url={state.product_url}
+                    />
+                  )}
+                </>
+              )}
             </div>
             <hr />
             <h2 ref={myRef}>GABA: The calming neurotransmitter</h2>
@@ -687,36 +707,46 @@ const FastAsleepLifestyle = ({ history, location }) => {
                 Get the deep restorative sleep you need <br />
                 with Saffron & GABA Chocolates
               </div>
-              <OutOfStockLP
-                onClick={getSelectVariant}
-                onExited={closeOutOfStockDialog}
-                buttonClass="green-btn"
-                product_img={state.product_img}
-                product_name={state.product_name}
-                product_category={state.product_category}
-                product_id={state.product_id}
-                product_sku={state.product_sku}
-                product_variant={state.product_variant}
-                product_url={state.product_url}
-                openOutOfStockDialog={openOutOfStockDialog}
-                handleOpenEmailConfirmation={handleOpenEmailConfirmation}
-              />
-              {openEmailConfirmation && (
-                <ConfirmEmail
-                  onExited={closeEmailConfirmation}
-                  product_img={state.product_img}
-                  product_name={state.product_name}
-                  product_category={state.product_category}
-                  product_id={state.product_id}
-                  product_sku={state.product_sku}
-                  product_variant={state.product_variant}
-                  product_url={state.product_url}
-                />
+              {/* If product in stock, add to cart */}
+              {state.product_stock >= 50 && (
+                <NavLink onClick={getSelectVariant} className="green-btn">
+                  get 15% off — Buy Now
+                </NavLink>
               )}
 
-              {/* <NavLink onClick={handleClick} className="green-btn">
-                get 15% off — Buy Now
-              </NavLink> */}
+              {/* If product low/out of stock, notify customer */}
+              
+              {state.product_stock < 50 && (
+                <>
+                  <OutOfStockLP
+                    onClick={getSelectVariant}
+                    onExited={closeOutOfStockDialog}
+                    buttonClass="green-btn"
+                    product_img={state.product_img}
+                    product_name={state.product_name}
+                    product_category={state.product_category}
+                    product_id={state.product_id}
+                    product_sku={state.product_sku}
+                    product_variant={state.product_variant}
+                    product_url={state.product_url}
+                    openOutOfStockDialog={openOutOfStockDialog}
+                    handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+                  />
+
+                  {openEmailConfirmation && (
+                    <ConfirmEmail
+                      onExited={closeEmailConfirmation}
+                      product_img={state.product_img}
+                      product_name={state.product_name}
+                      product_category={state.product_category}
+                      product_id={state.product_id}
+                      product_sku={state.product_sku}
+                      product_variant={state.product_variant}
+                      product_url={state.product_url}
+                    />
+                  )}
+                </>
+              )}
             </div>
           </Grid>
         </Grid>
@@ -818,23 +848,21 @@ const FastAsleepLifestyle = ({ history, location }) => {
                   <li>Saffron keeps you sound asleep all night</li>
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
-                <OutOfStockLP
-                  onClick={getSelectVariant}
-                  onExited={closeOutOfStockDialog}
-                  buttonClass="green-btn"
-                  product_img={state.product_img}
-                  product_name={state.product_name}
-                  product_category={state.product_category}
-                  product_id={state.product_id}
-                  product_sku={state.product_sku}
-                  product_variant={state.product_variant}
-                  product_url={state.product_url}
-                  openOutOfStockDialog={openOutOfStockDialog}
-                  handleOpenEmailConfirmation={handleOpenEmailConfirmation}
-                />
-                {openEmailConfirmation && (
-                  <ConfirmEmail
-                    onExited={closeEmailConfirmation}
+                {/* If product in stock, add to cart */}
+              {state.product_stock >= 50 && (
+                <NavLink onClick={getSelectVariant} className="black-btn">
+                  get 15% off — Buy Now
+                </NavLink>
+              )}
+
+              {/* If product low/out of stock, notify customer */}
+              
+              {state.product_stock < 50 && (
+                <>
+                  <OutOfStockLP
+                    onClick={getSelectVariant}
+                    onExited={closeOutOfStockDialog}
+                    buttonClass="black-btn"
                     product_img={state.product_img}
                     product_name={state.product_name}
                     product_category={state.product_category}
@@ -842,12 +870,24 @@ const FastAsleepLifestyle = ({ history, location }) => {
                     product_sku={state.product_sku}
                     product_variant={state.product_variant}
                     product_url={state.product_url}
+                    openOutOfStockDialog={openOutOfStockDialog}
+                    handleOpenEmailConfirmation={handleOpenEmailConfirmation}
                   />
-                )}
 
-                {/* <NavLink onClick={handleClick} className="black-btn">
-                  get 15% off — Buy Now
-                </NavLink> */}
+                  {openEmailConfirmation && (
+                    <ConfirmEmail
+                      onExited={closeEmailConfirmation}
+                      product_img={state.product_img}
+                      product_name={state.product_name}
+                      product_category={state.product_category}
+                      product_id={state.product_id}
+                      product_sku={state.product_sku}
+                      product_variant={state.product_variant}
+                      product_url={state.product_url}
+                    />
+                  )}
+                </>
+              )} 
               </div>
               <img
                 className="xs-only w-100"
