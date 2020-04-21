@@ -258,6 +258,7 @@ ProductAccordion.propTypes = {
       details: PropTypes.array
     }),
     frequentlyAskedQuestions: PropTypes.any,
+    supplementFactsServing: PropTypes.arrayOf(PropTypes.string),
     supplementFactsIngredientsParagraph: PropTypes.any,
     supplementFactsIngredients: PropTypes.arrayOf(
       PropTypes.shape({
