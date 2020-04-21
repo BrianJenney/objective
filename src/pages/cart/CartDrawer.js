@@ -98,9 +98,7 @@ const Cart = ({
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   const { cartMerged } = cart;
-  // use if condition cart.cartDrawOpened && match path (exclude /checkout - checkout2 - order)
-  // we're going to move the whole Segment logic to this flexDirection
-  // use cart to transform products as well
+
   useEffect(() => {
     const loc =
       matchPath(location.pathname, { path: '/checkout' }) ||
@@ -120,7 +118,7 @@ const Cart = ({
         brand: cart.storeCode
       });
     });
-    if (cart.cartDrawerOpened && loc === null) {
+    if (cart.cartDrawerOpened && !loc) {
       window.analytics.track('Cart Viewed', {
         cart_id: cart._id,
         num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
@@ -128,7 +126,7 @@ const Cart = ({
       });
     }
 
-    if (!cart.cartDrawerOpened && loc === null) {
+    if (!cart.cartDrawerOpened && !loc) {
       window.analytics.track('Cart Dismissed', {
         cart_id: cart._id,
         num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
@@ -244,11 +242,11 @@ const Cart = ({
               <Typography className={classes.cartRestricted}>
                 CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this product is not
               available in the state you selected. We hope to be able to offer {restrictedProduct} in your state soon!
-              </Typography>
+            </Typography>
               {cartCount === 0 && (
                 <NavLink to="/gallery" underline="always" className={classes.link}>
                   Continue shopping
-                </NavLink>
+              </NavLink>
               )}
             </>
           ) : null}
@@ -361,7 +359,7 @@ const Cart = ({
                             disabled={item.quantity < 2}
                           >
                             -
-                          </StyledCounterButton>
+                        </StyledCounterButton>
                           <StyledSmallCaps style={{ fontSize: '18px' }}>{item.quantity}</StyledSmallCaps>
                           <StyledCounterButton
                             color="primary"
@@ -373,7 +371,7 @@ const Cart = ({
                             value={index}
                           >
                             +
-                          </StyledCounterButton>
+                        </StyledCounterButton>
                         </StyledCardActions>
                       )}
                   </Grid>
