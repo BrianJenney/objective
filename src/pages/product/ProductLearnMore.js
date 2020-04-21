@@ -12,7 +12,6 @@ import '../blog/blog-styles.scss';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: '1200px',
     marginTop: '20px',
     padding: '10px 16px 100px',
     backgroundColor: '#fdfbf9',
@@ -40,6 +39,9 @@ const useStyles = makeStyles(theme => ({
       lineHeight: 'normal',
       letterSpacing: '1.28px'
     }
+  }, 
+  journalGallery: {
+    maxWidth: '1200px'
   }
 }));
 
@@ -61,7 +63,7 @@ const ProductLearnMore = () => {
       <Typography className={classes.heading} variant="h4" align="center">
         Want to Learn More?
       </Typography>
-      <div className="journal-gallery">
+      <div className={classes.journalGallery}>
         <Box className="content">
           <Grid container spacing={4}>
             {renderPosts(relatedArticles)}
