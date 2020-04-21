@@ -8,7 +8,6 @@ import { ATC, OutOfStockLP, OutOfStock } from '../../components/atcOutOfStock';
 import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmedLP';
 import { trackLPSection } from '../../utils/misc';
 import Logo from '../../components/common/Icons/Logo/Logo';
-
 import './fast-asleep.scss';
 
 const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
@@ -31,7 +30,8 @@ const FastAsleepMelatonin = ({ history, location }) => {
     product_id: '',
     product_sku: '',
     product_variant: '',
-    product_url: ''
+    product_url: '',
+    product_stock: 0
   })
 
   const getSelectVariant = useCallback(() => {
@@ -45,11 +45,14 @@ const FastAsleepMelatonin = ({ history, location }) => {
       product_id: variant.id,
       product_sku: variant.sku.slice(0, 4),
       product_variant: variant.sku,
-      product_url: `/products/${variant.slug}`
+      product_url: `/products/${variant.slug}`,
+      product_stock: variant.inStock
     }))
 
     handleOpenOutOfStockDialog();
   })
+
+
 
 
   // Out of stock functions
