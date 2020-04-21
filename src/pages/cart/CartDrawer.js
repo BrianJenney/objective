@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { withRouter, Link, matchPath } from 'react-router-dom';
@@ -98,6 +98,44 @@ const Cart = ({
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   const { cartMerged } = cart;
+  // use if condition cart.cartDrawOpened && match path (exclude /checkout - checkout2 - order)
+  // we're going to move the whole Segment logic to this flexDirection
+  // use cart to transform products as well
+  useEffect(() => {
+    const loc =
+      matchPath(location.pathname, { path: '/checkout' }) ||
+      matchPath(location.pathname, { path: '/checkout2' }) ||
+      matchPath(location.pathname, { path: '/order' });
+    const orderItemsTransformed = [];
+
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: `https:${item.variant_img}`,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      });
+    });
+    if (cart.cartDrawerOpened && loc === null) {
+      window.analytics.track('Cart Viewed', {
+        cart_id: cart._id,
+        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        products: orderItemsTransformed
+      });
+    }
+
+    if (!cart.cartDrawerOpened && loc === null) {
+      window.analytics.track('Cart Dismissed', {
+        cart_id: cart._id,
+        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        products: orderItemsTransformed
+      });
+    }
+  }, [cart.cartDrawerOpened]);
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false, false));
@@ -135,8 +173,7 @@ const Cart = ({
   const shippingData = get(options, code, {});
   const mobileDrawerPadding = window.screen.width < 960 ? '24px 20px' : '0';
   const isCheckoutPage =
-    matchPath(location.pathname, { path: '/checkout' }) ||
-    matchPath(location.pathname, { path: '/checkout2' });
+    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   return (
     <Grid
       container
@@ -168,30 +205,18 @@ const Cart = ({
               </StyledCartHeader>
               <StyledCartCountHeader
                 component="span"
-                style={
-                  xsBreakpoint ? { fontSize: '11px', fontWeight: '600' } : {}
-                }
+                style={xsBreakpoint ? { fontSize: '11px', fontWeight: '600' } : {}}
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartMerged && isCheckoutPage ? (
-                <CartMergeNotification isCheckoutPage={isCheckoutPage} />
-              ) : null}
+              {cartMerged && isCheckoutPage ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
             </Grid>
             {checkoutVersion === 2 ? (
-              <MenuLink
-                onClick={handleEditCart}
-                underline="always"
-                className={classes.editCart}
-                children="EDIT CART"
-              />
+              <MenuLink onClick={handleEditCart} underline="always" className={classes.editCart} children="EDIT CART" />
             ) : null}
             {!hideCheckoutProceedLink && (
               <Grid container direction="row" alignItems="flex-end">
-                <StyledProceedCheckout
-                  component="span"
-                  onClick={handleCheckout}
-                >
+                <StyledProceedCheckout component="span" onClick={handleCheckout}>
                   proceed to checkout
                   <StyledArrowIcon>
                     <RightArrow />
@@ -203,15 +228,10 @@ const Cart = ({
         ) : (
             <StyledHeaderWrapperEmptyCart container direction="column">
               <Grid container direction="row" alignItems="baseline">
-                <StyledCartHeader
-                  align="center"
-                  style={{ paddingBottom: '25px' }}
-                >
+                <StyledCartHeader align="center" style={{ paddingBottom: '25px' }}>
                   Your Cart
               </StyledCartHeader>
-                <StyledCartCountHeader component="span">
-                  ({cartCount} Items)
-              </StyledCartCountHeader>
+                <StyledCartCountHeader component="span">({cartCount} Items)</StyledCartCountHeader>
               </Grid>
             </StyledHeaderWrapperEmptyCart>
           )}
@@ -222,19 +242,13 @@ const Cart = ({
           restrictionMessage ? (
             <>
               <Typography className={classes.cartRestricted}>
-                CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
-                cart because this product is not available in the state you
-              selected. We hope to be able to offer {restrictedProduct} in your
-                state soon!
-            </Typography>
+                CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this product is not
+              available in the state you selected. We hope to be able to offer {restrictedProduct} in your state soon!
+              </Typography>
               {cartCount === 0 && (
-                <NavLink
-                  to="/gallery"
-                  underline="always"
-                  className={classes.link}
-                >
+                <NavLink to="/gallery" underline="always" className={classes.link}>
                   Continue shopping
-              </NavLink>
+                </NavLink>
               )}
             </>
           ) : null}
@@ -243,9 +257,7 @@ const Cart = ({
       <Grid container>
         {cart.items.length === 0 ? (
           <StyledGridEmptyCart item xs={12}>
-            <StyledSmallCapsEmptyCart component="span">
-              Your cart is currently empty
-            </StyledSmallCapsEmptyCart>
+            <StyledSmallCapsEmptyCart component="span">Your cart is currently empty</StyledSmallCapsEmptyCart>
           </StyledGridEmptyCart>
         ) : null}
         {cart.items.length > 0
@@ -340,9 +352,7 @@ const Cart = ({
                         <StyledCardActions>
                           <StyledCounterButton
                             color="primary"
-                            onClick={e =>
-                              adjustQty(cart, e.currentTarget.value, -1)
-                            }
+                            onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
                             style={{
                               fontSize: '20pt',
                               paddingBottom: '4px'
@@ -351,15 +361,11 @@ const Cart = ({
                             disabled={item.quantity < 2}
                           >
                             -
-                        </StyledCounterButton>
-                          <StyledSmallCaps style={{ fontSize: '18px' }}>
-                            {item.quantity}
-                          </StyledSmallCaps>
+                          </StyledCounterButton>
+                          <StyledSmallCaps style={{ fontSize: '18px' }}>{item.quantity}</StyledSmallCaps>
                           <StyledCounterButton
                             color="primary"
-                            onClick={e =>
-                              adjustQty(cart, e.currentTarget.value, 1)
-                            }
+                            onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
                             style={{
                               fontSize: '13pt',
                               paddingBottom: '2.5px'
@@ -367,16 +373,12 @@ const Cart = ({
                             value={index}
                           >
                             +
-                        </StyledCounterButton>
+                          </StyledCounterButton>
                         </StyledCardActions>
                       )}
                   </Grid>
                   <StyledCardContent
-                    style={
-                      !xsBreakpoint
-                        ? { paddingBottom: '0' }
-                        : { paddingBottom: '0px', paddingRight: '0px' }
-                    }
+                    style={!xsBreakpoint ? { paddingBottom: '0' } : { paddingBottom: '0px', paddingRight: '0px' }}
                   >
                     <StyledFinePrint component="div" value={index}>
                       {!disableItemEditing && (
@@ -390,9 +392,7 @@ const Cart = ({
                         </Link>
                       )}
                     </StyledFinePrint>
-                    <StyledProductPrice
-                      style={xsBreakpoint ? { fontSize: '16px' } : {}}
-                    >
+                    <StyledProductPrice style={xsBreakpoint ? { fontSize: '16px' } : {}}>
                       {displayMoney(item.quantity * item.unit_price)}
                     </StyledProductPrice>
                   </StyledCardContent>
@@ -403,110 +403,63 @@ const Cart = ({
           : null}
         {cart.items.length > 0 ? (
           <Grid item xs={12} style={{ textAlign: 'left' }}>
-            <StyledTotalWrapper
-              container
-              direction="row"
-              justify="space-between"
-            >
+            <StyledTotalWrapper container direction="row" justify="space-between">
               <Grid item xs={6}>
-                <StyledSmallCaps style={{ fontSize: '14px' }}>
-                  Subtotal ({cartCount} Items)
-                </StyledSmallCaps>
+                <StyledSmallCaps style={{ fontSize: '14px' }}>Subtotal ({cartCount} Items)</StyledSmallCaps>
               </Grid>
               <Grid item xs={3} style={{ textAlign: 'right' }}>
-                <StyledProductTotal style={{ fontSize: '18px' }}>
-                  {displayMoney(cart.subtotal)}
-                </StyledProductTotal>
+                <StyledProductTotal style={{ fontSize: '18px' }}>{displayMoney(cart.subtotal)}</StyledProductTotal>
               </Grid>
             </StyledTotalWrapper>
           </Grid>
         ) : null}
         {cart.items.length > 0 && isCheckoutPage ? (
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            style={{ margin: '10px 0px 0px' }}
-          >
+          <Grid container direction="row" justify="space-between" style={{ margin: '10px 0px 0px' }}>
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Shipping
-              </StyledSmallCaps>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>Shipping</StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
                 {displayMoney(shippingData.price, true)}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint
-              component="p"
-              style={{ position: 'relative', top: '6px' }}
-            >
+            <StyledFinePrint component="p" style={{ position: 'relative', top: '6px' }}>
               {shippingData.deliveryEstimate}
             </StyledFinePrint>
           </Grid>
         ) : null}
         {cart.items.length > 0 && !isCheckoutPage ? (
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            style={{ margin: '20px 0px 0px' }}
-          >
+          <Grid container direction="row" justify="space-between" style={{ margin: '20px 0px 0px' }}>
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Shipping
-              </StyledSmallCaps>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>Shipping</StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
                 {displayMoney(shippingData.price, true)}
               </StyledProductTotal>
             </Grid>
-            <StyledFinePrint
-              component="p"
-              style={{ position: 'relative', top: '6px', marginBottom: '25px' }}
-            >
+            <StyledFinePrint component="p" style={{ position: 'relative', top: '6px', marginBottom: '25px' }}>
               {shippingData.deliveryEstimate}
             </StyledFinePrint>
           </Grid>
         ) : null}
         {cart.items.length > 0 && cart.savings ? (
-          <Grid
-            container
-            direction="row"
-            xs={12}
-            justify="space-between"
-            style={{ margin: '20px 0' }}
-          >
+          <Grid container direction="row" xs={12} justify="space-between" style={{ margin: '20px 0' }}>
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Savings
-              </StyledSmallCaps>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>Savings</StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ textAlign: 'right' }}>
-              <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(cart.savings)}
-              </StyledProductTotal>
+              <StyledProductTotal style={{ fontSize: '18px' }}>{displayMoney(cart.savings)}</StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}
         {cart.items.length > 0 && isCheckoutPage ? (
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            style={{ margin: '20px 0 0' }}
-          >
+          <Grid container direction="row" justify="space-between" style={{ margin: '20px 0 0' }}>
             <Grid item xs={6}>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Tax
-              </StyledSmallCaps>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>Tax</StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(cart.tax)}
-              </StyledProductTotal>
+              <StyledProductTotal style={{ fontSize: '18px' }}>{displayMoney(cart.tax)}</StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}
@@ -546,20 +499,12 @@ const Cart = ({
             }
           >
             <Grid item xs={6}>
-              <StyledEstimatedTotal
-                style={xsBreakpoint ? { fontSize: '20px' } : {}}
-              >
-                {xsBreakpoint || checkoutVersion === 2
-                  ? 'Total'
-                  : 'Estimated Total'}
+              <StyledEstimatedTotal style={xsBreakpoint ? { fontSize: '20px' } : {}}>
+                {xsBreakpoint || checkoutVersion === 2 ? 'Total' : 'Estimated Total'}
               </StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <StyledProductPrice
-                style={
-                  !xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }
-                }
-              >
+              <StyledProductPrice style={!xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }}>
                 {displayMoney(cart.total)}
               </StyledProductPrice>
             </Grid>
@@ -568,9 +513,7 @@ const Cart = ({
         {cart.items.length > 0 && !hideTaxLabel && (
           <Grid container>
             <Grid item xs={12}>
-              <StyledFinePrint component="div">
-                Tax is calculated at checkout
-              </StyledFinePrint>
+              <StyledFinePrint component="div">Tax is calculated at checkout</StyledFinePrint>
             </Grid>
           </Grid>
         )}
