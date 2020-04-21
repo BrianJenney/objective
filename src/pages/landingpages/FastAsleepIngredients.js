@@ -31,7 +31,7 @@ const FastAsleepIngredients = ({ history, location }) => {
     product_variant: '',
     product_url: '',
     product_stock: null
-  })
+  });
 
   const getSelectVariant = useCallback(() => {
     const variant = catalog.variants.find(item => item.slug === 'fast-asleep');
@@ -46,18 +46,18 @@ const FastAsleepIngredients = ({ history, location }) => {
       product_variant: variant.sku,
       product_url: `/products/${variant.slug}`,
       product_stock: variant.inStock
-    }))
-  })
+    }));
+  });
 
   useEffect(() => {
-    if (state.product_stock !== null) {
+    if (state.product_stock) {
       if (state.product_stock >= 50) {
         handleAddToCart();
       } else {
         handleOpenOutOfStockDialog();
       }
     }
-  }, [state])
+  }, [state]);
 
 
 
