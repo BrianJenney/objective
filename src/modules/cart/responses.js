@@ -8,6 +8,7 @@ import {
   segmentAddCouponReceived,
   segmentRemoveCouponReceived
 } from './actions';
+import { setCartNotification } from '../utils/actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleCartResponse = (status, data, fields, properties) => {
@@ -63,7 +64,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
         data.items.length !== oldCart.items.length
       ) {
         openCartDrawer = false;
-        data.cartMerged = true;
+        store.dispatch(setCartNotification(true, 'cartMerged'));
       }
 
       store.dispatch(receivedPatchCart(data));

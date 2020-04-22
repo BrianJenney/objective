@@ -13,7 +13,7 @@ import { DropdownMenu, NavLink } from './common';
 import ShoppingCart from '../pages/cart/ShoppingCart';
 import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
-import { CartMergeNotification, CartNotification } from './cart';
+import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
 import { setCartNotification } from '../modules/utils/actions';
 
@@ -87,7 +87,9 @@ const Header = ({ currentUser, location }) => {
     ) {
       setAcqDiscount(true);
       removeCoupon(cart._id);
-      addCoupon(cart._id, 'SAVE25');
+      // addCoupon(cart._id, 'SAVE25');
+      // Sandbox coupon below:
+      addCoupon(cart._id, 'voucherify.io-10-percent-off');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id]);
@@ -159,8 +161,9 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={1} className="mobile-cart-icon">
                     {!isCheckoutPage && <ShoppingCart />}
-                    {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
-                    {cartNotification ? <CartNotification /> : null}
+                    {(cartNotification) 
+                      ? <CartNotification isCheckoutPage={isCheckoutPage} /> 
+                      : null}
                   </Grid>
                 </Grid>
                 {promoVisible ? (
@@ -237,8 +240,9 @@ const Header = ({ currentUser, location }) => {
                           </Grid>
                           <Grid item xs={6} className="header-shop-holder h-pding">
                             {!isCheckoutPage && <ShoppingCart />}
-                            {cartMerged ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
-                            {cartNotification ? <CartNotification /> : null}
+                            {cartNotification 
+                              ? <CartNotification isCheckoutPage={isCheckoutPage} /> 
+                              : null}
                           </Grid>
                         </Grid>
                       </Grid>

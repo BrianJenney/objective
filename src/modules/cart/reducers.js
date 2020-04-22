@@ -7,8 +7,7 @@ import {
   RECEIVED_PATCH_CART,
   RECEIVED_UPDATE_CART,
   SET_CART_DRAWER_OPENED,
-  REQUEST_REMOVE_CART_BY_ID,
-  UNSET_CART_MERGE_NOTIFICATION
+  REQUEST_REMOVE_CART_BY_ID
 } from './types';
 
 const localStorageClient = require('store');
@@ -48,8 +47,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload };
     case SET_CART_DRAWER_OPENED:
       return { ...state, cartDrawerOpened: action.payload };
-    case UNSET_CART_MERGE_NOTIFICATION:
-      return { ...state, cartMerged: action.payload };
     case REQUEST_REMOVE_CART_BY_ID:
       return { ...state };
     default:

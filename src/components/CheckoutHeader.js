@@ -1,14 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { unSetCartMergeNotification } from '../modules/cart/actions';
+import { setCartNotification } from '../modules/utils/actions'
 import Logo from './common/Icons/Logo/Logo';
 
 const CheckoutHeader = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(unSetCartMergeNotification());
+    dispatch(setCartNotification(false));
   };
 
   return (
