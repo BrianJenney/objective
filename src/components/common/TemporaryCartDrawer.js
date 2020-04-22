@@ -37,60 +37,38 @@ const StyledDrawerWrapper = withStyles(theme => ({
   }
 }))(Box);
 
-const TemporaryCartDrawer = ({
-  toggleContent,
-  listContent,
-  closer,
-  cart,
-  side,
-  ...rest
-}) => {
+const TemporaryCartDrawer = ({ toggleContent, listContent, closer, cart, side, ...rest }) => {
   const drawerOpened = useSelector(state => state.cart.cartDrawerOpened);
   const dispatch = useDispatch();
 
   const toggleDrawer = open => event => {
-    if (
-      event.type == 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event.type == 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    dispatch(setCartDrawerOpened(open,false));
+    dispatch(setCartDrawerOpened(open));
   };
 
   const windowSize = useWindowSize();
   const isMobile = windowSize.width < 415;
 
-  const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side)
-    ? 1
-    : isMobile
-    ? 335
-    : 415;
+  const listPanelWidth = [SIDES.TOP, SIDES.BOTTOM].includes(side) ? 1 : isMobile ? 335 : 415;
   const closePanel = <Box onClick={toggleDrawer(false)} children={closer} />;
 
-  const listPanel = (
-    <StyledDrawerWrapper width={listPanelWidth} children={listContent} />
-  );
+  const listPanel = <StyledDrawerWrapper width={listPanelWidth} children={listContent} />;
 
   const cartItem = useSelector(state => state.cart);
 
   return (
     <Box {...rest}>
-      {toggleContent && (
-        <StyledFab
-          size="small"
-          onClick={toggleDrawer(true)}
-          children={toggleContent}
-        />
-      )}
+      {toggleContent && <StyledFab size="small" onClick={toggleDrawer(true)} children={toggleContent} />}
       <Drawer anchor={side} open={drawerOpened} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
         {cartItem.items.length !== 0 ? (
           <CheckoutButton onClick={toggleDrawer(false)} />
         ) : (
-          <ContShoppingButton onClick={toggleDrawer(false)} />
-        )}
+            <ContShoppingButton onClick={toggleDrawer(false)} />
+          )}
       </Drawer>
     </Box>
   );
