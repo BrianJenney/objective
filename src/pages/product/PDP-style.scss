@@ -6,15 +6,31 @@ html,
 }
 
 .MuiTypography-h1.pdp-header {
-  color: #1f396d;
-  font-size: 54px;
+  font-size: 46px;
   margin: 0 0 20px;
+}
+
+.MuiTypography-h1.pdp-header.forest-green {
+  color: #003833;
+}
+
+.MuiTypography-h1.pdp-header.navy {
+  color: #1f396d;
+}
+
+.MuiTypography-h1.pdp-header.sienna {
+  color: #87331f;
+}
+
+.MuiTypography-h1.pdp-header.plum {
+  color: #621244;
 }
 
 .pdp-subtitle {
   font-family: p22-underground, sans-serif;
   text-transform: uppercase;
   color: #000;
+  line-height: normal;
 }
 
 .pdp-description {
@@ -115,7 +131,6 @@ html,
         .contentful-container {
           img {
             width: 260px;
-            height: 260px;
           }
         }
         .magnifier-container {
@@ -147,7 +162,7 @@ html,
           margin: 0;
           line-height: 1.67;
           color: #000000;
-          font-weight: 900;
+          font-weight: 600;
         }
       }
       .directions {
@@ -187,7 +202,7 @@ html,
       .faqs {
         h5 {
           text-transform: uppercase;
-          font-size: 18px;
+          font-size: 16px;
           margin: 0;
           line-height: 1.67;
           color: #000000;
@@ -347,7 +362,7 @@ html,
     position: fixed;
     box-shadow: 0 0 8px 8px #ccc;
     bottom: 5px;
-    width: 413px;
+    width: 352px;
     z-index: 1;
   }
 
