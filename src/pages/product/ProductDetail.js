@@ -245,7 +245,8 @@ const ProductDetail = () => {
     productTitle,
     shortPurposeHeadline,
     shortDescription,
-    productBenefits = []
+    productBenefits = [],
+    productColor
   } = content;
 
   return (
@@ -259,7 +260,10 @@ const ProductDetail = () => {
             <Card className={classes.box}>
               <CardContent className={classes.cardRootOverrides}>
                 <Box className="pdp-content" ref={contentRef}>
-                  <Typography variant="h1" className="pdp-header">
+                  <Typography
+                    variant="h1"
+                    className={`pdp-header ${productColor}`}
+                  >
                     {productTitle}
                   </Typography>
                   <ProductVariant
