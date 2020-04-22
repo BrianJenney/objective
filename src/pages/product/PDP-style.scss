@@ -6,9 +6,24 @@ html,
 }
 
 .MuiTypography-h1.pdp-header {
-  color: #1f396d;
   font-size: 46px;
   margin: 0 0 20px;
+}
+
+.MuiTypography-h1.pdp-header.forest-green {
+  color: #003833;
+}
+
+.MuiTypography-h1.pdp-header.navy {
+  color: #1f396d;
+}
+
+.MuiTypography-h1.pdp-header.sienna {
+  color: #87331f;
+}
+
+.MuiTypography-h1.pdp-header.plum {
+  color: #621244;
 }
 
 .pdp-subtitle {
