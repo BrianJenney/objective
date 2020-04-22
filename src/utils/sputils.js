@@ -208,21 +208,29 @@ export const ResizeImage = (template, data) => {
   const mobileWidth = data.mobileStyle.width;
   const mobileHeight = data.mobileStyle.height;
 
-  const params = !sm
-    ? !desktopWidth && !desktopHeight
-      ? defaultParams
-      : desktopWidth && !desktopHeight
-      ? `?w=${desktopWidth}`
-      : desktopHeight && !desktopWidth
-      ? `?h=${desktopHeight}`
-      : `?w=${desktopWidth}&h=${desktopHeight}`
-    : !mobileWidth && !mobileHeight
-    ? '?w=150'
-    : mobileWidth && !mobileHeight
-    ? `?w=${mobileWidth}`
-    : mobileHeight && !mobileWidth
-    ? `?h=${mobileHeight}`
-    : `?w=${mobileWidth}&h=${mobileHeight}`;
+  let params;
+
+  if (!sm) {
+    if (!desktopWidth && !desktopHeight) {
+      params = defaultParams;
+    } else if (desktopWidth && !desktopHeight) {
+      params = `?w=${desktopWidth}`;
+    } else if (desktopHeight && !desktopWidth) {
+      params = `?h=${desktopHeight}`;
+    } else {
+      params = `?w=${desktopWidth}&h=${desktopHeight}`;
+    }
+  } else {
+    if (!mobileWidth && !mobileHeight) {
+      params = '?w=150';
+    } else if (mobileWidth && !mobileHeight) {
+      params = `?w=${mobileWidth}`;
+    } else if (mobileHeight && !mobileWidth) {
+      params = `?h=${mobileHeight}`;
+    } else {
+      params = `?w=${mobileWidth}&h=${mobileHeight}`;
+    }
+  }
 
   return params;
 };
