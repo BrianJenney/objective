@@ -212,7 +212,8 @@ const AccountPaymentDetails = ({
 
         return onSubmit({
           ...payload.newCreditCard,
-          nonce: payload.nonce
+          nonce: payload.nonce,
+          saveToAccount: shouldSaveData
         });
       }
       if (allowFlyMode && !shouldSaveData) {

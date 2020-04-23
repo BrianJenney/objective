@@ -28,7 +28,8 @@ import {
   AboutUs,
   PrivacyPolicyPage,
   TermsPage,
-  NotFoundPage
+  NotFoundPage,
+  TrackOrderPage
 } from './pages';
 
 import {
@@ -85,15 +86,21 @@ export default [
   { path: '/terms', exact: true, component: TermsPage },
   {
     path: '/order',
-    auth: true,
+    auth: false,
     exact: true,
     component: OrderConfirmationPage
   },
   {
-    path: '/orders/:id',
-    auth: true,
+    path: '/track-order',
+    auth: false,
     exact: true,
-    injectCurrentUser: true,
+    component: TrackOrderPage
+  },
+  {
+    path: '/orders/:id',
+    auth: false,
+    exact: true,
+    injectCurrentUser: false,
     component: OrderPage
   },
   {

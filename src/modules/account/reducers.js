@@ -84,7 +84,9 @@ export default (state = INITIAL_STATE, action) => {
         onLoginFailure: action.onFailure
       };
     case RECEIVED_LOGIN_SUCCESS:
-      state.onLoginSuccess();
+      if (state.hasOwnProperty('onLoginSuccess') && state.onLoginStatus) {
+        state.onLoginSuccess();
+      }
       return {
         ...state,
         loginError: false,
@@ -95,7 +97,9 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_LOGIN_FAILURE:
-      state.onLoginFailure();
+      if (state.hasOwnProperty('onLoginFailure') && state.onLoginFailure) {
+        state.onLoginFailure();
+      }
       return {
         ...state,
         loginError: action.payload,

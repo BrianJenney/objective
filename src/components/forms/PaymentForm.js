@@ -357,6 +357,7 @@ const PaymentForm = ({
       values.shouldSaveData = false;
     }
     if(paypalEmail && paymentMethodMode==='paypal'){
+      onSubmit(false, actions);
       return;
     }
     let isHostedFieldInvalid = false;
@@ -380,7 +381,7 @@ const PaymentForm = ({
         );
       } else {
         //If password field is empty, disregard. This makes the password optional
-        if (requiredField === 'password' && values.billingAddress[requiredField].length === 0) {
+        if (requiredField === 'password' && values.billingAddress[requiredField] && values.billingAddress[requiredField].length === 0) {
         } else {
           fieldErrors.billingAddress[requiredField] = validateRequiredField(
             values.billingAddress[requiredField],
@@ -813,7 +814,7 @@ const PaymentForm = ({
                     />
                     <Typography
                       variant="p"
-                      children="For faster checkout next time, create a password"
+                      children="For faster checkout next time, create a password (optional)"
                       className={classes.subTitle}
                     />
                   </Grid>

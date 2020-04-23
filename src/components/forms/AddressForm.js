@@ -572,7 +572,7 @@ const AddressForm = ({
               <Grid
                 item
                 xs={12}
-                style={{ paddingTop: '0px', paddingLeft: '3px'}}
+                style={{ paddingTop: '0px', paddingLeft: '3px', display: 'none'}}
               >
                 <Field
                   name="address.shouldSubscribe"

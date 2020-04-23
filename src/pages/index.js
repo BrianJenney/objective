@@ -23,3 +23,4 @@ export { default as BlogTag } from './BlogTag';
 export { default as PrivacyPolicyPage } from './PrivacyPolicy';
 export { default as TermsPage } from './Terms';
 export { default as NotFoundPage } from './notfound/NotFound';
+export { default as TrackOrderPage } from './TrackOrder';

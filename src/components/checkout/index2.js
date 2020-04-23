@@ -191,8 +191,7 @@ const Checkout = ({
       });
       setAddressBookUpdated(true);
     }
-    if (isGuest) {
-    }
+
   }, [paymentDetailsUpdated]);
 
   useEffect(() => {
@@ -208,27 +207,6 @@ const Checkout = ({
   useEffect(() => {
     const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
     const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
-    if (accountCreated && account_jwt && !paymentDetailsUpdated && !isPaypalPaymentMethod && !isGuest) {
-      // Update payment details
-      const paymentDetailsPayload = payload.paymentDetails;
-      const creditCardNonce = paymentDetailsPayload.nonce;
-      delete paymentDetailsPayload.billingAddress.password;
-      delete paymentDetailsPayload.billingAddress.email;
-      delete paymentDetailsPayload.nonce;
-      payload.shippingAddress.isDefault = true;
-      payload.paymentDetails.isDefault = true;
-      const requestPayload = {
-        newCreditCard: { ...paymentDetailsPayload },
-        nonce: creditCardNonce
-      };
-
-      requestPatchAccount(account_jwt, requestPayload);
-
-      window.analytics.track('Email Capture Successful', {
-        email: currentUser.data.email,
-        site_location: 'checkout'
-      });
-    }
 
     if (accountCreated && account_jwt && !paymentDetailsUpdated && (isPaypalPaymentMethod || isGuest)) {
       setPaymentDetailsUpdated(true);
@@ -255,13 +233,11 @@ const Checkout = ({
         firstName: payload.paymentDetails.billingAddress.firstName,
         lastName: payload.paymentDetails.billingAddress.lastName,
         email: payload.shippingAddress.email,
-        password: !isGuest ? payload.paymentDetails.billingAddress.password : `p-${cart._id}`,
+        password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
+        passwordSet: !isGuest,
         isGuest: isGuest,
         storeCode: cart.storeCode,
-        newsletter:
-          payload.shippingAddress && payload.shippingAddress.shouldSubscribe
-            ? payload.shippingAddress.shouldSubscribe
-            : false
+        newsletter: true
       };
 
       setPayload({
@@ -298,7 +274,7 @@ const Checkout = ({
           paymentDetails: {
             ...paymentDetailsPayload.details,
             nonce: paymentDetailsPayload.nonce,
-            billingAddress: { ...paymentDetailsPayload.details.shippingAddress, password: `p-${cart._id}` },
+            billingAddress: { ...paymentDetailsPayload.details.shippingAddress, password: '' },
             method: 'paypal'
           },
           shippingAddress: {
@@ -347,29 +323,6 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
-
-      if (payload.shippingAddress.shouldSubscribe && payload.shippingAddress.email && !account_jwt) {
-        window.analytics.track('Email Capture Completed', {
-          email: payload.shippingAddress.email,
-          site_location: 'checkout'
-        });
-
-        window.analytics.track('Subscribed', {
-          email: payload.shippingAddress.email,
-          site_location: 'checkout'
-        });
-
-        window.analytics.track('Subscribed Listrak Auto', {
-          email: payload.shippingAddress.email,
-          site_location: 'checkout'
-        });
-
-        window.analytics.identify({
-          first_name: payload.shippingAddress.firstName,
-          last_name: payload.shippingAddress.lastName,
-          email: payload.shippingAddress.email
-        });
-      }
     }
   }, [activeStep, payload.shippingAddress]);
 
@@ -424,12 +377,12 @@ const Checkout = ({
     if (!values.nativeEvent) {
       return false;
     }
-
     const paymentMethodNonce = get(payload, 'paymentDetails.nonce');
     const paymentMethodToken = get(payload, 'paymentDetails.token');
 
-    delete payload.paymentDetails.nonce;
-
+    delete payload.paymentDetails.billingAddress.password;
+    delete payload.paymentDetails.billingAddress.shouldSubscribe;
+    delete payload.shippingAddress.shouldSubscribe;
     if (paymentMethodNonce !== '') {
       if (cart.items.length > 0) {
         requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
@@ -660,7 +613,7 @@ const Checkout = ({
                           restrictedProduct={restrictedProduct}
                         />
                       )}
-                      <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} />
+                      <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} payload={payload} setPayload={setPayload} accountJwt={account_jwt} />
                     </Panel>
                   </div>
                 </Grid>

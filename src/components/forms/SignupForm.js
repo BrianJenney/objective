@@ -46,7 +46,7 @@ const INITIAL_VALUES = {
   lastName: '',
   email: '',
   password: '',
-  newsletter: true
+  newsletter: true,
 };
 
 const schema = object().shape({
@@ -83,6 +83,9 @@ const SignupForm = ({
   }, []);
 
   const handleSubmit = useCallback((values, form) => {
+    values.disableGuestLogic = true;
+    values.isGuest = false;
+    values.passwordSet = true;
     onSubmit(values);
     form.setSubmitting(false);
   }, [onSubmit]);

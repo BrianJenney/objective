@@ -44,6 +44,19 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     }
   };
 
+  if(account.hasOwnProperty("isGuest")){
+    params.data.isGuest = account.isGuest;
+  }
+
+  if(account.hasOwnProperty("disableGuestLogic")){
+    params.data.disableGuestLogic = account.disableGuestLogic;
+  }
+
+  if(account.hasOwnProperty("passwordSet")){
+    params.data.passwordSet = account.passwordSet;
+  }
+  
+
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/account/account.request.register',
@@ -144,9 +157,6 @@ export const receivedFetchAccountSuccess = account => dispatch => {
     payload: account
   });
 
-  EventEmitter.emit('account.request.find', {
-    account
-  });
 };
 
 export const receivedFetchAccountFailure = error => dispatch => {

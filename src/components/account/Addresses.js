@@ -201,7 +201,7 @@ const AccountAddresses = ({
           addressSeed={addressSeed}
           useSeedLabel={useSeedLabel}
           defaultValues={
-            editedIndex > -1
+            editedIndex > -1 && addressBook[editedIndex]
               ? addressBook[editedIndex]
               : rest.shippingAddressActive
               ? rest.shippingAddressActive

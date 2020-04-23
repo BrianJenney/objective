@@ -50,6 +50,11 @@ export const handleCartResponse = (status, data, fields, properties) => {
       let oldCart = store.getState().cart;
       let openCartDrawer = true;
 
+      if(!data.hasOwnProperty('items')){
+        //Something went wrong on backend.
+        break;
+      }
+
       if (
         oldCart.items.length === data.items.length &&
         oldCart.total === data.total
@@ -83,6 +88,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
         fields.routingKey !== 'cart.request.setshippingaddress' &&
         openCartDrawer
       ) {
+
         store.dispatch(setCartDrawerOpened(true, false));
       }
       break;
