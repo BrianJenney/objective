@@ -97,7 +97,14 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'oneColSection':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`} id={`${obj.name}`}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              style={{ clear: 'both' }}
+              className={`${classes.margin} ${obj.id}`}
+              id={`${obj.name}`}
+            >
               <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
             </Grid>
           </>
