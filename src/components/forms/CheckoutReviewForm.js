@@ -82,7 +82,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint }) => (
       >
         <a
           style={{ fontSize: '11px', color: '#000000' }}
-          href="https://www.thecloroxcompany.com/privacy/"
+          href="/privacypolicy"
           target="_blank"
         >
           Privacy Policy

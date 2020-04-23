@@ -26,11 +26,12 @@ import {
   BlogCategory,
   BlogTag,
   AboutUs,
-  PrivacyPolicyPage,
   TermsPage,
   NotFoundPage,
   StaticPageOne
 } from './pages';
+
+import { default as PrivacyPolicyPage } from './pages/static/PrivacyPage';
 
 import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage, LoginToCheckoutPage } from './pages/Login';
 
@@ -80,7 +81,6 @@ export default [
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
   { path: '/about_us', exact: true, component: AboutUs },
-  { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
   { path: '/terms', exact: true, component: TermsPage },
   {
     path: '/order',
@@ -169,6 +169,10 @@ export default [
   { path: '/landing/everythingarmor-exercise-recovery', exact: true, component: EverythingArmorExerciseRecovery },
   { path: '/landing/everythingarmor-antioxidants', exact: true, component: EverythingArmorAntioxidants },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },
+
+  { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
+  { path: '/privacypolicy/:slug', exact: true, component: PrivacyPolicyPage },
+
   { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
 ];
