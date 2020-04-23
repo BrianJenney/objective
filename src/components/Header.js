@@ -50,7 +50,7 @@ const StyledBox = withStyles(() => ({
 let segmentIdentified = false;
 const segmentIdentify = user => {
   if (!segmentIdentified) {
-    if (user.firstName) {
+    if (user['firstName'] && !user.isGuest) {
       window.analytics.identify(jwt.decode(user.account_jwt).account_id, {
         first_name: `${user.firstName}`,
         last_name: `${user.lastName}`,
@@ -97,7 +97,7 @@ const Header = ({ currentUser, location }) => {
   }, [acqDiscount, cart._id]);
 
   segmentIdentify(currentUser.data);
-  const accountMenuItemConf = account_jwt
+  const accountMenuItemConf = account_jwt && !currentUser.data.isGuest
     ? {
         key: 'third',
         children: <LoggedInUser name={firstName} />,

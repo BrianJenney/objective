@@ -5,6 +5,8 @@ import {
   requestCreateAccount,
   clearCreateAccountError,
   requestLogin,
+  requestFetchAccount,
+  receivedFetchAccountSuccess,
   clearLoginError,
   requestPatchAccount,
   clearPatchAccountError
@@ -16,6 +18,8 @@ const mapDispatchToProps = {
   requestCreateAccount,
   clearCreateAccountError,
   requestLogin,
+  requestFetchAccount,
+  receivedFetchAccountSuccess,
   clearLoginError,
   requestPatchAccount,
   clearPatchAccountError,

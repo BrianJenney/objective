@@ -26,9 +26,14 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       }
       break;
     case 'account.request.get':
+    case 'account.request.find':
       debugRabbitResponse('Account Get Response', status, data, fields, properties);
       if (status === 'success') {
+        if(fields.routingKey === 'account.request.get'){
         store.dispatch(receivedFetchAccountSuccess(data));
+        } else{
+          store.dispatch(receivedFetchAccountSuccess(data.data && data.data[0] ? data.data[0] : {}));
+        }
       } else {
         store.dispatch(receivedFetchAccountFailure(data));
       }

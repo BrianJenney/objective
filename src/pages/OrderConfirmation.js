@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,6 +13,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
+import { GuestOrderSetPasswordForm} from '../components/forms';
+import { receivedLoginSuccess, requestChangePassword, receivedCreateAccountSuccess } from '../modules/account/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,8 +83,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OrderConfirmation = ({ history }) => {
-  const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
+  const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -115,10 +118,38 @@ const OrderConfirmation = ({ history }) => {
         shipping: order.shippingMethod.price,
         items: orderItemsTransformedGA
       });
+
+
+      if(order.account && order.account.hasOwnProperty('isGuest') && order.account.hasOwnProperty('passwordSet')){
+        if(!order.account.isGuest && order.account.passwordSet){
+          dispatch(receivedCreateAccountSuccess(order.account,order.account.account_jwt));
+        }
+      }
     }
   }, []);
 
+  const onGuestOrderPasswordSubmit = (values, actions) => {
+    dispatch(
+      requestChangePassword(
+        order.account.account_jwt,
+        {
+          currentPassword: '',
+          newPassword1: values.password,
+          newPassword2: values.password,
+          skipComparison: true,
+          isGuest: false,
+          passwordSet: true
+        },
+        actions
+      )
+    );
+
+    dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
+    setGuestPasswordFormSubmitted(true);
+  };
+
   if (!order) {
+    history.push('/');
     return null;
   }
 
@@ -127,9 +158,16 @@ const OrderConfirmation = ({ history }) => {
   };
 
   const OrderDetail = () => {
-    const { cardType, last4 } = order.paymentData;
+    const paymentMethod = order.paymentData && order.paymentData.method ? order.paymentData.method : 'creditCard';
+    const cardType =
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.cardType
+        ? order.paymentData.cardType
+        : '';
+    const last4 =
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.last4 ? order.paymentData.last4 : '';
+    const paymentEmail = 'paypal' && order.paymentData && order.paymentData.email ? order.paymentData.email : '';
     const { shippingAddress, billingAddress } = order;
-    const { email } = account.data;
+    const { email } = order;
     const handleOrderDetail = useCallback(
       e => {
         e.preventDefault();
@@ -137,18 +175,15 @@ const OrderConfirmation = ({ history }) => {
       },
       [history, order._id]
     );
-    useEffect(() => {
-      window.analytics.page('Order Confirmation');
-      window.gtag('event', 'purchase', {
-        transaction_id: order.orderNumber,
-        affiliation: order.storeCode,
-        value: order.total,
-        currency: 'USD',
-        tax: order.tax,
-        shipping: order.shippingMethod.price,
-        items: orderItemsTransformedGA
-      });
-    }, []);
+    const shouldShowSetPasswordForm =
+      order.hasOwnProperty('account') &&
+      order.account.hasOwnProperty('passwordSet') &&
+      order.account.hasOwnProperty('isGuest') &&
+      !order.account.passwordSet &&
+      order.account.isGuest
+        ? true
+        : false;
+
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
@@ -158,7 +193,8 @@ const OrderConfirmation = ({ history }) => {
         <Typography className={classes.text1}>
           Your order number: <strong>{order.orderNumber}</strong>
         </Typography>
-        {xs ? (
+
+        {xs && !shouldShowSetPasswordForm && (
           <Grid container style={{ overflow: 'hidden' }}>
             <Grid item style={{ overflow: 'hidden' }}>
               <Button
@@ -169,8 +205,25 @@ const OrderConfirmation = ({ history }) => {
               />
             </Grid>
           </Grid>
-        ) : (
+        )}
+
+        {!xs && !shouldShowSetPasswordForm && (
           <Button type="button" onClick={handleOrderDetail} children="Check Order Status" className={classes.button} />
+        )}
+
+        {shouldShowSetPasswordForm && (
+          <GuestOrderSetPasswordForm
+            title={
+              !guestPasswordFormSubmitted
+                ? 'Save your information to easily track your order'
+                : 'Success! You can now login to track your order.'
+            }
+            submitLabel={!guestPasswordFormSubmitted ? 'Create Account' : 'Check Order Status'}
+            onSubmit={onGuestOrderPasswordSubmit}
+            isSuccessful={guestPasswordFormSubmitted}
+            handleOrderDetail={handleOrderDetail}
+            style={ {marginBottom: '50px'} }
+          />
         )}
         <Box
           display="flex"
@@ -178,7 +231,7 @@ const OrderConfirmation = ({ history }) => {
           borderTop="1px solid #979797"
           borderBottom="1px solid #979797"
         >
-          <Grid item xs={addressesWidth}>
+          <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
             <Box borderRight={xs ? 0 : '1px solid #979797'} paddingBottom={xs ? '25px' : '35px'}>
               <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
                 Billing Information
@@ -187,7 +240,11 @@ const OrderConfirmation = ({ history }) => {
             </Box>
           </Grid>
           <Grid item xs={addressesWidth}>
-            <Box paddingLeft={xs ? 0 : 3} borderTop={xs ? '1px solid #979797' : 0} paddingBottom={xs ? '25px' : '35px'}>
+            <Box
+              paddingLeft={xs ? 0 : paymentMethod !== 'paypal' ? 3 : 0}
+              borderTop={xs ? '1px solid #979797' : 0}
+              paddingBottom={xs ? '25px' : '35px'}
+            >
               <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
                 Shipping Information
               </Typography>
@@ -200,7 +257,8 @@ const OrderConfirmation = ({ history }) => {
             Payment
           </Typography>
           <Typography className={classes.subText}>
-            {cardType} - ***{last4}
+            {paymentMethod === 'creditCard' ? `${cardType} - ***${last4}` : ''}
+            {paymentMethod === 'paypal' ? `PayPal: ${paymentEmail}` : ''}
           </Typography>
         </Grid>
       </Box>
