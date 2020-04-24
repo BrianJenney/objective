@@ -64,7 +64,8 @@ const ProductAccordion = ({ content }) => {
     supplementFactsOtherIngredients = [],
     supplementFactsImportant = [],
     supplementFactsServing = [],
-    supplementFactsDirections
+    supplementFactsDirections,
+    productColor
   } = content;
 
   const accordionItems = [
@@ -118,7 +119,11 @@ const ProductAccordion = ({ content }) => {
                 <Box className="icon">
                   <img src={detail.fields.icon.fields.file.url} alt="" />
                 </Box>
-                <Box className="text">{detail.fields.benefitText}</Box>
+                <Box className="text">
+                  <Box className={productColor}>
+                    {detail.fields.benefitText}
+                  </Box>
+                </Box>
               </Box>
             ))}
           </Box>
