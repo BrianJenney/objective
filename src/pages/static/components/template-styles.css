@@ -167,11 +167,11 @@
   }
 }
 .LP-Template-1-image-left {
-  margin-right: 25px;
+  margin: 0 25px 20px 0;
   float: left;
 }
 .LP-Template-1-image-right {
-  margin-left: 25px;
+  margin: 0 0 20px 25px;
   float: right;
 }
 .LP-Template-1-image-caption-left {
@@ -206,6 +206,8 @@
   font-family: p22-underground, Helvetica, sans-serif;
   color: #1f396d;
   text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-top: 20px;
 }
 .LP-Template-1-button {
   width: 385px;
