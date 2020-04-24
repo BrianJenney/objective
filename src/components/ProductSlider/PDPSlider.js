@@ -140,32 +140,30 @@ const PDPSlider = props => {
           showThumbnails
           onSlide={handleSegmentBrowsedEvent}
         />
-        {!xs ? (
-          <div className="pdp-slider-thumbnails-nav">
-            <div className={thumbnailsPanelPositionClassName}>
-              <IconButton
-                className="nav-left"
-                onClick={() => {
-                  galleryRef.current.slideToIndex(
-                    galleryRef.current.getCurrentIndex() - 1
-                  );
-                }}
-              >
-                <ChevronLeft />
-              </IconButton>
-              <IconButton
-                className="nav-right"
-                onClick={() => {
-                  galleryRef.current.slideToIndex(
-                    galleryRef.current.getCurrentIndex() + 1
-                  );
-                }}
-              >
-                <ChevronRight />
-              </IconButton>
-            </div>
+        {/* <div className="pdp-slider-thumbnails-nav">
+          <div className={thumbnailsPanelPositionClassName}>
+            <IconButton
+              className="nav-left"
+              onClick={() => {
+                galleryRef.current.slideToIndex(
+                  galleryRef.current.getCurrentIndex() - 1
+                );
+              }}
+            >
+              <ChevronLeft />
+            </IconButton>
+            <IconButton
+              className="nav-right"
+              onClick={() => {
+                galleryRef.current.slideToIndex(
+                  galleryRef.current.getCurrentIndex() + 1
+                );
+              }}
+            >
+              <ChevronRight />
+            </IconButton>
           </div>
-        ) : null}
+        </div> */}
       </div>
     );
   };
