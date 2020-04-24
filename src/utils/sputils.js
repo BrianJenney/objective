@@ -97,7 +97,14 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'oneColSection':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`} id={`${obj.name}`}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              style={{ clear: 'both' }}
+              className={`${classes.margin} ${obj.id}`}
+              id={`${obj.name}`}
+            >
               <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
             </Grid>
           </>
@@ -195,11 +202,11 @@ export const ResizeImage = (template, data) => {
   switch (template) {
     case 'LP-Template-1':
       if (data.desktopImg) {
-        defaultParams = '?w=315&h=275';
+        defaultParams = '?w=315';
       }
       break;
     default:
-      defaultParams = '?w=315&h=275';
+      defaultParams = '?w=315';
   }
 
   const desktopWidth = data.desktopStyle.width;
@@ -216,9 +223,9 @@ export const ResizeImage = (template, data) => {
     } else if (desktopWidth && !desktopHeight) {
       params = `?w=${desktopWidth}`;
     } else if (desktopHeight && !desktopWidth) {
-      params = `?h=${desktopHeight}`;
+      params = defaultParams;
     } else {
-      params = `?w=${desktopWidth}&h=${desktopHeight}`;
+      params = defaultParams;
     }
   } else {
     if (!mobileWidth && !mobileHeight) {
@@ -226,9 +233,9 @@ export const ResizeImage = (template, data) => {
     } else if (mobileWidth && !mobileHeight) {
       params = `?w=${mobileWidth}`;
     } else if (mobileHeight && !mobileWidth) {
-      params = `?h=${mobileHeight}`;
+      params = '?w=150';
     } else {
-      params = `?w=${mobileWidth}&h=${mobileHeight}`;
+      params = '?w=150';
     }
   }
 
