@@ -87,9 +87,7 @@ const Header = ({ currentUser, location }) => {
     ) {
       setAcqDiscount(true);
       removeCoupon(cart._id);
-      // addCoupon(cart._id, 'SAVE25');
-      // Sandbox coupon below:
-      addCoupon(cart._id, 'voucherify.io-10-percent-off');
+      addCoupon(cart._id, 'SAVE25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id]);
