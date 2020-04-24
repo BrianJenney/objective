@@ -39,7 +39,7 @@ import {
   StyledProductTotal,
   StyledEstimatedTotal
 } from './StyledComponents';
-import CartMergeNotification from '../../components/cart/CartMergeNotification';
+import CartNotification from '../../components/cart/CartNotification';
 
 const { MEDIUM_GRAY } = colorPalette;
 
@@ -94,10 +94,10 @@ const Cart = ({
 }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
+  const cartNotification = useSelector(state => state.utils.cartNotification);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  const { cartMerged } = cart;
 
   const onClickLogo = useCallback(() => {
     dispatch(setCartDrawerOpened(false, false));
@@ -174,8 +174,8 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartMerged && isCheckoutPage ? (
-                <CartMergeNotification isCheckoutPage={isCheckoutPage} />
+              {cartNotification && isCheckoutPage ? (
+                <CartNotification isCheckoutPage={isCheckoutPage} />
               ) : null}
             </Grid>
             {checkoutVersion === 2 ? (
