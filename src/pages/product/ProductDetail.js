@@ -281,7 +281,9 @@ const ProductDetail = () => {
                           />
                         </Box>
                         <Box className="text">
-                          <Box>{benefit.fields.benefitText}</Box>
+                          <Box className={productColor}>
+                            {benefit.fields.benefitText}
+                          </Box>
                         </Box>
                       </Box>
                     ))}
