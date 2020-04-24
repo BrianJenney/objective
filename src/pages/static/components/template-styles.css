@@ -191,6 +191,8 @@
   font-family: p22-underground, Helvetica, sans-serif;
   color: #1f396d;
   text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-top: 20px;
 }
 .LP-Template-1-button {
   width: 385px;
