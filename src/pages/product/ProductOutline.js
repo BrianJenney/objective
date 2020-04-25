@@ -77,7 +77,6 @@ const useStyles = makeStyles(theme => ({
       fontSize: '24px',
       fontWeight: 'normal',
       lineHeight: 1.33,
-      color: '#1e58ab',
       marginTop: '25px',
       marginBottom: '5px',
       [theme.breakpoints.down('sm')]: {
@@ -224,7 +223,7 @@ const ProductOutline = ({ scrollToTabs }) => {
           How It Works
         </Typography>
         <Box className={classes.howItWorksBlocksContentWrapper}>
-          <Box className={classes.howItWorksBlocksContent}>
+          <Box className={`${classes.howItWorksBlocksContent} ${productColor}`}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 {documentToReactComponents(howItWorksBlock1, contentfulOptions)}
