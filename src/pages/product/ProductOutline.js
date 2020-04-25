@@ -9,6 +9,7 @@ import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import ProductContext from '../../contexts/ProductContext';
 import { scrollToRef } from '../../utils/misc';
+import './PDP-style.scss';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,7 +56,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '50px',
     lineHeight: 1.2,
     letterSpacing: '-1.25px',
-    color: '#1f396d',
     maxWidth: '792px',
     [theme.breakpoints.down('sm')]: {
       fontSize: '24px',
@@ -167,7 +167,8 @@ const ProductOutline = ({ scrollToTabs }) => {
     keyObjectiveImages,
     keyObjective,
     howItWorksBlock1,
-    howItWorksBlock2
+    howItWorksBlock2,
+    productColor
   } = content;
   const keyObjectiveBackgroundStyle =
     sm && keyObjectiveBackgroundImage
@@ -200,7 +201,7 @@ const ProductOutline = ({ scrollToTabs }) => {
         </Box>
         <Box>
           <Typography
-            className={classes.keyObjectiveHeading}
+            className={`${classes.keyObjectiveHeading} ${productColor}`}
             variant="h3"
             align="center"
           >
