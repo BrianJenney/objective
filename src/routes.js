@@ -41,6 +41,7 @@ import SleepImmunity from './pages/landingpages/SleepImmunity';
 import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
 import FastAsleepMelatonin from './pages/landingpages/FastAsleepMelatonin';
 import FastAsleepLifestyle from './pages/landingpages/FastAsleepLifestyle';
+import FastAsleepMom from './pages/landingpages/FastAsleepMom';
 import EverythingArmorExerciseRecovery from './pages/landingpages/EverythingArmorExerciseRecovery';
 import EverythingArmorAntioxidants from './pages/landingpages/EverythingArmorAntioxidants';
 
@@ -173,6 +174,7 @@ export default [
   { path: '/landing/fastasleep-ingredients', exact: true, component: FastAsleepIngredients },
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
   { path: '/landing/fastasleep-lifestyle', exact: true, component: FastAsleepLifestyle },
+  { path: '/landing/fastasleep-mom', exact: true, component: FastAsleepMom },
   { path: '/landing/everythingarmor-exercise-recovery', exact: true, component: EverythingArmorExerciseRecovery },
   { path: '/landing/everythingarmor-antioxidants', exact: true, component: EverythingArmorAntioxidants },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },
