@@ -144,7 +144,7 @@ const FastAsleepMom = ({ history, location }) => {
             window.analytics.track('Product Clicked', {
                 brand: 'OBJ',
                 cart_id: cart._id,
-                coupon: 'SLUMBER15',
+                coupon: 'MOM25',
                 image_url: selectedVariant.assets.thumbnail,
                 name: selectedVariant.name,
                 price: selectedVariant.effectivePrice,
@@ -160,7 +160,7 @@ const FastAsleepMom = ({ history, location }) => {
 
     const handleAddCoupon = useCallback(() => {
         setTimeout(() => {
-            addCoupon(cart._id, 'SLUMBER15');
+            addCoupon(cart._id, 'MOM25');
             setCouponAdded(true);
         }, 500);
     }, [cart, catalog, dispatch]);
@@ -548,7 +548,7 @@ const FastAsleepMom = ({ history, location }) => {
                             {/* If product in stock, add to cart */}
                             {state.product_stock >= 50 && (
                                 <NavLink onClick={getSelectVariant} className="green-btn">
-                                    get 15% off — Buy Now
+                                    get 25% off — Buy Now
                                 </NavLink>
                             )}
 
@@ -707,7 +707,7 @@ const FastAsleepMom = ({ history, location }) => {
                             {/* If product in stock, add to cart */}
                             {state.product_stock >= 50 && (
                                 <NavLink onClick={getSelectVariant} className="blue-btn">
-                                    get 15% off — Buy Now
+                                    get 25% off — Buy Now
                                 </NavLink>
                             )}
 
@@ -847,7 +847,7 @@ const FastAsleepMom = ({ history, location }) => {
                                 {/* If product in stock, add to cart */}
                                 {state.product_stock >= 50 && (
                                     <NavLink onClick={getSelectVariant} className="black-btn">
-                                        get 15% off — Buy Now
+                                        get 25% off — Buy Now
                                     </NavLink>
                                 )}
 
