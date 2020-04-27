@@ -9,6 +9,7 @@ import Check from '@material-ui/icons/Check';
 import StepConnector from '@material-ui/core/StepConnector';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -50,7 +51,7 @@ const useQontoStepIconStyles = makeStyles({
   completed: {
     color: 'black',
     zIndex: 1,
-    fontSize: 18
+    fontSize: 28
   }
 });
 
@@ -64,7 +65,7 @@ function QontoStepIcon(props) {
         [classes.active]: active
       })}
     >
-      {completed ? <Check className={classes.completed} /> : <RadioButtonUncheckedIcon />}
+      {completed ? <CheckCircleOutlineIcon className={classes.completed} /> : <RadioButtonUncheckedIcon />}
     </div>
   );
 }
@@ -84,7 +85,6 @@ const getSteps = (status, statusStepper) => {
   let step = 1;
   let steps = [];
 
-  console.log('testing-STATUSssss', status);
   if (status === 'canceled' || status === 'refunded') {
     steps = ['Processed', 'Cancelled'];
     step = 2;
@@ -108,21 +108,14 @@ const StatusStepper = ({ status, statusStepper }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { step, steps } = getSteps(status, statusStepper);
-  console.log('testing-STATUS', step);
-  console.log('testing-STEPS', steps);
-  console.log('testing-STEPPPP', statusStepper);
   const [activeStep, setActiveStep] = React.useState(step);
-  console.log('testing-ACTIVE-STEP', activeStep);
   const DesktopStatusStepper = () => (
     <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
-      {steps.map(label => {
-        console.log('testing-LABEL', label);
-        return (
-          <Step key={label}>
-            <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-          </Step>
-        );
-      })}
+      {steps.map(label => (
+        <Step key={label}>
+          <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+        </Step>
+      ))}
     </Stepper>
   );
 
@@ -131,9 +124,7 @@ const StatusStepper = ({ status, statusStepper }) => {
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map(label => (
           <Step key={label}>
-            <StepLabel>
-              {label} {statusStepper[label]}
-            </StepLabel>
+            <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
