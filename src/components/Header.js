@@ -185,7 +185,7 @@ const Header = ({ currentUser, location }) => {
                       <Grid container item={true} xs={12}>
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
-                            <NavLink onClick={segmentTrackNavigationClick} to="/gallery" className="desktop-text">
+                            <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
                             Celebrate Moms with 25% OFF Fast Asleep + Free Shipping! Use Code MOM25
                             </NavLink>
                             <div className="closeIcon" onClick={handlePromoClose}>
