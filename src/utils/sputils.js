@@ -229,13 +229,13 @@ export const ResizeImage = (template, data) => {
     }
   } else {
     if (!mobileWidth && !mobileHeight) {
-      params = '?w=150';
+      params = '?w=164';
     } else if (mobileWidth && !mobileHeight) {
       params = `?w=${mobileWidth}`;
     } else if (mobileHeight && !mobileWidth) {
-      params = '?w=150';
+      params = '?w=164';
     } else {
-      params = '?w=150';
+      params = '?w=164';
     }
   }
 
