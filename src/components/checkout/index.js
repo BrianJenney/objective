@@ -279,6 +279,7 @@ const Checkout = ({
           shippingAddress: {
             ...paymentDetailsPayload.details.shippingAddress,
             email: paymentDetailsPayload.details.email,
+            isDefault: true,
             saveToAccount: true
           },
           shippingMethod:
@@ -382,6 +383,7 @@ const Checkout = ({
 
     if (!account_jwt) {
       payload.shippingAddress.saveToAccount = true;
+      payload.shippingAddress.isDefault = true;
     }
 
     delete payload.paymentDetails.billingAddress.password;
