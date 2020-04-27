@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import TabSection from './product/TabSection';
-import Instruction from './product/Instruction';
+import ProductOutline from './product/ProductOutline';
+import ProductLearnMore from './product/ProductLearnMore';
 import ProductDetail from './product/ProductDetail';
 import ResearchSources from './product/ResearchSources';
 import ScrollToTop from '../components/common/ScrollToTop';
@@ -24,8 +24,8 @@ const Product = ({ match }) => {
   const content = (
     <ProductStore productSlug={product_slug}>
       <ProductDetail />
-      <TabSection scrollToTabs={scrollToTabs} />
-      <Instruction />
+      <ProductOutline scrollToTabs={scrollToTabs} />
+      <ProductLearnMore />
       <ResearchSources />
     </ProductStore>
   );

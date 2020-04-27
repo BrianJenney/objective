@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import { NavLink } from '../../components/common';
-import './PDP-style.css';
+import './PDP-style.scss';
 
 export const ShippingRestrictionMobile = ({ onClick }) => (
   <Grid container xs={12} style={{ justifyContent: 'center' }}>

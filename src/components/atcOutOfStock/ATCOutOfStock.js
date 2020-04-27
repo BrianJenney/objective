@@ -4,10 +4,10 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 
-import { Button } from "../common";
+import { Button } from '../common';
 import ProductOutOfStockDialog from './ProductOutOfStockDialog';
 import '../../pages/product/overrides.css';
-import '../../pages/product/PDP-style.css';
+import '../../pages/product/PDP-style.scss';
 import { Typography } from '@material-ui/core';
 import EnvelopeIcon from './EnvelopeIcon';
 import { closeSync } from 'fs';
@@ -67,33 +67,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ATC = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
-    <Button
-      fullWidth
-      onClick={onClick}
-      disabled={variantSku === null}
-      className={btnStyle ? btnStyle : "atc-button"}
-    >
-      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
-    </Button>
-  );
+export const ATC = ({ price, onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
+  <Button fullWidth onClick={onClick} disabled={variantSku === null} className={btnStyle || 'atc-button'}>
+    {!ATCAdded ? (price ? `$${price} - ADD TO CART` : 'ADD TO CART') : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+  </Button>
+);
 
-export const ATCPDP = ({
-  onClick,
-  variantSku,
-  ATCAdded,
-  ATCAdding,
-  btnStyle
-}) => (
-    <Button
-      fullWidth
-      onClick={onClick}
-      disabled={variantSku === null}
-      className={btnStyle}
-    >
-      {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
-    </Button>
-  );
+export const ATCPDP = ({ onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
+  <Button fullWidth onClick={onClick} disabled={variantSku === null} className={btnStyle}>
+    {!ATCAdded ? 'ADD TO CART' : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+  </Button>
+);
 
 export const OutOfStockPDP = ({
   onClick,
@@ -114,9 +98,7 @@ export const OutOfStockPDP = ({
       <CardActions className={classes.maxWidth}>
         <Button className={classes.btnPDP} fullWidth onClick={onClick}>
           <EnvelopeIcon />
-          <Typography className={classes.textPDP}>
-            TELL ME WHEN IT'S AVAILABLE
-          </Typography>
+          <Typography className={classes.textPDP}>TELL ME WHEN IT'S AVAILABLE</Typography>
         </Button>
       </CardActions>
       {openOutOfStockDialog && (
@@ -153,12 +135,7 @@ export const OutOfStock = ({
   return (
     <>
       <Box width={1} className="gallery-atc">
-        <Button
-          className={classes.btnOOS}
-          fullWidth
-          onClick={onClick}
-          {...rest}
-        >
+        <Button className={classes.btnOOS} fullWidth onClick={onClick} {...rest}>
           TELL ME WHEN IT IS AVAILABLE
         </Button>
       </Box>
