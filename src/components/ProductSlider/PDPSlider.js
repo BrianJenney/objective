@@ -140,7 +140,7 @@ const PDPSlider = props => {
           showThumbnails
           onSlide={handleSegmentBrowsedEvent}
         />
-        <div className="pdp-slider-thumbnails-nav">
+        {/* <div className="pdp-slider-thumbnails-nav">
           <div className={thumbnailsPanelPositionClassName}>
             <IconButton
               className="nav-left"
@@ -163,7 +163,7 @@ const PDPSlider = props => {
               <ChevronRight />
             </IconButton>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   };

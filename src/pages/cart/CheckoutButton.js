@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { fonts } from '../../components/Theme/fonts';
 import { StyledCheckoutButton } from './StyledComponents';
 import { requestFetchCart } from '../../modules/cart/actions';
+import PayPalButton from './PayPalButton';
 
 const { $brandSans } = fonts;
 
@@ -19,31 +20,46 @@ class CheckoutButton extends Component {
       <>
         {
           this.props.cart.items.length !== 0 ?
-            <Link
-              to="/checkout"
-              style={{
-                color: 'white',
-                'textDecoration': 'none',
-                'fontFamily': $brandSans,
-                'fontWeight': 'bold'
-              }}
-            >
-              <Grid container>
-                <Grid item xs={12} style={{ display: 'flex', padding: '10px 16px 30px' }}>
-                  <StyledCheckoutButton
-                    style={{ margin: '0 auto' }}
-                    onClick={onClick}
-                    children={children}
-                    id="checkout-button"
-                    color="primary"
-                    variant="contained"
-                    disabled={this.props.cart.items.length === 0}
-                  >
-                    Checkout
+            <>
+              <Link
+                to="/checkout"
+                style={{
+                  color: 'white',
+                  'textDecoration': 'none',
+                  'fontFamily': $brandSans,
+                  'fontWeight': 'bold'
+                }}
+              >
+                <Grid container>
+
+                  <Grid item xs={12} style={{ display: 'flex', padding: '10px 16px 20px' }}>
+
+                    <StyledCheckoutButton
+                      style={{ margin: '0 auto', height: '55px' }}
+                      onClick={onClick}
+                      children={children}
+                      id="checkout-button"
+                      color="primary"
+                      variant="contained"
+                      disabled={this.props.cart.items.length === 0}
+                    >
+                      Checkout
                   </StyledCheckoutButton>
+
+                  </Grid>
+
+
                 </Grid>
-              </Grid>
-            </Link>
+              </Link>
+              <Grid container>
+                <Grid item xs={12} style={{ display: 'block', padding: '0px 16px 30px' }}>
+                  <PayPalButton
+                    cart={this.props.cart}
+                    buttonSelector='paypal-checkout-button-cart-drawer'
+                    buttonWrapperStyle={{ width: '100%', maxWidth: '351px', margin: '0px auto' }}
+                  />
+                </Grid>
+              </Grid></>
             :
             <Link
               to="/checkout"

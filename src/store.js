@@ -9,6 +9,8 @@ import orderReducer from './modules/order/reducers';
 import catalogReducer from './modules/catalog/reducers';
 import utilsReducer from './modules/utils/reducers';
 import staticReducers from './modules/static/reducers';
+import paypalReducer from './modules/paypal/reducers';
+import EventEmitter from './events';
 
 const rootReducer = combineReducers({
   stomp: stompReducer,
@@ -18,10 +20,20 @@ const rootReducer = combineReducers({
   order: orderReducer,
   catalog: catalogReducer,
   utils: utilsReducer,
-  page: staticReducers
+  page: staticReducers,
+  paypal: paypalReducer
 });
 
+//Emits store dispatch events
+const reduxStoreEvents = store => next => action => {
+  EventEmitter.emit(action.type, {payload: action.payload, state: store.getState()});
+  return next(action);
+};
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(reduxThunk)));
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(reduxThunk,reduxStoreEvents))
+);
 
 export default store;

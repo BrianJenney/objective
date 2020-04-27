@@ -9,6 +9,7 @@ import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import ProductContext from '../../contexts/ProductContext';
 import { scrollToRef } from '../../utils/misc';
+import './PDP-style.scss';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,7 +56,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '50px',
     lineHeight: 1.2,
     letterSpacing: '-1.25px',
-    color: '#1f396d',
     maxWidth: '792px',
     [theme.breakpoints.down('sm')]: {
       fontSize: '24px',
@@ -77,7 +77,6 @@ const useStyles = makeStyles(theme => ({
       fontSize: '24px',
       fontWeight: 'normal',
       lineHeight: 1.33,
-      color: '#1e58ab',
       marginTop: '25px',
       marginBottom: '5px',
       [theme.breakpoints.down('sm')]: {
@@ -157,7 +156,14 @@ const ProductOutline = ({ scrollToTabs }) => {
 
   if (!product || !content) return null;
 
-  const { keyObjectiveBackgroundImage, keyObjectiveImages, keyObjective, howItWorksBlock1, howItWorksBlock2 } = content;
+  const {
+    keyObjectiveBackgroundImage,
+    keyObjectiveImages,
+    keyObjective,
+    howItWorksBlock1,
+    howItWorksBlock2,
+    productColor
+  } = content;
   const keyObjectiveBackgroundStyle =
     sm && keyObjectiveBackgroundImage
       ? {
@@ -179,7 +185,7 @@ const ProductOutline = ({ scrollToTabs }) => {
           </Typography>
         </Box>
         <Box>
-          <Typography className={classes.keyObjectiveHeading} variant="h3" align="center">
+          <Typography className={`${classes.keyObjectiveHeading} ${productColor}`} variant="h3" align="center">
             {keyObjective}
           </Typography>
         </Box>
@@ -194,7 +200,7 @@ const ProductOutline = ({ scrollToTabs }) => {
           How It Works
         </Typography>
         <Box className={classes.howItWorksBlocksContentWrapper}>
-          <Box className={classes.howItWorksBlocksContent}>
+          <Box className={`${classes.howItWorksBlocksContent} ${productColor}`}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 {documentToReactComponents(howItWorksBlock1, contentfulOptions)}

@@ -83,7 +83,7 @@
         left: 27px;
       }
       .nav-right {
-        top: 460px;
+        top: 544px;
         left: 27px;
       }
     }
@@ -173,7 +173,7 @@
 .image-gallery-right-nav::before {
   color: #fff;
   line-height: 0.7;
-  text-shadow: 0 2px 2px #1a1a1a;
+  text-shadow: 0 0 6px #808080;
   transition: color 0.2s ease-out;
 }
 
@@ -407,7 +407,6 @@
   display: inline-block;
   vertical-align: top;
   width: 100px;
-  margin-top: 30px;
 }
 
 @media (max-width: 768px) {

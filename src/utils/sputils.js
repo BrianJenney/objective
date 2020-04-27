@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMediaQuery, Container, Grid } from '@material-ui/core';
+import { useMediaQuery, Container, Grid, useTheme } from '@material-ui/core';
 import {
   Hero,
   Image,
@@ -97,7 +97,14 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'oneColSection':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`} id={`${obj.name}`}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              style={{ clear: 'both' }}
+              className={`${classes.margin} ${obj.id}`}
+              id={`${obj.name}`}
+            >
               <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
             </Grid>
           </>
@@ -186,3 +193,51 @@ export const GenerateOneColumn = (comps, template, pageName) => {
 };
 
 export const RenderComponents = ({ components }) => components.map((component, i) => <>{component}</>);
+
+export const ResizeImage = (template, data) => {
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.down('xs'));
+  let defaultParams;
+
+  switch (template) {
+    case 'LP-Template-1':
+      if (data.desktopImg) {
+        defaultParams = '?w=315';
+      }
+      break;
+    default:
+      defaultParams = '?w=315';
+  }
+
+  const desktopWidth = data.desktopStyle.width;
+  const desktopHeight = data.desktopStyle.height;
+
+  const mobileWidth = data.mobileStyle.width;
+  const mobileHeight = data.mobileStyle.height;
+
+  let params;
+
+  if (!sm) {
+    if (!desktopWidth && !desktopHeight) {
+      params = defaultParams;
+    } else if (desktopWidth && !desktopHeight) {
+      params = `?w=${desktopWidth}`;
+    } else if (desktopHeight && !desktopWidth) {
+      params = defaultParams;
+    } else {
+      params = defaultParams;
+    }
+  } else {
+    if (!mobileWidth && !mobileHeight) {
+      params = '?w=150';
+    } else if (mobileWidth && !mobileHeight) {
+      params = `?w=${mobileWidth}`;
+    } else if (mobileHeight && !mobileWidth) {
+      params = '?w=150';
+    } else {
+      params = '?w=150';
+    }
+  }
+
+  return params;
+};

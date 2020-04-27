@@ -15,8 +15,7 @@ import {
   REQUEST_MERGE_CARTS,
   REQUEST_ADD_COUPON,
   REQUEST_REMOVE_COUPON,
-  REQUEST_SET_SHIPPING_ADDRESS,
-  UNSET_CART_MERGE_NOTIFICATION
+  REQUEST_SET_SHIPPING_ADDRESS
 } from './types';
 
 const localStorageClient = require('store');
@@ -271,13 +270,6 @@ export const setCartDrawerOpened = open => (dispatch, getState) => {
   dispatch({
     type: SET_CART_DRAWER_OPENED,
     payload: open
-  });
-};
-
-export const unSetCartMergeNotification = () => dispatch => {
-  dispatch({
-    type: UNSET_CART_MERGE_NOTIFICATION,
-    payload: false
   });
 };
 

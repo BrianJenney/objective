@@ -22,8 +22,15 @@ const getValuesWithoutLabels2 = ({ cardType, last4, expirationDate }) => [
   `Expires ${expirationDate}`
 ];
 
+const getValuesWithoutLabelsPaypal = ({ email }) => [
+  `PayPal: ${email}`
+]
+
 const PaymentSummary = ({ withLabels, values, children, ...rest}) => {
-  const neededValues = pick(values, PAYMENT_FIELDS);
+  const isPaypalMethod = values.method && values.method === 'paypal' ? true : false;
+  const neededValues = isPaypalMethod? pick(values, ['email']) : pick(values, PAYMENT_FIELDS);;
+
+  
   let pairs = null;
   let PAYMENT_FIELDS_ITEMS = null;
   if (rest.checkoutVersion && rest.checkoutVersion === 2) {
@@ -38,7 +45,11 @@ const PaymentSummary = ({ withLabels, values, children, ...rest}) => {
     }));
   } else {
     if (rest.checkoutVersion && rest.checkoutVersion === 2) {
-      pairs = getValuesWithoutLabels2(neededValues).map(value => ({ value }));
+      if(isPaypalMethod){
+        pairs = getValuesWithoutLabelsPaypal(neededValues).map(value => ({ value }));
+      }else{
+        pairs = getValuesWithoutLabels2(neededValues).map(value => ({ value }));
+      }
     } else {
       pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
     }

@@ -27,19 +27,16 @@ import { getDefaultEntity, scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
 import { resetOrderState } from '../../modules/order/actions';
+import { setCheckoutPaypalPayload, unsetCheckoutPaypalPayload } from '../../modules/paypal/actions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
 import Login from '../Login';
+import { sendPaypalCheckoutRequest } from '../../utils/braintree';
+import EventEmitter from '../../events';
 
-const getPanelTitleContent = (
-  xs,
-  step,
-  activeStep,
-  signupConfirmation,
-  payload
-) => {
+const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -66,25 +63,15 @@ const getPanelTitleContent = (
 
   if (!isNil(payload)) {
     if (step === 0) {
-      payloadSummary = (
-        <AddressSummary checkoutVersion={2} noDefault values={payload} />
-      );
+      payloadSummary = <AddressSummary checkoutVersion={2} noDefault values={payload} />;
     } else if (step === 1) {
-      payloadSummary = (
-        <PaymentSummary checkoutVersion={2} noDefault values={payload} />
-      );
+      payloadSummary = <PaymentSummary checkoutVersion={2} noDefault values={payload} />;
     }
   }
 
   const payloadView =
     payloadSummary && !isActiveStep ? (
-      <Box
-        width={1}
-        px={xs ? 8 : 14}
-        py={xs ? 3 : 4}
-        bgcolor="rgba(252, 248, 244, 0.5)"
-        color="#231f20"
-      >
+      <Box width={1} px={xs ? 8 : 14} py={xs ? 3 : 4} bgcolor="rgba(252, 248, 244, 0.5)" color="#231f20">
         {payloadSummary}
       </Box>
     ) : null;
@@ -104,6 +91,8 @@ const Checkout = ({
   requestCreateAccount,
   clearCreateAccountError,
   requestLogin,
+  requestFetchAccount,
+  receivedFetchAccountSuccess,
   clearLoginError,
   requestPatchAccount,
   clearPatchAccountError,
@@ -112,32 +101,26 @@ const Checkout = ({
   const [payload, setPayload] = useState({});
   const [resetFormMode, setResetFormMode] = useState(false);
   const [authMode, setAuthMode] = useState('shipping');
-  const [
-    resetPaymentDetailsFormMode,
-    setResetPaymentDetailsFormMode
-  ] = useState(false);
+  const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
+  const [guestMode, setGuestMode] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
+  const [ppButtonRendered, setPpButtonRendered] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const {
-    account_jwt,
-    email: currentUserEmail,
-    paymentMethods
-  } = currentUser.data;
+  const { account_jwt, email: currentUserEmail, paymentMethods } = currentUser.data;
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
+  const paypalPayloadState = useSelector(state => state.paypal);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(
-    false
-  );
+  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
 
@@ -147,7 +130,7 @@ const Checkout = ({
     setCloseShippingRestrictions(true);
   }, [setCloseShippingRestrictions]);
 
-  setTimeout(function () {
+  setTimeout(function() {
     setLoading(false);
   }, 300);
 
@@ -176,29 +159,13 @@ const Checkout = ({
       total: cart.total ? Number.parseFloat(cart.total) : 0
     });
   };
-  // Set step 1 to active if there were any signup errors
-  useEffect(() => {
-    if (!accountCreated && currentUser.signupError) {
-      if (currentUser.signupError.errorMessage) {
-        setResetPaymentDetailsFormMode(true);
-        setResetFormMode(true);
-        scrollToRef(stepRefs[0]);
-        setActiveStep(0);
 
-        window.analytics.track('Email Capture Failed', {
-          email: payload.shippingAddress.email,
-          error_message: currentUser.signupError.errorMessage,
-          site_location: 'checkout'
-        });
-      }
-    }
-  }, [currentUser.signupError]);
-  
-  //Reset signupError & patchError upon component unmount
+  //Reset signupError, patchError, and PayPal state upon component unmount
   useEffect(() => {
     return () => {
       clearPatchAccountError();
       clearCreateAccountError();
+      dispatch(unsetCheckoutPaypalPayload());
     };
   }, []);
 
@@ -217,16 +184,18 @@ const Checkout = ({
   }, [currentUser.patchAccountError]);
 
   useEffect(() => {
-    if (accountCreated && paymentDetailsUpdated && !addressBookUpdated) {
+    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
+    if (accountCreated && paymentDetailsUpdated && !addressBookUpdated && !isGuest) {
       requestPatchAccount(account_jwt, {
         addressBook: [payload.shippingAddress]
       });
       setAddressBookUpdated(true);
     }
+
   }, [paymentDetailsUpdated]);
 
   useEffect(() => {
-    if (accountCreated && !paymentDetailsUpdated) {
+    if (accountCreated && !paymentDetailsUpdated && paymentMethods.length > 0) {
       setPayload({
         ...payload,
         paymentDetails: paymentMethods[0]
@@ -236,25 +205,11 @@ const Checkout = ({
   }, [paymentMethods]);
 
   useEffect(() => {
-    if (accountCreated && account_jwt && !paymentDetailsUpdated) {
-      // Update payment details
-      const paymentDetailsPayload = payload.paymentDetails;
-      const creditCardNonce = paymentDetailsPayload.nonce;
-      delete paymentDetailsPayload.billingAddress.password;
-      delete paymentDetailsPayload.billingAddress.email;
-      delete paymentDetailsPayload.nonce;
-      payload.shippingAddress.isDefault = true;
-      payload.paymentDetails.isDefault = true;
-      const requestPayload = {
-        newCreditCard: { ...paymentDetailsPayload },
-        nonce: creditCardNonce
-      };
-      requestPatchAccount(account_jwt, requestPayload);
+    const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
+    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
 
-      window.analytics.track('Email Capture Successful', {
-        email: currentUser.data.email,
-        site_location: 'checkout'
-      });
+    if (accountCreated && account_jwt && !paymentDetailsUpdated && (isPaypalPaymentMethod || isGuest)) {
+      setPaymentDetailsUpdated(true);
     }
   }, [accountCreated]);
 
@@ -267,17 +222,78 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2 && !account_jwt && !accountCreated) {
-      // Create user here...
-      requestCreateAccount({
+      const isGuest =
+        (payload.paymentDetails.billingAddress.password &&
+          payload.paymentDetails.billingAddress.password.length === 0) ||
+        !payload.paymentDetails.billingAddress.password
+          ? true
+          : false;
+      setGuestMode(isGuest);
+      const accountInfoPayload = {
         firstName: payload.paymentDetails.billingAddress.firstName,
         lastName: payload.paymentDetails.billingAddress.lastName,
         email: payload.shippingAddress.email,
-        password: payload.paymentDetails.billingAddress.password,
-        newsletter: payload.shippingAddress.shouldSubscribe
-      });
+        password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
+        passwordSet: !isGuest,
+        isGuest: isGuest,
+        storeCode: cart.storeCode,
+        newsletter: true
+      };
 
+      setPayload({
+        ...payload,
+        accountInfo: accountInfoPayload
+      });
     }
   }, [activeStep]);
+
+  useEffect(() => {
+    if (Object.keys(paypalPayloadState).length > 0) {
+      //Make a copy and preserve to preserve the payload
+      let paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
+      //normalize paymentDetailsPayload
+      paymentDetailsPayload.details.shippingAddress.address1 = paymentDetailsPayload.details.shippingAddress.line1;
+      paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details.shippingAddress.line2
+        ? (paymentDetailsPayload.details.shippingAddress.address1 = paymentDetailsPayload.details.shippingAddress.line2)
+        : '';
+      paymentDetailsPayload.details.shippingAddress.zipcode = paymentDetailsPayload.details.shippingAddress.postalCode;
+      paymentDetailsPayload.details.shippingAddress.country = paymentDetailsPayload.details.shippingAddress.countryCode;
+      paymentDetailsPayload.details.shippingAddress.firstName = paymentDetailsPayload.details.firstName;
+      paymentDetailsPayload.details.shippingAddress.lastName = paymentDetailsPayload.details.lastName;
+      delete paymentDetailsPayload.details.shippingAddress.line1;
+      if (paymentDetailsPayload.details.shippingAddress.line2) {
+        delete paymentDetailsPayload.details.shippingAddress.line2;
+      }
+      delete paymentDetailsPayload.details.shippingAddress.postalCode;
+      delete paymentDetailsPayload.details.shippingAddress.countryCode;
+      delete paymentDetailsPayload.details.shippingAddress.recipientName;
+      setTimeout(() => {
+        setPayload({
+          ...payload,
+          nonce: paymentDetailsPayload.nonce,
+          paymentDetails: {
+            ...paymentDetailsPayload.details,
+            nonce: paymentDetailsPayload.nonce,
+            billingAddress: { ...paymentDetailsPayload.details.shippingAddress, password: '' },
+            method: 'paypal'
+          },
+          shippingAddress: {
+            ...paymentDetailsPayload.details.shippingAddress,
+            email: paymentDetailsPayload.details.email
+          },
+          shippingMethod:
+            cart.shipping && cart.shipping.options && cart.shipping.code
+              ? cart.shipping.options[cart.shipping.code]
+              : {},
+          method: 'paypal'
+        });
+
+        setShippingAddressActive(paymentDetailsPayload.details.shippingAddress);
+        dispatch(requestSetShippingAddress(cart._id, paymentDetailsPayload.details.shippingAddress));
+        setActiveStep(2);
+      }, 100);
+    }
+  }, [paypalPayloadState]);
 
   useEffect(() => {
     if (orderIsLoading || orderError) {
@@ -295,7 +311,6 @@ const Checkout = ({
     if (!account_jwt && activeStep > 0) {
       history.push('/');
     }
-
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
@@ -308,41 +323,14 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
-      
-      if (
-        payload.shippingAddress.shouldSubscribe &&
-        payload.shippingAddress.email &&
-        !account_jwt
-      ) {
-        window.analytics.track('Email Capture Completed', {
-          email: payload.shippingAddress.email,
-          site_location: 'checkout'
-        });
-
-        window.analytics.track('Subscribed', {
-          email: payload.shippingAddress.email,
-          site_location: 'checkout'
-        });
-
-        window.analytics.track('Subscribed Listrak Auto', {
-          email: payload.shippingAddress.email,
-          site_location: 'checkout'
-        });
-
-        window.analytics.identify({
-          first_name: payload.shippingAddress.firstName,
-          last_name: payload.shippingAddress.lastName,
-          email: payload.shippingAddress.email
-        });
-      }
     }
   }, [activeStep, payload.shippingAddress]);
 
   useEffect(() => {
-    if(cart && cart._id){
-    trackCheckoutStarted();
-    trackCheckoutStepStarted(0);
-    scrollToRef(stepRefs[0]);
+    if (cart && cart._id) {
+      trackCheckoutStarted();
+      trackCheckoutStepStarted(0);
+      scrollToRef(stepRefs[0]);
     }
   }, [cart._id]);
 
@@ -371,6 +359,10 @@ const Checkout = ({
     const NEW_STEP_KEYS = STEP_KEYS.slice(1, 4);
     const key = NEW_STEP_KEYS[activeStep];
 
+    if (!values) {
+      return true;
+    }
+
     setPayload({ ...payload, [key]: values });
 
     if (activeStep === 1 && isNil(payload[NEW_STEP_KEYS[0]])) {
@@ -385,25 +377,19 @@ const Checkout = ({
     if (!values.nativeEvent) {
       return false;
     }
-
     const paymentMethodNonce = get(payload, 'paymentDetails.nonce');
     const paymentMethodToken = get(payload, 'paymentDetails.token');
 
-    delete payload.paymentDetails.nonce;
-
+    delete payload.paymentDetails.billingAddress.password;
+    delete payload.paymentDetails.billingAddress.shouldSubscribe;
+    delete payload.shippingAddress.shouldSubscribe;
     if (paymentMethodNonce !== '') {
       if (cart.items.length > 0) {
-        requestCreateOrder(
-          { ...cart, ...payload, account_jwt },
-          { paymentMethodNonce }
-        );
+        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
       }
     } else if (paymentMethodToken !== '') {
       if (cart.items.length > 0) {
-        requestCreateOrder(
-          { ...cart, ...payload, account_jwt },
-          { paymentMethodToken }
-        );
+        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
       }
     } else {
       return false;
@@ -473,8 +459,7 @@ const Checkout = ({
     if (
       !expanded ||
       activeStep === 0 ||
-      ([2, 3].includes(panelIndex) &&
-        (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
+      ([2, 3].includes(panelIndex) && (isNil(payload[shippingKey]) || isNil(payload[paymentKey])))
     ) {
       return false;
     }
@@ -485,191 +470,199 @@ const Checkout = ({
     return setCurrentStep(panelIndex);
   };
 
+  const getPaypalBraintreeNonce = async () => {
+    const { total, shippingAddress } = cart;
+    if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
+      return null;
+    }
+    setPpButtonRendered(true);
+    let paymentDetailsPayload = await sendPaypalCheckoutRequest(
+      total,
+      shippingAddress,
+      {
+        label: 'paypal',
+        shape: 'rect',
+        color: 'gold',
+        height: 45,
+        size: 'responsive',
+        tagline: 'false'
+      },
+      '#paypal-checkout-button'
+    );
+    dispatch(setCheckoutPaypalPayload(paymentDetailsPayload));
+  };
+
+  let paypalCheckoutButton = document.getElementById('paypal-checkout-button');
+  useEffect(() => {
+    if (activeStep === 0 && paypalCheckoutButton !== null) {
+      paypalCheckoutButton.innerHTML = '';
+      getPaypalBraintreeNonce();
+    }
+  }, [activeStep, paypalCheckoutButton, cart.total]);
+
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-          <Box bgcolor="rgba(252, 248, 244, 0.5)">
-            <Container>
-              <Box py={10} className="checkout-wrapper">
-                <CssBaseline />
-                <Grid container spacing={4}>
-                  {xs ? (
-                    <MenuLink
-                      to="/gallery"
-                      children=" < Continue Shopping"
-                      underline="always"
-                      style={{ fontSize: '14px', padding: '50px 20px 12px' }}
-                    />
-                  ) : null}
-                  <Grid
-                    item
-                    flex={1}
-                    xs={12}
-                    md={8}
-                    style={xs ? { padding: 0 } : {}}
-                    className="right-side"
-                  >
-                    <div ref={stepRefs[0]}>
-                      <Panel
-                        title={getPanelTitleContent(
-                          xs,
-                          0,
-                          activeStep,
-                          null,
-                          payload.shippingAddress
-                        )}
-                        collapsible
-                        expanded={activeStep === 0}
-                        onChange={e => onPanelChange(e, 0)}
-                      >
-                        {authMode === 'shipping' ? (
-                          <AccountAddresses
-                            checkoutVersion={2}
-                            currentUser={currentUser}
-                            cart={cart}
-                            setRestrictionMessage={setRestrictionMessage}
-                            setRestrictedProduct={setRestrictedProduct}
-                            requestPatchAccount={requestPatchAccount}
-                            clearPatchAccountError={clearPatchAccountError}
-                            formType={ADDRESS_FORM_TYPES.CHECKOUT}
-                            onSubmit={handleNext}
-                            selectionEnabled
-                            allowFlyMode
-                            resetFormMode={resetFormMode}
-                            shippingAddressActive={shippingAddressActive}
-                            switchToLogin={() => setAuthMode('login')}
-                            mt={4}
-                            mx={10}
-                            mb={5}
-                          />
-                        ) : (
-                            <Login
-                              requestLogin={requestLogin}
-                              clearLoginError={clearLoginError}
-                              switchToSignup={() => setAuthMode('shipping')}
-                            />
-                          )}
-                      </Panel>
-                    </div>
-                    {xs && activeStep === 1 && restrictionMessage ? (
-                      <StateRestrictionsDialog
-                        product_name={restrictedProduct}
-                        cartCount={cartCount}
-                        onExited={closeShippingRestrictionsDialog}
-                      />
-                    ) : null}
-                    <div ref={stepRefs[1]}>
-                      <Panel
-                        title={getPanelTitleContent(
-                          xs,
-                          1,
-                          activeStep,
-                          null,
-                          payload.paymentDetails
-                        )}
-                        collapsible
-                        expanded={activeStep === 1}
-                        onChange={e => onPanelChange(e, 1)}
-                      >
-                        <AccountPaymentDetails
+        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Container>
+            <Box py={10} className="checkout-wrapper">
+              <CssBaseline />
+              <Grid container spacing={4}>
+                {xs ? (
+                  <MenuLink
+                    to="/gallery"
+                    children=" < Continue Shopping"
+                    underline="always"
+                    style={{ fontSize: '14px', padding: '50px 20px 12px' }}
+                  />
+                ) : null}
+                <Grid item flex={1} xs={12} md={8} style={xs ? { padding: 0 } : {}} className="right-side">
+                  <div ref={stepRefs[0]}>
+                    <Panel
+                      title={getPanelTitleContent(xs, 0, activeStep, null, payload.shippingAddress)}
+                      collapsible
+                      expanded={activeStep === 0}
+                      onChange={e => onPanelChange(e, 0)}
+                    >
+                      {authMode === 'shipping' ? (
+                        <AccountAddresses
                           checkoutVersion={2}
                           currentUser={currentUser}
+                          cart={cart}
+                          setRestrictionMessage={setRestrictionMessage}
+                          setRestrictedProduct={setRestrictedProduct}
                           requestPatchAccount={requestPatchAccount}
                           clearPatchAccountError={clearPatchAccountError}
-                          formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                          onBack={handleBack}
+                          formType={ADDRESS_FORM_TYPES.CHECKOUT}
                           onSubmit={handleNext}
                           selectionEnabled
-                          seedEnabled
-                          addressSeed={payload.shippingAddress}
-                          useSeedLabel="Use shipping address"
                           allowFlyMode
+                          resetFormMode={resetFormMode}
+                          shippingAddressActive={shippingAddressActive}
+                          switchToLogin={() => setAuthMode('login')}
                           mt={4}
                           mx={10}
                           mb={5}
-                          backLabel="Cancel"
-                          submitLabel="Review Order"
-                          resetFormMode={resetPaymentDetailsFormMode}
                         />
-                      </Panel>
-                    </div>
-                    <div ref={stepRefs[2]}>
-                      <Panel
-                        title={getPanelTitleContent(xs, 2, activeStep, null, {})}
-                        collapsible
-                        hideExpandIcon
-                        expanded={activeStep === 2}
-                        onChange={e => onPanelChange(e, 2)}
-                        className="lastPanel"
-                      >
-                        {xs && (
-                          <CartDrawer
-                            checkoutVersion={2}
-                            disableItemEditing
-                            hideCheckoutProceedLink
-                            hideTaxLabel
-                            showOrderSummaryText
-                            xsBreakpoint={xs}
-                            activeStep={activeStep}
-                            restrictionMessage={restrictionMessage}
-                            restrictedProduct={restrictedProduct}
-                          />
-                        )}
-                        <CheckoutReviewForm
-                          xsBreakpoint={xs}
-                          onSubmit={handleNext}
+                      ) : (
+                        <Login
+                          requestLogin={requestLogin}
+                          clearLoginError={clearLoginError}
+                          switchToSignup={() => setAuthMode('shipping')}
                         />
-                      </Panel>
-                    </div>
-                  </Grid>
-                  {!xs && currentUser ? (
-                    <Grid item xs={12} md={4} className="left-side">
-                      <CartDrawer
-                        checkoutVersion={2}
-                        disableItemEditing
-                        hideCheckoutProceedLink
-                        hideTaxLabel
-                        showOrderSummaryText={false}
-                        xsBreakpoint={xs}
-                        activeStep={activeStep}
-                        restrictionMessage={restrictionMessage}
-                        restrictedProduct={restrictedProduct}
-                      />
-                    </Grid>
-                  ) : (
-                      ''
-                    )}
-                </Grid>
-                <Dialog
-                  className="transaction-dialog-container"
-                  open={checkoutDialogOpen}
-                  onClose={handleCheckoutDialogClose}
-                  closeAfterTransition
-                >
-                  {orderError ? (
-                    <IconButton
-                      aria-label="close"
-                      style={{
-                        position: 'absolute',
-                        right: theme.spacing(1),
-                        top: theme.spacing(1),
-                        color: theme.palette.grey[500]
-                      }}
-                      onClick={handleCheckoutDialogClose}
-                    >
-                      <CloseIcon />
-                    </IconButton>
+                      )}
+                    </Panel>
+                  </div>
+                  {xs && activeStep === 1 && restrictionMessage ? (
+                    <StateRestrictionsDialog
+                      product_name={restrictedProduct}
+                      cartCount={cartCount}
+                      onExited={closeShippingRestrictionsDialog}
+                    />
                   ) : null}
-                  <MuiDialogContent>
-                    <TransactionMessage orderError={orderError} />
-                  </MuiDialogContent>
-                </Dialog>
-              </Box>
-            </Container>
-          </Box>
-        )}
+                  <div ref={stepRefs[1]}>
+                    <Panel
+                      title={getPanelTitleContent(xs, 1, activeStep, null, payload.paymentDetails)}
+                      collapsible
+                      expanded={activeStep === 1}
+                      onChange={e => onPanelChange(e, 1)}
+                    >
+                      <AccountPaymentDetails
+                        checkoutVersion={2}
+                        currentUser={currentUser}
+                        requestPatchAccount={requestPatchAccount}
+                        clearPatchAccountError={clearPatchAccountError}
+                        formType={PAYMENT_FORM_TYPES.CHECKOUT}
+                        onBack={handleBack}
+                        onSubmit={handleNext}
+                        selectionEnabled
+                        seedEnabled
+                        addressSeed={payload.shippingAddress}
+                        useSeedLabel="Use shipping address"
+                        allowFlyMode
+                        mt={4}
+                        mx={10}
+                        mb={5}
+                        backLabel="Cancel"
+                        submitLabel="Review Order"
+                        resetFormMode={resetPaymentDetailsFormMode}
+                      />
+                    </Panel>
+                  </div>
+                  <div ref={stepRefs[2]}>
+                    <Panel
+                      title={getPanelTitleContent(xs, 2, activeStep, null, {})}
+                      collapsible
+                      hideExpandIcon
+                      expanded={activeStep === 2}
+                      onChange={e => onPanelChange(e, 2)}
+                      className="lastPanel"
+                    >
+                      {xs && (
+                        <CartDrawer
+                          checkoutVersion={2}
+                          disableItemEditing
+                          hideCheckoutProceedLink
+                          hideTaxLabel
+                          showOrderSummaryText
+                          xsBreakpoint={xs}
+                          activeStep={activeStep}
+                          restrictionMessage={restrictionMessage}
+                          restrictedProduct={restrictedProduct}
+                        />
+                      )}
+                      <CheckoutReviewForm xsBreakpoint={xs} onSubmit={handleNext} payload={payload} setPayload={setPayload} accountJwt={account_jwt} />
+                    </Panel>
+                  </div>
+                </Grid>
+                {!xs && currentUser ? (
+                  <Grid item xs={12} md={4} className="left-side">
+                    <CartDrawer
+                      checkoutVersion={2}
+                      disableItemEditing
+                      hideCheckoutProceedLink
+                      hideTaxLabel
+                      showOrderSummaryText={false}
+                      xsBreakpoint={xs}
+                      activeStep={activeStep}
+                      restrictionMessage={restrictionMessage}
+                      restrictedProduct={restrictedProduct}
+                    />
+                  </Grid>
+                ) : (
+                  ''
+                )}
+              </Grid>
+              <Dialog
+                className="transaction-dialog-container"
+                open={checkoutDialogOpen}
+                onClose={handleCheckoutDialogClose}
+                closeAfterTransition
+              >
+                {orderError ? (
+                  <IconButton
+                    aria-label="close"
+                    style={{
+                      position: 'absolute',
+                      right: theme.spacing(1),
+                      top: theme.spacing(1),
+                      color: theme.palette.grey[500]
+                    }}
+                    onClick={handleCheckoutDialogClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ) : null}
+                <MuiDialogContent>
+                  <TransactionMessage orderError={orderError} />
+                </MuiDialogContent>
+              </Dialog>
+            </Box>
+          </Container>
+        </Box>
+      )}
     </>
   );
 };

@@ -8,6 +8,7 @@ import {
   segmentAddCouponReceived,
   segmentRemoveCouponReceived
 } from './actions';
+import { setCartNotification } from '../utils/actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
 export const handleCartResponse = (status, data, fields, properties) => {
@@ -32,14 +33,22 @@ export const handleCartResponse = (status, data, fields, properties) => {
       const oldCart = store.getState().cart;
       let openCartDrawer = true;
 
-      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
+      if(!data.hasOwnProperty('items')){
+        //Something went wrong on backend.
+        break;
+      }
+
+      if (
+        oldCart.items.length === data.items.length &&
+        oldCart.total === data.total
+      ) {
         openCartDrawer = false;
       }
 
       // Merge carts notification logic
       if (fields.routingKey === 'cart.request.mergecarts' && data.items.length !== oldCart.items.length) {
         openCartDrawer = false;
-        data.cartMerged = true;
+        store.dispatch(setCartNotification(true, 'cartMerged'));
       }
 
       store.dispatch(receivedPatchCart(data));
@@ -59,7 +68,8 @@ export const handleCartResponse = (status, data, fields, properties) => {
         fields.routingKey !== 'cart.request.setshippingaddress' &&
         openCartDrawer
       ) {
-        store.dispatch(setCartDrawerOpened(true));
+
+        store.dispatch(setCartDrawerOpened(true, false));
       }
       break;
     case 'cart.request.update':

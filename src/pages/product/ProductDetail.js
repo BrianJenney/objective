@@ -228,7 +228,14 @@ const ProductDetail = () => {
     return <LoadingSpinner loadingMessage="Loading product" page="pdp" />;
   }
 
-  const { productImages, productTitle, shortPurposeHeadline, shortDescription, productBenefits = [] } = content;
+  const {
+    productImages,
+    productTitle,
+    shortPurposeHeadline,
+    shortDescription,
+    productBenefits = [],
+    productColor
+  } = content;
 
   return (
     <Box className={classes.root}>
@@ -241,7 +248,7 @@ const ProductDetail = () => {
             <Card className={classes.box}>
               <CardContent className={classes.cardRootOverrides}>
                 <Box className="pdp-content" ref={contentRef}>
-                  <Typography variant="h1" className="pdp-header">
+                  <Typography variant="h1" className={`pdp-header ${productColor}`}>
                     {productTitle}
                   </Typography>
                   <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
@@ -254,7 +261,9 @@ const ProductDetail = () => {
                           <img src={benefit.fields.icon.fields.file.url} alt="" />
                         </Box>
                         <Box className="text">
-                          <Box>{benefit.fields.benefitText}</Box>
+                          <Box className={productColor}>
+                            {benefit.fields.benefitText}
+                          </Box>
                         </Box>
                       </Box>
                     ))}
