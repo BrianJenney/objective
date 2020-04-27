@@ -89,9 +89,7 @@ const Header = ({ currentUser, location }) => {
     ) {
       setAcqDiscount(true);
       removeCoupon(cart._id);
-      // addCoupon(cart._id, 'SAVE25');
-      // Sandbox coupon below:
-      addCoupon(cart._id, 'voucherify.io-10-percent-off');
+      addCoupon(cart._id, 'MOM25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id]);
@@ -173,7 +171,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                          Limited Time: Free Shipping for All New Customers
+                        25% OFF Fast Asleep + Free Shipping! Use Code MOM25
                         </NavLink>
                         <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
                       </StyledBox>
@@ -190,7 +188,7 @@ const Header = ({ currentUser, location }) => {
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
                             <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                              Limited Time: Free Shipping for All New Customers
+                            Celebrate Moms with 25% OFF Fast Asleep + Free Shipping! Use Code MOM25
                             </NavLink>
                             <div className="closeIcon" onClick={handlePromoClose}>
                               Close
