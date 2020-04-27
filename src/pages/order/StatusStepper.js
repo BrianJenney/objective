@@ -57,7 +57,7 @@ const useQontoStepIconStyles = makeStyles({
 function QontoStepIcon(props) {
   const classes = useQontoStepIconStyles();
   const { active, completed } = props;
-  console.log('testing-COMPLETE', completed);
+
   return (
     <div
       className={clsx(classes.root, {
@@ -83,17 +83,22 @@ const useStyles = makeStyles(theme => ({
 const getSteps = (status, statusStepper) => {
   let step = 1;
   let steps = [];
-  if (['canceled', 'refunded'].includes(status)) {
-    step = 2;
-  } else if (statusStepper.Delivered) step = 3;
-  else if (statusStepper.Shipped) step = 2;
 
+  console.log('testing-STATUSssss', status);
   if (status === 'canceled' || status === 'refunded') {
     steps = ['Processed', 'Cancelled'];
+    step = 2;
   } else if (status === 'placed') {
     steps = ['Not processed', 'Shipped', 'Delivered'];
+    step = 0;
   } else {
     steps = ['Processed', 'Shipped', 'Delivered'];
+    if (status === 'delivered') {
+      step = 3;
+    }
+    if (status === 'shipped') {
+      step = 2;
+    }
   }
   return { step, steps };
 };
@@ -103,14 +108,13 @@ const StatusStepper = ({ status, statusStepper }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { step, steps } = getSteps(status, statusStepper);
-  console.log('testing-STATUS', status);
+  console.log('testing-STATUS', step);
   console.log('testing-STEPS', steps);
   console.log('testing-STEPPPP', statusStepper);
   const [activeStep, setActiveStep] = React.useState(step);
   console.log('testing-ACTIVE-STEP', activeStep);
-  // activeStep = { activeStep } => this change to checkmark
   const DesktopStatusStepper = () => (
-    <Stepper alternativeLabel connector={<QontoConnector />}>
+    <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
       {steps.map(label => {
         console.log('testing-LABEL', label);
         return (
