@@ -206,32 +206,41 @@ const ProductAccordion = ({ content }) => {
             {supplementFactsOtherIngredients.length ? (
               <Typography variant="h4">Other Ingredients</Typography>
             ) : null}
-            <List disablePadding>
-              {supplementFactsOtherIngredients.map((otherIngredient, index) => (
-                <ListItem
-                  key={`other-ingredient-${index.toString()}`}
-                  disableGutters
-                >
-                  <Typography component="span">
-                    {otherIngredient.replace(/\|/g, ',')}
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
+            <div className={productColor}>
+              <List disablePadding className={productColor}>
+                {supplementFactsOtherIngredients.map(
+                  (otherIngredient, index) => (
+                    <ListItem
+                      key={`other-ingredient-${index.toString()}`}
+                      disableGutters
+                    >
+                      <Typography component="span">
+                        {otherIngredient.replace(/\|/g, ',')}
+                      </Typography>
+                    </ListItem>
+                  )
+                )}
+              </List>
+            </div>
           </Box>
           <Box className="important">
             {supplementFactsImportant.length ? (
               <Typography variant="h4">Important</Typography>
             ) : null}
-            <List disablePadding>
-              {supplementFactsImportant.map((important, index) => (
-                <ListItem key={`important-${index.toString()}`} disableGutters>
-                  <Typography component="span">
-                    {important.replace(/\|/g, ',')}
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
+            <div className={productColor}>
+              <List disablePadding>
+                {supplementFactsImportant.map((important, index) => (
+                  <ListItem
+                    key={`important-${index.toString()}`}
+                    disableGutters
+                  >
+                    <Typography component="span">
+                      {important.replace(/\|/g, ',')}
+                    </Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </div>
           </Box>
         </>
       )
