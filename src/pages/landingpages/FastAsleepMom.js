@@ -104,13 +104,13 @@ const FastAsleepMom = ({ history, location }) => {
     const handleScroll = e => {
         if (section.current.a === false && window.scrollY >= 1240 && window.scrollY < 1700) {
             section.current.a = true;
-            trackLPSection('Fast Asleep Ingredients', 'GABA: The Calming Neurotransmitter', 'TGSS-1BOT-CHO');
+            trackLPSection('Fast Asleep Mom', 'GABA: The Calming Neurotransmitter', 'TGSS-1BOT-CHO');
         }
 
         if (section.current.b === false && window.scrollY >= 2251 && window.scrollY < 2900) {
             section.current.b = true;
             trackLPSection(
-                'Fast Asleep Ingredients',
+                'Fast Asleep Mom',
                 'Saffron: The Natural Sleep Aid Worth Its Weight In Gold',
                 'TGSS-1BOT-CHO'
             );
@@ -118,22 +118,22 @@ const FastAsleepMom = ({ history, location }) => {
 
         if (section.current.c === false && window.scrollY >= 4050 && window.scrollY < 4900) {
             section.current.c = true;
-            trackLPSection('Fast Asleep Ingredients', 'Why GABA And Saffron Instead Of Melatonin?', 'TGSS-1BOT-CHO');
+            trackLPSection('Fast Asleep Mom', 'Why GABA And Saffron Instead Of Melatonin?', 'TGSS-1BOT-CHO');
         }
 
         if (section.current.d === false && window.scrollY >= 6294 && window.scrollY < 7000) {
             section.current.d = true;
-            trackLPSection('Fast Asleep Ingredients', 'Better Nights = Better Days = Better Health', 'TGSS-1BOT-CHO');
+            trackLPSection('Fast Asleep Mom', 'Better Nights = Better Days = Better Health', 'TGSS-1BOT-CHO');
         }
 
         if (section.current.e === false && window.scrollY >= 7700 && window.scrollY < 8200) {
             section.current.e = true;
-            trackLPSection('Fast Asleep Ingredients', 'Better Sleep, Guaranteed. Try It Today—Risk-Free!', 'TGSS-1BOT-CHO');
+            trackLPSection('Fast Asleep Mom', 'Better Sleep, Guaranteed. Try It Today—Risk-Free!', 'TGSS-1BOT-CHO');
         }
 
         if (section.current.f === false && window.scrollY >= 8440 && window.scrollY < 9200) {
             section.current.f = true;
-            trackLPSection('Fast Asleep Ingredients', 'Wake Up Refreshed with Fast Asleep', 'TGSS-1BOT-CHO');
+            trackLPSection('Fast Asleep Mom', 'Wake Up Refreshed with Fast Asleep', 'TGSS-1BOT-CHO');
         }
     };
 
@@ -150,7 +150,7 @@ const FastAsleepMom = ({ history, location }) => {
                 price: selectedVariant.effectivePrice,
                 product_id: selectedVariant.product_id,
                 quantity: 1,
-                site_location: 'Fast Asleep Ingredients Landing Page',
+                site_location: 'Fast Asleep Mom Landing Page',
                 sku: selectedVariant.sku,
                 url: window.location.href
             });
@@ -182,7 +182,7 @@ const FastAsleepMom = ({ history, location }) => {
     }, [cart]);
 
     useEffect(() => {
-        window.analytics.page('FastAsleepIngredients');
+        window.analytics.page('FastAsleepMom');
         document.addEventListener('scroll', handleScroll);
         return () => {
             document.removeEventListener('scroll', handleScroll);
