@@ -32,6 +32,7 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       store.dispatch(receivedGetOrder(data));
       break;
     case 'order.request.find':
+    case 'order.request.findUnauthenticated':
       debugRabbitResponse('Find Order by Account Response', status, data, fields, properties);
       // This is in the *account* module, so state updates are made in that reducer.
       store.dispatch(receivedFindOrdersByAccount(data.data));

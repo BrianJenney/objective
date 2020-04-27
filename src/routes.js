@@ -13,7 +13,6 @@ import {
   AccountPaymentDetailsPage,
   AccountProfilePage,
   CheckoutPage,
-  CheckoutPage2,
   ForgotPassword,
   ConfirmPassword,
   ResetPassword,
@@ -107,14 +106,9 @@ export default [
     path: '/checkout',
     exact: true,
     injectCurrentUser: true,
-    component: CheckoutPage2
+    component: CheckoutPage
   },
-  {
-    path: '/checkout2',
-    exact: true,
-    injectCurrentUser: true,
-    component: CheckoutPage2
-  },
+
   {
     path: '/account',
     auth: true,

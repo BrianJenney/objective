@@ -455,7 +455,7 @@ const AddressForm = ({
               autoComplete="address-line1"
               helperText={
                 rest.checkoutVersion && rest.checkoutVersion === 2
-                  ? '*No PO Boxes or APO/FPO addresses'
+                  ? '*No APO/FPO addresses'
                   : false
               }
             />

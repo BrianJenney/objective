@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { OrderTrackerForm } from '../components/forms';
-import { requestFindOrdersByAccount, receivedGetOrder } from '../modules/order/actions';
+import { requestFindOrdersByAccount, requestFindUnauthenticatedOrders, receivedGetOrder } from '../modules/order/actions';
 import { requestFetchAccount } from '../modules/account/actions';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -56,7 +56,12 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 4)
   },
   containingBox: {
-    [theme.breakpoints.down('xs')]: {}
+    [theme.breakpoints.down('xs')]: {
+        paddingTop: '20px',
+        paddingBottom: '32px'
+    },
+    paddingTop: '52px',
+    paddingBottom: '64px'
   },
   link: {
     color: '#000'
@@ -72,12 +77,12 @@ const TrackOrder = ({ history }) => {
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
         <CssBaseline />
-        <Box py={10} className={classes.containingBox}>
+        <Box className={classes.containingBox}>
           <Grid container spacing={2} justify={'center'}>
             <Grid item xs={xs ? 12 : 6}>
               <OrderTrackerForm
                 title={'Track an order'}
-                requestFindOrdersByAccount={requestFindOrdersByAccount}
+                requestFindUnauthenticatedOrders={requestFindUnauthenticatedOrders}
                 receivedGetOrder={receivedGetOrder}
                 requestFetchAccount={requestFetchAccount}
                 dispatch={dispatch}

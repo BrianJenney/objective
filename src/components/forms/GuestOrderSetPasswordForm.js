@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const schema = object().shape({
-  password: string().required('Password is required')
+  password: string().required('Password is required').min(6, 'Password has to be longer than 6 characters!')
 });
 
 const INITIAL_VALUES = {
