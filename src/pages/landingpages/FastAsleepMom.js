@@ -219,22 +219,23 @@ const FastAsleepMom = ({ history, location }) => {
             <Container>
                 <Grid container>
                     <Grid item xs={12} md={8} className="smaller-container">
-                        <h1>Do GABA & saffron beat melatonin at improving sleep quality?</h1>
-                        <h3>This natural power combo fights the #1 enemy of good sleep</h3>
+                        <h1>More Flowers & Chocolate? Not This Year. What Moms
+              <em> Really</em> Want Is a Good Night's Sleep</h1>
+                        <h3>Get the fix that will help you (or her) fall asleep faster, stay asleep longer and wake up feeling amazing</h3>
                     </Grid>
                 </Grid>
                 <Grid container>
                     <Grid item xs={12} md={10} className="smaller-container">
                         <img
                             className="w-100 hero-image hidden-xs"
-                            src="https://images.ctfassets.net/mj9bpefl6wof/51FdlvcsHxRRpuQBsIRzzr/1339a2ade8cf32cba9f9857577e88cff/Hero_-_desktop.png"
+                            src="https://images.ctfassets.net/mj9bpefl6wof/3voiLRyJzuIJxzzKk7coxi/0ec35e5e92196c4f236c9e269c324a8b/MothersDay-LP-Hero.png?h=466"
                         />
                     </Grid>
                 </Grid>
             </Container>
             <img
                 className="w-100 hero-image xs-only"
-                src="https://images.ctfassets.net/mj9bpefl6wof/3B4lfG6Aus493ToyiTGd3N/ef8cdfbd7abe160beaa0caf06374961a/hero_-_mobile.png?w=450"
+                src="https://images.ctfassets.net/mj9bpefl6wof/3voiLRyJzuIJxzzKk7coxi/0ec35e5e92196c4f236c9e269c324a8b/MothersDay-LP-Hero.png?h=250"
             />
             <Container>
                 <Grid container>
@@ -271,8 +272,7 @@ const FastAsleepMom = ({ history, location }) => {
                                 </ul>
                             </div>
                             <p>
-                                There’s no way around it: You need to sleep—and you need to sleep well—to feel well, perform at your
-                best during the day and, yes, even look good doing it.<sup>*</sup>
+                                There's no way around it—parents, especially moms, just don't get enough sleep.
                             </p>
                             <p>
                                 But if you’re among the estimated 50-70 million Americans who struggle with occasional sleeplessness,
