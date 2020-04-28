@@ -159,6 +159,7 @@ export const OutOfStockLP = ({
   onClick,
   onExited,
   buttonClass,
+  discount_text,
   product_img,
   product_name,
   product_category,
@@ -170,7 +171,7 @@ export const OutOfStockLP = ({
 }) => {
   return (
     <>
-      <NavLink onClick={onClick} className={buttonClass}>get 15% off — Buy Now
+      <NavLink onClick={onClick} className={buttonClass}>get {discount_text} off — Buy Now
       </NavLink>
       {openOutOfStockDialog && (
         <ProductOutOfStockDialog
