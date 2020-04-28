@@ -82,6 +82,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getSteps = (status, statusStepper) => {
+  const { deliveredStatus } = statusStepper;
   let step = 1;
   let steps = [];
 
@@ -93,11 +94,11 @@ const getSteps = (status, statusStepper) => {
     step = 0;
   } else {
     steps = ['Processed', 'Shipped', 'Delivered'];
-    if (status === 'delivered') {
-      step = 3;
-    }
     if (status === 'shipped') {
       step = 2;
+    }
+    if ((status === 'shipped' && deliveredStatus === 'DELIVERED') || status === 'delivered') {
+      step = 3;
     }
   }
   return { step, steps };
@@ -109,11 +110,14 @@ const StatusStepper = ({ status, statusStepper }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { step, steps } = getSteps(status, statusStepper);
   const [activeStep, setActiveStep] = React.useState(step);
+
   const DesktopStatusStepper = () => (
     <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
       {steps.map(label => (
         <Step key={label}>
-          <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+          <StepLabel StepIconComponent={QontoStepIcon}>
+            {label} {statusStepper[label]}
+          </StepLabel>
         </Step>
       ))}
     </Stepper>
