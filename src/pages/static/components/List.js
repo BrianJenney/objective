@@ -22,10 +22,13 @@ const List = ({ data, template, type, symbol }) => {
       {symbol ? (
         <ul>
           {data.value.map((item, i) => {
+            console.log('HERE', item);
             return (
-              <li key={i} className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}>
-                {item}
-              </li>
+              <li
+                key={i}
+                className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}
+                dangerouslySetInnerHTML={{ __html: item }}
+              ></li>
             );
           })}
         </ul>
