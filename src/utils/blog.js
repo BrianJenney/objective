@@ -28,9 +28,7 @@ export const fetchBlogHome = async () => {
   response = await contentfulClient.getEntries({
     content_type: 'blogPost',
     'sys.id[nin]': featuredIds.toString(),
-    select:
-      'fields.title,fields.featuredImage,fields.teaser,fields.minuteRead,fields.categories,fields.slug',
-    limit: 15 - featuredIds.length,
+    select: 'fields.title,fields.featuredImage,fields.teaser,fields.minuteRead,fields.categories,fields.slug',
     order: '-sys.updatedAt'
   });
 
