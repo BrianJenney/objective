@@ -75,42 +75,47 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     color: '#000'
+  },
+  cancelledText: {
+    fontFamily: 'p22-underground, sans-serif',
+    color: '#d0021b'
   }
 }));
 
 const getStatusStepper = statusStepper => {
+  const { deliveredStatus } = statusStepper;
   const processedDate = formatDateTime(statusStepper.processedDate, false);
   const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
   const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
   const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
+
   return {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate
+    Cancelled: cancelledDate,
+    deliveredStatus
   };
 };
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-  return tracking.map(tracking => {
-    return (
-      <>
-        <Typography className={classes.text} pt={2}>
-          {tracking && (
-            <Link
-              href={tracking.url}
-              style={{ color: 'black', textDecoration: 'underline' }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tracking.number}
-            </Link>
-          )}
-        </Typography>
-      </>
-    );
-  });
+  return tracking.map(tracking => (
+    <>
+      <Typography className={classes.text} pt={2}>
+        {tracking && (
+          <Link
+            href={tracking.url}
+            style={{ color: 'black', textDecoration: 'underline' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tracking.number}
+          </Link>
+        )}
+      </Typography>
+    </>
+  ));
 };
 
 const OrderCartSummary = ({ order }) => (order ? <CartSummary order={order} /> : null);
@@ -158,24 +163,19 @@ const OrderSummary = ({
   };
 
   const paymentMethod = paymentData && paymentData.method ? paymentData.method : 'creditCard';
-  const cardType =
-    paymentMethod === 'creditCard' && paymentData && paymentData.cardType
-      ? paymentData.cardType
-      : '';
-  const last4 =
-    paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
+  const cardType = paymentMethod === 'creditCard' && paymentData && paymentData.cardType ? paymentData.cardType : '';
+  const last4 = paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
   const paymentEmail = 'paypal' && paymentData && paymentData.email ? paymentData.email : '';
 
   const { phone } = billingAddress;
 
-  const shouldShowSetPasswordForm =
-  order.hasOwnProperty('account') &&
-  order.account.hasOwnProperty('passwordSet') &&
-  order.account.hasOwnProperty('isGuest') &&
-  !order.account.passwordSet &&
-  order.account.isGuest
-    ? true
-    : false;
+  const shouldShowSetPasswordForm = !!(
+    order.hasOwnProperty('account') &&
+    order.account.hasOwnProperty('passwordSet') &&
+    order.account.hasOwnProperty('isGuest') &&
+    !order.account.passwordSet &&
+    order.account.isGuest
+  );
 
   return (
     <Box className={classes.paper}>
@@ -190,14 +190,15 @@ const OrderSummary = ({
       </Box>
       {orderStatus === 'canceled' ? (
         <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong> was cancelled and did
-          not ship. A refund was issued back to the payment used for the order.
+          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          <br></br>
+          Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
-        <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
-        </Typography>
-      )}
+          <Typography className={classes.textFreight}>
+            Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          </Typography>
+        )}
       <br />
       {orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
@@ -219,8 +220,8 @@ const OrderSummary = ({
           Cancel Order
         </CommonButton>
       ) : (
-        ''
-      )}
+          ''
+        )}
       {shouldShowSetPasswordForm && (
         <GuestOrderSetPasswordForm
           title={
@@ -232,7 +233,7 @@ const OrderSummary = ({
           onSubmit={onGuestOrderPasswordSubmit}
           isSuccessful={guestPasswordFormSubmitted}
           handleOrderDetail={false}
-          style={{marginBottom:'50px'}}
+          style={{ marginBottom: '50px' }}
         />
       )}
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
