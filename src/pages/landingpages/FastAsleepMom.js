@@ -219,9 +219,9 @@ const FastAsleepMom = ({ history, location }) => {
             <Container>
                 <Grid container>
                     <Grid item xs={12} md={8} className="smaller-container">
-                        <h1>More Flowers & Chocolate? Not This Year. What Moms
+                        <h1>Flowers & Chocolate? Not This Year. What Moms
               <em> Really</em> Want Is a Good Night's Sleep</h1>
-                        <h3>Get the fix that will help you (or her) fall asleep faster, stay asleep longer and wake up feeling amazing</h3>
+                        <h3>The fix for falling asleep faster, staying asleep longer and waking up feeling amazing</h3>
                     </Grid>
                 </Grid>
                 <Grid container>
@@ -275,8 +275,8 @@ const FastAsleepMom = ({ history, location }) => {
                                 There's no way around it—parents, especially moms, just don't get enough sleep.
                             </p>
                             <p>
-                                But if you’re among the estimated 50-70 million Americans who struggle with occasional sleeplessness,
-                know that sleeping well is easier said than done.<sup>1</sup>
+                                And if you’re among the estimated 50-70 million Americans who struggle with occasional sleeplessness,
+                you know that sleeping well is easier said than done.<sup>1</sup>
                             </p>
                             <p>
                                 Whether your mind starts racing as soon as your head hits the pillow… or you find yourself wide awake in
