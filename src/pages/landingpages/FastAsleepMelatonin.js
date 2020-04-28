@@ -378,6 +378,7 @@ const FastAsleepMelatonin = ({ history, location }) => {
                     onClick={getSelectVariant}
                     onExited={closeOutOfStockDialog}
                     buttonClass="green-btn"
+                    discount_text="15%"
                     product_img={state.product_img}
                     product_name={state.product_name}
                     product_category={state.product_category}
@@ -535,6 +536,7 @@ const FastAsleepMelatonin = ({ history, location }) => {
                     onClick={getSelectVariant}
                     onExited={closeOutOfStockDialog}
                     buttonClass="blue-btn"
+                    discount_text="15%"
                     product_img={state.product_img}
                     product_name={state.product_name}
                     product_category={state.product_category}
@@ -867,6 +869,7 @@ const FastAsleepMelatonin = ({ history, location }) => {
                     onClick={getSelectVariant}
                     onExited={closeOutOfStockDialog}
                     buttonClass="black-btn"
+                    discount_text="15%"
                     product_img={state.product_img}
                     product_name={state.product_name}
                     product_category={state.product_category}
