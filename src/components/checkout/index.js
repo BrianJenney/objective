@@ -278,9 +278,7 @@ const Checkout = ({
           },
           shippingAddress: {
             ...paymentDetailsPayload.details.shippingAddress,
-            email: paymentDetailsPayload.details.email,
-            isDefault: true,
-            saveToAccount: true
+            email: paymentDetailsPayload.details.email
           },
           shippingMethod:
             cart.shipping && cart.shipping.options && cart.shipping.code
