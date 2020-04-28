@@ -22,7 +22,6 @@ const List = ({ data, template, type, symbol }) => {
       {symbol ? (
         <ul>
           {data.value.map((item, i) => {
-            console.log('HERE', item);
             return (
               <li
                 key={i}
