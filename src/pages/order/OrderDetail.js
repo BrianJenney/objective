@@ -73,6 +73,10 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     color: '#000'
+  },
+  cancelledText: {
+    fontFamily: 'p22-underground, sans-serif',
+    color: '#d0021b'
   }
 }));
 
@@ -151,8 +155,9 @@ const OrderSummary = ({
       </Box>
       {orderStatus === 'canceled' ? (
         <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong> was cancelled and did
-          not ship. A refund was issued back to the payment used for the order.
+          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          <br></br>
+          Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
           <Typography className={classes.textFreight}>
