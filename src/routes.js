@@ -90,7 +90,7 @@ export default [
     component: OrderConfirmationPage
   },
   {
-    path: '/track-order',
+    path: '/order-tracker',
     auth: false,
     exact: true,
     component: TrackOrderPage
