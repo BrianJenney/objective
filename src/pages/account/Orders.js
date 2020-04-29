@@ -9,7 +9,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
-import { formatCurrency, formatDateTime, getTracking } from '../../utils/misc';
+import { formatCurrency, formatDateTime, getTracking, getShippingAndTracking } from '../../utils/misc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
 const columns = [
@@ -25,18 +25,16 @@ const columns = [
     options: {
       filter: false,
       sort: false,
-      customBodyRender: (value, tableMeta, updateValue) => {
-        return (
-          <Button
-            style={{ lineHeight: 0, paddingLeft: '1px' }}
-            color="primary"
-            component={AdapterLink}
-            to={`/orders/${tableMeta.rowData[0]}`}
-          >
-            {value}
-          </Button>
-        );
-      }
+      customBodyRender: (value, tableMeta, updateValue) => (
+        <Button
+          style={{ lineHeight: 0, paddingLeft: '1px' }}
+          color="primary"
+          component={AdapterLink}
+          to={`/orders/${tableMeta.rowData[0]}`}
+        >
+          {value}
+        </Button>
+      )
     }
   },
   {
@@ -93,17 +91,17 @@ const columns = [
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const rowData = tableMeta.rowData;
+        const { rowData } = tableMeta;
         const trackings = getTracking(rowData[4], rowData[3]);
         return trackings
           ? trackings.map(tracking => (
-              <>
-                <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">
-                  {tracking.number}
-                </Link>
-                <br />
-              </>
-            ))
+            <>
+              <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">
+                {tracking.number}
+              </Link>
+              <br />
+            </>
+          ))
           : null;
       }
     }
@@ -143,6 +141,11 @@ const AccountOrders = ({ currentUser: { data } }) => {
   }, []);
 
   for (const key in data.orders) {
+    const { statusStepper } = getShippingAndTracking(data.orders[key]);
+    // console.log('testing-STT', statusStepper.deliveredStatus);
+    if (statusStepper.deliveredStatus === 'DELIVERED') {
+      data.orders[key].status = 'delivered';
+    }
     if (order && data.orders[key]._id === order._id) {
       data.orders[key].status = order.status;
     }
@@ -166,62 +169,60 @@ const AccountOrders = ({ currentUser: { data } }) => {
               columns={columns}
               isLoading={isLoading}
               moreOptions={{
-                customRowRender: (d, dataIndex, rowIndex) => {
-                  return (
-                    <tr className="account-orders-mobile-row">
-                      <td>
-                        <Grid container direction="row">
-                          <Grid item xs>
-                            <Typography className="order-meta-title-item">ORDER NUMBER</Typography>
-                            <Typography className="order-meta-item-info">
-                              <Button
-                                color="primary"
-                                component={AdapterLink}
-                                to={`/orders/${data.orders[dataIndex]._id}`}
-                              >
-                                {data.orders[dataIndex].orderNumber}
-                              </Button>
-                            </Typography>
-                          </Grid>
+                customRowRender: (d, dataIndex, rowIndex) => (
+                  <tr className="account-orders-mobile-row">
+                    <td>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">ORDER NUMBER</Typography>
+                          <Typography className="order-meta-item-info">
+                            <Button
+                              color="primary"
+                              component={AdapterLink}
+                              to={`/orders/${data.orders[dataIndex]._id}`}
+                            >
+                              {data.orders[dataIndex].orderNumber}
+                            </Button>
+                          </Typography>
                         </Grid>
+                      </Grid>
 
-                        <Grid container direction="row">
-                          <Grid item xs>
-                            <Typography className="order-meta-title-item">ORDER DATE</Typography>
-                            <Typography className="order-meta-item-info" style={{ verticalAlign: 'top' }}>
-                              {formatDateTime(data.orders[dataIndex].createdAt, false)}
-                            </Typography>
-                          </Grid>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">ORDER DATE</Typography>
+                          <Typography className="order-meta-item-info" style={{ verticalAlign: 'top' }}>
+                            {formatDateTime(data.orders[dataIndex].createdAt, false)}
+                          </Typography>
                         </Grid>
+                      </Grid>
 
-                        <Grid container direction="row">
-                          <Grid item xs>
-                            <Typography className="order-meta-title-item">STATUS</Typography>
-                            <Typography className="order-meta-item-info">{data.orders[dataIndex].status}</Typography>
-                          </Grid>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">STATUS</Typography>
+                          <Typography className="order-meta-item-info">{data.orders[dataIndex].status}</Typography>
                         </Grid>
+                      </Grid>
 
-                        <Grid container direction="row">
-                          <Grid item xs>
-                            <Typography className="order-meta-title-item">TRACKING INFORMATION</Typography>
-                            <Typography className="order-meta-item-info">
-                              <Button
-                                color="primary"
-                                component={AdapterLink}
-                                to={`/transactions/${data.orders[dataIndex]._id}`}
-                              />
-                            </Typography>
-                          </Grid>
+                      <Grid container direction="row">
+                        <Grid item xs>
+                          <Typography className="order-meta-title-item">TRACKING INFORMATION</Typography>
+                          <Typography className="order-meta-item-info">
+                            <Button
+                              color="primary"
+                              component={AdapterLink}
+                              to={`/transactions/${data.orders[dataIndex]._id}`}
+                            />
+                          </Typography>
                         </Grid>
-                      </td>
-                    </tr>
-                  );
-                }
+                      </Grid>
+                    </td>
+                  </tr>
+                )
               }}
             />
           ) : (
-            <DataTable title={xs ? '' : 'Your Orders'} data={data.orders} columns={columns} isLoading={isLoading} />
-          )}
+              <DataTable title={xs ? '' : 'Your Orders'} data={data.orders} columns={columns} isLoading={isLoading} />
+            )}
         </Grid>
       </Grid>
     </ScrollToTop>
