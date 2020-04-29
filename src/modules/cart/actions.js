@@ -154,14 +154,14 @@ export const receivedFetchCart = cart => ({
 
 export const requestCreateCart = () => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
-  let params = {
+  const params = {
     data: {
       storeCode: getState().storefront.code,
       catalogId: getState().storefront.catalogId
     }
   };
 
-  const account = getState().account;
+  const { account } = getState();
 
   if (account.data && account.data.account_jwt) {
     const accountId = jwt.decode(account.data.account_jwt).account_id;
@@ -247,7 +247,7 @@ export const receivedPatchCart = cart => ({
   payload: cart
 });
 
-export const setCartDrawerOpened = (open, trackCartDismissed = true) => (dispatch, getState) => {
+export const setCartDrawerOpened = open => (dispatch, getState) => {
   const { cart } = getState();
 
   if (cart.setCartDrawerOpened != open) {
@@ -265,28 +265,6 @@ export const setCartDrawerOpened = (open, trackCartDismissed = true) => (dispatc
         brand: cart.storeCode
       });
     });
-
-    if (open) {
-      // @segment Cart Viewed
-      if (!cart.cartDrawerOpened) {
-        window.analytics.track('Cart Viewed', {
-          cart_id: cart._id,
-          num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
-          products: orderItemsTransformed
-        });
-      }
-    } else {
-      // @segment Cart Dismissed
-      if (cart.cartDrawerOpened) {
-        if (trackCartDismissed) {
-          window.analytics.track('Cart Dismissed', {
-            cart_id: cart._id,
-            num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
-            products: orderItemsTransformed
-          });
-        }
-      }
-    }
   }
 
   dispatch({
