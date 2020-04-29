@@ -2,6 +2,9 @@ import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
+  REQUEST_CANCEL_ORDER,
+  RECEIVED_CANCEL_ORDER_SUCCESS,
+  RECEIVED_CANCEL_ORDER_FAILURE,
   REQUEST_FIND_ALL_ORDERS,
   RECEIVED_FIND_ALL_ORDERS,
   REQUEST_GET_ORDER,
@@ -46,6 +49,24 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case RESET_ORDER_STATE:
       return { ...state, isLoading: false, transactionError: null };
+    case REQUEST_CANCEL_ORDER:
+      return {
+        ...state
+      };
+    case RECEIVED_CANCEL_ORDER_SUCCESS:
+      return {
+        ...state,
+        order: action.payload,
+        isLoading: false,
+        transactionError: false
+      };
+    case RECEIVED_CANCEL_ORDER_FAILURE:
+      return {
+        ...state,
+        order: action.payload,
+        isLoading: false,
+        transactionError: true
+      };
     default:
       return state;
   }

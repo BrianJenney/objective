@@ -3,9 +3,9 @@ import {
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_CANCEL_ORDER,
-  RECEIVED_CANCEL_ORDER,
+  RECEIVED_CANCEL_ORDER_SUCCESS,
+  RECEIVED_CANCEL_ORDER_FAILURE,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
-  RECEIVED_FIND_ORDERS_BY_ACCOUNT,
   REQUEST_GET_ORDER,
   RECEIVED_GET_ORDER,
   RESET_ORDER_STATE
@@ -134,7 +134,17 @@ export const requestCancelOrder = orderId => async (dispatch, getState) => {
   });
 
   const { client: stompClient, replyTo } = getState().stomp;
-  const account_jwt = getState().account.data.account_jwt;
+  let { account_jwt } = getState().account.data;
+  if (!account_jwt) {
+    let orderState = getState().order;
+    if (
+      orderState.hasOwnProperty('order') &&
+      orderState.order.hasOwnProperty('account') &&
+      orderState.order.account.hasOwnProperty('account_jwt')
+    ) {
+      account_jwt = orderState.order.account.account_jwt;
+    }
+  }
   const params = {
     data: { orderId },
     params: { account_jwt }
@@ -150,6 +160,68 @@ export const requestCancelOrder = orderId => async (dispatch, getState) => {
     },
     payload
   );
+};
+
+export const receivedCancelOrderSuccess = order => async (dispatch, getState) => {
+  dispatch({
+    type: RECEIVED_CANCEL_ORDER_SUCCESS,
+    payload: order
+  });
+
+  // @segment Cancel Order Completed Event
+  // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
+  const orderItemsTransformed = [];
+  order.items.forEach(item => {
+    orderItemsTransformed.push({
+      brand: order.storeCode,
+      image_url: `https:${item.variant_img}`,
+      name: item.variant_name,
+      price: item.unit_price,
+      product_id: item.variant_id,
+      quantity: item.quantity,
+      sku: item.sku,
+      variant: item.variant_name
+    });
+  });
+
+  window.analytics.track('Order Cancelled', {
+    billing_city: order.billingAddress.city,
+    billing_country: order.billingAddress.country,
+    billing_state: order.billingAddress.state,
+    billing_zip: order.billingAddress.zipcode,
+    coupon: order.promo && order.promo.code ? order.promo.code : '',
+    currency: 'USD',
+    discount: order.discount,
+    email: order.email,
+    est_ship_date: order.shippingMethod.deliveryEstimate,
+    item_count: order.items.length,
+    order_date: order.transactions.transactionDate,
+    order_id: order.orderNumber,
+    order_link: `https://objectivewellness.com/orders/${order._id}`,
+    payment_method: 'Credit Card',
+    payment_method_detail: order.paymentData.cardType,
+    products: orderItemsTransformed,
+    shipping: order.shippingMethod.price,
+    shipping_city: order.shippingAddress.city,
+    shipping_country: order.shippingAddress.country,
+    shipping_state: order.shippingAddress.state,
+    shipping_zip: order.shippingAddress.zipcode,
+    subtotal: order.subtotal,
+    tax: order.tax,
+    total: order.total
+  });
+};
+
+export const receivedCancelOrderFailure = order => async (dispatch, getState) => {
+  dispatch({
+    type: RECEIVED_CANCEL_ORDER_FAILURE,
+    payload: order
+  });
+  // @segment - Cancel Order Failed Event
+  window.analytics.track('Order Cancel Failed', {
+    order_id: order.orderNumber,
+    error_message: order
+  });
 };
 
 export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {

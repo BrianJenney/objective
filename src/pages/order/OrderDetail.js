@@ -119,6 +119,7 @@ const OrderSummary = ({
   paymentData,
   classes,
   orderId,
+  orderNumber,
   orderEmail,
   orderRef,
   createdAt,
@@ -210,7 +211,7 @@ const OrderSummary = ({
           }}
           onClick={() => {
             if (orderStatus === 'placed') {
-              cancelOrder(orderRef, dispatch);
+              cancelOrder(orderRef, orderNumber, dispatch);
             }
           }}
         >
@@ -291,6 +292,7 @@ const OrderDetail = () => {
             <Grid item xs={mainWidth}>
               <OrderSummary
                 account={account}
+                orderNumber={order.orderNumber}
                 orderId={order.orderNumber}
                 orderRef={order._id}
                 orderEmail={order.email}
