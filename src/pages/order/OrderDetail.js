@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getStatusStepper = statusStepper => {
-  // const { deliveredStatus } = statusStepper;
   const processedDate = formatDateTime(statusStepper.processedDate, false);
   const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
   const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
@@ -93,7 +92,6 @@ const getStatusStepper = statusStepper => {
     Shipped: shippedDate,
     Delivered: deliveredDate,
     Cancelled: cancelledDate
-    // deliveredStatus
   };
 };
 
