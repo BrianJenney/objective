@@ -75,47 +75,50 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     color: '#000'
+  },
+  cancelledText: {
+    fontFamily: 'p22-underground, sans-serif',
+    color: '#d0021b'
   }
 }));
 
 const getStatusStepper = statusStepper => {
+  const { deliveredStatus } = statusStepper;
   const processedDate = formatDateTime(statusStepper.processedDate, false);
   const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
   const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
   const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
+
   return {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate
+    Cancelled: cancelledDate,
+    deliveredStatus
   };
 };
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-  return tracking.map(tracking => {
-    return (
-      <>
-        <Typography className={classes.text} pt={2}>
-          {tracking && (
-            <Link
-              href={tracking.url}
-              style={{ color: 'black', textDecoration: 'underline' }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tracking.number}
-            </Link>
-          )}
-        </Typography>
-      </>
-    );
-  });
+  return tracking.map(tracking => (
+    <>
+      <Typography className={classes.text} pt={2}>
+        {tracking && (
+          <Link
+            href={tracking.url}
+            style={{ color: 'black', textDecoration: 'underline' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tracking.number}
+          </Link>
+        )}
+      </Typography>
+    </>
+  ));
 };
 
-const OrderCartSummary = ({ order }) => {
-  return order ? <CartSummary order={order} /> : null;
-};
+const OrderCartSummary = ({ order }) => (order ? <CartSummary order={order} /> : null);
 
 const cancelOrder = (orderId, orderNumber, dispatch) => {
   dispatch(requestCancelOrder(orderId, orderNumber));
@@ -192,20 +195,21 @@ const OrderSummary = ({
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
-          <span>{'Return to order history'}</span>
+          <span>Return to order history</span>
         </RouterLink>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
       {orderStatus === 'canceled' ? (
         <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong> was cancelled and did
-          not ship. A refund was issued back to the payment used for the order.
+          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          <br></br>
+          Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
-        <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
-        </Typography>
-      )}
+          <Typography className={classes.textFreight}>
+            Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          </Typography>
+        )}
       <br />
       {orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
@@ -224,7 +228,7 @@ const OrderSummary = ({
             }
           }}
         >
-          {'Cancel Order'}
+          Cancel Order
         </CommonButton>
       ) : (
         ''

@@ -177,7 +177,7 @@ const ProductDetail = () => {
     }
   };
 
-  //Google Optimize
+  // Google Optimize
   const optimize = async () => {
     await window.dataLayer.push({ event: 'optimize.activate' });
   };
@@ -261,7 +261,7 @@ const ProductDetail = () => {
                           <img src={benefit.fields.icon.fields.file.url} alt="" />
                         </Box>
                         <Box className="text">
-                          <Box>{benefit.fields.benefitText}</Box>
+                          <Box className={productColor}>{benefit.fields.benefitText}</Box>
                         </Box>
                       </Box>
                     ))}
