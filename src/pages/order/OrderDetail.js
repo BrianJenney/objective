@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -13,9 +13,11 @@ import Container from '@material-ui/core/Container';
 import LeftArrowIcon from '@material-ui/icons/ChevronLeft';
 
 import { Address, Button as CommonButton } from '../../components/common';
+import { GuestOrderSetPasswordForm } from '../../components/forms';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import { formatDateTime, getShippingAndTracking } from '../../utils/misc';
+import { requestChangePassword, receivedLoginSuccess } from '../../modules/account/actions';
 
 import StatusStepper from './StatusStepper';
 
@@ -127,17 +129,61 @@ const OrderSummary = ({
   classes,
   orderId,
   orderNumber,
+  orderEmail,
+  orderRef,
   createdAt,
   addressesWidth,
   xs,
   statusStepper,
   tracking,
-  orderStatus
+  orderStatus,
+  order
 }) => {
-  const { cardType, last4 } = paymentData;
-  const { email } = account.data;
-  const { phone } = billingAddress;
   const dispatch = useDispatch();
+  const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
+  const onGuestOrderPasswordSubmit = (values, actions) => {
+    dispatch(
+      requestChangePassword(
+        order.account.account_jwt,
+        {
+          currentPassword: '',
+          newPassword1: values.password,
+          newPassword2: values.password,
+          skipComparison: true,
+          isGuest: false,
+          passwordSet: true
+        },
+        actions
+      )
+    );
+
+    order.account.isGuest = false;
+    order.account.passwordSet = true;
+
+    dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
+
+    setGuestPasswordFormSubmitted(true);
+  };
+
+  const paymentMethod = paymentData && paymentData.method ? paymentData.method : 'creditCard';
+  const cardType =
+    paymentMethod === 'creditCard' && paymentData && paymentData.cardType
+      ? paymentData.cardType
+      : '';
+  const last4 =
+    paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
+  const paymentEmail = 'paypal' && paymentData && paymentData.email ? paymentData.email : '';
+
+  const { phone } = billingAddress;
+
+  const shouldShowSetPasswordForm =
+  order.hasOwnProperty('account') &&
+  order.account.hasOwnProperty('passwordSet') &&
+  order.account.hasOwnProperty('isGuest') &&
+  !order.account.passwordSet &&
+  order.account.isGuest
+    ? true
+    : false;
 
   return (
     <Box className={classes.paper}>
@@ -183,20 +229,36 @@ const OrderSummary = ({
       ) : (
         ''
       )}
+      {shouldShowSetPasswordForm && (
+        <GuestOrderSetPasswordForm
+          title={
+            !guestPasswordFormSubmitted
+              ? 'Add a password for faster access next time'
+              : 'Success! You can now login to track your order.'
+          }
+          submitLabel={!guestPasswordFormSubmitted ? 'Remember Me' : 'Check Order Status'}
+          onSubmit={onGuestOrderPasswordSubmit}
+          isSuccessful={guestPasswordFormSubmitted}
+          handleOrderDetail={false}
+          style={{marginBottom:'50px'}}
+        />
+      )}
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
-        <Grid item xs={addressesWidth}>
+        <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
           <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>Billing Information</StyledSmallCaps>
-            <Address address={billingAddress} email={email} phone={phone || null} />
+            <Address address={billingAddress} email={orderEmail} phone={phone || null} />
           </Box>
         </Grid>
         <Grid item xs={addressesWidth}>
-          <Box paddingLeft={xs ? 0 : 3} borderTop={xs ? 1 : 0} paddingBottom={3}>
+          <Box paddingLeft={xs ? 0 : paymentMethod !== 'paypal' ? 3 : 0} borderTop={xs ? 1 : 0} paddingBottom={3}>
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>Shipping Information</StyledSmallCaps>
             <Address address={shippingAddress} />
             {tracking && (
               <Box className={classes.textTracking}>
-                <Typography className={classes.text}>Tracking #:</Typography>
+                <Typography className={classes.text} pt={2}>
+                  Tracking #:
+                </Typography>
                 <TrackingInfo className={classes.text} tracking={tracking} />
               </Box>
             )}
@@ -206,7 +268,8 @@ const OrderSummary = ({
       <Grid item xs={addressesWidth}>
         <StyledSmallCaps style={{ padding: '24px 0 16px' }}>Payment</StyledSmallCaps>
         <Typography className={classes.text}>
-          {cardType} - ***{last4}
+          {paymentMethod === 'creditCard' ? `${cardType} - ***${last4}` : ''}
+          {paymentMethod === 'paypal' ? `PayPal: ${paymentEmail}` : ''}
         </Typography>
       </Grid>
     </Box>
@@ -239,7 +302,9 @@ const OrderDetail = () => {
               <OrderSummary
                 account={account}
                 orderNumber={order.orderNumber}
-                orderId={order._id}
+                orderId={order.orderNumber}
+                orderRef={order._id}
+                orderEmail={order.email}
                 createdAt={formatDateTime(order.createdAt, false)}
                 shippingAddress={order.shippingAddress}
                 billingAddress={order.billingAddress}
@@ -250,6 +315,7 @@ const OrderDetail = () => {
                 xs={xs}
                 tracking={tracking}
                 statusStepper={status}
+                order={order}
               />
             </Grid>
             <Grid item xs={cartWidth}>
