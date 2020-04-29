@@ -142,8 +142,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
 
   for (const key in data.orders) {
     const { statusStepper } = getShippingAndTracking(data.orders[key]);
-    // console.log('testing-STT', statusStepper.deliveredStatus);
-    if (statusStepper.deliveredStatus === 'DELIVERED') {
+    if (statusStepper.status === 'delivered') {
       data.orders[key].status = 'delivered';
     }
     if (order && data.orders[key]._id === order._id) {

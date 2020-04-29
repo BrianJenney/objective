@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getSteps = (status, statusStepper) => {
-  const { deliveredStatus } = statusStepper;
   let step = 1;
   let steps = [];
 
@@ -97,7 +96,7 @@ const getSteps = (status, statusStepper) => {
     if (status === 'shipped') {
       step = 2;
     }
-    if ((status === 'shipped' && deliveredStatus === 'DELIVERED') || status === 'delivered') {
+    if (status === 'delivered') {
       step = 3;
     }
   }

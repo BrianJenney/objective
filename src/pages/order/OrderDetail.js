@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getStatusStepper = statusStepper => {
-  const { deliveredStatus } = statusStepper;
+  // const { deliveredStatus } = statusStepper;
   const processedDate = formatDateTime(statusStepper.processedDate, false);
   const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
   const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
@@ -90,8 +90,8 @@ const getStatusStepper = statusStepper => {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate,
-    deliveredStatus
+    Cancelled: cancelledDate
+    // deliveredStatus
   };
 };
 
@@ -236,6 +236,7 @@ const OrderDetail = () => {
   if (!order) return null;
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
+  order.status = statusStepper.status;
 
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
