@@ -17,19 +17,6 @@ import { Panel, Dialog } from '../../components/common';
 
 const plusIcon = require('../../assets/images/plus_symbol.svg');
 const magnifierIcon = require('../../assets/images/magnifier.svg');
-const contentfulOptions = {
-  renderNode: {
-    [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=555&fm=jpg&q=50';
-
-      if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=50';
-      }
-
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
-    }
-  }
-};
 
 const ProductAccordion = ({ content }) => {
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
@@ -46,6 +33,34 @@ const ProductAccordion = ({ content }) => {
   };
   const openClinicalResultsImageModal = () => setImageModalOpen(true);
   const closeClinicalResultsImageModal = () => setImageModalOpen(false);
+  const contentfulOptions = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: node => {
+        let params = '?w=555&fm=jpg&q=50';
+
+        if (window.screen.width < 768) {
+          params = '?w=450&fm=jpg&q=50';
+        }
+
+        return clinicalResultsEnlargedImage ? (
+          clinicalResultsEnlargedImage && (
+            <Box className="img-magnifier-container">
+              <img
+                className="img-clinical-result"
+                src={node.data.target.fields.file.url + params}
+                alt={node.data.target.fields.title}
+              />
+              <IconButton onClick={openClinicalResultsImageModal}>
+                <img src={magnifierIcon} alt="" />
+              </IconButton>
+            </Box>
+          )
+        ) : (
+          <img className="" src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+        );
+      }
+    }
+  };
   const {
     clinicalResults,
     clinicalResultsEnlargedImage,
@@ -69,14 +84,7 @@ const ProductAccordion = ({ content }) => {
       className: 'clinical-results',
       content: (
         <>
-          <Box className="contentful-container">{documentToReactComponents(clinicalResults, contentfulOptions)}</Box>
-          {clinicalResultsEnlargedImage && (
-            <Box className="magnifier-container">
-              <IconButton onClick={openClinicalResultsImageModal}>
-                <img src={magnifierIcon} alt="" />
-              </IconButton>
-            </Box>
-          )}
+          <Box>{documentToReactComponents(clinicalResults, contentfulOptions)}</Box>
           <Dialog onClose={closeClinicalResultsImageModal} open={imageModalOpen}>
             <Box mt="-51.5px">
               {clinicalResultsEnlargedImage && (
