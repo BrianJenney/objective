@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '55px',
-    fontWeight: 'bold',
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
     paddingBottom: theme.spacing(4),
