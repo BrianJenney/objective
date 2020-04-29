@@ -133,7 +133,17 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
   });
 
   const { client: stompClient, replyTo } = getState().stomp;
-  const { account_jwt } = getState().account.data;
+  let { account_jwt } = getState().account.data;
+  if (!account_jwt) {
+    let orderState = getState().order;
+    if (
+      orderState.hasOwnProperty('order') &&
+      orderState.order.hasOwnProperty('account') &&
+      orderState.order.account.hasOwnProperty('account_jwt')
+    ) {
+      account_jwt = orderState.order.account.account_jwt;
+    }
+  }
   const params = {
     data: { orderId },
     params: { account_jwt }
@@ -217,8 +227,6 @@ export const receivedCancelOrderFailure = order => async (dispatch, getState) =>
     error_message: order
   });
 };
-
-
 
 export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;

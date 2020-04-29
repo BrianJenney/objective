@@ -224,7 +224,7 @@ const OrderSummary = ({
           }}
           onClick={() => {
             if (orderStatus === 'placed') {
-              cancelOrder(orderId, orderNumber, dispatch);
+              cancelOrder(orderRef, orderNumber, dispatch);
             }
           }}
         >
