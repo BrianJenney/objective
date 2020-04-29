@@ -79,8 +79,12 @@ const BlogVariantCard = ({ product, variant, key }) => {
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
   }, [setOpenEmailConfirmation]);
-  let styleMap = {};
 
+  if (!variant) {
+    return null;
+  }
+
+  let styleMap = {};
   if (variant.productCategory === 'skin') {
     styleMap = {
       container: {
