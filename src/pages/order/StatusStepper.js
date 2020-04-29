@@ -127,7 +127,9 @@ const StatusStepper = ({ status, statusStepper }) => {
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map(label => (
           <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+            <StepLabel>
+              {label} {statusStepper[label]}
+            </StepLabel>
           </Step>
         ))}
       </Stepper>
