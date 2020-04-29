@@ -405,7 +405,7 @@ const FastAsleepIngredients = ({ history, location }) => {
                 Saffron contains several biologically active antioxidant compounds, including crocin, picrocrocin and
                 saffranal. Recent studies show that these compounds help support a normal inflammatory response, reduce
                 levels of the stress hormone cortisol, and can help balance levels of important mood- and
-                sleep-regulating brain chemicals like serotonin, dopamine and glutamate.11-16<sup>*</sup>
+                sleep-regulating brain chemicals like serotonin, dopamine and glutamate.<sup>11-16*</sup>
               </p>
               <div className="beige-box adds xs-only">
                 <div className="box-header">All of This Adds Up to Profound benefits:</div>
@@ -755,7 +755,7 @@ const FastAsleepIngredients = ({ history, location }) => {
               natural sleep support to the next level.
             </p>
             <p>
-              Fast Asleep harnesses the latest research findings on PharmaGABA™ and Saffr’Activ saffron to bring you an
+              Fast Asleep harnesses the latest research findings on PharmaGABA<sup>®</sup> and Saffr’Activ<sup>®</sup> saffron to bring you an
               amazingly effective support for deep, restorative sleep—and a treat you’ll look forward to nightly.
               <sup>*</sup>
             </p>
