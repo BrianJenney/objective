@@ -169,6 +169,12 @@ const OrderSummary = ({
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
 
+      {orderStatus === 'canceled' ? (
+        <Typography className={classes.textFreight} style={{ padding: '60px 0' }}>
+          Have questions about your order? You can reach customer service at (800) 270-5771.
+        </Typography>
+      ) : null}
+
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
