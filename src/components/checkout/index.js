@@ -624,11 +624,9 @@ const Checkout = ({
                         setPayload={setPayload}
                         accountJwt={account_jwt}
                       />
-                    </Grid>
-                  ) : (
-                      ''
-                    )}
-                </Grid>
+                    </Panel>
+                
+                </div>
                 {!xs && currentUser ? (
                   <Grid item xs={12} md={4} className="left-side">
                     <CartDrawer
@@ -671,6 +669,7 @@ const Checkout = ({
                   <TransactionMessage orderError={orderError} />
                 </MuiDialogContent>
               </Dialog>
+              </Grid>
             </Box>
           </Container>
         </Box>
