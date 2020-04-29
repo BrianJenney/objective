@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '55px',
-    fontWeight: 'bold',
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
     paddingBottom: theme.spacing(4),
@@ -83,7 +82,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getStatusStepper = statusStepper => {
-  const { deliveredStatus } = statusStepper;
+  // const { deliveredStatus } = statusStepper;
   const processedDate = formatDateTime(statusStepper.processedDate, false);
   const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
   const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
@@ -93,8 +92,8 @@ const getStatusStepper = statusStepper => {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate,
-    deliveredStatus
+    Cancelled: cancelledDate
+    // deliveredStatus
   };
 };
 
@@ -204,6 +203,12 @@ const OrderSummary = ({
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
 
+      {orderStatus === 'canceled' ? (
+        <Typography className={classes.textFreight} style={{ padding: '60px 0' }}>
+          Have questions about your order? You can reach customer service at (800) 270-5771.
+        </Typography>
+      ) : null}
+
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
@@ -283,6 +288,7 @@ const OrderDetail = () => {
   if (!order) return null;
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
+  order.status = statusStepper.status;
 
   return (
     <Box bgcolor="rgba(244,240,238, 0.5)">
