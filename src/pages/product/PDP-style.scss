@@ -146,6 +146,13 @@ html,
             right: 0px;
           }
         }
+        h2 {
+          text-transform: uppercase;
+          line-height: 2rem;
+          margin: 0;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
           font-size: 16px;
@@ -156,6 +163,13 @@ html,
         }
       }
       .ingredients {
+        h2 {
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 2rem;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
           font-size: 16px;
@@ -200,6 +214,13 @@ html,
         }
       }
       .faqs {
+        h2 {
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 2rem;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
           font-size: 16px;
