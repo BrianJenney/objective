@@ -136,12 +136,11 @@ export const getTracking = (items, status) => {
 };
 
 export const getShippingAndTracking = order => {
-  const { status, items, shipTracking, createdAt, updatedAt } = order;
+  let { status, items, shipTracking, createdAt, updatedAt } = order;
   let tracking = null;
   const processedDate = createdAt;
   let shippedDate = '';
   let deliveredDate = '';
-  let deliveredStatus = '';
   const item = items[0];
   if (item.tracking_list && shipTracking) {
     tracking = getTracking(items, status);
@@ -150,18 +149,18 @@ export const getShippingAndTracking = order => {
       shippedDate = shipTracking[trackingNo].tracking_status.object_created;
 
       if (shipTracking[trackingNo].tracking_status.status === 'DELIVERED') {
-        deliveredStatus = shipTracking[trackingNo].tracking_status.status;
+        status = 'delivered';
         deliveredDate = shipTracking[trackingNo].tracking_status.status_date;
       }
     }
   }
+
   const statusStepper = {
     status,
     processedDate,
     shippedDate,
     deliveredDate,
-    updatedAt,
-    deliveredStatus
+    updatedAt
   };
   return {
     tracking,

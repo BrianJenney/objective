@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getSteps = (status, statusStepper) => {
-  const { deliveredStatus } = statusStepper;
   let step = 1;
   let steps = [];
 
@@ -97,7 +96,7 @@ const getSteps = (status, statusStepper) => {
     if (status === 'shipped') {
       step = 2;
     }
-    if ((status === 'shipped' && deliveredStatus === 'DELIVERED') || status === 'delivered') {
+    if (status === 'delivered') {
       step = 3;
     }
   }
@@ -128,7 +127,9 @@ const StatusStepper = ({ status, statusStepper }) => {
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map(label => (
           <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+            <StepLabel>
+              {label} {statusStepper[label]}
+            </StepLabel>
           </Step>
         ))}
       </Stepper>
