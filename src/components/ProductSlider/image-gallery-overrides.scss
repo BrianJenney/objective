@@ -371,9 +371,8 @@
 .image-gallery-bullets .image-gallery-bullet {
   appearance: none;
   background-color: transparent;
-  border: 1px solid #fff;
+  border: 1px solid #000;
   border-radius: 50%;
-  box-shadow: 0 1px 0 #1a1a1a;
   cursor: pointer;
   display: inline-block;
   margin: 0 5px;
@@ -388,14 +387,8 @@
   }
 }
 
-@media (max-width: 480px) {
-  .image-gallery-bullets .image-gallery-bullet {
-    padding: 2.7px;
-  }
-}
-
 .image-gallery-bullets .image-gallery-bullet.active {
-  background: #fff;
+  background: #000;
 }
 
 .image-gallery-thumbnails-wrapper {
