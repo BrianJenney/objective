@@ -128,31 +128,30 @@ html,
         margin-bottom: 0 !important;
       }
       .clinical-results {
-        .contentful-container {
-          img {
-            width: 260px;
-          }
-        }
-        .magnifier-container {
+        .img-magnifier-container {
           position: relative;
+          width: 260px;
 
           .MuiIconButton-root:hover {
             background-color: transparent;
           }
 
+          .img-clinical-result {
+            display: block;
+            width: 260px;
+          }
           button {
             position: absolute;
-            width: 260px;
-            height: 260px;
-            bottom: 5px;
+            bottom: 0px;
+            right: 0px;
           }
-          img {
-            width: 18px;
-            height: 16px;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-          }
+        }
+        h2 {
+          text-transform: uppercase;
+          line-height: 2rem;
+          margin: 0;
+          color: #000000;
+          font-weight: 600;
         }
         h5 {
           text-transform: uppercase;
@@ -164,6 +163,13 @@ html,
         }
       }
       .ingredients {
+        h2 {
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 2rem;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
           font-size: 16px;
@@ -208,6 +214,13 @@ html,
         }
       }
       .faqs {
+        h2 {
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 2rem;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
           font-size: 16px;

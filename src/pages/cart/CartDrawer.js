@@ -207,9 +207,7 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartNotification && isCheckoutPage ? (
-                <CartNotification isCheckoutPage={isCheckoutPage} />
-              ) : null}
+              {cartNotification && isCheckoutPage ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
             </Grid>
             {checkoutVersion === 2 ? (
               <MenuLink onClick={handleEditCart} underline="always" className={classes.editCart} children="EDIT CART" />
@@ -244,11 +242,11 @@ const Cart = ({
             <Typography className={classes.cartRestricted}>
               CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this product is not
               available in the state you selected. We hope to be able to offer {restrictedProduct} in your state soon!
-              </Typography>
+            </Typography>
             {cartCount === 0 && (
               <NavLink to="/gallery" underline="always" className={classes.link}>
                 Continue shopping
-                </NavLink>
+              </NavLink>
             )}
           </>
         ) : null}
@@ -349,33 +347,33 @@ const Cart = ({
                           children={`QTY: ${item.quantity}`}
                         />
                       ) : (
-                      <StyledCardActions>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
-                          style={{
-                            fontSize: '20pt',
-                            paddingBottom: '4px'
-                          }}
-                          value={index}
-                          disabled={item.quantity < 2}
-                        >
+                        <StyledCardActions>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
+                            style={{
+                              fontSize: '20pt',
+                              paddingBottom: '4px'
+                            }}
+                            value={index}
+                            disabled={item.quantity < 2}
+                          >
                             -
                           </StyledCounterButton>
-                        <StyledSmallCaps style={{ fontSize: '18px' }}>{item.quantity}</StyledSmallCaps>
-                        <StyledCounterButton
-                          color="primary"
-                          onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
-                          style={{
-                            fontSize: '13pt',
-                            paddingBottom: '2.5px'
-                          }}
-                          value={index}
-                        >
+                          <StyledSmallCaps style={{ fontSize: '18px' }}>{item.quantity}</StyledSmallCaps>
+                          <StyledCounterButton
+                            color="primary"
+                            onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
+                            style={{
+                              fontSize: '13pt',
+                              paddingBottom: '2.5px'
+                            }}
+                            value={index}
+                          >
                             +
                           </StyledCounterButton>
-                      </StyledCardActions>
-                    )}
+                        </StyledCardActions>
+                      )}
                     </Grid>
                     <StyledCardContent
                       style={!xsBreakpoint ? { paddingBottom: '0' } : { paddingBottom: '0px', paddingRight: '0px' }}
