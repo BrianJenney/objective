@@ -238,7 +238,7 @@ const OrderSummary = ({
           style={{ marginBottom: '50px' }}
         />
       )}
-      '' )}
+   
       <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
         Have questions about your order? You can reach customer service at (800) 270-5771.
       </Typography>
