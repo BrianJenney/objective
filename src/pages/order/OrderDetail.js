@@ -207,17 +207,11 @@ const OrderSummary = ({
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
 
-      {orderStatus === 'canceled' || orderStatus === 'processing' ? (
-        <Typography className={classes.textFreight} style={{ padding: '60px 0' }}>
-          Have questions about your order? You can reach customer service at (800) 270-5771.
-        </Typography>
-      ) : null}
-
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
             padding: '23px 23px',
-            marginBottom: '25px',
+            margin: '25px 0',
             minWidth: '210px'
           }}
           onClick={() => {
@@ -245,6 +239,11 @@ const OrderSummary = ({
           style={{ marginBottom: '50px' }}
         />
       )}
+
+      <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
+        Have questions about your order? You can reach customer service at (800) 270-5771.
+      </Typography>
+
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
         <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
           <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
