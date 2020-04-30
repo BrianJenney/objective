@@ -197,11 +197,11 @@ const OrderSummary = ({
           </Typography>
         )}
       <br />
-      {orderStatus !== 'declined' && orderStatus !== 'created' && (
+      {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
 
-      {orderStatus === 'canceled' ? (
+      {orderStatus === 'canceled' || orderStatus === 'processing' ? (
         <Typography className={classes.textFreight} style={{ padding: '60px 0' }}>
           Have questions about your order? You can reach customer service at (800) 270-5771.
         </Typography>
