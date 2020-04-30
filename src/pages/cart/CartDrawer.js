@@ -207,9 +207,7 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartNotification && isCheckoutPage ? (
-                <CartNotification isCheckoutPage={isCheckoutPage} />
-              ) : null}
+              {cartNotification && isCheckoutPage ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
             </Grid>
             {checkoutVersion === 2 ? (
               <MenuLink onClick={handleEditCart} underline="always" className={classes.editCart} children="EDIT CART" />
@@ -248,7 +246,7 @@ const Cart = ({
               {cartCount === 0 && (
                 <NavLink to="/gallery" underline="always" className={classes.link}>
                   Continue shopping
-              </NavLink>
+                </NavLink>
               )}
             </>
           ) : null}
