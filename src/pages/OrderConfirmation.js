@@ -143,6 +143,8 @@ const OrderConfirmation = ({ history }) => {
         actions
       )
     );
+    order.account.isGuest = false;
+    order.account.passwordSet = true;
 
     dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
     setGuestPasswordFormSubmitted(true);

@@ -130,6 +130,10 @@ const validateRequiredField = (value, field = false) => {
     if (value && value.length && value.length < 6) {
       return 'Password must be atleast 6 characters';
     }
+    //Make password optional if no value is supplied
+    if (!value) {
+      return undefined;
+    }
   }
   if (value) {
     return undefined;
@@ -222,8 +226,8 @@ const PaymentForm = ({
     setBillingAddressMode(event.target.value);
   };
 
-  useEffect(() =>{
-    if(paypalEmail){
+  useEffect(() => {
+    if (paypalEmail) {
       setPaymentMethodMode('paypal');
     }
   }, [paypalPayloadState]);
@@ -353,10 +357,10 @@ const PaymentForm = ({
       billingAddress: {}
     };
     const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
-    if(isGuest){
+    if (isGuest) {
       values.shouldSaveData = false;
     }
-    if(paypalEmail && paymentMethodMode==='paypal'){
+    if (paypalEmail && paymentMethodMode === 'paypal') {
       onSubmit(false, actions);
       return;
     }
@@ -381,7 +385,11 @@ const PaymentForm = ({
         );
       } else {
         //If password field is empty, disregard. This makes the password optional
-        if (requiredField === 'password' && values.billingAddress[requiredField] && values.billingAddress[requiredField].length === 0) {
+        if (
+          requiredField === 'password' &&
+          values.billingAddress[requiredField] &&
+          values.billingAddress[requiredField].length === 0
+        ) {
         } else {
           fieldErrors.billingAddress[requiredField] = validateRequiredField(
             values.billingAddress[requiredField],
@@ -429,8 +437,8 @@ const PaymentForm = ({
       return null;
     }
     const { total, shippingAddress } = rest.cart;
-    if (!rest.cart || total === 0 || document.getElementById('paypal-checkout-button-payment-form') === null){
-    return null;
+    if (!rest.cart || total === 0 || document.getElementById('paypal-checkout-button-payment-form') === null) {
+      return null;
     }
     setPpButtonRendered(true);
     const paypalRequest = await sendPaypalCheckoutRequest(
@@ -448,22 +456,19 @@ const PaymentForm = ({
     );
 
     dispatch(setCheckoutPaypalPayload(paypalRequest));
-
   };
 
   if (!ppButtonRendered && rest.cart) {
     getPaypalBraintreeNonce();
   }
 
-
-    useEffect(() => {
-      if(ppButtonRendered && rest.cart && rest.cart.total > 0){
-        let paypalCheckoutButton = document.getElementById('paypal-checkout-button-payment-form');
-        paypalCheckoutButton.innerHTML = '';
-        getPaypalBraintreeNonce();
-      }
-    },[rest.cart]);
-  
+  useEffect(() => {
+    if (ppButtonRendered && rest.cart && rest.cart.total > 0) {
+      let paypalCheckoutButton = document.getElementById('paypal-checkout-button-payment-form');
+      paypalCheckoutButton.innerHTML = '';
+      getPaypalBraintreeNonce();
+    }
+  }, [rest.cart]);
 
   const preRenderBillingAddress = (values, setValues) => {
     if (

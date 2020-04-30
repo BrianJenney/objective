@@ -132,7 +132,17 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
     payload: { isLoading: true }
   });
   const { client: stompClient, replyTo } = getState().stomp;
-  const { account_jwt } = getState().account.data;
+  let { account_jwt } = getState().account.data;
+  if (!account_jwt) {
+    let orderState = getState().order;
+    if (
+      orderState.hasOwnProperty('order') &&
+      orderState.order.hasOwnProperty('account') &&
+      orderState.order.account.hasOwnProperty('account_jwt')
+    ) {
+      account_jwt = orderState.order.account.account_jwt;
+    }
+  }
   const params = {
     data: { orderId },
     params: { account_jwt }
@@ -217,7 +227,6 @@ export const receivedCancelOrderFailure = order => async (dispatch, getState) =>
   });
 };
 
-
 export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
@@ -234,6 +243,35 @@ export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null
 
   stompClient.send(
     '/exchange/order/order.request.find',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+  dispatch({
+    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
+    payload: {}
+  });
+};
+
+export const requestFindUnauthenticatedOrders = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      idField: 'accountId', // use this to tell the MS where to substitute the decoded id
+      query
+    }
+  };
+
+  if (accountJwt) {
+    params.params.account_jwt = accountJwt;
+  }
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/order/order.request.findUnauthenticated',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),

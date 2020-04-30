@@ -17,7 +17,7 @@ import { GuestOrderSetPasswordForm } from '../../components/forms';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import { formatDateTime, getShippingAndTracking } from '../../utils/misc';
-import { requestChangePassword } from '../../modules/account/actions';
+import { requestChangePassword, receivedLoginSuccess } from '../../modules/account/actions';
 
 import StatusStepper from './StatusStepper';
 
@@ -128,6 +128,7 @@ const OrderSummary = ({
   paymentData,
   classes,
   orderId,
+  orderNumber,
   orderEmail,
   orderRef,
   createdAt,
@@ -155,6 +156,11 @@ const OrderSummary = ({
         actions
       )
     );
+
+    order.account.isGuest = false;
+    order.account.passwordSet = true;
+
+    dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
 
     setGuestPasswordFormSubmitted(true);
   };
@@ -216,7 +222,7 @@ const OrderSummary = ({
           }}
           onClick={() => {
             if (orderStatus === 'placed') {
-              cancelOrder(order._id, orderId, dispatch);
+              cancelOrder(orderRef, orderNumber, dispatch);
             }
           }}
         >
@@ -297,6 +303,7 @@ const OrderDetail = () => {
             <Grid item xs={mainWidth}>
               <OrderSummary
                 account={account}
+                orderNumber={order.orderNumber}
                 orderId={order.orderNumber}
                 orderRef={order._id}
                 orderEmail={order.email}

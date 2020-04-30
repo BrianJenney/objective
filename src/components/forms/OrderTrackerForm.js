@@ -29,7 +29,27 @@ const useStyles = makeStyles(theme => ({
       borderColor: '#231f20'
     }
   },
-  title: { fontSize: '26px', textAlign: 'center' }
+  title: { fontSize: '26px', textAlign: 'center' },
+  subText: {
+    fontFamily: 'p22-underground',
+    fontSize: '16px',
+    paddingBottom: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px'
+    },
+    lineHeight: 1.5,
+    textAlign: 'center'
+  },
+  footerText: {
+    fontFamily: 'p22-underground',
+    fontSize: '14px',
+    paddingBottom: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '14px'
+    },
+    lineHeight: 1.57,
+    textAlign: 'center'
+  }
 }));
 
 const schema = object().shape({
@@ -48,7 +68,7 @@ const OrderTrackerForm = ({
   title,
   defaultValues,
   submitLabel,
-  requestFindOrdersByAccount,
+  requestFindUnauthenticatedOrders,
   receivedGetOrder,
   requestFetchAccount,
   dispatch,
@@ -64,7 +84,7 @@ const OrderTrackerForm = ({
 
   const onSubmit = (values, actions) => {
     dispatch(
-      requestFindOrdersByAccount(false, {
+      requestFindUnauthenticatedOrders(false, {
         orderNumber: values.orderNumber.trim(),
         email: values.email.trim(),
         'billingAddress.zipcode': values.zip.trim()
@@ -128,8 +148,12 @@ const OrderTrackerForm = ({
   const renderForm = () => (
     <Form className={classes.root}>
       {title && <Typography variant="h6" gutterBottom children={title} className={classes.title} />}
+      <Typography className={classes.subText}>
+        Don’t have an account? You can still track your order with the order number in your order confirmation email.
+      </Typography>
       {orderFoundError && (
         <AlertPanel
+          style={{ fontSize: '14px' }}
           type="error"
           text={`Order number could not be found. Please try again or contact us for help.`}
           onClose={() => {
@@ -150,13 +174,19 @@ const OrderTrackerForm = ({
           <Field name="zip" label="Zip Code" component={InputField} type="text" />
         </Grid>
 
-        <Grid item xs={12} style={{}}>
+        <Grid item xs={12}>
           <Button
             fullWidth
             type="submit"
             children={submitLabel}
             style={{ height: '60px', padding: '0px 40px', width: '100%' }}
           />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography className={classes.footerText}>
+            Need help with tracking your order? Give us a call at (800) 270-5771.
+          </Typography>
         </Grid>
       </Grid>
     </Form>
