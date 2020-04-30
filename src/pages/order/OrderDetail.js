@@ -166,24 +166,19 @@ const OrderSummary = ({
   };
 
   const paymentMethod = paymentData && paymentData.method ? paymentData.method : 'creditCard';
-  const cardType =
-    paymentMethod === 'creditCard' && paymentData && paymentData.cardType
-      ? paymentData.cardType
-      : '';
-  const last4 =
-    paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
+  const cardType = paymentMethod === 'creditCard' && paymentData && paymentData.cardType ? paymentData.cardType : '';
+  const last4 = paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
   const paymentEmail = 'paypal' && paymentData && paymentData.email ? paymentData.email : '';
 
   const { phone } = billingAddress;
 
-  const shouldShowSetPasswordForm =
-  order.hasOwnProperty('account') &&
-  order.account.hasOwnProperty('passwordSet') &&
-  order.account.hasOwnProperty('isGuest') &&
-  !order.account.passwordSet &&
-  order.account.isGuest
-    ? true
-    : false;
+  const shouldShowSetPasswordForm = !!(
+    order.hasOwnProperty('account') &&
+    order.account.hasOwnProperty('passwordSet') &&
+    order.account.hasOwnProperty('isGuest') &&
+    !order.account.passwordSet &&
+    order.account.isGuest
+  );
 
   return (
     <Box className={classes.paper}>
@@ -211,18 +206,11 @@ const OrderSummary = ({
       {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
-
-      {orderStatus === 'canceled' || orderStatus === 'processing' ? (
-        <Typography className={classes.textFreight} style={{ padding: '60px 0' }}>
-          Have questions about your order? You can reach customer service at (800) 270-5771.
-        </Typography>
-      ) : null}
-
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
             padding: '23px 23px',
-            marginBottom: '25px',
+            margin: '25px 0',
             minWidth: '210px'
           }}
           onClick={() => {
@@ -234,8 +222,8 @@ const OrderSummary = ({
           Cancel Order
         </CommonButton>
       ) : (
-        ''
-      )}
+          ''
+        )}
       {shouldShowSetPasswordForm && (
         <GuestOrderSetPasswordForm
           title={
@@ -247,9 +235,13 @@ const OrderSummary = ({
           onSubmit={onGuestOrderPasswordSubmit}
           isSuccessful={guestPasswordFormSubmitted}
           handleOrderDetail={false}
-          style={{marginBottom:'50px'}}
+          style={{ marginBottom: '50px' }}
         />
       )}
+      '' )}
+      <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
+        Have questions about your order? You can reach customer service at (800) 270-5771.
+      </Typography>
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
         <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
           <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
