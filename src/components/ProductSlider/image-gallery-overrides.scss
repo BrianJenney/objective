@@ -371,7 +371,7 @@
 .image-gallery-bullets .image-gallery-bullet {
   appearance: none;
   background-color: transparent;
-  border: 1px solid #000;
+  border: 1px solid #979797;
   border-radius: 50%;
   cursor: pointer;
   display: inline-block;
@@ -388,7 +388,7 @@
 }
 
 .image-gallery-bullets .image-gallery-bullet.active {
-  background: #000;
+  background: #979797;
 }
 
 .image-gallery-thumbnails-wrapper {
