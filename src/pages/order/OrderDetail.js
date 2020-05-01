@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '55px',
-    fontWeight: 'bold',
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
     paddingBottom: theme.spacing(4),
@@ -73,6 +72,10 @@ const useStyles = makeStyles(theme => ({
   },
   link: {
     color: '#000'
+  },
+  cancelledText: {
+    fontFamily: 'p22-underground, sans-serif',
+    color: '#d0021b'
   }
 }));
 
@@ -81,6 +84,7 @@ const getStatusStepper = statusStepper => {
   const shippedDate = statusStepper.shippedDate ? formatDateTime(statusStepper.shippedDate, false) : '';
   const deliveredDate = statusStepper.deliveredDate ? formatDateTime(statusStepper.deliveredDate, false) : '';
   const cancelledDate = formatDateTime(statusStepper.updatedAt, false);
+
   return {
     Processed: processedDate,
     Shipped: shippedDate,
@@ -91,29 +95,25 @@ const getStatusStepper = statusStepper => {
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-  return tracking.map(tracking => {
-    return (
-      <>
-        <Typography className={classes.text} pt={2}>
-          {tracking && (
-            <Link
-              href={tracking.url}
-              style={{ color: 'black', textDecoration: 'underline' }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tracking.number}
-            </Link>
-          )}
-        </Typography>
-      </>
-    );
-  });
+  return tracking.map(tracking => (
+    <>
+      <Typography className={classes.text} pt={2}>
+        {tracking && (
+          <Link
+            href={tracking.url}
+            style={{ color: 'black', textDecoration: 'underline' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tracking.number}
+          </Link>
+        )}
+      </Typography>
+    </>
+  ));
 };
 
-const OrderCartSummary = ({ order }) => {
-  return order ? <CartSummary order={order} /> : null;
-};
+const OrderCartSummary = ({ order }) => (order ? <CartSummary order={order} /> : null);
 
 const cancelOrder = (orderId, orderNumber, dispatch) => {
   dispatch(requestCancelOrder(orderId, orderNumber));
@@ -146,22 +146,23 @@ const OrderSummary = ({
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>
-          <span>{'Return to order history'}</span>
+          <span>Return to order history</span>
         </RouterLink>
         <Typography className={classes.title}>Order Details</Typography>
       </Box>
       {orderStatus === 'canceled' ? (
         <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong> was cancelled and did
-          not ship. A refund was issued back to the payment used for the order.
+          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          <br></br>
+          Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
-        <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
-        </Typography>
-      )}
+          <Typography className={classes.textFreight}>
+            Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          </Typography>
+        )}
       <br />
-      {orderStatus !== 'declined' && orderStatus !== 'created' && (
+      {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
 
@@ -169,7 +170,7 @@ const OrderSummary = ({
         <CommonButton
           style={{
             padding: '23px 23px',
-            marginBottom: '25px',
+            margin: '25px 0',
             minWidth: '210px'
           }}
           onClick={() => {
@@ -178,11 +179,16 @@ const OrderSummary = ({
             }
           }}
         >
-          {'Cancel Order'}
+          Cancel Order
         </CommonButton>
       ) : (
-        ''
-      )}
+          ''
+        )}
+
+      <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
+        Have questions about your order? You can reach customer service at (800) 270-5771.
+      </Typography>
+
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
         <Grid item xs={addressesWidth}>
           <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
@@ -227,6 +233,7 @@ const OrderDetail = () => {
   if (!order) return null;
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
+  order.status = statusStepper.status;
 
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
