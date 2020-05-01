@@ -142,7 +142,7 @@ export const getShippingAndTracking = order => {
   let shippedDate = '';
   let deliveredDate = '';
   const item = items[0];
-  if (item.tracking_list && shipTracking) {
+  if (item && item.tracking_list && shipTracking) {
     tracking = getTracking(items, status);
     const trackingNo = item.tracking_list[0].number;
     if (shipTracking[trackingNo] && shipTracking[trackingNo].tracking_status) {
