@@ -17,6 +17,7 @@ import FeaturedItem from './blog/FeaturedItem';
 import BlogVariantCard from './blog/BlogVariantCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import HeadTags from '../components/common/HeadTags';
+import NotFound from './notfound/NotFound';
 const dateFormat = require('dateformat');
 
 const contentfulOptions = {
@@ -40,21 +41,39 @@ const contentfulOptions = {
 
 const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
-  const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[post_slug];
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const validPost = seoMap[post_slug];
+  let title;
+  let description;
+
+  if (validPost) {
+    ({ title, description } = validPost);
+  }
+
+
   const fetchData = async () => {
     const postData = await fetchPost(post_slug);
     setPost(postData);
   };
+
   useEffect(() => {
-    fetchData();
-    window.analytics.page('Journal Post');
-    return () => {
-      setPost({});
-    };
+    if (validPost) {
+      fetchData();
+      window.analytics.page('Journal Post');
+      return () => {
+        setPost({});
+      };
+
+    } else {
+      window.analytics.page('404 Error');
+    }
   }, [post_slug]);
+
+  if (!validPost) {
+    return <NotFound />;
+  }
 
   if (Object.keys(post).length === 0) {
     return (
