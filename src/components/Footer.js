@@ -194,7 +194,8 @@ const Footer = ({ location, currentUser }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+  const isCheckoutPage =
+    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const isLanding = matchPath(location.pathname, { path: '/landing' });
   const [confirmationVisibility, setConfirmationVisibility] = useState(false);
@@ -520,7 +521,10 @@ const Footer = ({ location, currentUser }) => {
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to={gotoUrl('/account/orders', '/login/order')} onClick={segmentTrackNavigationClick}>
+                        <NavLink
+                          to={gotoUrl('/account/orders', '/order-tracker')}
+                          onClick={segmentTrackNavigationClick}
+                        >
                           Track an Order
                         </NavLink>
                       </ListItem>
