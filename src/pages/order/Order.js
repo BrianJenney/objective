@@ -24,7 +24,7 @@ const Order = ({ history, match: { params } }) => {
   }
 
   if (!account.hasOwnProperty('account_jwt') && !isLoading) {
-    history.push('/');
+    history.push('/login');
   }
 
   const shouldLookup = !order.order || (order.order && order.order._id !== params.id);

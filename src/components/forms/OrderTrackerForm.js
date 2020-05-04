@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { InputField } from '../form-fields';
-import { Button, AlertPanel } from '../common';
+import { Button, AlertPanel, NavLink } from '../common';
 import { getInitialValues } from '../../utils/misc';
 import EventEmitter from '../../events';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
@@ -155,7 +155,15 @@ const OrderTrackerForm = ({
         <AlertPanel
           style={{ fontSize: '14px' }}
           type="error"
-          text={`Order number could not be found. Please try again or contact us for help.`}
+          text={
+            <>
+              Order number could not be found. Please try again or{' '}
+              <NavLink style={{ textDecoration: 'underline', color: '#231f20' }} to="/contact">
+                contact us
+              </NavLink>{' '}
+              for help.
+            </>
+          }
           onClose={() => {
             setOrderFoundError(false);
           }}
