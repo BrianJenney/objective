@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { OrderTrackerForm } from '../components/forms';
-import { requestFindOrdersByAccount, requestFindUnauthenticatedOrders, receivedGetOrder } from '../modules/order/actions';
+import {
+  requestFindOrdersByAccount,
+  requestFindUnauthenticatedOrders,
+  receivedGetOrder
+} from '../modules/order/actions';
 import { requestFetchAccount } from '../modules/account/actions';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -57,8 +61,8 @@ const useStyles = makeStyles(theme => ({
   },
   containingBox: {
     [theme.breakpoints.down('xs')]: {
-        paddingTop: '20px',
-        paddingBottom: '32px'
+      paddingTop: '20px',
+      paddingBottom: '32px'
     },
     paddingTop: '52px',
     paddingBottom: '64px'
@@ -73,6 +77,9 @@ const TrackOrder = ({ history }) => {
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  useEffect(() => {
+    setTimeout(() => window.scrollTo(0, 0), 300);
+  }, []);
   return (
     <Box bgcolor="rgba(252, 248, 244, 0.5)">
       <Container>
