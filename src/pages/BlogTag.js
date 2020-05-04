@@ -57,7 +57,7 @@ const BlogTag = ({ computedMatch }) => {
     return <NotFound />;
   }
 
-  if (posts.length === 0 && validTag) {
+  if (posts.length === 0) {
     return (
       <>
         <HeadTags title={title} description={description} />
