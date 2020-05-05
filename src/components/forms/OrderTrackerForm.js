@@ -87,7 +87,9 @@ const OrderTrackerForm = ({
       requestFindUnauthenticatedOrders(false, {
         orderNumber: values.orderNumber.trim(),
         email: values.email.trim(),
-        'billingAddress.zipcode': values.zip.trim()
+        'billingAddress.zipcode': {
+          $in: [new RegExp(`^${values.zip.trim()}$`), new RegExp(`^${values.zip.trim()}-(.*)`)]
+        }
       })
     );
     //We received a response from the server for the order request
