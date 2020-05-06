@@ -48,7 +48,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '24px',
     fontFamily: 'FreightTextProBook'
   }
-
 }));
 
 export const FORM_TYPES = {
@@ -65,12 +64,12 @@ const usePrevious = value => {
 };
 
 /*
-* @description - Wrapper function for tracking the Payment Info Entered Segment Event
-* @return void
-*/
+ * @description - Wrapper function for tracking the Payment Info Entered Segment Event
+ * @return void
+ */
 const trackSegmentPaymentInfoEnteredEvent = properties => {
-  window.analytics.track("Payment Info Entered", properties);
-}
+  window.analytics.track('Payment Info Entered', properties);
+};
 
 const AccountPaymentDetails = ({
   currentUser,
@@ -98,9 +97,7 @@ const AccountPaymentDetails = ({
       ? paypalPayloadState.details.email
       : false;
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const prevPatchAccountSubmitting = usePrevious(
-    currentUser.patchAccountSubmitting
-  );
+  const prevPatchAccountSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -117,13 +114,13 @@ const AccountPaymentDetails = ({
   }, []);
 
   useEffect(() => {
-    if(rest.resetFormMode && creditCards.length===0 && !account_jwt){
+    if (rest.resetFormMode && creditCards.length === 0 && !account_jwt) {
       setFormModeEnabled(true);
     }
-  }, [rest]); 
+  }, [rest]);
 
   useEffect(() => {
-    if(paypalEmail){
+    if (paypalEmail) {
       setPaymentMethodMode('paypal');
     }
   }, [paypalPayloadState]);
@@ -142,11 +139,7 @@ const AccountPaymentDetails = ({
       }
     }
 
-    if (
-      prevPatchAccountSubmitting &&
-      !currentUser.patchAccountSubmitting &&
-      formModeEnabled
-    ) {
+    if (prevPatchAccountSubmitting && !currentUser.patchAccountSubmitting && formModeEnabled) {
       if (!currentUser.patchAccountError && paymentMethods.length > 0) {
         setSelectedIndex(paymentMethods.length - 1);
 
@@ -161,7 +154,6 @@ const AccountPaymentDetails = ({
     } else {
       setFormModeEnabled(false);
     }
-    
   }, [currentUser.data.paymentMethods]);
 
   const handleSelect = evt => {
@@ -206,7 +198,7 @@ const AccountPaymentDetails = ({
 
       trackSegmentPaymentInfoEnteredEvent({ cart_id: cart._id, payment_method: cardData.details.cardType });
 
-      if(allowFlyMode && !account_jwt){
+      if (allowFlyMode && !account_jwt) {
         actions.setSubmitting(false);
         setFormModeEnabled(false);
 
@@ -241,8 +233,7 @@ const AccountPaymentDetails = ({
   };
 
   const handleSubmit = () => {
-
-    if(paymentMethodMode==='paypal' && paypalEmail){
+    if (paymentMethodMode === 'paypal' && paypalEmail) {
       dispatch(setCheckoutPaypalPayload(paypalPayloadState));
       onSubmit(false);
       return true;
@@ -261,14 +252,13 @@ const AccountPaymentDetails = ({
     addressSeedData = getDefaultEntity(addressBook);
   }
 
-  
   const getPaypalBraintreeNonce = async () => {
     if (!cart) {
       return null;
     }
     const { total, shippingAddress } = cart;
-    if (!cart || total === 0 || document.getElementById('paypal-checkout-button-payment-details') === null){
-    return null;
+    if (!cart || total === 0 || document.getElementById('paypal-checkout-button-payment-details') === null) {
+      return null;
     }
     setPpButtonRendered(true);
     const paypalRequest = await sendPaypalCheckoutRequest(
@@ -286,21 +276,19 @@ const AccountPaymentDetails = ({
     );
 
     dispatch(setCheckoutPaypalPayload(paypalRequest));
-
   };
 
   if (!ppButtonRendered && cart) {
     getPaypalBraintreeNonce();
   }
 
-
-    useEffect(() => {
-      if(ppButtonRendered && cart && cart.total > 0 && formModeEnabled === false){
-        let paypalCheckoutButton = document.getElementById('paypal-checkout-button-payment-details');
-        paypalCheckoutButton.innerHTML = '';
-        getPaypalBraintreeNonce();
-      }
-    },[cart, formModeEnabled]);
+  useEffect(() => {
+    if (ppButtonRendered && cart && cart.total > 0 && formModeEnabled === false) {
+      let paypalCheckoutButton = document.getElementById('paypal-checkout-button-payment-details');
+      paypalCheckoutButton.innerHTML = '';
+      getPaypalBraintreeNonce();
+    }
+  }, [cart, formModeEnabled]);
 
   return (
     <Box {...rest} className="step-3-wrapper account-payment-details">
@@ -323,11 +311,7 @@ const AccountPaymentDetails = ({
         <>
           {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
             <>
-              <Box
-                display={formType === FORM_TYPES.CHECKOUT ? 'block' : 'none'}
-                mb={0}
-                className="justify-content"
-              >
+              <Box display={formType === FORM_TYPES.CHECKOUT ? 'block' : 'none'} mb={0} className="justify-content">
                 <Typography
                   color="#231f20"
                   variant="h5"

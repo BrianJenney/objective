@@ -17,7 +17,11 @@ import { GuestOrderSetPasswordForm } from '../../components/forms';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import { formatDateTime, getShippingAndTracking } from '../../utils/misc';
-import { requestChangePassword, receivedLoginSuccess } from '../../modules/account/actions';
+import {
+  requestChangePassword,
+  receivedLoginSuccess,
+  receivedCreateAccountSuccess
+} from '../../modules/account/actions';
 
 import StatusStepper from './StatusStepper';
 
@@ -85,7 +89,7 @@ const getStatusStepper = statusStepper => {
     Processed: processedDate,
     Shipped: shippedDate,
     Delivered: deliveredDate,
-    Cancelled: cancelledDate,
+    Cancelled: cancelledDate
   };
 };
 
@@ -95,13 +99,15 @@ const TrackingInfo = ({ tracking }) => {
     return (
       <>
         <Typography className={classes.text} pt={2}>
-          {tracking && <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">{tracking.number}</Link>}
+          {tracking && (
+            <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">
+              {tracking.number}
+            </Link>
+          )}
         </Typography>
       </>
-
-    )
-  }
-  )
+    );
+  });
 };
 
 const OrderCartSummary = ({ order }) => {
@@ -150,31 +156,29 @@ const OrderSummary = ({
 
     order.account.isGuest = false;
     order.account.passwordSet = true;
-
+    if (order.account.hasOwnProperty('temporarilyLogin')) {
+      delete order.account.temporarilyLogin;
+    }
+    dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
     dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
-
     setGuestPasswordFormSubmitted(true);
   };
 
   const paymentMethod = paymentData && paymentData.method ? paymentData.method : 'creditCard';
-  const cardType =
-    paymentMethod === 'creditCard' && paymentData && paymentData.cardType
-      ? paymentData.cardType
-      : '';
-  const last4 =
-    paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
+  const cardType = paymentMethod === 'creditCard' && paymentData && paymentData.cardType ? paymentData.cardType : '';
+  const last4 = paymentMethod === 'creditCard' && paymentData && paymentData.last4 ? paymentData.last4 : '';
   const paymentEmail = 'paypal' && paymentData && paymentData.email ? paymentData.email : '';
 
   const { phone } = billingAddress;
 
   const shouldShowSetPasswordForm =
-  order.hasOwnProperty('account') &&
-  order.account.hasOwnProperty('passwordSet') &&
-  order.account.hasOwnProperty('isGuest') &&
-  !order.account.passwordSet &&
-  order.account.isGuest
-    ? true
-    : false;
+    order.hasOwnProperty('account') &&
+    order.account.hasOwnProperty('passwordSet') &&
+    order.account.hasOwnProperty('isGuest') &&
+    !order.account.passwordSet &&
+    order.account.isGuest
+      ? true
+      : false;
 
   return (
     <Box className={classes.paper}>
@@ -231,7 +235,7 @@ const OrderSummary = ({
           onSubmit={onGuestOrderPasswordSubmit}
           isSuccessful={guestPasswordFormSubmitted}
           handleOrderDetail={false}
-          style={{marginBottom:'50px'}}
+          style={{ marginBottom: '50px' }}
         />
       )}
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>

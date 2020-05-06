@@ -6,7 +6,7 @@ import HttpsOutlined from '@material-ui/icons/HttpsOutlined';
 import { Button, NavLink } from '../common';
 import Checkbox from '@material-ui/core/Checkbox';
 
-const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload }) => {
+const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activeStep }) => {
   const [checkboxChecked, setCheckboxChecked] = useState(true);
   const handleChange = (event, payload) => {
     if (payload && payload.accountInfo) {
@@ -19,6 +19,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload }) => 
     if (
       checkboxChecked &&
       !accountJwt &&
+      activeStep === 2 &&
       payload.hasOwnProperty('shippingAddress') &&
       payload.shippingAddress.hasOwnProperty('email') &&
       payload.shippingAddress.hasOwnProperty('firstName') &&
@@ -45,7 +46,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload }) => 
         email: payload.shippingAddress.email
       });
     }
-  }, [checkboxChecked]);
+  }, [activeStep]);
   return (
     <Box
       display="flex"
