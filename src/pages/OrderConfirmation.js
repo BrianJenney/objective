@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
-import { GuestOrderSetPasswordForm} from '../components/forms';
+import { GuestOrderSetPasswordForm } from '../components/forms';
 import { receivedLoginSuccess, requestChangePassword, receivedCreateAccountSuccess } from '../modules/account/actions';
 
 const useStyles = makeStyles(theme => ({
@@ -120,10 +120,9 @@ const OrderConfirmation = ({ history }) => {
         items: orderItemsTransformedGA
       });
 
-
-      if(order.account && order.account.hasOwnProperty('isGuest') && order.account.hasOwnProperty('passwordSet')){
-        if(!order.account.isGuest && order.account.passwordSet){
-          dispatch(receivedCreateAccountSuccess(order.account,order.account.account_jwt));
+      if (order.account && order.account.hasOwnProperty('isGuest') && order.account.hasOwnProperty('passwordSet')) {
+        if (!order.account.isGuest && order.account.passwordSet) {
+          dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
         }
       }
     }
@@ -146,7 +145,7 @@ const OrderConfirmation = ({ history }) => {
     );
     order.account.isGuest = false;
     order.account.passwordSet = true;
-
+    dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
     dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
     setGuestPasswordFormSubmitted(true);
   };
@@ -225,7 +224,7 @@ const OrderConfirmation = ({ history }) => {
             onSubmit={onGuestOrderPasswordSubmit}
             isSuccessful={guestPasswordFormSubmitted}
             handleOrderDetail={handleOrderDetail}
-            style={ {marginBottom: '50px'} }
+            style={{ marginBottom: '50px' }}
           />
         )}
         <Box

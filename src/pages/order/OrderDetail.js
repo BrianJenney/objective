@@ -17,7 +17,11 @@ import { GuestOrderSetPasswordForm } from '../../components/forms';
 import { CartSummary } from '../../components/summaries';
 import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import { formatDateTime, getShippingAndTracking } from '../../utils/misc';
-import { requestChangePassword, receivedLoginSuccess } from '../../modules/account/actions';
+import {
+  requestChangePassword,
+  receivedLoginSuccess,
+  receivedCreateAccountSuccess
+} from '../../modules/account/actions';
 
 import StatusStepper from './StatusStepper';
 
@@ -159,9 +163,11 @@ const OrderSummary = ({
 
     order.account.isGuest = false;
     order.account.passwordSet = true;
-
+    if (order.account.hasOwnProperty('temporarilyLogin')) {
+      delete order.account.temporarilyLogin;
+    }
+    dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
     dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
-
     setGuestPasswordFormSubmitted(true);
   };
 
@@ -172,13 +178,14 @@ const OrderSummary = ({
 
   const { phone } = billingAddress;
 
-  const shouldShowSetPasswordForm = !!(
+  const shouldShowSetPasswordForm =
     order.hasOwnProperty('account') &&
     order.account.hasOwnProperty('passwordSet') &&
     order.account.hasOwnProperty('isGuest') &&
     !order.account.passwordSet &&
     order.account.isGuest
-  );
+      ? true
+      : false;
 
   return (
     <Box className={classes.paper}>
@@ -198,10 +205,10 @@ const OrderSummary = ({
           Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
-          <Typography className={classes.textFreight}>
-            Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
-          </Typography>
-        )}
+        <Typography className={classes.textFreight}>
+          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+        </Typography>
+      )}
       <br />
       {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
@@ -222,8 +229,8 @@ const OrderSummary = ({
           Cancel Order
         </CommonButton>
       ) : (
-          ''
-        )}
+        ''
+      )}
       {shouldShowSetPasswordForm && (
         <GuestOrderSetPasswordForm
           title={
@@ -238,7 +245,7 @@ const OrderSummary = ({
           style={{ marginBottom: '50px' }}
         />
       )}
-   
+
       <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
         Have questions about your order? You can reach customer service at (800) 270-5771.
       </Typography>
