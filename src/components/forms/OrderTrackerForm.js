@@ -86,7 +86,9 @@ const OrderTrackerForm = ({
     dispatch(
       requestFindUnauthenticatedOrders(false, {
         orderNumber: values.orderNumber.trim(),
-        email: values.email.trim(),
+        email: {
+          $in: [new RegExp(`^${values.email.trim()}$`, 'i')]
+        },
         'billingAddress.zipcode': {
           $in: [new RegExp(`^${values.zip.trim()}$`), new RegExp(`^${values.zip.trim()}-(.*)`)]
         }
