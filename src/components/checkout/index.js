@@ -231,7 +231,7 @@ const Checkout = ({
       const accountInfoPayload = {
         firstName: payload.paymentDetails.billingAddress.firstName,
         lastName: payload.paymentDetails.billingAddress.lastName,
-        email: payload.shippingAddress.email,
+        email: payload.shippingAddress.email.toLowerCase(),
         password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
         passwordSet: !isGuest,
         isGuest: isGuest,
@@ -243,6 +243,15 @@ const Checkout = ({
         ...payload,
         accountInfo: accountInfoPayload
       });
+    }
+
+    if (
+      activeStep === 1 &&
+      !account_jwt &&
+      payload.paymentDetails &&
+      payload.paymentDetails.hasOwnProperty('billingAddress')
+    ) {
+      setResetPaymentDetailsFormMode(true);
     }
   }, [activeStep]);
 
@@ -623,6 +632,7 @@ const Checkout = ({
                         payload={payload}
                         setPayload={setPayload}
                         accountJwt={account_jwt}
+                        activeStep={activeStep}
                       />
                     </Panel>
                   </div>
