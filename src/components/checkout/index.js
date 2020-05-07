@@ -160,12 +160,11 @@ const Checkout = ({
     });
   };
 
-  //Reset signupError, patchError, and PayPal state upon component unmount
+  //Reset signupError, patchError upon component unmount
   useEffect(() => {
     return () => {
       clearPatchAccountError();
       clearCreateAccountError();
-      dispatch(unsetCheckoutPaypalPayload());
     };
   }, []);
 
@@ -309,6 +308,7 @@ const Checkout = ({
     } else {
       handleCheckoutDialogClose();
       if (orderError === false) {
+        dispatch(unsetCheckoutPaypalPayload());
         setPayload({});
         history.replace('/order');
       }
@@ -478,6 +478,7 @@ const Checkout = ({
     }
     trackCheckoutStepCompleted(panelIndex);
     if (panelIndex === 0) {
+      console.log('resetting formMode');
       setResetFormMode(true);
     }
     return setCurrentStep(panelIndex);

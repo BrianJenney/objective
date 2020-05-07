@@ -114,8 +114,8 @@ const OrderCartSummary = ({ order }) => {
   return order ? <CartSummary order={order} /> : null;
 };
 
-const cancelOrder = (orderRef, dispatch) => {
-  dispatch(requestCancelOrder(orderRef));
+const cancelOrder = (orderRef, orderNumber, dispatch) => {
+  dispatch(requestCancelOrder(orderRef, orderNumber));
 };
 
 const OrderSummary = ({
@@ -183,7 +183,16 @@ const OrderSummary = ({
   return (
     <Box className={classes.paper}>
       <Box>
-        <RouterLink to="/account/orders" className="account-history-return">
+        <RouterLink
+          to="/account/orders"
+          className="account-history-return"
+          style={{
+            display:
+              order.hasOwnProperty('account') || (account.data && account.data.hasOwnProperty('temporarilyLogin'))
+                ? 'none'
+                : 'block'
+          }}
+        >
           <StyledArrowIcon>
             <LeftArrowIcon />
           </StyledArrowIcon>

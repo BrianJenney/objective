@@ -127,7 +127,7 @@ export const receivedCreateOrderFailure = order => async (dispatch, getState) =>
   });
 };
 
-export const requestCancelOrder = orderId => async (dispatch, getState) => {
+export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, getState) => {
   dispatch({
     type: REQUEST_CANCEL_ORDER,
     payload: { isLoading: true }
@@ -160,6 +160,10 @@ export const requestCancelOrder = orderId => async (dispatch, getState) => {
     },
     payload
   );
+  // @segment - Cancel Order Submitted Event
+  window.analytics.track('Order Cancel Submitted', {
+    order_id: orderNumber
+  });
 };
 
 export const receivedCancelOrderSuccess = order => async (dispatch, getState) => {

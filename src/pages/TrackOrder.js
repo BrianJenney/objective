@@ -7,7 +7,7 @@ import {
   requestFindUnauthenticatedOrders,
   receivedGetOrder
 } from '../modules/order/actions';
-import { requestFetchAccount } from '../modules/account/actions';
+import { requestFetchAccount, receivedFetchAccountSuccess } from '../modules/account/actions';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Typography from '@material-ui/core/Typography';
@@ -92,6 +92,7 @@ const TrackOrder = ({ history }) => {
                 requestFindUnauthenticatedOrders={requestFindUnauthenticatedOrders}
                 receivedGetOrder={receivedGetOrder}
                 requestFetchAccount={requestFetchAccount}
+                receivedFetchAccountSuccess={receivedFetchAccountSuccess}
                 dispatch={dispatch}
                 history={history}
               />
