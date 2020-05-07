@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useTheme, makeStyles } from '@material-ui/core/styles';
@@ -14,7 +14,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
 import { GuestOrderSetPasswordForm } from '../components/forms';
-import { receivedLoginSuccess, requestChangePassword, receivedCreateAccountSuccess } from '../modules/account/actions';
+import {
+  receivedLoginSuccess,
+  requestChangePassword,
+  receivedCreateAccountSuccess,
+  receivedFetchAccountSuccess
+} from '../modules/account/actions';
+
+import { receivedGetOrder } from '../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -123,8 +130,31 @@ const OrderConfirmation = ({ history }) => {
         if (!order.account.isGuest && order.account.passwordSet) {
           dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
         }
+
+        if (
+          order.account.isGuest &&
+          !order.account.passwordSet &&
+          order.account.hasOwnProperty('newsletter') &&
+          order.account.newsletter
+        ) {
+          window.analytics.track('Subscribed', {
+            email: order.account.email,
+            site_location: 'checkout'
+          });
+
+          window.analytics.track('Subscribed Listrak Auto', {
+            email: order.account.email,
+            site_location: 'checkout'
+          });
+        }
       }
     }
+
+    return () => {
+      if (!matchPath(history.location.pathname, { path: '/orders' })) {
+        dispatch(receivedGetOrder(null));
+      }
+    };
   }, []);
 
   const onGuestOrderPasswordSubmit = (values, actions) => {
@@ -144,6 +174,9 @@ const OrderConfirmation = ({ history }) => {
     );
     order.account.isGuest = false;
     order.account.passwordSet = true;
+    if (order.account.hasOwnProperty('temporarilyLogin')) {
+      delete order.account.temporarilyLogin;
+    }
     dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
     dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
     setGuestPasswordFormSubmitted(true);
@@ -172,6 +205,10 @@ const OrderConfirmation = ({ history }) => {
     const handleOrderDetail = useCallback(
       e => {
         e.preventDefault();
+        if (order.hasOwnProperty('account') && order.account) {
+          order.account.temporarilyLogin = true;
+          dispatch(receivedFetchAccountSuccess(order.account));
+        }
         history.replace(`/orders/${order._id}`);
       },
       [history, order._id]
