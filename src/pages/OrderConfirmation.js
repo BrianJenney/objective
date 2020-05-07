@@ -91,6 +91,7 @@ const useStyles = makeStyles(theme => ({
 
 const OrderConfirmation = ({ history }) => {
   const order = useSelector(state => state.order.order);
+  const account = useSelector(state => state.account);
   const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -128,6 +129,9 @@ const OrderConfirmation = ({ history }) => {
 
       if (order.account && order.account.hasOwnProperty('isGuest') && order.account.hasOwnProperty('passwordSet')) {
         if (!order.account.isGuest && order.account.passwordSet) {
+          if (order.account.hasOwnProperty('temporarilyLogin')) {
+            delete order.account.temporarilyLogin;
+          }
           dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
         }
 
@@ -205,7 +209,7 @@ const OrderConfirmation = ({ history }) => {
     const handleOrderDetail = useCallback(
       e => {
         e.preventDefault();
-        if (order.hasOwnProperty('account') && order.account) {
+        if (account.hasOwnProperty('data') && !account.data.hasOwnProperty('_id') && order.account) {
           order.account.temporarilyLogin = true;
           dispatch(receivedFetchAccountSuccess(order.account));
         }
