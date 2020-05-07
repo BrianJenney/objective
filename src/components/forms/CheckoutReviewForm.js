@@ -30,16 +30,6 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
         site_location: 'checkout'
       });
 
-      window.analytics.track('Subscribed', {
-        email: payload.shippingAddress.email,
-        site_location: 'checkout'
-      });
-
-      window.analytics.track('Subscribed Listrak Auto', {
-        email: payload.shippingAddress.email,
-        site_location: 'checkout'
-      });
-
       window.analytics.identify({
         first_name: payload.shippingAddress.firstName,
         last_name: payload.shippingAddress.lastName,

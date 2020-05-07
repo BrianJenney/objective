@@ -40,6 +40,7 @@ const Order = ({ history, match: { params } }) => {
       };
     } else {
       return () => {
+        dispatch(receivedGetOrder(null));
         if (account.temporarilyLogin) {
           dispatch(requestLogout());
         }

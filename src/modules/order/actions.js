@@ -159,7 +159,6 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
     },
     payload
   );
-
   // @segment - Cancel Order Submitted Event
   window.analytics.track('Order Cancel Submitted', {
     order_id: orderNumber

@@ -95,7 +95,7 @@ const Header = ({ currentUser, location }) => {
 
   segmentIdentify(currentUser.data);
   const accountMenuItemConf =
-    account_jwt && !currentUser.data.isGuest
+    account_jwt && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin
       ? {
           key: 'third',
           children: <LoggedInUser name={firstName} />,

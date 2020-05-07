@@ -12,6 +12,7 @@ import { getInitialValues } from '../../utils/misc';
 import EventEmitter from '../../events';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { receivedFetchAccountSuccess } from '../../modules/account/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -70,6 +71,7 @@ const OrderTrackerForm = ({
   submitLabel,
   requestFindUnauthenticatedOrders,
   receivedGetOrder,
+  requestFetchAccountSuccess,
   requestFetchAccount,
   dispatch,
   history
@@ -118,6 +120,7 @@ const OrderTrackerForm = ({
           if (data.payload._id) {
             order.account = { ...data.payload, isGuest: true, temporarilyLogin: true };
             dispatch(receivedGetOrder(order));
+            dispatch(receivedFetchAccountSuccess(order.account));
             history.push(`/orders/${order._id}`);
           } else {
             //No account holder found, display error message
