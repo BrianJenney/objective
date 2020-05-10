@@ -65,7 +65,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
   textFreight: {
-    fontSize: 18
+    fontSize: 18,
+    lineHeight: '1.5rem'
   },
   button: {
     margin: theme.spacing(3, 0, 4)
@@ -244,7 +245,7 @@ const OrderSummary = ({
           onSubmit={onGuestOrderPasswordSubmit}
           isSuccessful={guestPasswordFormSubmitted}
           handleOrderDetail={false}
-          style={{ marginBottom: '50px' }}
+          style={{ marginBottom: '50px', marginTop: '32px' }}
         />
       )}
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>

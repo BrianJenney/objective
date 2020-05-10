@@ -24,13 +24,16 @@ const useStyles = makeStyles(theme => ({
       color: '#231f20'
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#231f20'
+      borderColor: '#231f20',
+      backgroundColor: '#fff'
     }
   }
 }));
 
 const schema = object().shape({
-  password: string().required('Password is required').min(6, 'Password has to be longer than 6 characters!')
+  password: string()
+    .required('Password is required')
+    .min(6, 'Password has to be longer than 6 characters!')
 });
 
 const INITIAL_VALUES = {
@@ -62,9 +65,11 @@ const GuestOrderSetPasswordForm = ({
       style={{ backgroundColor: 'rgba(195, 241, 207, 0.5)', padding: '5px 25px 26px 24px', ...style }}
       className={classes.root}
     >
-      {title && <Typography variant="h6" gutterBottom children={title} style={{ fontSize: '26px' }} />}
+      {title && (
+        <Typography variant="h6" gutterBottom children={title} style={{ fontSize: '26px', lineHeight: '2rem' }} />
+      )}
       <Grid container spacing={2}>
-        <Grid item xs={xs ? 12 : 8} style={{ display: !isSuccessful ? 'flex' : 'none' }}>
+        <Grid item xs={xs ? 12 : 8} style={{ display: !isSuccessful ? 'flex' : 'none', marginTop: '16px' }}>
           <Field
             name="password"
             label="Password"
@@ -72,7 +77,7 @@ const GuestOrderSetPasswordForm = ({
             type={passwordVisible ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <Box width={1} textAlign="right">
+                <Box width={1} textAlign="right" style={{ zIndex: 1 }}>
                   <NavLink
                     style={{
                       fontFamily: 'P22-underground',
@@ -91,14 +96,18 @@ const GuestOrderSetPasswordForm = ({
 
         <Grid item xs={xs || isSuccessful ? 12 : 4} style={{ padding: '4px' }}>
           {!isSuccessful && (
-            <Button type="submit" children={submitLabel} style={{ height: '60px', padding: '0px 40px' }} />
+            <Button
+              type="submit"
+              children={submitLabel}
+              style={{ height: '60px', padding: '0px 40px', marginTop: '16px', marginBottom: '10px' }}
+            />
           )}
           {isSuccessful && handleOrderDetail && (
             <Button
               type="button"
               onClick={handleOrderDetail}
               children={submitLabel}
-              style={{ height: '60px', padding: '0px 40px' }}
+              style={{ height: '60px', padding: '0px 40px', marginTop: '16px', marginBottom: '10px' }}
             />
           )}
         </Grid>
