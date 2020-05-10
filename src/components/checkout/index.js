@@ -579,6 +579,7 @@ const Checkout = ({
                   <div ref={stepRefs[1]}>
                     <Panel
                       title={getPanelTitleContent(xs, 1, activeStep, null, payload.paymentDetails)}
+                      hideExpandIcon={activeStep <= 1}
                       collapsible
                       expanded={activeStep === 1}
                       onChange={e => onPanelChange(e, 1)}

@@ -58,7 +58,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
         ''
       )}
 
-      <Box display={!accountJwt ? 'flex' : 'none'} alignItems="center">
+      <Box display={!accountJwt ? 'flex' : 'none'} alignItems="center" style={{ marginBottom: '12px' }}>
         <Checkbox
           id="useAddressSeedToggle"
           size="small"

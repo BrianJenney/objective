@@ -55,7 +55,8 @@ const useStyles = makeStyles(theme => ({
   },
   text1: {
     fontSize: '18px',
-    fontFamily: 'freight-text-pro'
+    fontFamily: 'freight-text-pro',
+    lineHeight: '1.5rem'
   },
   text2: {
     fontSize: '18px',
@@ -264,7 +265,7 @@ const OrderConfirmation = ({ history }) => {
             onSubmit={onGuestOrderPasswordSubmit}
             isSuccessful={guestPasswordFormSubmitted}
             handleOrderDetail={handleOrderDetail}
-            style={{ marginBottom: '50px' }}
+            style={{ marginBottom: '50px', marginTop: '32px' }}
           />
         )}
         <Box

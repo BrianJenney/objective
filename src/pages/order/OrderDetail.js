@@ -63,7 +63,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
   textFreight: {
-    fontSize: 18
+    fontSize: 18,
+    lineHeight: '1.5rem'
   },
   textTracking: {
     marginTop: '16px'
@@ -252,7 +253,7 @@ const OrderSummary = ({
           onSubmit={onGuestOrderPasswordSubmit}
           isSuccessful={guestPasswordFormSubmitted}
           handleOrderDetail={false}
-          style={{ marginBottom: '50px' }}
+          style={{ marginBottom: '50px', marginTop: '32px' }}
         />
       )}
 

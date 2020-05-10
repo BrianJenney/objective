@@ -169,9 +169,12 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const mobileDrawerPadding = window.screen.width < 960 ? '24px 20px' : '0';
+  const mobileDrawerPadding = window.screen.width < 960 ? '24px 20px' : '0px';
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+
+  const checkoutPadding = xsBreakpoint ? '0px' : 'inherit';
+  const drawerPadding = !isCheckoutPage ? mobileDrawerPadding : checkoutPadding;
   return (
     <Grid
       container
@@ -179,7 +182,7 @@ const Cart = ({
         width: '100%',
         minWidth: '90%',
         margin: '0 auto',
-        padding: mobileDrawerPadding
+        padding: drawerPadding
       }}
       className="cart-drawer"
     >
@@ -310,8 +313,7 @@ const Cart = ({
                       to={`/products/${item.slug}`}
                       style={{
                         textDecoration: 'none',
-                        maxHeight: '40px',
-                        overflow: 'hidden'
+                        maxHeight: '40px'
                       }}
                       onClick={() => {
                         segmentProductClickEvent({

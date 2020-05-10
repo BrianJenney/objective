@@ -349,6 +349,7 @@ const AccountPaymentDetails = ({
 
               <FormControlLabel
                 key="formControlLabelCreditCardMode"
+                style={{ marginLeft: '-6px' }}
                 value="creditCard"
                 control={<Radio color={'primary'} size={'small'} />}
                 label="Credit Card"
@@ -428,6 +429,7 @@ const AccountPaymentDetails = ({
 
             <FormControlLabel
               key="formControlLabelCreditCardMode"
+              style={{ marginLeft: '-6px' }}
               value="paypal"
               control={<Radio color={'primary'} size={'small'} />}
               label={paypalEmail ? `PayPal: ${paypalEmail}` : 'PayPal'}
