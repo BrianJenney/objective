@@ -15,6 +15,7 @@ import FeaturedItem from './blog/FeaturedItem';
 import PostItem from './blog/PostItem';
 import LoadingSpinner from '../components/LoadingSpinner';
 import HeadTags from '../components/common/HeadTags';
+import NotFound from './notfound/NotFound';
 
 const BlogCategory = ({ computedMatch, location }) => {
   const { category_slug } = computedMatch.params;
@@ -25,33 +26,48 @@ const BlogCategory = ({ computedMatch, location }) => {
   const [posts, setPosts] = useState([]);
 
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[category_slug];
+  const validCategory = seoMap[category_slug];
+  let title;
+  let description;
   const isSleep = matchPath(location.pathname, { path: '/journal/category/sleep' });
 
-  useEffect(() => {
-    async function fetchData() {
-      const results = await fetchPostsByCategory(category_slug);
+  if (validCategory) {
+    ({ title, description } = validCategory);
+  }
 
-      if (isSleep) {
-        let featuredPostHolder = [];
-        results.posts.map(post => {
-          if (post.fields.featuredCategories && post.fields.featuredCategories[0].includes('Sleep')) {
-            let featuredPosition = post.fields.featuredCategories[0].slice(-1);
-            if (featuredPosition == 1) {
-              setFeaturedMain(post);
-            } else {
-              featuredPostHolder.push(post);
-            }
+  const fetchData = async () => {
+    const results = await fetchPostsByCategory(category_slug);
+
+    if (isSleep) {
+      let featuredPostHolder = [];
+      results.posts.map(post => {
+        if (post.fields.featuredCategories && post.fields.featuredCategories[0].includes('Sleep')) {
+          let featuredPosition = post.fields.featuredCategories[0].slice(-1);
+          if (featuredPosition == 1) {
+            setFeaturedMain(post);
+          } else {
+            featuredPostHolder.push(post);
           }
-        });
-        setFeaturedPosts(featuredPostHolder);
-      }
-      setBlogTitle(results.title);
-      setPosts(results.posts);
+        }
+      });
+      setFeaturedPosts(featuredPostHolder);
     }
-    fetchData();
-    window.analytics.page('Journal Category');
+    setBlogTitle(results.title);
+    setPosts(results.posts);
+  }
+
+  useEffect(() => {
+    if (validCategory) {
+      fetchData();
+      window.analytics.page('Journal Category');
+    } else {
+      window.analytics.page('404 Error');
+    }
   }, []);
+
+  if (!validCategory) {
+    return <NotFound />;
+  }
 
   if (posts.length === 0) {
     return (

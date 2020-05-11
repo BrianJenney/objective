@@ -9,16 +9,27 @@ import ResearchSources from './product/ResearchSources';
 import ScrollToTop from '../components/common/ScrollToTop';
 import { ProductStore } from '../contexts/ProductContext';
 import HeadTags from '../components/common/HeadTags';
+import NotFound from './notfound/NotFound';
 
 const Product = ({ match }) => {
   const { product_slug } = match.params;
   const { href: url } = window.location;
   const scrollToTabs = url[url.length - 1] === '#';
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[product_slug];
+  const validProduct = seoMap[product_slug];
+  let title;
+  let description;
+
+  if (validProduct) {
+    ({ title, description } = validProduct);
+  }
 
   useEffect(() => {
-    window.analytics.page('PDP');
+    if (validProduct) {
+      window.analytics.page('PDP');
+    } else {
+      window.analytics.page('404 Error');
+    }
   }, []);
 
   const content = (
@@ -29,6 +40,10 @@ const Product = ({ match }) => {
       <ResearchSources />
     </ProductStore>
   );
+
+  if (!validProduct) {
+    return <NotFound />;
+  }
 
   if (scrollToTabs) {
     return (
