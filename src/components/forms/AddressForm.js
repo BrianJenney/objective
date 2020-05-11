@@ -50,7 +50,9 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiFormHelperText-root': {
       fontSize: '11px',
-      color: '#231f20'
+      color: '#231f20',
+      lineHeight: '14px',
+      marginTop: '5px'
     },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: '#231f20'
@@ -378,16 +380,28 @@ const AddressForm = ({
             </Box>
           </Grid>
         )}
-        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
+
+        <Grid
+          item
+          xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+          sm={6}
+          style={{ paddingRight: '12px' }}
+        >
           <div ref={fieldRefs.firstName}>
             <Field name="address.firstName" label="First Name" component={InputField} autoComplete="given-name" />
           </div>
         </Grid>
-        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
+        <Grid
+          item
+          xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+          sm={6}
+          style={{ paddingLeft: '12px' }}
+        >
           <div ref={fieldRefs.lastName}>
             <Field name="address.lastName" label="Last Name" component={InputField} autoComplete="family-name" />
           </div>
         </Grid>
+
         <Grid item xs={12}>
           <div ref={fieldRefs.address1}>
             <Field
@@ -407,7 +421,12 @@ const AddressForm = ({
             autoComplete="address-line2"
           />
         </Grid>
-        <Grid item xs={12} sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}>
+        <Grid
+          item
+          xs={12}
+          sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}
+          style={{ paddingRight: '12px' }}
+        >
           <div ref={fieldRefs.city}>
             <Field name="address.city" label="City" component={InputField} autoComplete="address-level2" />
           </div>
@@ -416,6 +435,7 @@ const AddressForm = ({
           item
           xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
           sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 2 : 6}
+          style={{ paddingRight: '12px', paddingLeft: xs ? '8px' : '12px' }}
         >
           <div ref={fieldRefs.state}>
             <Field
@@ -430,6 +450,7 @@ const AddressForm = ({
           item
           xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
           sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 4 : 6}
+          style={{ paddingLeft: '12px' }}
         >
           <div ref={fieldRefs.zipcode}>
             <Field name="address.zipcode" label="Zip Code" component={InputField} autoComplete="postal-code" />
