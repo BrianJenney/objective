@@ -88,7 +88,7 @@ const Header = ({ currentUser, location }) => {
     ) {
       setAcqDiscount(true);
       removeCoupon(cart._id);
-      addCoupon(cart._id, 'MOM25');
+      addCoupon(cart._id, 'SAVE25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id]);
@@ -171,7 +171,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                        25% OFF Fast Asleep + Free Shipping! Use Code MOM25
+                        Limited Time: Free Shipping for All New Customers
                         </NavLink>
                         <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
                       </StyledBox>
@@ -188,7 +188,7 @@ const Header = ({ currentUser, location }) => {
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
                             <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                            Celebrate Moms with 25% OFF Fast Asleep + Free Shipping! Use Code MOM25
+                            Limited Time: Free Shipping for All New Customers
                             </NavLink>
                             <div className="closeIcon" onClick={handlePromoClose}>
                               Close
