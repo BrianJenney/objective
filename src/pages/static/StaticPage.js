@@ -28,9 +28,10 @@ const StaticPage = ({ match }) => {
         setTracked(true);
         window.analytics.page(`LP: ${page.name}`);
       }
-    } else {
-      setPageError(true);
     }
+    // else {
+    //   setPageError(true);
+    // }
   }, [page]);
 
   let FinalPage = null;
