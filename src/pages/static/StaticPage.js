@@ -37,9 +37,9 @@ const StaticPage = ({ match }) => {
   if (pageLoaded) {
     FinalPage = () => buildPage(page);
   }
-  if (pageError) {
-    FinalPage = () => <NotFound />
-  }
+  // if (pageError) {
+  //   FinalPage = () => <NotFound />;
+  // }
 
   if (FinalPage) {
     return <FinalPage />;
