@@ -51,7 +51,9 @@ export const sendPaypalCheckoutRequest = async (amount, shippingAddress, buttonS
         buttonSelector
       ).then(() => {
         //Show container when PayPal button has finished rendering
-        document.querySelector(buttonSelector).style.filter = 'none';
+        setTimeout(() => {
+          document.querySelector(buttonSelector).style.filter = 'none';
+        }, 500);
       });
     });
 
