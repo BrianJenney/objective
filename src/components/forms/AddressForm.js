@@ -57,6 +57,9 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: '#231f20'
+    },
+    '& .MuiCheckbox-root': {
+      padding: '3px'
     }
   }
 }));
@@ -476,7 +479,7 @@ const AddressForm = ({
           <Field name="address.country" label="Country" component={SelectField} options={COUNTRY_OPTIONS} disabled />
         </Grid>
         {allowFlyMode && currentUser.data.account_jwt && (
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ padding: '0px', marginTop: '-8px' }}>
             <Field name="shouldSaveData" label="Save details in account" component={CheckboxField} />
           </Grid>
         )}
