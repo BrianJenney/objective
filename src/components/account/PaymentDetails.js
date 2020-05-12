@@ -25,7 +25,10 @@ import { useSelector, useDispatch } from 'react-redux';
 const useStyles = makeStyles(theme => ({
   formControlLabel: {
     fontSize: '20px',
-    fontFamily: 'p22-underground'
+    fontFamily: 'p22-underground',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '16px'
+    }
   },
   mobileLogin: {
     fontSize: '16px',
@@ -414,7 +417,8 @@ const AccountPaymentDetails = ({
             </Grid>
             <Box
               mt="8px"
-              fontSize={xs ? 14 : 16}
+              mb="10px"
+              fontSize={xs ? 14 : 18}
               fontWeight={600}
               style={{ textTransform: 'uppercase', display: paymentMethodMode === 'creditCard' ? 'block' : 'none' }}
             >

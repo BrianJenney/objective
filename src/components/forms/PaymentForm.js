@@ -47,7 +47,10 @@ const useStyles = makeStyles(theme => ({
   },
   formControlLabel: {
     fontSize: '20px',
-    fontFamily: 'p22-underground'
+    fontFamily: 'p22-underground',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '16px'
+    }
   },
   mobileLogin: {
     fontSize: '16px',
@@ -58,11 +61,13 @@ const useStyles = makeStyles(theme => ({
       fontSize: '16px'
     },
     '& .MuiInputBase-root': {
-      fontSize: '16px'
+      fontSize: '16px',
+      marginBottom: '10px'
     },
     '& .MuiFormHelperText-root': {
       fontSize: '11px',
-      color: '#231f20'
+      color: '#231f20',
+      marginTop: '-8px'
     },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: '#231f20'
@@ -504,7 +509,7 @@ const PaymentForm = ({
               <Typography
                 variant="body1"
                 className={xs ? classes.mobileLogin : classes.subTitle}
-                style={{ textAlign: 'left', margin: '0px' }}
+                style={{ textAlign: 'left', margin: '0px', lineHeight: '2.3rem' }}
               >
                 All transactions are secure and encrypted
               </Typography>
@@ -642,7 +647,7 @@ const PaymentForm = ({
               </Grid>
 
               {paymentMethodMode === 'creditCard' && (
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ marginTop: '10px', marginBottom: xs ? '0px' : '8px' }}>
                   <Box
                     component={Typography}
                     color="#231f20"
@@ -650,7 +655,7 @@ const PaymentForm = ({
                     children="Billing Address"
                     style={{ fontFamily: 'CanelaText' }}
                     fontSize={xs ? 24 : 30}
-                    mb={1}
+                    mb={xs ? 0 : 1}
                     mt={1}
                   />
                 </Grid>
@@ -701,12 +706,7 @@ const PaymentForm = ({
                 !rest.checkoutVersion ||
                 (rest.checkoutVersion && rest.checkoutVersion === 1)) && (
                 <>
-                  <Grid
-                    item
-                    xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
-                    sm={6}
-                    style={{ paddingRight: '12px' }}
-                  >
+                  <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
                     <div ref={fieldRefs.firstName}>
                       <Field
                         name="billingAddress.firstName"
@@ -716,12 +716,7 @@ const PaymentForm = ({
                       />
                     </div>
                   </Grid>
-                  <Grid
-                    item
-                    xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
-                    sm={6}
-                    style={{ paddingLeft: '12px' }}
-                  >
+                  <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
                     <div ref={fieldRefs.lastName}>
                       <Field
                         name="billingAddress.lastName"
@@ -756,12 +751,7 @@ const PaymentForm = ({
                       />
                     </div>
                   </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}
-                    style={{ paddingRight: '12px' }}
-                  >
+                  <Grid item xs={12} sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}>
                     <div ref={fieldRefs.city}>
                       <Field
                         name="billingAddress.city"
@@ -775,7 +765,6 @@ const PaymentForm = ({
                     item
                     xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
                     sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 2 : 6}
-                    style={{ paddingRight: '12px', paddingLeft: xs ? '8px' : '12px' }}
                   >
                     <div ref={fieldRefs.state}>
                       <Field
@@ -792,7 +781,6 @@ const PaymentForm = ({
                     item
                     xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
                     sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 4 : 6}
-                    style={{ paddingLeft: '12px' }}
                   >
                     <div ref={fieldRefs.zipcode}>
                       <Field

@@ -66,7 +66,12 @@ const GuestOrderSetPasswordForm = ({
       className={classes.root}
     >
       {title && (
-        <Typography variant="h6" gutterBottom children={title} style={{ fontSize: '26px', lineHeight: '2rem' }} />
+        <Typography
+          variant="h6"
+          gutterBottom
+          children={title}
+          style={{ fontSize: '26px', lineHeight: '2rem', marginTop: '16px' }}
+        />
       )}
       <Grid container spacing={2}>
         <Grid item xs={xs ? 12 : 8} style={{ display: !isSuccessful ? 'flex' : 'none', marginTop: '16px' }}>
