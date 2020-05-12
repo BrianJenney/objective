@@ -598,7 +598,7 @@ const PaymentForm = ({
                     xs={12}
                     style={
                       rest.checkoutVersion && rest.checkoutVersion === 2
-                        ? { marginTop: '0px', paddingLeft: '3px', padding: '0px' }
+                        ? { marginTop: '8px', paddingLeft: '3px', padding: '0px' }
                         : {}
                     }
                   >
