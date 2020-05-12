@@ -34,24 +34,21 @@ const PayPalButton = ({ cart, buttonSelector, buttonWrapperStyle, history }) => 
     history.push('/checkout/');
   };
 
-
   useEffect(() => {
-    if(!ppButtonRendered && cart.cartDrawerOpened && cart && cart.total > 0){
-        getPaypalBraintreeNonce();
+    if (!ppButtonRendered && cart.cartDrawerOpened && cart && cart.total > 0) {
+      getPaypalBraintreeNonce();
     }
   }, [cart.cartDrawerOpened]);
-  
+
   useEffect(() => {
     if (ppButtonRendered && cart && cart.total > 0) {
       let paypalCheckoutButton = document.getElementById(buttonSelector);
-      if(paypalCheckoutButton){
-      paypalCheckoutButton.innerHTML = '';
+      if (paypalCheckoutButton) {
+        paypalCheckoutButton.innerHTML = '';
       }
       getPaypalBraintreeNonce();
     }
   }, [cart]);
-
-
 
   return <div id={buttonSelector} style={buttonWrapperStyle}></div>;
 };

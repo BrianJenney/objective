@@ -46,16 +46,20 @@ const useStyles = makeStyles(theme => ({
       fontSize: '16px'
     },
     '& .MuiInputBase-root': {
-      fontSize: '16px'
+      fontSize: '16px',
+      marginBottom: '10px'
     },
     '& .MuiFormHelperText-root': {
       fontSize: '11px',
       color: '#231f20',
       lineHeight: '14px',
-      marginTop: '5px'
+      marginTop: '-8px'
     },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: '#231f20'
+    },
+    '& .MuiCheckbox-root': {
+      padding: '3px'
     }
   }
 }));
@@ -381,22 +385,12 @@ const AddressForm = ({
           </Grid>
         )}
 
-        <Grid
-          item
-          xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
-          sm={6}
-          style={{ paddingRight: '12px' }}
-        >
+        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
           <div ref={fieldRefs.firstName}>
             <Field name="address.firstName" label="First Name" component={InputField} autoComplete="given-name" />
           </div>
         </Grid>
-        <Grid
-          item
-          xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
-          sm={6}
-          style={{ paddingLeft: '12px' }}
-        >
+        <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
           <div ref={fieldRefs.lastName}>
             <Field name="address.lastName" label="Last Name" component={InputField} autoComplete="family-name" />
           </div>
@@ -421,12 +415,7 @@ const AddressForm = ({
             autoComplete="address-line2"
           />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}
-          style={{ paddingRight: '12px' }}
-        >
+        <Grid item xs={12} sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}>
           <div ref={fieldRefs.city}>
             <Field name="address.city" label="City" component={InputField} autoComplete="address-level2" />
           </div>
@@ -435,7 +424,6 @@ const AddressForm = ({
           item
           xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
           sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 2 : 6}
-          style={{ paddingRight: '12px', paddingLeft: xs ? '8px' : '12px' }}
         >
           <div ref={fieldRefs.state}>
             <Field
@@ -450,7 +438,6 @@ const AddressForm = ({
           item
           xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
           sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 4 : 6}
-          style={{ paddingLeft: '12px' }}
         >
           <div ref={fieldRefs.zipcode}>
             <Field name="address.zipcode" label="Zip Code" component={InputField} autoComplete="postal-code" />
@@ -492,7 +479,7 @@ const AddressForm = ({
           <Field name="address.country" label="Country" component={SelectField} options={COUNTRY_OPTIONS} disabled />
         </Grid>
         {allowFlyMode && currentUser.data.account_jwt && (
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ padding: '0px', marginTop: '-8px' }}>
             <Field name="shouldSaveData" label="Save details in account" component={CheckboxField} />
           </Grid>
         )}
