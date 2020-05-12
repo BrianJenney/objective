@@ -300,8 +300,14 @@ const AccountAddresses = ({
             />
           </Box>
           {onSubmit && (
-            <Box mt={xs ? '28px' : '55px'} width={xs ? 1 : '438px'} mx="auto">
-              <Button fullWidth type="button" onClick={handleSubmit} children="Continue" />
+            <Box mt={xs ? '18px' : '45px'} width={xs ? 1 : '438px'} mx="auto">
+              <Button
+                fullWidth
+                type="button"
+                onClick={handleSubmit}
+                children="Continue"
+                style={{ height: '55px', padding: '0px' }}
+              />
             </Box>
           )}
         </>

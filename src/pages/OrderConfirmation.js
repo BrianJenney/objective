@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '55px',
     fontFamily: 'Canela Text Web',
     paddingBottom: '0',
-    marginBottom: '22px',
+    marginBottom: '36px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '40px'
     }
