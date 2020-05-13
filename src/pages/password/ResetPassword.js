@@ -158,7 +158,7 @@ const ResetPassword = ({ history, location }) => {
     dispatch(requestPasswordReset(token, values));
     const localStorageClient = require('store');
     localStorageClient.remove('token');
-    history.replace('/password/success');
+    history.replace('/password/success', utm_content);
   };
 
   return (

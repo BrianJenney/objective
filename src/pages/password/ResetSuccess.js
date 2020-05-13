@@ -40,13 +40,13 @@ const handleClick = () => {
 const localStorageClient = require('store');
 localStorageClient.remove('token');
 
-const ResetSuccess = () => {
+const ResetSuccess = ({ location }) => {
   const classes = useStyles();
   return (
     <Container>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>
-          Your password has been reset
+          { location.state ? 'Your password has been set' : 'Your password has been reset' }
         </Typography>
         <Typography className={classes.subTitle}>
           Click below to return to the account login page
