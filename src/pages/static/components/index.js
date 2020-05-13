@@ -9,4 +9,3 @@ export { default as HeaderMobile } from './HeaderMobile';
 export { default as SPButton } from './Button';
 export { default as SPBox } from './Box';
 export { default as Banner } from './Banner';
-export { default as Table } from './Table';

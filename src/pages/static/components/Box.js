@@ -9,17 +9,7 @@ import Title from './Title';
 import List from './List';
 
 const useStyles = makeStyles(theme => ({
-  border: props => ({
-    backgroundColor: props.desktopStyle.bgColor,
-    borderColor: props.desktopStyle.borderColor,
-    display: props.desktopStyle.display,
-    width: props.desktopStyle.width,
-    float: props.desktopStyle.float,
-    [theme.breakpoints.down('sm')]: {
-      width: props.mobileStyle.width
-    }
-  }),
-  noBorder: props => ({
+  root: props => ({
     backgroundColor: props.desktopStyle.bgColor,
     borderColor: props.desktopStyle.borderColor,
     display: props.desktopStyle.display,
@@ -33,36 +23,44 @@ const useStyles = makeStyles(theme => ({
 
 const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
-  const border = data.desktopStyle.border;
-  const float = data.desktopStyle.float;
+  const { border, float } = data.desktopStyle;
+  const classNames = border
+    ? `${classes.root} ${template}-${type} ${template}-${type}-${float}`
+    : `${classes.root} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`
 
   return (
     <>
-      {border ? (
-        <Box className={`${classes.border} ${template}-${type} ${template}-${type}-${float}`}>
-          {comps.map((obj, i) => {
-            switch (obj.type) {
-              case 'boxTitle':
-                return <Title key={i} data={obj} template={template} type={obj.type} />;
-              case 'list':
-                return (
-                  <List key={i} data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />
-                );
-            }
-          })}
-        </Box>
-      ) : (
-        <Box className={`${classes.noBorder} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`}>
-          {comps.map((obj, i) => {
-            switch (obj.type) {
-              case 'boxTitle':
-                return <Title key={i} data={obj} template={template} type={obj.type} />;
-              case 'list':
-                return <List key={i} data={obj} template={template} type={obj.type} />;
-            }
-          })}
-        </Box>
-      )}
+      <Box className={classNames}>
+        {comps.map((obj, i) => {
+          console.log(obj.type)
+          switch (obj.type) {
+            case 'boxTitle':
+              console.log(obj)
+
+              return <Title key={i} data={obj} template={template} type={obj.type} />;
+            case 'tableContainer':
+              return (
+                <div>
+                  {obj.value.components.map((el, i) => {                
+                      switch (el.type) {
+                          case 'tableHead':
+                            console.log(el.type)
+                            return <Title key={i} data={el} template={template} type={el.type} />;
+                          case 'tableBody':
+                            return (
+                              <List key={i} data={el} template={template} type={el.type} symbol={el.desktopStyle.bulletSymbol} />
+                            );
+                        }
+                  })}
+                </div>
+              );
+            case 'list':
+              return (
+                <List key={i} data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />
+              );
+          }
+        })}
+      </Box>
     </>
   );
 };

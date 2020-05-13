@@ -12,7 +12,6 @@ import {
   SPBox,
   Banner,
   List,
-  Table,
 } from '../pages/static/components';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -188,7 +187,7 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'table':
         components.push(
           <>
-            <Table data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
+            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
           </>
         );
         break;
