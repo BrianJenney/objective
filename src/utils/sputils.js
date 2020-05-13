@@ -11,7 +11,7 @@ import {
   SPButton,
   SPBox,
   Banner,
-  List,
+  List
 } from '../pages/static/components';
 import { makeStyles } from '@material-ui/core/styles';
 
