@@ -44,7 +44,7 @@
   letter-spacing: normal;
   color: #000;
 }
-.LP-Template-1-boxTitle {
+.LP-Template-1-boxTitle, .LP-Template-1-tableTitle {
   font-size: 18px;
   font-weight: 900;
   font-stretch: normal;
@@ -70,31 +70,31 @@
   width: 100%;
   display: block;
 }
-.LP-Template-1-box {
+.LP-Template-1-box, .LP-Template-1-table {
   border: 1px solid #000;
   background-color: #fcf8f4;
   padding: 20px 25px;
   width: 300px;
 }
-.LP-Template-1-box-right {
+.LP-Template-1-box-right, .LP-Template-1-table-right {
   margin: 12px 0 10px 25px;
   display: block;
   float: right;
 }
-.LP-Template-1-box-left {
+.LP-Template-1-box-left, .LP-Template-1-table-left {
   margin: 12px 25px 10px 0;
   display: block;
   float: left;
 }
-.LP-Template-1-box-noBorder {
+.LP-Template-1-box-noBorder, .LP-Template-1-table-noBorder {
   background-color: #fcf8f4;
   padding: 20px 25px;
   width: 300px;
 }
-.LP-Template-1-box-noBorder-right {
+.LP-Template-1-box-noBorder-right, .LP-Template-1-table-noBorder-right {
   margin: 12px 0 10px 25px;
 }
-.LP-Template-1-box-noBorder-left {
+.LP-Template-1-box-noBorder-left, .LP-Template-1-table-noBorder-left {
   margin: 12px 25px 10px 0;
 }
 .LP-Template-1-list {
@@ -255,14 +255,14 @@
     width: 100%;
     display: block;
   }
-  .LP-Template-1-box {
+  .LP-Template-1-box, .LP-Template-1-table {
     border: 1px solid #000;
     background-color: #fcf8f4;
     padding: 20px 25px;
     width: 100%;
     margin-bottom: 10px;
   }
-  .LP-Template-1-box {
+  .LP-Template-1-box, .LP-Template-1-table {
     background-color: #fcf8f4;
     padding: 20px 25px;
     width: 100%;
