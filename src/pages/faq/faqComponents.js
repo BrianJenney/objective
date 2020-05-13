@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
       fontSize: props.mobileStyle.fontSize || 24,
       lineHeight: props.mobileStyle.lineHeight || 'normal',
       fontFamily: props.mobileStyle.fontFamily || 'Canela Text Web',
-      textAlign: props.desktopStyle.align || 'center',
-      marginBottom: props.desktopStyle.margin || '0 0 44px'
+      textAlign: props.mobileStyle.align || 'center',
+      margin: props.mobileStyle.margin || '0 0 44px'
     }
   })
 }));
