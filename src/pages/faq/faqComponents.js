@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-  title: props => ({
-	
+  title: props => ({	
 			color: props.desktopStyle.fontColor,
 			fontWeight: props.desktopStyle.fontWeight || 'normal',
 			fontSize: props.desktopStyle.fontSize || 48,
@@ -89,7 +88,6 @@ export const generateComponents = (page) => {
 				break;
 		}
 	});
-	// console.log('testing-COMPPPPP----', components)
 	return components
 
 
