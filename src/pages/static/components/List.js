@@ -20,17 +20,19 @@ const List = ({ data, template, type, symbol }) => {
   return (
     <>
       {symbol ? (
-        <ul>
-          {data.value.map((item, i) => {
-            return (
-              <li
-                key={i}
-                className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}
-                dangerouslySetInnerHTML={{ __html: item }}
-              ></li>
-            );
-          })}
-        </ul>
+        <div className={`${template}-${type}-ulContainer`}>
+          <ul>
+            {data.value.map((item, i) => {
+              return (
+                <li
+                  key={i}
+                  className={`${classes.root} ${template}-${type} ${template}-${type}-${symbol}`}
+                  dangerouslySetInnerHTML={{ __html: item }}
+                ></li>
+              );
+            })}
+          </ul>
+        </div>
       ) : (
         <ol>
           {data.value.map((item, i) => {

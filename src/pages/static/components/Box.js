@@ -32,19 +32,18 @@ const SPBox = ({ data, template, type, comps }) => {
     <>
       <Box className={classNames}>
         {comps.map((obj, i) => {
-          console.log(obj.type)
           switch (obj.type) {
             case 'boxTitle':
-              console.log(obj)
-
               return <Title key={i} data={obj} template={template} type={obj.type} />;
             case 'tableContainer':
+              const borderClassname = obj.desktopStyle.borderPlacement
+                ? `${template}-${type}-columnContainer-${obj.desktopStyle.borderPlacement}`
+                : `${template}-${type}-columnContainer`
               return (
-                <div>
+                <div className={borderClassname}>
                   {obj.value.components.map((el, i) => {                
                       switch (el.type) {
                           case 'tableHead':
-                            console.log(el.type)
                             return <Title key={i} data={el} template={template} type={el.type} />;
                           case 'tableBody':
                             return (
