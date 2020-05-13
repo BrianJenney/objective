@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
 		lineHeight: props.desktopStyle.lineHeight || 'normal',
 		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
 		textAlign: props.desktopStyle.align || 'left',
-		margin: props.desktopStyle.margin || '0 0 20px',
 		[theme.breakpoints.down('xs')]: {
 			color: props.mobileStyle.fontColor,
 			fontWeight: props.mobileStyle.fontWeight || 'normal',
@@ -55,48 +54,13 @@ const useStyles = makeStyles(theme => ({
 			lineHeight: props.mobileStyle.lineHeight || 'normal',
 			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
 			textAlign: props.mobileStyle.align || 'left',
-			margin: props.mobileStyle.margin || '0'
 		}
 	}),
-	container: {
-		marginBottom: 20,
-    paddingBottom: 20,
-    borderBottom: '1px solid grey'
-	}
+	
 }));
-
-export const generateComponents = (page) => {
-	let components = [];
-	console.log('testing-PAGE', page);
-	page.components.map(comp => {
-		switch(comp.type) {
-			case 'pageTitle':
-        components.push(
-          <Title data={comp} value={comp.value}/>					
-        );
-				break;
-			case 'sectionTitle':
-				components.push(
-					<SectionTitle data={comp} value={comp.value}/>
-				);
-				break;
-			case 'oneColSection':
-				components.push(
-					generateComponents(comp.value)
-		
-				);
-				break;
-		}
-	});
-	return components
-
-
-};
-
 
 export const Title = ({ data, value }) => {
 	const classes = useStyles(data);
-	console.log('testing-TITLE', data)
   return (
     <>
       <Box>
@@ -119,16 +83,65 @@ export const SectionTitle = ({ data, value }) => {
 
 export const Paragraph = ({ data, value }) => {
   const classes = useStyles(data);
-	console.log('testing-DATA', data);
-	console.log('testing-VALUE', value)
+  return (   
+    <Box>
+			{value.map((item, i) => 	
+				<div key={i} className={classes.paragraph} dangerouslySetInnerHTML={{ __html: item }}></div>				
+			)}
+    </Box>
+  );
+};
+
+export const Container = ({ data }) => {
+	const borderStyle = { 
+		paddingBottom: 20, 
+		marginBottom: 20, 
+		borderBottom: data.desktopStyle.borderColor ? data.desktopStyle.borderColor : '1px solid grey' 
+	};
+	const paragraph = data.value.components.map(comp => {
+		return <Paragraph data={comp} value={comp.value}/>
+	});
+
   return (
     <Grid>
-      <Box>
-				{value.map((item, i) => 	
-					<div key={i} className={classes.paragraph} dangerouslySetInnerHTML={{ __html: item }}></div>				
-				)}
+      <Box style={borderStyle}>
+				{paragraph}
       </Box>
     </Grid>
   );
 };
+
+export const generateComponents = (page) => {
+	let components = [];
+	page.components.map(comp => {
+		switch(comp.type) {
+			case 'pageTitle':
+        components.push(
+          <Title data={comp} value={comp.value}/>					
+        );
+				break;
+			case 'sectionTitle':
+				components.push(
+					<SectionTitle data={comp} value={comp.value}/>
+				);
+				break;
+			case 'container':
+				components.push(
+					<Container data={comp}/>
+				);
+				break;
+			case 'oneColSection':
+				components.push(
+					generateComponents(comp.value)		
+				);
+				break;
+		}
+	});
+	return components
+
+
+};
+
+
+
 
