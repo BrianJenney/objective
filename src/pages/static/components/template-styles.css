@@ -54,6 +54,9 @@
   color: #1f396d;
   text-transform: uppercase;
 }
+.LP-Template-1-tableHead {
+  padding: 20px;
+}
 .LP-Template-1-pageSubTitle {
   font-size: 24px;
   font-weight: 900;
@@ -70,11 +73,28 @@
   width: 100%;
   display: block;
 }
-.LP-Template-1-box, .LP-Template-1-table {
+.LP-Template-1-box {
   border: 1px solid #000;
   background-color: #fcf8f4;
   padding: 20px 25px;
   width: 300px;
+}
+.LP-Template-1-table {
+  border: 1px solid #000;
+  background-color: #fcf8f4;
+  width: 300px;
+}
+.LP-Template-1-table-columnContainer-borderRight {
+  border-right: 1px solid #000;
+}
+.LP-Template-1-table-columnContainer-borderLeft {
+  border-left: 1px solid #000;
+}
+.LP-Template-1-table-columnContainer-borderTop {
+  border-top: 1px solid #000;
+}
+.LP-Template-1-table-columnContainer-borderBottom {
+  border-bottom: 1px solid #000;
 }
 .LP-Template-1-box-right, .LP-Template-1-table-right {
   margin: 12px 0 10px 25px;
@@ -96,6 +116,9 @@
 }
 .LP-Template-1-box-noBorder-left, .LP-Template-1-table-noBorder-left {
   margin: 12px 25px 10px 0;
+}
+.LP-Template-1-tableBody-ulContainer {
+  padding: 20px;
 }
 .LP-Template-1-list, .LP-Template-1-tableBody {
   margin-left: -1em;
@@ -150,6 +173,18 @@
 }
 .LP-Template-1-banner-borderRight {
   border-right: 4px solid #1f396d;
+}
+.LP-Template-1-tableHead-borderTop {
+  border-top: 1px solid #000;
+}
+.LP-Template-1-tableHead-borderBottom {
+  border-bottom: 1px solid #000;
+}
+.LP-Template-1-tableHead-borderLeft {
+  border-left: 1px solid #000;
+}
+.LP-Template-1-tableHead-borderRight {
+  border-right: 1px solid #000;
 }
 .LP-Template-1-image-left {
   margin: 0 25px 20px 0;
