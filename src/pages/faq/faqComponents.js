@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 			}
 	
 	}),
-	subTitle: props => ({
+	sectionTitle: props => ({
 		color: props.desktopStyle.fontColor,
 		fontWeight: props.desktopStyle.fontWeight || 600,
 		fontSize: props.desktopStyle.fontSize || 24,
@@ -40,8 +40,30 @@ const useStyles = makeStyles(theme => ({
 			textAlign: props.mobileStyle.align || 'left',
 			margin: props.mobileStyle.margin || '0 0 24px'
 		}
-	})
-	
+	}),
+	paragraph: props => ({
+		color: props.desktopStyle.fontColor,
+		fontWeight: props.desktopStyle.fontWeight || 'normal',
+		fontSize: props.desktopStyle.fontSize || 24,
+		lineHeight: props.desktopStyle.lineHeight || 'normal',
+		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
+		textAlign: props.desktopStyle.align || 'left',
+		margin: props.desktopStyle.margin || '0 0 20px',
+		[theme.breakpoints.down('xs')]: {
+			color: props.mobileStyle.fontColor,
+			fontWeight: props.mobileStyle.fontWeight || 'normal',
+			fontSize: props.mobileStyle.fontSize || 18,
+			lineHeight: props.mobileStyle.lineHeight || 'normal',
+			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
+			textAlign: props.mobileStyle.align || 'left',
+			margin: props.mobileStyle.margin || '0'
+		}
+	}),
+	container: {
+		marginBottom: 20,
+    paddingBottom: 20,
+    borderBottom: '1px solid grey'
+	}
 }));
 
 export const generateComponents = (page) => {
@@ -59,6 +81,12 @@ export const generateComponents = (page) => {
 					<SectionTitle data={comp} value={comp.value}/>
 				);
 				break;
+			case 'oneColSection':
+				components.push(
+					generateComponents(comp.value)
+		
+				);
+				break;
 		}
 	});
 	// console.log('testing-COMPPPPP----', components)
@@ -69,8 +97,8 @@ export const generateComponents = (page) => {
 
 
 export const Title = ({ data, value }) => {
-  const classes = useStyles(data);
-
+	const classes = useStyles(data);
+	console.log('testing-TITLE', data)
   return (
     <>
       <Box>
@@ -82,12 +110,27 @@ export const Title = ({ data, value }) => {
 
 export const SectionTitle = ({ data, value }) => {
   const classes = useStyles(data);
-
   return (
     <Grid>
       <Box>
-        <div className={classes.subTitle}>{value}</div>
+        <div className={classes.sectionTitle}>{value}</div>
       </Box>
     </Grid>
   );
 };
+
+export const Paragraph = ({ data, value }) => {
+  const classes = useStyles(data);
+	console.log('testing-DATA', data);
+	console.log('testing-VALUE', value)
+  return (
+    <Grid>
+      <Box>
+				{value.map((item, i) => 	
+					<div key={i} className={classes.paragraph} dangerouslySetInnerHTML={{ __html: item }}></div>				
+				)}
+      </Box>
+    </Grid>
+  );
+};
+
