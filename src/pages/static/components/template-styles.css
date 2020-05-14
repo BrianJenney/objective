@@ -272,6 +272,9 @@
     margin-bottom: 14px;
     text-transform: uppercase;
   }
+  .LP-Template-1-table-columnContainer {
+    width: 100%;
+  }
   .LP-Template-1-pageTitle {
     font-size: 36px;
     margin: 15px 0 5px;

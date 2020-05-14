@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import './template-styles.css';
 
@@ -16,7 +17,8 @@ const useStyles = makeStyles(theme => ({
     width: props.desktopStyle.width,
     float: props.desktopStyle.float,
     [theme.breakpoints.down('sm')]: {
-      width: props.mobileStyle.width
+      width: props.mobileStyle.width,
+      display: props.mobileStyle.display
     }
   })
 }));
@@ -24,9 +26,21 @@ const useStyles = makeStyles(theme => ({
 const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
   const { border, float } = data.desktopStyle;
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const classNames = border
     ? `${classes.root} ${template}-${type} ${template}-${type}-${float}`
     : `${classes.root} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`
+
+  const borderPlacementClassname = ((obj) => {
+    if (sm && obj.mobileStyle.borderPlacement) {
+      return `${template}-${type}-columnContainer-${obj.mobileStyle.borderPlacement}`
+    } else if (!sm && obj.desktopStyle.borderPlacement) {
+      return `${template}-${type}-columnContainer-${obj.desktopStyle.borderPlacement}`
+    } else {
+      return ""
+    }
+  })
 
   return (
     <>
@@ -36,11 +50,8 @@ const SPBox = ({ data, template, type, comps }) => {
             case 'boxTitle':
               return <Title key={i} data={obj} template={template} type={obj.type} />;
             case 'tableContainer':
-              const borderClassname = obj.desktopStyle.borderPlacement
-                ? `${template}-${type}-columnContainer-${obj.desktopStyle.borderPlacement}`
-                : ''
               return (
-                <div className={`${template}-${type}-columnContainer ${borderClassname}`}>
+                <div className={`${template}-${type}-columnContainer ${borderPlacementClassname(obj)}`}>
                   {obj.value.components.map((el, i) => {                
                       switch (el.type) {
                           case 'tableHead':
