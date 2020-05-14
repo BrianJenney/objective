@@ -176,6 +176,7 @@
 }
 .LP-Template-1-image-caption-left {
   float: left;
+  margin-right: 20px;
   padding-right: 20px;
   border: transparent solid 2px;
   font-family: freight-text-pro, serif;
@@ -304,6 +305,7 @@
   }
   .LP-Template-1-image-caption-left {
     padding-right: 10px;
+    text-align: center;
   }
   .LP-Template-1-image-caption-right {
     padding-left: 10px;
