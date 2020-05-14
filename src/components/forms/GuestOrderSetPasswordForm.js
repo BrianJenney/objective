@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
       fontSize: '11px',
       color: '#231f20'
     },
+    '& .MuiInputBase-input': {
+      zIndex: 1
+    },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: '#231f20',
       backgroundColor: '#fff'
