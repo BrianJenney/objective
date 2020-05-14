@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
       fontSize: '11px',
       color: '#231f20'
     },
+    '& .MuiInputBase-input': {
+      zIndex: 1
+    },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: '#231f20',
       backgroundColor: '#fff'
@@ -80,7 +83,6 @@ const GuestOrderSetPasswordForm = ({
             label="Password"
             component={InputField}
             type={passwordVisible ? 'text' : 'password'}
-            style={{ zIndex: 1 }}
             InputProps={{
               endAdornment: (
                 <Box width={1} textAlign="right" style={{ zIndex: 1 }}>
