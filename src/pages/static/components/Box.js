@@ -18,6 +18,8 @@ const useStyles = makeStyles(theme => ({
     float: props.desktopStyle.float,
     [theme.breakpoints.down('sm')]: {
       width: props.mobileStyle.width,
+    },
+    [theme.breakpoints.down('xs')]: {
       display: props.mobileStyle.display
     }
   })
@@ -27,20 +29,10 @@ const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
   const { border, float } = data.desktopStyle;
   const theme = useTheme();
-  const sm = useMediaQuery(theme.breakpoints.down('sm'));
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classNames = border
     ? `${classes.root} ${template}-${type} ${template}-${type}-${float}`
     : `${classes.root} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`
-
-  const borderPlacementClassname = ((obj) => {
-    if (sm && obj.mobileStyle.borderPlacement) {
-      return `${template}-${type}-columnContainer-${obj.mobileStyle.borderPlacement}`
-    } else if (!sm && obj.desktopStyle.borderPlacement) {
-      return `${template}-${type}-columnContainer-${obj.desktopStyle.borderPlacement}`
-    } else {
-      return ""
-    }
-  })
 
   return (
     <>
@@ -50,8 +42,11 @@ const SPBox = ({ data, template, type, comps }) => {
             case 'boxTitle':
               return <Title key={i} data={obj} template={template} type={obj.type} />;
             case 'tableContainer':
+              const borderPlacement = xs
+                ? obj.mobileStyle.borderPlacement
+                : obj.desktopStyle.borderPlacement
               return (
-                <div className={`${template}-${type}-columnContainer ${borderPlacementClassname(obj)}`}>
+                <div className={`${template}-${type}-columnContainer ${template}-${type}-columnContainer-${borderPlacement}`}>
                   {obj.value.components.map((el, i) => {                
                       switch (el.type) {
                           case 'tableHead':

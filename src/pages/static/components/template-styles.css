@@ -144,8 +144,11 @@
 .LP-Template-1-list-checkmark, .LP-Template-1-tableBody-checkmark {
   list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/3HZYclltbiH9vpFn6OPZIb/269d7184d896a24886cbd24bd4a5ff84/checkmark-black.svg?h=9');
 }
-.LP-Template-1-list-crossmark, .LP-Template-1-tableBody-crossmark {
+.LP-Template-1-list-crossmark {
   list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/ss2YbqmorcVrsmtzo7ePI/92e6f174ba9dce1bf2fb43401e0e04cf/x.svg?h=12');
+}
+.LP-Template-1-tableBody-crossmark {
+  list-style-image: url('https://images.ctfassets.net/mj9bpefl6wof/1YeAo256zqKDSXgf3wpbQM/3a417b39da24f8b942a8eda6f482dbee/x.svg?h=250');
 }
 .LP-Template-1-banner {
   font-size: 33px;
