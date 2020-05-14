@@ -33,15 +33,12 @@ export const handleCartResponse = (status, data, fields, properties) => {
       const oldCart = store.getState().cart;
       let openCartDrawer = true;
 
-      if(!data.hasOwnProperty('items')){
+      if (!data.hasOwnProperty('items')) {
         //Something went wrong on backend.
         break;
       }
 
-      if (
-        oldCart.items.length === data.items.length &&
-        oldCart.total === data.total
-      ) {
+      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
         openCartDrawer = false;
       }
 
@@ -68,12 +65,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
         fields.routingKey !== 'cart.request.setshippingaddress' &&
         openCartDrawer
       ) {
-<<<<<<< HEAD
-
-        store.dispatch(setCartDrawerOpened(true, false));
-=======
         store.dispatch(setCartDrawerOpened(true));
->>>>>>> DC-1247-image-caption-wrap
       }
       break;
     case 'cart.request.update':
