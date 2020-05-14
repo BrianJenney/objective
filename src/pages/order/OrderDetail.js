@@ -102,24 +102,6 @@ const getStatusStepper = statusStepper => {
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-<<<<<<< HEAD
-  return tracking.map(tracking => (
-    <>
-      <Typography className={classes.text} pt={2}>
-        {tracking && (
-          <Link
-            href={tracking.url}
-            style={{ color: 'black', textDecoration: 'underline' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tracking.number}
-          </Link>
-        )}
-      </Typography>
-    </>
-  ));
-=======
   return tracking.map(tracking => {
     return (
       <>
@@ -133,7 +115,6 @@ const TrackingInfo = ({ tracking }) => {
       </>
     );
   });
->>>>>>> DC-1247-image-caption-wrap
 };
 
 const OrderCartSummary = ({ order }) => (order ? <CartSummary order={order} /> : null);
@@ -231,17 +212,10 @@ const OrderSummary = ({
           Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
-<<<<<<< HEAD
-        <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
-        </Typography>
-      )}
-=======
           <Typography className={classes.textFreight}>
             Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
           </Typography>
         )}
->>>>>>> DC-1247-image-caption-wrap
       <br />
       {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
@@ -279,17 +253,9 @@ const OrderSummary = ({
           style={{ marginBottom: '50px', marginTop: '32px' }}
         />
       )}
-<<<<<<< HEAD
-
       <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
         Have questions about your order? You can reach customer service at (800) 270-5771.
       </Typography>
-
-=======
-      <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
-        Have questions about your order? You can reach customer service at (800) 270-5771.
-      </Typography>
->>>>>>> DC-1247-image-caption-wrap
       <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
         <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
           <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
