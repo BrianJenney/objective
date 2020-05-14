@@ -17,39 +17,38 @@ const useStyles = makeStyles(theme => ({
   captionImageMobile: {
     width: '100%'
   },
-  container: props => ({
+  container: props => {
+    let styles = {
     width: props.desktopStyle.width ? props.desktopStyle.width + 'px' : 320,
+    textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
     [theme.breakpoints.down('xs')]: {
       width: props.mobileStyle.width ? props.mobileStyle.width + 'px' : 164,
+      textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
     }
-  }),
-   caption: props => {
-     if (props.caption) {
-       return {
-       color: props.caption.desktopStyle.fontColor,
-       fontWeight: props.caption.desktopStyle.fontWeight,
-       fontSize: props.caption.desktopStyle.fontSize,
-       lineHeight: props.caption.desktopStyle.lineHeight,
-       fontFamily: props.caption.desktopStyle.fontFamily,
-       textTransform: props.caption.desktopStyle.textTransform
-      }}
-     },
-     mobileCaption: props => {
-      if (props.caption) {
-        return {
-        color: props.caption.mobileStyle.fontColor,
-        fontWeight: props.caption.mobileStyle.fontWeight,
-        fontSize: props.caption.mobileStyle.fontSize,
-        lineHeight: props.caption.mobileStyle.lineHeight,
-        fontFamily: props.caption.mobileStyle.fontFamily,
-        textTransform: props.caption.mobileStyle.textTransform
-       }}
-      }
+  };
+  return styles;
+},
+  caption: props => {
+    let styles = {};
+    if (props.caption) {
+      styles = {
+        color: props.caption.desktopStyle.fontColor,
+        fontWeight: props.caption.desktopStyle.fontWeight,
+        fontSize: props.caption.desktopStyle.fontSize,
+        lineHeight: props.caption.desktopStyle.lineHeight,
+        fontFamily: props.caption.desktopStyle.fontFamily,
+        textTransform: props.caption.desktopStyle.textTransform,
+        wordWrap: props.caption.desktopStyle.wordWrap === false ? "initial" : "break-word"
+      };
+    }
+    return styles;
+  }
 }));
 
 const Image = ({ data, template, type, caption }) => {
   const classes = useStyles(data);
 
+  console.log('data', data);
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
@@ -69,9 +68,9 @@ const Image = ({ data, template, type, caption }) => {
           />
         )
       ) : caption ? (
-        <div className={`${template}-${type}-caption-${float} ${classes.caption}`}>
+        <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
           <img src={`${data.mobileImg}${ResizeImage(template, data)}`} className={classes.captionImageMobile} />
-          <div className={classes.mobileCaption}>{caption.value}</div>
+          <div className={classes.caption}>{caption.value}</div>
         </div>
       ) : (
         <img
