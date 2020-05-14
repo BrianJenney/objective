@@ -68,8 +68,12 @@ export const handleCartResponse = (status, data, fields, properties) => {
         fields.routingKey !== 'cart.request.setshippingaddress' &&
         openCartDrawer
       ) {
+<<<<<<< HEAD
 
         store.dispatch(setCartDrawerOpened(true, false));
+=======
+        store.dispatch(setCartDrawerOpened(true));
+>>>>>>> DC-1247-image-caption-wrap
       }
       break;
     case 'cart.request.update':

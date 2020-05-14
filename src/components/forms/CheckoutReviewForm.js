@@ -107,7 +107,10 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
             fontSize: '11px',
             float: 'left'
           }}
+<<<<<<< HEAD
           target="_blank"
+=======
+>>>>>>> DC-1247-image-caption-wrap
         >
           Terms &amp; Conditions
         </Box>
@@ -126,7 +129,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
         >
           <a
             style={{ fontSize: '11px', color: '#000000' }}
-            href="https://www.thecloroxcompany.com/privacy/"
+            href="/privacypolicy"
             target="_blank"
           >
             Privacy Policy
