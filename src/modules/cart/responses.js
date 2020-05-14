@@ -33,7 +33,15 @@ export const handleCartResponse = (status, data, fields, properties) => {
       const oldCart = store.getState().cart;
       let openCartDrawer = true;
 
-      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
+      if(!data.hasOwnProperty('items')){
+        //Something went wrong on backend.
+        break;
+      }
+
+      if (
+        oldCart.items.length === data.items.length &&
+        oldCart.total === data.total
+      ) {
         openCartDrawer = false;
       }
 

@@ -13,7 +13,8 @@ const ADDRESS_FIELDS = [
   'city',
   'state',
   'zipcode',
-  'country'
+  'country',
+  'email'
 ];
 const labelsMap = {
   firstName: 'First Name',
@@ -23,7 +24,8 @@ const labelsMap = {
   city: 'City',
   state: 'State',
   zipcode: 'Postal Code',
-  country: 'Country'
+  country: 'Country',
+  email: 'Email'
 };
 const getValuesWithoutLabels = ({
   firstName,
@@ -33,7 +35,8 @@ const getValuesWithoutLabels = ({
   city,
   state,
   zipcode,
-  country
+  country,
+  email
 }) => {
   const name = [firstName, lastName].join(' ');
   const addressText1 = [address1, address2].join(' ');
@@ -41,7 +44,7 @@ const getValuesWithoutLabels = ({
   const countryLabel = (COUNTRY_OPTIONS.find(c => c.value === country) || {})
     .label;
 
-  return [name, addressText1, addressText2, countryLabel];
+  return [name, addressText1, addressText2, countryLabel, email];
 };
 
 const AddressSummary = ({ withLabels, values, children, ...rest }) => {
