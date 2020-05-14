@@ -89,7 +89,7 @@ const OrderTrackerForm = ({
       requestFindUnauthenticatedOrders(false, {
         orderNumber: values.orderNumber.trim(),
         email: {
-          $in: [new RegExp(`^${values.email.trim()}$`, 'i')]
+          $in: [new RegExp(`^${values.email.trim().replace('+', `\\+`)}$`, 'i')]
         },
         'billingAddress.zipcode': {
           $in: [new RegExp(`^${values.zip.trim()}$`), new RegExp(`^${values.zip.trim()}-(.*)`)]
