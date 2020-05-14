@@ -46,7 +46,7 @@ const SPBox = ({ data, template, type, comps }) => {
                 ? obj.mobileStyle.borderPlacement
                 : obj.desktopStyle.borderPlacement
               return (
-                <div className={`${template}-${type}-columnContainer ${template}-${type}-columnContainer-${borderPlacement}`}>
+                <div key={i} className={`${template}-${type}-columnContainer ${template}-${type}-columnContainer-${borderPlacement}`}>
                   {obj.value.components.map((el, i) => {                
                       switch (el.type) {
                           case 'tableHead':
