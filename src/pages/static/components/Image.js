@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
         lineHeight: props.caption.desktopStyle.lineHeight,
         fontFamily: props.caption.desktopStyle.fontFamily,
         textTransform: props.caption.desktopStyle.textTransform,
-        wordWrap: props.caption.desktopStyle.wordWrap === false ? 'initial' : 'initial'
+        wordWrap: props.caption.desktopStyle.wordWrap === false ? 'initial' : 'break-word'
       };
     }
     return styles;
