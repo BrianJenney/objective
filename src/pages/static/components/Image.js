@@ -17,12 +17,34 @@ const useStyles = makeStyles(theme => ({
   captionImageMobile: {
     width: '100%'
   },
-  caption: props => ({
+  container: props => ({
     width: props.desktopStyle.width ? props.desktopStyle.width + 'px' : 320,
     [theme.breakpoints.down('xs')]: {
       width: props.mobileStyle.width ? props.mobileStyle.width + 'px' : 164,
     }
-  })
+  }),
+   caption: props => {
+     if (props.caption) {
+       return {
+       color: props.caption.desktopStyle.fontColor,
+       fontWeight: props.caption.desktopStyle.fontWeight,
+       fontSize: props.caption.desktopStyle.fontSize,
+       lineHeight: props.caption.desktopStyle.lineHeight,
+       fontFamily: props.caption.desktopStyle.fontFamily,
+       textTransform: props.caption.desktopStyle.textTransform
+      }}
+     },
+     mobileCaption: props => {
+      if (props.caption) {
+        return {
+        color: props.caption.mobileStyle.fontColor,
+        fontWeight: props.caption.mobileStyle.fontWeight,
+        fontSize: props.caption.mobileStyle.fontSize,
+        lineHeight: props.caption.mobileStyle.lineHeight,
+        fontFamily: props.caption.mobileStyle.fontFamily,
+        textTransform: props.caption.mobileStyle.textTransform
+       }}
+      }
 }));
 
 const Image = ({ data, template, type, caption }) => {
@@ -36,9 +58,9 @@ const Image = ({ data, template, type, caption }) => {
     <div>
       {!sm ? (
         caption ? (
-          <div className={`${template}-${type}-caption-${float} ${classes.caption}`}>
+          <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
             <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
-            <div>{caption.value}</div>
+            <div className={classes.caption}>{caption.value}</div>
           </div>
         ) : (
           <img
@@ -49,7 +71,7 @@ const Image = ({ data, template, type, caption }) => {
       ) : caption ? (
         <div className={`${template}-${type}-caption-${float} ${classes.caption}`}>
           <img src={`${data.mobileImg}${ResizeImage(template, data)}`} className={classes.captionImageMobile} />
-          <div>{caption.value}</div>
+          <div className={classes.mobileCaption}>{caption.value}</div>
         </div>
       ) : (
         <img
