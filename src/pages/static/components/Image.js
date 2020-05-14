@@ -19,15 +19,15 @@ const useStyles = makeStyles(theme => ({
   },
   container: props => {
     let styles = {
-    width: props.desktopStyle.width ? props.desktopStyle.width + 'px' : 320,
-    textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
-    [theme.breakpoints.down('xs')]: {
-      width: props.mobileStyle.width ? props.mobileStyle.width + 'px' : 164,
+      width: props.desktopStyle.width ? props.desktopStyle.width + 'px' : 320,
       textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
-    }
-  };
-  return styles;
-},
+      [theme.breakpoints.down('xs')]: {
+        width: props.mobileStyle.width ? props.mobileStyle.width + 'px' : 164,
+        textAlign: props.caption ? props.caption.desktopStyle.float : 'left'
+      }
+    };
+    return styles;
+  },
   caption: props => {
     let styles = {};
     if (props.caption) {
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
         lineHeight: props.caption.desktopStyle.lineHeight,
         fontFamily: props.caption.desktopStyle.fontFamily,
         textTransform: props.caption.desktopStyle.textTransform,
-        wordWrap: props.caption.desktopStyle.wordWrap === false ? "initial" : "break-word"
+        wordWrap: props.caption.desktopStyle.wordWrap === false ? 'initial' : 'initial'
       };
     }
     return styles;
@@ -48,7 +48,6 @@ const useStyles = makeStyles(theme => ({
 const Image = ({ data, template, type, caption }) => {
   const classes = useStyles(data);
 
-  console.log('data', data);
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
@@ -57,10 +56,17 @@ const Image = ({ data, template, type, caption }) => {
     <div>
       {!sm ? (
         caption ? (
-          <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
-            <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
-            <div className={classes.caption}>{caption.value}</div>
-          </div>
+          caption.desktopStyle.url ? (
+            <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
+              <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
+              <a className={classes.caption} href={caption.desktopStyle.url}>{caption.value}</a>
+            </div>
+          ) : (
+            <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
+              <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
+              <div className={classes.caption}>{caption.value}</div>
+            </div>
+          )
         ) : (
           <img
             src={`${data.desktopImg}${ResizeImage(template, data)}`}
