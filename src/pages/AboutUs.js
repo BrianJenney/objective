@@ -17,7 +17,6 @@ import { OBJECTIVE_ABOUTUS } from '../constants/contentfulEntries';
 import { receivedLoginFailure } from '../modules/account/actions';
 import HeadTags from '../components/common/HeadTags';
 
-
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
@@ -28,18 +27,13 @@ const contentfulClient = contentful.createClient({
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=825&fm=jpg&q=50';
+      let params = '?w=825&fm=jpg';
 
       if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=50';
+        params = '?w=450&fm=jpg';
       }
 
-      return (
-        <img
-          src={node.data.target.fields.file.url + params}
-          alt={node.data.target.fields.title}
-        />
-      );
+      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
     },
     [INLINES.HYPERLINK]: (node, children) => (
       <Link to={node.data.uri} onClick={() => window.scrollTo(0, 0)}>
@@ -88,10 +82,10 @@ const AboutUs = ({ location }) => {
     if (!contents.heroSlider) return <></>;
 
     let images = contents.heroSlider;
-    let params = '?w=2000&fm=jpg&q=50';
+    let params = '?w=2000&fm=jpg';
     if (window.screen.width < 768) {
       images = contents.heroSliderMobile;
-      params = '?w=450&fm=jpg&q=50';
+      params = '?w=450&fm=jpg';
     }
 
     return images.map(image => (
@@ -103,20 +97,14 @@ const AboutUs = ({ location }) => {
 
   const renderWelcomeText = () => {
     if (!contents.welcomeText) return <></>;
-    return contents.welcomeText.content.map(text => (
-      <p>{text.content[0].value}</p>
-    ));
+    return contents.welcomeText.content.map(text => <p>{text.content[0].value}</p>);
   };
 
   const renderAdditionalText = () => {
     if (!contents.additionalText) return <></>;
     const allContents = contents.additionalText.content;
-    const allTexts = allContents.filter(
-      ({ nodeType }) => nodeType !== 'embedded-asset-block'
-    );
-    return allTexts.map(eachText => (
-      <div>{documentToReactComponents(eachText, contentfulOptions)}</div>
-    ));
+    const allTexts = allContents.filter(({ nodeType }) => nodeType !== 'embedded-asset-block');
+    return allTexts.map(eachText => <div>{documentToReactComponents(eachText, contentfulOptions)}</div>);
   };
 
   const renderApproachBlock = () => {
@@ -124,9 +112,7 @@ const AboutUs = ({ location }) => {
     const { content } = contents.approachBlock;
     const title = content[0].content[0].value;
     const subTitle = content[1].content[0].value;
-    const allBlocks = content
-      .slice(2, 5)
-      .map(block => block.data.target.fields.mainContent.content);
+    const allBlocks = content.slice(2, 5).map(block => block.data.target.fields.mainContent.content);
     return (
       <>
         <h1>
@@ -158,15 +144,9 @@ const AboutUs = ({ location }) => {
     const title = content[0].content[0].value;
     const subTitle1 = content[1].content[0].value;
     const subTitle2 = content[2].content[0].value;
-    const sections = content
-      .slice(3, 5)
-      .map(section => section.data.target.fields.mainContent.content);
-    const allTexts = sections.map(each =>
-      each.filter(({ nodeType }) => nodeType !== 'embedded-asset-block')
-    );
-    const allImgs = sections.map(each =>
-      each.filter(({ nodeType }) => nodeType === 'embedded-asset-block')
-    );
+    const sections = content.slice(3, 5).map(section => section.data.target.fields.mainContent.content);
+    const allTexts = sections.map(each => each.filter(({ nodeType }) => nodeType !== 'embedded-asset-block'));
+    const allImgs = sections.map(each => each.filter(({ nodeType }) => nodeType === 'embedded-asset-block'));
 
     return (
       <>
@@ -187,25 +167,25 @@ const AboutUs = ({ location }) => {
             ))}
           </div>
         ) : (
-            <div className="hundred xs-hidden">
-              <div className="left fifty">
-                <Container className="container-left">
-                  {allTexts[0].map((text, key) => (
-                    <p className={`textNum${key}`}>{text.content[0].value}</p>
-                  ))}
-                </Container>
-                <img src={allImgs[0][0].data.target.fields.file.url} />
-              </div>
-              <div className="right fifty">
-                <img src={allImgs[1][0].data.target.fields.file.url} />
-                <Container className="container-right">
-                  {allTexts[1].map((text, key) => (
-                    <p className={`textNum${key}`}>{text.content[0].value}</p>
-                  ))}
-                </Container>
-              </div>
+          <div className="hundred xs-hidden">
+            <div className="left fifty">
+              <Container className="container-left">
+                {allTexts[0].map((text, key) => (
+                  <p className={`textNum${key}`}>{text.content[0].value}</p>
+                ))}
+              </Container>
+              <img src={allImgs[0][0].data.target.fields.file.url} />
             </div>
-          )}
+            <div className="right fifty">
+              <img src={allImgs[1][0].data.target.fields.file.url} />
+              <Container className="container-right">
+                {allTexts[1].map((text, key) => (
+                  <p className={`textNum${key}`}>{text.content[0].value}</p>
+                ))}
+              </Container>
+            </div>
+          </div>
+        )}
       </>
     );
   };
@@ -220,11 +200,7 @@ const AboutUs = ({ location }) => {
             <Container className="section1">
               <div className="title">
                 <h1>{contents.welcomeHeader}</h1>
-                <img
-                  src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
-                  alt=""
-                  className="slash"
-                />
+                <img src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png" alt="" className="slash" />
               </div>
               {renderWelcomeText()}
             </Container>
@@ -232,13 +208,7 @@ const AboutUs = ({ location }) => {
           <Box className="section2 mobile-padding" py={8}>
             {mobile ? (
               <>
-                <img
-                  src={
-                    contents.additionalText.content[6].data.target.fields.file
-                      .url
-                  }
-                  className="mobile-img"
-                ></img>
+                <img src={contents.additionalText.content[6].data.target.fields.file.url} className="mobile-img"></img>
                 <Container>
                   <Box>
                     <div className="text">{renderAdditionalText()}</div>
@@ -249,25 +219,25 @@ const AboutUs = ({ location }) => {
                 </Container>
               </>
             ) : (
-                <div
-                  style={{
-                    backgroundImage: `url("${contents.additionalText.content[4].data.target.fields.file.url.replace(
-                      '//images.ctfassets.net/mj9bpefl6wof/',
-                      'https://nutranext.imgix.net/'
-                    )}?q=50&auto=compress,format")`
-                  }}
-                  className="desktop-img"
-                >
-                  <Container>
-                    <Box>
-                      <div className="text">{renderAdditionalText()}</div>
-                    </Box>
-                    <Link to="/gallery" className="buttonlink mobile-only">
-                      Shop Better Health
+              <div
+                style={{
+                  backgroundImage: `url("${contents.additionalText.content[4].data.target.fields.file.url.replace(
+                    '//images.ctfassets.net/mj9bpefl6wof/',
+                    'https://nutranext.imgix.net/'
+                  )}?&auto=compress,format")`
+                }}
+                className="desktop-img"
+              >
+                <Container>
+                  <Box>
+                    <div className="text">{renderAdditionalText()}</div>
+                  </Box>
+                  <Link to="/gallery" className="buttonlink mobile-only">
+                    Shop Better Health
                   </Link>
-                  </Container>
-                </div>
-              )}
+                </Container>
+              </div>
+            )}
           </Box>
           <Box py={8} className="mobile-padding">
             <Container className="section3">
@@ -289,9 +259,7 @@ const AboutUs = ({ location }) => {
             <Container>
               <h3>Press & Media Inquires?</h3>
               <h1>
-                <a href="mailto:press@objectivewellness.com">
-                  press@objectivewellness.com
-                </a>
+                <a href="mailto:press@objectivewellness.com">press@objectivewellness.com</a>
               </h1>
             </Container>
           </Box>
@@ -299,8 +267,8 @@ const AboutUs = ({ location }) => {
       </ScrollToTop>
     </>
   ) : (
-      <></>
-    );
+    <></>
+  );
 };
 
 export default AboutUs;

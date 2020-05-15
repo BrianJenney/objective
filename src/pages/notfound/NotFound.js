@@ -21,17 +21,17 @@ const NotFound = () => {
       <NavLink to={'/'}>
         {mobile ? (
           <img
-            src="https://images.ctfassets.net/mj9bpefl6wof/19ChPMduwPcvkvecLiOiXf/ebdd41cd42ed97e2249b92eb88a1d58d/404-mobile.png?w=450&fm=jpg&q=50"
+            src="https://images.ctfassets.net/mj9bpefl6wof/19ChPMduwPcvkvecLiOiXf/ebdd41cd42ed97e2249b92eb88a1d58d/404-mobile.png?w=450&fm=jpg"
             alt=""
             className={classes.root}
           />
         ) : (
-            <img
-              src="https://images.ctfassets.net/mj9bpefl6wof/3bJxwTFP6IpI9tkT5xiLZL/d3b2981571f8a26ac372f836b696f555/404_-_desktop.png?w=2000&q=50&fm=jpg"
-              alt=""
-              className={classes.root}
-            />
-          )}
+          <img
+            src="https://images.ctfassets.net/mj9bpefl6wof/3bJxwTFP6IpI9tkT5xiLZL/d3b2981571f8a26ac372f836b696f555/404_-_desktop.png?w=2000&fm=jpg"
+            alt=""
+            className={classes.root}
+          />
+        )}
       </NavLink>
     </>
   );

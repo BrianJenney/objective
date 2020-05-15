@@ -76,7 +76,7 @@ export const HomeVariantCard = ({ variant }) => {
             });
           }}
         >
-          <CardMedia style={{ height: 430, width: '100%' }} image={`${assets.imgs}&q=50`} className="tile-img" />
+          <CardMedia style={{ height: 430, width: '100%' }} image={assets.imgs} className="tile-img" />
         </NavLink>
         <NavLink
           to={`/products/${slug}`}
