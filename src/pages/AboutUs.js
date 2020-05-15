@@ -27,10 +27,10 @@ const contentfulClient = contentful.createClient({
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=825&fm=jpg&q=50';
+      let params = '?w=825&fm=jpg';
 
       if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=50';
+        params = '?w=450&fm=jpg';
       }
 
       return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
@@ -224,7 +224,7 @@ const AboutUs = ({ location }) => {
                   backgroundImage: `url("${contents.additionalText.content[4].data.target.fields.file.url.replace(
                     '//images.ctfassets.net/mj9bpefl6wof/',
                     'https://nutranext.imgix.net/'
-                  )}?q=50&auto=compress,format")`
+                  )}?&auto=compress,format")`
                 }}
                 className="desktop-img"
               >
