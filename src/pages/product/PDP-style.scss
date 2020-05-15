@@ -6,15 +6,31 @@ html,
 }
 
 .MuiTypography-h1.pdp-header {
-  color: #1f396d;
-  font-size: 54px;
+  font-size: 46px;
   margin: 0 0 20px;
+}
+
+.forest-green {
+  color: #003833;
+}
+
+.navy {
+  color: #1f396d;
+}
+
+.sienna {
+  color: #87331f;
+}
+
+.plum {
+  color: #621244;
 }
 
 .pdp-subtitle {
   font-family: p22-underground, sans-serif;
   text-transform: uppercase;
   color: #000;
+  line-height: normal;
 }
 
 .pdp-description {
@@ -112,42 +128,55 @@ html,
         margin-bottom: 0 !important;
       }
       .clinical-results {
-        .contentful-container {
-          img {
-            width: 260px;
-            height: 260px;
-          }
-        }
-        .magnifier-container {
+        .img-magnifier-container {
           position: relative;
+          width: 260px;
 
           .MuiIconButton-root:hover {
             background-color: transparent;
           }
 
+          .img-clinical-result {
+            display: block;
+            width: 260px;
+          }
           button {
             position: absolute;
-            width: 260px;
-            height: 260px;
-            bottom: 5px;
-          }
-          img {
-            width: 18px;
-            height: 16px;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
+            bottom: 0px;
+            right: 0px;
           }
         }
-      }
-      .ingredients {
+        h2 {
+          text-transform: uppercase;
+          line-height: 2rem;
+          margin: 0;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
           font-size: 16px;
           margin: 0;
           line-height: 1.67;
           color: #000000;
-          font-weight: 900;
+          font-weight: 600;
+        }
+      }
+      .ingredients {
+        h2 {
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 2rem;
+          color: #000000;
+          font-weight: 600;
+        }
+        h5 {
+          text-transform: uppercase;
+          font-size: 16px;
+          margin: 0;
+          line-height: 1.67;
+          color: #000000;
+          font-weight: 600;
         }
       }
       .directions {
@@ -185,9 +214,16 @@ html,
         }
       }
       .faqs {
+        h2 {
+          text-transform: uppercase;
+          margin: 0;
+          line-height: 2rem;
+          color: #000000;
+          font-weight: 600;
+        }
         h5 {
           text-transform: uppercase;
-          font-size: 18px;
+          font-size: 16px;
           margin: 0;
           line-height: 1.67;
           color: #000000;
@@ -293,6 +329,7 @@ html,
             text-transform: uppercase;
             margin: 0;
           }
+
           ul {
             li {
               align-items: flex-start;
@@ -302,7 +339,7 @@ html,
                 content: '';
                 width: 10px;
                 height: 10px;
-                background-color: #1f396d;
+                background: #000;
                 margin-right: 12px;
                 margin-top: 5px;
               }
@@ -314,6 +351,106 @@ html,
               line-height: 1;
               color: #000000;
               width: calc(100% - 22px);
+            }
+          }
+          .forest-green {
+            ul {
+              li {
+                align-items: flex-start;
+
+                &:before {
+                  display: block;
+                  content: '';
+                  width: 10px;
+                  height: 10px;
+                  background: #003833;
+                  margin-right: 12px;
+                  margin-top: 5px;
+                }
+              }
+
+              span {
+                font-family: FreightTextProBook;
+                font-size: 16px;
+                line-height: 1;
+                color: #000000;
+                width: calc(100% - 22px);
+              }
+            }
+          }
+          .navy {
+            ul {
+              li {
+                align-items: flex-start;
+
+                &:before {
+                  display: block;
+                  content: '';
+                  width: 10px;
+                  height: 10px;
+                  background: #1f396d;
+                  margin-right: 12px;
+                  margin-top: 5px;
+                }
+              }
+
+              span {
+                font-family: FreightTextProBook;
+                font-size: 16px;
+                line-height: 1;
+                color: #000000;
+                width: calc(100% - 22px);
+              }
+            }
+          }
+          .sienna {
+            ul {
+              li {
+                align-items: flex-start;
+
+                &:before {
+                  display: block;
+                  content: '';
+                  width: 10px;
+                  height: 10px;
+                  background: #87331f;
+                  margin-right: 12px;
+                  margin-top: 5px;
+                }
+              }
+
+              span {
+                font-family: FreightTextProBook;
+                font-size: 16px;
+                line-height: 1;
+                color: #000000;
+                width: calc(100% - 22px);
+              }
+            }
+          }
+          .plum {
+            ul {
+              li {
+                align-items: flex-start;
+
+                &:before {
+                  display: block;
+                  content: '';
+                  width: 10px;
+                  height: 10px;
+                  background: #621244;
+                  margin-right: 12px;
+                  margin-top: 5px;
+                }
+              }
+
+              span {
+                font-family: FreightTextProBook;
+                font-size: 16px;
+                line-height: 1;
+                color: #000000;
+                width: calc(100% - 22px);
+              }
             }
           }
         }
@@ -347,7 +484,7 @@ html,
     position: fixed;
     box-shadow: 0 0 8px 8px #ccc;
     bottom: 5px;
-    width: 413px;
+    width: 352px;
     z-index: 1;
   }
 

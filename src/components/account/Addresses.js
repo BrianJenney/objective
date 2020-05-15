@@ -42,11 +42,11 @@ const AccountAddresses = ({
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
   const errRef = useRef(null);
   useEffect(() => {
-    if(rest.resetFormMode && addressBook.length===0 && !formModeEnabled && !account_jwt){
+    if (rest.resetFormMode && addressBook.length === 0 && !account_jwt) {
       setFormModeEnabled(true);
       setIsEditing(true);
     }
-  }, [rest]); 
+  }, [rest]);
   useEffect(() => {
     const addressesData = currentUser.data.addressBook || [];
     if (addressesData.length === 0) {
@@ -64,24 +64,13 @@ const AccountAddresses = ({
     }
   }, []);
 
-  useEffect(() => {
-    if(currentUser.signupError && currentUser.signupError.errorMessage){
-      setTimeout(() => {
-        scrollToRef(errRef);
-      }, 400);
-      
-    }
-  }, [currentUser.signupError]);
-
   const handleSelect = evt => {
     const index = parseInt(evt.target.value, 10);
     setSelectedIndex(index);
   };
 
   const deleteAddress = deletedIndex => {
-    const newAddressBook = addressBook.filter(
-      (address, index) => index !== deletedIndex
-    );
+    const newAddressBook = addressBook.filter((address, index) => index !== deletedIndex);
     const payload = { addressBook: newAddressBook };
 
     requestPatchAccount(account_jwt, payload);
@@ -111,13 +100,8 @@ const AccountAddresses = ({
     let currentIndex = editedIndex;
     // Validate new address against cart_items at Checkout only
     if (formType === 'checkout') {
-
       const restrictions = new VariantRestrictions(cart.items);
-      const restrictionValidations = restrictions.validate(
-        values,
-        'variant_id',
-        'variant_name'
-      );
+      const restrictionValidations = restrictions.validate(values, 'variant_id', 'variant_name');
       if (restrictionValidations.hasRestrictions) {
         restrictionValidations.items.map(item => {
           setRestrictionMessage(true);
@@ -126,7 +110,7 @@ const AccountAddresses = ({
         });
       }
 
-      if(!account_jwt){
+      if (!account_jwt) {
         actions.setSubmitting(false);
         setIsEditing(false);
         setFormModeEnabled(false);
@@ -182,11 +166,7 @@ const AccountAddresses = ({
 
     const selectedAddress = addressBook[selectedIndex];
     const restrictions = new VariantRestrictions(cart.items);
-    const restrictionValidations = restrictions.validate(
-      selectedAddress,
-      'variant_id',
-      'variant_name'
-    );
+    const restrictionValidations = restrictions.validate(selectedAddress, 'variant_id', 'variant_name');
     if (restrictionValidations.hasRestrictions) {
       restrictionValidations.items.map(item => {
         setRestrictionMessage(true);
@@ -198,18 +178,9 @@ const AccountAddresses = ({
 
     return true;
   };
-  
+
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
-      {currentUser.signupError && currentUser.signupError.errorMessage && !currentUser.data.account_jwt && (
-        <div ref={errRef}>
-        <AlertPanel
-          mb={2}
-          type="error"
-          text={`${currentUser.signupError.errorMessage}`}
-        />
-      </div>
-      )}
       {formModeEnabled ? (
         <AddressForm
           currentUser={currentUser}
@@ -219,7 +190,7 @@ const AccountAddresses = ({
           addressSeed={addressSeed}
           useSeedLabel={useSeedLabel}
           defaultValues={
-            editedIndex > -1
+            editedIndex > -1 && addressBook[editedIndex]
               ? addressBook[editedIndex]
               : rest.shippingAddressActive
               ? rest.shippingAddressActive
@@ -233,7 +204,7 @@ const AccountAddresses = ({
           }}
           allowFlyMode={allowFlyMode}
           checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
-          switchToLogin = {rest.switchToLogin ? rest.switchToLogin : false}
+          switchToLogin={rest.switchToLogin ? rest.switchToLogin : false}
         />
       ) : (
         <>
@@ -242,31 +213,18 @@ const AccountAddresses = ({
               component={Typography}
               color="#231f20"
               variant="h5"
-              children={
-                formType === FORM_TYPES.ACCOUNT
-                  ? 'Saved Addresses'
-                  : 'Shipping Address'
-              }
+              children={formType === FORM_TYPES.ACCOUNT ? 'Saved Addresses' : 'Shipping Address'}
               fontSize={titleFontSize}
               mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
             />
           )}
-          {isEmpty(addressBook) && (
-            <AlertPanel mb={2} type="info" text="No Saved Addresses." />
-          )}
+          {isEmpty(addressBook) && <AlertPanel mb={2} type="info" text="No Saved Addresses." />}
           <Box mx="-8px" my="-8px">
             <Grid container>
-              {addressBook.map((addressEntity, index) => (
+              {addressBook.map((addressEntity, index) =>
                 addressEntity.isDefault ? (
                   <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                    <Box
-                      display="flex"
-                      alignItems="flex-start"
-                      m={1}
-                      px={4}
-                      py={3}
-                      border="2px solid #979797"
-                    >
+                    <Box display="flex" alignItems="flex-start" m={1} px={4} py={3} border="2px solid #979797">
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
                           <Radio
@@ -278,11 +236,7 @@ const AccountAddresses = ({
                           />
                         </Box>
                       )}
-                      <Box
-                        maxWidth={
-                          selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
-                        }
-                      >
+                      <Box maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}>
                         <EditablePanel
                           title=""
                           defaultValues={addressEntity}
@@ -292,82 +246,50 @@ const AccountAddresses = ({
                             setFormModeEnabled(true);
                             setEditedIndex(index);
                           }}
-                          onRemove={
-                            addressEntity.isDefault
-                              ? undefined
-                              : () => deleteAddress(index)
-                          }
-                          onSetDefault={
-                            addressEntity.isDefault
-                              ? undefined
-                              : () => setDefaultAddress(index)
-                          }
+                          onRemove={addressEntity.isDefault ? undefined : () => deleteAddress(index)}
+                          onSetDefault={addressEntity.isDefault ? undefined : () => setDefaultAddress(index)}
                         />
                       </Box>
                     </Box>
                   </Grid>
-                ) : (null)
-              ))}
-                {addressBook.map((addressEntity, index) => (
-                  addressEntity.isDefault === false ? (
-                    <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                      <Box
-                        display="flex"
-                        alignItems="flex-start"
-                        m={1}
-                        px={4}
-                        py={3}
-                        border="2px solid #979797"
-                      >
-                        {selectionEnabled && (
-                          <Box ml="-17px" mt="-9px">
-                            <Radio
-                              name="address-selector"
-                              style={{ color: '#231f20' }}
-                              value={index.toString()}
-                              onChange={handleSelect}
-                              checked={selectedIndex === index}
-                            />
-                          </Box>
-                        )}
-                        <Box
-                          maxWidth={
-                            selectionEnabled ? 'calc(100% - 28.5px)' : '100%'
-                          }
-                        >
-                          <EditablePanel
-                            title=""
-                            defaultValues={addressEntity}
-                            Summary={AddressSummary}
-                            onEdit={() => {
-                              setIsEditing(true);
-                              setFormModeEnabled(true);
-                              setEditedIndex(index);
-                            }}
-                            onRemove={
-                              addressEntity.isDefault
-                                ? undefined
-                                : () => deleteAddress(index)
-                            }
-                            onSetDefault={
-                              addressEntity.isDefault
-                                ? undefined
-                                : () => setDefaultAddress(index)
-                            }
+                ) : null
+              )}
+              {addressBook.map((addressEntity, index) =>
+                addressEntity.isDefault === false ? (
+                  <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
+                    <Box display="flex" alignItems="flex-start" m={1} px={4} py={3} border="2px solid #979797">
+                      {selectionEnabled && (
+                        <Box ml="-17px" mt="-9px">
+                          <Radio
+                            name="address-selector"
+                            style={{ color: '#231f20' }}
+                            value={index.toString()}
+                            onChange={handleSelect}
+                            checked={selectedIndex === index}
                           />
                         </Box>
+                      )}
+                      <Box maxWidth={selectionEnabled ? 'calc(100% - 28.5px)' : '100%'}>
+                        <EditablePanel
+                          title=""
+                          defaultValues={addressEntity}
+                          Summary={AddressSummary}
+                          onEdit={() => {
+                            setIsEditing(true);
+                            setFormModeEnabled(true);
+                            setEditedIndex(index);
+                          }}
+                          onRemove={addressEntity.isDefault ? undefined : () => deleteAddress(index)}
+                          onSetDefault={addressEntity.isDefault ? undefined : () => setDefaultAddress(index)}
+                        />
                       </Box>
-                    </Grid>
-                  ) : (null)
-                ))}
+                    </Box>
+                  </Grid>
+                ) : null
+              )}
             </Grid>
           </Box>
-          <Box
-            mt="26px"
-            fontSize={xs ? 14 : 16}
-            fontWeight={600}
-            style={{ textTransform: 'uppercase' }}
-          >
+          <Box mt="26px" fontSize={xs ? 14 : 16} fontWeight={600} style={{ textTransform: 'uppercase' }}>
             <MenuLink
               onClick={() => {
                 const addressesData = currentUser.data.addressBook || [];
@@ -378,12 +300,13 @@ const AccountAddresses = ({
             />
           </Box>
           {onSubmit && (
-            <Box mt={xs ? '28px' : '55px'} width={xs ? 1 : '438px'} mx="auto">
+            <Box mt={xs ? '18px' : '45px'} width={xs ? 1 : '438px'} mx="auto">
               <Button
                 fullWidth
                 type="button"
                 onClick={handleSubmit}
                 children="Continue"
+                style={{ height: '55px', padding: '0px' }}
               />
             </Box>
           )}

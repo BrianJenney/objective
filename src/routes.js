@@ -13,7 +13,6 @@ import {
   AccountPaymentDetailsPage,
   AccountProfilePage,
   CheckoutPage,
-  CheckoutPage2,
   ForgotPassword,
   ConfirmPassword,
   ResetPassword,
@@ -28,7 +27,8 @@ import {
   AboutUs,
   TermsPage,
   NotFoundPage,
-  StaticPageOne
+  StaticPageOne,
+  TrackOrderPage
 } from './pages';
 
 import { default as PrivacyPolicyPage } from './pages/static/PrivacyPage';
@@ -40,6 +40,7 @@ import SleepImmunity from './pages/landingpages/SleepImmunity';
 import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
 import FastAsleepMelatonin from './pages/landingpages/FastAsleepMelatonin';
 import FastAsleepLifestyle from './pages/landingpages/FastAsleepLifestyle';
+import FastAsleepMom from './pages/landingpages/FastAsleepMom';
 import EverythingArmorExerciseRecovery from './pages/landingpages/EverythingArmorExerciseRecovery';
 import EverythingArmorAntioxidants from './pages/landingpages/EverythingArmorAntioxidants';
 
@@ -84,29 +85,30 @@ export default [
   { path: '/terms', exact: true, component: TermsPage },
   {
     path: '/order',
-    auth: true,
+    auth: false,
     exact: true,
     component: OrderConfirmationPage
   },
   {
-    path: '/orders/:id',
-    auth: true,
+    path: '/order-tracker',
+    auth: false,
     exact: true,
-    injectCurrentUser: true,
+    component: TrackOrderPage
+  },
+  {
+    path: '/orders/:id',
+    auth: false,
+    exact: true,
+    injectCurrentUser: false,
     component: OrderPage
   },
   {
     path: '/checkout',
     exact: true,
     injectCurrentUser: true,
-    component: CheckoutPage2
+    component: CheckoutPage
   },
-  {
-    path: '/checkout2',
-    exact: true,
-    injectCurrentUser: true,
-    component: CheckoutPage2
-  },
+
   {
     path: '/account',
     auth: true,
@@ -166,6 +168,7 @@ export default [
   { path: '/landing/fastasleep-ingredients', exact: true, component: FastAsleepIngredients },
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
   { path: '/landing/fastasleep-lifestyle', exact: true, component: FastAsleepLifestyle },
+  { path: '/landing/fastasleep-mom', exact: true, component: FastAsleepMom },
   { path: '/landing/everythingarmor-exercise-recovery', exact: true, component: EverythingArmorExerciseRecovery },
   { path: '/landing/everythingarmor-antioxidants', exact: true, component: EverythingArmorAntioxidants },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },

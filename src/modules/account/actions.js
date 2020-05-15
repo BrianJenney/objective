@@ -47,6 +47,19 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     }
   };
 
+  if(account.hasOwnProperty("isGuest")){
+    params.data.isGuest = account.isGuest;
+  }
+
+  if(account.hasOwnProperty("disableGuestLogic")){
+    params.data.disableGuestLogic = account.disableGuestLogic;
+  }
+
+  if(account.hasOwnProperty("passwordSet")){
+    params.data.passwordSet = account.passwordSet;
+  }
+  
+
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/account/account.request.register',
@@ -120,13 +133,13 @@ export const clearCreateAccountError = () => dispatch => {
   });
 };
 
-export const requestFetchAccount = id => (dispatch, getState) => {
+export const requestFetchAccount = (data, find = false) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
-  const params = { id };
+  const params = find ? { params : {...data, token : localStorageClient.get('olympusToken') } } : data;
   const payload = JSON.stringify(msgpack.encode(params));
-
+  const exchangeTopic = find ? '/exchange/account/account.request.find' : '/exchange/account/account.request.get';
   stompClient.send(
-    '/exchange/account/account.request.get',
+    exchangeTopic,
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
@@ -146,6 +159,7 @@ export const receivedFetchAccountSuccess = account => dispatch => {
     type: RECEIVED_FETCH_ACCOUNT_SUCCESS,
     payload: account
   });
+
 };
 
 export const receivedFetchAccountFailure = error => dispatch => {

@@ -116,15 +116,15 @@ export const getTrackingUrl = (carrier, trackingNo) => {
 };
 
 export const getTracking = (items, status) => {
-  let trackings = [];
-  let trackingNo = {};
+  const trackings = [];
+  const trackingNo = {};
   items.map(item => {
     if (!item.tracking_list) return null;
     if (['shipped', 'delivered'].includes(status) && item.tracking_list) {
       item.tracking_list.map(({ number, carrier }) => {
         if (!trackingNo[number]) {
           trackings.push({
-            number: number,
+            number,
             url: getTrackingUrl(carrier, number)
           });
           trackingNo[number] = number;
@@ -136,18 +136,20 @@ export const getTracking = (items, status) => {
 };
 
 export const getShippingAndTracking = order => {
-  const { status, items, shipTracking, createdAt, updatedAt } = order;
+  let { status, items, shipTracking, createdAt, updatedAt } = order;
   let tracking = null;
   const processedDate = createdAt;
   let shippedDate = '';
   let deliveredDate = '';
   const item = items[0];
-  if (item.tracking_list && shipTracking) {
+  if (item && item.tracking_list && shipTracking) {
     tracking = getTracking(items, status);
-    const trackingNo = item.tracking_list.number;
+    const trackingNo = item.tracking_list[0].number;
     if (shipTracking[trackingNo] && shipTracking[trackingNo].tracking_status) {
       shippedDate = shipTracking[trackingNo].tracking_status.object_created;
+
       if (shipTracking[trackingNo].tracking_status.status === 'DELIVERED') {
+        status = 'delivered';
         deliveredDate = shipTracking[trackingNo].tracking_status.status_date;
       }
     }
@@ -182,14 +184,14 @@ export const getDaysDiff = dateFrom => {
 
 export const paramsToObject = url => {
   const obj = {};
-  for (let pair of url.entries()) {
+  for (const pair of url.entries()) {
     obj[pair[0]] = pair[1];
   }
   return obj;
 };
 
 export const isAcqDiscount = obj => {
-  if (typeof obj != 'undefined') {
+  if (typeof obj !== 'undefined') {
     if (obj.hasOwnProperty('utm_content') && obj.utm_content.includes('25off')) {
       return true;
     }
@@ -199,7 +201,7 @@ export const isAcqDiscount = obj => {
 
 export const trackLPSection = (lp, section_name, sku) => {
   window.analytics.track('Percent Scrolled', {
-    page_type: lp + ' Landing Page',
+    page_type: `${lp} Landing Page`,
     section_name,
     sku,
     url: window.location.href

@@ -152,18 +152,16 @@
   border-right: 4px solid #1f396d;
 }
 .LP-Template-1-image-left {
-  margin-right: 25px;
+  margin: 0 25px 20px 0;
   float: left;
 }
 .LP-Template-1-image-right {
-  margin-left: 25px;
+  margin: 0 0 20px 25px;
   float: right;
 }
 .LP-Template-1-image-caption-left {
   float: left;
-  width: 320px;
   padding-right: 20px;
-  margin-top: 10px;
   border: transparent solid 2px;
   font-family: freight-text-pro, serif;
   font-size: 14px;
@@ -176,9 +174,7 @@
 }
 .LP-Template-1-image-caption-right {
   float: right;
-  width: 320px;
   padding-left: 20px;
-  margin-top: 10px;
   border: transparent solid 2px;
   font-family: freight-text-pro, serif;
   font-size: 14px;
@@ -195,6 +191,7 @@
   font-family: p22-underground, Helvetica, sans-serif;
   color: #1f396d;
   text-transform: uppercase;
+  margin-bottom: 20px;
 }
 .LP-Template-1-button {
   width: 385px;
@@ -276,11 +273,11 @@
     text-align: left !important;
   }
   .LP-Template-1-image-left {
-    margin-right: 15px;
+    margin: 0 15px 10px 0;
     float: left;
   }
   .LP-Template-1-image-right {
-    margin-left: 15px;
+    margin: 0 0 10px 15px;
     float: right;
   }
   .LP-Template-1-list-ol {
@@ -288,11 +285,9 @@
     word-wrap: break-word;
   }
   .LP-Template-1-image-caption-left {
-    width: 170px;
     padding-right: 10px;
   }
   .LP-Template-1-image-caption-right {
-    width: 170px;
     padding-left: 10px;
   }
 }

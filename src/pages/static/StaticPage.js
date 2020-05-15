@@ -5,12 +5,14 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import Box from '@material-ui/core/Box';
 import { requestPage } from '../../modules/static/actions';
 import { buildPage } from '../../utils/sputils';
+import NotFound from '../notfound/NotFound';
 
 const StaticPage = ({ match }) => {
   const { slug } = match.params;
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [tracked, setTracked] = useState(false);
+  const [pageError, setPageError] = useState(false);
   const page = useSelector(state => state.page);
 
   useEffect(() => {
@@ -27,12 +29,18 @@ const StaticPage = ({ match }) => {
         window.analytics.page(`LP: ${page.name}`);
       }
     }
+    // else {
+    //   setPageError(true);
+    // }
   }, [page]);
 
   let FinalPage = null;
   if (pageLoaded) {
     FinalPage = () => buildPage(page);
   }
+  // if (pageError) {
+  //   FinalPage = () => <NotFound />;
+  // }
 
   if (FinalPage) {
     return <FinalPage />;

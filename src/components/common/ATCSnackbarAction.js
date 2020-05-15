@@ -22,18 +22,14 @@ const ATCSnackbarAction = ({ variant }) => {
   const dispatch = useDispatch();
 
   const viewCart = () => {
-    dispatch(setCartDrawerOpened(true,false));
+    dispatch(setCartDrawerOpened(true));
   };
 
   return (
     <Card>
       <Grid container sm={12} direction="row" alignItems="center">
         <Grid item sm={4}>
-          <CardMedia
-            style={{ height: 85, width: 85 }}
-            image={variant.assets.imgs}
-            title={variant.name}
-          />
+          <CardMedia style={{ height: 85, width: 85 }} image={variant.assets.imgs} title={variant.name} />
         </Grid>
         <Grid item sm={8}>
           <CardContent>
