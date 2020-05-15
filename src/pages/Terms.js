@@ -821,7 +821,7 @@ const Terms = ({location}) => {
                   <StyledParagraph>
                     Designated Agent: Senior Trademark and Copyright Counsel
                     <br></br>
-                    Email: <StyledLink>DMCAtakedown@clorox.com</StyledLink>{' '}
+                    Email: <StyledLink href="mailto:DMCAtakedown@clorox.com">DMCAtakedown@clorox.com</StyledLink>{' '}
                     <br></br>
                     Address: 1221 Broadway, Oakland, CA 94612<br></br>
                     Phone:{' '}
