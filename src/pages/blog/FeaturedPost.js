@@ -12,13 +12,17 @@ const FeaturedPost = ({ post }) => {
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
   if (post.fields.featuredImage && post.fields.featuredImage.fields) {
-    imageUrl = `${post.fields.featuredImage.fields.file.url}?w=880&fm=jpg`;
+    imageUrl = `${post.fields.featuredImage.fields.file.url}?w=880&fm=jpg&q=90`;
   }
 
   let category = 'General';
   let slug = null;
 
-  if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
+  if (
+    post.fields.categories &&
+    post.fields.categories.length > 0 &&
+    post.fields.categories[0].fields
+  ) {
     category = post.fields.categories[0].fields.title;
     slug = post.fields.categories[0].fields.slug;
   }

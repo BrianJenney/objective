@@ -29,7 +29,9 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg';
       }
 
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
+      return (
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+      );
     }
   }
 };
@@ -83,7 +85,13 @@ const BlogPost = ({ computedMatch }) => {
       return products.map(product => {
         const productVariant = variants.filter(variant => variant.slug === product.fields.Slug);
 
-        return <BlogVariantCard product={product} variant={productVariant[0]} key={product.fields.Slug} />;
+        return (
+          <BlogVariantCard
+            product={product}
+            variant={productVariant[0]}
+            key={product.fields.Slug}
+          />
+        );
       });
     }
     return <></>;
@@ -118,13 +126,17 @@ const BlogPost = ({ computedMatch }) => {
     let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
     if (post.fields.featuredImage && post.fields.featuredImage.fields) {
-      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg`;
+      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`;
     }
 
     let category = 'General';
     let slug = null;
 
-    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
+    if (
+      post.fields.categories &&
+      post.fields.categories.length > 0 &&
+      post.fields.categories[0].fields
+    ) {
       category = post.fields.categories[0].fields.title;
       slug = post.fields.categories[0].fields.slug;
     }
@@ -160,7 +172,11 @@ const BlogPost = ({ computedMatch }) => {
                       <div className="icon-holder">
                         <p className="share">SHARE</p>
                         <div className="social">
-                          <a href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
+                          <a
+                            href="https://www.instagram.com/objective_wellness"
+                            target="_blank"
+                            rel="noopener"
+                          >
                             <img
                               src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
                               alt="instagram"
@@ -171,7 +187,10 @@ const BlogPost = ({ computedMatch }) => {
                             target="_blank"
                             rel="noopener"
                           >
-                            <img src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg" alt="facebook" />
+                            <img
+                              src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
+                              alt="facebook"
+                            />
                           </a>
                         </div>
                       </div>
