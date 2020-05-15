@@ -31,19 +31,10 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=50';
       }
 
-      return (
-        <img
-          src={node.data.target.fields.file.url + params}
-          alt={node.data.target.fields.title}
-        />
-      );
+      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
     },
     [INLINES.HYPERLINK]: (node, children) => (
-      <Link
-        to={node.data.uri}
-        className="shopAllLink"
-        onClick={() => window.scrollTo(0, 0)}
-      >
+      <Link to={node.data.uri} className="shopAllLink" onClick={() => window.scrollTo(0, 0)}>
         {children}
       </Link>
     ),
@@ -96,11 +87,11 @@ class Home extends Component {
     if (!this.state.content.heroSlider) return <></>;
 
     let images = this.state.content.heroSlider;
-    let params = '?w=2000&fm=jpg&q=50';
+    let params = '?w=2000&fm=jpg';
 
     if (window.screen.width < 768) {
       images = this.state.content.heroSliderMobile;
-      params = '?w=450&fm=jpg&q=50';
+      params = '?w=450&fm=jpg';
     }
 
     return images.map(image => (
@@ -115,9 +106,7 @@ class Home extends Component {
 
     return this.state.content.homepageSection.map(section => (
       <div
-        className={`sectionNum${this.state.content.homepageSection.indexOf(
-          section
-        )}`}
+        className={`sectionNum${this.state.content.homepageSection.indexOf(section)}`}
         key={section.sys.id}
         style={{
           backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
@@ -128,12 +117,7 @@ class Home extends Component {
       >
         <Container className="section-container">
           <Box className="section-holder">
-            <div className="section">
-              {documentToReactComponents(
-                section.fields.mainContent,
-                contentfulOptions
-              )}
-            </div>
+            <div className="section">{documentToReactComponents(section.fields.mainContent, contentfulOptions)}</div>
           </Box>
         </Container>
       </div>
@@ -163,28 +147,20 @@ class Home extends Component {
       return null;
     }
 
-    const bps = this.props.products.filter(product =>
-      bestsellers.includes(product.sku.split('-')[0])
-    );
+    const bps = this.props.products.filter(product => bestsellers.includes(product.sku.split('-')[0]));
 
     return (
       <div className="home-bestsellers beige-bg">
         <Container>
           <Box py={10}>
-            {documentToReactComponents(
-              this.state.content.bestsellers.content[0],
-              contentfulOptions
-            )}
+            {documentToReactComponents(this.state.content.bestsellers.content[0], contentfulOptions)}
             <Grid container spacing={3}>
               {bps.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
             <Box style={{ paddingTop: 90 }}>
-              {documentToReactComponents(
-                this.state.content.bestsellers.content[2],
-                contentfulOptions
-              )}
+              {documentToReactComponents(this.state.content.bestsellers.content[2], contentfulOptions)}
             </Box>
           </Box>
         </Container>
@@ -223,24 +199,15 @@ class Home extends Component {
       <div className="his-hers-theirs beige-bg">
         <Container>
           <Box py={10}>
-            {documentToReactComponents(
-              this.state.content.solutionForFamily.content[0],
-              contentfulOptions
-            )}
-            {documentToReactComponents(
-              this.state.content.solutionForFamily.content[1],
-              contentfulOptions
-            )}
+            {documentToReactComponents(this.state.content.solutionForFamily.content[0], contentfulOptions)}
+            {documentToReactComponents(this.state.content.solutionForFamily.content[1], contentfulOptions)}
             <Grid container spacing={3}>
               {fps.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
             <Box style={{ paddingTop: 90 }}>
-              {documentToReactComponents(
-                this.state.content.solutionForFamily.content[3],
-                contentfulOptions
-              )}
+              {documentToReactComponents(this.state.content.solutionForFamily.content[3], contentfulOptions)}
             </Box>
           </Box>
         </Container>
