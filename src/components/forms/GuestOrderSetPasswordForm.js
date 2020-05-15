@@ -83,6 +83,7 @@ const GuestOrderSetPasswordForm = ({
             label="Password"
             component={InputField}
             type={passwordVisible ? 'text' : 'password'}
+            style={{ zIndex: 1 }}
             InputProps={{
               endAdornment: (
                 <Box width={1} textAlign="right" style={{ zIndex: 1 }}>

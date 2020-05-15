@@ -215,10 +215,17 @@ const OrderSummary = ({
           Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
+<<<<<<< HEAD
         <Typography className={classes.textFreight}>
           Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
         </Typography>
       )}
+=======
+          <Typography className={classes.textFreight}>
+            Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          </Typography>
+        )}
+>>>>>>> DC-1247-image-caption-wrap
       <br />
       {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
@@ -255,7 +262,10 @@ const OrderSummary = ({
           style={{ marginBottom: '50px', marginTop: '32px' }}
         />
       )}
+<<<<<<< HEAD
 
+=======
+>>>>>>> DC-1247-image-caption-wrap
       <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
         Have questions about your order? You can reach customer service at (800) 270-5771.
       </Typography>
@@ -276,7 +286,11 @@ const OrderSummary = ({
                   Tracking #:
                 </Typography>
                 <TrackingInfo className={classes.text} tracking={tracking} />
+<<<<<<< HEAD
               </Box>
+=======
+              </>
+>>>>>>> DC-1247-image-caption-wrap
             )}
           </Box>
         </Grid>
