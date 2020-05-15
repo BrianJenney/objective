@@ -9,10 +9,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import { Button, NavLink } from '../../components/common';
 import { requestPasswordReset } from '../../modules/account/actions';
 
-import { makeStyles } from '@material-ui/core/styles';
 import { InputField } from '../../components/form-fields';
 import withDialog from '../../hoc/withDialog';
 import './password-styles.scss';
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 const validatePassword = values => {
   const { newPassword1, newPassword2 } = values;
-  let errors = {};
+  const errors = {};
   if (newPassword1.trim() !== newPassword2.trim()) {
     errors.newPassword2 = 'Confirm password is not the same as new password';
   }
@@ -60,6 +60,7 @@ const ResetPassword = ({ history, location }) => {
   };
   const classes = useStyles();
   const dispatch = useDispatch();
+  const utm_content = location.search.includes('passwordcreation');
 
   const [firstNewPasswordVisible, setFirstPasswordVisible] = useState(false);
   const toggleFirstPassword = useCallback(
@@ -79,79 +80,77 @@ const ResetPassword = ({ history, location }) => {
     [secondNewPasswordVisible, setSecondPasswordVisible]
   );
 
-  const renderForm = ({ isValid }) => {
-    return (
-      <Form>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Field
-              label="New Password"
-              name="newPassword1"
-              type="password"
-              component={InputField}
-              type={firstNewPasswordVisible ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <Box width={1} textAlign="right">
-                    <NavLink
-                      style={{
-                        fontFamily: 'p22-underground',
-                        fontSize: '12px'
-                      }}
-                      component="button"
-                      underline="always"
-                      onClick={event => toggleFirstPassword(event)}
-                      children={firstNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
-                    ></NavLink>
-                  </Box>
-                )
-              }}
-            />
-            <Typography
-              style={{
-                fontFamily: 'p22-underground',
-                fontSize: '11px',
-                padding: '5px',
-                textAlign: 'left'
-              }}
-            >
-              Must be at least 6 characters
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Field
-              label="Confirm New Password"
-              name="newPassword2"
-              type="password"
-              component={InputField}
-              type={secondNewPasswordVisible ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <Box width={1} textAlign="right">
-                    <NavLink
-                      style={{
-                        fontFamily: 'p22-underground',
-                        fontSize: '12px'
-                      }}
-                      component="button"
-                      underline="always"
-                      onClick={event => toggleSecondPassword(event)}
-                      children={secondNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
-                    ></NavLink>
-                  </Box>
-                )
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" fullWidth disabled={!isValid}>
-              Reset Password
-            </Button>
-          </Grid>
+  const renderForm = ({ isValid }) => (
+    <Form>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Field
+            label={utm_content ? 'Password' : 'New Password'}
+            name="newPassword1"
+            type="password"
+            component={InputField}
+            type={firstNewPasswordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    style={{
+                      fontFamily: 'p22-underground',
+                      fontSize: '12px'
+                    }}
+                    component="button"
+                    underline="always"
+                    onClick={event => toggleFirstPassword(event)}
+                    children={firstNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
+                  ></NavLink>
+                </Box>
+              )
+            }}
+          />
+          <Typography
+            style={{
+              fontFamily: 'p22-underground',
+              fontSize: '11px',
+              padding: '5px',
+              textAlign: 'left'
+            }}
+          >
+            Must be at least 6 characters
+          </Typography>
         </Grid>
-      </Form>
-    );
-  };
+        <Grid item xs={12}>
+          <Field
+            label={utm_content ? 'Confirm Password' : 'Confirm New Password'}
+            name="newPassword2"
+            type="password"
+            component={InputField}
+            type={secondNewPasswordVisible ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                  <NavLink
+                    style={{
+                      fontFamily: 'p22-underground',
+                      fontSize: '12px'
+                    }}
+                    component="button"
+                    underline="always"
+                    onClick={event => toggleSecondPassword(event)}
+                    children={secondNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
+                  ></NavLink>
+                </Box>
+              )
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button type="submit" fullWidth disabled={!isValid}>
+            {utm_content ? 'Set password' : 'Reset Password'}
+          </Button>
+        </Grid>
+      </Grid>
+    </Form>
+  );
 
   const handleSubmit = values => {
     const urlParams = new URLSearchParams(location.search);
@@ -159,15 +158,17 @@ const ResetPassword = ({ history, location }) => {
     dispatch(requestPasswordReset(token, values));
     const localStorageClient = require('store');
     localStorageClient.remove('token');
-    history.replace('/password/success');
+    history.replace('/password/success', utm_content);
   };
 
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
-        <Typography className={classes.title}>Reset your password</Typography>
-        <Typography className={classes.subTitle}>Enter your new password below.</Typography>
+        <Typography className={classes.title}>{utm_content ? 'Set your password' : 'Reset your password'}</Typography>
+        <Typography className={classes.subTitle}>
+          {utm_content ? 'Enter your password below.' : 'Enter your new password below.'}
+        </Typography>
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
