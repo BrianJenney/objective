@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
 			lineHeight: props.desktopStyle.lineHeight || 'normal',
 			fontFamily: props.desktopStyle.fontFamily || 'Canela Text Web',
 			textAlign: props.desktopStyle.align || 'center',
-			margin: props.desktopStyle.margin || '0 0 62px',
+			margin: props.desktopStyle.margin || '0',
 			[theme.breakpoints.down('xs')]: {
 				color: props.mobileStyle.fontColor,
 				fontWeight: props.mobileStyle.fontWeight,
@@ -18,9 +18,8 @@ const useStyles = makeStyles(theme => ({
 				lineHeight: props.mobileStyle.lineHeight || 'normal',
 				fontFamily: props.mobileStyle.fontFamily || 'Canela Text Web',
 				textAlign: props.mobileStyle.align || 'center',
-				margin: props.mobileStyle.margin || '0 0 44px'
-			}
-	
+				margin: props.mobileStyle.margin || '0',
+			}	
 	}),
 	sectionTitle: props => ({
 		color: props.desktopStyle.fontColor,
@@ -29,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 		lineHeight: props.desktopStyle.lineHeight || 'normal',
 		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
 		textAlign: props.desktopStyle.align || 'left',
-		margin: props.desktopStyle.margin || '0 0 30px',
+		margin: props.desktopStyle.margin || '50px 0 30px',
 		[theme.breakpoints.down('xs')]: {
 			color: props.mobileStyle.fontColor,
 			fontWeight: props.mobileStyle.fontWeight || 600,
@@ -37,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 			lineHeight: props.mobileStyle.lineHeight || 'normal',
 			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
 			textAlign: props.mobileStyle.align || 'left',
-			margin: props.mobileStyle.margin || '0 0 24px'
+			margin: props.mobileStyle.margin || '50px 0 24px'
 		}
 	}),
 	paragraph: props => ({
@@ -47,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 		lineHeight: props.desktopStyle.lineHeight || 'normal',
 		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
 		textAlign: props.desktopStyle.align || 'left',
+		marginLeft: '8px',
 		[theme.breakpoints.down('xs')]: {
 			color: props.mobileStyle.fontColor,
 			fontWeight: props.mobileStyle.fontWeight || 'normal',
@@ -82,7 +82,8 @@ export const SectionTitle = ({ data, value }) => {
 };
 
 export const Paragraph = ({ data, value }) => {
-  const classes = useStyles(data);
+	const classes = useStyles(data);
+	// console.log('testing--PARA', value)
   return (   
     <Box>
 			{value.map((item, i) => 	
@@ -98,22 +99,25 @@ export const Container = ({ data }) => {
 		marginBottom: 20, 
 		borderBottom: data.desktopStyle.borderColor ? data.desktopStyle.borderColor : '1px solid grey' 
 	};
+	const isBorder = data.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20 };
+	// console.log('testing-CONTAINER', data)
 	const paragraph = data.value.components.map(comp => {
 		return <Paragraph data={comp} value={comp.value}/>
 	});
-
   return (
     <Grid>
-      <Box style={borderStyle}>
+      <Box style={isBorder}>
 				{paragraph}
       </Box>
     </Grid>
   );
 };
 
+
 export const generateComponents = (page) => {
 	let components = [];
 	page.components.map(comp => {
+		console.log('testing-COMP',comp)
 		switch(comp.type) {
 			case 'pageTitle':
         components.push(
@@ -129,7 +133,6 @@ export const generateComponents = (page) => {
 				components.push(
 					<Container data={comp}/>
 				);
-				break;
 			case 'oneColSection':
 				components.push(
 					generateComponents(comp.value)		
@@ -138,8 +141,6 @@ export const generateComponents = (page) => {
 		}
 	});
 	return components
-
-
 };
 
 
