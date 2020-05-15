@@ -96,7 +96,7 @@ const PDPSlider = props => {
       let imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/mj9bpefl6wof/');
       imageUrlOriginal = 'https://nutranext.imgix.net/' + imageUrlOriginalSplit[1];
 
-      let imageUrlThumbnail = image.fields.file.url + '?w=120&h=120&q=50';
+      let imageUrlThumbnail = image.fields.file.url + '?w=120&h=120';
       let imageUrlThumbnailSplit = imageUrlThumbnail.split('//images.ctfassets.net/mj9bpefl6wof/');
       imageUrlThumbnail = 'https://nutranext.imgix.net/' + imageUrlThumbnailSplit[1] + '&auto=compress,format';
 

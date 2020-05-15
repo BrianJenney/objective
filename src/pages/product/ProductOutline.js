@@ -130,16 +130,11 @@ const useStyles = makeStyles(theme => ({
 const contentfulOptions = {
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=555&fm=jpg&q=50';
+      let params = '?w=555&fm=jpg';
       if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=50';
+        params = '?w=450&fm=jpg';
       }
-      return (
-        <img
-          src={node.data.target.fields.file.url + params}
-          alt={node.data.target.fields.title}
-        />
-      );
+      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
     }
   }
 };
@@ -178,19 +173,10 @@ const ProductOutline = ({ scrollToTabs }) => {
 
   return (
     <div className={classes.root} ref={containerRef}>
-      <Box
-        className={classes.keyObjective}
-        style={keyObjectiveBackgroundStyle}
-        width={1}
-      >
+      <Box className={classes.keyObjective} style={keyObjectiveBackgroundStyle} width={1}>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
-            <img
-              src={keyObjectiveImages[0].fields.file.url}
-              alt=""
-              width="100%"
-              height="auto"
-            />
+            <img src={keyObjectiveImages[0].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
         <Box>
@@ -199,22 +185,13 @@ const ProductOutline = ({ scrollToTabs }) => {
           </Typography>
         </Box>
         <Box>
-          <Typography
-            className={`${classes.keyObjectiveHeading} ${productColor}`}
-            variant="h3"
-            align="center"
-          >
+          <Typography className={`${classes.keyObjectiveHeading} ${productColor}`} variant="h3" align="center">
             {keyObjective}
           </Typography>
         </Box>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
-            <img
-              src={keyObjectiveImages[1].fields.file.url}
-              alt=""
-              width="100%"
-              height="auto"
-            />
+            <img src={keyObjectiveImages[1].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
       </Box>
