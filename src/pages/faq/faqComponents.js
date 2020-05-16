@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 		lineHeight: props.desktopStyle.lineHeight || 'normal',
 		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
 		textAlign: props.desktopStyle.align || 'left',
-		marginLeft: '8px',
+		// marginLeft: '8px',
 		[theme.breakpoints.down('xs')]: {
 			color: props.mobileStyle.fontColor,
 			fontWeight: props.mobileStyle.fontWeight || 'normal',
@@ -93,31 +93,17 @@ export const Paragraph = ({ data, value }) => {
   );
 };
 
-export const Container = ({ data }) => {
-	const borderStyle = { 
-		paddingBottom: 20, 
-		marginBottom: 20, 
-		borderBottom: data.desktopStyle.borderColor ? data.desktopStyle.borderColor : '1px solid grey' 
-	};
-	const isBorder = data.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20 };
-	// console.log('testing-CONTAINER', data)
-	const paragraph = data.value.components.map(comp => {
-		return <Paragraph data={comp} value={comp.value}/>
-	});
-  return (
-    <Grid>
-      <Box style={isBorder}>
-				{paragraph}
-      </Box>
-    </Grid>
-  );
-};
 
-
-export const generateComponents = (page) => {
+export const generateComponents = (page, xs) => {
+	console.log('testing-PAGE',page)
 	let components = [];
 	page.components.map(comp => {
-		console.log('testing-COMP',comp)
+		const borderStyle = { 
+			paddingBottom: 20, 
+			marginBottom: 20, 
+			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey' 
+		};
+		const isBorder = comp.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20 };
 		switch(comp.type) {
 			case 'pageTitle':
         components.push(
@@ -129,13 +115,18 @@ export const generateComponents = (page) => {
 					<SectionTitle data={comp} value={comp.value}/>
 				);
 				break;
-			case 'container':
+			case 'paragraph':
 				components.push(
-					<Container data={comp}/>
+					<Paragraph data={comp} value={comp.value}/>
 				);
+				break;
+			case 'container':
 			case 'oneColSection':
 				components.push(
-					generateComponents(comp.value)		
+					<Box style={isBorder}>
+						{generateComponents(comp.value)	}	
+
+					</Box>
 				);
 				break;
 		}
