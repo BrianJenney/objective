@@ -54,9 +54,17 @@ const useStyles = makeStyles(theme => ({
 			lineHeight: props.mobileStyle.lineHeight || 'normal',
 			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
 			textAlign: props.mobileStyle.align || 'left',
-			padding: props.mobileStyle.margin 
+			padding: props.mobileStyle.margin
 		}
 	}),
+	img: props => ({
+		width: props.desktopStyle.width,
+		height: props.desktopStyle.height,
+		[theme.breakpoints.down('xs')]: {
+			width: props.mobileStyle.width,
+			height: props.mobileStyle.height,
+		}
+	})
 	
 }));
 
@@ -94,8 +102,14 @@ export const Paragraph = ({ data, value }) => {
   );
 };
 
+export const Image = ({ data }) => {
+	const classes = useStyles(data);
+  return (   
+		 <img className={classes.img} src={data.desktopImg} />
+  );
+};
+
 export const generateComponents = (page, xs) => {
-	// console.log('testing-PAGE',page)
 	let components = [];
 	page.components.map(comp => {
 		const borderStyle = { 
@@ -103,10 +117,9 @@ export const generateComponents = (page, xs) => {
 			marginBottom: 20, 
 			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey' 
 		};
-		const isBorder = comp.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20 };
+		const isBorder = comp.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20, textAlign: 'center'};
 	const styledSection = transformStyle(comp);
 
-	// console.log('testing-STYLEEEE', styledSection);
 		switch(comp.type) {
 			case 'pageTitle':
         components.push(
@@ -123,17 +136,37 @@ export const generateComponents = (page, xs) => {
 					<Paragraph data={comp} value={comp.value}/>
 				);
 				break;
+			case 'image':
+				delete styledSection.desktop.width;
+				delete styledSection.mobile.width;
+				components.push(
+					<Box style={xs ? styledSection.mobile : styledSection.desktop}>
+						<Image data={comp} />
+					</Box>
+				);
+				break;
+			case 'box':
+				styledSection.desktop['flexDirection'] = 'row';
+				styledSection.mobile['flexDirection'] = 'column';
+				components.push(
+					<Box style={xs ? styledSection.mobile : styledSection.desktop}>
+						{generateComponents(comp.value, xs)}
+					</Box>
+				);
+				break;
 			case 'container':
 				components.push(
 					<Box style={isBorder}>
-						{generateComponents(comp.value)	}	
+						<Box style={xs ? styledSection.mobile : styledSection.desktop}>
+							{generateComponents(comp.value, xs)}	
+						</Box>
 					</Box>
 				);
 				break;
 			case 'oneColSection':
 				components.push(
 					<Container style={xs ? styledSection.mobile : styledSection.desktop}>
-						{ generateComponents(comp.value) }
+						{generateComponents(comp.value, xs)}
 					</Container>
 				);
 				break;
@@ -142,17 +175,20 @@ export const generateComponents = (page, xs) => {
 	return components
 };
 
-
-
 export const transformStyle = (data) => {
 	const { desktopStyle, mobileStyle } = data;
 	const desktop =  Object.keys(desktopStyle).reduce((obj, value) => {
 		if (!obj[value]) {
 			if (value === 'padding' && desktopStyle[value] === true) {
-				obj[value] = desktopStyle.margin;
-				delete desktopStyle.margin;
+				obj[value] = desktopStyle.margin ;	
+				// delete desktopStyle.margin;
 			} else if (value === 'bgColor') {
 				obj['backgroundColor'] = desktopStyle[value];
+			} else if (value === 'borderPlacement') {
+				const borderVal = desktopStyle[value];
+				obj[borderVal] = desktopStyle.borderColor;
+			} else if (value === 'margin') {
+				
 			} else {
 				obj[value] = desktopStyle[value];
 			}
@@ -163,10 +199,13 @@ export const transformStyle = (data) => {
 	const mobile =  Object.keys(mobileStyle).reduce((obj, value) => {
 		if (!obj[value]) {
 			if (value === 'padding' && mobileStyle[value] === true) {
-				obj[value] = mobileStyle.margin;
+				obj[value] = mobileStyle.margin || '0 0 36px';
 				delete mobileStyle.margin;
 			} else if (value === 'bgColor') {
 				obj['backgroundColor'] = mobileStyle[value];
+			} else if (value === 'borderPlacement') {
+				const borderVal = mobileStyle[value];
+				obj[borderVal] = mobileStyle.borderColor;
 			} else {
 				obj[value] = mobileStyle[value];
 			}
