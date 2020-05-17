@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   title: props => ({	
@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
 			lineHeight: props.desktopStyle.lineHeight || 'normal',
 			fontFamily: props.desktopStyle.fontFamily || 'Canela Text Web',
 			textAlign: props.desktopStyle.align || 'center',
-			margin: props.desktopStyle.margin || '0',
+			padding: props.desktopStyle.margin || '0',
 			[theme.breakpoints.down('xs')]: {
 				color: props.mobileStyle.fontColor,
 				fontWeight: props.mobileStyle.fontWeight,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 				lineHeight: props.mobileStyle.lineHeight || 'normal',
 				fontFamily: props.mobileStyle.fontFamily || 'Canela Text Web',
 				textAlign: props.mobileStyle.align || 'center',
-				margin: props.mobileStyle.margin || '0',
+				padding: props.mobileStyle.margin || '0',
 			}	
 	}),
 	sectionTitle: props => ({
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 		lineHeight: props.desktopStyle.lineHeight || 'normal',
 		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
 		textAlign: props.desktopStyle.align || 'left',
-		// marginLeft: '8px',
+		padding: props.desktopStyle.margin,
 		[theme.breakpoints.down('xs')]: {
 			color: props.mobileStyle.fontColor,
 			fontWeight: props.mobileStyle.fontWeight || 'normal',
@@ -54,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 			lineHeight: props.mobileStyle.lineHeight || 'normal',
 			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
 			textAlign: props.mobileStyle.align || 'left',
+			padding: props.mobileStyle.margin 
 		}
 	}),
 	
@@ -83,7 +84,7 @@ export const SectionTitle = ({ data, value }) => {
 
 export const Paragraph = ({ data, value }) => {
 	const classes = useStyles(data);
-	// console.log('testing--PARA', value)
+	
   return (   
     <Box>
 			{value.map((item, i) => 	
@@ -93,9 +94,8 @@ export const Paragraph = ({ data, value }) => {
   );
 };
 
-
 export const generateComponents = (page, xs) => {
-	console.log('testing-PAGE',page)
+	// console.log('testing-PAGE',page)
 	let components = [];
 	page.components.map(comp => {
 		const borderStyle = { 
@@ -104,6 +104,9 @@ export const generateComponents = (page, xs) => {
 			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey' 
 		};
 		const isBorder = comp.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20 };
+	const styledSection = transformStyle(comp);
+
+	// console.log('testing-STYLEEEE', styledSection);
 		switch(comp.type) {
 			case 'pageTitle':
         components.push(
@@ -121,12 +124,17 @@ export const generateComponents = (page, xs) => {
 				);
 				break;
 			case 'container':
-			case 'oneColSection':
 				components.push(
 					<Box style={isBorder}>
 						{generateComponents(comp.value)	}	
-
 					</Box>
+				);
+				break;
+			case 'oneColSection':
+				components.push(
+					<Container style={xs ? styledSection.mobile : styledSection.desktop}>
+						{ generateComponents(comp.value) }
+					</Container>
 				);
 				break;
 		}
@@ -136,4 +144,35 @@ export const generateComponents = (page, xs) => {
 
 
 
+export const transformStyle = (data) => {
+	const { desktopStyle, mobileStyle } = data;
+	const desktop =  Object.keys(desktopStyle).reduce((obj, value) => {
+		if (!obj[value]) {
+			if (value === 'padding' && desktopStyle[value] === true) {
+				obj[value] = desktopStyle.margin;
+				delete desktopStyle.margin;
+			} else if (value === 'bgColor') {
+				obj['backgroundColor'] = desktopStyle[value];
+			} else {
+				obj[value] = desktopStyle[value];
+			}
+		}
+		return obj;
+	}, {});
+
+	const mobile =  Object.keys(mobileStyle).reduce((obj, value) => {
+		if (!obj[value]) {
+			if (value === 'padding' && mobileStyle[value] === true) {
+				obj[value] = mobileStyle.margin;
+				delete mobileStyle.margin;
+			} else if (value === 'bgColor') {
+				obj['backgroundColor'] = mobileStyle[value];
+			} else {
+				obj[value] = mobileStyle[value];
+			}
+		}
+		return obj;
+	}, {});
+	return { desktop, mobile };
+};
 

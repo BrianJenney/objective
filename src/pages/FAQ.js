@@ -50,8 +50,8 @@ const FAQ = ({ location }) => {
         <HeadTags title={title} description={description} />
           <ScrollToTop>
             <StyledBackground>
-              <StyledContainer>
-                <FinalPage />
+              <StyledContainer>    
+                <FinalPage />             
               </StyledContainer>
             </StyledBackground>
           </ScrollToTop>
