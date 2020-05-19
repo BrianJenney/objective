@@ -14,10 +14,22 @@ export const SectionTitle = ({ data, value, xs }) => {
 };
 
 export const Paragraph = ({ data, value, xs }) => {
-  return (   
-		value.map((item, i) => 	
-			<div key={i} style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} dangerouslySetInnerHTML={{ __html: item }}></div>				
-		)
+	return (   
+		value.map((item, i) => 	{
+			const link = item.match(/<a[^>]*>([^<]+)<\/a>/);
+			let styleTag = null;
+			if (link) {
+				if (data.name === 'ContactUs-EmailAddress' || data.name === 'ContactUs-PhoneNumber') {
+					styleTag = `<a href=${link[1]} style="color:#000000">${link[1]}</a>` ;
+				} else {
+					styleTag = `<a href=${link[1]} style="color:#00c3ef">${link[1]}</a>` ;
+				}
+				const splitTag = item.split(link[0]);
+				item = splitTag[0] + styleTag + splitTag[1];
+			}
+			return <div key={i} style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} dangerouslySetInnerHTML={{ __html: item }}></div>				
+
+		})
   );
 };
 
@@ -31,7 +43,6 @@ export const generateComponents = (page, xs) => {
 	let components = [];
 	page.components.map(comp => {
 		const borderStyle = { 
-			paddingBottom: 20, 
 			marginBottom: 20, 
 			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey' 
 		};
