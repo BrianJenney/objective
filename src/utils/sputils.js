@@ -184,6 +184,13 @@ export const GenerateOneColumn = (comps, template, pageName) => {
           </>
         );
         break;
+      case 'table':
+        components.push(
+          <>
+            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
+          </>
+        );
+        break;
       default:
         break;
     }

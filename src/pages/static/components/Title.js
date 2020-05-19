@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
 const Title = ({ data, template, type, pageName }) => {
   const [tracked, setTracked] = useState(false);
   const classes = useStyles(data);
+  const borderClassname = data.desktopStyle.borderPlacement
+    ? `${template}-${type}-${data.desktopStyle.borderPlacement}`
+    : ''
 
   const ComponentToTrack = ({ isVisible }) => {
     if (isVisible && tracked === false && (type === 'sectionTitle' || type === 'sectionSubTitle')) {
@@ -45,7 +48,7 @@ const Title = ({ data, template, type, pageName }) => {
         <ComponentToTrack />
       </TrackVisibility>
       <Box className={template}>
-        <div className={`${classes.root} ${template}-${type}`}>{data.value}</div>
+        <div className={`${classes.root} ${template}-${type} ${borderClassname}`}>{data.value}</div>
       </Box>
     </>
   );
