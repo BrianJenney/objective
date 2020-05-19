@@ -16,6 +16,32 @@ const useStyles = makeStyles(theme => ({
   }),
   captionImageMobile: {
     width: '100%'
+  },
+  container: props => {
+    let styles = {
+      width: props.desktopStyle.width ? props.desktopStyle.width + 'px' : 320,
+      textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
+      [theme.breakpoints.down('xs')]: {
+        width: props.mobileStyle.width ? props.mobileStyle.width + 'px' : 164,
+        textAlign: props.caption ? props.caption.desktopStyle.float : 'left'
+      }
+    };
+    return styles;
+  },
+  caption: props => {
+    let styles = {};
+    if (props.caption) {
+      styles = {
+        color: props.caption.desktopStyle.fontColor,
+        fontWeight: props.caption.desktopStyle.fontWeight,
+        fontSize: props.caption.desktopStyle.fontSize,
+        lineHeight: props.caption.desktopStyle.lineHeight,
+        fontFamily: props.caption.desktopStyle.fontFamily,
+        textTransform: props.caption.desktopStyle.textTransform,
+        wordWrap: props.caption.desktopStyle.wordWrap === false ? 'initial' : 'break-word'
+      };
+    }
+    return styles;
   }
 }));
 
@@ -26,80 +52,53 @@ const Image = ({ data, template, type, caption }) => {
   const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
-  // Assigning <img> properties:
+  // Assign img src:
   let imgSrc = sm 
     ? data.mobileImg 
     : data.desktopImg;
-  imgSrc += ResizeImage(template, data);
+  imgSrc += (ResizeImage(template, data));
 
-  // Desktop + caption has no class assigned to <img>:
-  let imgClass = sm && caption 
-    ? classes.captionImageMobile 
-    : '';
-
-  imgClass = caption 
-    ? imgClass 
-    : `${classes.root} ${template}-${type}-${float}`;
-  // remove - Need to test that we didn't mess up assigned class in case of line 32 ^
+  // Conditionally assign class to img:
+  let imgClass = '';
+  if (sm && caption) {
+    imgClass = classes.captionImageMobile;
+  } else if (!caption) {
+    imgClass = `${classes.root} ${template}-${type}-${float}`;
+  }
 
   let image = <img src={imgSrc} className={imgClass} />;
   
-  // Check if image should be wrapped with <Link />:
-  if (data.URL) {
+  // Check if image has a URL prop:
+  const imgUrl = data.desktopStyle.url || data.mobileStyle.url;
+  if (imgUrl ) {
     image = (
-      <Link to={data.URL} target="_blank">
+      <a href={imgUrl} target="_blank">
         {image}
-      </Link>
+      </a>
     )
   };
 
-  // Check if image has a caption and construct:
+  // Check if there is a caption & add if needed:
   if (caption) {
+    // Check if caption has a URL prop:
+    let captionNode = <div className={classes.caption}>{caption.value}</div>;
+    if (caption.desktopStyle.url) {
+      captionNode = (
+      <a className={classes.caption} href={caption.desktopStyle.url}>
+        {caption.value}
+      </a>
+      );
+    }
+
     image = (
-      <div className={`${template}-${type}-caption-${float}`}> 
+      <div className={`${template}-${type}-caption-${float} ${classes.container}`}> 
         {image}
-        <div className={classes.caption}>{caption.value}</div>
+        {captionNode}
       </div>
     )
   };
 
-  // ... in the end just return the constructed image object.
   return image;
-
-  
-  return (
-    <div>
-      {!sm ? (
-        // desktop & caption
-        caption ? (
-          <div className={`${template}-${type}-caption-${float}`}>
-            <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
-            <div className={classes.caption}>{caption.value}</div>
-          </div>
-        ) : (
-          // desktop no caption
-          <img
-            src={`${data.desktopImg}${ResizeImage(template, data)}`}
-            className={`${classes.root} ${template}-${type}-${float}`}
-          />
-        )
-        // mobile caption
-      ) : caption ? (
-        <div className={`${template}-${type}-caption-${float}`}>
-          <img 
-          src={`${data.mobileImg}${ResizeImage(template, data)}`} 
-          className={classes.captionImageMobile} />
-          <div className={classes.caption}>{caption.value}</div>
-        </div>
-      ) : (
-        // mobile no caption
-        <img
-          src={`${data.mobileImg}${ResizeImage(template, data)}`}
-          className={`${classes.root} ${template}-${type}-${float}`}
-        />
-      )}
-    </div>
-  );
 };
 
 export default Image;
