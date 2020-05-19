@@ -2,13 +2,13 @@
 
 ## Clone the repo and cd into it
 `git clone git@bitbucket.org:nxtdtc/objective.git`
-`cd objective``
+`cd objective`
 
 ### If it is the first time running this app
 `npm install`
 
 ## Start Docker Stack
-See ReadME for [nxt-localdev](https://bitbucket.org/nxtdtc/nxt-localdev/src/master/)
+See ReadME for [nxt-localdev](https://bitbucket.org/nxtdtc/nxt-localdev/src/master/).
 
 ## Start
 `npm start`
