@@ -20,9 +20,6 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
     type: REQUEST_CREATE_ORDER,
     payload: { isLoading: true }
   });
-  // The account JWT needs to be passed in as its own argument
-  const account_jwt = cart.account_jwt;
-  delete cart.account_jwt;
   const { client: stompClient, replyTo } = getState().stomp;
   const { merchantAccountId } = getState().storefront;
 
@@ -37,10 +34,9 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
     cart.email = getState().account.data.email;
   }
 
-  const params = {
+  let params = {
     data: { cart },
     params: {
-      account_jwt,
       nonceOrToken,
       merchantAccountId,
       ...(localStorageClient.get('clickId') && {
@@ -49,13 +45,22 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
     }
   };
 
+  if (cart.account_jwt) {
+    const account_jwt = cart.account_jwt;
+    params.params.account_jwt = account_jwt;
+    delete cart.account_jwt;
+  } else if (cart.accountInfo) {
+    const accountInfo = cart.accountInfo;
+    params.params.accountInfo = accountInfo;
+    delete cart.accountInfo;
+  }
+
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/order/order.request.createorder',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
-      jwt: account_jwt,
       token: localStorageClient.get('olympusToken')
     },
     payload
@@ -78,7 +83,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
   order.items.forEach(item => {
     orderItemsTransformed.push({
       brand: order.storeCode,
-      image_url: 'https:' + item.variant_img,
+      image_url: `https:${item.variant_img}`,
       name: item.variant_name,
       price: item.unit_price,
       product_id: item.variant_id,
@@ -98,7 +103,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     item_count: order.items.length,
     order_date: order.transactions.transactionDate,
     order_id: order.orderNumber,
-    order_link: 'https://objectivewellness.com/orders/' + order._id,
+    order_link: `https://objectivewellness.com/orders/${order._id}`,
     payment_method: 'Credit Card',
     payment_method_detail: order.paymentData.cardType,
     products: orderItemsTransformed,
@@ -126,8 +131,19 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
     type: REQUEST_CANCEL_ORDER,
     payload: { isLoading: true }
   });
+
   const { client: stompClient, replyTo } = getState().stomp;
-  const { account_jwt } = getState().account.data;
+  let { account_jwt } = getState().account.data;
+  if (!account_jwt) {
+    let orderState = getState().order;
+    if (
+      orderState.hasOwnProperty('order') &&
+      orderState.order.hasOwnProperty('account') &&
+      orderState.order.account.hasOwnProperty('account_jwt')
+    ) {
+      account_jwt = orderState.order.account.account_jwt;
+    }
+  }
   const params = {
     data: { orderId },
     params: { account_jwt }
@@ -143,62 +159,10 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
     },
     payload
   );
-
   // @segment - Cancel Order Submitted Event
   window.analytics.track('Order Cancel Submitted', {
     order_id: orderNumber
   });
-};
-
-export const requestFindOrdersByAccount = accountJwt => (dispatch, getState) => {
-  const { client: stompClient, replyTo } = getState().stomp;
-  const params = {
-    params: {
-      account_jwt: accountJwt,
-      idField: 'accountId', // use this to tell the MS where to substitute the decoded id
-      query: { accountId: null }
-    }
-  };
-  const payload = JSON.stringify(msgpack.encode(params));
-
-  stompClient.send(
-    '/exchange/order/order.request.find',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      token: localStorageClient.get('olympusToken')
-    },
-    payload
-  );
-  dispatch({
-    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
-    payload: {}
-  });
-};
-
-export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
-  const { client: stompClient, replyTo } = getState().stomp;
-  dispatch({
-    type: REQUEST_GET_ORDER,
-    payload: { isLoading: true }
-  });
-  const getParams = {
-    id: orderId,
-    params: {
-      account_jwt: accountJwt
-    }
-  };
-  const payload = JSON.stringify(msgpack.encode(getParams));
-
-  stompClient.send(
-    '/exchange/order/order.request.get',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      token: localStorageClient.get('olympusToken')
-    },
-    payload
-  );
 };
 
 export const receivedCancelOrderSuccess = order => async (dispatch, getState) => {
@@ -213,7 +177,7 @@ export const receivedCancelOrderSuccess = order => async (dispatch, getState) =>
   order.items.forEach(item => {
     orderItemsTransformed.push({
       brand: order.storeCode,
-      image_url: 'https:' + item.variant_img,
+      image_url: `https:${item.variant_img}`,
       name: item.variant_name,
       price: item.unit_price,
       product_id: item.variant_id,
@@ -261,6 +225,98 @@ export const receivedCancelOrderFailure = order => async (dispatch, getState) =>
     order_id: order.orderNumber,
     error_message: order
   });
+};
+
+export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      idField: 'accountId', // use this to tell the MS where to substitute the decoded id
+      query
+    }
+  };
+
+  if (accountJwt) {
+    params.params.account_jwt = accountJwt;
+  }
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/order/order.request.find',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+  dispatch({
+    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
+    payload: {}
+  });
+};
+
+export const requestFindUnauthenticatedOrders = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      idField: 'accountId', // use this to tell the MS where to substitute the decoded id
+      query
+    }
+  };
+
+  if (accountJwt) {
+    params.params.account_jwt = accountJwt;
+  }
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/order/order.request.findUnauthenticated',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+  dispatch({
+    type: REQUEST_FIND_ORDERS_BY_ACCOUNT,
+    payload: {}
+  });
+};
+
+export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  let account_jwt = '';
+  if (accountJwt) {
+    account_jwt = accountJwt;
+  } else if (getState().account.data.hasOwnProperty('account_jwt')) {
+    account_jwt = getState().account.data.account_jwt;
+  }
+
+  dispatch({
+    type: REQUEST_GET_ORDER,
+    payload: { isLoading: true }
+  });
+
+  const getParams = {
+    id: orderId,
+    params: {
+      account_jwt
+    }
+  };
+
+  const payload = JSON.stringify(msgpack.encode(getParams));
+
+  stompClient.send(
+    '/exchange/order/order.request.get',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
 };
 
 export const receivedGetOrder = order => (dispatch, getState) => {

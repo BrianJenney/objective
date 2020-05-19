@@ -525,7 +525,10 @@ const Footer = ({ location, currentUser }) => {
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to={gotoUrl('/account/orders', '/login/order')} onClick={segmentTrackNavigationClick}>
+                        <NavLink
+                          to={gotoUrl('/account/orders', '/order-tracker')}
+                          onClick={segmentTrackNavigationClick}
+                        >
                           Track an Order
                         </NavLink>
                       </ListItem>
