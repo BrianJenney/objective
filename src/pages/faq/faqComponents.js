@@ -2,57 +2,57 @@ import React from 'react';
 import { Box, Grid, Container } from '@material-ui/core';
 
 export const Title = ({ data, value, xs }) => {
-  return (
+	return (
 		<div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
-  );
+	);
 };
 
-export const SectionTitle = ({ data, value, xs }) => {		
-  return (
-    <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
-  );
+export const SectionTitle = ({ data, value, xs }) => {
+	return (
+		<div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
+	);
 };
 
 export const Paragraph = ({ data, value, xs }) => {
-	return (   
-		value.map((item, i) => 	{
+	return (
+		value.map((item, i) => {
 			const link = item.match(/<a[^>]*>([^<]+)<\/a>/);
 			let styleTag = null;
 			if (link) {
 				if (data.name === 'ContactUs-EmailAddress' || data.name === 'ContactUs-PhoneNumber') {
-					styleTag = `<a href=${link[1]} style="color:#000000">${link[1]}</a>` ;
+					styleTag = `<a href=${link[1]} style="color:#000000">${link[1]}</a>`;
 				} else {
-					styleTag = `<a href=${link[1]} style="color:#00c3ef">${link[1]}</a>` ;
+					styleTag = `<a href=${link[1]} style="color:#00c3ef">${link[1]}</a>`;
 				}
 				const splitTag = item.split(link[0]);
 				item = splitTag[0] + styleTag + splitTag[1];
 			}
-			return <div key={i} style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} dangerouslySetInnerHTML={{ __html: item }}></div>				
+			return <div key={i} style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} dangerouslySetInnerHTML={{ __html: item }}></div>
 
 		})
-  );
+	);
 };
 
 export const Image = ({ data, xs }) => {
-  return ( 	
+	return (
 		<img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
-  );
+	);
 };
 
 export const generateComponents = (page, xs) => {
 	let components = [];
 	page.components.map(comp => {
-		const borderStyle = { 
-			marginBottom: 20, 
-			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey' 
+		const borderStyle = {
+			marginBottom: 20,
+			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey'
 		};
-		const isBorder = comp.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20, textAlign: 'center'};
+		const isBorder = comp.desktopStyle.border ? borderStyle : { paddingBottom: 20, marginBottom: 20, textAlign: 'center' };
 
-		switch(comp.type) {
+		switch (comp.type) {
 			case 'pageTitle':
-        components.push(
-          <Title data={comp} value={comp.value} xs={xs} />					
-        );
+				components.push(
+					<Title data={comp} value={comp.value} xs={xs} />
+				);
 				break;
 			case 'sectionTitle':
 				components.push(
@@ -61,12 +61,12 @@ export const generateComponents = (page, xs) => {
 				break;
 			case 'paragraph':
 				components.push(
-					<Paragraph data={comp} value={comp.value} xs={xs}/>
+					<Paragraph data={comp} value={comp.value} xs={xs} />
 				);
 				break;
 			case 'image':
 				components.push(
-					<Image data={comp} xs={xs}/>					
+					<Image data={comp} xs={xs} />
 				);
 				break;
 			case 'box':
@@ -80,7 +80,7 @@ export const generateComponents = (page, xs) => {
 				components.push(
 					<Box style={isBorder}>
 						<Box style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}>
-							{generateComponents(comp.value, xs)}	
+							{generateComponents(comp.value, xs)}
 						</Box>
 					</Box>
 				);
@@ -99,10 +99,10 @@ export const generateComponents = (page, xs) => {
 
 export const transformDesktopStyle = (data) => {
 	const { desktopStyle, type } = data;
-	return  Object.keys(desktopStyle).reduce((obj, value) => {
+	return Object.keys(desktopStyle).reduce((obj, value) => {
 		if (!obj[value]) {
 			if (value === 'padding' && desktopStyle[value] === true) {
-				obj[value] = desktopStyle.margin ;	
+				obj[value] = desktopStyle.margin;
 			} else if (value === 'bgColor') {
 				obj['backgroundColor'] = desktopStyle[value];
 			} else if (value === 'borderPlacement') {
