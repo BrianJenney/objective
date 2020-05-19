@@ -1,22 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { requestPage } from '../modules/static/actions';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 import { generateComponents } from './faq/faqComponents';
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
 
+export const StyledBackground = withStyles(theme => ({
+  root: {
+    backgroundColor: '#fdfbf9',
+    [theme.breakpoints.down('xs')]: {
+      padding: '0px',
+      backgroundColor: '#fdfbf9'
+    }
+  }
+}))(Box);
 
-import {
-  StyledBackground,  
-  StyledContainer  
-} from './faq/StyledComponents';
+export const StyledContainer = withStyles(theme => ({
+  root: {
+    paddingTop: 70,
+    paddingBottom: 40,
+    width: 1193,
+    [theme.breakpoints.down('xs')]: {
+      padding: '38px 0 40px',
+      backgroundColor: '#fdfbf9',
+      width: '100%'
+    }
+  }
+}))(Container);
 
 
 const FAQ = ({ location }) => {
@@ -41,7 +57,7 @@ const FAQ = ({ location }) => {
   }, [page]);
   let FinalPage = null;  
   if (pageLoaded) {
-    FinalPage = () =>  generateComponents(page, xs)
+    FinalPage = () => generateComponents(page, xs)
   }
 
   if (FinalPage) {

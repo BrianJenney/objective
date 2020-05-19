@@ -1,111 +1,29 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid, Container } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  title: props => ({	
-			color: props.desktopStyle.fontColor,
-			fontWeight: props.desktopStyle.fontWeight || 'normal',
-			fontSize: props.desktopStyle.fontSize || 48,
-			lineHeight: props.desktopStyle.lineHeight || 'normal',
-			fontFamily: props.desktopStyle.fontFamily || 'Canela Text Web',
-			textAlign: props.desktopStyle.align || 'center',
-			padding: props.desktopStyle.margin || '0',
-			[theme.breakpoints.down('xs')]: {
-				color: props.mobileStyle.fontColor,
-				fontWeight: props.mobileStyle.fontWeight,
-				fontSize: props.mobileStyle.fontSize || 24,
-				lineHeight: props.mobileStyle.lineHeight || 'normal',
-				fontFamily: props.mobileStyle.fontFamily || 'Canela Text Web',
-				textAlign: props.mobileStyle.align || 'center',
-				padding: props.mobileStyle.margin || '0',
-			}	
-	}),
-	sectionTitle: props => ({
-		color: props.desktopStyle.fontColor,
-		fontWeight: props.desktopStyle.fontWeight || 600,
-		fontSize: props.desktopStyle.fontSize || 24,
-		lineHeight: props.desktopStyle.lineHeight || 'normal',
-		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
-		textAlign: props.desktopStyle.align || 'left',
-		margin: props.desktopStyle.margin || '50px 0 30px',
-		[theme.breakpoints.down('xs')]: {
-			color: props.mobileStyle.fontColor,
-			fontWeight: props.mobileStyle.fontWeight || 600,
-			fontSize: props.mobileStyle.fontSize || 18,
-			lineHeight: props.mobileStyle.lineHeight || 'normal',
-			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
-			textAlign: props.mobileStyle.align || 'left',
-			margin: props.mobileStyle.margin || '50px 0 24px'
-		}
-	}),
-	paragraph: props => ({
-		color: props.desktopStyle.fontColor,
-		fontWeight: props.desktopStyle.fontWeight || 'normal',
-		fontSize: props.desktopStyle.fontSize || 24,
-		lineHeight: props.desktopStyle.lineHeight || 'normal',
-		fontFamily: props.desktopStyle.fontFamily || 'p22-underground, sans-serif',
-		textAlign: props.desktopStyle.align || 'left',
-		padding: props.desktopStyle.margin,
-		[theme.breakpoints.down('xs')]: {
-			color: props.mobileStyle.fontColor,
-			fontWeight: props.mobileStyle.fontWeight || 'normal',
-			fontSize: props.mobileStyle.fontSize || 18,
-			lineHeight: props.mobileStyle.lineHeight || 'normal',
-			fontFamily: props.mobileStyle.fontFamily || 'p22-underground, sans-serif',
-			textAlign: props.mobileStyle.align || 'left',
-			padding: props.mobileStyle.margin
-		}
-	}),
-	img: props => ({
-		width: props.desktopStyle.width,
-		height: props.desktopStyle.height,
-		[theme.breakpoints.down('xs')]: {
-			width: props.mobileStyle.width,
-			height: props.mobileStyle.height,
-		}
-	})
-	
-}));
-
-export const Title = ({ data, value }) => {
-	const classes = useStyles(data);
+export const Title = ({ data, value, xs }) => {
   return (
-    <>
-      <Box>
-        <div className={classes.title}>{value}</div>
-      </Box>
-    </>
+		<div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
   );
 };
 
-export const SectionTitle = ({ data, value }) => {
-  const classes = useStyles(data);
+export const SectionTitle = ({ data, value, xs }) => {		
   return (
-    <Grid>
-      <Box>
-        <div className={classes.sectionTitle}>{value}</div>
-      </Box>
-    </Grid>
+    <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
   );
 };
 
-export const Paragraph = ({ data, value }) => {
-	const classes = useStyles(data);
-	
+export const Paragraph = ({ data, value, xs }) => {
   return (   
-    <Box>
-			{value.map((item, i) => 	
-				<div key={i} className={classes.paragraph} dangerouslySetInnerHTML={{ __html: item }}></div>				
-			)}
-    </Box>
+		value.map((item, i) => 	
+			<div key={i} style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} dangerouslySetInnerHTML={{ __html: item }}></div>				
+		)
   );
 };
 
-export const Image = ({ data }) => {
-	const classes = useStyles(data);
-  return (   
-		 <img className={classes.img} src={data.desktopImg} />
+export const Image = ({ data, xs }) => {
+  return ( 	
+		<img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
   );
 };
 
@@ -118,38 +36,31 @@ export const generateComponents = (page, xs) => {
 			borderBottom: comp.desktopStyle.borderColor ? comp.desktopStyle.borderColor : '1px solid grey' 
 		};
 		const isBorder = comp.desktopStyle.border ? borderStyle : {	paddingBottom: 20, marginBottom: 20, textAlign: 'center'};
-	const styledSection = transformStyle(comp);
 
 		switch(comp.type) {
 			case 'pageTitle':
         components.push(
-          <Title data={comp} value={comp.value}/>					
+          <Title data={comp} value={comp.value} xs={xs} />					
         );
 				break;
 			case 'sectionTitle':
 				components.push(
-					<SectionTitle data={comp} value={comp.value}/>
+					<SectionTitle data={comp} value={comp.value} xs={xs} />
 				);
 				break;
 			case 'paragraph':
 				components.push(
-					<Paragraph data={comp} value={comp.value}/>
+					<Paragraph data={comp} value={comp.value} xs={xs}/>
 				);
 				break;
 			case 'image':
-				delete styledSection.desktop.width;
-				delete styledSection.mobile.width;
 				components.push(
-					<Box style={xs ? styledSection.mobile : styledSection.desktop}>
-						<Image data={comp} />
-					</Box>
+					<Image data={comp} xs={xs}/>					
 				);
 				break;
 			case 'box':
-				styledSection.desktop['flexDirection'] = 'row';
-				styledSection.mobile['flexDirection'] = 'column';
 				components.push(
-					<Box style={xs ? styledSection.mobile : styledSection.desktop}>
+					<Box style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}>
 						{generateComponents(comp.value, xs)}
 					</Box>
 				);
@@ -157,7 +68,7 @@ export const generateComponents = (page, xs) => {
 			case 'container':
 				components.push(
 					<Box style={isBorder}>
-						<Box style={xs ? styledSection.mobile : styledSection.desktop}>
+						<Box style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}>
 							{generateComponents(comp.value, xs)}	
 						</Box>
 					</Box>
@@ -165,7 +76,7 @@ export const generateComponents = (page, xs) => {
 				break;
 			case 'oneColSection':
 				components.push(
-					<Container style={xs ? styledSection.mobile : styledSection.desktop}>
+					<Container style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}>
 						{generateComponents(comp.value, xs)}
 					</Container>
 				);
@@ -175,43 +86,55 @@ export const generateComponents = (page, xs) => {
 	return components
 };
 
-export const transformStyle = (data) => {
-	const { desktopStyle, mobileStyle } = data;
-	const desktop =  Object.keys(desktopStyle).reduce((obj, value) => {
+export const transformDesktopStyle = (data) => {
+	const { desktopStyle, type } = data;
+	return  Object.keys(desktopStyle).reduce((obj, value) => {
 		if (!obj[value]) {
 			if (value === 'padding' && desktopStyle[value] === true) {
 				obj[value] = desktopStyle.margin ;	
-				// delete desktopStyle.margin;
 			} else if (value === 'bgColor') {
 				obj['backgroundColor'] = desktopStyle[value];
 			} else if (value === 'borderPlacement') {
 				const borderVal = desktopStyle[value];
 				obj[borderVal] = desktopStyle.borderColor;
 			} else if (value === 'margin') {
-				
+				//skip margin value from Contentful
+			} else if (value === 'align') {
+				obj['textAlign'] = desktopStyle[value]
 			} else {
 				obj[value] = desktopStyle[value];
 			}
 		}
+		if (type === 'box') {
+			obj['flexDirection'] = 'row';
+		}
 		return obj;
 	}, {});
+};
 
-	const mobile =  Object.keys(mobileStyle).reduce((obj, value) => {
+export const transformMobileStyle = (data) => {
+	const { mobileStyle, type } = data;
+	return Object.keys(mobileStyle).reduce((obj, value) => {
 		if (!obj[value]) {
 			if (value === 'padding' && mobileStyle[value] === true) {
-				obj[value] = mobileStyle.margin || '0 0 36px';
-				delete mobileStyle.margin;
+				obj[value] = mobileStyle.margin;
 			} else if (value === 'bgColor') {
 				obj['backgroundColor'] = mobileStyle[value];
 			} else if (value === 'borderPlacement') {
 				const borderVal = mobileStyle[value];
 				obj[borderVal] = mobileStyle.borderColor;
+			} else if (value === 'margin') {
+				//skip margin value from Contentful
+			} else if (value === 'align') {
+				obj['textAlign'] = mobileStyle[value]
 			} else {
 				obj[value] = mobileStyle[value];
 			}
 		}
+		if (type === 'box') {
+			obj['flexDirection'] = 'column';
+		}
 		return obj;
 	}, {});
-	return { desktop, mobile };
 };
 
