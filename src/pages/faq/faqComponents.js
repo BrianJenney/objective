@@ -9,7 +9,7 @@ export const SectionTitle = ({ data, value, xs }) => (
 	<div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
 );
 
-export const Paragraph = ({ data, value, xs }) => {
+export const Paragraph = ({ data, value, xs }) =>
 	value.map((item, i) => {
 		const link = item.match(/<a[^>]*>([^<]+)<\/a>/);
 		let styleTag = null;
@@ -30,7 +30,6 @@ export const Paragraph = ({ data, value, xs }) => {
 			></div>
 		);
 	});
-};
 
 export const Image = ({ data, xs }) => (
 	<img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
