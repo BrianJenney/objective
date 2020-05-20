@@ -9,7 +9,7 @@ export const SectionTitle = ({ data, value, xs }) => (
 	<div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
 );
 
-export const Paragraph = ({ data, value, xs }) =>
+export const Paragraph = ({ data, value, xs }) => {
 	value.map((item, i) => {
 		const link = item.match(/<a[^>]*>([^<]+)<\/a>/);
 		let styleTag = null;
@@ -22,9 +22,15 @@ export const Paragraph = ({ data, value, xs }) =>
 			const splitTag = item.split(link[0]);
 			item = splitTag[0] + styleTag + splitTag[1];
 		}
-		return <div key={i} style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} dangerouslySetInnerHTML={{ __html: item }}></div>
-    );
-  });
+		return (
+			<div
+				key={i}
+				style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
+				dangerouslySetInnerHTML={{ __html: item }}
+			></div>
+		);
+	});
+};
 
 export const Image = ({ data, xs }) => (
 	<img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
