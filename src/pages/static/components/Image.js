@@ -52,42 +52,6 @@ const Image = ({ data, template, type, caption }) => {
   const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
-<<<<<<< HEAD
-  return (
-    <div>
-      {!sm ? (
-        caption ? (
-          caption.desktopStyle.url ? (
-            <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
-              <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
-              <a className={classes.caption} href={caption.desktopStyle.url}>{caption.value}</a>
-            </div>
-          ) : (
-            <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
-              <img src={`${data.desktopImg}${ResizeImage(template, data)}`} />
-              <div className={classes.caption}>{caption.value}</div>
-            </div>
-          )
-        ) : (
-          <img
-            src={`${data.desktopImg}${ResizeImage(template, data)}`}
-            className={`${classes.root} ${template}-${type}-${float}`}
-          />
-        )
-      ) : caption ? (
-        <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
-          <img src={`${data.mobileImg}${ResizeImage(template, data)}`} className={classes.captionImageMobile} />
-          <div className={classes.caption}>{caption.value}</div>
-        </div>
-      ) : (
-        <img
-          src={`${data.mobileImg}${ResizeImage(template, data)}`}
-          className={`${classes.root} ${template}-${type}-${float}`}
-        />
-      )}
-    </div>
-  );
-=======
   // Assign img src:
   let imgSrc = sm 
     ? data.mobileImg 
@@ -135,7 +99,6 @@ const Image = ({ data, template, type, caption }) => {
   };
 
   return image;
->>>>>>> DC-1248-lp-image-links
 };
 
 export default Image;
