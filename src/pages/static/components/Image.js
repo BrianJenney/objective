@@ -52,6 +52,7 @@ const Image = ({ data, template, type, caption }) => {
   const sm = useMediaQuery(theme.breakpoints.down('xs'));
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
+<<<<<<< HEAD
   return (
     <div>
       {!sm ? (
@@ -86,6 +87,55 @@ const Image = ({ data, template, type, caption }) => {
       )}
     </div>
   );
+=======
+  // Assign img src:
+  let imgSrc = sm 
+    ? data.mobileImg 
+    : data.desktopImg;
+  imgSrc += (ResizeImage(template, data));
+
+  // Conditionally assign class to img:
+  let imgClass = '';
+  if (sm && caption) {
+    imgClass = classes.captionImageMobile;
+  } else if (!caption) {
+    imgClass = `${classes.root} ${template}-${type}-${float}`;
+  }
+
+  let image = <img src={imgSrc} className={imgClass} />;
+  
+  // Check if image has a URL prop:
+  const imgUrl = data.desktopStyle.url || data.mobileStyle.url;
+  if (imgUrl ) {
+    image = (
+      <a href={imgUrl} target="_blank">
+        {image}
+      </a>
+    )
+  };
+
+  // Check if there is a caption & add if needed:
+  if (caption) {
+    // Check if caption has a URL prop:
+    let captionNode = <div className={classes.caption}>{caption.value}</div>;
+    if (caption.desktopStyle.url) {
+      captionNode = (
+      <a className={classes.caption} href={caption.desktopStyle.url}>
+        {caption.value}
+      </a>
+      );
+    }
+
+    image = (
+      <div className={`${template}-${type}-caption-${float} ${classes.container}`}> 
+        {image}
+        {captionNode}
+      </div>
+    )
+  };
+
+  return image;
+>>>>>>> DC-1248-lp-image-links
 };
 
 export default Image;
