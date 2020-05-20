@@ -4,10 +4,12 @@
   }
 }
 
-.anchor:before { /* This is to account for height of sticky header on mobile */
+@media (max-width: 450px) {
+  .anchor:before { /* This is to account for height of sticky header on mobile for jump links */
     display: block;
     content: " ";
     height: 116px;
     margin-top: -116px;
     visibility: hidden;
+  }
 }
