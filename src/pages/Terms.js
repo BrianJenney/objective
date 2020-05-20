@@ -142,7 +142,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="highlights">Highlights of the Agreement</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="highlights">
+                  Highlights of the Agreement
+                </StyledSubheaders>
                 <StyledParagraph>
                   This Terms of Use Agreement (the “Agreement”) is a legal agreement between you and
                   us governing your use of our websites and other online or mobile services,
@@ -276,7 +278,7 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="our-rights">
+                <StyledSubheaders className="anchor" id="our-rights">
                   Our Intellectual Property Rights
                 </StyledSubheaders>
                 <StyledParagraph>
@@ -315,7 +317,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="your-use">Your Authorized Use of Our Sites</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="your-use">
+                  Your Authorized Use of Our Sites
+                </StyledSubheaders>
                 <StyledParagraph>
                   While using a Site, you are required to comply with all applicable statutes,
                   orders, regulations, rules and other laws. You may not use a Site for any
@@ -389,7 +393,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="content-submitted">Content Submitted by You</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="content-submitted">
+                  Content Submitted by You
+                </StyledSubheaders>
                 <StyledParagraph>
                   You are responsible for any information, text, images, videos or other materials
                   or content that you post on a Site or transmit through our Sites (“User Content”).
@@ -457,7 +463,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="interactive">Interactive Features</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="interactive">
+                  Interactive Features
+                </StyledSubheaders>
                 <StyledParagraph>
                   We may host message boards, user-generated content, promotions, product reviews,
                   blogs, and other interactive features or services through which users can post or
@@ -504,7 +512,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="accounts">Accounts</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="accounts">
+                  Accounts
+                </StyledSubheaders>
                 <StyledParagraph>
                   In general, you are not obligated to register in order to access the Sites.
                   However, certain sections and features of some of the Sites are available only to
@@ -544,7 +554,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="descriptions">Descriptions and Orders</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="descriptions">
+                  Descriptions and Orders
+                </StyledSubheaders>
                 <StyledParagraph>
                   We may make improvements and/or changes in products or services described on the
                   Sites, add new features, or terminate a Site at any time without notice. We also:
@@ -581,7 +593,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="third-party">Third-Party Content and Links</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="third-party">
+                  Third-Party Content and Links
+                </StyledSubheaders>
                 <StyledParagraph>
                   Any information, statements, opinions or other information provided by third
                   parties and made available on our Sites are those of the respective author(s) and
@@ -626,7 +640,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="copyright">Copyright Infringement Notices</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="copyright">
+                  Copyright Infringement Notices
+                </StyledSubheaders>
                 <StyledParagraph>
                   If you believe that any Content on a Site infringes upon any copyright which you
                   own or control, you may send a written notification to our designated copyright
@@ -668,7 +684,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="updates">Updates to this Agreement</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="updates">
+                  Updates to this Agreement
+                </StyledSubheaders>
                 <StyledParagraph>
                   We may revise or otherwise change or update this Agreement from time to time.
                   Please check the “Last Updated” legend at the top of this page to see when this
@@ -688,7 +706,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="other-policies">Other Policies</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="other-policies">
+                  Other Policies
+                </StyledSubheaders>
                 <StyledParagraph>
                   This Agreement applies exclusively to your access to, and use of, the Sites and
                   does not alter in any way the terms or conditions of any other agreement you may
@@ -729,9 +749,13 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="additional">Additional Terms</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="additional">
+                  Additional Terms
+                </StyledSubheaders>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="termination">Termination</StyledParagraphHeader>
+                  <StyledParagraphHeader className="anchor" id="termination">
+                    Termination
+                  </StyledParagraphHeader>
                   <StyledParagraph>
                     The Sites and this Agreement are in effect until terminated by us. In addition
                     to any right or remedy that may be available to us under applicable law, we may
@@ -760,7 +784,9 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="children">Children</StyledParagraphHeader>
+                  <StyledParagraphHeader className="anchor" id="children">
+                    Children
+                  </StyledParagraphHeader>
                   <StyledParagraph>
                     Our Sites are not designed to appeal to minors, and we do not knowingly attempt
                     to solicit or receive any information from children under 13. YOU MUST BE AT
@@ -787,7 +813,7 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="medical">
+                  <StyledParagraphHeader className="anchor" id="medical">
                     Disclaimer of Medical Advice
                   </StyledParagraphHeader>
                   <StyledParagraph>
@@ -812,7 +838,7 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="warranty">
+                  <StyledParagraphHeader className="anchor" id="warranty">
                     Disclaimer of Warranty
                   </StyledParagraphHeader>
                   <StyledParagraph>
@@ -828,7 +854,7 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="liability">
+                  <StyledParagraphHeader className="anchor" id="liability">
                     Limitation of Liability
                   </StyledParagraphHeader>
                   <StyledParagraph>
@@ -850,7 +876,9 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="indemnity">Indemnity</StyledParagraphHeader>
+                  <StyledParagraphHeader className="anchor" id="indemnity">
+                    Indemnity
+                  </StyledParagraphHeader>
                   <StyledParagraph>
                     You agree to indemnify, defend and hold us and the Releasees and all of our
                     directors, officers, employees, agents and contractors harmless from and against
@@ -862,7 +890,7 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="consent">
+                  <StyledParagraphHeader className="anchor" id="consent">
                     Consent to Communication
                   </StyledParagraphHeader>
                   <StyledParagraph>
@@ -888,7 +916,7 @@ const Terms = ({ location }) => {
                   </StyledParagraph>
                 </Box>
                 <Box style={{ paddingTop: '25px' }}>
-                  <StyledParagraphHeader id="international">
+                  <StyledParagraphHeader className="anchor" id="international">
                     International Users
                   </StyledParagraphHeader>
                   <StyledParagraph>
@@ -914,7 +942,7 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer>
-                <StyledSubheaders id="disputes">
+                <StyledSubheaders className="anchor" id="disputes">
                   Disputes, Arbitration and Class Action Waiver
                 </StyledSubheaders>
                 <StyledParagraph>
@@ -1027,7 +1055,9 @@ const Terms = ({ location }) => {
             </Grid>
             <Grid>
               <ParagraphContainer style={{ border: 'none', paddingBottom: 0 }}>
-                <StyledSubheaders id="contact">Contacting Us</StyledSubheaders>
+                <StyledSubheaders className="anchor" id="contact">
+                  Contacting Us
+                </StyledSubheaders>
                 <StyledParagraph>
                   If you have questions about this Agreement, or if you have technical questions
                   about the operation of a Site, please contact us through this{' '}
