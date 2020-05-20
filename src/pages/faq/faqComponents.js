@@ -14,10 +14,14 @@ export const Paragraph = ({ data, value, xs }) =>
 		const link = item.match(/<a[^>]*>([^<]+)<\/a>/);
 		let styleTag = null;
 		if (link) {
-			if (data.name === 'ContactUs-EmailAddress' || data.name === 'ContactUs-PhoneNumber') {
-				styleTag = `<a href=${link[1]} style="color:#000000">${link[1]}</a>`;
+			if (data.name === 'ContactUs-EmailAddress') {
+				styleTag = `<a href=mailto:${link[1]} style="color:#000000">${link[1]}</a>`;
+			} else if (data.name === 'ContactUs-PhoneNumber') {
+				styleTag = `<a href=tel:${link[1]} style="color:#000000; text-decoration: none" >${link[1]}</a>`;
+			} else if (data.name === 'FAQ-What is your return policy?-Answer') {
+				styleTag = `<a href=tel:${link[1]} style="color:#00c3ef; text-decoration: none">${link[1]}</a>`;
 			} else {
-				styleTag = `<a href=${link[1]} style="color:#00c3ef">${link[1]}</a>`;
+				styleTag = `<a href=${link[1]} style="color:#00c3ef; text-decoration: none">${link[1]}</a>`;
 			}
 			const splitTag = item.split(link[0]);
 			item = splitTag[0] + styleTag + splitTag[1];
