@@ -1,8 +1,13 @@
-.privacypolicy-container {
-}
-
 .terms-container {
   li {
     padding: 9px 0px;
   }
+}
+
+.anchor:before { /* This is to account for height of sticky header on mobile */
+    display: block;
+    content: " ";
+    height: 116px;
+    margin-top: -116px;
+    visibility: hidden;
 }
