@@ -40,7 +40,7 @@ class App extends Component {
       requestCreateCart,
       requestPatchCart,
       requestRemoveCartById,
-      requestMergeCarts,
+      requestMergeCarts
     } = this.props;
 
     // ImpactRadius, Segment click id logic
@@ -85,7 +85,6 @@ class App extends Component {
     EventEmitter.addListener('user.logged.out', () => {
       const olympusToken = createAnonymousToken();
       localStorageClient.set('olympusToken', olympusToken);
-
       requestCreateCart();
     });
 
@@ -133,7 +132,7 @@ const mapDispatchToProps = {
   requestCreateCart,
   requestPatchCart,
   requestRemoveCartById,
-  requestMergeCarts,
+  requestMergeCarts
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
