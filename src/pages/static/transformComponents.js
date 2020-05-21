@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Container } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 
 export const Title = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>

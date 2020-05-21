@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { requestPage } from '../modules/static/actions';
 
-import { generateComponents } from './faq/faqComponents';
+import { generateComponents } from './static/transformComponents';
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
 
@@ -25,7 +25,7 @@ export const StyledContainer = withStyles(theme => ({
   root: {
     paddingTop: 70,
     paddingBottom: 40,
-    width: 1197,
+    width: 1195,
     [theme.breakpoints.down('xs')]: {
       padding: '38px 0 40px',
       backgroundColor: '#fdfbf9',
