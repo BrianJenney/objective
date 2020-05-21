@@ -23,10 +23,6 @@ const StyledBackground = withStyles(theme => ({
 
 const StyledContainer = withStyles(theme => ({
   root: {
-    margin: 'auto',
-    width: 884,
-    height: 643,
-    backgroundColor: '#FFF',
     [theme.breakpoints.down('xs')]: {
       padding: '30px 0px',
       height: 'auto',
