@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { requestPage } from '../modules/static/actions';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import { withStyles } from '@material-ui/core/styles';
-import { generateComponents } from './faq/faqComponents';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { requestPage } from '../modules/static/actions';
+
+import { generateComponents } from './static/transformComponents';
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
 
@@ -25,7 +25,7 @@ export const StyledContainer = withStyles(theme => ({
   root: {
     paddingTop: 70,
     paddingBottom: 40,
-    width: 1193,
+    width: 1195,
     [theme.breakpoints.down('xs')]: {
       padding: '38px 0 40px',
       backgroundColor: '#fdfbf9',
@@ -33,7 +33,6 @@ export const StyledContainer = withStyles(theme => ({
     }
   }
 }))(Container);
-
 
 const FAQ = ({ location }) => {
   const theme = useTheme();
@@ -44,33 +43,33 @@ const FAQ = ({ location }) => {
   const seoMap = useSelector(state => state.storefront.seoMap);
   const { title, description } = seoMap[slug];
   const page = useSelector(state => state.page);
-  
+
   useEffect(() => {
     if (!pageLoaded) dispatch(requestPage(slug));
   }, []);
-  
-  useEffect (() => {
+
+  useEffect(() => {
     if (page.hasOwnProperty('template')) {
       setPageLoaded(true);
       window.analytics.page('FAQ');
     }
   }, [page]);
-  let FinalPage = null;  
+  let FinalPage = null;
   if (pageLoaded) {
-    FinalPage = () => generateComponents(page, xs)
+    FinalPage = () => generateComponents(page, xs);
   }
 
   if (FinalPage) {
     return (
       <>
         <HeadTags title={title} description={description} />
-          <ScrollToTop>
-            <StyledBackground>
-              <StyledContainer>    
-                <FinalPage />             
-              </StyledContainer>
-            </StyledBackground>
-          </ScrollToTop>
+        <ScrollToTop>
+          <StyledBackground>
+            <StyledContainer>
+              <FinalPage />
+            </StyledContainer>
+          </StyledBackground>
+        </ScrollToTop>
       </>
     );
   }
