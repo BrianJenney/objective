@@ -49,7 +49,7 @@ const StyledBox = withStyles(() => ({
 let segmentIdentified = false;
 const segmentIdentify = user => {
   if (!segmentIdentified) {
-    if (user['firstName']) {
+    if (user.firstName && !user.isGuest) {
       window.analytics.identify(jwt.decode(user.account_jwt).account_id, {
         first_name: `${user.firstName}`,
         last_name: `${user.lastName}`,
@@ -64,7 +64,8 @@ const segmentIdentify = user => {
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
-  const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+  const isCheckoutPage =
+    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const isLandingNoHeader = matchPath(location.pathname, { path: '/landing' });
   const { account_jwt, firstName } = currentUser.data;
@@ -93,19 +94,20 @@ const Header = ({ currentUser, location }) => {
   }, [acqDiscount, cart._id]);
 
   segmentIdentify(currentUser.data);
-  const accountMenuItemConf = account_jwt
-    ? {
-        key: 'third',
-        children: <LoggedInUser name={firstName} />,
-        link: '/account/overview'
-      }
-    : burger
-    ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
-    : {
-        key: 'third',
-        children: <LoginDropdown />,
-        link: '/login'
-      };
+  const accountMenuItemConf =
+    account_jwt && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin
+      ? {
+          key: 'third',
+          children: <LoggedInUser name={firstName} />,
+          link: '/account/overview'
+        }
+      : burger
+      ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
+      : {
+          key: 'third',
+          children: <LoginDropdown />,
+          link: '/login'
+        };
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', link: '/gallery', children: 'Shop' },
     { key: 'second', to: '/journal', link: '/journal', children: 'Journal' },

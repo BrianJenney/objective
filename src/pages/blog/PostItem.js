@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import segmentTrackEditorialItemClicked from '../../utils/segmentTrackEditorialItemClicked';
 
-const PostItem = ({post}) => {
+const PostItem = ({ post }) => {
   let p = post;
   let segmentAnalyticsTracker = segmentTrackEditorialItemClicked;
   let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
   if (p.fields.featuredImage && p.fields.featuredImage.fields) {
-    imageUrl = `${p.fields.featuredImage.fields.file.url}?w=529&fm=jpg&q=50`;
+    imageUrl = `${p.fields.featuredImage.fields.file.url}?w=529&fm=jpg&q=90`;
   }
 
   let category = 'General';
@@ -24,18 +24,42 @@ const PostItem = ({post}) => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} md={6}>
-        <Link onClick={()=>{segmentAnalyticsTracker(p)}} to={`/journal/posts/${ p.fields.slug }`}>
-          <img src={ imageUrl } />
+        <Link
+          onClick={() => {
+            segmentAnalyticsTracker(p);
+          }}
+          to={`/journal/posts/${p.fields.slug}`}
+        >
+          <img src={imageUrl} />
         </Link>
       </Grid>
       <Grid item xs={12} md={6}>
         <div className="flex">
-          <span className="categoryName"><Link to={`/journal/category/${ slug }`}>{ category }</Link></span>&mdash;
-          <span className="minRead">{ p.fields.minuteRead } Min Read</span>
+          <span className="categoryName">
+            <Link to={`/journal/category/${slug}`}>{category}</Link>
+          </span>
+          &mdash;
+          <span className="minRead">{p.fields.minuteRead} Min Read</span>
         </div>
-        <h2><Link onClick={()=>{segmentAnalyticsTracker(p)}} to={`/journal/posts/${ p.fields.slug }`}>{ p.fields.title }</Link></h2>
-        <p>{ p.fields.teaser }</p>
-        <Link onClick={()=>{segmentAnalyticsTracker(p, "Read More")}} to={`/journal/posts/${ p.fields.slug }`}>Read More</Link>
+        <h2>
+          <Link
+            onClick={() => {
+              segmentAnalyticsTracker(p);
+            }}
+            to={`/journal/posts/${p.fields.slug}`}
+          >
+            {p.fields.title}
+          </Link>
+        </h2>
+        <p>{p.fields.teaser}</p>
+        <Link
+          onClick={() => {
+            segmentAnalyticsTracker(p, 'Read More');
+          }}
+          to={`/journal/posts/${p.fields.slug}`}
+        >
+          Read More
+        </Link>
       </Grid>
     </Grid>
   );

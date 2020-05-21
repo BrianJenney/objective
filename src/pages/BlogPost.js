@@ -29,12 +29,7 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=50';
       }
 
-      return (
-        <img
-          src={node.data.target.fields.file.url + params}
-          alt={node.data.target.fields.title}
-        />
-      );
+      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
     }
   }
 };
@@ -52,7 +47,6 @@ const BlogPost = ({ computedMatch }) => {
     ({ title, description } = validPost);
   }
 
-
   const fetchData = async () => {
     const postData = await fetchPost(post_slug);
     setPost(postData);
@@ -65,7 +59,6 @@ const BlogPost = ({ computedMatch }) => {
       return () => {
         setPost({});
       };
-
     } else {
       window.analytics.page('404 Error');
     }
@@ -81,24 +74,16 @@ const BlogPost = ({ computedMatch }) => {
         <HeadTags title={title} description={description} />
         <ScrollToTop>
           <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
-      </ScrollToTop>
+        </ScrollToTop>
       </>
     );
   }
   const renderRelatedProducts = products => {
     if (variants && products.length > 0) {
       return products.map(product => {
-        const productVariant = variants.filter(
-          variant => variant.slug === product.fields.Slug
-        );
+        const productVariant = variants.filter(variant => variant.slug === product.fields.Slug);
 
-        return (
-          <BlogVariantCard
-            product={product}
-            variant={productVariant[0]}
-            key={product.fields.Slug}
-          />
-        );
+        return <BlogVariantCard product={product} variant={productVariant[0]} key={product.fields.Slug} />;
       });
     }
     return <></>;
@@ -106,9 +91,7 @@ const BlogPost = ({ computedMatch }) => {
 
   const renderRelatedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => (
-        <FeaturedItem post={item} key={item.sys.id} />
-      ));
+      return posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
@@ -135,17 +118,13 @@ const BlogPost = ({ computedMatch }) => {
     let imageUrl = 'http://cdn1.stopagingnow.com/objective/fakeimg.png';
 
     if (post.fields.featuredImage && post.fields.featuredImage.fields) {
-      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=50`;
+      imageUrl = `${post.fields.featuredImage.fields.file.url}?w=1336&fm=jpg&q=90`;
     }
 
     let category = 'General';
     let slug = null;
 
-    if (
-      post.fields.categories &&
-      post.fields.categories.length > 0 &&
-      post.fields.categories[0].fields
-    ) {
+    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
       category = post.fields.categories[0].fields.title;
       slug = post.fields.categories[0].fields.slug;
     }
@@ -162,37 +141,26 @@ const BlogPost = ({ computedMatch }) => {
                     <span className="categoryName">
                       <Link to={`/journal/category/${slug}`}>{category}</Link>
                     </span>
-                    |
-                  <span className="minRead">
-                      {post.fields.minuteRead} Min Read
-                  </span>
+                    |<span className="minRead">{post.fields.minuteRead} Min Read</span>
                   </div>
                   <h1>{post.fields.title}</h1>
                   <img src={imageUrl} />
                 </Box>
                 <Grid container>
                   <Grid item xs={12} md={2} className="left">
-                    <p className="date">
-                      {dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}
-                    </p>
+                    <p className="date">{dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}</p>
                     <div className="mobile-flex">
                       <div className="tagholder">
                         {post.fields.tags && post.fields.tags.length > 0 ? (
-                          <div className="tags">
-                            {renderTags(post.fields.tags)}
-                          </div>
+                          <div className="tags">{renderTags(post.fields.tags)}</div>
                         ) : (
-                            <></>
-                          )}
+                          <></>
+                        )}
                       </div>
                       <div className="icon-holder">
                         <p className="share">SHARE</p>
                         <div className="social">
-                          <a
-                            href="https://www.instagram.com/objective_wellness"
-                            target="_blank"
-                            rel="noopener"
-                          >
+                          <a href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
                             <img
                               src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
                               alt="instagram"
@@ -203,20 +171,14 @@ const BlogPost = ({ computedMatch }) => {
                             target="_blank"
                             rel="noopener"
                           >
-                            <img
-                              src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
-                              alt="facebook"
-                            />
+                            <img src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg" alt="facebook" />
                           </a>
                         </div>
                       </div>
                     </div>
                   </Grid>
                   <Grid item xs={12} md={10} className="border-left">
-                    {documentToReactComponents(
-                      post.fields.body,
-                      contentfulOptions
-                    )}
+                    {documentToReactComponents(post.fields.body, contentfulOptions)}
                     {/* Quote Block
                   <Divider className="gray" />
                   <h2>
@@ -233,22 +195,21 @@ const BlogPost = ({ computedMatch }) => {
               </Container>
             </Box>
 
-            {post.fields.relatedProducts &&
-              post.fields.relatedProducts.length > 0 ? (
-                <Box className="shop">
-                  <Container>
-                    <h1 className="title" align="center">
-                      SHOP THIS POST
-                </h1>
-                    <div className="border"></div>
-                    <Grid container spacing={3} justify="center">
-                      {renderRelatedProducts(post.fields.relatedProducts)}
-                    </Grid>
-                  </Container>
-                </Box>
-              ) : (
-                <></>
-              )}
+            {post.fields.relatedProducts && post.fields.relatedProducts.length > 0 ? (
+              <Box className="shop">
+                <Container>
+                  <h1 className="title" align="center">
+                    SHOP THIS POST
+                  </h1>
+                  <div className="border"></div>
+                  <Grid container spacing={3} justify="center">
+                    {renderRelatedProducts(post.fields.relatedProducts)}
+                  </Grid>
+                </Container>
+              </Box>
+            ) : (
+              <></>
+            )}
 
             {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
               <Box className="content related" py={8}>
@@ -261,8 +222,8 @@ const BlogPost = ({ computedMatch }) => {
                 </Container>
               </Box>
             ) : (
-                <></>
-              )}
+              <></>
+            )}
           </div>
         </ScrollToTop>
       </>
