@@ -4,8 +4,6 @@ options:
 
 definitions:
   services:
-    docker:
-      memory: 3072
     steps:
       - step: &build-and-push
           image: docker
@@ -46,4 +44,7 @@ pipelines:
           script:
             - curl -X POST ${PORTA_WH_MASTER}
 
-
+definitions:
+  services:
+    docker:
+      memory: 3072
