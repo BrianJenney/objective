@@ -2,9 +2,10 @@
 options:
   docker: true
 
-definitions:
-  steps:
-    - step: &build-and-deploy
+pipelines:
+  default:
+    - step:
+        name: build image
         image: docker
         script:
           - apk add curl
@@ -18,28 +19,25 @@ definitions:
           - docker push ${NXT_REGISTRY_URL}:${BUILD_ID}
            # tag master image as latest
           - if [ ${BITBUCKET_BRANCH} == "master" ]; then docker tag ${NXT_REGISTRY_URL}:${BUILD_ID} ${NXT_REGISTRY_URL}:latest; docker push ${NXT_REGISTRY_URL}:latest; fi
-           # deploy to env site
-          - export DEPLOY_VAR=$(echo PORTA_WH_${BITBUCKET_BRANCH} | tr '[:lower:]' '[:upper:]')
-          - eval DEPLOY_URL=\$${DEPLOY_VAR}
-          - curl -X POST ${DEPLOY_URL}
 
-pipelines:
-  custom: # Pipelines that can only be triggered manually
-    sonar:
-      - step:
-          script:
-            - echo "Manual triggers for Sonar are awesome!"
-    deployment-to-prod:
-      - step:
-          script:
-            - echo "Manual triggers for deployments are awesome!"
-  branches:
-    dev:
-      - step: *build-and-deploy
-    stage:
-      - step: *build-and-deploy
-    master:
-      - step: *build-and-deploy
+    - step:
+        name: deploy to dev
+        image: docker
+        deployment: dev
+        script:
+          - curl -X POST ${PORTA_WH_DEV}
+    - step:
+        name: deploy to stage
+        image: docker
+        deployment: stage
+        script:
+          - curl -X POST ${PORTA_WH_STAGE}
+    - step:
+        name: deploy to preprod
+        image: docker
+        deployment: preprod
+        script:
+          - curl -X POST ${PORTA_WH_MASTER}
 
 definitions:
   services:
