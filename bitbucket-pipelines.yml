@@ -3,8 +3,11 @@ options:
   docker: true
 
 definitions:
-  steps:
-    - step: &build-push
+  services:
+    docker:
+      memory: 3072
+    steps:
+    - step: &build-and-push
         image: docker
         script:
           - apk add curl
@@ -43,7 +46,4 @@ pipelines:
           script:
             - curl -X POST ${PORTA_WH_MASTER}
 
-definitions:
-  services:
-    docker:
-      memory: 3072
+
