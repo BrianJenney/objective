@@ -26,7 +26,7 @@ pipelines:
       - step: *build-and-push
       - step:
           name: Deploy
-          deployment: test
+          deployment: dev
           script:
             - curl -X POST ${PORTA_WH_DEV}
     stage:
