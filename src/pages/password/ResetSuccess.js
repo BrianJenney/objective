@@ -32,16 +32,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const handleClick = () => {
-  console.log('click', window.location);
-  window.location.replace(window.location.origin + '/login');
-};
-
 const localStorageClient = require('store');
 localStorageClient.remove('token');
 
-const ResetSuccess = ({ location }) => {
+const ResetSuccess = ({ history, location }) => {
   const classes = useStyles();
+
+  const handleClick = () => {
+    history.replace('/login');
+  };
+
   return (
     <Container>
       <Paper className={classes.paper}>
