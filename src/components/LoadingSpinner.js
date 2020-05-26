@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 const LoadingSpinner = ({ location, loadingMessage, page }) => {
   const classes = useStyles();
   let size = 0;
-  if (page === 'pdp' || page === 'home' || page === 'lp') size = 45;
+  if (page === 'pdp' || page === 'home' || page === 'lp' || page === 'contact') size = 45;
   if (page === 'gallery') size = 10;
   if (page === 'journal') size = 100;
 
