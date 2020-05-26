@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+
 import LoadingSpinner from '../components/LoadingSpinner';
 import { requestPage } from '../modules/static/actions';
 import { generateComponents } from './static/transformComponents';
@@ -72,4 +75,7 @@ const ContactUs = ({ location }) => {
   }
   return <LoadingSpinner loadingMessage="...loading" page="contact" />;
 };
+
+ContactUs.propTypes = { location: PropTypes.object.isRequired };
+
 export default ContactUs;
