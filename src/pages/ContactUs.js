@@ -61,7 +61,7 @@ const ContactUs = ({ location }) => {
 
   if (FinalPage) {
     return (
-      <>
+      <div className="ContactUs">
         <HeadTags title={title} description={description} />
         <ScrollToTop>
           <StyledBackground>
@@ -70,7 +70,7 @@ const ContactUs = ({ location }) => {
             </StyledContainer>
           </StyledBackground>
         </ScrollToTop>
-      </>
+      </div>
     );
   }
   return <LoadingSpinner loadingMessage="...loading" page="contact" />;
