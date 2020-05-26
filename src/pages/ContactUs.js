@@ -49,7 +49,7 @@ const ContactUs = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    if (page.hasOwnProperty('template')) {
+    if (page && page.template) {
       setPageLoaded(true);
       window.analytics.page('Contact');
     }
