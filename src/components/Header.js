@@ -16,6 +16,7 @@ import LoginDropdown from './LoginDropdown';
 import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
 import { setCartNotification } from '../modules/utils/actions';
+import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
@@ -61,6 +62,13 @@ const segmentIdentify = user => {
   }
 };
 
+const contentful = require('contentful');
+const contentfulClient = contentful.createClient({
+  space: OBJECTIVE_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
+});
+
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
@@ -73,6 +81,7 @@ const Header = ({ currentUser, location }) => {
   const accountJWT = currentUser.data.account_jwt;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
+  const [contents, setContents] = useState();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
@@ -80,6 +89,23 @@ const Header = ({ currentUser, location }) => {
   if (window.location.pathname === '/landing/sleepandimmunity') {
     isLandingWithHeader = true;
   }
+
+  const fetchPromoBannerData = async () => {
+    const results = [];
+    const response = await contentfulClient.getEntries({
+      content_type: 'promoBanner'
+    });
+    response.items.forEach(entry => {
+      if (entry.fields) {
+        results.push(entry.fields);
+      }
+    });
+    setContents(...results);
+  };
+
+  useEffect(() => {
+    fetchPromoBannerData();
+  }, []);
 
   useEffect(() => {
     const cartID = cart._id;
@@ -140,6 +166,55 @@ const Header = ({ currentUser, location }) => {
     });
   };
 
+  const renderPromoBanner = () => {
+    if (burger) {
+      return (
+        <Grid container item xs={12} className="headerBar">
+          <Grid item xs={12}>
+            <StyledBox fontSize={9}>
+              <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+                {contents.text}
+              </NavLink>
+              <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
+            </StyledBox>
+          </Grid>
+        </Grid>
+      );
+    }
+    return (
+      <div className="headerBar">
+        <Container>
+          <Grid container item xs={12}>
+            <Grid item xs={12}>
+              <StyledBox fontSize={12}>
+                <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+                  {contents.text}
+                </NavLink>
+                <div
+                  className="closeIcon"
+                  role="button"
+                  onClick={handlePromoClose}
+                  onKeyPress={handlePromoClose}
+                  tabIndex={0}
+                >
+                  Close
+                  <CloseIcon
+                    onClick={handlePromoClose}
+                    style={{
+                      position: 'relative',
+                      top: 9,
+                      paddingLeft: 5
+                    }}
+                  />
+                </div>
+              </StyledBox>
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
+    );
+  };
+
   const renderHeader = () => {
     if (burger) {
       return (
@@ -159,55 +234,13 @@ const Header = ({ currentUser, location }) => {
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
-          {promoVisible && (
-            <Grid container item xs={12} className="headerBar">
-              <Grid item xs={12}>
-                <StyledBox fontSize={9}>
-                  <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                    Limited Time: Free Shipping for All New Customers
-                  </NavLink>
-                  <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
-                </StyledBox>
-              </Grid>
-            </Grid>
-          )}
+          {promoVisible && renderPromoBanner()}
         </>
       );
     }
     return (
       <>
-        {promoVisible && (
-          <div className="headerBar">
-            <Container>
-              <Grid container item xs={12}>
-                <Grid item xs={12}>
-                  <StyledBox fontSize={12}>
-                    <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                      Limited Time: Free Shipping for All New Customers
-                    </NavLink>
-                    <div
-                      className="closeIcon"
-                      role="button"
-                      onClick={handlePromoClose}
-                      onKeyPress={handlePromoClose}
-                      tabIndex={0}
-                    >
-                      Close
-                      <CloseIcon
-                        onClick={handlePromoClose}
-                        style={{
-                          position: 'relative',
-                          top: 9,
-                          paddingLeft: 5
-                        }}
-                      />
-                    </div>
-                  </StyledBox>
-                </Grid>
-              </Grid>
-            </Container>
-          </div>
-        )}
+        {promoVisible && renderPromoBanner()}
         <div className="holder">
           <Container>
             <Grid container>
@@ -270,13 +303,13 @@ const Header = ({ currentUser, location }) => {
     return (
       <Grid container item xs={12} className="headerContainer">
         <Grid container item xs={12} spacing={0}>
-          {renderHeader}
+          {renderHeader()}
         </Grid>
       </Grid>
     );
   };
 
-  return <div className="Header">{renderHeaderContainer}</div>;
+  return <div className="Header">{renderHeaderContainer()}</div>;
 };
 
 Header.propTypes = {
