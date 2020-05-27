@@ -17,6 +17,7 @@ import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
 import { setCartNotification } from '../modules/utils/actions';
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { OBJECTIVE_PROMOBANNER } from '../constants/contentfulEntries';
 
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
@@ -91,16 +92,8 @@ const Header = ({ currentUser, location }) => {
   }
 
   const fetchPromoBannerData = async () => {
-    const results = [];
-    const response = await contentfulClient.getEntries({
-      content_type: 'promoBanner'
-    });
-    response.items.forEach(entry => {
-      if (entry.fields) {
-        results.push(entry.fields);
-      }
-    });
-    setContents(...results);
+    const response = await contentfulClient.getEntry(OBJECTIVE_PROMOBANNER);
+    setContents(response.fields);
   };
 
   useEffect(() => {
