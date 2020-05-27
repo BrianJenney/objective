@@ -16,6 +16,7 @@ import LoginDropdown from './LoginDropdown';
 import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
 import { setCartNotification } from '../modules/utils/actions';
+import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 
 import Logo from './common/Icons/Logo/Logo';
 import './Header-style.scss';
@@ -62,53 +63,77 @@ const segmentIdentify = user => {
   }
 };
 
+const contentful = require('contentful');
+const contentfulClient = contentful.createClient({
+  space: OBJECTIVE_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
+  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
+});
+
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
   const isCheckoutPage =
-    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+    matchPath(location.pathname, { path: '/checkout' }) ||
+    matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const isLandingNoHeader = matchPath(location.pathname, { path: '/landing' });
-  const { account_jwt, firstName } = currentUser.data;
+  const { firstName } = currentUser.data;
+  const accountJWT = currentUser.data.account_jwt;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
+  const [contents, setContents] = useState();
   const dispatch = useDispatch();
-  const cartMerged = useSelector(state => state.cart.cartMerged);
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
   let isLandingWithHeader = false;
-  if (window.location.pathname == '/landing/sleepandimmunity') {
+  if (window.location.pathname === '/landing/sleepandimmunity') {
     isLandingWithHeader = true;
   }
 
+  const fetchPromoBannerData = async () => {
+    const results = [];
+    const response = await contentfulClient.getEntries({
+      content_type: 'promoBanner'
+    });
+    response.items.forEach(entry => {
+      if (entry.fields) {
+        results.push(entry.fields);
+      }
+    });
+    setContents(...results);
+  };
+
   useEffect(() => {
+    fetchPromoBannerData();
+    const cartID = cart._id;
     if (
       isAcqDiscount(paramsToObject(new URLSearchParams(window.location.search))) &&
       acqDiscount === false &&
-      cart._id
+      cartID
     ) {
       setAcqDiscount(true);
-      removeCoupon(cart._id);
-      addCoupon(cart._id, 'SAVE25');
+      removeCoupon(cartID);
+      addCoupon(cartID, 'SAVE25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
-  }, [acqDiscount, cart._id]);
+  }, [acqDiscount, cart._id, dispatch]);
 
   segmentIdentify(currentUser.data);
-  const accountMenuItemConf =
-    account_jwt && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin
-      ? {
-          key: 'third',
-          children: <LoggedInUser name={firstName} />,
-          link: '/account/overview'
-        }
-      : burger
-      ? { key: 'third', to: '/login', link: '/login', children: ' Account' }
-      : {
-          key: 'third',
-          children: <LoginDropdown />,
-          link: '/login'
-        };
+
+  let accountMenuItemConf = {};
+  if (accountJWT && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin) {
+    accountMenuItemConf = {
+      key: 'third',
+      children: <LoggedInUser name={firstName} />,
+      link: '/account/overview'
+    };
+  } else if (burger) {
+    accountMenuItemConf = { key: 'third', to: '/login', link: '/login', children: ' Account' };
+  } else {
+    accountMenuItemConf = { key: 'third', children: <LoginDropdown />, link: '/login' };
+  }
+
   const burgerMenuItems = [
     { key: 'first', to: '/gallery', link: '/gallery', children: 'Shop' },
     { key: 'second', to: '/journal', link: '/journal', children: 'Journal' },
@@ -138,125 +163,151 @@ const Header = ({ currentUser, location }) => {
       site_location: segmentSiteLocation()
     });
   };
-  
-  return (
-    <>
-      {isCheckoutPage || isOrderPage ? (
-        <CheckoutHeader />
-      ) : isLandingNoHeader  && !isLandingWithHeader ? (
-        <></>
-      ) : (
-        <Grid container item={true} xs={12} className="headerContainer">
-          <Grid container item={true} xs={12} spacing={0}>
-            {burger ? (
-              <>
-                <Grid container className="top">
-                  <Grid item xs={1}>
-                    {renderBurgerIcon()}
-                  </Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={8} className="logo text-center">
-                    <NavLink onClick={segmentTrackNavigationClick} to="/">
-                      <Logo />
-                    </NavLink>
-                  </Grid>
-                  <Grid item xs={1} className="mobile-cart-icon">
-                    {!isCheckoutPage && <ShoppingCart />}
-                    {(cartNotification) 
-                      ? <CartNotification isCheckoutPage={isCheckoutPage} /> 
-                      : null}
-                  </Grid>
-                </Grid>
-                {promoVisible ? (
-                  <Grid container item={true} xs={12} className="headerBar">
-                    <Grid item xs={12}>
-                      <StyledBox fontSize={9}>
-                        <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                        Limited Time: Free Shipping for All New Customers
-                        </NavLink>
-                        <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
-                      </StyledBox>
-                    </Grid>
-                  </Grid>
-                ) : null}
-              </>
-            ) : (
-              <>
-                {promoVisible ? (
-                  <div className="headerBar">
-                    <Container>
-                      <Grid container item={true} xs={12}>
-                        <Grid item xs={12}>
-                          <StyledBox fontSize={12}>
-                            <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                            Limited Time: Free Shipping for All New Customers
-                            </NavLink>
-                            <div className="closeIcon" onClick={handlePromoClose}>
-                              Close
-                              <CloseIcon
-                                onClick={handlePromoClose}
-                                style={{
-                                  position: 'relative',
-                                  top: 9,
-                                  paddingLeft: 5
-                                }}
-                              />
-                            </div>
-                          </StyledBox>
-                        </Grid>
-                      </Grid>
-                    </Container>
-                  </div>
-                ) : null}
-                <div className="holder">
-                  <Container>
-                    <Grid container>
-                      <Grid item xs={4}>
-                        <Grid container>
-                          <Grid item xs={6} className="h-pding">
-                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
-                              Shop
-                            </StyledLink>
-                          </Grid>
-                          <Grid item xs={6} className="h-pding">
-                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
-                              Journal
-                            </StyledLink>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={4} className="logo text-center">
-                        <NavLink onClick={segmentTrackNavigationClick} to="/">
-                          <Logo />
-                        </NavLink>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Grid container className="align-right">
-                          <Grid item xs={6} className="acct h-pding">
-                            <StyledLink
-                              component={RouterLink}
-                              {...accountMenuItemConf}
-                              onClick={segmentTrackNavigationClick}
-                            />
-                          </Grid>
-                          <Grid item xs={6} className="header-shop-holder h-pding">
-                            {!isCheckoutPage && <ShoppingCart />}
-                            {cartNotification 
-                              ? <CartNotification isCheckoutPage={isCheckoutPage} /> 
-                              : null}
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Container>
-                </div>
-              </>
-            )}
+
+  const renderPromoBanner = () => {
+    if (burger) {
+      return (
+        <Grid container item xs={12} className="headerBar">
+          <Grid item xs={12}>
+            <StyledBox fontSize={9}>
+              <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+                {contents.text}
+              </NavLink>
+              <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
+            </StyledBox>
           </Grid>
         </Grid>
-      )}
-    </>
-  );
+      );
+    }
+    return (
+      <div className="headerBar">
+        <Container>
+          <Grid container item xs={12}>
+            <Grid item xs={12}>
+              <StyledBox fontSize={12}>
+                <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+                  {contents.text}
+                </NavLink>
+                <div
+                  className="closeIcon"
+                  role="button"
+                  onClick={handlePromoClose}
+                  onKeyPress={handlePromoClose}
+                  tabIndex={0}
+                >
+                  Close
+                  <CloseIcon
+                    onClick={handlePromoClose}
+                    style={{
+                      position: 'relative',
+                      top: 9,
+                      paddingLeft: 5
+                    }}
+                  />
+                </div>
+              </StyledBox>
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
+    );
+  };
+
+  const renderHeader = () => {
+    if (burger) {
+      return (
+        <>
+          <Grid container className="top">
+            <Grid item xs={1}>
+              {renderBurgerIcon()}
+            </Grid>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={8} className="logo text-center">
+              <NavLink onClick={segmentTrackNavigationClick} to="/">
+                <Logo />
+              </NavLink>
+            </Grid>
+            <Grid item xs={1} className="mobile-cart-icon">
+              {!isCheckoutPage && <ShoppingCart />}
+              {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+            </Grid>
+          </Grid>
+          {promoVisible && contents && renderPromoBanner()}
+        </>
+      );
+    }
+    return (
+      <>
+        {promoVisible && contents && renderPromoBanner()}
+        <div className="holder">
+          <Container>
+            <Grid container>
+              <Grid item xs={4}>
+                <Grid container>
+                  <Grid item xs={6} className="h-pding">
+                    <StyledLink
+                      onClick={segmentTrackNavigationClick}
+                      component={RouterLink}
+                      to="/gallery"
+                    >
+                      Shop
+                    </StyledLink>
+                  </Grid>
+                  <Grid item xs={6} className="h-pding">
+                    <StyledLink
+                      onClick={segmentTrackNavigationClick}
+                      component={RouterLink}
+                      to="/journal"
+                    >
+                      Journal
+                    </StyledLink>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={4} className="logo text-center">
+                <NavLink onClick={segmentTrackNavigationClick} to="/">
+                  <Logo />
+                </NavLink>
+              </Grid>
+              <Grid item xs={4}>
+                <Grid container className="align-right">
+                  <Grid item xs={6} className="acct h-pding">
+                    <StyledLink
+                      component={RouterLink}
+                      {...accountMenuItemConf}
+                      onClick={segmentTrackNavigationClick}
+                    />
+                  </Grid>
+                  <Grid item xs={6} className="header-shop-holder h-pding">
+                    {!isCheckoutPage && <ShoppingCart />}
+                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Container>
+        </div>
+      </>
+    );
+  };
+
+  const renderHeaderContainer = () => {
+    if (isCheckoutPage || isOrderPage) {
+      return <CheckoutHeader />;
+    }
+    if (isLandingNoHeader && !isLandingWithHeader) {
+      return null;
+    }
+    return (
+      <Grid container item xs={12} className="headerContainer">
+        <Grid container item xs={12} spacing={0}>
+          {renderHeader()}
+        </Grid>
+      </Grid>
+    );
+  };
+
+  return <div className="Header">{renderHeaderContainer()}</div>;
 };
 
 Header.propTypes = {
