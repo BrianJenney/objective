@@ -3,43 +3,46 @@ options:
   docker: true
 
 definitions:
-  steps:
-    - step: &build-and-deploy
-        image: docker
-        script:
-          - apk add curl
-          # build the image
-          - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
-          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
-          - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
-          - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:${BITBUCKET_BRANCH} .
-          # push to repo
-          - docker push ${NXT_REGISTRY_URL}:${BITBUCKET_BRANCH}
-          - docker push ${NXT_REGISTRY_URL}:${BUILD_ID}
-           # tag master image as latest
-          - if [ ${BITBUCKET_BRANCH} == "master" ]; then docker tag ${NXT_REGISTRY_URL}:${BUILD_ID} ${NXT_REGISTRY_URL}:latest; docker push ${NXT_REGISTRY_URL}:latest; fi
-           # deploy to env site
-          - export DEPLOY_VAR=$(echo PORTA_WH_${BITBUCKET_BRANCH} | tr '[:lower:]' '[:upper:]')
-          - eval DEPLOY_URL=\$${DEPLOY_VAR}
-          - curl -X POST ${DEPLOY_URL}
+  services:
+    steps:
+      - step: &build-and-push
+          image: docker
+          script:
+            - apk add curl
+            # build the image
+            - export NXT_REGISTRY_URL=${NXT_REG_URL}/${BITBUCKET_REPO_SLUG}
+            - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+            - docker login --username "${NXT_REG_USER}" --password "${NXT_REG_PASSWD}" ${NXT_REG_URL}
+            - docker image build --build-arg GIT_COMMIT=${BITBUCKET_COMMIT} -t ${NXT_REGISTRY_URL}:$BUILD_ID -t ${NXT_REGISTRY_URL}:${BITBUCKET_BRANCH} .
+            # push to repo
+            - docker push ${NXT_REGISTRY_URL}:${BITBUCKET_BRANCH}
+            - docker push ${NXT_REGISTRY_URL}:${BUILD_ID}
+             # tag master image as latest
+            - if [ ${BITBUCKET_BRANCH} == "master" ]; then docker tag ${NXT_REGISTRY_URL}:${BUILD_ID} ${NXT_REGISTRY_URL}:latest; docker push ${NXT_REGISTRY_URL}:latest; fi
 
 pipelines:
-  custom: # Pipelines that can only be triggered manually
-    sonar:
-      - step:
-          script:
-            - echo "Manual triggers for Sonar are awesome!"
-    deployment-to-prod:
-      - step:
-          script:
-            - echo "Manual triggers for deployments are awesome!"
   branches:
     dev:
-      - step: *build-and-deploy
+      - step: *build-and-push
+      - step:
+          name: Deploy
+          deployment: dev
+          script:
+            - curl -X POST ${PORTA_WH_DEV}
     stage:
-      - step: *build-and-deploy
+      - step: *build-and-push
+      - step:
+          name: Deploy
+          deployment: stage
+          script:
+            - curl -X POST ${PORTA_WH_STAGE}
     master:
-      - step: *build-and-deploy
+      - step: *build-and-push
+      - step:
+          name: Deploy
+          deployment: preprod
+          script:
+            - curl -X POST ${PORTA_WH_MASTER}
 
 definitions:
   services:

@@ -24,26 +24,26 @@ const Gallery = ({ location }) => {
     <>
       <HeadTags title={title} description={description} />
       <ScrollToTop>
-      <Box className="gallery-page">
-        <Box className="hero-holder">
-          {mobile ? (
-            <img
-              src="https://images.ctfassets.net/mj9bpefl6wof/29ipFkUCQVaYvyIRwxoxk2/80ea601e030147f31e2963847b86a184/gallery_hero_mobile_v2.png?w=450&fm=jpg&q=50"
-              alt=""
-              className="gallery-hero"
-            />
-          ) : (
+        <Box className="gallery-page">
+          <Box className="hero-holder">
+            {mobile ? (
               <img
-                src="https://images.ctfassets.net/mj9bpefl6wof/1x79YGcZCxW8ZOrs6oxUUh/7562a456af91c3d25eb57c7e7f4d4916/gallery_hero_v2.png?w=2000&q=50&fm=jpg"
+                src="https://images.ctfassets.net/mj9bpefl6wof/29ipFkUCQVaYvyIRwxoxk2/80ea601e030147f31e2963847b86a184/gallery_hero_mobile_v2.png?w=450&fm=jpg&q=85"
+                alt=""
+                className="gallery-hero"
+              />
+            ) : (
+              <img
+                src="https://images.ctfassets.net/mj9bpefl6wof/1x79YGcZCxW8ZOrs6oxUUh/7562a456af91c3d25eb57c7e7f4d4916/gallery_hero_v2.png?w=2000&q=85&fm=jpg"
                 alt=""
                 className="gallery-hero"
               />
             )}
+          </Box>
+          <GalleryStore products={catalog.variants}>
+            <Products></Products>
+          </GalleryStore>
         </Box>
-        <GalleryStore products={catalog.variants}>
-          <Products></Products>
-        </GalleryStore>
-      </Box>
       </ScrollToTop>
     </>
   );

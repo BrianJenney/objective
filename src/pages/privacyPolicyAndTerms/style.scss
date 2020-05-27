@@ -1,8 +1,15 @@
-.privacypolicy-container {
-}
-
 .terms-container {
   li {
     padding: 9px 0px;
+  }
+}
+
+@media (max-width: 450px) {
+  .anchor:before { /* This is to account for height of sticky header on mobile for jump links */
+    display: block;
+    content: " ";
+    height: 116px;
+    margin-top: -116px;
+    visibility: hidden;
   }
 }
