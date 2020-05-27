@@ -105,15 +105,14 @@ const Header = ({ currentUser, location }) => {
 
   useEffect(() => {
     fetchPromoBannerData();
-    const cartID = cart._id;
     if (
       isAcqDiscount(paramsToObject(new URLSearchParams(window.location.search))) &&
       acqDiscount === false &&
-      cartID
+      cart._id
     ) {
       setAcqDiscount(true);
-      removeCoupon(cartID);
-      addCoupon(cartID, 'SAVE25');
+      removeCoupon(cart._id);
+      addCoupon(cart._id, 'SAVE25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
   }, [acqDiscount, cart._id, dispatch]);
