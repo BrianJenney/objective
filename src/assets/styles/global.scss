@@ -17,5 +17,13 @@ body {
 }
 
 .MuiDialog-paperWidthSm {
-    max-width: 800px !important;
+  max-width: 800px !important;
+}
+.MuiContainer-maxWidthLg {
+  max-width: 1200px !important;
+}
+@media (min-width: 1400px) {
+  .MuiContainer-maxWidthLg {
+    max-width: 1200px !important;
+  }
 }
