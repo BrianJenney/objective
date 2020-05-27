@@ -26,6 +26,8 @@ const StyledBackground = withStyles(theme => ({
 
 const StyledContainer = withStyles(theme => ({
   root: {
+    display: 'flex',
+    justifyContent: 'center',
     [theme.breakpoints.down('xs')]: {
       padding: '30px 0px',
       height: 'auto',
