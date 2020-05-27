@@ -105,9 +105,6 @@ const Header = ({ currentUser, location }) => {
 
   useEffect(() => {
     fetchPromoBannerData();
-  }, []);
-
-  useEffect(() => {
     const cartID = cart._id;
     if (
       isAcqDiscount(paramsToObject(new URLSearchParams(window.location.search))) &&
@@ -119,7 +116,7 @@ const Header = ({ currentUser, location }) => {
       addCoupon(cartID, 'SAVE25');
       dispatch(setCartNotification(true, 'applyPromoCode'));
     }
-  }, [acqDiscount, cart._id]);
+  }, [acqDiscount, cart._id, dispatch]);
 
   segmentIdentify(currentUser.data);
 
@@ -234,13 +231,13 @@ const Header = ({ currentUser, location }) => {
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
-          {promoVisible && renderPromoBanner()}
+          {promoVisible && contents && renderPromoBanner()}
         </>
       );
     }
     return (
       <>
-        {promoVisible && renderPromoBanner()}
+        {promoVisible && contents && renderPromoBanner()}
         <div className="holder">
           <Container>
             <Grid container>
