@@ -179,7 +179,7 @@ const ProductOutline = ({ scrollToTabs }) => {
   return (
     <div className={classes.root} ref={containerRef}>
       <Box
-        className={classes.keyObjective}
+        className={`${classes.keyObjective} Anne`}
         style={keyObjectiveBackgroundStyle}
         width={1}
       >
@@ -193,20 +193,22 @@ const ProductOutline = ({ scrollToTabs }) => {
             />
           </Box>
         )}
-        <Box>
-          <Typography className={classes.heading} variant="h3" align="center">
-            Key Objective
-          </Typography>
-        </Box>
-        <Box>
-          <Typography
-            className={`${classes.keyObjectiveHeading} ${productColor}`}
-            variant="h3"
-            align="center"
-          >
-            {keyObjective}
-          </Typography>
-        </Box>
+        <div className="text-container">
+          <Box>
+            <Typography className={classes.heading} variant="h3" align="center">
+              Key Objective
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              className={`${classes.keyObjectiveHeading} ${productColor}`}
+              variant="h3"
+              align="center"
+            >
+              {keyObjective}
+            </Typography>
+          </Box>
+        </div>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
             <img
