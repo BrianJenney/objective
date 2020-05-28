@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { ResizeImage } from '../../../utils/sputils';
+import { ResizeImage } from '../../../utils/spimageutils';
 
 import './template-styles.css';
 
@@ -18,11 +18,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   container: props => {
-    let styles = {
-      width: props.desktopStyle.width ? props.desktopStyle.width + 'px' : 320,
+    const styles = {
+      width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
       textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
       [theme.breakpoints.down('xs')]: {
-        width: props.mobileStyle.width ? props.mobileStyle.width + 'px' : 164,
+        width: props.mobileStyle.width ? `${props.mobileStyle.width}px` : 164,
         textAlign: props.caption ? props.caption.desktopStyle.float : 'left'
       }
     };
@@ -53,10 +53,8 @@ const Image = ({ data, template, type, caption }) => {
   const float = data.desktopStyle.float || data.mobileStyle.float;
 
   // Assign img src:
-  let imgSrc = sm 
-    ? data.mobileImg 
-    : data.desktopImg;
-  imgSrc += (ResizeImage(template, data));
+  let imgSrc = sm ? data.mobileImg : data.desktopImg;
+  imgSrc += ResizeImage(template, data);
 
   // Conditionally assign class to img:
   let imgClass = '';
@@ -66,17 +64,17 @@ const Image = ({ data, template, type, caption }) => {
     imgClass = `${classes.root} ${template}-${type}-${float}`;
   }
 
-  let image = <img src={imgSrc} className={imgClass} />;
-  
+  let image = <img src={imgSrc} className={imgClass} alt={data.name} />;
+
   // Check if image has a URL prop:
   const imgUrl = data.desktopStyle.url || data.mobileStyle.url;
-  if (imgUrl ) {
+  if (imgUrl) {
     image = (
       <a href={imgUrl} target="_blank">
         {image}
       </a>
-    )
-  };
+    );
+  }
 
   // Check if there is a caption & add if needed:
   if (caption) {
@@ -84,19 +82,19 @@ const Image = ({ data, template, type, caption }) => {
     let captionNode = <div className={classes.caption}>{caption.value}</div>;
     if (caption.desktopStyle.url) {
       captionNode = (
-      <a className={classes.caption} href={caption.desktopStyle.url}>
-        {caption.value}
-      </a>
+        <a className={classes.caption} href={caption.desktopStyle.url}>
+          {caption.value}
+        </a>
       );
     }
 
     image = (
-      <div className={`${template}-${type}-caption-${float} ${classes.container}`}> 
+      <div className={`${template}-${type}-caption-${float} ${classes.container}`}>
         {image}
         {captionNode}
       </div>
-    )
-  };
+    );
+  }
 
   return image;
 };
