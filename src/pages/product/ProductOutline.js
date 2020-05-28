@@ -134,7 +134,9 @@ const contentfulOptions = {
       if (window.screen.width < 768) {
         params = '?w=450&fm=jpg';
       }
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
+      return (
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+      );
     }
   }
 };
@@ -166,18 +168,12 @@ const ProductOutline = ({ scrollToTabs }) => {
   } = content;
   const keyObjectiveBackgroundStyle =
     sm && keyObjectiveBackgroundImage
-      ? {
-          backgroundImage: `url(${keyObjectiveBackgroundImage.fields.file.url})`
-        }
+      ? { backgroundImage: `url(${keyObjectiveBackgroundImage.fields.file.url})` }
       : {};
 
   return (
     <div className={classes.root} ref={containerRef}>
-      <Box
-        className={`${classes.keyObjective} Anne`}
-        style={keyObjectiveBackgroundStyle}
-        width={1}
-      >
+      <Box className={classes.keyObjective} style={keyObjectiveBackgroundStyle} width={1}>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
             <img src={keyObjectiveImages[0].fields.file.url} alt="" width="100%" height="auto" />
