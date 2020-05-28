@@ -97,6 +97,9 @@
         right: 10px;
       }
     }
+    .closeIcon:focus {
+      outline: none;
+    }
   }
 
   a:hover,
