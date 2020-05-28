@@ -118,11 +118,11 @@ class Home extends Component {
         }}
       >
         <Container className="section-container">
-          <Box className="section-holder">
-            <div className="section">
+          <Grid container className="section-holder">
+            <Grid item xs={12} md={6} className="section">
               {documentToReactComponents(section.fields.mainContent, contentfulOptions)}
-            </div>
-          </Box>
+            </Grid>
+          </Grid>
         </Container>
       </div>
     ));
