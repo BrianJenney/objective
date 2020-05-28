@@ -179,7 +179,7 @@ const ProductOutline = ({ scrollToTabs }) => {
   return (
     <div className={classes.root} ref={containerRef}>
       <Box
-        className={`${classes.keyObjective} Anne`}
+        className={classes.keyObjective}
         style={keyObjectiveBackgroundStyle}
         width={1}
       >
