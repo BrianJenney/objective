@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { StyledContainer } from '../assets/styles/globalStyledComponents';
 
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
@@ -72,7 +73,7 @@ const contentfulClient = contentful.createClient({
 
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
