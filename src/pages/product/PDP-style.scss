@@ -72,6 +72,12 @@ html,
   }
 }
 
+@media only screen and (max-width: 1380px) {
+  .text-container {
+    max-width: 450px;
+  }
+}
+
 .pdp-accordion {
   border-top: 2px solid #cac9c8;
   border-bottom: 2px solid #cac9c8;
@@ -638,6 +644,8 @@ html,
 .research-sources ul li {
   margin-bottom: 15px;
 }
+
+
 
 @media only screen and (min-width: 735.99px) {
   .research-sources h2 {

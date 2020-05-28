@@ -173,22 +173,32 @@ const ProductOutline = ({ scrollToTabs }) => {
 
   return (
     <div className={classes.root} ref={containerRef}>
-      <Box className={classes.keyObjective} style={keyObjectiveBackgroundStyle} width={1}>
+      <Box
+        className={`${classes.keyObjective} Anne`}
+        style={keyObjectiveBackgroundStyle}
+        width={1}
+      >
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
             <img src={keyObjectiveImages[0].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
-        <Box>
-          <Typography className={classes.heading} variant="h3" align="center">
-            Key Objective
-          </Typography>
-        </Box>
-        <Box>
-          <Typography className={`${classes.keyObjectiveHeading} ${productColor}`} variant="h3" align="center">
-            {keyObjective}
-          </Typography>
-        </Box>
+        <div className="text-container">
+          <Box>
+            <Typography className={classes.heading} variant="h3" align="center">
+              Key Objective
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              className={`${classes.keyObjectiveHeading} ${productColor}`}
+              variant="h3"
+              align="center"
+            >
+              {keyObjective}
+            </Typography>
+          </Box>
+        </div>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
             <img src={keyObjectiveImages[1].fields.file.url} alt="" width="100%" height="auto" />
