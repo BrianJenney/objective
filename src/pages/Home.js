@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -14,6 +13,8 @@ import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
+
+import { StyledContainer } from '../assets/styles/globalStyledComponents';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
@@ -117,13 +118,13 @@ class Home extends Component {
           )}?q=50&auto=compress,format")`
         }}
       >
-        <Container className="section-container">
+        <StyledContainer className="section-container">
           <Grid container className="section-holder">
             <Grid item xs={12} md={6} className="section">
               {documentToReactComponents(section.fields.mainContent, contentfulOptions)}
             </Grid>
           </Grid>
-        </Container>
+        </StyledContainer>
       </div>
     ));
   }
@@ -157,7 +158,7 @@ class Home extends Component {
 
     return (
       <div className="home-bestsellers beige-bg">
-        <Container>
+        <StyledContainer>
           <Box py={10}>
             {documentToReactComponents(
               this.state.content.bestsellers.content[0],
@@ -175,7 +176,7 @@ class Home extends Component {
               )}
             </Box>
           </Box>
-        </Container>
+        </StyledContainer>
       </div>
     );
   }
@@ -209,7 +210,7 @@ class Home extends Component {
 
     return (
       <div className="his-hers-theirs beige-bg">
-        <Container>
+        <StyledContainer>
           <Box py={10}>
             {documentToReactComponents(
               this.state.content.solutionForFamily.content[0],
@@ -231,7 +232,7 @@ class Home extends Component {
               )}
             </Box>
           </Box>
-        </Container>
+        </StyledContainer>
       </div>
     );
   }
@@ -279,7 +280,7 @@ class Home extends Component {
             >
               <ul>{this.renderHeroSlider()}</ul>
             </Link>
-            <Container>
+            <StyledContainer>
               <Grid
                 container
                 direction="column"
@@ -294,7 +295,7 @@ class Home extends Component {
                   <p>{welcomeText}</p>
                 </Grid>
               </Grid>
-            </Container>
+            </StyledContainer>
             <>{this.renderBestsellers()}</>
             <>{this.renderSections()}</>
             <>{this.renderFamily()}</>
