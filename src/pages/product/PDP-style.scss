@@ -72,9 +72,12 @@ html,
   }
 }
 
-@media only screen and (max-width: 1380px) {
-  .text-container {
+.text-container {
+  @media only screen and (min-width: 1070px) and (max-width: 1380px) {
     max-width: 450px;
+  }
+  @media only screen and (min-width: 960px) and (max-width: 1070px) {
+    max-width: 400px;
   }
 }
 
