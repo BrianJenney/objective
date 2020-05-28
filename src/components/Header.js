@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { StyledContainer } from '../assets/styles/globalStyledComponents';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';

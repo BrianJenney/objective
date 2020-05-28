@@ -14,7 +14,7 @@ import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-import { StyledContainer } from '../assets/styles/globalStyledComponents';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
