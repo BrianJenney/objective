@@ -208,7 +208,7 @@ const Header = ({ currentUser, location }) => {
                   </div>
                 ) : null}
                 <div className="holder">
-                  <Container>
+                  <StyledContainer>
                     <Grid container>
                       <Grid item xs={4}>
                         <Grid container>
@@ -255,7 +255,7 @@ const Header = ({ currentUser, location }) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Container>
+                  </StyledContainer>
                 </div>
               </>
             )}
