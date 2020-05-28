@@ -28,6 +28,7 @@ import {
   RECEIVED_PASSWORD_RESET_FAILURE
 } from './types';
 import EventEmitter from '../../events';
+import { unsetCheckoutPaypalPayload } from '../paypal/actions';
 import returnSiteLocation from '../../utils/segmentSiteLocation';
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -47,18 +48,17 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     }
   };
 
-  if(account.hasOwnProperty("isGuest")){
+  if (account.hasOwnProperty('isGuest')) {
     params.data.isGuest = account.isGuest;
   }
 
-  if(account.hasOwnProperty("disableGuestLogic")){
+  if (account.hasOwnProperty('disableGuestLogic')) {
     params.data.disableGuestLogic = account.disableGuestLogic;
   }
 
-  if(account.hasOwnProperty("passwordSet")){
+  if (account.hasOwnProperty('passwordSet')) {
     params.data.passwordSet = account.passwordSet;
   }
-  
 
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -135,9 +135,13 @@ export const clearCreateAccountError = () => dispatch => {
 
 export const requestFetchAccount = (data, find = false) => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
-  const params = find ? { params : {...data, token : localStorageClient.get('olympusToken') } } : data;
+  const params = find
+    ? { params: { ...data, token: localStorageClient.get('olympusToken') } }
+    : data;
   const payload = JSON.stringify(msgpack.encode(params));
-  const exchangeTopic = find ? '/exchange/account/account.request.find' : '/exchange/account/account.request.get';
+  const exchangeTopic = find
+    ? '/exchange/account/account.request.find'
+    : '/exchange/account/account.request.get';
   stompClient.send(
     exchangeTopic,
     {
@@ -159,7 +163,6 @@ export const receivedFetchAccountSuccess = account => dispatch => {
     type: RECEIVED_FETCH_ACCOUNT_SUCCESS,
     payload: account
   });
-
 };
 
 export const receivedFetchAccountFailure = error => dispatch => {
@@ -233,7 +236,10 @@ export const clearPatchAccountError = () => dispatch => {
   });
 };
 
-export const requestChangePassword = (authToken, patches, { setSubmitting }) => (dispatch, getState) => {
+export const requestChangePassword = (authToken, patches, { setSubmitting }) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     id: authToken,
@@ -364,6 +370,8 @@ export const requestLogout = () => dispatch => {
     type: REQUEST_LOGOUT,
     payload: {}
   });
+
+  dispatch(unsetCheckoutPaypalPayload());
 
   EventEmitter.emit('user.logged.out', {});
 };
