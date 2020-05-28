@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { StyledContainer } from '../assets/styles/globalStyledComponents';
 
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
@@ -63,9 +64,10 @@ const segmentIdentify = user => {
 
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const isCheckoutPage =
-    matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+    matchPath(location.pathname, { path: '/checkout' }) ||
+    matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const isLandingNoHeader = matchPath(location.pathname, { path: '/landing' });
   const { account_jwt, firstName } = currentUser.data;
@@ -137,12 +139,12 @@ const Header = ({ currentUser, location }) => {
       site_location: segmentSiteLocation()
     });
   };
-  
+
   return (
     <>
       {isCheckoutPage || isOrderPage ? (
         <CheckoutHeader />
-      ) : isLandingNoHeader  && !isLandingWithHeader ? (
+      ) : isLandingNoHeader && !isLandingWithHeader ? (
         <></>
       ) : (
         <Grid container item={true} xs={12} className="headerContainer">
@@ -161,9 +163,7 @@ const Header = ({ currentUser, location }) => {
                   </Grid>
                   <Grid item xs={1} className="mobile-cart-icon">
                     {!isCheckoutPage && <ShoppingCart />}
-                    {(cartNotification) 
-                      ? <CartNotification isCheckoutPage={isCheckoutPage} /> 
-                      : null}
+                    {cartNotification ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
                   </Grid>
                 </Grid>
                 {promoVisible ? (
@@ -171,7 +171,7 @@ const Header = ({ currentUser, location }) => {
                     <Grid item xs={12}>
                       <StyledBox fontSize={9}>
                         <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                        Limited Time: Free Shipping for All New Customers
+                          Limited Time: Free Shipping for All New Customers
                         </NavLink>
                         <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
                       </StyledBox>
@@ -188,7 +188,7 @@ const Header = ({ currentUser, location }) => {
                         <Grid item xs={12}>
                           <StyledBox fontSize={12}>
                             <NavLink onClick={segmentTrackNavigationClick} to="/gallery">
-                            Limited Time: Free Shipping for All New Customers
+                              Limited Time: Free Shipping for All New Customers
                             </NavLink>
                             <div className="closeIcon" onClick={handlePromoClose}>
                               Close
@@ -213,12 +213,20 @@ const Header = ({ currentUser, location }) => {
                       <Grid item xs={4}>
                         <Grid container>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/gallery">
+                            <StyledLink
+                              onClick={segmentTrackNavigationClick}
+                              component={RouterLink}
+                              to="/gallery"
+                            >
                               Shop
                             </StyledLink>
                           </Grid>
                           <Grid item xs={6} className="h-pding">
-                            <StyledLink onClick={segmentTrackNavigationClick} component={RouterLink} to="/journal">
+                            <StyledLink
+                              onClick={segmentTrackNavigationClick}
+                              component={RouterLink}
+                              to="/journal"
+                            >
                               Journal
                             </StyledLink>
                           </Grid>
@@ -240,9 +248,9 @@ const Header = ({ currentUser, location }) => {
                           </Grid>
                           <Grid item xs={6} className="header-shop-holder h-pding">
                             {!isCheckoutPage && <ShoppingCart />}
-                            {cartNotification 
-                              ? <CartNotification isCheckoutPage={isCheckoutPage} /> 
-                              : null}
+                            {cartNotification ? (
+                              <CartNotification isCheckoutPage={isCheckoutPage} />
+                            ) : null}
                           </Grid>
                         </Grid>
                       </Grid>
