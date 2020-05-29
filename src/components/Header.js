@@ -151,12 +151,17 @@ const Header = ({ currentUser, location }) => {
           <Grid container item={true} xs={12} spacing={0}>
             {burger ? (
               <>
-                <Grid container className="top">
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                  className="top"
+                >
                   <Grid item xs={1}>
                     {renderBurgerIcon()}
                   </Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={8} className="logo text-center">
+                  <Grid item xs={3} className="logo text-center">
                     <NavLink onClick={segmentTrackNavigationClick} to="/">
                       <Logo />
                     </NavLink>
