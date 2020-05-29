@@ -209,49 +209,76 @@ const Header = ({ currentUser, location }) => {
                 ) : null}
                 <div className="holder">
                   <StyledContainer>
-                    <Grid container>
-                      <Grid item xs={4}>
-                        <Grid container>
-                          <Grid item xs={6} className="h-pding">
-                            <StyledLink
-                              onClick={segmentTrackNavigationClick}
-                              component={RouterLink}
-                              to="/gallery"
-                            >
-                              Shop
-                            </StyledLink>
-                          </Grid>
-                          <Grid item xs={6} className="h-pding">
-                            <StyledLink
-                              onClick={segmentTrackNavigationClick}
-                              component={RouterLink}
-                              to="/journal"
-                            >
-                              Journal
-                            </StyledLink>
-                          </Grid>
+                    <Grid
+                      container
+                      spacing={3}
+                      direction="row"
+                      justify="space-between"
+                      alignItems="center"
+                    >
+                      <Grid
+                        container
+                        xs={3}
+                        spacing={3}
+                        direction="row"
+                        justify="space-evenly"
+                        alignItems="center"
+                      >
+                        <Grid item xs="auto" className="h-pding">
+                          <StyledLink
+                            onClick={segmentTrackNavigationClick}
+                            component={RouterLink}
+                            to="/gallery"
+                          >
+                            Shop
+                          </StyledLink>
+                        </Grid>
+                        <Grid item xs="auto" className="h-pding">
+                          <StyledLink
+                            onClick={segmentTrackNavigationClick}
+                            component={RouterLink}
+                            to="/journal"
+                          >
+                            Journal
+                          </StyledLink>
                         </Grid>
                       </Grid>
-                      <Grid item xs={4} className="logo text-center">
-                        <NavLink onClick={segmentTrackNavigationClick} to="/">
-                          <Logo />
-                        </NavLink>
+                      <Grid
+                        container
+                        xs={3}
+                        spacing={3}
+                        direction="row"
+                        alignItems="center"
+                        className="logo text-center"
+                      >
+                        <Grid item xs="auto">
+                          <NavLink onClick={segmentTrackNavigationClick} to="/">
+                            <Logo />
+                          </NavLink>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={4}>
-                        <Grid container className="align-right">
-                          <Grid item xs={6} className="acct h-pding">
-                            <StyledLink
-                              component={RouterLink}
-                              {...accountMenuItemConf}
-                              onClick={segmentTrackNavigationClick}
-                            />
-                          </Grid>
-                          <Grid item xs={6} className="header-shop-holder h-pding">
-                            {!isCheckoutPage && <ShoppingCart />}
-                            {cartNotification ? (
-                              <CartNotification isCheckoutPage={isCheckoutPage} />
-                            ) : null}
-                          </Grid>
+                      <Grid
+                        container
+                        xs={3}
+                        spacing={3}
+                        direction="row"
+                        alignItems="center"
+                        justify="flex-end"
+                        justify="space-evenly"
+                        className="align-right"
+                      >
+                        <Grid item xs="auto" className="acct h-pding">
+                          <StyledLink
+                            component={RouterLink}
+                            {...accountMenuItemConf}
+                            onClick={segmentTrackNavigationClick}
+                          />
+                        </Grid>
+                        <Grid item xs="auto" className="header-shop-holder h-pding">
+                          {!isCheckoutPage && <ShoppingCart />}
+                          {cartNotification ? (
+                            <CartNotification isCheckoutPage={isCheckoutPage} />
+                          ) : null}
                         </Grid>
                       </Grid>
                     </Grid>
