@@ -69,50 +69,44 @@ const LoggedInUser = ({ name, logout }) => {
   return xs ? (
     <NavLink to="/account/overview">Hi, {name}</NavLink>
   ) : (
-      <div className="logged-in-user-desktop">
-        <Button
-          margin="0 10px"
-          aria-haspopup="true"
-          onClick={handleClick}
-          style={{ backgroundColor: 'transparent', padding: 0 }}
+    <div className="logged-in-user-desktop">
+      <Button
+        margin="0 10px"
+        aria-haspopup="true"
+        onClick={handleClick}
+        style={{ backgroundColor: 'transparent', padding: 0 }}
+      >
+        <Typography
+          style={{
+            fontFamily: $brandSans,
+            fontSize: '16px',
+            letterSpacing: '1px'
+          }}
         >
-          <Typography
-            style={{
-              fontFamily: $brandSans,
-              fontSize: '16px',
-              letterSpacing: '1px',
-              lineHeight: '1rem'
-            }}
-          >
-            Hi, {name}
-          </Typography>{' '}
-          &nbsp; {xs ? '' : <ExpandMore />}
-        </Button>
+          Hi, {name}
+        </Typography>{' '}
+        &nbsp; {xs ? '' : <ExpandMore />}
+      </Button>
 
-        <StyledMenu
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {menuItems.map(menuItem =>
-            menuItem.key === 'logout' ? (
-              <NavLink onClick={logout}>
-                <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
-                  <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
-                </StyledMenuItem>
-              </NavLink>
-            ) : (
-                <NavLink to={menuItem.to}>
-                  <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
-                    <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
-                  </StyledMenuItem>
-                </NavLink>
-              )
-          )}
-        </StyledMenu>
-      </div>
-    );
+      <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+        {menuItems.map(menuItem =>
+          menuItem.key === 'logout' ? (
+            <NavLink onClick={logout}>
+              <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
+                <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
+              </StyledMenuItem>
+            </NavLink>
+          ) : (
+            <NavLink to={menuItem.to}>
+              <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
+                <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
+              </StyledMenuItem>
+            </NavLink>
+          )
+        )}
+      </StyledMenu>
+    </div>
+  );
 };
 
 LoggedInUser.propTypes = {
