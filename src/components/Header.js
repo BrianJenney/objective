@@ -272,14 +272,14 @@ const Header = ({ currentUser, location }) => {
                         justify="space-evenly"
                         className="align-right"
                       >
-                        <Grid item xs="auto" className="acct h-pding">
+                        <Grid item xs="auto" className="h-pding">
                           <StyledLink
                             component={RouterLink}
                             {...accountMenuItemConf}
                             onClick={segmentTrackNavigationClick}
                           />
                         </Grid>
-                        <Grid item xs="auto" className="header-shop-holder h-pding">
+                        <Grid item xs="auto" className="h-pding">
                           {!isCheckoutPage && <ShoppingCart />}
                           {cartNotification ? (
                             <CartNotification isCheckoutPage={isCheckoutPage} />
