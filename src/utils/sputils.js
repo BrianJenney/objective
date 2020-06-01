@@ -1,5 +1,7 @@
 import React from 'react';
-import { useMediaQuery, Container, Grid, useTheme } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import {
   Hero,
   Image,
@@ -13,10 +15,9 @@ import {
   Banner,
   List
 } from '../pages/static/components';
-import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
-  let tmpComps = GeneratePageComponents(page.components, page.template, page.name);
+  const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
   return (
     <GenerateTemplate
       data={tmpComps}
@@ -27,6 +28,11 @@ export const buildPage = page => {
 };
 
 export const GenerateTemplate = ({ data, header, template }) => {
+  GenerateTemplate.propTypes = {
+    data: PropTypes.func.isRequired,
+    header: PropTypes.func.isRequired,
+    template: PropTypes.func.isRequired
+  };
   return (
     <div>
       <Header data={header} template={template} type={header.type} />
@@ -38,15 +44,15 @@ export const GenerateTemplate = ({ data, header, template }) => {
 };
 
 export const GeneratePageComponents = (comps, template, pageName) => {
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles(() => ({
     margin: {
       margin: '0 auto'
     }
   }));
   const classes = useStyles();
-  let components = [];
+  const components = [];
 
-  comps.map(obj => {
+  comps.forEach(obj => {
     switch (obj.type) {
       case 'pageTitle':
         components.push(
@@ -66,8 +72,8 @@ export const GeneratePageComponents = (comps, template, pageName) => {
           </>
         );
         break;
-      case 'hero':
-        const nav = comps.filter(obj => obj.type === 'navigation');
+      case 'hero': {
+        const nav = comps.filter(comp => comp.type === 'navigation');
         components.push(
           <>
             <Grid item xs={12} md={10} className={classes.margin}>
@@ -79,6 +85,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
           </>
         );
         break;
+      }
       case 'banner':
         components.push(
           <>
@@ -105,7 +112,9 @@ export const GeneratePageComponents = (comps, template, pageName) => {
               className={`${classes.margin} ${obj.id}`}
               id={`${obj.name}`}
             >
-              <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
+              <RenderComponents
+                components={GenerateOneColumn(obj.value.components, template, pageName)}
+              />
             </Grid>
           </>
         );
@@ -119,21 +128,33 @@ export const GeneratePageComponents = (comps, template, pageName) => {
 };
 
 export const GenerateOneColumn = (comps, template, pageName) => {
-  let components = [];
+  const components = [];
 
-  comps.map(obj => {
+  comps.forEach(obj => {
     switch (obj.type) {
       case 'sectionTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} pageName={pageName} id={`${obj.name}`} />
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
       case 'image':
         components.push(
           <>
-            <Image data={obj} template={template} type={obj.type} caption={obj.caption} id={`${obj.name}`} />
+            <Image
+              data={obj}
+              template={template}
+              type={obj.type}
+              caption={obj.caption}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
@@ -160,14 +181,26 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'box':
         components.push(
           <>
-            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
+            <SPBox
+              data={obj}
+              template={template}
+              type={obj.type}
+              comps={obj.value.components}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
       case 'sectionSubTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} pageName={pageName} id={`${obj.name}`} />
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
@@ -187,7 +220,13 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'table':
         components.push(
           <>
-            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
+            <SPBox
+              data={obj}
+              template={template}
+              type={obj.type}
+              comps={obj.value.components}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
@@ -199,52 +238,4 @@ export const GenerateOneColumn = (comps, template, pageName) => {
   return components;
 };
 
-export const RenderComponents = ({ components }) => components.map((component, i) => <>{component}</>);
-
-export const ResizeImage = (template, data) => {
-  const theme = useTheme();
-  const sm = useMediaQuery(theme.breakpoints.down('xs'));
-  let defaultParams;
-
-  switch (template) {
-    case 'LP-Template-1':
-      if (data.desktopImg) {
-        defaultParams = '?w=315';
-      }
-      break;
-    default:
-      defaultParams = '?w=315';
-  }
-
-  const desktopWidth = data.desktopStyle.width;
-  const desktopHeight = data.desktopStyle.height;
-
-  const mobileWidth = data.mobileStyle.width;
-  const mobileHeight = data.mobileStyle.height;
-
-  let params;
-
-  if (!sm) {
-    if (!desktopWidth && !desktopHeight) {
-      params = defaultParams;
-    } else if (desktopWidth && !desktopHeight) {
-      params = `?w=${desktopWidth}`;
-    } else if (desktopHeight && !desktopWidth) {
-      params = defaultParams;
-    } else {
-      params = defaultParams;
-    }
-  } else {
-    if (!mobileWidth && !mobileHeight) {
-      params = '?w=164';
-    } else if (mobileWidth && !mobileHeight) {
-      params = `?w=${mobileWidth}`;
-    } else if (mobileHeight && !mobileWidth) {
-      params = '?w=164';
-    } else {
-      params = '?w=164';
-    }
-  }
-
-  return params;
-};
+export const RenderComponents = ({ components }) => components.map(component => <>{component}</>);
