@@ -72,7 +72,7 @@ const contentfulClient = contentful.createClient({
 
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
