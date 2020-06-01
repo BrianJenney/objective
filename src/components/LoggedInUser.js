@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { withStyles, useTheme } from '@material-ui/core/styles';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { fonts } from './Theme/fonts';
 import { NavLink, MenuLink } from './common';
@@ -110,6 +109,7 @@ const LoggedInUser = ({ name, logout }) => {
 };
 
 LoggedInUser.propTypes = {
+  name: PropTypes.string,
   logout: PropTypes.func.isRequired
 };
 
