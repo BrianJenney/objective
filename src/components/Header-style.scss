@@ -31,7 +31,9 @@
 
   .holder {
     width: 100%;
-    padding: 20px 0;
+    height: 122px;
+    display: flex;
+    align-items: center;
     button {
       .MuiButton-label {
         align-items: initial;
