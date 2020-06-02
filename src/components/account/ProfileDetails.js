@@ -31,7 +31,7 @@ const usePrevious = value => {
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: fonts.header,
-    fontSize: 48,
+    fontSize: 36,
     marginBottom: 30,
     [theme.breakpoints.down('xs')]: {
       fontSize: '36px'
@@ -70,12 +70,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfileDetails = ({
-  currentUser,
-  requestPatchAccount,
-  clearPatchAccountError,
-  ...rest
-}) => {
+const ProfileDetails = ({ currentUser, requestPatchAccount, clearPatchAccountError, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -115,20 +110,13 @@ const ProfileDetails = ({
     return <div>No Account</div>;
   }
 
-  if (
-    currentUser.fetchAccountLoading === null ||
-    currentUser.fetchAccountLoading
-  ) {
+  if (currentUser.fetchAccountLoading === null || currentUser.fetchAccountLoading) {
     return <Loader />;
   }
 
   if (currentUser.fetchAccountError) {
     return (
-      <AlertPanel
-        type="error"
-        text={getErrorMessage(currentUser.fetchAccountError)}
-        notClosable
-      />
+      <AlertPanel type="error" text={getErrorMessage(currentUser.fetchAccountError)} notClosable />
     );
   }
 
@@ -143,11 +131,7 @@ const ProfileDetails = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           {currentUser.patchAccountError && (
-            <AlertPanel
-              type="error"
-              text={errorMessage}
-              onClose={clearPatchAccountError}
-            />
+            <AlertPanel type="error" text={errorMessage} onClose={clearPatchAccountError} />
           )}
           {resultVisible && (
             <AlertPanel
@@ -186,13 +170,13 @@ const ProfileDetails = ({
       {xs ? (
         ''
       ) : (
-          <Typography className={classes.title} variant="h1" gutterBottom>
-            Your Profile
+        <Typography className={classes.title} variant="h1" gutterBottom>
+          Your Profile
         </Typography>
-        )}
+      )}
 
       <Typography className={classes.info} variant="h3" gutterBottom>
-        NAME {'&'} EMAIL
+        NAME & EMAIL
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
