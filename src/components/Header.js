@@ -233,16 +233,9 @@ const Header = ({ currentUser, location }) => {
         {promoVisible && contents && renderPromoBanner()}
         <div className="holder">
           <StyledContainer>
-            <Grid container spacing={3} direction="row" justify="space-between" alignItems="center">
-              <Grid
-                container
-                xs={3}
-                spacing={3}
-                direction="row"
-                justify="space-evenly"
-                alignItems="center"
-              >
-                <Grid item xs="auto" className="h-pding">
+            <Grid container spacing={3} direction="row" alignItems="center">
+              <Grid container xs={3} spacing={5} direction="row" alignItems="center">
+                <Grid item className="h-pding">
                   <StyledLink
                     onClick={segmentTrackNavigationClick}
                     component={RouterLink}
@@ -251,7 +244,7 @@ const Header = ({ currentUser, location }) => {
                     Shop
                   </StyledLink>
                 </Grid>
-                <Grid item xs="auto" className="h-pding">
+                <Grid item className="h-pding">
                   <StyledLink
                     onClick={segmentTrackNavigationClick}
                     component={RouterLink}
@@ -264,12 +257,13 @@ const Header = ({ currentUser, location }) => {
               <Grid
                 container
                 xs={3}
-                spacing={3}
+                lg={2}
                 direction="row"
                 alignItems="center"
-                className="logo text-center"
+                justify="center"
+                className="logo"
               >
-                <Grid item xs="auto">
+                <Grid item>
                   <NavLink onClick={segmentTrackNavigationClick} to="/">
                     <Logo />
                   </NavLink>
@@ -278,11 +272,10 @@ const Header = ({ currentUser, location }) => {
               <Grid
                 container
                 xs={3}
-                spacing={3}
+                spacing={5}
                 direction="row"
                 alignItems="center"
-                justify="space-evenly"
-                className="align-right"
+                justify="flex-end"
               >
                 <Grid item xs="auto" className="h-pding">
                   <StyledLink
