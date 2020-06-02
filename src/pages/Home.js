@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -58,28 +59,26 @@ class Home extends Component {
       .then(entry => {
         const content = entry.fields;
         this.setState({
-          ...this.state,
           content: {
             ...content
           }
         });
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
     contentfulClient
       .getEntries({ content_type: 'homepageBestsellers' })
       .then(entry => {
         const products = entry.items;
         this.setState({
-          ...this.state,
           carousel: {
             ...products
           }
         });
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
     if (!homePageTracked) {
       window.analytics.page('Home');
@@ -99,7 +98,11 @@ class Home extends Component {
 
     return images.map(image => (
       <li key={image.sys.id}>
-        <img src={image.fields.file.url + params} style={{ width: '100%' }} />
+        <img
+          src={image.fields.file.url + params}
+          style={{ width: '100%' }}
+          alt={image.fields.title}
+        />
       </li>
     ));
   }
@@ -138,16 +141,16 @@ class Home extends Component {
 
     if (this.state.carousel) {
       const { carousel } = this.state;
-      for (const key in carousel) {
-        if (carousel[key].fields.identifier === 'bestsellers') {
-          carousel[key].fields.products.map(product => {
+      Object.values(carousel).forEach(key => {
+        if (key.fields.identifier === 'bestsellers') {
+          key.fields.products.forEach(product => {
             bestsellers.push(product.fields.sku);
             if (bestsellers.length >= 4) {
               bestsellers.pop();
             }
           });
         }
-      }
+      });
     } else {
       return null;
     }
@@ -190,16 +193,17 @@ class Home extends Component {
 
     if (this.state.carousel) {
       const { carousel } = this.state;
-      for (const key in carousel) {
-        if (carousel[key].fields.identifier === 'solutions_whole_family') {
-          carousel[key].fields.products.map(product => {
+
+      Object.values(carousel).forEach(key => {
+        if (key.fields.identifier === 'solutions_whole_family') {
+          key.fields.products.forEach(product => {
             family.push(product.fields.sku);
             if (family.length >= 4) {
               family.pop();
             }
           });
         }
-      }
+      });
     } else {
       return null;
     }
@@ -314,5 +318,11 @@ const mapStateToProps = state => ({
   products: state.catalog.variants,
   seoMap: state.storefront.seoMap
 });
+
+Home.propTypes = {
+  products: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  seoMap: PropTypes.object.isRequired
+};
 
 export default withRouter(connect(mapStateToProps)(Home));
