@@ -547,7 +547,6 @@ const Footer = ({ location, currentUser }) => {
                     sm={4}
                     spacing={3}
                     alignItems="center"
-                    className="border-right"
                     style={{ padding: '10px 0px' }}
                   >
                     <Grid item className="uppercase follow-text">
@@ -585,26 +584,26 @@ const Footer = ({ location, currentUser }) => {
                       </Link>
                     </Grid>
                   </Grid>
-                  <Grid item x={9} className="legal">
-                    <div style={{ paddingRight: 20 }}>© Objective 2020 </div>
-                    &bull;
-                    <Grid className="legal-text">
-                      <a
-                        onClick={segmentTrackNavigationClick}
-                        href="https://www.thecloroxcompany.com/privacy/"
-                        target="_blank"
-                        style={{ padding: '0px 20px', color: '#959595' }}
-                      >
-                        Privacy Policy
-                      </a>
-                      <NavLink
-                        onClick={segmentTrackNavigationClick}
-                        to="/terms"
-                        style={{ color: '#959595' }}
-                      >
-                        Terms of use
-                      </NavLink>
-                    </Grid>
+                  <Grid
+                    container
+                    item
+                    sm={7}
+                    justify="space-evenly"
+                    className="legal legal-text border-left"
+                  >
+                    <div>© Objective 2020 </div>
+                    <div>&bull;</div>
+
+                    <a
+                      onClick={segmentTrackNavigationClick}
+                      href="https://www.thecloroxcompany.com/privacy/"
+                      target="_blank"
+                    >
+                      Privacy Policy
+                    </a>
+                    <NavLink onClick={segmentTrackNavigationClick} to="/terms">
+                      Terms of use
+                    </NavLink>
                   </Grid>
                 </Grid>
               </Grid>
