@@ -203,9 +203,6 @@
           fill: #fff;
         }
       }
-      @media only screen and (max-width: 768px) {
-        padding-right: 10px;
-      }
     }
     .title {
       font-family: p22-underground, Helvetica, sans-serif;
@@ -282,34 +279,31 @@
     }
 
     .row1 {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
       &.logo {
-        svg {
-          width: 48px;
-          path {
-            fill: #fff;
+        @media (max-width: 960px) {
+          svg {
+            width: 62px;
+            height: 62px;
+            path {
+              fill: #fff;
+            }
           }
+          padding: 15px;
+        }
+        @media (max-width: 600px) {
+          svg {
+            width: 48px;
+            height: 48px;
+            path {
+              fill: #fff;
+            }
+          }
+          padding: 15px;
         }
       }
       img {
         width: 27px;
         height: 27px;
-      }
-      .follow-text {
-        font-family: p22-underground, sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: normal;
-        letter-spacing: 1.31px;
-        color: #959595;
-        @media (min-width: 1200px) {
-          font-size: 16px;
-        }
       }
       @media (min-width: 1200px) {
         width: 175px;
@@ -322,7 +316,19 @@
         }
       }
     }
-
+    .follow-text {
+      font-family: p22-underground, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1.31px;
+      color: #959595;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
+    }
     input {
       font-family: p22-underground, sans-serif;
       font-weight: normal;
