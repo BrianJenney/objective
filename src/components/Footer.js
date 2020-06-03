@@ -385,12 +385,12 @@ const Footer = ({ location, currentUser }) => {
                     </Box>
                   </Grid>
                   <Grid item xs={9} className="promise border-left">
-                    <Grid item xs="auto">
+                    <Grid item>
                       <Typography variant="h4" gutterBottom className="uppercase">
                         THE OBJECTIVE PROMISE
                       </Typography>
                     </Grid>
-                    <Grid item xs="auto">
+                    <Grid item>
                       <p>
                         Behind every Objective supplement are studies, endless hours of research and
                         a team with over 50 years of combined experience formulating dietary
