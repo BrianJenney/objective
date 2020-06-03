@@ -32,7 +32,7 @@ const INITIAL_VALUES = {
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '44px',
+    fontSize: '36px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -53,8 +53,8 @@ const ForgotPassword = ({ history }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = ({ email }) => {
-    const location = window.location;
-    const url = location.protocol + '//' + location.host;
+    const { location } = window;
+    const url = `${location.protocol}//${location.host}`;
 
     dispatch(requestForgotPassword(email, url));
     history.replace('/password/confirm');
@@ -64,12 +64,7 @@ const ForgotPassword = ({ history }) => {
     <Form>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Field
-            name="email"
-            label="Email Address"
-            component={InputField}
-            autoComplete="email"
-          />
+          <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
         </Grid>
         <Grid item xs={12}>
           <Button type="submit" fullWidth children="Request Reset Link" />
@@ -82,12 +77,9 @@ const ForgotPassword = ({ history }) => {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
-        <Typography className={classes.title}>
-          Forgot your email/password?
-        </Typography>
+        <Typography className={classes.title}>Forgot your email/password?</Typography>
         <Typography className={classes.subTitle}>
-          It's easy to forget. Enter your email address and we'll send you a
-          reset link.
+          It's easy to forget. Enter your email address and we'll send you a reset link.
         </Typography>
         <Formik
           initialValues={INITIAL_VALUES}
@@ -100,10 +92,7 @@ const ForgotPassword = ({ history }) => {
   );
 };
 
-const ForgotPasswordDialog = compose(
-  withRouter,
-  withDialog
-)(ForgotPassword);
+const ForgotPasswordDialog = compose(withRouter, withDialog)(ForgotPassword);
 
 const ForgotPasswordPage = props => (
   <ForgotPasswordDialog onExited={props.history.goBack} {...props} />
