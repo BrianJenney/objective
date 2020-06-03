@@ -516,20 +516,22 @@ const Footer = ({ location, currentUser }) => {
                                 }}
                               />
                               <Button type="submit" className="signup-arrow">
-                                <Grid>
-                                  <Arrow />
-                                  <Typography
-                                    style={{
-                                      fontFamily: 'P22-Underground',
-                                      fontSize: '14px',
-                                      fontWeight: 600,
-                                      position: 'relative',
-                                      bottom: 10,
-                                      letterSpacing: 1.17
-                                    }}
-                                  >
-                                    Submit
-                                  </Typography>
+                                <Grid container alignItems="center" justify="center">
+                                  <Grid item style={{ paddingTop: 22 }}>
+                                    <Arrow />
+                                    <Typography
+                                      style={{
+                                        fontFamily: 'P22-Underground',
+                                        fontSize: '14px',
+                                        fontWeight: 600,
+                                        position: 'relative',
+                                        bottom: 10,
+                                        letterSpacing: 1.17
+                                      }}
+                                    >
+                                      Submit
+                                    </Typography>
+                                  </Grid>
                                 </Grid>
                               </Button>
                             </Form>
