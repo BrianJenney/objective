@@ -318,22 +318,26 @@ const Footer = ({ location, currentUser }) => {
                     </Grid>
                   )}
                 </Grid>
-                <Grid container item xs={12} className="legal border-bottom">
-                  © Objective 2020
-                  <Grid container xs={12} className="legal-text">
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  direction="column"
+                  alignItems="center"
+                  justify="center"
+                  className="legal border-bottom"
+                >
+                  <div>&#169; Objective 2020</div>
+                  <Grid container direction="row" justify="center" className="legal-text">
                     <a
                       onClick={segmentTrackNavigationClick}
                       href="https://www.thecloroxcompany.com/privacy/"
                       target="_blank"
-                      style={{ paddingRight: 10, color: '#959595' }}
+                      style={{ paddingRight: 10 }}
                     >
                       Privacy Policy
                     </a>
-                    <NavLink
-                      onClick={segmentTrackNavigationClick}
-                      to="/terms"
-                      style={{ color: '#959595' }}
-                    >
+                    <NavLink onClick={segmentTrackNavigationClick} to="/terms">
                       Terms of use
                     </NavLink>
                   </Grid>
