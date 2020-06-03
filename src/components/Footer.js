@@ -408,7 +408,7 @@ const Footer = ({ location, currentUser }) => {
                     sm={5}
                     direction="row"
                     className="border-right"
-                    style={{ padding: '20px 0px' }}
+                    style={{ padding: '30px 0px' }}
                   >
                     <Grid item>
                       <div className="title">About</div>
