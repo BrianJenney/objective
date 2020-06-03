@@ -280,7 +280,7 @@
 
     .row1 {
       &.logo {
-        @media (max-width: 960px) {
+        @media (min-width: 600px) {
           svg {
             width: 62px;
             height: 62px;
