@@ -159,6 +159,9 @@
         padding-top: 24px;
       }
     }
+    @media only screen and (max-width: 960px) {
+      padding: 31px 0px;
+    }
   }
   .border-left {
     border-left: 1px solid #959595;
