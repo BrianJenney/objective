@@ -541,17 +541,27 @@ const Footer = ({ location, currentUser }) => {
                     )}
                   </Grid>
                 </Grid>
-                <Grid item xs={12} className="row1 border-bottom">
+                <Grid container direction="row" alignItems="center" className="border-bottom">
                   <Grid
-                    item
-                    xs={3}
-                    className="row1 border-right"
-                    style={{
-                      padding: '24px 0px'
-                    }}
+                    container
+                    sm={4}
+                    spacing={3}
+                    alignItems="center"
+                    className="border-right"
+                    style={{ padding: '10px 0px' }}
                   >
-                    <div className="uppercase follow-text">Follow Us</div>
-                    <Grid className=" row1 icon-container">
+                    <Grid item className="uppercase follow-text">
+                      Follow Us
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      sm={5}
+                      spacing={3}
+                      direction="row"
+                      alignItems="center"
+                      justify="space-between"
+                    >
                       <Link
                         href="https://www.instagram.com/objective_wellness"
                         target="_blank"
