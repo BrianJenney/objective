@@ -403,7 +403,13 @@ const Footer = ({ location, currentUser }) => {
                   </Grid>
                 </Grid>
                 <Grid container direction="row" alignItems="center" className="border-bottom">
-                  <Grid container sm={5} direction="row">
+                  <Grid
+                    container
+                    sm={5}
+                    direction="row"
+                    className="border-right"
+                    style={{ padding: '20px 0px' }}
+                  >
                     <Grid item>
                       <div className="title">About</div>
                       <StyledList className="links">
@@ -450,9 +456,9 @@ const Footer = ({ location, currentUser }) => {
                     </Grid>
                   </Grid>
 
-                  <Grid item sm={7} alignItems="center" className=" border-left signup-box">
+                  <Grid item sm={7} spacing={3} className="signup-box">
                     {confirmationVisibility ? (
-                      <>
+                      <Grid item sm={9}>
                         <Typography
                           style={{
                             fontFamily: 'P22-Underground',
@@ -482,13 +488,14 @@ const Footer = ({ location, currentUser }) => {
                           ></NavLink>{' '}
                           in seconds.
                         </Typography>
-                      </>
+                      </Grid>
                     ) : (
-                      <>
-                        <span>
+                      <Grid item sm={9} lg={11}>
+                        <Grid item sm={9}>
                           Subscribe and never miss out on new products, special offers, health tips,
                           and more.
-                        </span>
+                        </Grid>
+
                         <Formik
                           initialValues={{ email: '' }}
                           onSubmit={handleSubmit}
@@ -528,7 +535,7 @@ const Footer = ({ location, currentUser }) => {
                             </Form>
                           )}
                         />
-                      </>
+                      </Grid>
                     )}
                   </Grid>
                 </Grid>
