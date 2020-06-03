@@ -188,11 +188,9 @@ const Footer = ({ location, currentUser }) => {
                     </p>
                   </Grid>
                 </Grid>
-                <Grid item xs={6} className="border-bottom">
-                  <Grid container spacing={0}>
-                    <Grid item xs={12} className="title">
-                      About
-                    </Grid>
+                <Grid container direction="row" className="border-bottom">
+                  <Grid item>
+                    <div className="title">About</div>
                     <StyledList className="links">
                       <ListItem>
                         <NavLink onClick={segmentTrackNavigationClick} to="/about_us">
@@ -206,12 +204,9 @@ const Footer = ({ location, currentUser }) => {
                       </ListItem>
                     </StyledList>
                   </Grid>
-                </Grid>
-                <Grid item xs={6} className="border-bottom">
-                  <Grid container spacing={0}>
-                    <Grid item xs={12} className="title">
-                      HELP
-                    </Grid>
+                  <Grid item xs={3} sm={2}></Grid>
+                  <Grid item>
+                    <div className="title">HELP</div>
                     <StyledList className="links">
                       <ListItem>
                         <NavLink
