@@ -253,7 +253,8 @@ const Footer = ({ location, currentUser }) => {
                           fontFamily: 'FreightTextProBook',
                           fontSize: '16px',
                           opacity: '0.75',
-                          letterSpacing: 'normal'
+                          letterSpacing: 'normal',
+                          color: '#fff'
                         }}
                       >
                         Be a step ahead and{' '}
@@ -262,13 +263,13 @@ const Footer = ({ location, currentUser }) => {
                           underline="always"
                           children="create an account"
                           onClick={segmentTrackNavigationClick}
-                          style={{ color: '#959595' }}
+                          style={{ color: '#fff' }}
                         ></NavLink>{' '}
                         in seconds.
                       </Typography>
                     </>
                   ) : (
-                    <>
+                    <Grid xs={12} sm={7} item>
                       <span>
                         Subscribe and never miss out on new products, special offers, health tips,
                         and more.
@@ -293,26 +294,28 @@ const Footer = ({ location, currentUser }) => {
                               }}
                             />
                             <Button type="submit" className="signup-arrow">
-                              <Grid>
-                                <Arrow />
-                                <Typography
-                                  style={{
-                                    fontFamily: 'P22-Underground',
-                                    fontSize: '12px',
-                                    fontWeight: 600,
-                                    position: 'relative',
-                                    bottom: 10,
-                                    letterSpacing: 1
-                                  }}
-                                >
-                                  Submit
-                                </Typography>
+                              <Grid container alignItems="center" justify="center">
+                                <Grid item style={{ paddingTop: 21 }}>
+                                  <Arrow />
+                                  <Typography
+                                    style={{
+                                      fontFamily: 'P22-Underground',
+                                      fontSize: '12px',
+                                      fontWeight: 600,
+                                      position: 'relative',
+                                      bottom: 10,
+                                      letterSpacing: 1
+                                    }}
+                                  >
+                                    Submit
+                                  </Typography>
+                                </Grid>
                               </Grid>
                             </Button>
                           </Form>
                         )}
                       />
-                    </>
+                    </Grid>
                   )}
                 </Grid>
                 <Grid container item xs={12} className="legal border-bottom">
