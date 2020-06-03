@@ -9,7 +9,12 @@ import { useTheme } from '@material-ui/core/styles';
 import { DataTable, AdapterLink } from '../../components/common';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
-import { formatCurrency, formatDateTime, getTracking, getShippingAndTracking } from '../../utils/misc';
+import {
+  formatCurrency,
+  formatDateTime,
+  getTracking,
+  getShippingAndTracking
+} from '../../utils/misc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
 const columns = [
@@ -96,7 +101,12 @@ const columns = [
         return trackings
           ? trackings.map(tracking => (
             <>
-              <Link href={tracking.url} style={{ color: 'black' }} target="_blank" rel="noopener noreferrer">
+              <Link
+                href={tracking.url}
+                style={{ color: 'black' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {tracking.number}
               </Link>
               <br />
@@ -189,7 +199,10 @@ const AccountOrders = ({ currentUser: { data } }) => {
                       <Grid container direction="row">
                         <Grid item xs>
                           <Typography className="order-meta-title-item">ORDER DATE</Typography>
-                          <Typography className="order-meta-item-info" style={{ verticalAlign: 'top' }}>
+                          <Typography
+                            className="order-meta-item-info"
+                            style={{ verticalAlign: 'top' }}
+                          >
                             {formatDateTime(data.orders[dataIndex].createdAt, false)}
                           </Typography>
                         </Grid>
@@ -198,13 +211,17 @@ const AccountOrders = ({ currentUser: { data } }) => {
                       <Grid container direction="row">
                         <Grid item xs>
                           <Typography className="order-meta-title-item">STATUS</Typography>
-                          <Typography className="order-meta-item-info">{data.orders[dataIndex].status}</Typography>
+                          <Typography className="order-meta-item-info">
+                            {data.orders[dataIndex].status}
+                          </Typography>
                         </Grid>
                       </Grid>
 
                       <Grid container direction="row">
                         <Grid item xs>
-                          <Typography className="order-meta-title-item">TRACKING INFORMATION</Typography>
+                          <Typography className="order-meta-title-item">
+                            TRACKING INFORMATION
+                          </Typography>
                           <Typography className="order-meta-item-info">
                             <Button
                               color="primary"
@@ -220,8 +237,13 @@ const AccountOrders = ({ currentUser: { data } }) => {
               }}
             />
           ) : (
-              <DataTable title={xs ? '' : 'Your Orders'} data={data.orders} columns={columns} isLoading={isLoading} />
-            )}
+            <DataTable
+              title={xs ? '' : 'Your Orders'}
+              data={data.orders}
+              columns={columns}
+              isLoading={isLoading}
+            />
+          )}
         </Grid>
       </Grid>
     </ScrollToTop>
