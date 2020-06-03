@@ -165,11 +165,19 @@ const AboutUs = ({ location }) => {
 
     return (
       <>
-        <h3>{titleSection}</h3>
-        <h1>
-          {subTitle1} <br />
-          {subTitle2}
-        </h1>
+        <StyledContainer>
+          <Grid container direction="column" justify="center" alignItems="center">
+            <Grid item xs={8} lg={5}>
+              <h3>{titleSection}</h3>
+            </Grid>
+            <Grid item xs={11} lg={6}>
+              <h1>
+                {subTitle1} <br />
+                {subTitle2}
+              </h1>
+            </Grid>
+          </Grid>
+        </StyledContainer>
         {mobile ? (
           <div className="mobile-only">
             <img
@@ -279,14 +287,14 @@ const AboutUs = ({ location }) => {
             )}
           </Box>
           <Box py={8} className="mobile-padding">
-            <Container className="section3">
+            <StyledContainer className="section3">
               <div className="border">
                 {renderApproachBlock()}
                 <Link to="/gallery" className="buttonlink">
                   Shop Better Health
                 </Link>
               </div>
-            </Container>
+            </StyledContainer>
           </Box>
           <Box py={8} className="section4 mobile-padding">
             {renderSections()}
