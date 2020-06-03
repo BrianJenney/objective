@@ -14,6 +14,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 
@@ -223,17 +224,21 @@ const AboutUs = ({ location }) => {
         <div className="aboutus">
           {renderHeroSlider()}
           <Box py={8} className="mobile-padding">
-            <Container className="section1">
-              <div className="title">
-                <h1>{contents.welcomeHeader}</h1>
-                <img
-                  src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
-                  alt=""
-                  className="slash"
-                />
-              </div>
-              {renderWelcomeText()}
-            </Container>
+            <StyledContainer className="section1">
+              <Grid container spacing={3} justify="center">
+                <Grid item xs={12} md={10} lg={8}>
+                  <div className="title">
+                    <h1>{contents.welcomeHeader}</h1>
+                    <img
+                      src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
+                      alt=""
+                      className="slash"
+                    />
+                  </div>
+                  {renderWelcomeText()}
+                </Grid>
+              </Grid>
+            </StyledContainer>
           </Box>
           <Box className="section2 mobile-padding" py={8}>
             {mobile ? (
@@ -262,14 +267,14 @@ const AboutUs = ({ location }) => {
                 }}
                 className="desktop-img"
               >
-                <Container>
+                <StyledContainer>
                   <Box>
                     <div className="text">{renderAdditionalText()}</div>
                   </Box>
                   <Link to="/gallery" className="buttonlink mobile-only">
                     Shop Better Health
                   </Link>
-                </Container>
+                </StyledContainer>
               </div>
             )}
           </Box>
