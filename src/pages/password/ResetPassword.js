@@ -28,7 +28,7 @@ const schema = object().shape({
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '48px',
+    fontSize: '36px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -165,7 +165,9 @@ const ResetPassword = ({ history, location }) => {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
-        <Typography className={classes.title}>{utm_content ? 'Set your password' : 'Reset your password'}</Typography>
+        <Typography className={classes.title}>
+          {utm_content ? 'Set your password' : 'Reset your password'}
+        </Typography>
         <Typography className={classes.subTitle}>
           {utm_content ? 'Enter your password below.' : 'Enter your new password below.'}
         </Typography>
