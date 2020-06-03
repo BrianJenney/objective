@@ -73,7 +73,7 @@ const StyledList = withStyles(() => ({
 const Footer = ({ location, currentUser }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const isCheckoutPage = matchPath(location.pathname, { path: '/checkout' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
 
@@ -111,7 +111,7 @@ const Footer = ({ location, currentUser }) => {
   );
 
   const renderFooter = () => {
-    if (xs) {
+    if (sm) {
       return (
         <StyledBox className="footer-container">
           <Container>
@@ -402,24 +402,10 @@ const Footer = ({ location, currentUser }) => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                  className="border-bottom"
-                >
-                  <Grid
-                    item
-                    xs={6}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      padding: '8px 0px 41px'
-                    }}
-                  >
-                    <Grid item xs={2} style={{ marginRight: 60 }}>
-                      <Grid className="title">About</Grid>
+                <Grid container direction="row" alignItems="center" className="border-bottom">
+                  <Grid container sm={5} direction="row">
+                    <Grid item>
+                      <div className="title">About</div>
                       <StyledList className="links">
                         <ListItem>
                           <NavLink onClick={segmentTrackNavigationClick} to="/about_us">
@@ -433,8 +419,9 @@ const Footer = ({ location, currentUser }) => {
                         </ListItem>
                       </StyledList>
                     </Grid>
-                    <Grid item xs={4} style={{ marginLeft: 59 }}>
-                      <Grid className="title">Help</Grid>
+                    <Grid item sm={3}></Grid>
+                    <Grid item>
+                      <div className="title">Help</div>
                       <StyledList className="links">
                         <ListItem>
                           <NavLink
@@ -463,7 +450,7 @@ const Footer = ({ location, currentUser }) => {
                     </Grid>
                   </Grid>
 
-                  <Grid item xs={6} className=" border-left signup-box">
+                  <Grid item sm={7} alignItems="center" className=" border-left signup-box">
                     {confirmationVisibility ? (
                       <>
                         <Typography
