@@ -115,17 +115,38 @@ const Footer = ({ location, currentUser }) => {
       return (
         <StyledBox className="footer-container">
           <Container>
-            <Grid container spacing={0}>
-              <div className="footer-main-holder">
-                <Grid container className="footer-main" xs={12}>
-                  <Grid item xs className="row1 border-top border-bottom ">
-                    <Grid item xs={3} className="row1 logo border-right">
-                      <StyledBox>
-                        <LogoShort />
-                      </StyledBox>
+            <div className="footer-main-holder">
+              <Grid container className="footer-main" xs={12}>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  className="border-top border-bottom"
+                >
+                  <Grid item xs={3} sm={2} className="border-right">
+                    <Box className=" row1 logo">
+                      <LogoShort />
+                    </Box>
+                  </Grid>
+                  <Grid
+                    container
+                    xs={9}
+                    spacing={2}
+                    alignItems="center"
+                    style={{ paddingLeft: 10 }}
+                  >
+                    <Grid item className="uppercase follow-text">
+                      Follow Us
                     </Grid>
-                    <Grid className="row1 icon-container">
-                      <div className="uppercase follow-text">Follow Us</div>
+                    <Grid
+                      container
+                      item
+                      xs={6}
+                      sm={4}
+                      direction="row"
+                      alignItems="center"
+                      justify="space-between"
+                    >
                       <Link
                         href="https://www.instagram.com/objective_wellness"
                         target="_blank"
@@ -149,220 +170,220 @@ const Footer = ({ location, currentUser }) => {
                       </Link>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={12} className="promise border-bottom">
-                    <Grid item xs={12}>
-                      <Typography variant="h4" gutterBottom className="uppercase">
-                        THE OBJECTIVE PROMISE
+                </Grid>
+                <Grid container item xs={12} className="promise border-bottom">
+                  <Grid item xs={12}>
+                    <Typography variant="h4" gutterBottom className="uppercase">
+                      THE OBJECTIVE PROMISE
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <p>
+                      Behind every Objective supplement are studies, endless hours of research and a
+                      team with over 50 years of combined experience formulating dietary
+                      supplements. And the one thing we know for sure? Everybody&#39;s different.
+                      Every body is different. It&#39;s possible that what works wonders for your
+                      best friend might not do a thing for you. So let us know and we&#39;ll refund
+                      your money. It&#39;s that simple.
+                    </p>
+                  </Grid>
+                </Grid>
+                <Grid item xs={6} className="border-bottom">
+                  <Grid container spacing={0}>
+                    <Grid item xs={12} className="title">
+                      About
+                    </Grid>
+                    <StyledList className="links">
+                      <ListItem>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/about_us">
+                          About Us
+                        </NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/journal">
+                          Journal
+                        </NavLink>
+                      </ListItem>
+                    </StyledList>
+                  </Grid>
+                </Grid>
+                <Grid item xs={6} className="border-bottom">
+                  <Grid container spacing={0}>
+                    <Grid item xs={12} className="title">
+                      HELP
+                    </Grid>
+                    <StyledList className="links">
+                      <ListItem>
+                        <NavLink
+                          onClick={segmentTrackNavigationClick}
+                          to={gotoUrl('/account', '/login/account')}
+                        >
+                          My Account
+                        </NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">
+                          Shipping &amp; Refunds
+                        </NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/contact">
+                          Contact Us
+                        </NavLink>
+                      </ListItem>
+                      <ListItem>
+                        <NavLink onClick={segmentTrackNavigationClick} to="/faq">
+                          FAQs
+                        </NavLink>
+                      </ListItem>
+                    </StyledList>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} className="border-bottom signup-box p-20">
+                  {confirmationVisibility ? (
+                    <>
+                      <Typography
+                        style={{
+                          fontFamily: 'P22-Underground',
+                          fontSize: '22px',
+                          lineHeight: 'normal',
+                          letterSpacing: 'normal',
+                          color: '#fff'
+                        }}
+                      >
+                        Awesome! You&#39;re on the list!
                       </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <p>
-                        Behind every Objective supplement are studies, endless hours of research and
-                        a team with over 50 years of combined experience formulating dietary
-                        supplements. And the one thing we know for sure? Everybody&#39;s different.
-                        Every body is different. It&#39;s possible that what works wonders for your
-                        best friend might not do a thing for you. So let us know and we&#39;ll
-                        refund your money. It&#39;s that simple.
-                      </p>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6} className="border-bottom">
-                    <Grid container spacing={0}>
-                      <Grid item xs={12} className="title">
-                        About
-                      </Grid>
-                      <StyledList className="links">
-                        <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/about_us">
-                            About Us
-                          </NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/journal">
-                            Journal
-                          </NavLink>
-                        </ListItem>
-                      </StyledList>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6} className="border-bottom">
-                    <Grid container spacing={0}>
-                      <Grid item xs={12} className="title">
-                        HELP
-                      </Grid>
-                      <StyledList className="links">
-                        <ListItem>
-                          <NavLink
-                            onClick={segmentTrackNavigationClick}
-                            to={gotoUrl('/account', '/login/account')}
-                          >
-                            My Account
-                          </NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">
-                            Shipping &amp; Refunds
-                          </NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/contact">
-                            Contact Us
-                          </NavLink>
-                        </ListItem>
-                        <ListItem>
-                          <NavLink onClick={segmentTrackNavigationClick} to="/faq">
-                            FAQs
-                          </NavLink>
-                        </ListItem>
-                      </StyledList>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12} className="border-bottom signup-box p-20">
-                    {confirmationVisibility ? (
-                      <>
-                        <Typography
-                          style={{
-                            fontFamily: 'P22-Underground',
-                            fontSize: '22px',
-                            lineHeight: 'normal',
-                            letterSpacing: 'normal',
-                            color: '#fff'
-                          }}
-                        >
-                          Awesome! You&#39;re on the list!
-                        </Typography>
-                        <Typography
-                          style={{
-                            fontFamily: 'FreightTextProBook',
-                            fontSize: '16px',
-                            opacity: '0.75',
-                            letterSpacing: 'normal'
-                          }}
-                        >
-                          Be a step ahead and{' '}
-                          <NavLink
-                            to="/signup"
-                            underline="always"
-                            children="create an account"
-                            onClick={segmentTrackNavigationClick}
-                            style={{ color: '#959595' }}
-                          ></NavLink>{' '}
-                          in seconds.
-                        </Typography>
-                      </>
-                    ) : (
-                      <>
-                        <span>
-                          Subscribe and never miss out on new products, special offers, health tips,
-                          and more.
-                        </span>
-                        <Formik
-                          initialValues={{ email: '' }}
-                          onSubmit={handleSubmit}
-                          validationSchema={schema}
-                          render={() => (
-                            <Form style={{ height: 61, marginTop: 24 }}>
-                              <Field
-                                name="email"
-                                label=""
-                                placeholder="Your Email"
-                                component={InputField}
-                                InputProps={{
-                                  style: {
-                                    border: '#fff solid 1px',
-                                    width: '100%',
-                                    height: '100%'
-                                  }
-                                }}
-                              />
-                              <Button type="submit" className="signup-arrow">
-                                <Grid>
-                                  <Arrow />
-                                  <Typography
-                                    style={{
-                                      fontFamily: 'P22-Underground',
-                                      fontSize: '12px',
-                                      fontWeight: 600,
-                                      position: 'relative',
-                                      bottom: 10,
-                                      letterSpacing: 1
-                                    }}
-                                  >
-                                    Submit
-                                  </Typography>
-                                </Grid>
-                              </Button>
-                            </Form>
-                          )}
-                        />
-                      </>
-                    )}
-                  </Grid>
-                  <Grid container item xs={12} className="legal border-bottom">
-                    © Objective 2020
-                    <Grid container xs={12} className="legal-text">
-                      <a
-                        onClick={segmentTrackNavigationClick}
-                        href="https://www.thecloroxcompany.com/privacy/"
-                        target="_blank"
-                        style={{ paddingRight: 10, color: '#959595' }}
+                      <Typography
+                        style={{
+                          fontFamily: 'FreightTextProBook',
+                          fontSize: '16px',
+                          opacity: '0.75',
+                          letterSpacing: 'normal'
+                        }}
                       >
-                        Privacy Policy
-                      </a>
-                      <NavLink
-                        onClick={segmentTrackNavigationClick}
-                        to="/terms"
-                        style={{ color: '#959595' }}
-                      >
-                        Terms of use
-                      </NavLink>
-                    </Grid>
-                  </Grid>
+                        Be a step ahead and{' '}
+                        <NavLink
+                          to="/signup"
+                          underline="always"
+                          children="create an account"
+                          onClick={segmentTrackNavigationClick}
+                          style={{ color: '#959595' }}
+                        ></NavLink>{' '}
+                        in seconds.
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        Subscribe and never miss out on new products, special offers, health tips,
+                        and more.
+                      </span>
+                      <Formik
+                        initialValues={{ email: '' }}
+                        onSubmit={handleSubmit}
+                        validationSchema={schema}
+                        render={() => (
+                          <Form style={{ height: 61, marginTop: 24 }}>
+                            <Field
+                              name="email"
+                              label=""
+                              placeholder="Your Email"
+                              component={InputField}
+                              InputProps={{
+                                style: {
+                                  border: '#fff solid 1px',
+                                  width: '100%',
+                                  height: '100%'
+                                }
+                              }}
+                            />
+                            <Button type="submit" className="signup-arrow">
+                              <Grid>
+                                <Arrow />
+                                <Typography
+                                  style={{
+                                    fontFamily: 'P22-Underground',
+                                    fontSize: '12px',
+                                    fontWeight: 600,
+                                    position: 'relative',
+                                    bottom: 10,
+                                    letterSpacing: 1
+                                  }}
+                                >
+                                  Submit
+                                </Typography>
+                              </Grid>
+                            </Button>
+                          </Form>
+                        )}
+                      />
+                    </>
+                  )}
                 </Grid>
-                <Grid item xs={12} className="disclaimer-container">
-                  <Typography className="disclaimer-text">
-                    * Statements on this website have not been evaluated by the Food and Drug
-                    Administration. Any products discussed or advertised are not intended to
-                    diagnose, treat, cure or prevent any disease. Testimonial results are not
-                    typical. Customers may have received a gift certificate after submitting their
-                    testimonial. If you are pregnant, nursing, taking medication, or have a medical
-                    condition, consult your physician before using any dietary supplement.
-                  </Typography>
-                  <Typography className="disclaimer-text">
-                    Objective is committed to making its website accessible for all users, and will
-                    continue to take all steps necessary to ensure compliance with applicable laws.
-                  </Typography>
-                  <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
-                    If you have difficulty accessing any content, feature or functionality on our
-                    website or on our other electronic platforms, please email us at{' '}
-                    <Link
-                      style={{
-                        borderBottom: '1px solid #959595',
-                        textDecoration: 'none',
-                        color: '#959595'
-                      }}
-                      href="mailto:Help@objectivewellness.com"
+                <Grid container item xs={12} className="legal border-bottom">
+                  © Objective 2020
+                  <Grid container xs={12} className="legal-text">
+                    <a
+                      onClick={segmentTrackNavigationClick}
+                      href="https://www.thecloroxcompany.com/privacy/"
+                      target="_blank"
+                      style={{ paddingRight: 10, color: '#959595' }}
                     >
-                      Help@objectivewellness.com
-                    </Link>{' '}
-                    or call us at{' '}
-                    <Link href="tel:800-270-5771" style={{ color: '#959595' }}>
-                      800-270-5771
-                    </Link>{' '}
-                    so that we can provide you access through an alternative method.
-                  </Typography>
+                      Privacy Policy
+                    </a>
+                    <NavLink
+                      onClick={segmentTrackNavigationClick}
+                      to="/terms"
+                      style={{ color: '#959595' }}
+                    >
+                      Terms of use
+                    </NavLink>
+                  </Grid>
                 </Grid>
-                <div className="ccpa-footer">
-                  <a href="https://thecloroxcompany.com/brands" target="_blank" rel="external">
-                    <img
-                      src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg"
-                      alt="CLX"
-                    />
-                    <span>Member of the CLX family of brands</span>
-                  </a>
-                </div>
+              </Grid>
+              <Grid item xs={12} className="disclaimer-container">
+                <Typography className="disclaimer-text">
+                  * Statements on this website have not been evaluated by the Food and Drug
+                  Administration. Any products discussed or advertised are not intended to diagnose,
+                  treat, cure or prevent any disease. Testimonial results are not typical. Customers
+                  may have received a gift certificate after submitting their testimonial. If you
+                  are pregnant, nursing, taking medication, or have a medical condition, consult
+                  your physician before using any dietary supplement.
+                </Typography>
+                <Typography className="disclaimer-text">
+                  Objective is committed to making its website accessible for all users, and will
+                  continue to take all steps necessary to ensure compliance with applicable laws.
+                </Typography>
+                <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                  If you have difficulty accessing any content, feature or functionality on our
+                  website or on our other electronic platforms, please email us at{' '}
+                  <Link
+                    style={{
+                      borderBottom: '1px solid #959595',
+                      textDecoration: 'none',
+                      color: '#959595'
+                    }}
+                    href="mailto:Help@objectivewellness.com"
+                  >
+                    Help@objectivewellness.com
+                  </Link>{' '}
+                  or call us at{' '}
+                  <Link href="tel:800-270-5771" style={{ color: '#959595' }}>
+                    800-270-5771
+                  </Link>{' '}
+                  so that we can provide you access through an alternative method.
+                </Typography>
+              </Grid>
+              <div className="ccpa-footer">
+                <a href="https://thecloroxcompany.com/brands" target="_blank" rel="external">
+                  <img
+                    src="https://www.glad.com/wp-content/themes/electro/img/clx-footer-logo.svg"
+                    alt="CLX"
+                  />
+                  <span>Member of the CLX family of brands</span>
+                </a>
               </div>
-            </Grid>
+            </div>
           </Container>
         </StyledBox>
       );
