@@ -19,6 +19,7 @@ const ButtonComponent = ({
   mb,
   fullWidth,
   style,
+  padding,
   ...rest
 }) => {
   const theme = useTheme();
@@ -27,10 +28,11 @@ const ButtonComponent = ({
     fontFamily: 'p22-underground, Helvetica, sans',
     border: '1px solid #000',
     fontWeight: 900,
-    padding: '16px',
+    padding: '14px',
     letterSpacing: xs ? '1.17px' : '1.33px',
     lineHeight: xs ? 1.88 : 2.14,
     fontSize: xs ? 14 : 16,
+    height: '60px',
     ...style
   };
 
@@ -44,13 +46,9 @@ const ButtonComponent = ({
       mr={mr}
       mt={mt}
       mb={mb}
+      padding={padding || 0}
     >
-      <Button
-        disabled={loading || disabled}
-        fullWidth={fullWidth}
-        style={buttonStyles}
-        {...rest}
-      >
+      <Button disabled={loading || disabled} fullWidth={fullWidth} style={buttonStyles} {...rest}>
         {icon && <Box component={Icon} children={icon} mr={1} />}
         {children}
       </Button>

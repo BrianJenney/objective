@@ -45,6 +45,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: '17px',
     fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 
@@ -61,12 +67,12 @@ const ForgotPassword = ({ history }) => {
   };
 
   const renderForm = () => (
-    <Form>
-      <Grid container spacing={2}>
+    <Form className={classes.form}>
+      <Grid container>
         <Grid item xs={12}>
           <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ paddingTop: '33px' }}>
           <Button type="submit" fullWidth children="Request Reset Link" />
         </Grid>
       </Grid>

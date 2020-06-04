@@ -46,12 +46,12 @@ const ResetSuccess = ({ history, location }) => {
     <Container>
       <Paper className={classes.paper}>
         <Typography className={classes.title}>
-          { location.state ? 'Your password has been set' : 'Your password has been reset' }
+          {location.state ? 'Your password has been set' : 'Your password has been reset'}
         </Typography>
         <Typography className={classes.subTitle}>
           Click below to return to the account login page
         </Typography>
-        <Button fullWidth onClick={handleClick}>
+        <Button fullWidth onClick={handleClick} padding="0 53px">
           Login to your account
         </Button>
         <br />
@@ -61,7 +61,5 @@ const ResetSuccess = ({ history, location }) => {
 };
 
 const ResetSuccessPassword = withDialog(ResetSuccess);
-const ResetSuccessPage = props => (
-  <ResetSuccessPassword noClosingDialog {...props} />
-);
+const ResetSuccessPage = props => <ResetSuccessPassword noClosingDialog {...props} />;
 export default ResetSuccessPage;

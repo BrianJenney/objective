@@ -41,6 +41,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: '18px',
     fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 
@@ -81,8 +87,8 @@ const ResetPassword = ({ history, location }) => {
   );
 
   const renderForm = ({ isValid }) => (
-    <Form>
-      <Grid container spacing={2}>
+    <Form className={classes.form}>
+      <Grid container>
         <Grid item xs={12}>
           <Field
             label={utm_content ? 'Password' : 'New Password'}
@@ -143,7 +149,7 @@ const ResetPassword = ({ history, location }) => {
             }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ paddingTop: '33px' }}>
           <Button type="submit" fullWidth disabled={!isValid}>
             {utm_content ? 'Set password' : 'Reset Password'}
           </Button>

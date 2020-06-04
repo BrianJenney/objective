@@ -1,18 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  Container,
-  Typography,
-  Box,
-  CssBaseline,
-  Paper
-} from '@material-ui/core';
+import { Container, Typography, Box, CssBaseline, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '48px',
+    fontSize: '36px',
     fontFamily: 'Canela Text Web',
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(3),
@@ -34,13 +28,13 @@ const useStyles = makeStyles(theme => ({
 const ConfirmPassword = () => {
   const classes = useStyles();
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
       <Box component={Paper} pb={8} textAlign="center">
         <Typography className={classes.title}>We sent you an email</Typography>
         <Typography className={classes.text}>
-          If your email exists in our system, you will receive a link to reset
-          your password shortly.
+          If your email exists in our system, you will receive a link to reset your password
+          shortly.
         </Typography>
       </Box>
     </Container>
