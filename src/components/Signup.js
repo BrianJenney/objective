@@ -14,7 +14,7 @@ import { MenuLink, NavLink } from './common';
 const useStyles = makeStyles(theme => ({
   title: {
     minHeight: '48px',
-    fontSize: '48px',
+    fontSize: '36px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -35,11 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Signup = ({
-  requestCreateAccount,
-  clearCreateAccountError,
-  switchToLogin
-}) => {
+const Signup = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -52,12 +48,7 @@ const Signup = ({
             {switchToLogin ? (
               <MenuLink onClick={switchToLogin} children="Log in!" />
             ) : (
-              <NavLink
-                to="/login"
-                children="Log in!"
-                replace
-                underline="always"
-              />
+              <NavLink to="/login" children="Log in!" replace underline="always" />
             )}
           </Typography>
 
