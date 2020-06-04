@@ -61,12 +61,12 @@ const ForgotPassword = ({ history }) => {
   };
 
   const renderForm = () => (
-    <Form>
-      <Grid container spacing={2}>
+    <Form style={{ padding: '0 78px' }}>
+      <Grid container>
         <Grid item xs={12}>
           <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ paddingTop: '33px' }}>
           <Button type="submit" fullWidth children="Request Reset Link" />
         </Grid>
       </Grid>
