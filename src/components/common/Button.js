@@ -19,6 +19,7 @@ const ButtonComponent = ({
   mb,
   fullWidth,
   style,
+  padding,
   ...rest
 }) => {
   const theme = useTheme();
@@ -45,6 +46,7 @@ const ButtonComponent = ({
       mr={mr}
       mt={mt}
       mb={mb}
+      padding={padding || 0}
     >
       <Button disabled={loading || disabled} fullWidth={fullWidth} style={buttonStyles} {...rest}>
         {icon && <Box component={Icon} children={icon} mr={1} />}
