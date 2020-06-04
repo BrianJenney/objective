@@ -81,8 +81,8 @@ const ResetPassword = ({ history, location }) => {
   );
 
   const renderForm = ({ isValid }) => (
-    <Form>
-      <Grid container spacing={2}>
+    <Form style={{ padding: '0 78px' }}>
+      <Grid container>
         <Grid item xs={12}>
           <Field
             label={utm_content ? 'Password' : 'New Password'}
@@ -143,7 +143,7 @@ const ResetPassword = ({ history, location }) => {
             }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ paddingTop: '33px' }}>
           <Button type="submit" fullWidth disabled={!isValid}>
             {utm_content ? 'Set password' : 'Reset Password'}
           </Button>
