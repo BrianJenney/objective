@@ -54,23 +54,14 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
   );
 
   const renderForm = ({ values, isValid }) => (
-    <Form>
+    <Form style={{ padding: '0 78px' }}>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       {currentUser.loginError && (
-        <AlertPanel
-          type="error"
-          text={errorMessage}
-          onClose={clearLoginError}
-        />
+        <AlertPanel type="error" text={errorMessage} onClose={clearLoginError} />
       )}
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Field
-            name="email"
-            label="Email Address"
-            component={InputField}
-            autoComplete="email"
-          />
+          <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
         </Grid>
         <Grid item xs={12}>
           <Field
@@ -89,9 +80,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
                     type="button"
                     underline="always"
                     onClick={event => togglePasswordVisibility(event)}
-                    children={
-                      passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
-                    }
+                    children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                   />
                 </Box>
               )
@@ -109,12 +98,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
-            fullWidth
-            type="submit"
-            children="Log in"
-            disabled={!isValid}
-          />
+          <Button fullWidth type="submit" children="Log in" disabled={!isValid} />
         </Grid>
       </Grid>
     </Form>
