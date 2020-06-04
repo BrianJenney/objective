@@ -41,6 +41,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: '18px',
     fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 
@@ -81,7 +87,7 @@ const ResetPassword = ({ history, location }) => {
   );
 
   const renderForm = ({ isValid }) => (
-    <Form style={{ padding: '0 78px' }}>
+    <Form className={classes.form}>
       <Grid container>
         <Grid item xs={12}>
           <Field

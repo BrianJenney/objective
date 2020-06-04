@@ -24,7 +24,7 @@ const schema = object().shape({
     .min(6, 'Password has to be longer than 6 characters!')
 });
 
-const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
+const LoginForm = ({ title, onSubmit, clearLoginError, currentUser, formStyle }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisibility = useCallback(
     event => {
@@ -54,7 +54,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser }) => {
   );
 
   const renderForm = ({ values, isValid }) => (
-    <Form style={{ padding: '0 78px' }}>
+    <Form className={formStyle}>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       {currentUser.loginError && (
         <AlertPanel type="error" text={errorMessage} onClose={clearLoginError} />

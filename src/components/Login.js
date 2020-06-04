@@ -34,6 +34,12 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       fontSize: '14px'
     }
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 
@@ -48,7 +54,11 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
             {loginTitle || 'Log in to your account'}
           </Typography>
           <Box pt={4}>
-            <LoginForm onSubmit={requestLogin} clearLoginError={clearLoginError} />
+            <LoginForm
+              onSubmit={requestLogin}
+              clearLoginError={clearLoginError}
+              formStyle={classes.form}
+            />
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>
