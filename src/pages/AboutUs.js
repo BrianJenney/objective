@@ -196,29 +196,37 @@ const AboutUs = ({ location }) => {
             ))}
           </div>
         ) : (
-          <div className="hundred xs-hidden">
-            <div className="left fifty">
-              <Container className="container-left">
+          <div className="section4">
+            <div className="hundred">
+              <div className="image-container right">
+                <img
+                  src={allImgs[1][0].data.target.fields.file.url}
+                  alt={allImgs[1][0].data.target.fields.title}
+                />
+              </div>
+            </div>
+            <StyledContainer className="container-left">
+              <Grid container item xs={12} lg={6} className="text">
                 {allTexts[0].map((text, key) => (
                   <p className={`textNum${key}`}>{text.content[0].value}</p>
                 ))}
-              </Container>
-              <img
-                src={allImgs[0][0].data.target.fields.file.url}
-                alt={allImgs[0][0].data.target.fields.title}
-              />
+              </Grid>
+            </StyledContainer>
+            <div className="hundred">
+              <div className="image-container left">
+                <img
+                  src={allImgs[0][0].data.target.fields.file.url}
+                  alt={allImgs[0][0].data.target.fields.title}
+                />
+              </div>
             </div>
-            <div className="right fifty">
-              <img
-                src={allImgs[1][0].data.target.fields.file.url}
-                alt={allImgs[1][0].data.target.fields.title}
-              />
-              <Container className="container-right">
+            <StyledContainer className="container-right">
+              <Grid container item xs={12} lg={5} className="text">
                 {allTexts[1].map((text, key) => (
                   <p className={`textNum${key}`}>{text.content[0].value}</p>
                 ))}
-              </Container>
-            </div>
+              </Grid>
+            </StyledContainer>
           </div>
         )}
       </>
@@ -298,10 +306,10 @@ const AboutUs = ({ location }) => {
           </Box>
           <Box py={8} className="section4 mobile-padding">
             {renderSections()}
-            <Link to="/gallery" className="buttonlink">
-              Shop Better Health
-            </Link>
           </Box>
+          <Link to="/gallery" className="buttonlink">
+            Shop Better Health
+          </Link>
           <Box py={8} className="section5 mobile-padding">
             <Container>
               <h3>Press & Media Inquires?</h3>
