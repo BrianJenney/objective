@@ -10,8 +10,15 @@ import './template-styles.css';
 const useStyles = makeStyles(theme => ({
   root: props => ({
     float: props.desktopStyle.float,
+    marginTop: '10px',
+    width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
     [theme.breakpoints.down('xs')]: {
-      float: props.mobileStyle.float
+      float: props.mobileStyle.float,
+      width: !props.mobileStyle.width
+        ? 164
+        : props.mobileStyle.width === '100%'
+          ? '100%'
+        : `${props.mobileStyle.width}px`
     }
   }),
   captionImageMobile: {
