@@ -22,7 +22,11 @@ const useStyles = makeStyles(theme => ({
       width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
       textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
       [theme.breakpoints.down('xs')]: {
-        width: props.mobileStyle.width ? `${props.mobileStyle.width}px` : 164,
+        width: !props.mobileStyle.width
+          ? 164
+          : props.mobileStyle.width === '100%'
+            ? '100%'
+            : `${props.mobileStyle.width}px`,
         textAlign: props.caption ? props.caption.desktopStyle.float : 'left'
       }
     };
