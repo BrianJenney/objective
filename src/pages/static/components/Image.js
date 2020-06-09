@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   container: props => {
     const styles = {
+      marginTop: '10px',
       width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
       textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
       [theme.breakpoints.down('xs')]: {
