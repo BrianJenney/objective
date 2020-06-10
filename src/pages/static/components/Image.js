@@ -10,10 +10,10 @@ import './template-styles.css';
 const useStyles = makeStyles(theme => ({
   root: props => ({
     float: props.desktopStyle.float,
-    marginTop: '10px',
     width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
     [theme.breakpoints.down('xs')]: {
       float: props.mobileStyle.float,
+      marginTop: 0,
       width: !props.mobileStyle.width
         ? 164
         : props.mobileStyle.width === '100%'
@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
   },
   container: props => {
     const styles = {
-      marginTop: '10px',
       width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
       textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
       [theme.breakpoints.down('xs')]: {
@@ -35,6 +34,7 @@ const useStyles = makeStyles(theme => ({
           : props.mobileStyle.width === '100%'
             ? '100%'
             : `${props.mobileStyle.width}px`,
+        marginTop: 0,
         textAlign: props.caption ? props.caption.desktopStyle.float : 'left'
       }
     };
