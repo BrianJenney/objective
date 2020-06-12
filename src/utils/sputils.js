@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Container, Grid, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import {
   Hero,
@@ -50,6 +50,8 @@ export const GeneratePageComponents = (comps, template, pageName) => {
     }
   }));
   const classes = useStyles();
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const components = [];
 
   comps.forEach(obj => {
@@ -117,6 +119,122 @@ export const GeneratePageComponents = (comps, template, pageName) => {
               />
             </Grid>
           </>
+        );
+        break;
+      case 'twoColSection':
+        components.push(
+          <>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              className={`${classes.margin} ${obj.id}`}
+              id={`${obj.name}`}
+              style={{ border: '2px solid black', margin: obj.desktopStyle.margin }}
+            >
+              <RenderComponents
+                components={GenerateTwoColumn(obj.value.components, template, pageName, xs)}
+              />
+            </Grid>
+          </>
+        );
+        break;
+      default:
+        break;
+    }
+  });
+
+  return components;
+};
+
+export const GenerateTwoColumn = (comps, template, pageName, xs) => {
+  const components = [];
+
+  comps.forEach(obj => {
+    switch (obj.type) {
+      case 'sectionTitle':
+        components.push(
+          <>
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+      case 'image':
+        components.push(
+          <>
+            <Image
+              data={obj}
+              template={template}
+              type={obj.type}
+              caption={obj.caption}
+              id={`${obj.name}`}
+              style={{ margin: xs ? '0 0 20px' : '20px' }}
+            />
+          </>
+        );
+        break;
+      case 'paragraph':
+        components.push(
+          <>
+            <Paragraph data={obj} template={template} type={obj.type} id={`${obj.name}`} />
+          </>
+        );
+        break;
+      case 'button':
+        components.push(
+          <>
+            <SPButton
+              data={obj}
+              template={template}
+              type={obj.type}
+              align={obj.desktopStyle.align}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+
+      case 'sectionSubTitle':
+        components.push(
+          <>
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+      case 'list':
+        components.push(
+          <>
+            <List
+              data={obj}
+              template={template}
+              type={obj.type}
+              symbol={obj.desktopStyle.bulletSymbol}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+      case 'container':
+        components.push(
+          <div
+            style={{
+              padding: xs ? obj.mobileStyle.margin : obj.desktopStyle.margin || '0 20px 40px'
+            }}
+          >
+            {GenerateTwoColumn(obj.value.components, template, pageName)}
+          </div>
         );
         break;
       default:

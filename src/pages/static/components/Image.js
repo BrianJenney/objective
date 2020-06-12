@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Image = ({ data, template, type, caption }) => {
+const Image = ({ data, template, type, caption, style }) => {
   const classes = useStyles(data);
 
   const theme = useTheme();
@@ -76,7 +76,7 @@ const Image = ({ data, template, type, caption }) => {
     imgClass = `${classes.root} ${template}-${type}-${float}`;
   }
 
-  let image = <img src={imgSrc} className={imgClass} alt={data.name} />;
+  let image = <img src={imgSrc} className={imgClass} alt={data.name} style={style} />;
 
   // Check if image has a URL prop:
   const imgUrl = data.desktopStyle.url || data.mobileStyle.url;
