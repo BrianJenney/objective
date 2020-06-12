@@ -31,7 +31,7 @@ import {
   TrackOrderPage
 } from './pages';
 
-import { default as PrivacyPolicyPage } from './pages/static/PrivacyPage';
+import PrivacyPolicyPage from './pages/static/PrivacyPage';
 
 import {
   LoginToOrderPage,
@@ -46,7 +46,6 @@ import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
 import FastAsleepMelatonin from './pages/landingpages/FastAsleepMelatonin';
 import FastAsleepMom from './pages/landingpages/FastAsleepMom';
 import EverythingArmorExerciseRecovery from './pages/landingpages/EverythingArmorExerciseRecovery';
-import EverythingArmorAntioxidants from './pages/landingpages/EverythingArmorAntioxidants';
 
 export default [
   { path: '/', exact: true, component: HomePage },
@@ -176,11 +175,6 @@ export default [
     path: '/landing/everythingarmor-exercise-recovery',
     exact: true,
     component: EverythingArmorExerciseRecovery
-  },
-  {
-    path: '/landing/everythingarmor-antioxidants',
-    exact: true,
-    component: EverythingArmorAntioxidants
   },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },
 

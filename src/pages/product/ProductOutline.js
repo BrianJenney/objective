@@ -135,10 +135,7 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=50';
       }
       return (
-        <img
-          src={node.data.target.fields.file.url + params}
-          alt={node.data.target.fields.title}
-        />
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
       );
     }
   }
@@ -171,50 +168,36 @@ const ProductOutline = ({ scrollToTabs }) => {
   } = content;
   const keyObjectiveBackgroundStyle =
     sm && keyObjectiveBackgroundImage
-      ? {
-          backgroundImage: `url(${keyObjectiveBackgroundImage.fields.file.url})`
-        }
+      ? { backgroundImage: `url(${keyObjectiveBackgroundImage.fields.file.url})` }
       : {};
 
   return (
     <div className={classes.root} ref={containerRef}>
-      <Box
-        className={classes.keyObjective}
-        style={keyObjectiveBackgroundStyle}
-        width={1}
-      >
+      <Box className={classes.keyObjective} style={keyObjectiveBackgroundStyle} width={1}>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ left: 0 }}>
-            <img
-              src={keyObjectiveImages[0].fields.file.url}
-              alt=""
-              width="100%"
-              height="auto"
-            />
+            <img src={keyObjectiveImages[0].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
-        <Box>
-          <Typography className={classes.heading} variant="h3" align="center">
-            Key Objective
-          </Typography>
-        </Box>
-        <Box>
-          <Typography
-            className={`${classes.keyObjectiveHeading} ${productColor}`}
-            variant="h3"
-            align="center"
-          >
-            {keyObjective}
-          </Typography>
-        </Box>
+        <div className="text-container">
+          <Box>
+            <Typography className={classes.heading} variant="h3" align="center">
+              Key Objective
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              className={`${classes.keyObjectiveHeading} ${productColor}`}
+              variant="h3"
+              align="center"
+            >
+              {keyObjective}
+            </Typography>
+          </Box>
+        </div>
         {!sm && keyObjectiveImages && keyObjectiveImages.length === 2 && (
           <Box className={classes.keyObjectiveImage} style={{ right: 0 }}>
-            <img
-              src={keyObjectiveImages[1].fields.file.url}
-              alt=""
-              width="100%"
-              height="auto"
-            />
+            <img src={keyObjectiveImages[1].fields.file.url} alt="" width="100%" height="auto" />
           </Box>
         )}
       </Box>
