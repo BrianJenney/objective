@@ -153,7 +153,7 @@ const BlogPost = ({ computedMatch }) => {
                     <span className="categoryName">
                       <Link to={`/journal/category/${slug}`}>{category}</Link>
                     </span>
-                    |<span className="minRead">{post.fields.minuteRead} Min Read</span>
+                    <span className="minRead">| {post.fields.minuteRead} Min Read</span>
                   </div>
                   <h1>{post.fields.title}</h1>
                   <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
