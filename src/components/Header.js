@@ -15,8 +15,8 @@ import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
 import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
+import { requestPromoBanner } from '../modules/static/actions';
 import { setCartNotification } from '../modules/utils/actions';
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
 import { OBJECTIVE_PROMOBANNER } from '../constants/contentfulEntries';
 
 import Logo from './common/Icons/Logo/Logo';
@@ -63,13 +63,6 @@ const segmentIdentify = user => {
   }
 };
 
-const contentful = require('contentful');
-const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
-});
-
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
@@ -82,22 +75,17 @@ const Header = ({ currentUser, location }) => {
   const accountJWT = currentUser.data.account_jwt;
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
-  const [contents, setContents] = useState();
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
+  const promoBanner = useSelector(state => state.promoBanner.fields);
   let isLandingWithHeader = false;
   if (window.location.pathname === '/landing/sleepandimmunity') {
     isLandingWithHeader = true;
   }
 
-  const fetchPromoBannerData = async () => {
-    const response = await contentfulClient.getEntry(OBJECTIVE_PROMOBANNER);
-    setContents(response.fields);
-  };
-
   useEffect(() => {
-    fetchPromoBannerData();
+    dispatch(requestPromoBanner(OBJECTIVE_PROMOBANNER));
     if (
       isAcqDiscount(paramsToObject(new URLSearchParams(window.location.search))) &&
       acqDiscount === false &&
@@ -161,8 +149,8 @@ const Header = ({ currentUser, location }) => {
         <Grid container item xs={12} className="headerBar">
           <Grid item xs={12}>
             <StyledBox fontSize={9}>
-              <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
-                {contents.text}
+              <NavLink onClick={segmentTrackNavigationClick} to={promoBanner.href}>
+                {promoBanner.text}
               </NavLink>
               <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
             </StyledBox>
@@ -176,8 +164,8 @@ const Header = ({ currentUser, location }) => {
           <Grid container item xs={12}>
             <Grid item xs={12}>
               <StyledBox fontSize={12}>
-                <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
-                  {contents.text}
+                <NavLink onClick={segmentTrackNavigationClick} to={promoBanner.href}>
+                  {promoBanner.text}
                 </NavLink>
                 <div
                   className="closeIcon"
@@ -223,13 +211,13 @@ const Header = ({ currentUser, location }) => {
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
-          {promoVisible && contents && renderPromoBanner()}
+          {promoVisible && promoBanner && renderPromoBanner()}
         </>
       );
     }
     return (
       <>
-        {promoVisible && contents && renderPromoBanner()}
+        {promoVisible && promoBanner && renderPromoBanner()}
         <div className="holder">
           <Container>
             <Grid container>
