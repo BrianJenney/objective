@@ -58,12 +58,16 @@ const Blog = ({ location }) => {
       <ScrollToTop>
         <div className="journal-gallery">
           <Box className="header" py={8}>
-            <StyledContainer className="container">
-              <h1>The Journal</h1>
-              <p>
-                Lifestyle tips, recipes, deep dives into study results and more...to make good
-                health easy
-              </p>
+            <StyledContainer>
+              <Grid container spacing={3} direction="column" justify="center" alignItems="center">
+                <Grid item xs={12} sm={8} md={6}>
+                  <h1>The Journal</h1>
+                  <p>
+                    Lifestyle tips, recipes, deep dives into study results and more...to make good
+                    health easy
+                  </p>
+                </Grid>
+              </Grid>
             </StyledContainer>
           </Box>
           <Box className="content" py={8}>
