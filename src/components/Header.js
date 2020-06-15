@@ -15,7 +15,7 @@ import LoggedInUser from './LoggedInUser';
 import LoginDropdown from './LoginDropdown';
 import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
-import { requestPromoBanner } from '../modules/static/actions';
+import { requestEntryById } from '../modules/static/actions';
 import { setCartNotification } from '../modules/utils/actions';
 import { OBJECTIVE_PROMOBANNER } from '../constants/contentfulEntries';
 
@@ -78,14 +78,14 @@ const Header = ({ currentUser, location }) => {
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
-  const promoBanner = useSelector(state => state.promoBanner.fields);
+  const promoBanner = useSelector(state => state.entryById.fields);
   let isLandingWithHeader = false;
   if (window.location.pathname === '/landing/sleepandimmunity') {
     isLandingWithHeader = true;
   }
 
   useEffect(() => {
-    dispatch(requestPromoBanner(OBJECTIVE_PROMOBANNER));
+    dispatch(requestEntryById(OBJECTIVE_PROMOBANNER));
     if (
       isAcqDiscount(paramsToObject(new URLSearchParams(window.location.search))) &&
       acqDiscount === false &&

@@ -3,8 +3,8 @@ import {
   RECEIVED_PAGE,
   REQUEST_PRIVACY,
   RECEIVED_PRIVACY,
-  REQUEST_PROMOBANNER,
-  RECEIVED_PROMOBANNER
+  REQUEST_ENTRYBYID,
+  RECEIVED_ENTRYBYID
 } from './types';
 
 const localStorageClient = require('store');
@@ -52,7 +52,7 @@ export const receivedPage = page => async dispatch => {
   });
 };
 
-export const requestPromoBanner = entryId => (dispatch, getState) => {
+export const requestEntryById = entryId => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -68,7 +68,7 @@ export const requestPromoBanner = entryId => (dispatch, getState) => {
   const payload = JSON.stringify(msgpack.encode(params));
 
   stompClient.send(
-    '/exchange/content/content.request.contentfulPromoBanner',
+    '/exchange/content/content.request.contentfulEntryById',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
@@ -78,14 +78,14 @@ export const requestPromoBanner = entryId => (dispatch, getState) => {
   );
 
   dispatch({
-    type: REQUEST_PROMOBANNER,
+    type: REQUEST_ENTRYBYID,
     payload: {}
   });
 };
 
-export const receivedPromoBanner = entry => async dispatch => {
+export const receivedEntryById = entry => async dispatch => {
   dispatch({
-    type: RECEIVED_PROMOBANNER,
+    type: RECEIVED_ENTRYBYID,
     payload: entry
   });
 };

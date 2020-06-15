@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   catalog: catalogReducer,
   utils: utilsReducer,
   page: staticReducers,
-  promoBanner: staticReducers,
+  entryById: staticReducers,
   paypal: paypalReducer
 });
 

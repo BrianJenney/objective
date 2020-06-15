@@ -1,5 +1,5 @@
 import store from '../../store';
-import { receivedPage, receivedPrivacy, receivedPromoBanner } from './actions';
+import { receivedPage, receivedPrivacy, receivedEntryById } from './actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
 export const handlePageResponse = (status, data, fields, properties) => {
@@ -13,11 +13,11 @@ export const handlePageResponse = (status, data, fields, properties) => {
         throw status;
       }
       break;
-    case 'content.request.contentfulPromoBanner':
+    case 'content.request.contentfulEntryById':
       debugRabbitResponse('Contentful Response', status, data, fields, properties);
       // status handling
       if (status === 'success') {
-        store.dispatch(receivedPromoBanner(data));
+        store.dispatch(receivedEntryById(data));
       }
       break;
     case 'content.request.privacy':
