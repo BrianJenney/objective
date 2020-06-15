@@ -42,7 +42,7 @@
     .share {
       padding: 25px 0;
       font-family: p22-underground, sans-serif;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -54,7 +54,7 @@
     .social {
       display: flex;
       img {
-        width: 40px;
+        width: 30px;
         &:first-of-type {
           margin-right: 20px;
         }
@@ -499,9 +499,9 @@
     &.post {
       .flex .categoryName,
       .flex .minRead {
-        font-size: 18px;
+        font-size: 16px;
         a {
-          font-size: 18px;
+          font-size: 16px;
         }
       }
       .center {
@@ -509,13 +509,14 @@
           font-size: 36px;
           margin-bottom: 25px;
         }
-        margin-bottom: 20px;
+        margin-bottom: 12px;
       }
       .left {
         .date {
           text-align: center;
           font-size: 14px;
           margin-bottom: 0;
+          padding-bottom: 12px;
         }
       }
       .border-left {
