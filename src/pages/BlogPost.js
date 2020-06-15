@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
@@ -29,7 +29,9 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=50';
       }
 
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
+      return (
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+      );
     }
   }
 };
@@ -83,7 +85,13 @@ const BlogPost = ({ computedMatch }) => {
       return products.map(product => {
         const productVariant = variants.filter(variant => variant.slug === product.fields.Slug);
 
-        return <BlogVariantCard product={product} variant={productVariant[0]} key={product.fields.Slug} />;
+        return (
+          <BlogVariantCard
+            product={product}
+            variant={productVariant[0]}
+            key={product.fields.Slug}
+          />
+        );
       });
     }
     return <></>;
@@ -91,7 +99,7 @@ const BlogPost = ({ computedMatch }) => {
 
   const renderRelatedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
+      return posts.map(item => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
@@ -124,7 +132,11 @@ const BlogPost = ({ computedMatch }) => {
     let category = 'General';
     let slug = null;
 
-    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
+    if (
+      post.fields.categories &&
+      post.fields.categories.length > 0 &&
+      post.fields.categories[0].fields
+    ) {
       category = post.fields.categories[0].fields.title;
       slug = post.fields.categories[0].fields.slug;
     }
@@ -135,7 +147,7 @@ const BlogPost = ({ computedMatch }) => {
         <ScrollToTop>
           <div className="journal-gallery post">
             <Box className="content" py={8}>
-              <Container>
+              <StyledContainer>
                 <Box className="center">
                   <div className="flex">
                     <span className="categoryName">
@@ -144,7 +156,7 @@ const BlogPost = ({ computedMatch }) => {
                     |<span className="minRead">{post.fields.minuteRead} Min Read</span>
                   </div>
                   <h1>{post.fields.title}</h1>
-                  <img src={imageUrl} />
+                  <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
                 </Box>
                 <Grid container>
                   <Grid item xs={12} md={2} className="left">
@@ -160,7 +172,11 @@ const BlogPost = ({ computedMatch }) => {
                       <div className="icon-holder">
                         <p className="share">SHARE</p>
                         <div className="social">
-                          <a href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
+                          <a
+                            href="https://www.instagram.com/objective_wellness"
+                            target="_blank"
+                            rel="noopener"
+                          >
                             <img
                               src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
                               alt="instagram"
@@ -171,7 +187,10 @@ const BlogPost = ({ computedMatch }) => {
                             target="_blank"
                             rel="noopener"
                           >
-                            <img src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg" alt="facebook" />
+                            <img
+                              src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
+                              alt="facebook"
+                            />
                           </a>
                         </div>
                       </div>
@@ -192,12 +211,12 @@ const BlogPost = ({ computedMatch }) => {
                   */}
                   </Grid>
                 </Grid>
-              </Container>
+              </StyledContainer>
             </Box>
 
             {post.fields.relatedProducts && post.fields.relatedProducts.length > 0 ? (
               <Box className="shop">
-                <Container>
+                <StyledContainer>
                   <h1 className="title" align="center">
                     SHOP THIS POST
                   </h1>
@@ -205,7 +224,7 @@ const BlogPost = ({ computedMatch }) => {
                   <Grid container spacing={3} justify="center">
                     {renderRelatedProducts(post.fields.relatedProducts)}
                   </Grid>
-                </Container>
+                </StyledContainer>
               </Box>
             ) : (
               <></>
@@ -213,13 +232,13 @@ const BlogPost = ({ computedMatch }) => {
 
             {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
               <Box className="content related" py={8}>
-                <Container>
+                <StyledContainer>
                   <Divider />
                   <h1>Related Posts</h1>
                   <Grid container spacing={4} className="calloutSmall">
                     {renderRelatedPosts(post.fields.relatedPosts)}
                   </Grid>
-                </Container>
+                </StyledContainer>
               </Box>
             ) : (
               <></>
