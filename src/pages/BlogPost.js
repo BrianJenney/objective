@@ -158,7 +158,7 @@ const BlogPost = ({ computedMatch }) => {
                   <h1>{post.fields.title}</h1>
                   <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
                 </Box>
-                <Grid container>
+                <Grid container xs={12} md={10}>
                   <Grid item xs={12} md={2} className="left">
                     <p className="date">{dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}</p>
                     <div className="mobile-flex">
