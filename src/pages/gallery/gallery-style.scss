@@ -7,7 +7,6 @@
   }
 }
 
-.opt1,
 .opt2 {
   border: 1px solid #8b3a26;
   height: 100%;
@@ -23,7 +22,7 @@
   }
 }
 .opt1 {
-  min-height: 474px;
+  min-height: 465px;
   padding: 20px;
   .blurb-img {
     width: 100%;
@@ -55,11 +54,11 @@
     background-color: #88341f;
   }
   .leftside {
-    padding-right: 20px;
+    padding-right: 26px;
   }
   @media (min-width: 1400px) {
     .blurb-img {
-      height: 469px;
+      height: 417px;
     }
   }
 }
