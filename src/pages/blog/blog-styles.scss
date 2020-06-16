@@ -438,7 +438,7 @@
   .journal-gallery {
     .mobile-flex {
       display: flex;
-      margin-bottom: 35px;
+      margin-bottom: 20px;
       .tagholder,
       .icon-holder {
         width: 50%;
@@ -525,6 +525,13 @@
       }
       p > b {
         font-size: 16px;
+      }
+    }
+  }
+  .social {
+    img {
+      &:first-of-type {
+        margin-right: 12px !important;
       }
     }
   }
