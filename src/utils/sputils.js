@@ -115,7 +115,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
               id={`${obj.name}`}
             >
               <RenderComponents
-                components={GenerateOneColumn(obj.value.components, template, pageName)}
+                components={GenerateOneColumn(obj.value.components, template, pageName, xs)}
               />
             </Grid>
           </>
@@ -245,9 +245,10 @@ export const GenerateTwoColumn = (comps, template, pageName, xs) => {
   return components;
 };
 
-export const GenerateOneColumn = (comps, template, pageName) => {
+export const GenerateOneColumn = (comps, template, pageName, xs) => {
   const components = [];
-
+  // const theme = useTheme();
+  // const xs = useMediaQuery(theme.breakpoints.down('xs'));
   comps.forEach(obj => {
     switch (obj.type) {
       case 'sectionTitle':
@@ -353,6 +354,18 @@ export const GenerateOneColumn = (comps, template, pageName) => {
     }
   });
 
+  if (!xs) {
+    components.forEach((currVal, ind) => {
+      let startInd = null;
+      if (currVal.props.children.props.data.type === 'sectionTitle') {
+        startInd = ind;
+      }
+      if (currVal.props.children.props.data.type === 'box') {
+        const boxComp = components.splice(ind, 1)[0];
+        components.splice(startInd + 1, 0, boxComp);
+      }
+    });
+  }
   return components;
 };
 
