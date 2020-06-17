@@ -247,8 +247,7 @@ export const GenerateTwoColumn = (comps, template, pageName, xs) => {
 
 export const GenerateOneColumn = (comps, template, pageName, xs) => {
   const components = [];
-  // const theme = useTheme();
-  // const xs = useMediaQuery(theme.breakpoints.down('xs'));
+
   comps.forEach(obj => {
     switch (obj.type) {
       case 'sectionTitle':
