@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: props.mobileStyle.bgColor,
       borderColor: props.mobileStyle.borderColor,
       width: props.mobileStyle.width,
-      float: props.mobileStyle.float
+      float: props.mobileStyle.float,
+      margin: '10px auto'
     }
   })
 }));

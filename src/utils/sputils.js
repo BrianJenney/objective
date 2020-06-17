@@ -354,12 +354,13 @@ export const GenerateOneColumn = (comps, template, pageName, xs) => {
   });
 
   if (!xs) {
+    let startInd = null;
     components.forEach((currVal, ind) => {
-      let startInd = null;
       if (currVal.props.children.props.data.type === 'sectionTitle') {
         startInd = ind;
       }
-      if (currVal.props.children.props.data.type === 'box') {
+
+      if (startInd !== null && currVal.props.children.props.data.type === 'box') {
         const boxComp = components.splice(ind, 1)[0];
         components.splice(startInd + 1, 0, boxComp);
       }
