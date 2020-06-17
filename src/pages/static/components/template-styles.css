@@ -208,11 +208,11 @@
   border-right: 1px solid #000;
 }
 .LP-Template-1-image-left {
-  margin: 0 25px 20px 0;
+  margin: 10px 25px 20px 0;
   float: left;
 }
 .LP-Template-1-image-right {
-  margin: 0 0 20px 25px;
+  margin: 10px 0 20px 25px;
   float: right;
 }
 .LP-Template-1-image-caption-left {
