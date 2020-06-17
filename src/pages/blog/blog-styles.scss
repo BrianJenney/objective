@@ -42,7 +42,7 @@
     .share {
       padding: 25px 0;
       font-family: p22-underground, sans-serif;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -54,7 +54,7 @@
     .social {
       display: flex;
       img {
-        width: 30px;
+        width: 40px;
         &:first-of-type {
           margin-right: 20px;
         }
@@ -445,7 +445,7 @@
         padding-top: 20px;
       }
       .tags {
-        min-height: 117px;
+        min-height: 90px;
       }
       .icon-holder {
         padding-bottom: 20px;
@@ -453,7 +453,7 @@
         border-bottom: 2px solid;
         border-left: 2px solid;
 
-        min-height: 117px;
+        min-height: 90px;
         .share {
           padding: 0 0 10px;
         }
@@ -528,8 +528,12 @@
       }
     }
   }
+  .share {
+    font-size: 14px !important;
+  }
   .social {
     img {
+      width: 30px !important;
       &:first-of-type {
         margin-right: 12px !important;
       }
