@@ -234,30 +234,28 @@ const Header = ({ currentUser, location }) => {
         <div className="holder">
           <StyledContainer>
             <Grid container spacing={3} direction="row" alignItems="center">
-              <Grid container xs={3} spacing={5} direction="row" alignItems="center">
-                <Grid item className="h-pding">
-                  <StyledLink
-                    onClick={segmentTrackNavigationClick}
-                    component={RouterLink}
-                    to="/gallery"
-                  >
-                    Shop
-                  </StyledLink>
-                </Grid>
-                <Grid item className="h-pding">
-                  <StyledLink
-                    onClick={segmentTrackNavigationClick}
-                    component={RouterLink}
-                    to="/journal"
-                  >
-                    Journal
-                  </StyledLink>
-                </Grid>
+              <Grid item sm={1} className="h-pding">
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/gallery"
+                >
+                  Shop
+                </StyledLink>
+              </Grid>
+              <Grid item sm={1} className="h-pding">
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/journal"
+                >
+                  Journal
+                </StyledLink>
               </Grid>
               <Grid
                 container
-                xs={3}
-                lg={2}
+                sm={8}
+                spacing={1}
                 direction="row"
                 alignItems="center"
                 justify="center"
@@ -271,11 +269,11 @@ const Header = ({ currentUser, location }) => {
               </Grid>
               <Grid
                 container
-                xs={3}
-                spacing={5}
+                sm={2}
+                spacing={1}
                 direction="row"
+                justify="space-around"
                 alignItems="center"
-                justify="flex-end"
               >
                 <Grid item xs="auto" className="h-pding">
                   <StyledLink
@@ -284,6 +282,7 @@ const Header = ({ currentUser, location }) => {
                     onClick={segmentTrackNavigationClick}
                   />
                 </Grid>
+
                 <Grid item xs="auto" className="h-pding">
                   {!isCheckoutPage && <ShoppingCart />}
                   {cartNotification ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
