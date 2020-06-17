@@ -15,7 +15,9 @@
     </script>
     <!-- LogRocket -->
     <script src="https://cdn.logrocket.io/LogRocket.min.js"></script>
-    <script>window.LogRocket && window.LogRocket.init('oe5etj/objective-dev');</script>
+    <script>if ('%REACT_APP_LOGROCKET%' != '') {
+      window.LogRocket && window.LogRocket.init('%REACT_APP_LOGROCKET%');
+      }</script>
     <!-- OneTrust Cookies Consent Notice end -->
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/objective_favicon.png" />
