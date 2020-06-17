@@ -155,7 +155,7 @@ const Products = () => {
           <Box py={5} className="corehealth">
             <StyledContainer>
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                   <div className="opt1">
                     <Grid container className="gallery-content-blurb">
                       <Grid item xs={12} md={6} className="leftside">
@@ -166,7 +166,7 @@ const Products = () => {
                           feeling good day in and day out.
                         </p>
                       </Grid>
-                      <Grid item xs={12} sm={10} md={6}>
+                      <Grid item xs={12} sm={5} md={6}>
                         <img src={healthImg} alt="" className="blurb-img" />
                       </Grid>
                     </Grid>
@@ -193,7 +193,7 @@ const Products = () => {
           <Box py={5} className="beige-bg moodenergy">
             <StyledContainer className="beige-container">
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                   <div className="opt1">
                     <Grid container className="gallery-content-blurb">
                       <Grid item xs={12} md={6} className="leftside">
@@ -204,7 +204,7 @@ const Products = () => {
                           sleep to sharper thinking and hormone help.
                         </p>
                       </Grid>
-                      <Grid item xs={12} sm={10} md={6}>
+                      <Grid item xs={12} sm={5} md={6}>
                         <img src={energyImg} alt="" className="blurb-img" />
                       </Grid>
                     </Grid>
@@ -231,7 +231,7 @@ const Products = () => {
           <Box py={5} className="skinbeauty">
             <StyledContainer>
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                   <div className="opt1">
                     <Grid container className="gallery-content-blurb">
                       <Grid item xs={12} md={6} className="leftside">
@@ -242,7 +242,7 @@ const Products = () => {
                           healthy, radiant glow.
                         </p>
                       </Grid>
-                      <Grid item xs={12} sm={10} md={6}>
+                      <Grid item xs={12} sm={5} md={6}>
                         <img src={skinImg} alt="" className="blurb-img" />
                       </Grid>
                     </Grid>
