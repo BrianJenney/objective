@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ import BlogVariantCard from './blog/BlogVariantCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import HeadTags from '../components/common/HeadTags';
 import NotFound from './notfound/NotFound';
+import StaticPage from './static/StaticPage';
 const dateFormat = require('dateformat');
 
 const contentfulOptions = {
@@ -29,7 +31,9 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=50';
       }
 
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
+      return (
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+      );
     }
   }
 };
@@ -38,6 +42,7 @@ const BlogPost = ({ computedMatch }) => {
   const { post_slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const [useStaticPage, setUseStaticPage] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
   const validPost = seoMap[post_slug];
   let title;
@@ -50,19 +55,26 @@ const BlogPost = ({ computedMatch }) => {
   const fetchData = async () => {
     const postData = await fetchPost(post_slug);
     setPost(postData);
+    // Check if BlogPost entry exists, then whether there is a post body
+    if (postData && !postData.fields.body) {
+      // If post body is empty but BlogPost exists, use StaticPage entry
+      setUseStaticPage(true);
+    }
   };
 
   useEffect(() => {
+    fetchData();
     if (validPost) {
-      fetchData();
       window.analytics.page('Journal Post');
-      return () => {
-        setPost({});
-      };
+      setPost({});
     } else {
       window.analytics.page('404 Error');
     }
   }, [post_slug]);
+
+  if (useStaticPage) {
+    return <StaticPage />;
+  }
 
   if (!validPost) {
     return <NotFound />;
@@ -83,7 +95,13 @@ const BlogPost = ({ computedMatch }) => {
       return products.map(product => {
         const productVariant = variants.filter(variant => variant.slug === product.fields.Slug);
 
-        return <BlogVariantCard product={product} variant={productVariant[0]} key={product.fields.Slug} />;
+        return (
+          <BlogVariantCard
+            product={product}
+            variant={productVariant[0]}
+            key={product.fields.Slug}
+          />
+        );
       });
     }
     return <></>;
@@ -91,7 +109,7 @@ const BlogPost = ({ computedMatch }) => {
 
   const renderRelatedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
+      return posts.map(item => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
@@ -110,6 +128,7 @@ const BlogPost = ({ computedMatch }) => {
     return <></>;
   };
 
+  // eslint-disable-next-line no-shadow
   const renderPost = post => {
     if (!post.fields || !post.fields.title) {
       return <div>Loading...</div>;
@@ -124,8 +143,13 @@ const BlogPost = ({ computedMatch }) => {
     let category = 'General';
     let slug = null;
 
-    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
+    if (
+      post.fields.categories &&
+      post.fields.categories.length > 0 &&
+      post.fields.categories[0].fields
+    ) {
       category = post.fields.categories[0].fields.title;
+      // eslint-disable-next-line prefer-destructuring
       slug = post.fields.categories[0].fields.slug;
     }
 
@@ -144,7 +168,7 @@ const BlogPost = ({ computedMatch }) => {
                     |<span className="minRead">{post.fields.minuteRead} Min Read</span>
                   </div>
                   <h1>{post.fields.title}</h1>
-                  <img src={imageUrl} />
+                  <img src={imageUrl} alt={post.fields.title} />
                 </Box>
                 <Grid container>
                   <Grid item xs={12} md={2} className="left">
@@ -160,7 +184,11 @@ const BlogPost = ({ computedMatch }) => {
                       <div className="icon-holder">
                         <p className="share">SHARE</p>
                         <div className="social">
-                          <a href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
+                          <a
+                            href="https://www.instagram.com/objective_wellness"
+                            target="_blank"
+                            rel="noopener"
+                          >
                             <img
                               src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
                               alt="instagram"
@@ -171,7 +199,10 @@ const BlogPost = ({ computedMatch }) => {
                             target="_blank"
                             rel="noopener"
                           >
-                            <img src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg" alt="facebook" />
+                            <img
+                              src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
+                              alt="facebook"
+                            />
                           </a>
                         </div>
                       </div>
