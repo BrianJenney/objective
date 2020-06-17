@@ -456,9 +456,19 @@
         min-height: 90px;
         .share {
           padding: 0 0 10px;
+          font-size: 14px;
+        }
+        .social {
+          img {
+            width: 30px;
+            &:first-of-type {
+              margin-right: 12px;
+            }
+          }
         }
       }
     }
+    
     .header {
       .container {
         padding-left: 16px;
@@ -525,17 +535,6 @@
       }
       p > b {
         font-size: 16px;
-      }
-    }
-  }
-  .share {
-    font-size: 14px !important;
-  }
-  .social {
-    img {
-      width: 30px !important;
-      &:first-of-type {
-        margin-right: 12px !important;
       }
     }
   }
