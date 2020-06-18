@@ -130,7 +130,10 @@ export const GeneratePageComponents = (comps, template, pageName) => {
               md={8}
               className={`${classes.margin} ${obj.id}`}
               id={`${obj.name}`}
-              style={{ border: '2px solid black', margin: obj.desktopStyle.margin }}
+              style={{
+                border: obj.desktopStyle.borderColor || '2px solid #000',
+                margin: obj.desktopStyle.margin || '40px auto'
+              }}
             >
               <RenderComponents
                 components={GenerateTwoColumn(obj.value.components, template, pageName, xs)}
