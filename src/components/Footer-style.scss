@@ -163,6 +163,12 @@
       padding: 31px 0px;
     }
   }
+  .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+    border: 2px solid #c10230;
+  }
+  .MuiFormHelperText-contained {
+    margin: 0px !important;
+  }
   .border-left {
     border-left: 1px solid #959595;
   }
