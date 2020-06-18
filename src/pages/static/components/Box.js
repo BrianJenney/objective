@@ -21,7 +21,12 @@ const useStyles = makeStyles(theme => ({
       width: props.mobileStyle.width
     },
     [theme.breakpoints.down('xs')]: {
-      display: props.mobileStyle.display
+      display: props.mobileStyle.display,
+      backgroundColor: props.mobileStyle.bgColor,
+      borderColor: props.mobileStyle.borderColor,
+      width: props.mobileStyle.width,
+      float: props.mobileStyle.float,
+      margin: '10px auto'
     }
   })
 }));

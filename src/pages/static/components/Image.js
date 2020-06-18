@@ -10,8 +10,15 @@ import './template-styles.css';
 const useStyles = makeStyles(theme => ({
   root: props => ({
     float: props.desktopStyle.float,
+    width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
     [theme.breakpoints.down('xs')]: {
-      float: props.mobileStyle.float
+      float: props.mobileStyle.float,
+      marginTop: 0,
+      width: !props.mobileStyle.width
+        ? 164
+        : props.mobileStyle.width === '100%'
+          ? '100%'
+        : `${props.mobileStyle.width}px`
     }
   }),
   captionImageMobile: {
@@ -22,7 +29,12 @@ const useStyles = makeStyles(theme => ({
       width: props.desktopStyle.width ? `${props.desktopStyle.width}px` : 320,
       textAlign: props.caption ? props.caption.desktopStyle.float : 'left',
       [theme.breakpoints.down('xs')]: {
-        width: props.mobileStyle.width ? `${props.mobileStyle.width}px` : 164,
+        width: !props.mobileStyle.width
+          ? 164
+          : props.mobileStyle.width === '100%'
+            ? '100%'
+            : `${props.mobileStyle.width}px`,
+        marginTop: 0,
         textAlign: props.caption ? props.caption.desktopStyle.float : 'left'
       }
     };
@@ -45,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Image = ({ data, template, type, caption }) => {
+const Image = ({ data, template, type, caption, style }) => {
   const classes = useStyles(data);
 
   const theme = useTheme();
@@ -64,7 +76,7 @@ const Image = ({ data, template, type, caption }) => {
     imgClass = `${classes.root} ${template}-${type}-${float}`;
   }
 
-  let image = <img src={imgSrc} className={imgClass} alt={data.name} />;
+  let image = <img src={imgSrc} className={imgClass} alt={data.name} style={style} />;
 
   // Check if image has a URL prop:
   const imgUrl = data.desktopStyle.url || data.mobileStyle.url;
