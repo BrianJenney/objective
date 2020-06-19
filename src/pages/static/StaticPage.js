@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { requestPage } from '../../modules/static/actions';
 import { buildPage } from '../../utils/sputils';
@@ -15,7 +16,8 @@ const StaticPage = ({ match }) => {
   const page = useSelector(state => state.page);
 
   useEffect(() => {
-    if (pageLoaded === false) dispatch(requestPage(slug));
+    const [subdomain] = window.location.hostname.split('.');
+    if (pageLoaded === false) dispatch(requestPage(slug, subdomain));
   }, []);
 
   useEffect(() => {
