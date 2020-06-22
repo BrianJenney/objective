@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -39,12 +38,12 @@ const contentfulOptions = {
 };
 
 const BlogPost = ({ computedMatch }) => {
-  const { post_slug } = computedMatch.params;
+  const { postSlug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
   const [useStaticPage, setUseStaticPage] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validPost = seoMap[post_slug];
+  const validPost = seoMap[postSlug];
   let title;
   let description;
 
@@ -53,7 +52,7 @@ const BlogPost = ({ computedMatch }) => {
   }
 
   const fetchData = async () => {
-    const postData = await fetchPost(post_slug);
+    const postData = await fetchPost(postSlug);
     setPost(postData);
     // Check if BlogPost entry exists, then whether there is a post body
     if (postData && !postData.fields.body) {
@@ -70,7 +69,7 @@ const BlogPost = ({ computedMatch }) => {
     } else {
       window.analytics.page('404 Error');
     }
-  }, [post_slug]);
+  }, [postSlug]);
 
   if (useStaticPage) {
     return <StaticPage />;
@@ -128,8 +127,7 @@ const BlogPost = ({ computedMatch }) => {
     return <></>;
   };
 
-  // eslint-disable-next-line no-shadow
-  const renderPost = post => {
+  const renderPost = () => {
     if (!post.fields || !post.fields.title) {
       return <div>Loading...</div>;
     }
@@ -149,8 +147,7 @@ const BlogPost = ({ computedMatch }) => {
       post.fields.categories[0].fields
     ) {
       category = post.fields.categories[0].fields.title;
-      // eslint-disable-next-line prefer-destructuring
-      slug = post.fields.categories[0].fields.slug;
+      ({ slug } = post.fields.categories[0].fields);
     }
 
     return (
@@ -261,7 +258,7 @@ const BlogPost = ({ computedMatch }) => {
     );
   };
 
-  return renderPost(post);
+  return renderPost();
 };
 
 export default BlogPost;
