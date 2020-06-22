@@ -93,6 +93,10 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     });
   });
 
+  const paymentMethod =
+    order.paymentData.hasOwnProperty('method') && order.paymentData.method === 'paypal'
+      ? 'paypal'
+      : 'creditcard';
   window.analytics.track('Order Completed', {
     affiliation: order.storeCode,
     coupon: order.promo && order.promo.code ? order.promo.code : '',
@@ -104,8 +108,13 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     order_date: order.transactions.transactionDate,
     order_id: order.orderNumber,
     order_link: `https://objectivewellness.com/orders/${order._id}`,
-    payment_method: 'Credit Card',
-    payment_method_detail: order.paymentData.cardType,
+    payment_method: paymentMethod === 'creditcard' ? 'Credit Card' : 'PayPal',
+    payment_method_detail:
+      paymentMethod === 'creditcard'
+        ? order.paymentData.cardType
+        : order.paymentData.hasOwnProperty('email')
+        ? order.paymentData.email
+        : '',
     products: orderItemsTransformed,
     shipping: order.shippingMethod.price,
     subtotal: order.subtotal,
@@ -227,7 +236,10 @@ export const receivedCancelOrderFailure = order => async (dispatch, getState) =>
   });
 };
 
-export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -256,7 +268,10 @@ export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null
   });
 };
 
-export const requestFindUnauthenticatedOrders = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+export const requestFindUnauthenticatedOrders = (accountJwt, query = { accountId: null }) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
