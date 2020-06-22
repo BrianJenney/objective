@@ -30,7 +30,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // const { requestFetchBootstrap, requestPatchCart, requestMergeCarts } = this.props;
+    // eslint-disable-next-line no-shadow
+    const { requestFetchBootstrap, requestPatchCart, requestMergeCarts } = this.props;
 
     // ImpactRadius, Segment click id logic
     // Ref: Jira DC-846
