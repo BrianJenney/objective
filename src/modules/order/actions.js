@@ -110,6 +110,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
     order_link: `https://objectivewellness.com/orders/${order._id}`,
     payment_method: paymentMethod === 'creditcard' ? 'Credit Card' : 'PayPal',
     payment_method_detail:
+      // eslint-disable-next-line no-nested-ternary
       paymentMethod === 'creditcard'
         ? order.paymentData.cardType
         : order.paymentData.hasOwnProperty('email')
