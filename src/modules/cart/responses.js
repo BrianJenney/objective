@@ -3,6 +3,7 @@ import {
   receivedCreateCart,
   receivedFetchCart,
   receivedPatchCart,
+  receivedRemoveCart,
   receivedUpdateCart,
   setCartDrawerOpened,
   segmentAddCouponReceived,
@@ -29,12 +30,22 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.removecoupon':
     case 'cart.request.setshippingaddress':
     case 'cart.request.patch':
-      debugRabbitResponse(`Cart Patch Response (${fields.routingKey})`, status, data, fields, properties);
+      debugRabbitResponse(
+        `Cart Patch Response (${fields.routingKey})`,
+        status,
+        data,
+        fields,
+        properties
+      );
+      // eslint-disable-next-line no-case-declarations
       const oldCart = store.getState().cart;
+
+      // eslint-disable-next-line no-case-declarations
       let openCartDrawer = true;
 
+      // eslint-disable-next-line no-prototype-builtins
       if (!data.hasOwnProperty('items')) {
-        //Something went wrong on backend.
+        // Something went wrong on backend.
         break;
       }
 
@@ -43,7 +54,10 @@ export const handleCartResponse = (status, data, fields, properties) => {
       }
 
       // Merge carts notification logic
-      if (fields.routingKey === 'cart.request.mergecarts' && data.items.length !== oldCart.items.length) {
+      if (
+        fields.routingKey === 'cart.request.mergecarts' &&
+        data.items.length !== oldCart.items.length
+      ) {
         openCartDrawer = false;
         store.dispatch(setCartNotification(true, 'cartMerged'));
       }
@@ -72,7 +86,12 @@ export const handleCartResponse = (status, data, fields, properties) => {
       debugRabbitResponse('Cart Update Response', status, data, fields, properties);
       store.dispatch(receivedUpdateCart(data));
       break;
+    case 'cart.request.remove':
+      debugRabbitResponse('Cart Remove Response', status, data, fields, properties);
+      store.dispatch(receivedRemoveCart(data));
+      break;
     default:
+      // eslint-disable-next-line no-console
       console.log(`bad response ${fields.routingKey}`);
   }
 };
