@@ -7,7 +7,8 @@ import {
   RECEIVED_PATCH_CART,
   RECEIVED_UPDATE_CART,
   SET_CART_DRAWER_OPENED,
-  REQUEST_REMOVE_CART_BY_ID
+  REQUEST_REMOVE_CART_BY_ID,
+  RECEIVED_REMOVE_CART
 } from './types';
 
 const localStorageClient = require('store');
@@ -15,12 +16,12 @@ const localStorageClient = require('store');
 const INITIAL_STATE = {
   accountId: null,
   items: [],
-  subtotal: 0,
-  taxRate: 0,
-  tax: 0,
-  discount: 0,
-  total: 0,
-  savings: 0,
+  // subtotal: 0,
+  // taxRate: 0,
+  // tax: 0,
+  // discount: 0,
+  // total: 0,
+  // savings: 0,
   cartDrawerOpened: false,
   cartMerged: false
 };
@@ -35,8 +36,7 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_FETCH_CART:
       return { ...state };
     case RECEIVED_FETCH_CART:
-      if (action.payload !== undefined)
-        localStorageClient.set('cartId', action.payload._id);
+      if (action.payload !== undefined) localStorageClient.set('cartId', action.payload._id);
       return { ...state, ...action.payload };
     case REQUEST_PATCH_CART:
       return { ...state };
@@ -49,6 +49,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, cartDrawerOpened: action.payload };
     case REQUEST_REMOVE_CART_BY_ID:
       return { ...state };
+    case RECEIVED_REMOVE_CART:
+      return { ...INITIAL_STATE };
     default:
       return state;
   }

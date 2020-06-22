@@ -6,7 +6,7 @@ const localStorageClient = require('store');
 
 export const requestFetchBootstrap = () => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
-  const cartId = localStorageClient.get('cartId');
+  const cartId = localStorageClient.get('cartId') || null;
 
   const params = {
     cartId
