@@ -29,7 +29,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.addcoupon':
     case 'cart.request.removecoupon':
     case 'cart.request.setshippingaddress':
-    case 'cart.request.patch':
+    case 'cart.request.patch': {
       debugRabbitResponse(
         `Cart Patch Response (${fields.routingKey})`,
         status,
@@ -37,10 +37,8 @@ export const handleCartResponse = (status, data, fields, properties) => {
         fields,
         properties
       );
-      // eslint-disable-next-line no-case-declarations
-      const oldCart = store.getState().cart;
 
-      // eslint-disable-next-line no-case-declarations
+      const oldCart = store.getState().cart;
       let openCartDrawer = true;
 
       // eslint-disable-next-line no-prototype-builtins
@@ -82,6 +80,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
         store.dispatch(setCartDrawerOpened(true));
       }
       break;
+    }
     case 'cart.request.update':
       debugRabbitResponse('Cart Update Response', status, data, fields, properties);
       store.dispatch(receivedUpdateCart(data));
