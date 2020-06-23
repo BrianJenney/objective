@@ -39,7 +39,7 @@ export const handleCartResponse = (status, data, fields, properties) => {
       );
       const oldCart = store.getState().cart;
 
-      // eslint-disable-next-line no-case-declarations
+      const oldCart = store.getState().cart;
       let openCartDrawer = true;
 
       // eslint-disable-next-line no-prototype-builtins
