@@ -4,6 +4,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { Container, Grid, useMediaQuery, Box } from '@material-ui/core';
 import { addCoupon, addToCart } from '../../modules/cart/functions';
+import { ATC, OutOfStockLP, OutOfStock } from '../../components/atcOutOfStock';
+import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmedLP';
 import { trackLPSection } from '../../utils/misc';
 import Logo from '../../components/common/Icons/Logo/Logo';
 import './fast-asleep.scss';
@@ -15,6 +17,70 @@ const FastAsleepIngredients = ({ history, location }) => {
   const catalog = useSelector(state => state.catalog);
   const [prodAdded, setProdAdded] = useState(false);
   const [couponAdded, setCouponAdded] = useState(false);
+
+  // Out of stock modal states
+  const [openOutOfStockDialog, setOpenOutOfStockDialog] = useState(false);
+  const [openEmailConfirmation, setOpenEmailConfirmation] = useState(false);
+
+  const [state, setState] = useState({
+    product_img: '',
+    product_name: '',
+    product_category: '',
+    product_id: '',
+    product_sku: '',
+    product_variant: '',
+    product_url: '',
+    product_stock: null
+  });
+
+  const getSelectVariant = useCallback(() => {
+    const variant = catalog.variants.find(item => item.slug === 'fast-asleep');
+
+    setState(prevState => ({
+      ...prevState,
+      product_img: variant.assets.thumbnail,
+      product_name: variant.name,
+      product_category: variant.productCategory,
+      product_id: variant.id,
+      product_sku: variant.sku.slice(0, 4),
+      product_variant: variant.sku,
+      product_url: `/products/${variant.slug}`,
+      product_stock: variant.inStock
+    }));
+  });
+
+  useEffect(() => {
+    if (state.product_stock) {
+      if (state.product_stock >= 50) {
+        handleAddToCart();
+      } else {
+        handleOpenOutOfStockDialog();
+      }
+    }
+  }, [state]);
+
+
+
+
+  // Out of stock functions
+
+  const handleOpenOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(true);
+  }, [setOpenOutOfStockDialog]);
+
+  const closeOutOfStockDialog = useCallback(() => {
+    setOpenOutOfStockDialog(false);
+  }, [setOpenOutOfStockDialog]);
+
+  /* Out Of Stock email confirmation */
+  const handleOpenEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(true);
+  }, [setOpenEmailConfirmation]);
+  const closeEmailConfirmation = useCallback(() => {
+    setOpenEmailConfirmation(false);
+  }, [setOpenEmailConfirmation]);
+
+
   const section = useRef({
     a: false,
     b: false,
@@ -110,7 +176,7 @@ const FastAsleepIngredients = ({ history, location }) => {
   }, [prodAdded, couponAdded]);
 
   useEffect(() => {
-    if (cart.items.length > 0 && couponAdded === false) {
+    if (prodAdded && couponAdded === false) {
       handleAddCoupon();
     }
   }, [cart]);
@@ -284,18 +350,18 @@ const FastAsleepIngredients = ({ history, location }) => {
             <p>
               When GABA’s calming effects on the nervous system were first revealed in the research, many companies
               raced to market with synthetic GABA supplements, which didn’t yield great results. But then a new form of
-              GABA came on to the scene. Called PharmaGABA®, it’s produced by fermentation using the same friendly
-              probiotic (Lactobacilllus hilgardi) used to culture the traditional Korean fermented food, kimchi.
+              GABA came on to the scene. Called PharmaGABA<sup>®</sup>, it’s produced by fermentation using the same friendly
+              probiotic (Lactobacillus hilgardii) used to culture the traditional Korean fermented food, kimchi.
               <sup>5*</sup>
             </p>
             <p>
-              PharmaGABA® has been shown to effectively increase the alpha-wave brain activity associated with calmness
+              PharmaGABA<sup>®</sup> has been shown to effectively increase the alpha-wave brain activity associated with calmness
               and relaxation while decreasing the beta-wave activity linked with nervousness and feelings of
               anxiousness.
               <sup>6,7*</sup>
             </p>
             <p>
-              In a small 7-day study, PharmaGABA® reduced the time it took study participants to fall asleep and
+              In a small 7-day study, PharmaGABA<sup>®</sup> reduced the time it took study participants to fall asleep and
               increased sleep quality and efficiency (the amount of time asleep while in bed), according to Pittsburgh
               Sleep Quality Index (PSQI) scores. Participants also reported improvements in the way they felt upon
               waking.<sup>8*</sup>
@@ -305,11 +371,11 @@ const FastAsleepIngredients = ({ history, location }) => {
               drowsiness in the morning, along with a welcomed decrease in nighttime urination.<sup>9*</sup>
             </p>
             <p>
-              And a third non-sleep study showed how PharmaGABA® effectively eased stress. Participants reported calmer
+              And a third non-sleep study showed how PharmaGABA<sup>®</sup> effectively eased stress. Participants reported calmer
               feelings and EEG readings confirmed it: They showed measurably decreased stress responses.<sup>10*</sup>
             </p>
             <p>
-              Another great thing about PharmaGABA® is that it’s quickly absorbed. It starts working within 30 minutes
+              Another great thing about PharmaGABA<sup>®</sup> is that it’s quickly absorbed. It starts working within 30 minutes
               after ingestion—making it perfect for bedtime.<sup>10*</sup>
             </p>
             <hr />
@@ -339,7 +405,7 @@ const FastAsleepIngredients = ({ history, location }) => {
                 Saffron contains several biologically active antioxidant compounds, including crocin, picrocrocin and
                 saffranal. Recent studies show that these compounds help support a normal inflammatory response, reduce
                 levels of the stress hormone cortisol, and can help balance levels of important mood- and
-                sleep-regulating brain chemicals like serotonin, dopamine and glutamate.11-16<sup>*</sup>
+                sleep-regulating brain chemicals like serotonin, dopamine and glutamate.<sup>11-16*</sup>
               </p>
               <div className="beige-box adds xs-only">
                 <div className="box-header">All of This Adds Up to Profound benefits:</div>
@@ -377,7 +443,7 @@ const FastAsleepIngredients = ({ history, location }) => {
               </div>
               <p>
                 Another truly impressive study—a randomized, double-blind, placebo-controlled clinical trial—evaluated
-                the effects of a daily dose of 30 mg per day of a standardized saffron extract called Saffr’Activ® on
+                the effects of a daily dose of 30 mg per day of a standardized saffron extract called Saffr’Activ<sup>®</sup> on
                 mood, anxiousness and sleep in 30 healthy adults.<sup>16*</sup>
               </p>
               <p>
@@ -402,7 +468,7 @@ const FastAsleepIngredients = ({ history, location }) => {
                 <li>Feeling refreshed upon waking</li>
               </ul>
             </div>
-            <h2>Saffr’ACTIV® is the real deal</h2>
+            <h2>Saffr’ACTIV<sup>®</sup> is the real deal</h2>
             <p>
               Growing, harvesting, drying and extracting saffron is no simple endeavor, and as is the case with most
               things as precious (and pricey) as saffron, adulteration is a huge issue when it comes to sourcing the raw
@@ -420,7 +486,7 @@ const FastAsleepIngredients = ({ history, location }) => {
                 </em>
               </div>
               <p>
-                Saffr’ACTIV® is the real deal. It’s made from Crocus sativa saffron flowers grown in North Africa,
+                Saffr’ACTIV<sup>®</sup> is the real deal. It’s made from Crocus sativa saffron flowers grown in North Africa,
                 Greece and the Middle East.<sup>*</sup>
               </p>
               <p>
@@ -479,9 +545,47 @@ const FastAsleepIngredients = ({ history, location }) => {
                 Get the deep restorative sleep you need <br />
                 with Saffron & GABA Chocolates
               </div>
-              <NavLink onClick={handleClick} className="green-btn">
-                get 15% off — Buy Now
-              </NavLink>
+              {/* If product in stock, add to cart */}
+              {state.product_stock >= 50 && (
+                <NavLink onClick={getSelectVariant} className="green-btn">
+                  get 15% off — Buy Now
+                </NavLink>
+              )}
+
+              {/* If product low/out of stock, notify customer */}
+              
+              {state.product_stock < 50 && (
+                <>
+                  <OutOfStockLP
+                    onClick={getSelectVariant}
+                    onExited={closeOutOfStockDialog}
+                    buttonClass="green-btn"
+                    discount_text="15%"
+                    product_img={state.product_img}
+                    product_name={state.product_name}
+                    product_category={state.product_category}
+                    product_id={state.product_id}
+                    product_sku={state.product_sku}
+                    product_variant={state.product_variant}
+                    product_url={state.product_url}
+                    openOutOfStockDialog={openOutOfStockDialog}
+                    handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+                  />
+
+                  {openEmailConfirmation && (
+                    <ConfirmEmail
+                      onExited={closeEmailConfirmation}
+                      product_img={state.product_img}
+                      product_name={state.product_name}
+                      product_category={state.product_category}
+                      product_id={state.product_id}
+                      product_sku={state.product_sku}
+                      product_variant={state.product_variant}
+                      product_url={state.product_url}
+                    />
+                  )}
+                </>
+              )}
             </div>
           </Grid>
         </Grid>
@@ -601,9 +705,47 @@ const FastAsleepIngredients = ({ history, location }) => {
                 dark chocolate mint filled with two powerful, natural sleep-inducing ingredients that help counteract
                 the negative effects of stress on sleep: GABA and saffron.<sup>*</sup>
               </p>
-              <NavLink onClick={handleClick} className="blue-btn">
-                get 15% off — Buy Now
-              </NavLink>
+              {/* If product in stock, add to cart */}
+              {state.product_stock >= 50 && (
+                <NavLink onClick={getSelectVariant} className="blue-btn">
+                  get 15% off — Buy Now
+                </NavLink>
+              )}
+
+              {/* If product low/out of stock, notify customer */}
+              
+              {state.product_stock < 50 && (
+                <>
+                  <OutOfStockLP
+                    onClick={getSelectVariant}
+                    onExited={closeOutOfStockDialog}
+                    buttonClass="blue-btn"
+                    discount_text="15%"
+                    product_img={state.product_img}
+                    product_name={state.product_name}
+                    product_category={state.product_category}
+                    product_id={state.product_id}
+                    product_sku={state.product_sku}
+                    product_variant={state.product_variant}
+                    product_url={state.product_url}
+                    openOutOfStockDialog={openOutOfStockDialog}
+                    handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+                  />
+
+                  {openEmailConfirmation && (
+                    <ConfirmEmail
+                      onExited={closeEmailConfirmation}
+                      product_img={state.product_img}
+                      product_name={state.product_name}
+                      product_category={state.product_category}
+                      product_id={state.product_id}
+                      product_sku={state.product_sku}
+                      product_variant={state.product_variant}
+                      product_url={state.product_url}
+                    />
+                  )}
+                </>
+              )}
             </div>
             <hr />
             <h2>Your sweetest (naturally sugar-free) sleep ever </h2>
@@ -613,7 +755,7 @@ const FastAsleepIngredients = ({ history, location }) => {
               natural sleep support to the next level.
             </p>
             <p>
-              Fast Asleep harnesses the latest research findings on PharmaGABA™ and Saffr’Activ saffron to bring you an
+              Fast Asleep harnesses the latest research findings on PharmaGABA<sup>®</sup> and Saffr’Activ<sup>®</sup> saffron to bring you an
               amazingly effective support for deep, restorative sleep—and a treat you’ll look forward to nightly.
               <sup>*</sup>
             </p>
@@ -631,7 +773,7 @@ const FastAsleepIngredients = ({ history, location }) => {
             </p>
             <h4>Quality, purity and effectiveness you can trust</h4>
             <p>
-              Fast Asleep is manufactured in the U.S. with research-based doses of PharmaGABA® and Saffr’Activ®, which
+              Fast Asleep is manufactured in the U.S. with research-based doses of PharmaGABA<sup>®</sup> and Saffr’Activ<sup>®</sup>, which
               we chose because they each have extensive research backing their safety and efficacy. We are meticulous in
               sourcing, positively identifying and testing our raw ingredients for purity and potency. We also test and
               validate the finished products once they are complete.
@@ -703,9 +845,48 @@ const FastAsleepIngredients = ({ history, location }) => {
                   <li>Saffron keeps you sound asleep all night</li>
                   <li>You’ll wake up refreshed and alert</li>
                 </ul>
-                <NavLink onClick={handleClick} className="black-btn">
+
+                {/* If product in stock, add to cart */}
+              {state.product_stock >= 50 && (
+                <NavLink onClick={getSelectVariant} className="black-btn">
                   get 15% off — Buy Now
                 </NavLink>
+              )}
+
+              {/* If product low/out of stock, notify customer */}
+              
+              {state.product_stock < 50 && (
+                <>
+                  <OutOfStockLP
+                    onClick={getSelectVariant}
+                    onExited={closeOutOfStockDialog}
+                    buttonClass="black-btn"
+                    discount_text="15%"
+                    product_img={state.product_img}
+                    product_name={state.product_name}
+                    product_category={state.product_category}
+                    product_id={state.product_id}
+                    product_sku={state.product_sku}
+                    product_variant={state.product_variant}
+                    product_url={state.product_url}
+                    openOutOfStockDialog={openOutOfStockDialog}
+                    handleOpenEmailConfirmation={handleOpenEmailConfirmation}
+                  />
+
+                  {openEmailConfirmation && (
+                    <ConfirmEmail
+                      onExited={closeEmailConfirmation}
+                      product_img={state.product_img}
+                      product_name={state.product_name}
+                      product_category={state.product_category}
+                      product_id={state.product_id}
+                      product_sku={state.product_sku}
+                      product_variant={state.product_variant}
+                      product_url={state.product_url}
+                    />
+                  )}
+                </>
+              )}
               </div>
               <img
                 className="xs-only w-100"

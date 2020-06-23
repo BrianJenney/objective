@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { withRouter, Link, matchPath } from 'react-router-dom';
@@ -39,7 +39,7 @@ import {
   StyledProductTotal,
   StyledEstimatedTotal
 } from './StyledComponents';
-import CartMergeNotification from '../../components/cart/CartMergeNotification';
+import CartNotification from '../../components/cart/CartNotification';
 
 const { MEDIUM_GRAY } = colorPalette;
 
@@ -94,18 +94,54 @@ const Cart = ({
 }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
+  const cartNotification = useSelector(state => state.utils.cartNotification);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-  const { cartMerged } = cart;
+
+  useEffect(() => {
+    const loc =
+      matchPath(location.pathname, { path: '/checkout' }) ||
+      matchPath(location.pathname, { path: '/checkout2' }) ||
+      matchPath(location.pathname, { path: '/order' });
+    const orderItemsTransformed = [];
+
+    cart.items.forEach(item => {
+      orderItemsTransformed.push({
+        image_url: `https:${item.variant_img}`,
+        quantity: item.quantity,
+        sku: item.sku,
+        price: Number.parseFloat(item.unit_price),
+        product_id: item.variant_id,
+        variant: item.variant_id,
+        name: item.variant_name,
+        brand: cart.storeCode
+      });
+    });
+    if (cart.cartDrawerOpened && !loc) {
+      window.analytics.track('Cart Viewed', {
+        cart_id: cart._id,
+        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        products: orderItemsTransformed
+      });
+    }
+
+    if (!cart.cartDrawerOpened && !loc) {
+      window.analytics.track('Cart Dismissed', {
+        cart_id: cart._id,
+        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        products: orderItemsTransformed
+      });
+    }
+  }, [cart.cartDrawerOpened]);
 
   const onClickLogo = useCallback(() => {
-    dispatch(setCartDrawerOpened(false, false));
+    dispatch(setCartDrawerOpened(false));
     history.push('/gallery');
   }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
-    dispatch(setCartDrawerOpened(false, false));
+    dispatch(setCartDrawerOpened(false));
   }, [dispatch]);
 
   const togglePromo = useCallback(() => {
@@ -113,12 +149,12 @@ const Cart = ({
   }, [promoVisible, setPromoVisible]);
 
   const handleCheckout = useCallback(() => {
-    dispatch(setCartDrawerOpened(false, false));
+    dispatch(setCartDrawerOpened(false));
     history.push('/checkout');
   }, [dispatch, history]);
 
   const handleEditCart = useCallback(() => {
-    dispatch(setCartDrawerOpened(true, true));
+    dispatch(setCartDrawerOpened(true));
     history.push('/gallery');
   }, [dispatch, history]);
 
@@ -133,9 +169,12 @@ const Cart = ({
   const code = get(cart, 'shipping.code', '');
   const options = get(cart, 'shipping.options', {});
   const shippingData = get(options, code, {});
-  const mobileDrawerPadding = window.screen.width < 960 ? '24px 20px' : '0';
+  const mobileDrawerPadding = window.screen.width < 960 ? '24px 20px' : '0px';
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) || matchPath(location.pathname, { path: '/checkout2' });
+
+  const checkoutPadding = xsBreakpoint ? '0px' : 'inherit';
+  const drawerPadding = !isCheckoutPage ? mobileDrawerPadding : checkoutPadding;
   return (
     <Grid
       container
@@ -143,7 +182,7 @@ const Cart = ({
         width: '100%',
         minWidth: '90%',
         margin: '0 auto',
-        padding: mobileDrawerPadding
+        padding: drawerPadding
       }}
       className="cart-drawer"
     >
@@ -171,7 +210,7 @@ const Cart = ({
               >
                 ({cartCount} Items)
               </StyledCartCountHeader>
-              {cartMerged && isCheckoutPage ? <CartMergeNotification isCheckoutPage={isCheckoutPage} /> : null}
+              {cartNotification && isCheckoutPage ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
             </Grid>
             {checkoutVersion === 2 ? (
               <MenuLink onClick={handleEditCart} underline="always" className={classes.editCart} children="EDIT CART" />
@@ -200,14 +239,12 @@ const Cart = ({
       </div>
       <Grid container>
         {isCheckoutPage &&
-          (activeStep === 2 || activeStep === 3 || (checkoutVersion === 2 && activeStep === 1)) &&
-          restrictionMessage ? (
-            <>
-              <Typography className={classes.cartRestricted}>
-                CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your
-                cart because this product is not available in the state you
-              selected. We hope to be able to offer {restrictedProduct} in your
-                state soon!
+        (activeStep === 2 || activeStep === 3 || (checkoutVersion === 2 && activeStep === 1)) &&
+        restrictionMessage ? (
+          <>
+            <Typography className={classes.cartRestricted}>
+              CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this product is not
+              available in the state you selected. We hope to be able to offer {restrictedProduct} in your state soon!
             </Typography>
             {cartCount === 0 && (
               <NavLink to="/gallery" underline="always" className={classes.link}>
@@ -276,8 +313,7 @@ const Cart = ({
                       to={`/products/${item.slug}`}
                       style={{
                         textDecoration: 'none',
-                        maxHeight: '40px',
-                        overflow: 'hidden'
+                        maxHeight: '40px'
                       }}
                       onClick={() => {
                         segmentProductClickEvent({

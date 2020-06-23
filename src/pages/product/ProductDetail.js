@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   containerRoot: {
+    maxWidth: '1200px !important',
     [theme.breakpoints.down('xs')]: {
       padding: 0
     }
@@ -176,7 +177,7 @@ const ProductDetail = () => {
     }
   };
 
-  //Google Optimize
+  // Google Optimize
   const optimize = async () => {
     await window.dataLayer.push({ event: 'optimize.activate' });
   };
@@ -227,7 +228,14 @@ const ProductDetail = () => {
     return <LoadingSpinner loadingMessage="Loading product" page="pdp" />;
   }
 
-  const { productImages, productTitle, shortPurposeHeadline, shortDescription, productBenefits = [] } = content;
+  const {
+    productImages,
+    productTitle,
+    shortPurposeHeadline,
+    shortDescription,
+    productBenefits = [],
+    productColor
+  } = content;
 
   return (
     <Box className={classes.root}>
@@ -240,7 +248,7 @@ const ProductDetail = () => {
             <Card className={classes.box}>
               <CardContent className={classes.cardRootOverrides}>
                 <Box className="pdp-content" ref={contentRef}>
-                  <Typography variant="h1" className="pdp-header">
+                  <Typography variant="h1" className={`pdp-header ${productColor}`}>
                     {productTitle}
                   </Typography>
                   <ProductVariant productVariant={variantMap.get(selectedVariantSku)} />
@@ -253,7 +261,7 @@ const ProductDetail = () => {
                           <img src={benefit.fields.icon.fields.file.url} alt="" />
                         </Box>
                         <Box className="text">
-                          <Box>{benefit.fields.benefitText}</Box>
+                          <Box className={productColor}>{benefit.fields.benefitText}</Box>
                         </Box>
                       </Box>
                     ))}
@@ -275,6 +283,9 @@ const ProductDetail = () => {
                         variantSku={selectedVariantSku}
                         ATCAdded={ATCAdded}
                         ATCAdding={ATCAdding}
+                        product_img={variant.assets.imgs}
+                        product_name={variant.name}
+                        product_color={product.color}
                       />
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center">
@@ -313,8 +324,9 @@ const ProductDetail = () => {
                     maxWidth={classes.maxWidth}
                     onClick={handleOpenOutOfStockDialog}
                     onExited={closeOutOfStockDialog}
-                    product_img={product.assets.img_front}
-                    product_name={product.name}
+                    product_img={variant.assets.imgs}
+                    product_name={variant.name}
+                    product_color={product.color}
                     product_category={product.category}
                     product_id={product._id}
                     product_sku={product.sku}

@@ -13,7 +13,6 @@ import {
   AccountPaymentDetailsPage,
   AccountProfilePage,
   CheckoutPage,
-  CheckoutPage2,
   ForgotPassword,
   ConfirmPassword,
   ResetPassword,
@@ -26,21 +25,26 @@ import {
   BlogCategory,
   BlogTag,
   AboutUs,
-  PrivacyPolicyPage,
   TermsPage,
   NotFoundPage,
-  StaticPageOne
+  StaticPageOne,
+  TrackOrderPage
 } from './pages';
 
-import { LoginToOrderPage, LoginToShippingPage, LoginToAccountPage, LoginToCheckoutPage } from './pages/Login';
+import PrivacyPolicyPage from './pages/static/PrivacyPage';
+
+import {
+  LoginToOrderPage,
+  LoginToShippingPage,
+  LoginToAccountPage,
+  LoginToCheckoutPage
+} from './pages/Login';
 
 import NewYear from './pages/landingpages/NewYear';
 import SleepImmunity from './pages/landingpages/SleepImmunity';
 import FastAsleepIngredients from './pages/landingpages/FastAsleepIngredients';
 import FastAsleepMelatonin from './pages/landingpages/FastAsleepMelatonin';
-import FastAsleepLifestyle from './pages/landingpages/FastAsleepLifestyle';
-import EverythingArmorExerciseRecovery from './pages/landingpages/EverythingArmorExerciseRecovery';
-import EverythingArmorAntioxidants from './pages/landingpages/EverythingArmorAntioxidants';
+import FastAsleepMom from './pages/landingpages/FastAsleepMom';
 
 export default [
   { path: '/', exact: true, component: HomePage },
@@ -80,33 +84,33 @@ export default [
   { path: '/contact', exact: true, component: ContactUsPage },
   { path: '/faq', exact: true, component: FAQPage },
   { path: '/about_us', exact: true, component: AboutUs },
-  { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
   { path: '/terms', exact: true, component: TermsPage },
   {
     path: '/order',
-    auth: true,
+    auth: false,
     exact: true,
     component: OrderConfirmationPage
   },
   {
-    path: '/orders/:id',
-    auth: true,
+    path: '/order-tracker',
+    auth: false,
     exact: true,
-    injectCurrentUser: true,
+    component: TrackOrderPage
+  },
+  {
+    path: '/orders/:id',
+    auth: false,
+    exact: true,
+    injectCurrentUser: false,
     component: OrderPage
   },
   {
     path: '/checkout',
     exact: true,
     injectCurrentUser: true,
-    component: CheckoutPage2
+    component: CheckoutPage
   },
-  {
-    path: '/checkout2',
-    exact: true,
-    injectCurrentUser: true,
-    component: CheckoutPage2
-  },
+
   {
     path: '/account',
     auth: true,
@@ -165,10 +169,12 @@ export default [
   { path: '/landing/sleepandimmunity', exact: true, component: SleepImmunity },
   { path: '/landing/fastasleep-ingredients', exact: true, component: FastAsleepIngredients },
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
-  { path: '/landing/fastasleep-lifestyle', exact: true, component: FastAsleepLifestyle },
-  { path: '/landing/everythingarmor-exercise-recovery', exact: true, component: EverythingArmorExerciseRecovery },
-  { path: '/landing/everythingarmor-antioxidants', exact: true, component: EverythingArmorAntioxidants },
+  { path: '/landing/fastasleep-mom', exact: true, component: FastAsleepMom },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },
+
+  { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
+  { path: '/privacypolicy/:slug', exact: true, component: PrivacyPolicyPage },
+
   { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
 ];

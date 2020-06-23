@@ -1,7 +1,7 @@
-import React, { useCallback,useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { withRouter, matchPath } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -14,6 +14,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
+import { GuestOrderSetPasswordForm } from '../components/forms';
+import {
+  receivedLoginSuccess,
+  requestChangePassword,
+  receivedCreateAccountSuccess,
+  receivedFetchAccountSuccess
+} from '../modules/account/actions';
+
+import { receivedGetOrder } from '../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,14 +49,15 @@ const useStyles = makeStyles(theme => ({
     fontSize: '55px',
     fontFamily: 'Canela Text Web',
     paddingBottom: '0',
-    marginBottom: '22px',
+    marginBottom: '36px',
     [theme.breakpoints.down('xs')]: {
       fontSize: '40px'
     }
   },
   text1: {
     fontSize: '18px',
-    fontFamily: 'freight-text-pro'
+    fontFamily: 'freight-text-pro',
+    lineHeight: '1.5rem'
   },
   text2: {
     fontSize: '18px',
@@ -81,11 +91,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const OrderConfirmation = ({ history }) => {
-  const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
+  const account = useSelector(state => state.account);
+  const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -118,49 +128,117 @@ const OrderConfirmation = ({ history }) => {
         shipping: order.shippingMethod.price,
         items: orderItemsTransformedGA
       });
+
+      if (order.account && order.account.hasOwnProperty('isGuest') && order.account.hasOwnProperty('passwordSet')) {
+        if (!order.account.isGuest && order.account.passwordSet) {
+          if (order.account.hasOwnProperty('temporarilyLogin')) {
+            delete order.account.temporarilyLogin;
+          }
+          dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
+        }
+
+        if (
+          order.account.isGuest &&
+          !order.account.passwordSet &&
+          order.account.hasOwnProperty('newsletter') &&
+          order.account.newsletter
+        ) {
+          window.analytics.track('Subscribed', {
+            email: order.account.email,
+            site_location: 'checkout'
+          });
+
+          window.analytics.track('Subscribed Listrak Auto', {
+            email: order.account.email,
+            site_location: 'checkout'
+          });
+        }
+      }
     }
+
+    return () => {
+      if (!matchPath(history.location.pathname, { path: '/orders' })) {
+        dispatch(receivedGetOrder(null));
+      }
+    };
   }, []);
 
+  const onGuestOrderPasswordSubmit = (values, actions) => {
+    dispatch(
+      requestChangePassword(
+        order.account.account_jwt,
+        {
+          currentPassword: '',
+          newPassword1: values.password,
+          newPassword2: values.password,
+          skipComparison: true,
+          isGuest: false,
+          passwordSet: true
+        },
+        actions
+      )
+    );
+    order.account.isGuest = false;
+    order.account.passwordSet = true;
+    if (order.account.hasOwnProperty('temporarilyLogin')) {
+      delete order.account.temporarilyLogin;
+    }
+    dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
+    dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
+    setGuestPasswordFormSubmitted(true);
+  };
+
   if (!order) {
+    history.push('/');
     return null;
   }
-
-  
-
-
-
-
 
   const OrderCartSummary = () => {
     return <CartSummary order={order} />;
   };
 
   const OrderDetail = () => {
-    const { cardType, last4 } = order.paymentData;
+    const paymentMethod = order.paymentData && order.paymentData.method ? order.paymentData.method : 'creditCard';
+    const cardType =
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.cardType
+        ? order.paymentData.cardType
+        : '';
+    const last4 =
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.last4 ? order.paymentData.last4 : '';
+    const paymentEmail = 'paypal' && order.paymentData && order.paymentData.email ? order.paymentData.email : '';
     const { shippingAddress, billingAddress } = order;
-    const { email } = account.data;
+    const { email } = order;
     const handleOrderDetail = useCallback(
       e => {
         e.preventDefault();
+        if (account.hasOwnProperty('data') && !account.data.hasOwnProperty('_id') && order.account) {
+          order.account.temporarilyLogin = true;
+          dispatch(receivedFetchAccountSuccess(order.account));
+        }
         history.replace(`/orders/${order._id}`);
       },
       [history, order._id]
     );
+    const shouldShowSetPasswordForm =
+      order.hasOwnProperty('account') &&
+      order.account.hasOwnProperty('passwordSet') &&
+      order.account.hasOwnProperty('isGuest') &&
+      !order.account.passwordSet &&
+      order.account.isGuest
+        ? true
+        : false;
 
     return (
       <Box className={classes.paper}>
         <Typography className={classes.title}>You&#39;re all set!</Typography>
         <Typography className={classes.text1} gutterBottom>
-          Your order has been placed and a confirmation email has been sent to:{' '}
-          {email}.
+          Your order has been placed and a confirmation email has been sent to: {email}.
         </Typography>
         <Typography className={classes.text1}>
-          Your order number:{' '}
-          <strong>
-            {order.orderNumber}
-          </strong>
+          Your order number: <strong>{order.orderNumber}</strong>
         </Typography>
-        {xs ? (
+
+        {xs && !shouldShowSetPasswordForm && (
           <Grid container style={{ overflow: 'hidden' }}>
             <Grid item style={{ overflow: 'hidden' }}>
               <Button
@@ -171,12 +249,24 @@ const OrderConfirmation = ({ history }) => {
               />
             </Grid>
           </Grid>
-        ) : (
-          <Button
-            type="button"
-            onClick={handleOrderDetail}
-            children="Check Order Status"
-            className={classes.button}
+        )}
+
+        {!xs && !shouldShowSetPasswordForm && (
+          <Button type="button" onClick={handleOrderDetail} children="Check Order Status" className={classes.button} />
+        )}
+
+        {shouldShowSetPasswordForm && (
+          <GuestOrderSetPasswordForm
+            title={
+              !guestPasswordFormSubmitted
+                ? 'Save your information to easily track your order'
+                : 'Success! You can now login to track your order.'
+            }
+            submitLabel={!guestPasswordFormSubmitted ? 'Create Account' : 'Check Order Status'}
+            onSubmit={onGuestOrderPasswordSubmit}
+            isSuccessful={guestPasswordFormSubmitted}
+            handleOrderDetail={handleOrderDetail}
+            style={{ marginBottom: '50px', marginTop: '32px' }}
           />
         )}
         <Box
@@ -185,15 +275,9 @@ const OrderConfirmation = ({ history }) => {
           borderTop="1px solid #979797"
           borderBottom="1px solid #979797"
         >
-          <Grid item xs={addressesWidth}>
-            <Box
-              borderRight={xs ? 0 : '1px solid #979797'}
-              paddingBottom={xs ? '25px' : '35px'}
-            >
-              <Typography
-                className={classes.text2}
-                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
-              >
+          <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
+            <Box borderRight={xs ? 0 : '1px solid #979797'} paddingBottom={xs ? '25px' : '35px'}>
+              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
                 Billing Information
               </Typography>
               <Address address={billingAddress} email={email} />
@@ -201,14 +285,11 @@ const OrderConfirmation = ({ history }) => {
           </Grid>
           <Grid item xs={addressesWidth}>
             <Box
-              paddingLeft={xs ? 0 : 3}
+              paddingLeft={xs ? 0 : paymentMethod !== 'paypal' ? 3 : 0}
               borderTop={xs ? '1px solid #979797' : 0}
               paddingBottom={xs ? '25px' : '35px'}
             >
-              <Typography
-                className={classes.text2}
-                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
-              >
+              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
                 Shipping Information
               </Typography>
               <Address address={shippingAddress} email={email} />
@@ -216,14 +297,12 @@ const OrderConfirmation = ({ history }) => {
           </Grid>
         </Box>
         <Grid item xs={addressesWidth}>
-          <Typography
-            className={classes.text2}
-            style={{ padding: '24px 0 16px' }}
-          >
+          <Typography className={classes.text2} style={{ padding: '24px 0 16px' }}>
             Payment
           </Typography>
           <Typography className={classes.subText}>
-            {cardType} - ***{last4}
+            {paymentMethod === 'creditCard' ? `${cardType} - ***${last4}` : ''}
+            {paymentMethod === 'paypal' ? `PayPal: ${paymentEmail}` : ''}
           </Typography>
         </Grid>
       </Box>

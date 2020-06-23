@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import './template-styles.css';
 
@@ -9,7 +11,7 @@ import Title from './Title';
 import List from './List';
 
 const useStyles = makeStyles(theme => ({
-  border: props => ({
+  root: props => ({
     backgroundColor: props.desktopStyle.bgColor,
     borderColor: props.desktopStyle.borderColor,
     display: props.desktopStyle.display,
@@ -17,54 +19,87 @@ const useStyles = makeStyles(theme => ({
     float: props.desktopStyle.float,
     [theme.breakpoints.down('sm')]: {
       width: props.mobileStyle.width
-    }
-  }),
-  noBorder: props => ({
-    backgroundColor: props.desktopStyle.bgColor,
-    borderColor: props.desktopStyle.borderColor,
-    display: props.desktopStyle.display,
-    width: props.desktopStyle.width,
-    float: props.desktopStyle.float,
-    [theme.breakpoints.down('sm')]: {
-      width: props.mobileStyle.width
+    },
+    [theme.breakpoints.down('xs')]: {
+      display: props.mobileStyle.display,
+      backgroundColor: props.mobileStyle.bgColor,
+      borderColor: props.mobileStyle.borderColor,
+      width: props.mobileStyle.width,
+      float: props.mobileStyle.float,
+      margin: '10px auto'
     }
   })
 }));
 
 const SPBox = ({ data, template, type, comps }) => {
   const classes = useStyles(data);
-  const border = data.desktopStyle.border;
-  const float = data.desktopStyle.float;
+  const { border, float } = data.desktopStyle;
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const classNames = border
+    ? `${classes.root} ${template}-${type} ${template}-${type}-${float}`
+    : `${classes.root} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`;
 
   return (
     <>
-      {border ? (
-        <Box className={`${classes.border} ${template}-${type} ${template}-${type}-${float}`}>
-          {comps.map((obj, i) => {
-            switch (obj.type) {
-              case 'boxTitle':
-                return <Title key={i} data={obj} template={template} type={obj.type} />;
-              case 'list':
-                return (
-                  <List key={i} data={obj} template={template} type={obj.type} symbol={obj.desktopStyle.bulletSymbol} />
-                );
+      <Box className={classNames}>
+        {comps.map(obj => {
+          switch (obj.type) {
+            case 'boxTitle':
+              return <Title key={obj.id} data={obj} template={template} type={obj.type} />;
+            case 'tableContainer': {
+              const borderPlacement = xs
+                ? obj.mobileStyle.borderPlacement
+                : obj.desktopStyle.borderPlacement;
+              return (
+                <div
+                  className={`${template}-${type}-columnContainer ${template}-${type}-columnContainer-${borderPlacement}`}
+                >
+                  {obj.value.components.map(el => {
+                    switch (el.type) {
+                      case 'tableHead':
+                        return <Title key={el.id} data={el} template={template} type={el.type} />;
+                      case 'tableBody':
+                        return (
+                          <List
+                            key={el.id}
+                            data={el}
+                            template={template}
+                            type={el.type}
+                            symbol={el.desktopStyle.bulletSymbol}
+                          />
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
+                </div>
+              );
             }
-          })}
-        </Box>
-      ) : (
-        <Box className={`${classes.noBorder} ${template}-${type}-noBorder ${template}-${type}-noBorder-${float}`}>
-          {comps.map((obj, i) => {
-            switch (obj.type) {
-              case 'boxTitle':
-                return <Title key={i} data={obj} template={template} type={obj.type} />;
-              case 'list':
-                return <List key={i} data={obj} template={template} type={obj.type} />;
-            }
-          })}
-        </Box>
-      )}
+            case 'list':
+              return (
+                <List
+                  key={obj.id}
+                  data={obj}
+                  template={template}
+                  type={obj.type}
+                  symbol={obj.desktopStyle.bulletSymbol}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
+      </Box>
     </>
   );
+};
+
+SPBox.propTypes = {
+  data: PropTypes.object,
+  template: PropTypes.string,
+  type: PropTypes.string,
+  comps: PropTypes.object
 };
 
 export default SPBox;

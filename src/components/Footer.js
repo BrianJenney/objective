@@ -404,7 +404,7 @@ const Footer = ({ location, currentUser }) => {
                         >
                           Privacy Policy
                         </NavLink>  */}
-                        <a href="https://www.thecloroxcompany.com/privacy/" target="_blank">
+                        <a href="/privacypolicy" target="_blank">
                           Privacy Policy
                         </a>
                       </ListItem>
@@ -525,7 +525,10 @@ const Footer = ({ location, currentUser }) => {
                         </NavLink>
                       </ListItem>
                       <ListItem>
-                        <NavLink to={gotoUrl('/account/orders', '/login/order')} onClick={segmentTrackNavigationClick}>
+                        <NavLink
+                          to={gotoUrl('/account/orders', '/order-tracker')}
+                          onClick={segmentTrackNavigationClick}
+                        >
                           Track an Order
                         </NavLink>
                       </ListItem>
@@ -615,7 +618,7 @@ const Footer = ({ location, currentUser }) => {
                         >
                           Privacy Policy
                         </NavLink> */}
-                        <a href="https://www.thecloroxcompany.com/privacy/" target="_blank">
+                        <a href="/privacypolicy" target="_blank">
                           Privacy Policy
                         </a>
                       </ListItem>

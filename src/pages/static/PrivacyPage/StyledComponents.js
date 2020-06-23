@@ -1,10 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { fonts } from '../../components/Theme/fonts';
-import Link from '@material-ui/core/Link';
+import { Typography, Box, Container, Link } from '@material-ui/core';
+import { fonts } from '../../../components/Theme/fonts';
 
 const { $brandSans } = fonts;
 
@@ -20,11 +16,11 @@ export const StyledBackground = withStyles(theme => ({
 
 export const StyledContainer = withStyles(theme => ({
   root: {
-    paddingTop: 70,
+    paddingTop: 40,
     paddingBottom: 40,
     width: 1193,
     [theme.breakpoints.down('xs')]: {
-      paddingTop: 38,
+      paddingTop: 10,
       paddingBottom: 40,
       backgroundColor: '#fdfbf9',
       width: '100%'
@@ -62,18 +58,16 @@ export const StyledTitle = withStyles(theme => ({
 export const StyledSubheaders = withStyles(theme => ({
   root: {
     fontFamily: $brandSans,
-    fontSize: '24px',
-    fontWeight: 600,
+    fontSize: '35px',
     fontStyle: 'normal',
     fontStretch: 'normal,',
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: '#000000',
-    marginBottom: 30,
+    marginBottom: 10,
     [theme.breakpoints.down('xs')]: {
       fontFamily: $brandSans,
-      fontSize: '18px',
-      fontWeight: 600,
+      fontSize: '24px',
       fontStyle: 'normal',
       fontStretch: 'normal,',
       lineHeight: 'normal',
@@ -84,59 +78,17 @@ export const StyledSubheaders = withStyles(theme => ({
   }
 }))(Typography);
 
-export const StyledQuestions = withStyles(theme => ({
+export const ParagraphContainer = withStyles(theme => ({
   root: {
-    fontFamily: $brandSans,
-    fontSize: '24px',
-    fontWeight: 600,
-    fontStyle: 'normal',
-    fontStretch: 'normal,',
-    lineHeight: 'normal',
-    letterSpacing: 'normal',
-    color: '#000000',
+    borderBottom: '1px solid',
+    padding: '40px 0px 30px 0px',
     [theme.breakpoints.down('xs')]: {
-      fontFamily: $brandSans,
-      fontSize: '18px',
-      fontWeight: 600,
-      fontStyle: 'normal',
-      fontStretch: 'normal,',
-      lineHeight: 'normal',
-      letterSpacing: 'normal',
-      color: '#000000'
+      padding: '50px 0px 30px 0px'
     }
-  }
-}))(Typography);
-
-export const StyledAnswerContainer = withStyles(theme => ({
-  root: {
-    display: 'flex'
   }
 }))(Box);
 
-export const StyledA = withStyles(theme => ({
-  root: {
-    fontFamily: $brandSans,
-    fontSize: '24px',
-    fontWeight: 600,
-    fontStyle: 'normal',
-    fontStretch: 'normal,',
-    lineHeight: 'normal',
-    letterSpacing: 'normal',
-    color: '#000000',
-    [theme.breakpoints.down('xs')]: {
-      fontFamily: $brandSans,
-      fontSize: '18px',
-      fontWeight: 600,
-      fontStyle: 'normal',
-      fontStretch: 'normal,',
-      lineHeight: 'normal',
-      letterSpacing: 'normal',
-      color: '#000000'
-    }
-  }
-}))(Typography);
-
-export const StyledAnswers = withStyles(theme => ({
+export const StyledParagraph = withStyles(theme => ({
   root: {
     fontFamily: 'FreightTextProMedium-Regular',
     fontSize: '24px',
@@ -146,48 +98,41 @@ export const StyledAnswers = withStyles(theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: '#000000',
-    marginLeft: 8,
+    margin: '13px 0px',
     [theme.breakpoints.down('xs')]: {
       fontFamily: 'FreightTextProMedium-Regular',
       fontSize: '18px',
       fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal,',
+      lineHeight: 'normal',
+      letterSpacing: 'normal',
+      color: '#000000'
+    }
+  }
+}))(Typography);
+
+export const StyledParagraphHeader = withStyles(theme => ({
+  root: {
+    fontFamily: $brandSans,
+    fontSize: '22px',
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontStretch: 'normal,',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#000000',
+    marginBottom: 10,
+    [theme.breakpoints.down('xs')]: {
+      fontFamily: $brandSans,
+      fontSize: '18px',
+      fontWeight: 600,
       fontStyle: 'normal',
       fontStretch: 'normal,',
       lineHeight: 'normal',
       letterSpacing: 'normal',
       color: '#000000',
-      marginLeft: 8
-    }
-  }
-}))(Typography);
-
-export const QAContainer = withStyles(theme => ({
-  root: {
-    marginBottom: 20,
-    paddingBottom: 20,
-    borderBottom: '1px solid grey'
-  }
-}))(Grid);
-
-export const StyledText = withStyles(theme => ({
-  root: {
-    fontFamily: 'FreightTextProMedium-Regular',
-    fontSize: '24px',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    fontStretch: 'normal,',
-    lineHeight: 'normal',
-    letterSpacing: 'normal',
-    color: '#000000',
-    [theme.breakpoints.down('xs')]: {
-      fontFamily: 'FreightTextProMedium-Regular',
-      fontSize: '18px',
-      fontWeight: 'normal',
-      fontStyle: 'normal',
-      fontStretch: 'normal,',
-      lineHeight: 'normal',
-      letterSpacing: 'normal',
-      color: '#000000'
+      marginBottom: 24
     }
   }
 }))(Typography);
@@ -203,6 +148,7 @@ export const StyledLink = withStyles(theme => ({
     letterSpacing: 'normal',
     textDecoration: 'none',
     color: '#00c3ef',
+    cursor: 'pointer',
     [theme.breakpoints.down('xs')]: {
       fontFamily: 'FreightTextProMedium-Regular',
       fontSize: '18px',

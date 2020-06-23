@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,24 +17,6 @@ import { Panel, Dialog } from '../../components/common';
 
 const plusIcon = require('../../assets/images/plus_symbol.svg');
 const magnifierIcon = require('../../assets/images/magnifier.svg');
-const contentfulOptions = {
-  renderNode: {
-    [BLOCKS.EMBEDDED_ASSET]: node => {
-      let params = '?w=555&fm=jpg&q=50';
-
-      if (window.screen.width < 768) {
-        params = '?w=450&fm=jpg&q=50';
-      }
-
-      return (
-        <img
-          src={node.data.target.fields.file.url + params}
-          alt={node.data.target.fields.title}
-        />
-      );
-    }
-  }
-};
 
 const ProductAccordion = ({ content }) => {
   const [expandedPanelIndex, setExpandedPanelIndex] = useState(null);
@@ -50,38 +33,59 @@ const ProductAccordion = ({ content }) => {
   };
   const openClinicalResultsImageModal = () => setImageModalOpen(true);
   const closeClinicalResultsImageModal = () => setImageModalOpen(false);
+  const contentfulOptions = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: node => {
+        let params = '?w=555&fm=jpg&q=50';
+
+        if (window.screen.width < 768) {
+          params = '?w=450&fm=jpg&q=50';
+        }
+
+        return clinicalResultsEnlargedImage ? (
+          clinicalResultsEnlargedImage && (
+            <Box className="img-magnifier-container">
+              <img
+                className="img-clinical-result"
+                src={node.data.target.fields.file.url + params}
+                alt={node.data.target.fields.title}
+              />
+              <IconButton onClick={openClinicalResultsImageModal}>
+                <img src={magnifierIcon} alt="" />
+              </IconButton>
+            </Box>
+          )
+        ) : (
+          <img className="" src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+        );
+      }
+    }
+  };
   const {
     clinicalResults,
     clinicalResultsEnlargedImage,
     ingredients,
-    directions = { summary: '', details: [] },
+    directions = [],
     frequentlyAskedQuestions,
+    supplementFactsTitle,
     supplementFactsIngredientsParagraph = null,
     supplementFactsIngredients = [],
     supplementFactsNotes,
     supplementFactsOtherIngredients = [],
-    supplementFactsImportant = []
+    supplementFactsImportant = [],
+    supplementFactsServing = [],
+    supplementFactsDirections,
+    productColor
   } = content;
+
   const accordionItems = [
     {
       title: 'Clinical Results',
       className: 'clinical-results',
       content: (
         <>
-          <Box className="contentful-container">
-            {documentToReactComponents(clinicalResults, contentfulOptions)}
-          </Box>
-          {clinicalResultsEnlargedImage && (
-            <Box className="magnifier-container">
-              <IconButton onClick={openClinicalResultsImageModal}>
-                <img src={magnifierIcon} alt="" />
-              </IconButton>
-            </Box>
-          )}
-          <Dialog
-            onClose={closeClinicalResultsImageModal}
-            open={imageModalOpen}
-          >
+          <Box>{documentToReactComponents(clinicalResults, contentfulOptions)}</Box>
+          <Dialog onClose={closeClinicalResultsImageModal} open={imageModalOpen}>
             <Box mt="-51.5px">
               {clinicalResultsEnlargedImage && (
                 <img
@@ -98,7 +102,7 @@ const ProductAccordion = ({ content }) => {
       )
     },
     {
-      title: 'Ingredients',
+      title: 'Key Ingredients',
       className: 'ingredients',
       content: documentToReactComponents(ingredients, contentfulOptions)
     },
@@ -107,14 +111,15 @@ const ProductAccordion = ({ content }) => {
       className: 'directions',
       content: (
         <>
-          <Box className="summary">{directions.summary}</Box>
           <Box className="details">
-            {directions.details.map((detail, index) => (
+            {directions.map((detail, index) => (
               <Box className="entry" key={`entry_${index.toString()}`}>
                 <Box className="icon">
-                  <img src={detail.icon} alt="" />
+                  <img src={detail.fields.icon.fields.file.url} alt="" />
                 </Box>
-                <Box className="text">{detail.label}</Box>
+                <Box className="text">
+                  <Box className={productColor}>{detail.fields.benefitText}</Box>
+                </Box>
               </Box>
             ))}
           </Box>
@@ -124,21 +129,36 @@ const ProductAccordion = ({ content }) => {
     {
       title: 'Frequently Asked Questions',
       className: 'faqs',
-      content: documentToReactComponents(
-        frequentlyAskedQuestions,
-        contentfulOptions
-      )
+      content: documentToReactComponents(frequentlyAskedQuestions, contentfulOptions)
     },
     {
-      title: 'Supplement Facts',
+      title: supplementFactsTitle || 'Supplement Facts',
       className: 'supplement-facts',
       content: (
         <>
+          <Grid className="serving-directions">
+            <Box className="serving">
+              {supplementFactsServing.length ? <Typography variant="h4">Serving</Typography> : null}
+              <List disablePadding>
+                {supplementFactsServing.map((serving, index) => (
+                  <ListItem key={`serving-${index.toString()}`} disableGutters>
+                    <Typography component="span">{serving.replace(/\|/g, ',')}</Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+            <Box className="supplement-facts-directions">
+              {supplementFactsDirections ? (
+                <Typography variant="h4" className="directions">
+                  Directions
+                </Typography>
+              ) : null}
+              <Typography component="span">{supplementFactsDirections}</Typography>
+            </Box>
+          </Grid>
           <Box className="ingredients">
             {supplementFactsIngredientsParagraph ? (
-              <Box className="ingredients-pg">
-                {supplementFactsIngredientsParagraph}
-              </Box>
+              <Box className="ingredients-pg">{supplementFactsIngredientsParagraph}</Box>
             ) : (
               <Table>
                 <TableHead>
@@ -164,35 +184,30 @@ const ProductAccordion = ({ content }) => {
               </Table>
             )}
           </Box>
-          <Box className="notes">
-            {documentToReactComponents(supplementFactsNotes, contentfulOptions)}
-          </Box>
+          <Box className="notes">{documentToReactComponents(supplementFactsNotes, contentfulOptions)}</Box>
           <Box className="other-ingredients">
-            <Typography variant="h4">Other Ingredients</Typography>
-            <List disablePadding>
-              {supplementFactsOtherIngredients.map((otherIngredient, index) => (
-                <ListItem
-                  key={`other-ingredient-${index.toString()}`}
-                  disableGutters
-                >
-                  <Typography component="span">
-                    {otherIngredient.replace(/\|/g, ',')}
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
+            {supplementFactsOtherIngredients.length ? <Typography variant="h4">Other Ingredients</Typography> : null}
+            <div className={productColor}>
+              <List disablePadding className={productColor}>
+                {supplementFactsOtherIngredients.map((otherIngredient, index) => (
+                  <ListItem key={`other-ingredient-${index.toString()}`} disableGutters>
+                    <Typography component="span">{otherIngredient.replace(/\|/g, ',')}</Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </div>
           </Box>
           <Box className="important">
-            <Typography variant="h4">Important</Typography>
-            <List disablePadding>
-              {supplementFactsImportant.map((important, index) => (
-                <ListItem key={`important-${index.toString()}`} disableGutters>
-                  <Typography component="span">
-                    {important.replace(/\|/g, ',')}
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
+            {supplementFactsImportant.length ? <Typography variant="h4">Important</Typography> : null}
+            <div className={productColor}>
+              <List disablePadding>
+                {supplementFactsImportant.map((important, index) => (
+                  <ListItem key={`important-${index.toString()}`} disableGutters>
+                    <Typography component="span">{important.replace(/\|/g, ',')}</Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </div>
           </Box>
         </>
       )
@@ -234,6 +249,8 @@ ProductAccordion.propTypes = {
       details: PropTypes.array
     }),
     frequentlyAskedQuestions: PropTypes.any,
+    supplementFactsServing: PropTypes.arrayOf(PropTypes.string),
+    supplementFactsDirections: PropTypes.any,
     supplementFactsIngredientsParagraph: PropTypes.any,
     supplementFactsIngredients: PropTypes.arrayOf(
       PropTypes.shape({

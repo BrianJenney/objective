@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import Box from '@material-ui/core/Box';
 import { requestPage } from '../../modules/static/actions';
 import { buildPage } from '../../utils/sputils';
-
-import Box from '@material-ui/core/Box';
+import NotFound from '../notfound/NotFound';
 
 const StaticPage = ({ match }) => {
   const { slug } = match.params;
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [tracked, setTracked] = useState(false);
+  const [pageError, setPageError] = useState(false);
   const page = useSelector(state => state.page);
 
-  console.log('this page ', page);
   useEffect(() => {
     if (pageLoaded === false) dispatch(requestPage(slug));
   }, []);
@@ -28,20 +29,23 @@ const StaticPage = ({ match }) => {
         window.analytics.page(`LP: ${page.name}`);
       }
     }
+    // else {
+    //   setPageError(true);
+    // }
   }, [page]);
 
   let FinalPage = null;
   if (pageLoaded) {
-    FinalPage = () => {
-      return buildPage(page);
-    };
+    FinalPage = () => buildPage(page);
   }
+  // if (pageError) {
+  //   FinalPage = () => <NotFound />;
+  // }
 
   if (FinalPage) {
     return <FinalPage />;
-  } else {
-    return null;
   }
+  return <LoadingSpinner loadingMessage="...loading" page="lp" />;
 };
 
 export default withRouter(StaticPage);

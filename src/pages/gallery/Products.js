@@ -239,7 +239,7 @@ const Products = () => {
                   <div className="opt1">
                     <Grid container className="gallery-content-blurb">
                       <Grid item xs={12} md={5} className="leftside">
-                        <h3>Skin Health</h3>
+                        <h3>Skin & Hair Health</h3>
                         <Divider variant="fullWidth" />
                         <p>
                           Nourish your skin from within and topically for an

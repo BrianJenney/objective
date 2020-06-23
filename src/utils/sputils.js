@@ -1,5 +1,7 @@
 import React from 'react';
-import { useMediaQuery, Container, Grid } from '@material-ui/core';
+import { Container, Grid, useMediaQuery } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import {
   Hero,
   Image,
@@ -13,10 +15,9 @@ import {
   Banner,
   List
 } from '../pages/static/components';
-import { makeStyles } from '@material-ui/core/styles';
 
 export const buildPage = page => {
-  let tmpComps = GeneratePageComponents(page.components, page.template, page.name);
+  const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
   return (
     <GenerateTemplate
       data={tmpComps}
@@ -27,6 +28,11 @@ export const buildPage = page => {
 };
 
 export const GenerateTemplate = ({ data, header, template }) => {
+  GenerateTemplate.propTypes = {
+    data: PropTypes.func.isRequired,
+    header: PropTypes.func.isRequired,
+    template: PropTypes.func.isRequired
+  };
   return (
     <div>
       <Header data={header} template={template} type={header.type} />
@@ -38,15 +44,17 @@ export const GenerateTemplate = ({ data, header, template }) => {
 };
 
 export const GeneratePageComponents = (comps, template, pageName) => {
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles(() => ({
     margin: {
       margin: '0 auto'
     }
   }));
   const classes = useStyles();
-  let components = [];
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const components = [];
 
-  comps.map(obj => {
+  comps.forEach(obj => {
     switch (obj.type) {
       case 'pageTitle':
         components.push(
@@ -66,8 +74,8 @@ export const GeneratePageComponents = (comps, template, pageName) => {
           </>
         );
         break;
-      case 'hero':
-        const nav = comps.filter(obj => obj.type === 'navigation');
+      case 'hero': {
+        const nav = comps.filter(comp => comp.type === 'navigation');
         components.push(
           <>
             <Grid item xs={12} md={10} className={classes.margin}>
@@ -79,6 +87,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
           </>
         );
         break;
+      }
       case 'banner':
         components.push(
           <>
@@ -97,8 +106,38 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'oneColSection':
         components.push(
           <>
-            <Grid item xs={12} md={8} className={`${classes.margin} ${obj.id}`} id={`${obj.name}`}>
-              <RenderComponents components={GenerateOneColumn(obj.value.components, template, pageName)} />
+            <Grid
+              item
+              xs={12}
+              md={8}
+              style={{ clear: 'both' }}
+              className={`${classes.margin} ${obj.id}`}
+              id={`${obj.name}`}
+            >
+              <RenderComponents
+                components={GenerateOneColumn(obj.value.components, template, pageName, xs)}
+              />
+            </Grid>
+          </>
+        );
+        break;
+      case 'twoColSection':
+        components.push(
+          <>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              className={`${classes.margin} ${obj.id}`}
+              id={`${obj.name}`}
+              style={{
+                border: obj.desktopStyle.borderColor || '2px solid #000',
+                margin: obj.desktopStyle.margin || '40px auto'
+              }}
+            >
+              <RenderComponents
+                components={GenerateTwoColumn(obj.value.components, template, pageName, xs)}
+              />
             </Grid>
           </>
         );
@@ -111,22 +150,132 @@ export const GeneratePageComponents = (comps, template, pageName) => {
   return components;
 };
 
-export const GenerateOneColumn = (comps, template, pageName) => {
-  let components = [];
+export const GenerateTwoColumn = (comps, template, pageName, xs) => {
+  const components = [];
 
-  comps.map(obj => {
+  comps.forEach(obj => {
     switch (obj.type) {
       case 'sectionTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} pageName={pageName} id={`${obj.name}`} />
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
       case 'image':
         components.push(
           <>
-            <Image data={obj} template={template} type={obj.type} caption={obj.caption} id={`${obj.name}`} />
+            <Image
+              data={obj}
+              template={template}
+              type={obj.type}
+              caption={obj.caption}
+              id={`${obj.name}`}
+              style={{ margin: xs ? '0 0 20px' : '20px' }}
+            />
+          </>
+        );
+        break;
+      case 'paragraph':
+        components.push(
+          <>
+            <Paragraph data={obj} template={template} type={obj.type} id={`${obj.name}`} />
+          </>
+        );
+        break;
+      case 'button':
+        components.push(
+          <>
+            <SPButton
+              data={obj}
+              template={template}
+              type={obj.type}
+              align={obj.desktopStyle.align}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+
+      case 'sectionSubTitle':
+        components.push(
+          <>
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+      case 'list':
+        components.push(
+          <>
+            <List
+              data={obj}
+              template={template}
+              type={obj.type}
+              symbol={obj.desktopStyle.bulletSymbol}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+      case 'container':
+        components.push(
+          <div
+            style={{
+              padding: xs ? obj.mobileStyle.margin : obj.desktopStyle.margin || '0 20px 40px'
+            }}
+          >
+            {GenerateTwoColumn(obj.value.components, template, pageName)}
+          </div>
+        );
+        break;
+      default:
+        break;
+    }
+  });
+
+  return components;
+};
+
+export const GenerateOneColumn = (comps, template, pageName, xs) => {
+  const components = [];
+
+  comps.forEach(obj => {
+    switch (obj.type) {
+      case 'sectionTitle':
+        components.push(
+          <>
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
+      case 'image':
+        components.push(
+          <>
+            <Image
+              data={obj}
+              template={template}
+              type={obj.type}
+              caption={obj.caption}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
@@ -153,14 +302,26 @@ export const GenerateOneColumn = (comps, template, pageName) => {
       case 'box':
         components.push(
           <>
-            <SPBox data={obj} template={template} type={obj.type} comps={obj.value.components} id={`${obj.name}`} />
+            <SPBox
+              data={obj}
+              template={template}
+              type={obj.type}
+              comps={obj.value.components}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
       case 'sectionSubTitle':
         components.push(
           <>
-            <Title data={obj} template={template} type={obj.type} pageName={pageName} id={`${obj.name}`} />
+            <Title
+              data={obj}
+              template={template}
+              type={obj.type}
+              pageName={pageName}
+              id={`${obj.name}`}
+            />
           </>
         );
         break;
@@ -177,12 +338,38 @@ export const GenerateOneColumn = (comps, template, pageName) => {
           </>
         );
         break;
+      case 'table':
+        components.push(
+          <>
+            <SPBox
+              data={obj}
+              template={template}
+              type={obj.type}
+              comps={obj.value.components}
+              id={`${obj.name}`}
+            />
+          </>
+        );
+        break;
       default:
         break;
     }
   });
 
+  if (!xs) {
+    let startInd = null;
+    components.forEach((currVal, ind) => {
+      if (currVal.props.children.props.data.type === 'sectionTitle') {
+        startInd = ind;
+      }
+
+      if (startInd !== null && currVal.props.children.props.data.type === 'box') {
+        const boxComp = components.splice(ind, 1)[0];
+        components.splice(startInd + 1, 0, boxComp);
+      }
+    });
+  }
   return components;
 };
 
-export const RenderComponents = ({ components }) => components.map((component, i) => <>{component}</>);
+export const RenderComponents = ({ components }) => components.map(component => <>{component}</>);

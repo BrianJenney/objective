@@ -60,7 +60,7 @@ const ProductLearnMore = () => {
       <Typography className={classes.heading} variant="h4" align="center">
         Want to Learn More?
       </Typography>
-      <div className="journal-gallery">
+      <div className="journal-gallery pdp-journal-gallery">
         <Box className="content">
           <Grid container spacing={4}>
             {renderPosts(relatedArticles)}

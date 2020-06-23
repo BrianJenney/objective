@@ -1,9 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import ImageGallery from 'react-image-gallery';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
 import { useTheme } from '@material-ui/core/styles';
 import ProductContext from '../../contexts/ProductContext';
 import './image-gallery-overrides.scss';
@@ -30,13 +27,9 @@ const PDPSlider = props => {
   }
 
   useEffect(() => {
-    const imageWrapper = document.getElementsByClassName(
-      'image-gallery-slide-wrapper'
-    );
+    const imageWrapper = document.getElementsByClassName('image-gallery-slide-wrapper');
     const largeImg = document.getElementsByClassName('image-gallery-image');
-    const thumbImg = document.getElementsByClassName(
-      'image-gallery-thumbnails-container'
-    );
+    const thumbImg = document.getElementsByClassName('image-gallery-thumbnails-container');
 
     if (imageWrapper.length < 1) {
       return undefined;
@@ -100,32 +93,26 @@ const PDPSlider = props => {
 
     images.map(image => {
       let imageUrlOriginal = image.fields.file.url + '?w=687&w=687&q=50';
-      let imageUrlOriginalSplit = imageUrlOriginal.split(
-        '//images.ctfassets.net/mj9bpefl6wof/'
-      );
-      imageUrlOriginal =
-        'https://nutranext.imgix.net/' +
-        imageUrlOriginalSplit[1] +
-        '&auto=compress,format';
+      let imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/mj9bpefl6wof/');
+      imageUrlOriginal = 'https://nutranext.imgix.net/' + imageUrlOriginalSplit[1] + '&auto=compress,format';
 
       let imageUrlThumbnail = image.fields.file.url + '?w=120&h=120&q=50';
-      let imageUrlThumbnailSplit = imageUrlThumbnail.split(
-        '//images.ctfassets.net/mj9bpefl6wof/'
-      );
-      imageUrlThumbnail =
-        'https://nutranext.imgix.net/' +
-        imageUrlThumbnailSplit[1] +
-        '&auto=compress,format';
+      let imageUrlThumbnailSplit = imageUrlThumbnail.split('//images.ctfassets.net/mj9bpefl6wof/');
+      imageUrlThumbnail = 'https://nutranext.imgix.net/' + imageUrlThumbnailSplit[1] + '&auto=compress,format';
 
-      carouselImages.push({
-        original: imageUrlOriginal,
-        thumbnail: imageUrlThumbnail
-      });
+      {
+        !xs
+          ? carouselImages.push({
+              original: imageUrlOriginal,
+              thumbnail: imageUrlThumbnail
+            })
+          : carouselImages.push({
+              original: imageUrlOriginal
+            });
+      }
+
       return carouselImages;
     });
-    const thumbnailsPanelPositionClassName = xs
-      ? 'pdp-slider-thumbnails-bottom'
-      : 'pdp-slider-thumbnails-left';
 
     return (
       <div className="pdp-slider">
@@ -137,33 +124,10 @@ const PDPSlider = props => {
           showPlayButton={false}
           items={carouselImages}
           thumbnailPosition={xs ? 'bottom' : 'left'}
-          showThumbnails
+          showThumbnails={xs ? false : true}
+          showBullets={xs ? true : false}
           onSlide={handleSegmentBrowsedEvent}
         />
-        <div className="pdp-slider-thumbnails-nav">
-          <div className={thumbnailsPanelPositionClassName}>
-            <IconButton
-              className="nav-left"
-              onClick={() => {
-                galleryRef.current.slideToIndex(
-                  galleryRef.current.getCurrentIndex() - 1
-                );
-              }}
-            >
-              <ChevronLeft />
-            </IconButton>
-            <IconButton
-              className="nav-right"
-              onClick={() => {
-                galleryRef.current.slideToIndex(
-                  galleryRef.current.getCurrentIndex() + 1
-                );
-              }}
-            >
-              <ChevronRight />
-            </IconButton>
-          </div>
-        </div>
       </div>
     );
   };

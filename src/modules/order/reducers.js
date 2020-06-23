@@ -51,8 +51,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, isLoading: false, transactionError: null };
     case REQUEST_CANCEL_ORDER:
       return {
-        ...state,
-        isLoading: true
+        ...state
       };
     case RECEIVED_CANCEL_ORDER_SUCCESS:
       return {
