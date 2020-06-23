@@ -332,39 +332,41 @@ const OrderDetail = () => {
   order.status = statusStepper.status;
 
   return (
-    <div className={classes.box}>
-      <Box bgcolor="rgba(252, 248, 244, 0.5)">
-        <Container>
-          <CssBaseline />
-          <Box py={10} className={classes.containingBox}>
-            <Grid container spacing={xs ? 0 : 4}>
-              <Grid item xs={mainWidth}>
-                <OrderSummary
-                  account={account}
-                  orderNumber={order.orderNumber}
-                  orderId={order.orderNumber}
-                  orderRef={order._id}
-                  orderEmail={order.email}
-                  createdAt={formatDateTime(order.createdAt, false)}
-                  shippingAddress={order.shippingAddress}
-                  billingAddress={order.billingAddress}
-                  paymentData={order.paymentData}
-                  orderStatus={order.status}
-                  classes={classes}
-                  addressesWidth={addressesWidth}
-                  xs={xs}
-                  tracking={tracking}
-                  statusStepper={status}
-                  order={order}
-                />
+    <div style={{ backgroundColor: 'rgba(252, 248, 244, 0.5)' }}>
+      <div className={classes.box}>
+        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Container>
+            <CssBaseline />
+            <Box py={10} className={classes.containingBox}>
+              <Grid container spacing={xs ? 0 : 4}>
+                <Grid item xs={mainWidth}>
+                  <OrderSummary
+                    account={account}
+                    orderNumber={order.orderNumber}
+                    orderId={order.orderNumber}
+                    orderRef={order._id}
+                    orderEmail={order.email}
+                    createdAt={formatDateTime(order.createdAt, false)}
+                    shippingAddress={order.shippingAddress}
+                    billingAddress={order.billingAddress}
+                    paymentData={order.paymentData}
+                    orderStatus={order.status}
+                    classes={classes}
+                    addressesWidth={addressesWidth}
+                    xs={xs}
+                    tracking={tracking}
+                    statusStepper={status}
+                    order={order}
+                  />
+                </Grid>
+                <Grid item xs={cartWidth}>
+                  <OrderCartSummary order={order} />
+                </Grid>
               </Grid>
-              <Grid item xs={cartWidth}>
-                <OrderCartSummary order={order} />
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      </Box>
+            </Box>
+          </Container>
+        </Box>
+      </div>
     </div>
   );
 };
