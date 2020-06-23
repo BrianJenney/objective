@@ -357,18 +357,19 @@ export const GenerateOneColumn = (comps, template, pageName, xs) => {
   });
 
   if (!xs) {
-    let startInd = null;
+    let startInd = 0;
     components.forEach((currVal, ind) => {
       if (currVal.props.children.props.data.type === 'sectionTitle') {
-        startInd = ind;
+        startInd = ind + 1;
       }
 
-      if (startInd !== null && currVal.props.children.props.data.type === 'box') {
+      if (currVal.props.children.props.data.type === 'box') {
         const boxComp = components.splice(ind, 1)[0];
-        components.splice(startInd + 1, 0, boxComp);
+        components.splice(startInd, 0, boxComp);
       }
     });
   }
+
   return components;
 };
 
