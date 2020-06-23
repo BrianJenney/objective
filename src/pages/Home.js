@@ -148,9 +148,10 @@ class Home extends Component {
       });
     }
 
-    const bps = this.props.products.filter(product =>
-      bestsellers.includes(product.sku.split('-')[0])
-    );
+    const bpsOrdered = [];
+    bestsellers.forEach(sku => {
+      bpsOrdered.push(this.props.products.find(product => product.sku.split('-')[0] === sku));
+    });
 
     return (
       <div className="home-bestsellers beige-bg">
@@ -161,7 +162,7 @@ class Home extends Component {
               contentfulOptions
             )}
             <Grid container spacing={3}>
-              {bps.map(variant => (
+              {bpsOrdered.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
@@ -198,9 +199,10 @@ class Home extends Component {
       });
     }
 
-    const fps = this.props.products
-      .filter(product => family.includes(product.sku.split('-')[0]))
-      .map(product => product);
+    const fpsOrdered = [];
+    family.forEach(sku => {
+      fpsOrdered.push(this.props.products.find(product => product.sku.split('-')[0] === sku));
+    });
 
     return (
       <div className="his-hers-theirs beige-bg">
@@ -215,7 +217,7 @@ class Home extends Component {
               contentfulOptions
             )}
             <Grid container spacing={3}>
-              {fps.map(variant => (
+              {fpsOrdered.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
