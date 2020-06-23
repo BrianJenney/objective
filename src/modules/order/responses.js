@@ -7,7 +7,7 @@ import {
   receivedGetOrder
 } from './actions';
 import { receivedFindOrdersByAccount } from '../account/actions';
-import { requestCreateCart, requestRemoveCartById } from '../cart/actions';
+import { requestRemoveCartById } from '../cart/actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
 const localStorageClient = require('store');
@@ -18,10 +18,10 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       debugRabbitResponse('Order Create Response', status, data, fields, properties);
       // status handling
       if (status === 'success') {
-        // clear cart on success
+        // clear cart from redux & local storage on success
         store.dispatch(receivedCreateOrderSuccess(data));
         store.dispatch(requestRemoveCartById(data.cartId));
-        store.dispatch(requestCreateCart());
+        localStorageClient.remove('cartId');
 
         // ImpactRadius, Segment
         // Remove clickId/timer on success order
@@ -54,6 +54,7 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       store.dispatch(receivedGetOrder(data));
       break;
     default:
-      console.log('bad response ' + fields.routingKey);
+      // eslint-disable-next-line no-console
+      console.log(`bad response ${fields.routingKey}`);
   }
 };

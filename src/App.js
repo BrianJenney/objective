@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Switch, useParams } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 
-import { requestFetchBootstrap } from './modules/bootstrap/actions';
+import { requestFetchBootstrap as requestFetchBootstrapImport } from './modules/bootstrap/actions';
 import {
-  requestCreateCart,
-  requestPatchCart,
-  requestRemoveCartById,
-  requestMergeCarts
+  requestCreateCart as requestCreateCartImport,
+  requestPatchCart as requestPatchCartImport,
+  requestMergeCarts as requestMergeCartsImport
 } from './modules/cart/actions';
+
 import { RouteWithSubRoutes } from './components/common';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -27,21 +27,16 @@ const localStorageClient = require('store');
 
 class App extends Component {
   static propTypes = {
+    cart: PropTypes.object,
     requestFetchBootstrap: PropTypes.func.isRequired,
     requestCreateCart: PropTypes.func.isRequired,
     requestPatchCart: PropTypes.func.isRequired,
-    requestRemoveCartById: PropTypes.func.isRequired,
     requestMergeCarts: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    const {
-      requestFetchBootstrap,
-      requestCreateCart,
-      requestPatchCart,
-      requestRemoveCartById,
-      requestMergeCarts
-    } = this.props;
+    // eslint-disable-next-line no-shadow
+    const { requestFetchBootstrap, requestPatchCart, requestMergeCarts } = this.props;
 
     // ImpactRadius, Segment click id logic
     // Ref: Jira DC-846
@@ -79,18 +74,14 @@ class App extends Component {
 
       const accountId = jwt.decode(token).account_id;
 
-      requestMergeCarts(localStorageClient.get('cartId'), accountId);
+      if (localStorageClient.get('cartId')) {
+        requestMergeCarts(localStorageClient.get('cartId'), accountId);
+      }
     });
 
     EventEmitter.addListener('user.logged.out', () => {
       const olympusToken = createAnonymousToken();
       localStorageClient.set('olympusToken', olympusToken);
-      requestCreateCart();
-    });
-
-    EventEmitter.addListener('order.created', order => {
-      requestRemoveCartById(this.props.cart._id);
-      requestCreateCart();
     });
   }
 
@@ -128,11 +119,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestFetchBootstrap,
-  requestCreateCart,
-  requestPatchCart,
-  requestRemoveCartById,
-  requestMergeCarts
+  requestFetchBootstrap: requestFetchBootstrapImport,
+  requestCreateCart: requestCreateCartImport,
+  requestPatchCart: requestPatchCartImport,
+  requestMergeCarts: requestMergeCartsImport
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
