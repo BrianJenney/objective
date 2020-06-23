@@ -2,7 +2,8 @@
   .shopAllLink {
     color: #fff;
     background-color: #000000;
-    height: 80px;
+    width: 384px;
+    height: 60px;
     font-size: 16px;
     font-weight: 900;
     line-height: 1.88;
@@ -11,7 +12,55 @@
     font-family: p22-underground, Helvetica, sans-serif;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 22px 150px;
+    padding: 19px 0px;
+    display: block;
+  }
+  .best-container > div {
+    &:nth-of-type(1) {
+      .tile {
+        border: 1px solid #87331f;
+        .title {
+          color: #87331f;
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      .tile {
+        border: 1px solid #1f396d;
+        .title {
+          color: #1f396d;
+        }
+      }
+    }
+    &:nth-of-type(3),
+    &:nth-of-type(4) {
+      .tile {
+        border: 1px solid #003833;
+        .title {
+          color: #003833;
+        }
+      }
+    }
+  }
+  .solutions-container > div {
+    &:nth-of-type(1),
+    &:nth-of-type(2) {
+      .tile {
+        border: 1px solid #1f396d;
+        .title {
+          color: #1f396d;
+        }
+      }
+    }
+    &:nth-of-type(3),
+    &:nth-of-type(4) {
+      .tile {
+        border: 1px solid #003833;
+        .title {
+          color: #003833;
+        }
+      }
+    }
   }
   .beige-bg {
     background-color: rgba(244, 240, 238, 0.5);
@@ -90,7 +139,7 @@
   .his-hers-theirs {
     h1 {
       font-family: p22-underground, sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
       font-style: normal;
       font-stretch: normal;
@@ -104,8 +153,7 @@
     }
   }
   .welcome {
-    padding-left: 275px;
-    padding-right: 275px;
+    padding: 101px 0px 81px 0px;
     p {
       margin: 0 auto;
     }
@@ -163,7 +211,7 @@
     margin-bottom: 120px;
     h1 {
       font-family: p22-underground, sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 500;
       font-style: normal;
       font-stretch: normal;
@@ -177,7 +225,7 @@
     }
     h2 {
       font-family: 'Canela Text Web';
-      font-size: 50px !important;
+      font-size: 44px;
       font-weight: 300;
       font-style: normal;
       font-stretch: normal;
@@ -202,7 +250,7 @@
       a {
         color: #fff;
         background-color: #000000;
-        height: 80px;
+        height: 60px;
         font-size: 16px;
         font-weight: 900;
         line-height: 1.88;
@@ -211,7 +259,8 @@
         font-family: p22-underground, Helvetica, sans-serif;
         text-transform: uppercase;
         text-decoration: none;
-        padding: 25px 100px;
+        padding: 22px 100px;
+        display: initial;
       }
       &:nth-of-type(1) {
         margin-bottom: 50px;
@@ -262,6 +311,7 @@
       padding: 0 15px 15px;
       button {
         min-width: 0;
+        height: 60px;
       }
     }
     &.green {
@@ -298,8 +348,18 @@
       letter-spacing: 1.65px !important;
       padding: 19px !important;
     }
+    .tile {
+      .home-atc {
+        button {
+          height: 74.4px;
+        }
+      }
+    }
     .shopAllLink {
-      padding: 25px 120px;
+      display: block;
+      padding: 30px 0px;
+      width: 302px;
+      height: 80px;
     }
     .xs-hidden {
       display: none;
@@ -321,8 +381,7 @@
       }
     }
     .welcome {
-      padding-left: 0;
-      padding-right: 0;
+      padding-top: 80px;
     }
     .section {
       min-height: 0px;
@@ -357,7 +416,7 @@
           font-size: 14px;
           line-height: 2.14;
           letter-spacing: 1.17px;
-          padding: 25px 0;
+          padding: 19px 0;
           width: 100%;
           display: block;
           text-align: center;

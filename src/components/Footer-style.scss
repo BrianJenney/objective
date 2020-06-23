@@ -8,7 +8,6 @@
 
   a {
     color: #ffffff;
-    text-decoration: none;
   }
 
   a:hover,
@@ -26,7 +25,7 @@
   }
 
   .promise {
-    padding: 32px 0px;
+    padding: 48px 0px 48px 66px;
     h4 {
       font-family: p22-underground, sans-serif;
       font-size: 16px;
@@ -51,11 +50,15 @@
       margin: 0;
     }
     @media (min-width: 1200px) {
-      padding: 30px;
-      border-left: 1px solid $gray;
       p {
         font-size: 16px;
       }
+    }
+    @media only screen and (max-width: 1024px) {
+      padding: 30px;
+    }
+    @media only screen and (max-width: 960px) {
+      padding: 32px 0px;
     }
   }
   .signup-box {
@@ -63,7 +66,7 @@
     font-family: freight-text-pro, sans-serif;
     font-size: 16px;
     text-transform: none;
-    padding: 40px 0px 40px;
+    padding: 48px 0px 77px 32px;
     color: #959595;
 
     .MuiFormHelperText-root.Mui-error {
@@ -78,9 +81,25 @@
       padding: 0;
       position: absolute;
     }
+    button {
+      background: #fff;
+      width: 115px;
+      height: 100%;
+      padding-top: 9px;
+      .cls-1,
+      .cls-2 {
+        fill: none;
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+      .cls-2 {
+        stroke-linecap: square;
+      }
+    }
     @media (min-width: 1200px) {
       font-size: 18px;
-      padding: 32px 0px 79px 39px;
+      padding: 48px 0px 77px 64px;
       font-weight: normal;
       font-stretch: normal;
       font-style: normal;
@@ -96,22 +115,6 @@
             width: 98%;
           }
         }
-        button {
-          background: #fff;
-          width: 115px;
-          height: 100%;
-          padding-top: 9px;
-          .cls-1,
-          .cls-2 {
-            fill: none;
-            stroke: #231f20;
-            stroke-miterlimit: 10;
-            stroke-width: 2px;
-          }
-          .cls-2 {
-            stroke-linecap: square;
-          }
-        }
       }
     }
     form {
@@ -125,6 +128,7 @@
       }
     }
     @media (max-width: 768px) {
+      padding-left: 10px;
       form {
         .MuiFormControl-fullWidth {
           width: 76%;
@@ -155,20 +159,32 @@
         padding-top: 24px;
       }
     }
+    @media only screen and (max-width: 960px) {
+      padding: 31px 0px;
+    }
+  }
+  .MuiOutlinedInput-input {
+    padding: 15.5px;
+  }
+  .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+    border: 2px solid #c10230;
+  }
+  .MuiFormHelperText-contained {
+    margin: 0px !important;
   }
   .border-left {
-    border-left: 1px solid $gray;
+    border-left: 1px solid #959595;
   }
 
   .border-bottom {
-    border-bottom: 1px solid $gray;
+    border-bottom: 1px solid #959595;
   }
 
   .border-right {
-    border-right: 1px solid $gray;
+    border-right: 1px solid #959595;
   }
   .border-top {
-    border-top: 1px solid $gray;
+    border-top: 1px solid #959595;
   }
 
   .uppercase {
@@ -190,9 +206,11 @@
 
   .footer-main {
     .logo {
-      padding: 20px 23px;
+      display: flex;
+      justify-content: center;
       svg {
-        width: 65px;
+        width: 92px;
+        height: 92px;
         path {
           fill: #fff;
         }
@@ -230,15 +248,14 @@
       letter-spacing: 0.8px;
       font-weight: 600;
       color: #959595;
+      a {
+        color: #959595;
+        text-decoration: underline;
+      }
 
       @media (min-width: 320px) {
-        font-size: 12px;
-        display: flex;
-        justify-content: center;
-        padding: 20px;
+        padding: 15px 0px;
         .legal-text {
-          display: flex;
-          justify-content: center;
           padding-top: 5px;
           text-decoration: underline;
           @media (min-width: 1200px) {
@@ -248,6 +265,7 @@
         }
       }
       @media (min-width: 1200px) {
+        padding: 32px 0px 28px 48px;
         text-transform: uppercase;
         letter-spacing: 0.8px;
         font-weight: 600;
@@ -258,10 +276,6 @@
         font-style: normal;
         line-height: normal;
         letter-spacing: 1.33px;
-      }
-      @media (min-width: 1600px) {
-        display: flex;
-        justify-content: center;
       }
 
       ul {
@@ -277,37 +291,31 @@
     }
 
     .row1 {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
       &.logo {
-        svg {
-          width: 48px;
-          path {
-            fill: #fff;
+        @media (min-width: 600px) {
+          svg {
+            width: 62px;
+            height: 62px;
+            path {
+              fill: #fff;
+            }
           }
+          padding: 15px;
         }
-      }
-      &.icon-container {
-        justify-content: space-evenly;
+        @media (max-width: 600px) {
+          svg {
+            width: 48px;
+            height: 48px;
+            path {
+              fill: #fff;
+            }
+          }
+          padding: 15px;
+        }
       }
       img {
         width: 27px;
         height: 27px;
-      }
-      .follow-text {
-        font-family: p22-underground, sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: normal;
-        letter-spacing: 1.31px;
-        color: #959595;
-        @media (min-width: 1200px) {
-          font-size: 16px;
-        }
       }
       @media (min-width: 1200px) {
         width: 175px;
@@ -320,7 +328,19 @@
         }
       }
     }
-
+    .follow-text {
+      font-family: p22-underground, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1.31px;
+      color: #959595;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
+    }
     input {
       font-family: p22-underground, sans-serif;
       font-weight: normal;
@@ -329,9 +349,6 @@
       line-height: normal;
       letter-spacing: normal;
       color: #ffffff;
-      // padding: 15px 10px 10px 10px;
-      // border: 1px solid #fff;
-      background-color: #000000;
     }
 
     input::placeholder {
@@ -581,7 +598,7 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
-      padding: 0px 18px 20px 18px;
+      padding: 0px 5px 20px 5px;
     }
     p {
       font-family: p22-underground, Helvetica, sans-serif;
@@ -597,7 +614,7 @@
     }
     h3 {
       font-family: 'Canela Text Web';
-      font-size: 18px;
+      font-size: 20px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -609,7 +626,7 @@
     }
     h4 {
       font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -617,7 +634,6 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
-      padding-bottom: 20px;
     }
     @media only screen and (min-width: 600px) {
       svg:nth-child(1) {

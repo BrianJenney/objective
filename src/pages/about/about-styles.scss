@@ -33,7 +33,7 @@
     text-transform: uppercase;
     text-decoration: none;
     padding: 25px 0;
-    margin: 55px auto 0;
+    margin: 55px auto 30px;
   }
   .title {
     text-align: center;
@@ -65,20 +65,17 @@
       color: #231f20;
     }
     &:nth-of-type(6) {
-      visibility: hidden; 
+      visibility: hidden;
     }
-  }
-  .section1 {
-    max-width: 785px;
   }
   .section2 {
     .desktop-img {
       background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-    background-position: bottom;
-    height: 989px;
-    padding-top: 10px;
+      background-repeat: no-repeat;
+      position: relative;
+      background-position: bottom;
+      height: 989px;
+      padding-top: 10px;
     }
     .text {
       max-width: 485px;
@@ -93,7 +90,7 @@
       letter-spacing: -0.47px;
       color: #231f20;
     }
-    
+
     .mobile-img {
       display: none;
     }
@@ -112,16 +109,16 @@
       width: auto;
     }
     h2 {
-    font-family: p22-underground, sans-serif;
-    font-size: 20px !important;
-    font-weight: 600;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.5;
-    letter-spacing: 1.25px;
-    text-align: center;
-    color: #231f20;
-    text-transform: uppercase;
+      font-family: p22-underground, sans-serif;
+      font-size: 20px !important;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.5;
+      letter-spacing: 1.25px;
+      text-align: center;
+      color: #231f20;
+      text-transform: uppercase;
     }
     p {
       text-align: left;
@@ -130,66 +127,45 @@
   .section4 {
     .hundred {
       width: 100%;
-      display: flex;
     }
-    .fifty {
+    .image-container {
       width: 50%;
       &.left {
-        margin-top: 200px;
+        float: left;
         img {
-          left: 0;
-          margin-top: 120px;
-          width: inherit;
+          width: 100%;
         }
       }
       &.right {
+        float: right;
+        margin-top: -200px;
         img {
-          right: 0;
-          position: absolute;
-          margin-top: -120px;
-          width: inherit;
+          width: 100%;
         }
       }
     }
-    @media(min-width: 1200px) {
-      .fifty {
-        &.left {
-          margin-top: 100px;
-          img {
-            left: 0;
-            margin-top: 120px;
-            width: 620px;
-          }
-        }
-        &.right {
-          img {
-            right: 0;
-            position: absolute;
-            margin-top: -120px;
-            width: inherit;
-          }
-        }
-      }
-      .container-right {
-        margin-top: 575px;
+    .container-left {
+      margin-top: 180px;
+      .text {
+        padding-left: 80px;
       }
     }
-    @media(min-width: 1600px){
-      .container-left {
-        padding-left: 285px;
-      }
-      .container-right {
-        padding-right: 285px;
-        margin-top: 815px;
-      }
-      .fifty {
-        &.left {
-          img {
-            width: 800px;
-          }
-        }
+    .container-right {
+      .text {
+        padding-left: 30px;
       }
     }
+    @media (min-width: 1200px) {
+      .image-container {
+        width: 50%;
+      }
+    }
+    @media (max-width: 768px) {
+      .image-container {
+        width: 100%;
+      }
+    }
+
     .textNum0 {
       font-family: FreightTextProMedium;
       font-size: 28px;
@@ -220,7 +196,7 @@
     background-color: #fcf8f4;
     text-align: center;
     h3 {
-      font-family:  p22-underground, sans-serif;
+      font-family: p22-underground, sans-serif;
       font-size: 20px;
       font-weight: 600;
       font-style: normal;
@@ -233,13 +209,16 @@
     }
     h1 {
       margin: 30px 0 0;
-      a, a:hover, a:visited, a:active {
+      a,
+      a:hover,
+      a:visited,
+      a:active {
         text-decoration: none;
         color: #000000;
       }
     }
   }
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     .xs-hidden {
       display: none !important;
     }
@@ -277,7 +256,7 @@
     p {
       font-size: 16px;
       &:nth-of-type(5) {
-        font-size: 26px;        
+        font-size: 26px;
       }
     }
     .section1 {
@@ -322,11 +301,13 @@
       }
     }
     .section4 {
-      img{
+      img {
         width: 100%;
       }
-      p, h1, h3 {
-        padding: 0 16px; 
+      p,
+      h1,
+      h3 {
+        padding: 0 16px;
       }
       .buttonlink {
         width: 100%;

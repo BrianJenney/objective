@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -14,6 +14,8 @@ import './home/home-style.scss';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
+
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 const contentful = require('contentful');
 const contentfulClient = contentful.createClient({
@@ -57,28 +59,26 @@ class Home extends Component {
       .then(entry => {
         const content = entry.fields;
         this.setState({
-          ...this.state,
           content: {
             ...content
           }
         });
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
     contentfulClient
       .getEntries({ content_type: 'homepageBestsellers' })
       .then(entry => {
         const products = entry.items;
         this.setState({
-          ...this.state,
           carousel: {
             ...products
           }
         });
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
     if (!homePageTracked) {
       window.analytics.page('Home');
@@ -98,7 +98,11 @@ class Home extends Component {
 
     return images.map(image => (
       <li key={image.sys.id}>
-        <img src={image.fields.file.url + params} style={{ width: '100%' }} />
+        <img
+          src={image.fields.file.url + params}
+          style={{ width: '100%' }}
+          alt={image.fields.title}
+        />
       </li>
     ));
   }
@@ -117,13 +121,13 @@ class Home extends Component {
           )}?&auto=compress,format")`
         }}
       >
-        <Container className="section-container">
-          <Box className="section-holder">
-            <div className="section">
+        <StyledContainer className="section-container">
+          <Grid container className="section-holder">
+            <Grid item xs={12} md={6} className="section">
               {documentToReactComponents(section.fields.mainContent, contentfulOptions)}
-            </div>
-          </Box>
-        </Container>
+            </Grid>
+          </Grid>
+        </StyledContainer>
       </div>
     ));
   }
@@ -137,16 +141,16 @@ class Home extends Component {
 
     if (this.state.carousel) {
       const { carousel } = this.state;
-      for (const key in carousel) {
-        if (carousel[key].fields.identifier === 'bestsellers') {
-          carousel[key].fields.products.map(product => {
+      Object.values(carousel).forEach(key => {
+        if (key.fields.identifier === 'bestsellers') {
+          key.fields.products.forEach(product => {
             bestsellers.push(product.fields.sku);
             if (bestsellers.length >= 4) {
               bestsellers.pop();
             }
           });
         }
-      }
+      });
     } else {
       return null;
     }
@@ -158,7 +162,7 @@ class Home extends Component {
     console.log(bps);
     return (
       <div className="home-bestsellers beige-bg">
-        <Container>
+        <StyledContainer>
           <Box py={10}>
             {documentToReactComponents(
               this.state.content.bestsellers.content[0],
@@ -169,14 +173,14 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90 }}>
+            <Box style={{ paddingTop: 90, display: 'flex', justifyContent: 'center' }}>
               {documentToReactComponents(
                 this.state.content.bestsellers.content[2],
                 contentfulOptions
               )}
             </Box>
           </Box>
-        </Container>
+        </StyledContainer>
       </div>
     );
   }
@@ -190,16 +194,17 @@ class Home extends Component {
 
     if (this.state.carousel) {
       const { carousel } = this.state;
-      for (const key in carousel) {
-        if (carousel[key].fields.identifier === 'solutions_whole_family') {
-          carousel[key].fields.products.map(product => {
+
+      Object.values(carousel).forEach(key => {
+        if (key.fields.identifier === 'solutions_whole_family') {
+          key.fields.products.forEach(product => {
             family.push(product.fields.sku);
             if (family.length >= 4) {
               family.pop();
             }
           });
         }
-      }
+      });
     } else {
       return null;
     }
@@ -210,7 +215,7 @@ class Home extends Component {
 
     return (
       <div className="his-hers-theirs beige-bg">
-        <Container>
+        <StyledContainer>
           <Box py={10}>
             {documentToReactComponents(
               this.state.content.solutionForFamily.content[0],
@@ -225,14 +230,14 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90 }}>
+            <Box style={{ paddingTop: 90, display: 'flex', justifyContent: 'center' }}>
               {documentToReactComponents(
                 this.state.content.solutionForFamily.content[3],
                 contentfulOptions
               )}
             </Box>
           </Box>
-        </Container>
+        </StyledContainer>
       </div>
     );
   }
@@ -280,12 +285,22 @@ class Home extends Component {
             >
               <ul>{this.renderHeroSlider()}</ul>
             </Link>
-            <Container>
-              <Box py={10} className="welcome">
-                <h1>{welcomeHeader}</h1>
-                <p>{welcomeText}</p>
-              </Box>
-            </Container>
+            <StyledContainer>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                className="welcome"
+              >
+                <Grid item xs={12} md={3}>
+                  <h1>{welcomeHeader}</h1>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <p>{welcomeText}</p>
+                </Grid>
+              </Grid>
+            </StyledContainer>
             <>{this.renderBestsellers()}</>
             <>{this.renderSections()}</>
             <>{this.renderFamily()}</>
@@ -304,5 +319,11 @@ const mapStateToProps = state => ({
   products: state.catalog.variants,
   seoMap: state.storefront.seoMap
 });
+
+Home.propTypes = {
+  products: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  seoMap: PropTypes.object.isRequired
+};
 
 export default withRouter(connect(mapStateToProps)(Home));

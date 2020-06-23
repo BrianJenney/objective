@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import './blog/blog-styles.scss';
 import { fetchPost } from '../utils/blog';
@@ -159,18 +159,22 @@ const BlogPost = ({ computedMatch }) => {
         <ScrollToTop>
           <div className="journal-gallery post">
             <Box className="content" py={8}>
-              <Container>
+              <StyledContainer>
                 <Box className="center">
-                  <div className="flex">
-                    <span className="categoryName">
-                      <Link to={`/journal/category/${slug}`}>{category}</Link>
-                    </span>
-                    |<span className="minRead">{post.fields.minuteRead} Min Read</span>
-                  </div>
-                  <h1>{post.fields.title}</h1>
-                  <img src={imageUrl} alt={post.fields.title} />
+                  <Grid container direction="column" justify="center" alignItems="center">
+                    <div className="flex">
+                      <span className="categoryName">
+                        <Link to={`/journal/category/${slug}`}>{category}</Link>
+                      </span>
+                      <span className="minRead">| {post.fields.minuteRead} Min Read</span>
+                    </div>
+                    <Grid item xs={12} sm={8} md={6}>
+                      <h1>{post.fields.title}</h1>
+                    </Grid>
+                  </Grid>
+                  <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
                 </Box>
-                <Grid container>
+                <Grid container xs={12} md={10}>
                   <Grid item xs={12} md={2} className="left">
                     <p className="date">{dateFormat(post.sys.updatedAt, 'mmmm d, yyyy')}</p>
                     <div className="mobile-flex">
@@ -223,12 +227,12 @@ const BlogPost = ({ computedMatch }) => {
                   */}
                   </Grid>
                 </Grid>
-              </Container>
+              </StyledContainer>
             </Box>
 
             {post.fields.relatedProducts && post.fields.relatedProducts.length > 0 ? (
               <Box className="shop">
-                <Container>
+                <StyledContainer>
                   <h1 className="title" align="center">
                     SHOP THIS POST
                   </h1>
@@ -236,7 +240,7 @@ const BlogPost = ({ computedMatch }) => {
                   <Grid container spacing={3} justify="center">
                     {renderRelatedProducts(post.fields.relatedProducts)}
                   </Grid>
-                </Container>
+                </StyledContainer>
               </Box>
             ) : (
               <></>
@@ -244,13 +248,13 @@ const BlogPost = ({ computedMatch }) => {
 
             {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 ? (
               <Box className="content related" py={8}>
-                <Container>
+                <StyledContainer>
                   <Divider />
                   <h1>Related Posts</h1>
                   <Grid container spacing={4} className="calloutSmall">
                     {renderRelatedPosts(post.fields.relatedPosts)}
                   </Grid>
-                </Container>
+                </StyledContainer>
               </Box>
             ) : (
               <></>

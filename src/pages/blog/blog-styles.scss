@@ -64,13 +64,9 @@
   .header {
     background-color: #fdfbf9;
     text-align: center;
-    .container {
-      padding-left: 300px;
-      padding-right: 300px;
-    }
     h1 {
       font-family: 'Canela Text Web';
-      font-size: 60px;
+      font-size: 53px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -261,7 +257,7 @@
     h2,
     h2 a {
       font-family: 'Canela Text Web';
-      font-size: 32px !important;
+      font-size: 28px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -366,7 +362,7 @@
       margin-bottom: 55px;
       h1 {
         font-family: 'Canela Text Web';
-        font-size: 60px;
+        font-size: 48px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
@@ -388,9 +384,9 @@
       margin: 0;
       .categoryName,
       .minRead {
-        font-size: 24px;
+        font-size: 22px;
         a {
-          font-size: 24px;
+          font-size: 22px;
           text-decoration: none;
         }
       }

@@ -57,7 +57,7 @@ export const HomeVariantCard = ({ variant }) => {
   }, [setOpenEmailConfirmation]);
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={3}>
       <Card className="tile" ref={ref} style={{ border: `1px solid ${variant.color}` }}>
         <NavLink
           to={`/products/${slug}`}
@@ -76,7 +76,11 @@ export const HomeVariantCard = ({ variant }) => {
             });
           }}
         >
-          <CardMedia style={{ height: 430, width: '100%' }} image={assets.imgs} className="tile-img" />
+          <CardMedia
+            style={{ height: 430, width: '100%' }}
+            image={assets.imgs + '&q=50'}
+            className="tile-img"
+          />
         </NavLink>
         <NavLink
           to={`/products/${slug}`}

@@ -1,21 +1,16 @@
 import React, { useEffect } from 'react';
 import { get, isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { fonts } from '../../components/Theme/fonts.js';
+import { fonts } from '../../components/Theme/fonts';
 import { getDefaultEntity } from '../../utils/misc';
 import { NavLink, Button } from '../../components/common';
 import { withLogout } from '../../hoc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
-const pStyle = {
-  padding: 20
-};
 const change = {
   fontFamily: fonts.smallHeader,
   fontSize: 12,
@@ -25,7 +20,7 @@ const change = {
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: fonts.header,
-    fontSize: 48,
+    fontSize: 36,
     marginBottom: 30,
     [theme.breakpoints.down('xs')]: {
       fontSize: 36,
@@ -66,18 +61,13 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'p22-underground, sans-serif'
   }
 }));
-const AccountOverview = props => {
-  const { currentUser } = props;
+const AccountOverview = ({ currentUser, logout }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const [open, setOpen] = React.useState(true);
   const paymentMethods = get(currentUser, 'data.paymentMethods', []);
   const defaultPaymentMethod = getDefaultEntity(paymentMethods) || {};
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
   useEffect(() => {
     window.analytics.page('Account Overview');
   }, []);
@@ -87,8 +77,7 @@ const AccountOverview = props => {
         Welcome, {currentUser.data.firstName}!
       </Typography>
       <p>
-        <strong>NAME</strong> {currentUser.data.firstName}{' '}
-        {currentUser.data.lastName}
+        <strong>NAME</strong> {currentUser.data.firstName} {currentUser.data.lastName}
       </p>
       <p>
         <strong>EMAIL</strong>
@@ -108,12 +97,12 @@ const AccountOverview = props => {
           : `${defaultPaymentMethod.cardType} ${defaultPaymentMethod.last4}`}
       </p>
       {xs ? (
-        <Button mt={2} mp={3} fullWidth type="submit" onClick={props.logout}>
+        <Button mt={2} mp={3} fullWidth type="submit" onClick={logout}>
           Logout
         </Button>
       ) : (
-          ''
-        )}
+        ''
+      )}
     </div>
   );
   return (
@@ -124,6 +113,7 @@ const AccountOverview = props => {
 };
 
 AccountOverview.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired
 };
 export default withLogout(AccountOverview);
