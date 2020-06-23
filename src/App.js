@@ -6,8 +6,13 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 
-import { requestFetchBootstrap } from './modules/bootstrap/actions';
-import { requestCreateCart, requestPatchCart, requestMergeCarts } from './modules/cart/actions';
+import { requestFetchBootstrap as requestFetchBootstrapImport } from './modules/bootstrap/actions';
+import {
+  requestCreateCart as requestCreateCartImport,
+  requestPatchCart as requestPatchCartImport,
+  requestMergeCarts as requestMergeCartsImport
+} from './modules/cart/actions';
+
 import { RouteWithSubRoutes } from './components/common';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -114,10 +119,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  requestFetchBootstrap,
-  requestCreateCart,
-  requestPatchCart,
-  requestMergeCarts
+  requestFetchBootstrap: requestFetchBootstrapImport,
+  requestCreateCart: requestCreateCartImport,
+  requestPatchCart: requestPatchCartImport,
+  requestMergeCarts: requestMergeCartsImport
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
