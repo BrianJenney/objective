@@ -16,12 +16,6 @@ const localStorageClient = require('store');
 const INITIAL_STATE = {
   accountId: null,
   items: [],
-  // subtotal: 0,
-  // taxRate: 0,
-  // tax: 0,
-  // discount: 0,
-  // total: 0,
-  // savings: 0,
   cartDrawerOpened: false,
   cartMerged: false
 };
