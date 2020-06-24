@@ -85,7 +85,6 @@
       background: #fff;
       width: 115px;
       height: 100%;
-      padding-top: 9px;
       .cls-1,
       .cls-2 {
         fill: none;
@@ -138,9 +137,8 @@
         }
         button {
           background: #fff;
-          width: 115px;
+          width: 82.7px;
           height: 100%;
-          padding-top: 9px;
           .cls-1,
           .cls-2 {
             fill: none;
@@ -152,11 +150,6 @@
             stroke-linecap: square;
           }
         }
-      }
-    }
-    @-moz-document url-prefix() {
-      .signup-arrow {
-        padding-top: 24px;
       }
     }
     @media only screen and (max-width: 960px) {
