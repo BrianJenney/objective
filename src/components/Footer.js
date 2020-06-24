@@ -217,6 +217,14 @@ const Footer = ({ location, currentUser }) => {
                         </NavLink>
                       </ListItem>
                       <ListItem>
+                        <NavLink
+                          to={gotoUrl('/account/orders', '/login/order')}
+                          onClick={segmentTrackNavigationClick}
+                        >
+                          Track an Order
+                        </NavLink>
+                      </ListItem>
+                      <ListItem>
                         <NavLink onClick={segmentTrackNavigationClick} to="/faq">
                           Shipping &amp; Refunds
                         </NavLink>
@@ -458,6 +466,14 @@ const Footer = ({ location, currentUser }) => {
                             to={gotoUrl('/account', '/login/account')}
                           >
                             My Account
+                          </NavLink>
+                        </ListItem>
+                        <ListItem>
+                          <NavLink
+                            to={gotoUrl('/account/orders', '/order-tracker')}
+                            onClick={segmentTrackNavigationClick}
+                          >
+                            Track an Order
                           </NavLink>
                         </ListItem>
                         <ListItem>
