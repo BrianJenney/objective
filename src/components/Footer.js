@@ -301,23 +301,23 @@ const Footer = ({ location, currentUser }) => {
                                 }
                               }}
                             />
-                            <Button type="submit" className="signup-arrow">
+                            <Button type="submit">
                               <Grid container alignItems="center" justify="center">
-                                <Grid item style={{ paddingTop: 21 }}>
+                                <Box pt={1}>
                                   <Arrow />
-                                  <Typography
+                                  <div
                                     style={{
                                       fontFamily: 'P22-Underground',
                                       fontSize: '12px',
                                       fontWeight: 600,
                                       position: 'relative',
-                                      bottom: 10,
+                                      bottom: 4,
                                       letterSpacing: 1
                                     }}
                                   >
                                     Submit
-                                  </Typography>
-                                </Grid>
+                                  </div>
+                                </Box>
                               </Grid>
                             </Button>
                           </Form>
@@ -554,23 +554,23 @@ const Footer = ({ location, currentUser }) => {
                                   }
                                 }}
                               />
-                              <Button type="submit" className="signup-arrow">
+                              <Button type="submit">
                                 <Grid container alignItems="center" justify="center">
-                                  <Grid item style={{ paddingTop: 22 }}>
+                                  <Box pt={1}>
                                     <Arrow />
-                                    <Typography
+                                    <div
                                       style={{
                                         fontFamily: 'P22-Underground',
                                         fontSize: '14px',
                                         fontWeight: 600,
                                         position: 'relative',
-                                        bottom: 10,
+                                        bottom: 4,
                                         letterSpacing: 1.17
                                       }}
                                     >
                                       Submit
-                                    </Typography>
-                                  </Grid>
+                                    </div>
+                                  </Box>
                                 </Grid>
                               </Button>
                             </Form>
