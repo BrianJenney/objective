@@ -614,7 +614,7 @@ const Footer = ({ location, currentUser }) => {
                     justify="space-evenly"
                     className="legal legal-text border-left"
                   >
-                    <div>Â© Objective 2020 </div>
+                    <div>&#169; Objective 2020 </div>
                     <div>&bull;</div>
 
                     <a
