@@ -43,7 +43,7 @@ class CheckoutButton extends Component {
                     variant="contained"
                     disabled={this.props.cart.items.length === 0}
                   >
-                    Checkout -hello
+                    Checkout
                   </StyledCheckoutButton>
                 </Grid>
               </Grid>
