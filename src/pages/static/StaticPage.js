@@ -15,8 +15,8 @@ const StaticPage = ({ match }) => {
   const page = useSelector(state => state.page);
 
   useEffect(() => {
-    const [subdomain] = window.location.hostname.split('-');
-    if (pageLoaded === false) dispatch(requestPage(slug, subdomain));
+    const [prefix] = window.location.hostname.split('-');
+    if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
 
   useEffect(() => {
