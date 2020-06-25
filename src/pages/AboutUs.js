@@ -11,15 +11,8 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import ScrollToTop from '../components/common/ScrollToTop';
 import './about/about-styles.scss';
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { contentfulClient } from '../utils/contentful';
 import HeadTags from '../components/common/HeadTags';
-
-const contentful = require('contentful');
-const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
-});
 
 const contentfulOptions = {
   renderNode: {
