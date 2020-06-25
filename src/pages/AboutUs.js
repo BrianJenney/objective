@@ -13,19 +13,11 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { contentfulClient } from '../utils/contentful';
 import HeadTags from '../components/common/HeadTags';
 import { StyledContainer } from '../assets/styles/StyledComponents';
 
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
-
 import './about/about-styles.scss';
-
-const contentful = require('contentful');
-const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
-});
 
 const contentfulOptions = {
   renderNode: {
