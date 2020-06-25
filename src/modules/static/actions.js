@@ -7,13 +7,13 @@ const NodeCache = require('node-cache');
 
 const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
-export const requestPage = (slug, subdomain = '') => (dispatch, getState) => {
+export const requestPage = (slug, prefix = '') => (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
       query: {
         slug,
-        subdomain
+        prefix
       },
       collation: {
         locale: 'en_US',

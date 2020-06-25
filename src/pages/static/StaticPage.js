@@ -16,8 +16,10 @@ const StaticPage = ({ match }) => {
   const page = useSelector(state => state.page);
 
   useEffect(() => {
-    const [subdomain] = window.location.hostname.split('-');
-    if (pageLoaded === false) dispatch(requestPage(slug, subdomain));
+    const { hostname } = window.location;
+    const prefix =
+      hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview' ? 'preview' : '';
+    if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
 
   useEffect(() => {

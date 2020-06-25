@@ -17,7 +17,7 @@ import LoginDropdown from './LoginDropdown';
 import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
 import { setCartNotification } from '../modules/utils/actions';
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { contentfulClient } from '../utils/contentful';
 import { OBJECTIVE_PROMOBANNER } from '../constants/contentfulEntries';
 
 import Logo from './common/Icons/Logo/Logo';
@@ -64,13 +64,6 @@ const segmentIdentify = user => {
     }
   }
 };
-
-const contentful = require('contentful');
-const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
-});
 
 const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
