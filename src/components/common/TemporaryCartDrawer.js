@@ -37,7 +37,15 @@ const StyledDrawerWrapper = withStyles(theme => ({
   }
 }))(Box);
 
-const TemporaryCartDrawer = ({ toggleContent, listContent, closer, cart, side, ...rest }) => {
+const TemporaryCartDrawer = ({
+  toggleContent,
+  listContent,
+  closer,
+  cart,
+  side,
+  hideLPCoupon,
+  ...rest
+}) => {
   const drawerOpened = useSelector(state => state.cart.cartDrawerOpened);
   const dispatch = useDispatch();
 
@@ -60,15 +68,17 @@ const TemporaryCartDrawer = ({ toggleContent, listContent, closer, cart, side, .
 
   return (
     <Box {...rest}>
-      {toggleContent && <StyledFab size="small" onClick={toggleDrawer(true)} children={toggleContent} />}
+      {toggleContent && (
+        <StyledFab size="small" onClick={toggleDrawer(true)} children={toggleContent} />
+      )}
       <Drawer anchor={side} open={drawerOpened} onClose={toggleDrawer(false)}>
         {closePanel}
         {listPanel}
         {cartItem.items.length !== 0 ? (
-          <CheckoutButton onClick={toggleDrawer(false)} />
+          <CheckoutButton onClick={toggleDrawer(false)} hideLPCoupon={hideLPCoupon} />
         ) : (
-            <ContShoppingButton onClick={toggleDrawer(false)} />
-          )}
+          <ContShoppingButton onClick={toggleDrawer(false)} />
+        )}
       </Drawer>
     </Box>
   );
@@ -78,7 +88,8 @@ TemporaryCartDrawer.propTypes = {
   side: PropTypes.oneOf(Object.values(SIDES)).isRequired,
   toggleContent: PropTypes.node.isRequired,
   closer: PropTypes.node,
-  listContent: PropTypes.node.isRequired
+  listContent: PropTypes.node.isRequired,
+  hideLPCoupon: PropTypes.node
 };
 
 export default TemporaryCartDrawer;

@@ -166,13 +166,14 @@ const Checkout = ({
     });
   };
 
-  //Reset signupError, patchError upon component unmount
-  useEffect(() => {
-    return () => {
+  // Reset signupError, patchError upon component unmount
+  useEffect(
+    () => () => {
       clearPatchAccountError();
       clearCreateAccountError();
-    };
-  }, []);
+    },
+    []
+  );
 
   // Set step 2 to active if there are any patch account errors
   useEffect(() => {
@@ -210,7 +211,7 @@ const Checkout = ({
   }, [paymentMethods]);
 
   useEffect(() => {
-    const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
+    const isPaypalPaymentMethod = !!(payload.method && payload.method === 'paypal');
     const isGuest =
       currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
 
@@ -233,12 +234,11 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2 && !account_jwt && !accountCreated) {
-      const isGuest =
+      const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
         !payload.paymentDetails.billingAddress.password
-          ? true
-          : false;
+      );
       setGuestMode(isGuest);
       const accountInfoPayload = {
         firstName: payload.paymentDetails.billingAddress.firstName,
@@ -246,7 +246,7 @@ const Checkout = ({
         email: payload.shippingAddress.email.toLowerCase(),
         password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
         passwordSet: !isGuest,
-        isGuest: isGuest,
+        isGuest,
         storeCode: cart.storeCode,
         newsletter: true
       };
@@ -269,9 +269,9 @@ const Checkout = ({
 
   useEffect(() => {
     if (Object.keys(paypalPayloadState).length > 0) {
-      //Make a copy and preserve to preserve the payload
-      let paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
-      //normalize paymentDetailsPayload
+      // Make a copy and preserve to preserve the payload
+      const paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
+      // normalize paymentDetailsPayload
       paymentDetailsPayload.details.shippingAddress.address1 =
         paymentDetailsPayload.details.shippingAddress.line1;
       paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details
@@ -511,7 +511,7 @@ const Checkout = ({
       return null;
     }
     setPpButtonRendered(true);
-    let paymentDetailsPayload = await sendPaypalCheckoutRequest(
+    const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
       {
@@ -527,7 +527,7 @@ const Checkout = ({
     dispatch(setCheckoutPaypalPayload(paymentDetailsPayload));
   };
 
-  let paypalCheckoutButton = document.getElementById('paypal-checkout-button');
+  const paypalCheckoutButton = document.getElementById('paypal-checkout-button');
   useEffect(() => {
     if (activeStep === 0 && paypalCheckoutButton !== null) {
       paypalCheckoutButton.innerHTML = '';
