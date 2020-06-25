@@ -54,9 +54,12 @@ const BlogPost = ({ computedMatch }) => {
   const fetchData = async () => {
     const postData = await fetchPost(postSlug);
     setPost(postData);
-    // Check if BlogPost entry exists, then whether there is a post body
-    if (postData && !postData.fields.body) {
-      // If post body is empty but BlogPost exists, use StaticPage entry
+    // Check postData for embedded static page
+    const postBody = postData.fields.body.content;
+    if (
+      postBody[0].nodeType === 'embedded-entry-block' &&
+      postBody[0].data.target.sys.contentType.sys.id === 'spMainPage'
+    ) {
       setUseStaticPage(true);
     }
   };
