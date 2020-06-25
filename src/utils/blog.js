@@ -1,11 +1,4 @@
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
-
-const contentful = require('contentful');
-const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
-});
+import { contentfulClient } from './contentful';
 
 export const fetchBlogHome = async () => {
   const results = {};
