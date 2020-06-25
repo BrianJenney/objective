@@ -5,16 +5,24 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import './template-styles.css';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: props => ({
     color: props.desktopStyle.fontColor,
     fontWeight: props.desktopStyle.fontWeight,
     fontSize: props.desktopStyle.fontSize,
     lineHeight: props.desktopStyle.lineHeight,
     fontFamily: props.desktopStyle.fontFamily,
-    paddingLeft: props.desktopStyle.paddingLeft
+    paddingLeft: props.desktopStyle.paddingLeft,
+    [theme.breakpoints.down('xs')]: {
+      color: props.mobileStyle.fontColor,
+      fontWeight: props.mobileStyle.fontWeight,
+      fontSize: props.mobileStyle.fontSize,
+      lineHeight: props.mobileStyle.lineHeight,
+      fontFamily: props.mobileStyle.fontFamily,
+      paddingLeft: props.mobileStyle.paddingLeft
+    }
   })
-});
+}));
 
 const List = ({ data, template, type, symbol }) => {
   const classes = useStyles(data);
