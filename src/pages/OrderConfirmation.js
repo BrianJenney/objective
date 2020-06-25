@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { withRouter, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
 
 import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
@@ -92,6 +91,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OrderConfirmation = ({ history }) => {
+  const { state } = history.location;
   const order = useSelector(state => state.order.order);
   const account = useSelector(state => state.account);
   const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
@@ -102,7 +102,7 @@ const OrderConfirmation = ({ history }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
-  let orderItemsTransformedGA = [];
+  const orderItemsTransformedGA = [];
 
   if (order) {
     order.items.map(item => {
@@ -129,7 +129,11 @@ const OrderConfirmation = ({ history }) => {
         items: orderItemsTransformedGA
       });
 
-      if (order.account && order.account.hasOwnProperty('isGuest') && order.account.hasOwnProperty('passwordSet')) {
+      if (
+        order.account &&
+        order.account.hasOwnProperty('isGuest') &&
+        order.account.hasOwnProperty('passwordSet')
+      ) {
         if (!order.account.isGuest && order.account.passwordSet) {
           if (order.account.hasOwnProperty('temporarilyLogin')) {
             delete order.account.temporarilyLogin;
@@ -193,40 +197,46 @@ const OrderConfirmation = ({ history }) => {
     return null;
   }
 
-  const OrderCartSummary = () => {
-    return <CartSummary order={order} />;
-  };
+  const OrderCartSummary = () => <CartSummary order={order} hideLPCoupon={state} />;
 
   const OrderDetail = () => {
-    const paymentMethod = order.paymentData && order.paymentData.method ? order.paymentData.method : 'creditCard';
+    const paymentMethod =
+      order.paymentData && order.paymentData.method ? order.paymentData.method : 'creditCard';
     const cardType =
       paymentMethod === 'creditCard' && order.paymentData && order.paymentData.cardType
         ? order.paymentData.cardType
         : '';
     const last4 =
-      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.last4 ? order.paymentData.last4 : '';
-    const paymentEmail = 'paypal' && order.paymentData && order.paymentData.email ? order.paymentData.email : '';
+      paymentMethod === 'creditCard' && order.paymentData && order.paymentData.last4
+        ? order.paymentData.last4
+        : '';
+    const paymentEmail =
+      'paypal' && order.paymentData && order.paymentData.email ? order.paymentData.email : '';
     const { shippingAddress, billingAddress } = order;
     const { email } = order;
     const handleOrderDetail = useCallback(
       e => {
         e.preventDefault();
-        if (account.hasOwnProperty('data') && !account.data.hasOwnProperty('_id') && order.account) {
+        if (
+          account.hasOwnProperty('data') &&
+          !account.data.hasOwnProperty('_id') &&
+          order.account
+        ) {
           order.account.temporarilyLogin = true;
           dispatch(receivedFetchAccountSuccess(order.account));
         }
-        history.replace(`/orders/${order._id}`);
+
+        history.replace(`/orders/${order._id}`, state);
       },
       [history, order._id]
     );
-    const shouldShowSetPasswordForm =
+    const shouldShowSetPasswordForm = !!(
       order.hasOwnProperty('account') &&
       order.account.hasOwnProperty('passwordSet') &&
       order.account.hasOwnProperty('isGuest') &&
       !order.account.passwordSet &&
       order.account.isGuest
-        ? true
-        : false;
+    );
 
     return (
       <Box className={classes.paper}>
@@ -252,7 +262,12 @@ const OrderConfirmation = ({ history }) => {
         )}
 
         {!xs && !shouldShowSetPasswordForm && (
-          <Button type="button" onClick={handleOrderDetail} children="Check Order Status" className={classes.button} />
+          <Button
+            type="button"
+            onClick={handleOrderDetail}
+            children="Check Order Status"
+            className={classes.button}
+          />
         )}
 
         {shouldShowSetPasswordForm && (
@@ -275,9 +290,16 @@ const OrderConfirmation = ({ history }) => {
           borderTop="1px solid #979797"
           borderBottom="1px solid #979797"
         >
-          <Grid item xs={addressesWidth} style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}>
+          <Grid
+            item
+            xs={addressesWidth}
+            style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}
+          >
             <Box borderRight={xs ? 0 : '1px solid #979797'} paddingBottom={xs ? '25px' : '35px'}>
-              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
+              <Typography
+                className={classes.text2}
+                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
+              >
                 Billing Information
               </Typography>
               <Address address={billingAddress} email={email} />
@@ -289,7 +311,10 @@ const OrderConfirmation = ({ history }) => {
               borderTop={xs ? '1px solid #979797' : 0}
               paddingBottom={xs ? '25px' : '35px'}
             >
-              <Typography className={classes.text2} style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}>
+              <Typography
+                className={classes.text2}
+                style={{ padding: xs ? '25px 0 15px' : '35px 0 25px' }}
+              >
                 Shipping Information
               </Typography>
               <Address address={shippingAddress} email={email} />

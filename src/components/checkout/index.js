@@ -104,6 +104,8 @@ const Checkout = ({
   clearPatchAccountError,
   requestCreateOrder
 }) => {
+  const hideLPCoupon = !!history.location.state;
+  console.log('testing-INDEX-CHECKOUT', hideLPCoupon);
   const [payload, setPayload] = useState({});
   const [resetFormMode, setResetFormMode] = useState(false);
   const [authMode, setAuthMode] = useState('shipping');
@@ -332,7 +334,7 @@ const Checkout = ({
       if (orderError === false) {
         dispatch(unsetCheckoutPaypalPayload());
         setPayload({});
-        history.replace('/order');
+        history.replace('/order', hideLPCoupon);
       }
     }
   }, [orderError, orderIsLoading]);
@@ -436,7 +438,7 @@ const Checkout = ({
       setCheckoutDialogOpen(true);
     } else {
       setPayload({});
-      history.replace('/order');
+      history.replace('/order', hideLPCoupon);
     }
     return true;
   };

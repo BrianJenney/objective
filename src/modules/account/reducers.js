@@ -152,7 +152,7 @@ export default (state = INITIAL_STATE, action) => {
         onPatchFailure: action.onFailure
       };
     case RECEIVED_PATCH_ACCOUNT_SUCCESS:
-      state.onPatchSuccess();
+      // state.onPatchSuccess();
       return {
         ...state,
         patchAccountError: false,
