@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import { useMediaQuery, Container, Grid, Box, Link, SvgIcon } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import { withCurrentUser } from '../hoc';
 import { DropdownMenu, NavLink } from './common';
@@ -72,7 +73,7 @@ const contentfulClient = contentful.createClient({
 
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -231,52 +232,64 @@ const Header = ({ currentUser, location }) => {
       <>
         {promoVisible && contents && renderPromoBanner()}
         <div className="holder">
-          <Container>
-            <Grid container>
-              <Grid item xs={4}>
-                <Grid container>
-                  <Grid item xs={6} className="h-pding">
-                    <StyledLink
-                      onClick={segmentTrackNavigationClick}
-                      component={RouterLink}
-                      to="/gallery"
-                    >
-                      Shop
-                    </StyledLink>
-                  </Grid>
-                  <Grid item xs={6} className="h-pding">
-                    <StyledLink
-                      onClick={segmentTrackNavigationClick}
-                      component={RouterLink}
-                      to="/journal"
-                    >
-                      Journal
-                    </StyledLink>
-                  </Grid>
+          <StyledContainer>
+            <Grid container spacing={3} direction="row" alignItems="center">
+              <Grid item sm={1} className="h-pding">
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/gallery"
+                >
+                  Shop
+                </StyledLink>
+              </Grid>
+              <Grid item sm={1} className="h-pding">
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/journal"
+                >
+                  Journal
+                </StyledLink>
+              </Grid>
+              <Grid
+                container
+                sm={8}
+                spacing={1}
+                direction="row"
+                alignItems="center"
+                justify="center"
+                className="logo"
+              >
+                <Grid item>
+                  <NavLink onClick={segmentTrackNavigationClick} to="/">
+                    <Logo />
+                  </NavLink>
                 </Grid>
               </Grid>
-              <Grid item xs={4} className="logo text-center">
-                <NavLink onClick={segmentTrackNavigationClick} to="/">
-                  <Logo />
-                </NavLink>
-              </Grid>
-              <Grid item xs={4}>
-                <Grid container className="align-right">
-                  <Grid item xs={6} className="acct h-pding">
-                    <StyledLink
-                      component={RouterLink}
-                      {...accountMenuItemConf}
-                      onClick={segmentTrackNavigationClick}
-                    />
-                  </Grid>
-                  <Grid item xs={6} className="header-shop-holder h-pding">
-                    {!isCheckoutPage && <ShoppingCart />}
-                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
-                  </Grid>
+              <Grid
+                container
+                sm={2}
+                spacing={1}
+                direction="row"
+                justify="space-around"
+                alignItems="center"
+              >
+                <Grid item xs="auto" className="h-pding">
+                  <StyledLink
+                    component={RouterLink}
+                    {...accountMenuItemConf}
+                    onClick={segmentTrackNavigationClick}
+                  />
+                </Grid>
+
+                <Grid item xs="auto" className="h-pding">
+                  {!isCheckoutPage && <ShoppingCart />}
+                  {cartNotification ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
                 </Grid>
               </Grid>
             </Grid>
-          </Container>
+          </StyledContainer>
         </div>
       </>
     );

@@ -32,7 +32,7 @@ const INITIAL_VALUES = {
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '44px',
+    fontSize: '36px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -45,6 +45,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: '17px',
     fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 
@@ -53,25 +59,20 @@ const ForgotPassword = ({ history }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = ({ email }) => {
-    const location = window.location;
-    const url = location.protocol + '//' + location.host;
+    const { location } = window;
+    const url = `${location.protocol}//${location.host}`;
 
     dispatch(requestForgotPassword(email, url));
     history.replace('/password/confirm');
   };
 
   const renderForm = () => (
-    <Form>
-      <Grid container spacing={2}>
+    <Form className={classes.form}>
+      <Grid container>
         <Grid item xs={12}>
-          <Field
-            name="email"
-            label="Email Address"
-            component={InputField}
-            autoComplete="email"
-          />
+          <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ paddingTop: '33px' }}>
           <Button type="submit" fullWidth children="Request Reset Link" />
         </Grid>
       </Grid>
@@ -82,12 +83,9 @@ const ForgotPassword = ({ history }) => {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
-        <Typography className={classes.title}>
-          Forgot your email/password?
-        </Typography>
+        <Typography className={classes.title}>Forgot your email/password?</Typography>
         <Typography className={classes.subTitle}>
-          It's easy to forget. Enter your email address and we'll send you a
-          reset link.
+          It's easy to forget. Enter your email address and we'll send you a reset link.
         </Typography>
         <Formik
           initialValues={INITIAL_VALUES}
@@ -100,10 +98,7 @@ const ForgotPassword = ({ history }) => {
   );
 };
 
-const ForgotPasswordDialog = compose(
-  withRouter,
-  withDialog
-)(ForgotPassword);
+const ForgotPasswordDialog = compose(withRouter, withDialog)(ForgotPassword);
 
 const ForgotPasswordPage = props => (
   <ForgotPasswordDialog onExited={props.history.goBack} {...props} />

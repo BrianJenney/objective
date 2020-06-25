@@ -13,14 +13,13 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { getDefaultEntity } from '../../utils/misc';
 import { PaymentSummary } from '../summaries';
 import { PaymentForm } from '../forms';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 import { setCheckoutPaypalPayload } from '../../modules/paypal/actions';
-
-import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   formControlLabel: {
@@ -96,7 +95,9 @@ const AccountPaymentDetails = ({
   const dispatch = useDispatch();
   const paypalPayloadState = useSelector(state => state.paypal);
   const paypalEmail =
-    Object.keys(paypalPayloadState).length > 0 && paypalPayloadState.details && paypalPayloadState.details.email
+    Object.keys(paypalPayloadState).length > 0 &&
+    paypalPayloadState.details &&
+    paypalPayloadState.details.email
       ? paypalPayloadState.details.email
       : false;
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -108,7 +109,7 @@ const AccountPaymentDetails = ({
   const creditCards = get(currentUser, 'data.paymentMethods', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
   const addressBook = get(currentUser, 'data.addressBook', []);
-  const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
+  const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 36 : xs ? 24 : 30; // eslint-disable-line
   const cart = useSelector(state => state.cart);
   useEffect(() => {
     if (window.location.pathname.indexOf('/account/payment-details') !== -1) {
@@ -131,15 +132,13 @@ const AccountPaymentDetails = ({
   useEffect(() => {
     const paymentMethods = currentUser.data.paymentMethods || [];
     const defaultIndex = paymentMethods.findIndex(method => method.isDefault);
-    //if there is a default payment method, select it.
+    // if there is a default payment method, select it.
     if (defaultIndex !== -1) {
       setSelectedIndex(defaultIndex);
+    } else if (paymentMethods.length > 0) {
+      setSelectedIndex(0);
     } else {
-      if (paymentMethods.length > 0) {
-        setSelectedIndex(0);
-      } else {
-        setSelectedIndex(-1);
-      }
+      setSelectedIndex(-1);
     }
 
     if (prevPatchAccountSubmitting && !currentUser.patchAccountSubmitting && formModeEnabled) {
@@ -192,14 +191,17 @@ const AccountPaymentDetails = ({
           name: paymentDetails.cardholderName,
           cardType: cardData.details.cardType,
           last4: cardData.details.lastFour,
-          expirationDate: cardData.details.expirationMonth + '/' + cardData.details.expirationYear,
+          expirationDate: `${cardData.details.expirationMonth}/${cardData.details.expirationYear}`,
           billingAddress,
           isDefault: false
         },
         nonce: cardData.nonce
       };
 
-      trackSegmentPaymentInfoEnteredEvent({ cart_id: cart._id, payment_method: cardData.details.cardType });
+      trackSegmentPaymentInfoEnteredEvent({
+        cart_id: cart._id,
+        payment_method: cardData.details.cardType
+      });
 
       if (allowFlyMode && !account_jwt) {
         actions.setSubmitting(false);
@@ -209,7 +211,7 @@ const AccountPaymentDetails = ({
           ...payload.newCreditCard,
           nonce: payload.nonce,
           saveToAccount: shouldSaveData,
-          isDefault: shouldSaveData ? true : false
+          isDefault: !!shouldSaveData
         });
       }
       if (allowFlyMode && !shouldSaveData) {
@@ -260,7 +262,11 @@ const AccountPaymentDetails = ({
       return null;
     }
     const { total, shippingAddress } = cart;
-    if (!cart || total === 0 || document.getElementById('paypal-checkout-button-payment-details') === null) {
+    if (
+      !cart ||
+      total === 0 ||
+      document.getElementById('paypal-checkout-button-payment-details') === null
+    ) {
       return null;
     }
     setPpButtonRendered(true);
@@ -287,7 +293,9 @@ const AccountPaymentDetails = ({
 
   useEffect(() => {
     if (ppButtonRendered && cart && cart.total > 0 && formModeEnabled === false) {
-      let paypalCheckoutButton = document.getElementById('paypal-checkout-button-payment-details');
+      const paypalCheckoutButton = document.getElementById(
+        'paypal-checkout-button-payment-details'
+      );
       paypalCheckoutButton.innerHTML = '';
       getPaypalBraintreeNonce();
     }
@@ -314,7 +322,11 @@ const AccountPaymentDetails = ({
         <>
           {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
             <>
-              <Box display={formType === FORM_TYPES.CHECKOUT ? 'block' : 'none'} mb={0} className="justify-content">
+              <Box
+                display={formType === FORM_TYPES.CHECKOUT ? 'block' : 'none'}
+                mb={0}
+                className="justify-content"
+              >
                 <Typography
                   color="#231f20"
                   variant="h5"
@@ -348,7 +360,7 @@ const AccountPaymentDetails = ({
                 key="formControlLabelCreditCardMode"
                 style={{ marginLeft: '-6px' }}
                 value="creditCard"
-                control={<Radio color={'primary'} size={'small'} />}
+                control={<Radio color="primary" size="small" />}
                 label="Credit Card"
                 classes={{ label: classes.formControlLabel }}
                 onClick={evt => {
@@ -369,23 +381,26 @@ const AccountPaymentDetails = ({
               fontWeight={600}
               fontFamily="p22-underground"
               style={{ textTransform: 'uppercase' }}
-              mb={4}
+              mb={3}
             />
           )}
           {isEmpty(creditCards) && paymentMethodMode === 'creditCard' && (
             <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
           )}
           <Box mx="0px" my="-8px">
-            <Grid container style={{ display: paymentMethodMode === 'creditCard' ? 'flex' : 'none' }}>
+            <Grid
+              container
+              style={{ display: paymentMethodMode === 'creditCard' ? 'flex' : 'none' }}
+            >
               {creditCards.map((creditCardEntity, index) => (
-                <Grid key={`credit_card_entity_${index}`} item xs={12} sm={6}>
+                <Grid key={`credit_card_entity_${index}`} item xs={12} sm={5}>
                   <Box
                     display="flex"
                     alignItems="flex-start"
                     m={1}
                     px={4}
                     py={3}
-                    border="2px solid #979797"
+                    border="1px solid #231f20"
                     style={{ marginLeft: '0px' }}
                   >
                     {selectionEnabled && (
@@ -407,7 +422,9 @@ const AccountPaymentDetails = ({
                         checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
                         onRemove={() => deleteCreditCard(creditCardEntity.token)}
                         onSetDefault={
-                          creditCardEntity.isDefault ? undefined : () => setDefaultCreditCard(creditCardEntity.token)
+                          creditCardEntity.isDefault
+                            ? undefined
+                            : () => setDefaultCreditCard(creditCardEntity.token)
                         }
                       />
                     </Box>
@@ -416,20 +433,27 @@ const AccountPaymentDetails = ({
               ))}
             </Grid>
             <Box
-              mt="8px"
+              mt="37px"
               mb="10px"
               fontSize={xs ? 14 : 18}
               fontWeight={600}
-              style={{ textTransform: 'uppercase', display: paymentMethodMode === 'creditCard' ? 'block' : 'none' }}
+              style={{
+                textTransform: 'uppercase',
+                display: paymentMethodMode === 'creditCard' ? 'block' : 'none'
+              }}
             >
-              <MenuLink onClick={() => setFormModeEnabled(true)} children="Add New Card" underline="always" />
+              <MenuLink
+                onClick={() => setFormModeEnabled(true)}
+                children="Add New Card"
+                underline="always"
+              />
             </Box>
 
             <FormControlLabel
               key="formControlLabelCreditCardMode"
               style={{ marginLeft: '-6px' }}
               value="paypal"
-              control={<Radio color={'primary'} size={'small'} />}
+              control={<Radio color="primary" size="small" />}
               label={paypalEmail ? `PayPal: ${paypalEmail}` : 'PayPal'}
               classes={{ label: classes.formControlLabel }}
               onClick={evt => {
@@ -439,7 +463,11 @@ const AccountPaymentDetails = ({
               style={{ display: formType !== FORM_TYPES.ACCOUNT ? 'block' : 'none' }}
             />
 
-            <Grid item xs={12} style={{ display: paymentMethodMode === 'paypal' && !paypalEmail ? 'block' : 'none' }}>
+            <Grid
+              item
+              xs={12}
+              style={{ display: paymentMethodMode === 'paypal' && !paypalEmail ? 'block' : 'none' }}
+            >
               <Box>
                 <Typography
                   variant="body1"
@@ -460,7 +488,10 @@ const AccountPaymentDetails = ({
             mt={xs ? '28px' : '55px'}
             style={{
               display:
-                paymentMethodMode === 'creditCard' || (paymentMethodMode === 'paypal' && paypalEmail) ? 'block' : 'none'
+                paymentMethodMode === 'creditCard' ||
+                (paymentMethodMode === 'paypal' && paypalEmail)
+                  ? 'block'
+                  : 'none'
             }}
           >
             <ButtonGroup fullWidth>
@@ -487,7 +518,8 @@ const AccountPaymentDetails = ({
                     height: '55px',
                     padding: '0px',
                     display:
-                      paymentMethodMode === 'creditCard' || (paymentMethodMode === 'paypal' && paypalEmail)
+                      paymentMethodMode === 'creditCard' ||
+                      (paymentMethodMode === 'paypal' && paypalEmail)
                         ? 'block'
                         : 'none'
                   }}
