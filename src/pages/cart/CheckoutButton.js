@@ -14,67 +14,28 @@ const { $brandSans } = fonts;
 
 class CheckoutButton extends Component {
   render() {
-    const { onClick, children } = this.props;
+    const { onClick, children, hideLPCoupon } = this.props;
 
     return (
       <>
-        {
-          this.props.cart.items.length !== 0 ?
-            <>
-              <Link
-                to="/checkout"
-                style={{
-                  color: 'white',
-                  'textDecoration': 'none',
-                  'fontFamily': $brandSans,
-                  'fontWeight': 'bold'
-                }}
-              >
-                <Grid container>
-
-                  <Grid item xs={12} style={{ display: 'flex', padding: '10px 16px 20px' }}>
-
-                    <StyledCheckoutButton
-                      style={{ margin: '0 auto', height: '55px' }}
-                      onClick={onClick}
-                      children={children}
-                      id="checkout-button"
-                      color="primary"
-                      variant="contained"
-                      disabled={this.props.cart.items.length === 0}
-                    >
-                      Checkout
-                  </StyledCheckoutButton>
-
-                  </Grid>
-
-
-                </Grid>
-              </Link>
-              <Grid container>
-                <Grid item xs={12} style={{ display: 'block', padding: '0px 16px 30px' }}>
-                  <PayPalButton
-                    cart={this.props.cart}
-                    buttonSelector='paypal-checkout-button-cart-drawer'
-                    buttonWrapperStyle={{ width: '100%', maxWidth: '351px', margin: '0px auto' }}
-                  />
-                </Grid>
-              </Grid></>
-            :
+        {this.props.cart.items.length !== 0 ? (
+          <>
             <Link
-              to="/checkout"
+              to={{
+                pathname: '/checkout',
+                state: hideLPCoupon
+              }}
               style={{
                 color: 'white',
-                'text-decoration': 'none',
-                'font-family': $brandSans,
-                'font-weight': 'bold'
+                textDecoration: 'none',
+                fontFamily: $brandSans,
+                fontWeight: 'bold'
               }}
-              onClick={e => e.preventDefault()}
             >
               <Grid container>
-                <Grid item xs={12} style={{ display: 'flex', padding: '0 16px 30px' }}>
+                <Grid item xs={12} style={{ display: 'flex', padding: '10px 16px 20px' }}>
                   <StyledCheckoutButton
-                    style={{ margin: '0 auto' }}
+                    style={{ margin: '0 auto', height: '55px' }}
                     onClick={onClick}
                     children={children}
                     id="checkout-button"
@@ -82,14 +43,54 @@ class CheckoutButton extends Component {
                     variant="contained"
                     disabled={this.props.cart.items.length === 0}
                   >
-                    Checkout
+                    Checkout -hello
                   </StyledCheckoutButton>
                 </Grid>
               </Grid>
             </Link>
-        }
+            <Grid container>
+              <Grid item xs={12} style={{ display: 'block', padding: '0px 16px 30px' }}>
+                <PayPalButton
+                  cart={this.props.cart}
+                  buttonSelector="paypal-checkout-button-cart-drawer"
+                  buttonWrapperStyle={{ width: '100%', maxWidth: '351px', margin: '0px auto' }}
+                />
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <Link
+            to={{
+              pathname: '/checkout',
+              state: hideLPCoupon
+            }}
+            style={{
+              color: 'white',
+              'text-decoration': 'none',
+              'font-family': $brandSans,
+              'font-weight': 'bold'
+            }}
+            onClick={e => e.preventDefault()}
+          >
+            <Grid container>
+              <Grid item xs={12} style={{ display: 'flex', padding: '0 16px 30px' }}>
+                <StyledCheckoutButton
+                  style={{ margin: '0 auto' }}
+                  onClick={onClick}
+                  children={children}
+                  id="checkout-button"
+                  color="primary"
+                  variant="contained"
+                  disabled={this.props.cart.items.length === 0}
+                >
+                  Checkout
+                </StyledCheckoutButton>
+              </Grid>
+            </Grid>
+          </Link>
+        )}
       </>
-    )
+    );
   }
 }
 
@@ -105,7 +106,4 @@ const mapDispatchToProps = {
   requestFetchCart
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CheckoutButton);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutButton);
