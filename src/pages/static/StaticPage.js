@@ -15,7 +15,9 @@ const StaticPage = ({ match }) => {
   const page = useSelector(state => state.page);
 
   useEffect(() => {
-    const [prefix] = window.location.hostname.split('-');
+    const { hostname } = window.location;
+    const prefix =
+      hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview' ? 'preview' : '';
     if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
 

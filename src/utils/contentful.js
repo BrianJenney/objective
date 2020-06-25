@@ -16,14 +16,6 @@ const clientVars =
   hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview'
     ? previewVars
     : productionVars;
-console.log(clientVars)
-
-const testing = {
-  space: OBJECTIVE_SPACE,
-  ...clientVars
-};
-
-console.log(testing)
 
 export const contentfulClient = contentful.createClient({
   space: OBJECTIVE_SPACE,
