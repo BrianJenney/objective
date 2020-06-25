@@ -28,7 +28,8 @@ export const fetchBlogHome = async () => {
   response = await contentfulClient.getEntries({
     content_type: 'blogPost',
     'sys.id[nin]': featuredIds.toString(),
-    select: 'fields.title,fields.featuredImage,fields.teaser,fields.minuteRead,fields.categories,fields.slug',
+    select:
+      'fields.title,fields.featuredImage,fields.teaser,fields.minuteRead,fields.categories,fields.slug',
     order: '-sys.updatedAt'
   });
 
@@ -44,10 +45,10 @@ export const fetchPost = async slug => {
   });
 
   if (response.total < 1) {
+    return null;
     // @TODO Need to redirect to a 404 page
-  } else {
-    return response.items[0];
   }
+  return response.items[0];
 };
 
 export const fetchPostsByCategory = async slug => {
@@ -68,13 +69,13 @@ export const fetchPostsByCategory = async slug => {
   });
 
   if (response.total < 1) {
+    return null;
     // @TODO Need to redirect to a 404 page
-  } else {
-    return {
-      title,
-      posts: response.items
-    };
   }
+  return {
+    title,
+    posts: response.items
+  };
 };
 
 export const fetchPostsByTag = async slug => {
@@ -95,13 +96,13 @@ export const fetchPostsByTag = async slug => {
   });
 
   if (response.total < 1) {
+    return null;
     // @TODO Need to redirect to a 404 page
-  } else {
-    return {
-      tag,
-      posts: response.items
-    };
   }
+  return {
+    tag,
+    posts: response.items
+  };
 };
 
 export const fetchLinkedCategory = async id => {
