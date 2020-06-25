@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
 import store from '../store';
 import EventEmitter from '../events';
 
@@ -12,6 +13,11 @@ const ObjectId = require('bson-objectid');
 const Context = React.createContext();
 
 export class ProductStore extends Component {
+  static propTypes = {
+    productSlug: PropTypes.string.isRequired,
+    children: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +44,7 @@ export class ProductStore extends Component {
 
     EventEmitter.addListener('product.request.pdp', data => {
       if (data.status === 'success' && data.data) {
-        let { product, variants, prices } = data.data;
+        const { product, variants, prices } = data.data;
 
         this.setState({ product, variants, prices });
       }
@@ -51,12 +57,12 @@ export class ProductStore extends Component {
     if (prevProps.productSlug !== this.props.productSlug) {
       const { stomp } = store.getState();
       const stompClient = stomp.client;
-      const replyTo = stomp.replyTo;
+      const { replyTo } = stomp;
       this.getProductData(stompClient, replyTo);
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
+  shouldComponentUpdate(nextProps, nextState) {
     const updated = !(
       nextState.product === null ||
       nextState.variants.length === 0 ||
@@ -66,7 +72,7 @@ export class ProductStore extends Component {
   }
 
   getProductData(stompClient, replyTo) {
-    let params = {
+    const params = {
       params: {
         query: {
           slug: this.props.productSlug
@@ -74,7 +80,7 @@ export class ProductStore extends Component {
       }
     };
 
-    let obj = JSON.stringify(msgpack.encode(params));
+    const obj = JSON.stringify(msgpack.encode(params));
 
     stompClient.send(
       '/exchange/product/product.request.pdp',
