@@ -402,6 +402,7 @@ const Cart = ({
                         {!disableItemEditing && (
                           <Link
                             onClick={e => {
+                              e.preventDefault();
                               removeFromCart(cart, index);
                             }}
                             style={{ color: '#9b9b9b' }}

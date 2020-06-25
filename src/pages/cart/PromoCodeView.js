@@ -34,7 +34,10 @@ const PromoCodeView = ({ hideLPCoupon, history }) => {
         {cart.promo.code !== 'SAVE25' && !hideLPCoupon ? cart.promo.code : ''}
         <br />
         <Link
-          onClick={e => removeCoupon(cart._id)}
+          onClick={e => {
+            e.preventDefault();
+            removeCoupon(cart._id);
+          }}
           style={{
             'text-transform': 'uppercase',
             color: LIGHT_GRAY,
