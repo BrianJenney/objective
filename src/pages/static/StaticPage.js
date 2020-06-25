@@ -23,8 +23,8 @@ const StaticPage = ({ match }) => {
 
   useEffect(() => {
     // check this when we have real content from content ms
+    let analyticsStr;
     if (page.template && !tracked) {
-      let analyticsStr;
       // Check templates against routes:
       if (isLandingPage && page.template === 'LP-Template-1') {
         analyticsStr = `LP: ${page.name}`;
@@ -36,10 +36,12 @@ const StaticPage = ({ match }) => {
         analyticsStr = '404 Error';
         setPageError(true);
       }
-
-      window.analytics.page(analyticsStr);
       setTracked(true);
+    } else if (page.error) {
+      analyticsStr = '404 Error';
+      setPageError(true);
     }
+    window.analytics.page(analyticsStr);
   }, [page]);
 
   let FinalPage;
