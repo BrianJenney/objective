@@ -145,7 +145,7 @@ class Home extends Component {
         if (key.fields.identifier === 'bestsellers') {
           key.fields.products.forEach(product => {
             bestsellers.push(product.fields.sku);
-            if (bestsellers.length >= 4) {
+            if (bestsellers.length >= 5) {
               bestsellers.pop();
             }
           });
@@ -198,7 +198,7 @@ class Home extends Component {
         if (key.fields.identifier === 'solutions_whole_family') {
           key.fields.products.forEach(product => {
             family.push(product.fields.sku);
-            if (family.length >= 4) {
+            if (family.length >= 5) {
               family.pop();
             }
           });
