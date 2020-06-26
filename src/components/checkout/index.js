@@ -13,29 +13,28 @@ import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { Panel, Loader, MenuLink } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
-import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
+import { AddressSummary, PaymentSummary } from '../summaries';
 import { CheckoutReviewForm } from '../forms';
 import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
-import CheckoutAuth from './Auth';
-import { STEPS, STEP_KEYS, STEPS_V2, DATA_KEYS } from './constants';
-import { getDefaultEntity, scrollToRef } from '../../utils/misc';
+import { STEP_KEYS, STEPS_V2 } from './constants';
+import { scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
 import { requestCheckEmailExistence } from '../../modules/account/actions';
 import { resetOrderState } from '../../modules/order/actions';
 import { setCheckoutPaypalPayload, unsetCheckoutPaypalPayload } from '../../modules/paypal/actions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
 import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
-import EventEmitter from '../../events';
+const localStorageClient = require('store');
 
 const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
   const isActiveStep = step === activeStep;
@@ -95,15 +94,12 @@ const Checkout = ({
   history,
   currentUser,
   cart,
-  requestCreateAccount,
+  emitOrderSubmitted,
   clearCreateAccountError,
   requestLogin,
-  requestFetchAccount,
-  receivedFetchAccountSuccess,
   clearLoginError,
   requestPatchAccount,
-  clearPatchAccountError,
-  requestCreateOrder
+  clearPatchAccountError
 }) => {
   const hideLPCoupon = !!history.location.state;
   const [payload, setPayload] = useState({});
@@ -434,17 +430,21 @@ const Checkout = ({
     delete payload.shippingAddress.shouldSubscribe;
     if (paymentMethodNonce) {
       if (cart.items.length > 0) {
-        requestCreateOrder(
-          { ...cart, hideLPCoupon, ...payload, account_jwt },
-          { paymentMethodNonce }
-        );
+        emitOrderSubmitted({
+          cartId: cart._id,
+          email: payload.shippingAddress.email,
+          payment: { paymentMethodNonce },
+          customerJwt: account_jwt ? account_jwt : localStorageClient.get('olympusToken')
+        });
       }
     } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
-        requestCreateOrder(
-          { ...cart, hideLPCoupon, ...payload, account_jwt },
-          { paymentMethodToken }
-        );
+        emitOrderSubmitted({
+          cartId: cart._id,
+          email: payload.shippingAddress.email,
+          payment: { paymentMethodToken },
+          customerJwt: account_jwt ? account_jwt : localStorageClient.get('olympusToken')
+        });
       }
     } else {
       return false;
@@ -746,7 +746,8 @@ Checkout.propTypes = {
   clearLoginError: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   clearPatchAccountError: PropTypes.func.isRequired,
-  requestCreateOrder: PropTypes.func.isRequired
+  requestCreateOrder: PropTypes.func.isRequired,
+  emitOrderSubmitted
 };
 
 export default withRouter(Checkout);

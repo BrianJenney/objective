@@ -21,6 +21,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'FE_ORDER_SUBMITTED':
+      return { ...state, isLoading: true, order: null };
     case REQUEST_CREATE_ORDER:
       return { ...state, isLoading: true, order: null };
     case RECEIVED_CREATE_ORDER_SUCCESS:
