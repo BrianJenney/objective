@@ -6,43 +6,62 @@ import { withRouter } from 'react-router-dom';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { requestPage } from '../../modules/static/actions';
 import { buildPage } from '../../utils/sputils';
+import NotFound from '../notfound/NotFound';
 
 const StaticPage = ({ match }) => {
-  const { slug } = match.params;
+  const { postSlug } = match.params;
+  const isLandingPage = match.path.startsWith('/landing');
   const isBlogPost = match.path.startsWith('/journal');
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [tracked, setTracked] = useState(false);
+  const [pageError, setPageError] = useState(false);
   const page = useSelector(state => state.page);
 
   useEffect(() => {
     const { hostname } = window.location;
     const prefix =
       hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview' ? 'preview' : '';
-    if (pageLoaded === false) dispatch(requestPage(slug, prefix));
+    if (pageLoaded === false) dispatch(requestPage(postSlug, prefix));
   }, []);
 
   useEffect(() => {
     // check this when we have real content from content ms
-    if (page.template) {
-      setPageLoaded(true);
-      if (tracked === false && page.name) {
-        setTracked(true);
-        const analyticsStr = isBlogPost ? 'Journal Post' : `LP: ${page.name}`;
-        window.analytics.page(analyticsStr);
+    let analyticsStr;
+    if (page.template && !tracked) {
+      // Check templates against routes:
+      if (isLandingPage && page.template === 'LP-Template-1') {
+        analyticsStr = `LP: ${page.name}`;
+        setPageLoaded(true);
+      } else if (isBlogPost && page.template === 'Blog-Post') {
+        analyticsStr = 'Journal Post';
+        setPageLoaded(true);
+      } else {
+        analyticsStr = '404 Error';
+        setPageError(true);
       }
+      setTracked(true);
+    } else if (page.error) {
+      analyticsStr = '404 Error';
+      setPageError(true);
     }
+    window.analytics.page(analyticsStr);
   }, [page]);
 
-  let FinalPage = null;
+  let FinalPage;
 
   if (pageLoaded) {
     FinalPage = () => buildPage(page);
   }
 
+  if (pageError) {
+    FinalPage = () => NotFound();
+  }
+
   if (FinalPage) {
     return <FinalPage />;
   }
+
   return <LoadingSpinner loadingMessage="...loading" page="lp" />;
 };
 
@@ -50,7 +69,7 @@ StaticPage.propTypes = {
   match: {
     path: PropTypes.string,
     params: {
-      slug: PropTypes.string
+      postSlug: PropTypes.string
     }
   }
 };
