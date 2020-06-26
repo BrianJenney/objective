@@ -48,7 +48,6 @@ const TemporaryCartDrawer = ({
 }) => {
   const drawerOpened = useSelector(state => state.cart.cartDrawerOpened);
   const dispatch = useDispatch();
-
   const toggleDrawer = open => event => {
     if (event.type == 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;

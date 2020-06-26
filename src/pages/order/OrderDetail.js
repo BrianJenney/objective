@@ -128,13 +128,15 @@ const TrackingInfo = ({ tracking }) => {
   ));
 };
 
-const OrderCartSummary = ({ order }) => (order ? <CartSummary order={order} /> : null);
+const OrderCartSummary = ({ order, hideLPCoupon }) =>
+  order ? <CartSummary order={order} hideLPCoupon={hideLPCoupon} /> : null;
 
 const cancelOrder = (orderRef, orderNumber, dispatch) => {
   dispatch(requestCancelOrder(orderRef, orderNumber));
 };
 
 const OrderSummary = ({
+  hideLPCoupon,
   account,
   billingAddress,
   shippingAddress,
@@ -203,7 +205,10 @@ const OrderSummary = ({
     <Box className={classes.paper}>
       <Box>
         <RouterLink
-          to="/account/orders"
+          to={{
+            pathname: '/account/orders',
+            state: hideLPCoupon
+          }}
           className="account-history-return"
           style={{
             display:
@@ -315,7 +320,7 @@ const OrderSummary = ({
   );
 };
 
-const OrderDetail = () => {
+const OrderDetail = ({ hideLPCoupon }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
 
@@ -341,6 +346,7 @@ const OrderDetail = () => {
               <Grid container spacing={xs ? 0 : 4}>
                 <Grid item xs={mainWidth}>
                   <OrderSummary
+                    hideLPCoupon={hideLPCoupon}
                     account={account}
                     orderNumber={order.orderNumber}
                     orderId={order.orderNumber}
@@ -360,7 +366,7 @@ const OrderDetail = () => {
                   />
                 </Grid>
                 <Grid item xs={cartWidth}>
-                  <OrderCartSummary order={order} />
+                  <OrderCartSummary order={order} hideLPCoupon={hideLPCoupon} />
                 </Grid>
               </Grid>
             </Box>
