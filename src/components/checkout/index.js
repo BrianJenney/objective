@@ -737,7 +737,12 @@ Checkout.propTypes = {
   clearLoginError: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   clearPatchAccountError: PropTypes.func.isRequired,
+<<<<<<< HEAD
   emitOrderSubmitted: PropTypes.func.isRequired
+=======
+  requestCreateOrder: PropTypes.func.isRequired,
+  emitOrderSubmitted
+>>>>>>> sending fe.order.submitted event to back-end
 };
 
 export default withRouter(Checkout);
