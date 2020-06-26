@@ -8,7 +8,7 @@ import { buildPage } from '../../utils/sputils';
 import NotFound from '../notfound/NotFound';
 
 const StaticPage = ({ match }) => {
-  const { slug } = match.params;
+  const { postSlug } = match.params;
   const isLandingPage = match.path.startsWith('/landing');
   const isBlogPost = match.path.startsWith('/journal');
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const StaticPage = ({ match }) => {
   const page = useSelector(state => state.page);
 
   useEffect(() => {
-    if (pageLoaded === false) dispatch(requestPage(slug));
+    if (pageLoaded === false) dispatch(requestPage(postSlug));
   }, []);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ StaticPage.propTypes = {
   match: {
     path: PropTypes.string,
     params: {
-      slug: PropTypes.string
+      postSlug: PropTypes.string
     }
   }
 };
