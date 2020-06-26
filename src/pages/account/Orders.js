@@ -31,13 +31,11 @@ const columns = [
       filter: false,
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => (
-        // console.log('testing-COUPON', tableMeta);
-
         <Button
           style={{ lineHeight: 0, paddingLeft: '1px' }}
           color="primary"
           component={AdapterLink}
-          to={`/orders/${tableMeta.rowData[0]}`} // pass hideLPCoupon here
+          to={`/orders/${tableMeta.rowData[0]}`}
         >
           {value}
         </Button>
@@ -134,8 +132,7 @@ const columns = [
 
 const AccountOrders = ({ currentUser: { data }, location }) => {
   const dispatch = useDispatch();
-  const { state } = location;
-  // console.log('testing-ORDER-ACC', state);
+  // const { state } = location;
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
@@ -165,7 +162,6 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
     if (data.orders[key].status === 'canceled') {
       data.orders[key].status = 'Order Cancelled';
     }
-    // data.orders[key].hideLPCoupon = state;
   }
 
   return (
@@ -183,7 +179,6 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
               data={data.orders}
               columns={columns}
               isLoading={isLoading}
-              hideLPCoupon={state}
               moreOptions={{
                 customRowRender: (d, dataIndex, rowIndex) => (
                   <tr className="account-orders-mobile-row">
@@ -195,7 +190,7 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
                             <Button
                               color="primary"
                               component={AdapterLink}
-                              to={(`/orders/${data.orders[dataIndex]._id}`, state)}
+                              to={`/orders/${data.orders[dataIndex]._id}`}
                             >
                               {data.orders[dataIndex].orderNumber}
                             </Button>
@@ -249,7 +244,6 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
               data={data.orders}
               columns={columns}
               isLoading={isLoading}
-              hideLPCoupon={state}
             />
           )}
         </Grid>

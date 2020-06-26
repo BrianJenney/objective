@@ -59,10 +59,9 @@ const useStyles = makeStyles(theme => ({
 }));
 const { MEDIUM_GRAY } = colorPalette;
 
-const CartSummary = ({ order, hideLPCoupon }) => {
+const CartSummary = ({ order }) => {
   const classes = useStyles();
-  const { items } = order;
-
+  const { items, hideCouponCode } = order;
   let shippingMethod = null;
 
   if (order.shippingMethod) {
@@ -76,7 +75,7 @@ const CartSummary = ({ order, hideLPCoupon }) => {
       <Grid container xs={12} direction="column">
         <Grid container xs={12}>
           <Grid item xs>
-            <Typography className={classes.title}>Order Summary HELLO</Typography>
+            <Typography className={classes.title}>Order Summary</Typography>
           </Grid>
 
           <Grid item>
@@ -155,7 +154,7 @@ const CartSummary = ({ order, hideLPCoupon }) => {
           <Grid container xs={12}>
             <Grid item xs>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Savings{hideLPCoupon ? '' : promoCode}
+                Savings{hideCouponCode ? '' : promoCode}
               </StyledSmallCaps>
             </Grid>
             <Grid item>

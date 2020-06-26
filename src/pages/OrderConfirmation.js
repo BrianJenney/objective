@@ -91,7 +91,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OrderConfirmation = ({ history }) => {
-  const { state } = history.location;
   const order = useSelector(state => state.order.order);
   const account = useSelector(state => state.account);
   const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
@@ -197,7 +196,7 @@ const OrderConfirmation = ({ history }) => {
     return null;
   }
 
-  const OrderCartSummary = () => <CartSummary order={order} hideLPCoupon={state} />;
+  const OrderCartSummary = () => <CartSummary order={order} hideLPCoupon={order.hideCouponCode} />;
 
   const OrderDetail = () => {
     const paymentMethod =
@@ -226,7 +225,7 @@ const OrderConfirmation = ({ history }) => {
           dispatch(receivedFetchAccountSuccess(order.account));
         }
 
-        history.replace(`/orders/${order._id}`, state);
+        history.replace(`/orders/${order._id}`, order.hideCouponCode);
       },
       [history, order._id]
     );

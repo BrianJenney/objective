@@ -196,7 +196,7 @@ const OrderSummary = ({
     !order.account.passwordSet &&
     order.account.isGuest
   );
-  // console.log('testing-ORDERDETAIL', hideLPCoupon);
+
   return (
     <Box className={classes.paper}>
       <Box>

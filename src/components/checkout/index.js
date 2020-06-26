@@ -105,7 +105,6 @@ const Checkout = ({
   requestCreateOrder
 }) => {
   const hideLPCoupon = !!history.location.state;
-  console.log('testing-INDEX-CHECKOUT', hideLPCoupon);
   const [payload, setPayload] = useState({});
   const [resetFormMode, setResetFormMode] = useState(false);
   const [authMode, setAuthMode] = useState('shipping');
@@ -131,7 +130,6 @@ const Checkout = ({
   const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
-
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const closeShippingRestrictionsDialog = useCallback(() => {
@@ -416,17 +414,22 @@ const Checkout = ({
       payload.shippingAddress.saveToAccount = true;
       payload.shippingAddress.isDefault = true;
     }
-
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
     if (paymentMethodNonce !== '') {
       if (cart.items.length > 0) {
-        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
+        requestCreateOrder(
+          { ...cart, hideLPCoupon, ...payload, account_jwt },
+          { paymentMethodNonce }
+        );
       }
     } else if (paymentMethodToken !== '') {
       if (cart.items.length > 0) {
-        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
+        requestCreateOrder(
+          { ...cart, hideLPCoupon, ...payload, account_jwt },
+          { paymentMethodToken }
+        );
       }
     } else {
       return false;
@@ -472,13 +475,12 @@ const Checkout = ({
   };
 
   const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
-
   const handleNext = async values => {
     let result = null;
     if (activeStep <= 1) {
       result = await handleAddressesAndCardSteps(values);
     } else if (activeStep === 2) {
-      handleReviewStep(values);
+      handleReviewStep(values); // <-- Here! direct to /order page
       return true;
     }
     if (result) {
