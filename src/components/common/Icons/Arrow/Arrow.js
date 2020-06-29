@@ -4,7 +4,7 @@ import { ReactComponent as Arrow } from '../../../../assets/static/arrow.svg';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '50x',
+    width: '60px',
     height: '18px',
     [theme.breakpoints.down('xs')]: {
       width: '44px',
