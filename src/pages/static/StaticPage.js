@@ -14,8 +14,8 @@ const StaticPage = ({ match }) => {
   const isBlogPost = match.path.startsWith('/journal');
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [tracked, setTracked] = useState(false);
   const [pageError, setPageError] = useState(false);
+  const [tracked, setTracked] = useState(false);
   const page = useSelector(state => state.page);
 
   useEffect(() => {
