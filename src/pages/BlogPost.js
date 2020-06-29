@@ -38,12 +38,12 @@ const contentfulOptions = {
 };
 
 const BlogPost = ({ computedMatch }) => {
-  const { postSlug } = computedMatch.params;
+  const { slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
   const [useStaticPage, setUseStaticPage] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validPost = seoMap[postSlug];
+  const validPost = seoMap[slug];
   let title;
   let description;
 
@@ -52,7 +52,7 @@ const BlogPost = ({ computedMatch }) => {
   }
 
   const fetchData = async () => {
-    const postData = await fetchPost(postSlug);
+    const postData = await fetchPost(slug);
     setPost(postData);
     // Check postData for embedded static page
     const postBody = postData.fields.body.content;
@@ -65,14 +65,14 @@ const BlogPost = ({ computedMatch }) => {
   };
 
   useEffect(() => {
-    fetchData();
-    if (validPost) {
-      window.analytics.page('Journal Post');
-      setPost({});
-    } else {
-      window.analytics.page('404 Error');
-    }
-  }, [postSlug]);
+    fetchData().then(() => {
+      if (validPost) {
+        window.analytics.page('Journal Post');
+      } else {
+        window.analytics.page('404 Error');
+      }
+    });
+  }, [slug]);
 
   if (useStaticPage) {
     return <StaticPage />;
@@ -142,7 +142,7 @@ const BlogPost = ({ computedMatch }) => {
     }
 
     let category = 'General';
-    let slug = null;
+    let categorySlug = null;
 
     if (
       post.fields.categories &&
@@ -150,7 +150,7 @@ const BlogPost = ({ computedMatch }) => {
       post.fields.categories[0].fields
     ) {
       category = post.fields.categories[0].fields.title;
-      ({ slug } = post.fields.categories[0].fields);
+      ({ categorySlug } = post.fields.categories[0].fields);
     }
 
     return (
@@ -164,7 +164,7 @@ const BlogPost = ({ computedMatch }) => {
                   <Grid container direction="column" justify="center" alignItems="center">
                     <div className="flex">
                       <span className="categoryName">
-                        <Link to={`/journal/category/${slug}`}>{category}</Link>
+                        <Link to={`/journal/category/${categorySlug}`}>{category}</Link>
                       </span>
                       <span className="minRead">| {post.fields.minuteRead} Min Read</span>
                     </div>

@@ -9,7 +9,7 @@ import { buildPage } from '../../utils/sputils';
 import NotFound from '../notfound/NotFound';
 
 const StaticPage = ({ match }) => {
-  const { postSlug } = match.params;
+  const { slug } = match.params;
   const isLandingPage = match.path.startsWith('/landing');
   const isBlogPost = match.path.startsWith('/journal');
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const StaticPage = ({ match }) => {
     const { hostname } = window.location;
     const prefix =
       hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview' ? 'preview' : '';
-    if (pageLoaded === false) dispatch(requestPage(postSlug, prefix));
+    if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ StaticPage.propTypes = {
   match: {
     path: PropTypes.string,
     params: {
-      postSlug: PropTypes.string
+      slug: PropTypes.string
     }
   }
 };
