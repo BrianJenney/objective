@@ -18,6 +18,7 @@ import BlogVariantCard from './blog/BlogVariantCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import HeadTags from '../components/common/HeadTags';
 import NotFound from './notfound/NotFound';
+import StaticPage from './static/StaticPage';
 const dateFormat = require('dateformat');
 
 const contentfulOptions = {
@@ -37,11 +38,12 @@ const contentfulOptions = {
 };
 
 const BlogPost = ({ computedMatch }) => {
-  const { post_slug } = computedMatch.params;
+  const { slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const [useStaticPage, setUseStaticPage] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validPost = seoMap[post_slug];
+  const validPost = seoMap[slug];
   let title;
   let description;
 
@@ -50,21 +52,31 @@ const BlogPost = ({ computedMatch }) => {
   }
 
   const fetchData = async () => {
-    const postData = await fetchPost(post_slug);
+    const postData = await fetchPost(slug);
     setPost(postData);
+    // Check postData for embedded static page
+    const postBody = postData.fields.body.content;
+    if (
+      postBody[0].nodeType === 'embedded-entry-block' &&
+      postBody[0].data.target.sys.contentType.sys.id === 'spMainPage'
+    ) {
+      setUseStaticPage(true);
+    }
   };
 
   useEffect(() => {
-    if (validPost) {
-      fetchData();
-      window.analytics.page('Journal Post');
-      return () => {
-        setPost({});
-      };
-    } else {
-      window.analytics.page('404 Error');
-    }
-  }, [post_slug]);
+    fetchData().then(() => {
+      if (validPost) {
+        window.analytics.page('Journal Post');
+      } else {
+        window.analytics.page('404 Error');
+      }
+    });
+  }, [slug]);
+
+  if (useStaticPage) {
+    return <StaticPage />;
+  }
 
   if (!validPost) {
     return <NotFound />;
@@ -118,7 +130,7 @@ const BlogPost = ({ computedMatch }) => {
     return <></>;
   };
 
-  const renderPost = post => {
+  const renderPost = () => {
     if (!post.fields || !post.fields.title) {
       return <div>Loading...</div>;
     }
@@ -130,7 +142,7 @@ const BlogPost = ({ computedMatch }) => {
     }
 
     let category = 'General';
-    let slug = null;
+    let categorySlug = null;
 
     if (
       post.fields.categories &&
@@ -138,7 +150,7 @@ const BlogPost = ({ computedMatch }) => {
       post.fields.categories[0].fields
     ) {
       category = post.fields.categories[0].fields.title;
-      slug = post.fields.categories[0].fields.slug;
+      categorySlug = post.fields.categories[0].fields.slug;
     }
 
     return (
@@ -149,17 +161,13 @@ const BlogPost = ({ computedMatch }) => {
             <Box className="content" py={8}>
               <StyledContainer>
                 <Box className="center">
-                  <Grid container direction="column" justify="center" alignItems="center">
-                    <div className="flex">
-                      <span className="categoryName">
-                        <Link to={`/journal/category/${slug}`}>{category}</Link>
-                      </span>
-                      <span className="minRead">| {post.fields.minuteRead} Min Read</span>
-                    </div>
-                    <Grid item xs={12} sm={8} md={6}>
-                      <h1>{post.fields.title}</h1>
-                    </Grid>
-                  </Grid>
+                  <div className="flex">
+                    <span className="categoryName">
+                      <Link to={`/journal/category/${categorySlug}`}>{category}</Link>
+                    </span>
+                    |<span className="minRead">{post.fields.minuteRead} Min Read</span>
+                  </div>
+                  <h1>{post.fields.title}</h1>
                   <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
                 </Box>
                 <Grid container xs={12} md={10}>
@@ -253,7 +261,7 @@ const BlogPost = ({ computedMatch }) => {
     );
   };
 
-  return renderPost(post);
+  return renderPost();
 };
 
 export default BlogPost;
