@@ -150,7 +150,7 @@ const BlogPost = ({ computedMatch }) => {
       post.fields.categories[0].fields
     ) {
       category = post.fields.categories[0].fields.title;
-      ({ categorySlug } = post.fields.categories[0].fields);
+      categorySlug = post.fields.categories[0].fields.slug;
     }
 
     return (
