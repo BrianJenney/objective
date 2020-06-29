@@ -1,14 +1,19 @@
-import { REQUEST_PAGE, RECEIVED_PAGE, REQUEST_PRIVACY, RECEIVED_PRIVACY } from './types';
+import {
+  REQUEST_PAGE,
+  RECEIVED_PAGE,
+  REQUEST_PRIVACY,
+  RECEIVED_PRIVACY,
+  PAGE_ERROR
+} from './types';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
-const nodeCache = require( "node-cache" );
+const NodeCache = require('node-cache');
 
-const myCache = new nodeCache( { stdTTL: 100, checkperiod: 120 } );
+const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
 
 export const requestPage = slug => (dispatch, getState) => {
-
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -39,7 +44,7 @@ export const requestPage = slug => (dispatch, getState) => {
   });
 };
 
-export const receivedPage = page => async (dispatch, getState) => {
+export const receivedPage = page => async dispatch => {
   dispatch({
     type: RECEIVED_PAGE,
     payload: page
@@ -47,11 +52,9 @@ export const receivedPage = page => async (dispatch, getState) => {
 };
 
 export const requestPrivacy = slug => (dispatch, getState) => {
-  if (slug === undefined) {
-    slug = "";
-  }
+  const privacySlug = slug || '';
   // If page is in cache, fake a received event to redux
-  const cacheKey =  'privacy-' + slug;
+  const cacheKey = `privacy-${privacySlug}`;
   const page = myCache.get(cacheKey);
   if (page !== undefined) {
     dispatch({
@@ -66,7 +69,7 @@ export const requestPrivacy = slug => (dispatch, getState) => {
     const params = {
       params: {
         query: {
-          slug
+          privacySlug
         }
       }
     };
@@ -89,14 +92,21 @@ export const requestPrivacy = slug => (dispatch, getState) => {
   }
 };
 
-export const receivedPrivacy = page => async (dispatch, getState) => {
+export const receivedPrivacy = page => async dispatch => {
   //  Store page in cache, name make it last one hour
-  const cacheKey =  'privacy-' + page.slug;
+  const cacheKey = `privacy-${page.slug}`;
   myCache.set(cacheKey, page, 3600);
 
   // Send received event to redux
   dispatch({
     type: RECEIVED_PRIVACY,
     payload: page
+  });
+};
+
+export const pageError = msg => dispatch => {
+  dispatch({
+    type: PAGE_ERROR,
+    payload: msg
   });
 };

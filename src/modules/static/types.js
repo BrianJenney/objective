@@ -2,3 +2,4 @@ export const REQUEST_PAGE = 'REQUEST_PAGE';
 export const RECEIVED_PAGE = 'RECEIVED_PAGE';
 export const REQUEST_PRIVACY = 'REQUEST_PRIVACY';
 export const RECEIVED_PRIVACY = 'RECEIVED_PRIVACY';
+export const PAGE_ERROR = 'PAGE_ERROR';
