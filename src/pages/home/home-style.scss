@@ -155,6 +155,15 @@
     p {
       margin: 0 auto 60px;
     }
+    .carousel-btn-shopAll {
+      padding-top: 90px;
+      display: flex;
+      justify-content: center;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* IE10+ CSS styles go here */
+        justify-content: inherit;
+      }
+    }
   }
   .welcome {
     padding: 101px 0px 81px 0px;
