@@ -130,8 +130,9 @@ const columns = [
       */
 ];
 
-const AccountOrders = ({ currentUser: { data } }) => {
+const AccountOrders = ({ currentUser: { data }, location }) => {
   const dispatch = useDispatch();
+  // const { state } = location;
   const order = useSelector(state => state.order.order);
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
@@ -162,6 +163,7 @@ const AccountOrders = ({ currentUser: { data } }) => {
       data.orders[key].status = 'Order Cancelled';
     }
   }
+
   return (
     <ScrollToTop>
       <Grid
