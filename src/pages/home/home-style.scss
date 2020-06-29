@@ -134,6 +134,10 @@
       letter-spacing: -0.88px;
       text-align: center;
       color: #231f20;
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* IE10+ CSS styles go here */
+        padding-top: 32px;
+      }
     }
   }
   .his-hers-theirs {
@@ -154,6 +158,10 @@
   }
   .welcome {
     padding: 101px 0px 81px 0px;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      /* IE10+ CSS styles go here */
+      padding: 101px 0px 218px;
+    }
     p {
       margin: 0 auto;
     }
