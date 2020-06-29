@@ -191,6 +191,12 @@
     h1 {
       margin-top: 0;
     }
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      /* IE10+ CSS styles go here */
+      h1 {
+        margin-top: 45px;
+      }
+    }
   }
   .section5 {
     background-color: #fcf8f4;
