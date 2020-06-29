@@ -18,6 +18,7 @@ import BlogVariantCard from './blog/BlogVariantCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import HeadTags from '../components/common/HeadTags';
 import NotFound from './notfound/NotFound';
+import StaticPage from './static/StaticPage';
 const dateFormat = require('dateformat');
 
 const contentfulOptions = {
@@ -29,17 +30,20 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=50';
       }
 
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
+      return (
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+      );
     }
   }
 };
 
 const BlogPost = ({ computedMatch }) => {
-  const { post_slug } = computedMatch.params;
+  const { slug } = computedMatch.params;
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
+  const [useStaticPage, setUseStaticPage] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validPost = seoMap[post_slug];
+  const validPost = seoMap[slug];
   let title;
   let description;
 
@@ -48,21 +52,31 @@ const BlogPost = ({ computedMatch }) => {
   }
 
   const fetchData = async () => {
-    const postData = await fetchPost(post_slug);
+    const postData = await fetchPost(slug);
     setPost(postData);
+    // Check postData for embedded static page
+    const postBody = postData.fields.body.content;
+    if (
+      postBody[0].nodeType === 'embedded-entry-block' &&
+      postBody[0].data.target.sys.contentType.sys.id === 'spMainPage'
+    ) {
+      setUseStaticPage(true);
+    }
   };
 
   useEffect(() => {
-    if (validPost) {
-      fetchData();
-      window.analytics.page('Journal Post');
-      return () => {
-        setPost({});
-      };
-    } else {
-      window.analytics.page('404 Error');
-    }
-  }, [post_slug]);
+    fetchData().then(() => {
+      if (validPost) {
+        window.analytics.page('Journal Post');
+      } else {
+        window.analytics.page('404 Error');
+      }
+    });
+  }, [slug]);
+
+  if (useStaticPage) {
+    return <StaticPage />;
+  }
 
   if (!validPost) {
     return <NotFound />;
@@ -83,7 +97,13 @@ const BlogPost = ({ computedMatch }) => {
       return products.map(product => {
         const productVariant = variants.filter(variant => variant.slug === product.fields.Slug);
 
-        return <BlogVariantCard product={product} variant={productVariant[0]} key={product.fields.Slug} />;
+        return (
+          <BlogVariantCard
+            product={product}
+            variant={productVariant[0]}
+            key={product.fields.Slug}
+          />
+        );
       });
     }
     return <></>;
@@ -91,7 +111,7 @@ const BlogPost = ({ computedMatch }) => {
 
   const renderRelatedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
+      return posts.map(item => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
@@ -110,7 +130,7 @@ const BlogPost = ({ computedMatch }) => {
     return <></>;
   };
 
-  const renderPost = post => {
+  const renderPost = () => {
     if (!post.fields || !post.fields.title) {
       return <div>Loading...</div>;
     }
@@ -122,11 +142,15 @@ const BlogPost = ({ computedMatch }) => {
     }
 
     let category = 'General';
-    let slug = null;
+    let categorySlug = null;
 
-    if (post.fields.categories && post.fields.categories.length > 0 && post.fields.categories[0].fields) {
+    if (
+      post.fields.categories &&
+      post.fields.categories.length > 0 &&
+      post.fields.categories[0].fields
+    ) {
       category = post.fields.categories[0].fields.title;
-      slug = post.fields.categories[0].fields.slug;
+      categorySlug = post.fields.categories[0].fields.slug;
     }
 
     return (
@@ -139,12 +163,12 @@ const BlogPost = ({ computedMatch }) => {
                 <Box className="center">
                   <div className="flex">
                     <span className="categoryName">
-                      <Link to={`/journal/category/${slug}`}>{category}</Link>
+                      <Link to={`/journal/category/${categorySlug}`}>{category}</Link>
                     </span>
                     |<span className="minRead">{post.fields.minuteRead} Min Read</span>
                   </div>
                   <h1>{post.fields.title}</h1>
-                  <img src={imageUrl} />
+                  <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
                 </Box>
                 <Grid container>
                   <Grid item xs={12} md={2} className="left">
@@ -160,7 +184,11 @@ const BlogPost = ({ computedMatch }) => {
                       <div className="icon-holder">
                         <p className="share">SHARE</p>
                         <div className="social">
-                          <a href="https://www.instagram.com/objective_wellness" target="_blank" rel="noopener">
+                          <a
+                            href="https://www.instagram.com/objective_wellness"
+                            target="_blank"
+                            rel="noopener"
+                          >
                             <img
                               src="https://cdn1.stopagingnow.com/objective/svg/instagram_black.svg"
                               alt="instagram"
@@ -171,7 +199,10 @@ const BlogPost = ({ computedMatch }) => {
                             target="_blank"
                             rel="noopener"
                           >
-                            <img src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg" alt="facebook" />
+                            <img
+                              src="https://cdn1.stopagingnow.com/objective/svg/fb_black.svg"
+                              alt="facebook"
+                            />
                           </a>
                         </div>
                       </div>
@@ -230,7 +261,7 @@ const BlogPost = ({ computedMatch }) => {
     );
   };
 
-  return renderPost(post);
+  return renderPost();
 };
 
 export default BlogPost;
