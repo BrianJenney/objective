@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import LoadingSpinner from '../../components/LoadingSpinner';
+import NotFound from '../notfound/NotFound';
 import { requestPage } from '../../modules/static/actions';
 import { buildPage } from '../../utils/sputils';
-import NotFound from '../notfound/NotFound';
 
 const StaticPage = ({ match }) => {
   const { slug } = match.params;
