@@ -214,7 +214,7 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90, display: 'flex', justifyContent: 'center' }}>
+            <Box className="carousel-btn-shopAll">
               {documentToReactComponents(
                 this.state.content.solutionForFamily.content[3],
                 contentfulOptions

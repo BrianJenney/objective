@@ -269,6 +269,10 @@
         font-style: normal;
         line-height: normal;
         letter-spacing: 1.33px;
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+          /* IE10+ CSS styles go here */
+          justify-content: space-around;
+        }
       }
 
       ul {
