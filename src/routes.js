@@ -158,7 +158,7 @@ export default [
   { path: '/password/reset', exact: true, component: ResetPassword },
   { path: '/password/success', exact: true, component: ResetSuccess },
   {
-    path: '/journal/category/:category_slug',
+    path: '/journal/category/:categorySlug',
     exact: true,
     component: BlogCategory
   },
