@@ -339,13 +339,13 @@ const Footer = ({ location, currentUser }) => {
                   <Grid container direction="row" justify="center" className="legal-text">
                     <a
                       onClick={segmentTrackNavigationClick}
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                       style={{ paddingRight: 10 }}
                     >
                       Privacy Policy
                     </a>
-                    <NavLink onClick={segmentTrackNavigationClick} to="/terms">
+                    <NavLink onClick={segmentTrackNavigationClick} to="/terms" target="_blank">
                       Terms of use
                     </NavLink>
                   </Grid>
@@ -633,14 +633,10 @@ const Footer = ({ location, currentUser }) => {
                     <div>&#169; Objective 2020 </div>
                     <div>&bull;</div>
 
-                    <a
-                      onClick={segmentTrackNavigationClick}
-                      href="https://www.thecloroxcompany.com/privacy/"
-                      target="_blank"
-                    >
+                    <a onClick={segmentTrackNavigationClick} href="/privacypolicy" target="_blank">
                       Privacy Policy
                     </a>
-                    <NavLink onClick={segmentTrackNavigationClick} to="/terms">
+                    <NavLink onClick={segmentTrackNavigationClick} to="/terms" target="_blank">
                       Terms of use
                     </NavLink>
                   </Grid>
