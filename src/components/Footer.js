@@ -345,7 +345,7 @@ const Footer = ({ location, currentUser }) => {
                     >
                       Privacy Policy
                     </a>
-                    <NavLink onClick={segmentTrackNavigationClick} to="/terms">
+                    <NavLink onClick={segmentTrackNavigationClick} to="/terms" target="_blank">
                       Terms of use
                     </NavLink>
                   </Grid>
@@ -636,7 +636,7 @@ const Footer = ({ location, currentUser }) => {
                     <a onClick={segmentTrackNavigationClick} href="/privacypolicy" target="_blank">
                       Privacy Policy
                     </a>
-                    <NavLink onClick={segmentTrackNavigationClick} to="/terms">
+                    <NavLink onClick={segmentTrackNavigationClick} to="/terms" target="_blank">
                       Terms of use
                     </NavLink>
                   </Grid>
