@@ -17,8 +17,9 @@ export const generateComponents = (page, xs) => {
       margin: '0 auto'
     }
   }));
-
   page.components.forEach(comp => {
+    const desktopStyle = transformDesktopStyle(comp);
+    const mobileStyle = transformMobileStyle(comp);
     switch (comp.type) {
       case 'hero':
         components.push(
@@ -34,7 +35,7 @@ export const generateComponents = (page, xs) => {
         break;
       case 'button':
         components.push(
-          <div style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}>
+          <div style={xs ? mobileStyle : desktopStyle}>
             <Button to={comp.URL} component={NavLink}>
               {comp.value}
             </Button>
@@ -49,9 +50,6 @@ export const generateComponents = (page, xs) => {
         );
         break;
       case 'box':
-        const desktopStyle = transformDesktopStyle(comp);
-        const mobileStyle = transformMobileStyle(comp);
-
         components.push(
           <Box
             style={
@@ -76,7 +74,11 @@ export const generateComponents = (page, xs) => {
         break;
       case 'oneColSection':
         components.push(
-          <div style={transformDesktopStyle(comp)}>{generateComponents(comp.value, xs)}</div>
+          <div
+            style={{ ...desktopStyle, margin: xs ? comp.desktopStyle.margin || '0 0 250px' : '0' }}
+          >
+            {generateComponents(comp.value, xs)}
+          </div>
         );
         break;
     }
