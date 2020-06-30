@@ -10,7 +10,8 @@ import { requestFetchBootstrap as requestFetchBootstrapImport } from './modules/
 import {
   requestCreateCart as requestCreateCartImport,
   requestPatchCart as requestPatchCartImport,
-  requestMergeCarts as requestMergeCartsImport
+  requestMergeCarts as requestMergeCartsImport,
+  requestFetchCartByAccount as requestFetchCartByAccountImport
 } from './modules/cart/actions';
 
 import { RouteWithSubRoutes } from './components/common';
@@ -31,12 +32,18 @@ class App extends Component {
     requestFetchBootstrap: PropTypes.func.isRequired,
     requestCreateCart: PropTypes.func.isRequired,
     requestPatchCart: PropTypes.func.isRequired,
-    requestMergeCarts: PropTypes.func.isRequired
+    requestMergeCarts: PropTypes.func.isRequired,
+    requestFetchCartByAccount: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     // eslint-disable-next-line no-shadow
-    const { requestFetchBootstrap, requestPatchCart, requestMergeCarts } = this.props;
+    const {
+      requestFetchBootstrap,
+      requestPatchCart,
+      requestMergeCarts,
+      requestFetchCartByAccount
+    } = this.props;
 
     // ImpactRadius, Segment click id logic
     // Ref: Jira DC-846
@@ -76,12 +83,15 @@ class App extends Component {
 
       if (localStorageClient.get('cartId')) {
         requestMergeCarts(localStorageClient.get('cartId'), accountId);
+      } else {
+        requestFetchCartByAccount(accountId);
       }
     });
 
     EventEmitter.addListener('user.logged.out', () => {
       const olympusToken = createAnonymousToken();
       localStorageClient.set('olympusToken', olympusToken);
+      localStorageClient.remove('cartId');
     });
   }
 
@@ -122,7 +132,8 @@ const mapDispatchToProps = {
   requestFetchBootstrap: requestFetchBootstrapImport,
   requestCreateCart: requestCreateCartImport,
   requestPatchCart: requestPatchCartImport,
-  requestMergeCarts: requestMergeCartsImport
+  requestMergeCarts: requestMergeCartsImport,
+  requestFetchCartByAccount: requestFetchCartByAccountImport
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
