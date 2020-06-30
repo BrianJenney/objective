@@ -19,7 +19,10 @@ export const Paragraph = ({ data, value, xs }) =>
   ));
 
 export const Image = ({ data, xs }) => (
-  <img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
+  <img
+    style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
+    src={data.desktopImg}
+  />
 );
 
 export const generateComponents = (page, xs) => {
