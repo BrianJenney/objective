@@ -37,7 +37,6 @@ export const handleCartResponse = (status, data, fields, properties) => {
         fields,
         properties
       );
-      const oldCart = store.getState().cart;
 
       const oldCart = store.getState().cart;
       let openCartDrawer = true;
