@@ -51,7 +51,7 @@ const Terms = ({ location }) => {
   }, []);
 
   useEffect(() => {
-    if (page.template && page.template === 'terms') {
+    if (page.template && page.template === 'Terms') {
       setPageLoaded(true);
       window.analytics.page('Terms');
     }
