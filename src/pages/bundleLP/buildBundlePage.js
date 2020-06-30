@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Hero } from '../static/components';
 import { Button, NavLink } from '../../components/common';
 import {
   Paragraph,
@@ -25,7 +24,10 @@ export const generateComponents = (page, xs) => {
         components.push(
           <div style={{ margin: '0 auto' }}>
             <Grid item xs={12} md={10}>
-              <Hero data={comp} />
+              <img
+                src={xs ? comp.mobileImg : comp.desktopImg}
+                style={xs ? mobileStyle : desktopStyle}
+              />
             </Grid>
           </div>
         );
