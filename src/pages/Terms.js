@@ -985,8 +985,8 @@ const Terms = ({ location }) => {
                   you and we do not reach an agreement to resolve the claim within 30 days after the
                   Notice is received, you or us may commence an arbitration proceeding or file a
                   claim in small claims court. Arbitration forms can be downloaded from{' '}
-                  <StyledLink href="www.jamsadr.com">www.jamsadr.com</StyledLink>. If you are
-                  required to pay a filing fee, after we receive Notice that you have commenced
+                  <StyledLink href="https://www.jamsadr.com/">www.jamsadr.com</StyledLink>. If you
+                  are required to pay a filing fee, after we receive Notice that you have commenced
                   arbitration, we will promptly reimburse you for your payment of the filing fee,
                   unless your claim is for greater than US$10,000 or the arbitrator determines the
                   claims are frivolous, in which event you will be responsible for filing fees.
