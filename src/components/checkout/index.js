@@ -732,8 +732,7 @@ Checkout.propTypes = {
   clearLoginError: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   clearPatchAccountError: PropTypes.func.isRequired,
-  requestCreateOrder: PropTypes.func.isRequired,
-  emitOrderSubmitted
+  requestCreateOrder: PropTypes.func.isRequired
 };
 
 export default withRouter(Checkout);
