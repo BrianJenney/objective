@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { requestGetOrder, receivedGetOrder } from '../../modules/order/actions';
+import { requestGetOrder, receivedGetOrder, resetOrderState } from '../../modules/order/actions';
 import { receivedFetchAccountSuccess, requestLogout } from '../../modules/account/actions';
 import LoaderInProgress from '../../components/common/LoaderInProgress';
 
@@ -34,6 +34,7 @@ const Order = ({ history, match: { params } }) => {
       dispatch(requestGetOrder(account.account_jwt, params.id));
       return () => {
         dispatch(receivedGetOrder(null));
+        dispatch(resetOrderState());
         if (account.temporarilyLogin) {
           dispatch(requestLogout());
         }
@@ -41,6 +42,7 @@ const Order = ({ history, match: { params } }) => {
     } else {
       return () => {
         dispatch(receivedGetOrder(null));
+        dispatch(resetOrderState());
         if (account.temporarilyLogin) {
           dispatch(requestLogout());
         }
