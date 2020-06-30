@@ -8,7 +8,8 @@ import {
   RECEIVED_UPDATE_CART,
   SET_CART_DRAWER_OPENED,
   REQUEST_REMOVE_CART_BY_ID,
-  RECEIVED_REMOVE_CART
+  RECEIVED_REMOVE_CART,
+  REQUEST_LOGOUT
 } from './types';
 
 const localStorageClient = require('store');
@@ -44,6 +45,8 @@ export default (state = INITIAL_STATE, action) => {
     case REQUEST_REMOVE_CART_BY_ID:
       return { ...state };
     case RECEIVED_REMOVE_CART:
+      return { ...INITIAL_STATE };
+    case REQUEST_LOGOUT:
       return { ...INITIAL_STATE };
     default:
       return state;
