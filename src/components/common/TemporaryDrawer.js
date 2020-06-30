@@ -35,7 +35,6 @@ const TemporaryDrawer = ({ toggleContent, listContent, closer, cart, side, ...re
   const [drawer, setDrawer] = React.useState({
     open: false
   });
-  console.log('testing-TemporaryDrawer');
   const toggleDrawer = open => event => {
     if (event.type == 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;

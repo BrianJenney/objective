@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 
+import { makeStyles } from '@material-ui/core/styles';
 import {
   StyledDrawerGrid,
   StyledFinePrint,
@@ -18,7 +19,6 @@ import {
 import { displayMoney } from '../../utils/formatters';
 
 import { colorPalette } from '../Theme/color-palette';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -61,8 +61,7 @@ const { MEDIUM_GRAY } = colorPalette;
 
 const CartSummary = ({ order }) => {
   const classes = useStyles();
-  const { items } = order;
-
+  const { items, hideCouponCode } = order;
   let shippingMethod = null;
 
   if (order.shippingMethod) {
@@ -76,13 +75,11 @@ const CartSummary = ({ order }) => {
       <Grid container xs={12} direction="column">
         <Grid container xs={12}>
           <Grid item xs>
-            <Typography className={classes.title}>Order Summary </Typography>
+            <Typography className={classes.title}>Order Summary</Typography>
           </Grid>
 
           <Grid item>
-            <StyledSmallCaps style={{ fontSize: '12px' }}>
-              ({items.length} items){' '}
-            </StyledSmallCaps>
+            <StyledSmallCaps style={{ fontSize: '12px' }}>({items.length} items) </StyledSmallCaps>
           </Grid>
         </Grid>
         {items.map((item, index) => (
@@ -144,10 +141,7 @@ const CartSummary = ({ order }) => {
           <Grid container xs={12} style={{ margin: '15px 0' }}>
             <Grid item xs>
               <StyledSmallCaps>Shipping</StyledSmallCaps>
-              <StyledFinePrint
-                component="p"
-                style={{ position: 'relative', top: '6px' }}
-              >
+              <StyledFinePrint component="p" style={{ position: 'relative', top: '6px' }}>
                 {shippingMethod.deliveryEstimate}
               </StyledFinePrint>
             </Grid>
@@ -160,7 +154,7 @@ const CartSummary = ({ order }) => {
           <Grid container xs={12}>
             <Grid item xs>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Savings{promoCode}
+                Savings{hideCouponCode ? '' : promoCode}
               </StyledSmallCaps>
             </Grid>
             <Grid item>
@@ -171,9 +165,7 @@ const CartSummary = ({ order }) => {
           </Grid>
           <Grid container style={{ margin: '15px 0' }}>
             <Grid item xs>
-              <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Tax
-              </StyledSmallCaps>
+              <StyledSmallCaps style={{ fontSize: '14px' }}>Tax</StyledSmallCaps>
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
@@ -194,9 +186,7 @@ const CartSummary = ({ order }) => {
               <StyledSmallCaps>Total</StyledSmallCaps>
             </Grid>
             <Grid item>
-              <Typography className={classes.total}>
-                {displayMoney(order.total)}
-              </Typography>
+              <Typography className={classes.total}>{displayMoney(order.total)}</Typography>
             </Grid>
           </Grid>
         </Grid>
