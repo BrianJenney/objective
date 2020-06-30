@@ -63,7 +63,7 @@ const BlogCategory = ({ computedMatch, location }) => {
     } else {
       window.analytics.page('404 Error');
     }
-  }, []);
+  }, [category_slug]);
 
   if (!validCategory) {
     return <NotFound />;
