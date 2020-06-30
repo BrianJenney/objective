@@ -339,7 +339,7 @@ const Footer = ({ location, currentUser }) => {
                   <Grid container direction="row" justify="center" className="legal-text">
                     <a
                       onClick={segmentTrackNavigationClick}
-                      href="https://www.thecloroxcompany.com/privacy/"
+                      href="/privacypolicy"
                       target="_blank"
                       style={{ paddingRight: 10 }}
                     >
@@ -633,11 +633,7 @@ const Footer = ({ location, currentUser }) => {
                     <div>© Objective 2020 </div>
                     <div>&bull;</div>
 
-                    <a
-                      onClick={segmentTrackNavigationClick}
-                      href="https://www.thecloroxcompany.com/privacy/"
-                      target="_blank"
-                    >
+                    <a onClick={segmentTrackNavigationClick} href="/privacypolicy" target="_blank">
                       Privacy Policy
                     </a>
                     <NavLink onClick={segmentTrackNavigationClick} to="/terms">
