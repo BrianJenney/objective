@@ -4,17 +4,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import CartDrawer from './CartDrawer';
 import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
-import {
-  StyledCartCloseIcon,
-  StyledEmptyCartCloseIcon
-} from './StyledComponents';
+import { StyledCartCloseIcon, StyledEmptyCartCloseIcon } from './StyledComponents';
 
-const ShoppingCart = () => {
+const ShoppingCart = ({ hideLPCoupon }) => {
   const cart = useSelector(state => state.cart);
-  // const cartCount = cart.items.length;
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   return (
     <TemporaryCartDrawer
+      hideLPCoupon={hideLPCoupon}
       toggleContent={
         <>
           <ShoppingBag />

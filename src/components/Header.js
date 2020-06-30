@@ -70,9 +70,10 @@ const contentfulClient = contentful.createClient({
   host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
 });
 
-const Header = ({ currentUser, location }) => {
+const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const { state } = history.location;
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -219,7 +220,7 @@ const Header = ({ currentUser, location }) => {
               </NavLink>
             </Grid>
             <Grid item xs={1} className="mobile-cart-icon">
-              {!isCheckoutPage && <ShoppingCart />}
+              {!isCheckoutPage && <ShoppingCart hideLPCoupon={state} />}
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
@@ -270,7 +271,7 @@ const Header = ({ currentUser, location }) => {
                     />
                   </Grid>
                   <Grid item xs={6} className="header-shop-holder h-pding">
-                    {!isCheckoutPage && <ShoppingCart />}
+                    {!isCheckoutPage && <ShoppingCart hideLPCoupon={state} />}
                     {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
                   </Grid>
                 </Grid>
