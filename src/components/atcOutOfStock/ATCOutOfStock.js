@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     height: 'auto',
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-    padding: '15px 0 !important',
+    padding: '15px 5px !important',
     fontSize: '14px !important',
     lineHeight: '1.2 !important',
     letterSpacing: '1.17px !important',
