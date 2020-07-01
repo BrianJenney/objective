@@ -67,7 +67,6 @@ const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
   const locationState = history.location.state;
-  console.log(history)
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
