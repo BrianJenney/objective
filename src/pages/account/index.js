@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     margin: '0px 70px',
     [theme.breakpoints.down('xs')]: {
       padding: '0 0 32px',
-      marginLeft: 0
+      margin: 0
     }
   },
   rightSideGrid: {
