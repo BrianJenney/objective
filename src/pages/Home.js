@@ -220,10 +220,12 @@ class Home extends Component {
               this.state.content.solutionForFamily.content[0],
               contentfulOptions
             )}
-            {documentToReactComponents(
-              this.state.content.solutionForFamily.content[1],
-              contentfulOptions
-            )}
+            <div className="subheader">
+              {documentToReactComponents(
+                this.state.content.solutionForFamily.content[1],
+                contentfulOptions
+              )}
+            </div>
             <Grid container spacing={3}>
               {fps.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
