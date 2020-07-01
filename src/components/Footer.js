@@ -433,7 +433,7 @@ const Footer = ({ location, currentUser }) => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container direction="row" alignItems="center" className="border-bottom">
+                <Grid container direction="row" className="border-bottom">
                   <Grid
                     container
                     sm={5}
