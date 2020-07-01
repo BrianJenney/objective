@@ -42,14 +42,20 @@ const BlogPost = ({ computedMatch }) => {
   const { variants } = useSelector(state => state.catalog);
   const [post, setPost] = useState({});
   const [useStaticPage, setUseStaticPage] = useState(false);
+  const [isValidPost, setIsValidPost] = useState(null);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validPost = seoMap[slug];
   let title;
   let description;
 
-  if (validPost) {
-    ({ title, description } = validPost);
-  }
+  const checkIsValidPost = async () => {
+    const seoData = seoMap[slug];
+    if (seoData && seoData.description.includes('Objective Journal')) {
+      setIsValidPost(true);
+      ({ title, description } = seoData);
+    } else {
+      setIsValidPost(false);
+    }
+  };
 
   const fetchData = async () => {
     const postData = await fetchPost(slug);
@@ -65,20 +71,21 @@ const BlogPost = ({ computedMatch }) => {
   };
 
   useEffect(() => {
-    fetchData().then(() => {
-      if (validPost) {
+    checkIsValidPost().then(() => {
+      if (isValidPost) {
+        fetchData();
         window.analytics.page('Journal Post');
       } else {
         window.analytics.page('404 Error');
       }
     });
-  }, [slug]);
+  }, [isValidPost]);
 
   if (useStaticPage) {
     return <StaticPage />;
   }
 
-  if (!validPost) {
+  if (!isValidPost) {
     return <NotFound />;
   }
 
