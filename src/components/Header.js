@@ -66,8 +66,8 @@ const segmentIdentify = user => {
 
 const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('sm'));
-  const { state } = history.location;
+  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const locationState = history.location.state;
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -214,7 +214,7 @@ const Header = ({ currentUser, location, history }) => {
               </NavLink>
             </Grid>
             <Grid item xs={1} className="mobile-cart-icon">
-              {!isCheckoutPage && <ShoppingCart hideLPCoupon={state} />}
+              {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
@@ -278,7 +278,7 @@ const Header = ({ currentUser, location, history }) => {
                 </Grid>
 
                 <Grid item xs="auto" className="h-pding">
-                  {!isCheckoutPage && <ShoppingCart hideLPCoupon={state} />}
+                  {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
                   {cartNotification ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
                 </Grid>
               </Grid>
@@ -310,7 +310,8 @@ const Header = ({ currentUser, location, history }) => {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const enhance = compose(withCurrentUser, withRouter);

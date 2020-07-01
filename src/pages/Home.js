@@ -40,34 +40,38 @@ const contentfulOptions = {
 
 const homePageTracked = false;
 class Home extends Component {
-  static propTypes = {
-    products: PropTypes.array.isRequired,
-    history: PropTypes.object.isRequired,
-    seoMap: PropTypes.object.isRequired
-  };
-
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
-    contentfulClient.getEntry(OBJECTIVE_HOMEPAGE).then(entry => {
-      const content = entry.fields;
-      this.setState({
-        content: {
-          ...content
-        }
+    contentfulClient
+      .getEntry(OBJECTIVE_HOMEPAGE)
+      .then(entry => {
+        const content = entry.fields;
+        this.setState({
+          content: {
+            ...content
+          }
+        });
+      })
+      .catch(err => {
+        throw err;
       });
-    });
-    contentfulClient.getEntries({ content_type: 'homepageBestsellers' }).then(entry => {
-      const products = entry.items;
-      this.setState({
-        carousel: {
-          ...products
-        }
+    contentfulClient
+      .getEntries({ content_type: 'homepageBestsellers' })
+      .then(entry => {
+        const products = entry.items;
+        this.setState({
+          carousel: {
+            ...products
+          }
+        });
+      })
+      .catch(err => {
+        throw err;
       });
-    });
     if (!homePageTracked) {
       window.analytics.page('Home');
     }
