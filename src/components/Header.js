@@ -16,7 +16,7 @@ import LoginDropdown from './LoginDropdown';
 import CartNotification from './cart/CartNotification';
 import { addCoupon, removeCoupon } from '../modules/cart/functions';
 import { setCartNotification } from '../modules/utils/actions';
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { contentfulClient } from '../utils/contentful';
 import { OBJECTIVE_PROMOBANNER } from '../constants/contentfulEntries';
 
 import Logo from './common/Icons/Logo/Logo';
@@ -63,17 +63,10 @@ const segmentIdentify = user => {
   }
 };
 
-const contentful = require('contentful');
-const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
-  accessToken: process.env.REACT_APP_CONTENTFUL_TOKEN,
-  host: process.env.REACT_APP_CONTENTFUL_HOSTNAME
-});
-
 const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
-  const { state } = history.location;
+  const locationState = history.location.state;
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -220,7 +213,7 @@ const Header = ({ currentUser, location, history }) => {
               </NavLink>
             </Grid>
             <Grid item xs={1} className="mobile-cart-icon">
-              {!isCheckoutPage && <ShoppingCart hideLPCoupon={state} />}
+              {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
@@ -271,7 +264,7 @@ const Header = ({ currentUser, location, history }) => {
                     />
                   </Grid>
                   <Grid item xs={6} className="header-shop-holder h-pding">
-                    {!isCheckoutPage && <ShoppingCart hideLPCoupon={state} />}
+                    {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
                     {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
                   </Grid>
                 </Grid>
@@ -304,7 +297,8 @@ const Header = ({ currentUser, location, history }) => {
 
 Header.propTypes = {
   currentUser: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const enhance = compose(withCurrentUser, withRouter);
