@@ -159,7 +159,7 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90, display: 'flex', justifyContent: 'center' }}>
+            <Box style={{ paddingTop: 53, display: 'flex', justifyContent: 'center' }}>
               {documentToReactComponents(
                 this.state.content.bestsellers.content[2],
                 contentfulOptions
@@ -205,10 +205,12 @@ class Home extends Component {
               this.state.content.solutionForFamily.content[0],
               contentfulOptions
             )}
-            {documentToReactComponents(
-              this.state.content.solutionForFamily.content[1],
-              contentfulOptions
-            )}
+            <div className="subheader">
+              {documentToReactComponents(
+                this.state.content.solutionForFamily.content[1],
+                contentfulOptions
+              )}
+            </div>
             <Grid container spacing={3}>
               {fpsOrdered.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
