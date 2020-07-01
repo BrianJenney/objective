@@ -152,7 +152,10 @@ export default (state = INITIAL_STATE, action) => {
         onPatchFailure: action.onFailure
       };
     case RECEIVED_PATCH_ACCOUNT_SUCCESS:
-      state.onPatchSuccess();
+      if (state.hasOwnProperty('onPatchSuccess') && state.onPatchSuccess) {
+        state.onPatchSuccess();
+      }
+
       return {
         ...state,
         patchAccountError: false,
@@ -163,7 +166,9 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_PATCH_ACCOUNT_FAILURE:
-      state.onPatchFailure();
+      if (state.hasOwnProperty('onPatchFailure') && state.onPatchFailure) {
+        state.onPatchFailure();
+      }
       return {
         ...state,
         patchAccountError: action.payload,
@@ -183,7 +188,9 @@ export default (state = INITIAL_STATE, action) => {
         onPatchFailure: action.onFailure
       };
     case RECEIVED_CHANGE_PASSWORD_SUCCESS:
-      state.onPatchSuccess();
+      if (state.hasOwnProperty('onPatchSuccess') && state.onPatchSuccess) {
+        state.onPatchSuccess();
+      }
       return {
         ...state,
         changePasswordError: false,
@@ -194,7 +201,9 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_CHANGE_PASSWORD_FAILURE:
-      state.onPatchFailure();
+      if (state.hasOwnProperty('onPatchFailure') && state.onPatchFailure) {
+        state.onPatchFailure();
+      }
       return {
         ...state,
         changePasswordError: action.payload,
