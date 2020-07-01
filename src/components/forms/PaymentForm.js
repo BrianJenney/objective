@@ -978,7 +978,7 @@ const PaymentForm = ({
                 currentUser.data.paymentMethods &&
                 currentUser.data.paymentMethods.length > 0 && (
                   <Button
-                    style={{ height: '55px', padding: '0px' }}
+                    style={{ height: '60px', padding: '0px' }}
                     color="secondary"
                     type="button"
                     onClick={onBack}
@@ -988,7 +988,7 @@ const PaymentForm = ({
                 )}
               <Button
                 style={{
-                  height: '55px',
+                  height: '60px',
                   padding: '0px',
                   display:
                     paymentMethodMode === 'creditCard' ||

@@ -142,7 +142,9 @@ const AddressForm = ({
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
-  const [initialValues, setInitialValues] = useState(getInitialValues(INITIAL_VALUES, defaultValues));
+  const [initialValues, setInitialValues] = useState(
+    getInitialValues(INITIAL_VALUES, defaultValues)
+  );
   const [addressSuggestionEnabled, setAddressSuggestion] = useState(false);
   const [originalAddress, setOriginalAddress] = useState(null);
   const [suggestedAddress, setSuggestedAddress] = useState(null);
@@ -328,7 +330,12 @@ const AddressForm = ({
               </Grid>
             </Typography>
 
-            <Grid container spacing={1} alignItems={'center'} style={{ marginTop: '23px', marginBottom: '23px' }}>
+            <Grid
+              container
+              spacing={1}
+              alignItems={'center'}
+              style={{ marginTop: '23px', marginBottom: '23px' }}
+            >
               <Grid item xs>
                 <hr style={{ border: 'solid 1px #231f20' }}></hr>
               </Grid>
@@ -373,7 +380,14 @@ const AddressForm = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <div ref={errRef}>
-            <AlertPanel py={2} px={4} type="error" bgcolor="#ffcdd2" text={errorMessage} variant="subtitle2" />
+            <AlertPanel
+              py={2}
+              px={4}
+              type="error"
+              bgcolor="#ffcdd2"
+              text={errorMessage}
+              variant="subtitle2"
+            />
           </div>
         </Grid>
         {seedEnabled && (
@@ -387,12 +401,22 @@ const AddressForm = ({
 
         <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
           <div ref={fieldRefs.firstName}>
-            <Field name="address.firstName" label="First Name" component={InputField} autoComplete="given-name" />
+            <Field
+              name="address.firstName"
+              label="First Name"
+              component={InputField}
+              autoComplete="given-name"
+            />
           </div>
         </Grid>
         <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
           <div ref={fieldRefs.lastName}>
-            <Field name="address.lastName" label="Last Name" component={InputField} autoComplete="family-name" />
+            <Field
+              name="address.lastName"
+              label="Last Name"
+              component={InputField}
+              autoComplete="family-name"
+            />
           </div>
         </Grid>
 
@@ -403,7 +427,9 @@ const AddressForm = ({
               label="Street Address"
               component={InputField}
               autoComplete="address-line1"
-              helperText={rest.checkoutVersion && rest.checkoutVersion === 2 ? '*No APO/FPO addresses' : false}
+              helperText={
+                rest.checkoutVersion && rest.checkoutVersion === 2 ? '*No APO/FPO addresses' : false
+              }
             />
           </div>
         </Grid>
@@ -417,7 +443,12 @@ const AddressForm = ({
         </Grid>
         <Grid item xs={12} sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}>
           <div ref={fieldRefs.city}>
-            <Field name="address.city" label="City" component={InputField} autoComplete="address-level2" />
+            <Field
+              name="address.city"
+              label="City"
+              component={InputField}
+              autoComplete="address-level2"
+            />
           </div>
         </Grid>
         <Grid
@@ -430,7 +461,11 @@ const AddressForm = ({
               name="address.state"
               label="State"
               component={SelectField}
-              options={rest.checkoutVersion && rest.checkoutVersion === 2 ? STATE_OPTIONS_ABBR : STATE_OPTIONS}
+              options={
+                rest.checkoutVersion && rest.checkoutVersion === 2
+                  ? STATE_OPTIONS_ABBR
+                  : STATE_OPTIONS
+              }
             />
           </div>
         </Grid>
@@ -440,7 +475,12 @@ const AddressForm = ({
           sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 4 : 6}
         >
           <div ref={fieldRefs.zipcode}>
-            <Field name="address.zipcode" label="Zip Code" component={InputField} autoComplete="postal-code" />
+            <Field
+              name="address.zipcode"
+              label="Zip Code"
+              component={InputField}
+              autoComplete="postal-code"
+            />
           </div>
         </Grid>
         <Grid item xs={12}>
@@ -475,12 +515,26 @@ const AddressForm = ({
             </div>
           </Grid>
         )}
-        <Grid item xs={12} style={rest.checkoutVersion && rest.checkoutVersion === 2 ? { display: 'none' } : {}}>
-          <Field name="address.country" label="Country" component={SelectField} options={COUNTRY_OPTIONS} disabled />
+        <Grid
+          item
+          xs={12}
+          style={rest.checkoutVersion && rest.checkoutVersion === 2 ? { display: 'none' } : {}}
+        >
+          <Field
+            name="address.country"
+            label="Country"
+            component={SelectField}
+            options={COUNTRY_OPTIONS}
+            disabled
+          />
         </Grid>
         {allowFlyMode && currentUser.data.account_jwt && (
           <Grid item xs={12} style={{ padding: '0px', marginTop: '-8px' }}>
-            <Field name="shouldSaveData" label="Save details in account" component={CheckboxField} />
+            <Field
+              name="shouldSaveData"
+              label="Save details in account"
+              component={CheckboxField}
+            />
           </Grid>
         )}
         {allowFlyMode && !currentUser.data.account_jwt && (
@@ -500,7 +554,9 @@ const AddressForm = ({
               color="#231f20"
               variant="h5"
               children={bottomTitle}
-              fontSize={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 24 : 26) : xs ? 24 : 30}
+              fontSize={
+                rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 24 : 26) : xs ? 24 : 30
+              }
               mb={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 2 : 3) : xs ? 3 : 4}
             />
             <Box
@@ -540,14 +596,14 @@ const AddressForm = ({
                 onClick={onBack}
                 children={backLabel}
                 mr={2}
-                style={{ height: '55px', padding: '0px' }}
+                style={{ height: '60px', padding: '0px' }}
               />
             )}
             <Button
               type="submit"
               children={submitLabel}
               loading={isSubmitting}
-              style={{ height: '55px', padding: '0px' }}
+              style={{ height: '60px', padding: '0px' }}
             />
           </ButtonGroup>
         </Grid>

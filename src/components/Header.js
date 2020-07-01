@@ -33,8 +33,8 @@ const StyledLink = withStyles(() => ({
     fontWeight: 'normal',
     color: '#000000',
     textTransform: 'uppercase',
-    letterSpacing: '1.13px',
-    fontSize: '18px'
+    letterSpacing: '1px',
+    fontSize: '16px'
   }
 }))(Link);
 
@@ -246,19 +246,40 @@ const Header = ({ currentUser, location, history }) => {
                   Journal
                 </StyledLink>
               </Grid>
-              <Grid item xs={4}>
-                <Grid container className="align-right">
-                  <Grid item xs={6} className="acct h-pding">
-                    <StyledLink
-                      component={RouterLink}
-                      {...accountMenuItemConf}
-                      onClick={segmentTrackNavigationClick}
-                    />
-                  </Grid>
-                  <Grid item xs={6} className="header-shop-holder h-pding">
-                    {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
-                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
-                  </Grid>
+              <Grid
+                container
+                sm={8}
+                spacing={1}
+                direction="row"
+                alignItems="center"
+                justify="center"
+                className="logo"
+              >
+                <Grid item>
+                  <NavLink onClick={segmentTrackNavigationClick} to="/">
+                    <Logo />
+                  </NavLink>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                sm={2}
+                spacing={1}
+                direction="row"
+                justify="space-around"
+                alignItems="center"
+              >
+                <Grid item xs="auto" className="h-pding">
+                  <StyledLink
+                    component={RouterLink}
+                    {...accountMenuItemConf}
+                    onClick={segmentTrackNavigationClick}
+                  />
+                </Grid>
+
+                <Grid item xs="auto" className="h-pding">
+                  {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
+                  {cartNotification ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
                 </Grid>
               </Grid>
             </Grid>
