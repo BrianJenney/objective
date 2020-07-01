@@ -172,7 +172,7 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90, display: 'flex', justifyContent: 'center' }}>
+            <Box style={{ paddingTop: 53, display: 'flex', justifyContent: 'center' }}>
               {documentToReactComponents(
                 this.state.content.bestsellers.content[2],
                 contentfulOptions
