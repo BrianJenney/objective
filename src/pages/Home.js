@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -31,7 +32,9 @@ const contentfulOptions = {
         params = '?w=450&fm=jpg&q=80';
       }
 
-      return <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />;
+      return (
+        <img src={node.data.target.fields.file.url + params} alt={node.data.target.fields.title} />
+      );
     },
     [INLINES.HYPERLINK]: (node, children) => (
       <Link to={node.data.uri} className="shopAllLink" onClick={() => window.scrollTo(0, 0)}>
@@ -55,28 +58,26 @@ class Home extends Component {
       .then(entry => {
         const content = entry.fields;
         this.setState({
-          ...this.state,
           content: {
             ...content
           }
         });
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
     contentfulClient
       .getEntries({ content_type: 'homepageBestsellers' })
       .then(entry => {
         const products = entry.items;
         this.setState({
-          ...this.state,
           carousel: {
             ...products
           }
         });
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
     if (!homePageTracked) {
       window.analytics.page('Home');
@@ -96,7 +97,11 @@ class Home extends Component {
 
     return images.map(image => (
       <li key={image.sys.id}>
-        <img src={image.fields.file.url + params} style={{ width: '100%' }} />
+        <img
+          src={image.fields.file.url + params}
+          style={{ width: '100%' }}
+          alt={image.fields.title}
+        />
       </li>
     ));
   }
@@ -117,7 +122,9 @@ class Home extends Component {
       >
         <Container className="section-container">
           <Box className="section-holder">
-            <div className="section">{documentToReactComponents(section.fields.mainContent, contentfulOptions)}</div>
+            <div className="section">
+              {documentToReactComponents(section.fields.mainContent, contentfulOptions)}
+            </div>
           </Box>
         </Container>
       </div>
@@ -130,37 +137,44 @@ class Home extends Component {
     }
 
     const bestsellers = [];
+    const { carousel } = this.state;
 
-    if (this.state.carousel) {
-      const { carousel } = this.state;
-      for (const key in carousel) {
-        if (carousel[key].fields.identifier === 'bestsellers') {
-          carousel[key].fields.products.map(product => {
+    if (carousel) {
+      Object.values(carousel).forEach(value => {
+        if (value.fields.identifier === 'bestsellers') {
+          value.fields.products.forEach(product => {
             bestsellers.push(product.fields.sku);
             if (bestsellers.length >= 4) {
               bestsellers.pop();
             }
           });
         }
-      }
-    } else {
-      return null;
+      });
     }
 
-    const bps = this.props.products.filter(product => bestsellers.includes(product.sku.split('-')[0]));
+    const bpsOrdered = [];
+    bestsellers.forEach(sku => {
+      bpsOrdered.push(this.props.products.find(product => product.sku.split('-')[0] === sku));
+    });
 
     return (
       <div className="home-bestsellers beige-bg">
         <Container>
           <Box py={10}>
-            {documentToReactComponents(this.state.content.bestsellers.content[0], contentfulOptions)}
+            {documentToReactComponents(
+              this.state.content.bestsellers.content[0],
+              contentfulOptions
+            )}
             <Grid container spacing={3}>
-              {bps.map(variant => (
+              {bpsOrdered.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
             <Box style={{ paddingTop: 90 }}>
-              {documentToReactComponents(this.state.content.bestsellers.content[2], contentfulOptions)}
+              {documentToReactComponents(
+                this.state.content.bestsellers.content[2],
+                contentfulOptions
+              )}
             </Box>
           </Box>
         </Container>
@@ -174,40 +188,48 @@ class Home extends Component {
     }
 
     const family = [];
+    const { carousel } = this.state;
 
-    if (this.state.carousel) {
-      const { carousel } = this.state;
-      for (const key in carousel) {
-        if (carousel[key].fields.identifier === 'solutions_whole_family') {
-          carousel[key].fields.products.map(product => {
+    if (carousel) {
+      Object.values(carousel).forEach(value => {
+        if (value.fields.identifier === 'solutions_whole_family') {
+          value.fields.products.forEach(product => {
             family.push(product.fields.sku);
             if (family.length >= 4) {
               family.pop();
             }
           });
         }
-      }
-    } else {
-      return null;
+      });
     }
 
-    const fps = this.props.products
-      .filter(product => family.includes(product.sku.split('-')[0]))
-      .map(product => product);
+    const fpsOrdered = [];
+    family.forEach(sku => {
+      fpsOrdered.push(this.props.products.find(product => product.sku.split('-')[0] === sku));
+    });
 
     return (
       <div className="his-hers-theirs beige-bg">
         <Container>
           <Box py={10}>
-            {documentToReactComponents(this.state.content.solutionForFamily.content[0], contentfulOptions)}
-            {documentToReactComponents(this.state.content.solutionForFamily.content[1], contentfulOptions)}
+            {documentToReactComponents(
+              this.state.content.solutionForFamily.content[0],
+              contentfulOptions
+            )}
+            {documentToReactComponents(
+              this.state.content.solutionForFamily.content[1],
+              contentfulOptions
+            )}
             <Grid container spacing={3}>
-              {fps.map(variant => (
+              {fpsOrdered.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
             <Box style={{ paddingTop: 90 }}>
-              {documentToReactComponents(this.state.content.solutionForFamily.content[3], contentfulOptions)}
+              {documentToReactComponents(
+                this.state.content.solutionForFamily.content[3],
+                contentfulOptions
+              )}
             </Box>
           </Box>
         </Container>
@@ -282,5 +304,11 @@ const mapStateToProps = state => ({
   products: state.catalog.variants,
   seoMap: state.storefront.seoMap
 });
+
+Home.propTypes = {
+  products: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  seoMap: PropTypes.object.isRequired
+};
 
 export default withRouter(connect(mapStateToProps)(Home));
