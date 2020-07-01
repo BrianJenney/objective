@@ -503,7 +503,6 @@ const Checkout = ({
     }
     trackCheckoutStepCompleted(panelIndex);
     if (panelIndex === 0) {
-      console.log('resetting formMode');
       setResetFormMode(true);
     }
     return setCurrentStep(panelIndex);

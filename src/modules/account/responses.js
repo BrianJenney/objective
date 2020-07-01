@@ -11,7 +11,8 @@ import {
   receivedChangePasswordSuccess,
   receivedChangePasswordFailure,
   receivedPasswordResetSuccess,
-  receivedPasswordResetFailure
+  receivedPasswordResetFailure,
+  receivedCheckEmailExistence
 } from './actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
@@ -29,10 +30,12 @@ export const handleAccountResponse = (status, data, fields, properties) => {
     case 'account.request.find':
       debugRabbitResponse('Account Get Response', status, data, fields, properties);
       if (status === 'success') {
-        if(fields.routingKey === 'account.request.get'){
-        store.dispatch(receivedFetchAccountSuccess(data));
-        } else{
-          store.dispatch(receivedFetchAccountSuccess(data.data && data.data[0] ? data.data[0] : {}));
+        if (fields.routingKey === 'account.request.get') {
+          store.dispatch(receivedFetchAccountSuccess(data));
+        } else {
+          store.dispatch(
+            receivedFetchAccountSuccess(data.data && data.data[0] ? data.data[0] : {})
+          );
         }
       } else {
         store.dispatch(receivedFetchAccountFailure(data));
@@ -68,6 +71,12 @@ export const handleAccountResponse = (status, data, fields, properties) => {
         store.dispatch(receivedPasswordResetSuccess(data));
       } else {
         store.dispatch(receivedPasswordResetFailure(data));
+      }
+      break;
+    case 'account.request.checkEmailExistence':
+      debugRabbitResponse('Check Email Existence Response', status, data, fields, properties);
+      if (status === 'success') {
+        store.dispatch(receivedCheckEmailExistence(data));
       }
       break;
     default:
