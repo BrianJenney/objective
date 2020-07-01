@@ -121,8 +121,7 @@
       text-transform: uppercase;
     }
   }
-  .welcome,
-  .his-hers-theirs {
+  .welcome {
     text-align: center;
     p {
       font-family: 'Canela Text Web';
@@ -141,10 +140,27 @@
     }
   }
   .his-hers-theirs {
+    text-align: center;
+    p {
+      font-family: 'Canela Text Web';
+      font-size: 24px;
+      font-weight: 300;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.23;
+      letter-spacing: -0.88px;
+      text-align: center;
+      color: #231f20;
+    }
+    .subheader {
+      p {
+        font-size: 44px;
+      }
+    }
     h1 {
       font-family: p22-underground, sans-serif;
       font-size: 20px;
-      font-weight: 500;
+      font-weight: 600;
       font-style: normal;
       font-stretch: normal;
       line-height: normal;
@@ -156,7 +172,7 @@
       margin: 0 auto 60px;
     }
     .carousel-btn-shopAll {
-      padding-top: 90px;
+      padding-top: 53px;
       display: flex;
       justify-content: center;
       @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -289,6 +305,8 @@
   }
   .tile {
     text-align: left;
+    height: 100%;
+    min-height: 465px;
     .prod-name-holder {
       margin-bottom: 5px;
       p {
@@ -325,7 +343,7 @@
       padding: 15px;
     }
     .home-atc {
-      padding: 0 15px 15px;
+      padding: 11px 15px 15px;
       button {
         min-width: 0;
         height: 60px;

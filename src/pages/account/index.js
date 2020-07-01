@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: '58px 58px 58px 25px',
     backgroundColor: '#FFF',
-    marginLeft: '70px',
+    margin: '0px 70px',
     [theme.breakpoints.down('xs')]: {
       padding: '0 0 32px',
       marginLeft: 0
