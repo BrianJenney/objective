@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, NavLink } from '../../components/common';
+
 import {
   Paragraph,
   Title,
@@ -11,11 +12,7 @@ import {
 export const generateComponents = (page, xs) => {
   console.log('testing', page);
   const components = [];
-  const useStyles = makeStyles(() => ({
-    margin: {
-      margin: '0 auto'
-    }
-  }));
+
   page.components.forEach(comp => {
     const desktopStyle = transformDesktopStyle(comp);
     const mobileStyle = transformMobileStyle(comp);
@@ -23,16 +20,27 @@ export const generateComponents = (page, xs) => {
       case 'hero':
         components.push(
           <div style={{ margin: '0 auto' }}>
-            <Grid item xs={12} md={10}>
-              <img
-                src={xs ? comp.mobileImg : comp.desktopImg}
-                style={xs ? mobileStyle : desktopStyle}
-              />
-            </Grid>
+            <img
+              src={xs ? comp.mobileImg : comp.desktopImg}
+              style={xs ? mobileStyle : desktopStyle}
+            />
+          </div>
+        );
+        break;
+      case 'image':
+        components.push(
+          <div
+            style={xs ? { margin: comp.mobileStyle.margin } : { margin: comp.desktopStyle.margin }}
+          >
+            <img
+              src={xs ? comp.mobileImg : comp.desktopImg}
+              style={xs ? mobileStyle : desktopStyle}
+            />
           </div>
         );
         break;
       case 'pageTitle':
+      case 'sectionTitle':
         components.push(<Title data={comp} value={comp.value} xs={xs} />);
         break;
       case 'button':
@@ -45,11 +53,7 @@ export const generateComponents = (page, xs) => {
         );
         break;
       case 'paragraph':
-        components.push(
-          <>
-            <Paragraph data={comp} value={comp.value} xs={xs} />
-          </>
-        );
+        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
         break;
       case 'box':
         components.push(
@@ -77,13 +81,20 @@ export const generateComponents = (page, xs) => {
       case 'oneColSection':
         components.push(
           <div
-            style={{ ...desktopStyle, margin: xs ? comp.desktopStyle.margin || '0 0 250px' : '0' }}
+            style={
+              xs
+                ? { ...mobileStyle, margin: comp.mobileStyle.margin }
+                : { ...desktopStyle, margin: comp.desktopStyle.margin }
+            }
           >
             {generateComponents(comp.value, xs)}
           </div>
         );
         break;
+      default:
+        break;
     }
   });
+
   return components;
 };

@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 import { requestPage } from '../../modules/static/actions';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { generateComponents } from './buildBundlePage';
 import ScrollToTop from '../../components/common/ScrollToTop';
+
+export const StyledContainer = withStyles(theme => ({
+  root: {
+    padding: '0',
+    [theme.breakpoints.down('xs')]: {
+      padding: '38px 0 40px',
+      backgroundColor: '#fdfbf9',
+      width: '100%'
+    }
+  }
+}))(Container);
 
 const BundleLP = ({ match }) => {
   const { slug } = match.params;
@@ -36,7 +48,9 @@ const BundleLP = ({ match }) => {
     return (
       <div className="bundlePage">
         <ScrollToTop>
-          <FinalPage />
+          <StyledContainer>
+            <FinalPage />
+          </StyledContainer>
         </ScrollToTop>
       </div>
     );
