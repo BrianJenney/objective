@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   subTitle: {
-    fontSize: '17px',
+    fontSize: '18px',
     fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
   },

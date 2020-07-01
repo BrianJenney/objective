@@ -23,9 +23,9 @@ const useStyles = makeStyles(theme => ({
     height: 'auto',
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
-    padding: '15px 0 !important',
+    padding: '15px 5px !important',
     fontSize: '14px !important',
-    lineHeight: '1.8 !important',
+    lineHeight: '1.2 !important',
     letterSpacing: '1.17px !important',
     '&:hover': {
       backgroundColor: theme.palette.common.white
@@ -68,8 +68,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ATC = ({ price, onClick, variantSku, ATCAdded, ATCAdding, btnStyle }) => (
-  <Button fullWidth onClick={onClick} disabled={variantSku === null} className={btnStyle || 'atc-button'}>
-    {!ATCAdded ? (price ? `$${price} - ADD TO CART` : 'ADD TO CART') : !ATCAdding ? 'PRODUCT ADDED' : 'ADDING...'}
+  <Button
+    fullWidth
+    onClick={onClick}
+    disabled={variantSku === null}
+    className={btnStyle || 'atc-button'}
+  >
+    {!ATCAdded
+      ? price
+        ? `$${price} - ADD TO CART`
+        : 'ADD TO CART'
+      : !ATCAdding
+      ? 'PRODUCT ADDED'
+      : 'ADDING...'}
   </Button>
 );
 
@@ -167,11 +178,12 @@ export const OutOfStockLP = ({
   product_sku,
   product_variant,
   openOutOfStockDialog,
-  handleOpenEmailConfirmation,
+  handleOpenEmailConfirmation
 }) => {
   return (
     <>
-      <NavLink onClick={onClick} className={buttonClass}>get {discount_text} off — Buy Now
+      <NavLink onClick={onClick} className={buttonClass}>
+        get {discount_text} off — Buy Now
       </NavLink>
       {openOutOfStockDialog && (
         <ProductOutOfStockDialog
@@ -185,7 +197,6 @@ export const OutOfStockLP = ({
           handleOpenEmailConfirmation={handleOpenEmailConfirmation}
         />
       )}
-      
     </>
-  )
-}
+  );
+};
