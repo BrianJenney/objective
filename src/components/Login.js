@@ -13,7 +13,7 @@ import { MenuLink, NavLink } from './common';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '30px',
+    fontSize: '36px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -28,20 +28,22 @@ const useStyles = makeStyles(theme => ({
   },
   subTitle: {
     fontFamily: 'p22-underground',
-    fontSize: '16px',
+    fontSize: '18px',
     paddingBottom: theme.spacing(1),
+    lineHeight: 1.1,
     [theme.breakpoints.down('xs')]: {
       fontSize: '14px'
+    }
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
     }
   }
 }));
 
-const Login = ({
-  requestLogin,
-  clearLoginError,
-  switchToSignup,
-  loginTitle
-}) => {
+const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="sm">
@@ -49,12 +51,13 @@ const Login = ({
       <Box component={Paper}>
         <Box textAlign="center">
           <Typography className={classes.title}>
-            {loginTitle || 'Log in to your Account'}
+            {loginTitle || 'Log in to your account'}
           </Typography>
           <Box pt={4}>
             <LoginForm
               onSubmit={requestLogin}
               clearLoginError={clearLoginError}
+              formStyle={classes.form}
             />
           </Box>
           <Box mt={2} mb={2}>
@@ -69,13 +72,8 @@ const Login = ({
               {switchToSignup ? (
                 <MenuLink onClick={switchToSignup} children="Sign up!" />
               ) : (
-                  <NavLink
-                    to="/signup"
-                    children="Sign up!"
-                    replace
-                    underline="always"
-                  />
-                )}
+                <NavLink to="/signup" children="Sign up!" replace underline="always" />
+              )}
             </Typography>
           </Box>
         </Box>

@@ -1,7 +1,8 @@
 import React, { useState, useContext, useCallback, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Container from '@material-ui/core/Container';
+
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -9,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+
 import ProductContext from '../../contexts/ProductContext';
 import { useQuantity, useWindowSize } from '../../hooks';
 import { Dialog, MenuLink } from '../../components/common';
@@ -22,6 +24,7 @@ import ConfirmEmail from './ProductOutOfStockEmailConfirmed';
 import ProductAccordion from './ProductAccordion';
 import './PDP-style.scss';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { StyledContainer } from '../../assets/styles/StyledComponents';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,12 +34,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       paddingTop: 0,
       paddingBottom: '22px'
-    }
-  },
-  containerRoot: {
-    maxWidth: '1200px !important',
-    [theme.breakpoints.down('xs')]: {
-      padding: 0
     }
   },
   maxWidth: {
@@ -97,7 +94,7 @@ const ProductDetail = () => {
   const contentRef = useRef();
   const atcRef = useRef();
   const dispatch = useDispatch();
-  const [ATCEnabled, setATCEnabled] = useState(true);
+  const [ATCEnabled] = useState(true);
   const [ATCAdded, setATCAdded] = useState(false);
   const [ATCAdding, setATCAdding] = useState(false);
   const [seconds, setSeconds] = useState(0);
@@ -121,7 +118,7 @@ const ProductDetail = () => {
     [cart, selectedVariantSku, variantMap, dispatch]
   );
 
-  const [quantity, setQuantity, Quantity] = useQuantity(
+  const [quantity, Quantity] = useQuantity(
     // eslint-disable-line
     updateQuantityToCart,
     'QTY'
@@ -133,7 +130,6 @@ const ProductDetail = () => {
     setTimeout(() => {
       addToCart(cart, variantMap.get(selectedVariantSku), quantity);
       // enqueueSnackbar(message, { variant: 'success' });
-      // setATCEnabled(false);
       setATCAdding(false);
       setTimeout(() => {
         setATCAdded(false);
@@ -167,7 +163,10 @@ const ProductDetail = () => {
     const { scrollTop } = scrollingElement;
 
     if (atcRef.current && contentRef.current) {
-      if (scrollTop > OFFSET + contentRef.current.offsetTop + contentRef.current.offsetHeight - windowSize.height) {
+      if (
+        scrollTop >
+        OFFSET + contentRef.current.offsetTop + contentRef.current.offsetHeight - windowSize.height
+      ) {
         atcRef.current.style.position = 'static';
         atcRef.current.style.boxShadow = 'none';
       } else {
@@ -239,7 +238,7 @@ const ProductDetail = () => {
 
   return (
     <Box className={classes.root}>
-      <Container className={classes.containerRoot}>
+      <StyledContainer>
         <Grid container xs={12} sm={12}>
           <Grid item xs={12} sm={8}>
             <PDPSlider images={productImages} />
@@ -291,8 +290,8 @@ const ProductDetail = () => {
                     <Box display="flex" justifyContent="center" alignItems="center">
                       <Box width={320}>
                         <Typography className="atc-note">
-                          Our <MenuLink onClick={openPromiseModal}>Objective Promise</MenuLink> ensures you’re making a
-                          risk-free purchase
+                          Our <MenuLink onClick={openPromiseModal}>Objective Promise</MenuLink>{' '}
+                          ensures you’re making a risk-free purchase
                         </Typography>
                       </Box>
                     </Box>
@@ -306,11 +305,12 @@ const ProductDetail = () => {
                             THE OBJECTIVE PROMISE
                           </Typography>
                           <Typography className="promise-description">
-                            Behind every Objective supplement are studies, endless hours of research and a team with
-                            over 50 years of combined experience formulating dietary supplements. And the one thing we
-                            know for sure? Everybody's different. Every body is different. It's possible that what works
-                            wonders for your best friend might not do a thing for you. So let us know and we'll refund
-                            your money. It's that simple.
+                            Behind every Objective supplement are studies, endless hours of research
+                            and a team with over 50 years of combined experience formulating dietary
+                            supplements. And the one thing we know for sure? Everybody&#39;s
+                            different. Every body is different. It&#39;s possible that what works
+                            wonders for your best friend might not do a thing for you. So let us
+                            know and we&#39;ll refund your money. It&#39;s that simple.
                           </Typography>
                         </Box>
                       </Box>
@@ -353,9 +353,13 @@ const ProductDetail = () => {
             </Card>
           </Grid>
         </Grid>
-      </Container>
+      </StyledContainer>
     </Box>
   );
+};
+
+ProductVariant.propTypes = {
+  productVariant: PropTypes.object.isRequired
 };
 
 export default withRouter(ProductDetail);

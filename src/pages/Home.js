@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -16,6 +15,7 @@ import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 import './home/home-style.scss';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 const contentfulOptions = {
   renderNode: {
@@ -114,13 +114,13 @@ class Home extends Component {
           )}?q=50&auto=compress,format")`
         }}
       >
-        <Container className="section-container">
-          <Box className="section-holder">
-            <div className="section">
+        <StyledContainer className="section-container">
+          <Grid container className="section-holder">
+            <Grid item xs={12} md={6} className="section">
               {documentToReactComponents(section.fields.mainContent, contentfulOptions)}
-            </div>
-          </Box>
-        </Container>
+            </Grid>
+          </Grid>
+        </StyledContainer>
       </div>
     ));
   }
@@ -138,7 +138,7 @@ class Home extends Component {
         if (value.fields.identifier === 'bestsellers') {
           value.fields.products.forEach(product => {
             bestsellers.push(product.fields.sku);
-            if (bestsellers.length >= 4) {
+            if (bestsellers.length >= 5) {
               bestsellers.pop();
             }
           });
@@ -153,7 +153,7 @@ class Home extends Component {
 
     return (
       <div className="home-bestsellers beige-bg">
-        <Container>
+        <StyledContainer>
           <Box py={10}>
             {documentToReactComponents(
               this.state.content.bestsellers.content[0],
@@ -164,14 +164,14 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90 }}>
+            <Box style={{ paddingTop: 53, display: 'flex', justifyContent: 'center' }}>
               {documentToReactComponents(
                 this.state.content.bestsellers.content[2],
                 contentfulOptions
               )}
             </Box>
           </Box>
-        </Container>
+        </StyledContainer>
       </div>
     );
   }
@@ -189,7 +189,7 @@ class Home extends Component {
         if (value.fields.identifier === 'solutions_whole_family') {
           value.fields.products.forEach(product => {
             family.push(product.fields.sku);
-            if (family.length >= 4) {
+            if (family.length >= 5) {
               family.pop();
             }
           });
@@ -204,29 +204,31 @@ class Home extends Component {
 
     return (
       <div className="his-hers-theirs beige-bg">
-        <Container>
+        <StyledContainer>
           <Box py={10}>
             {documentToReactComponents(
               this.state.content.solutionForFamily.content[0],
               contentfulOptions
             )}
-            {documentToReactComponents(
-              this.state.content.solutionForFamily.content[1],
-              contentfulOptions
-            )}
+            <div className="subheader">
+              {documentToReactComponents(
+                this.state.content.solutionForFamily.content[1],
+                contentfulOptions
+              )}
+            </div>
             <Grid container spacing={3}>
               {fpsOrdered.map(variant => (
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 90 }}>
+            <Box className="carousel-btn-shopAll">
               {documentToReactComponents(
                 this.state.content.solutionForFamily.content[3],
                 contentfulOptions
               )}
             </Box>
           </Box>
-        </Container>
+        </StyledContainer>
       </div>
     );
   }
@@ -274,12 +276,22 @@ class Home extends Component {
             >
               <ul>{this.renderHeroSlider()}</ul>
             </Link>
-            <Container>
-              <Box py={10} className="welcome">
-                <h1>{welcomeHeader}</h1>
-                <p>{welcomeText}</p>
-              </Box>
-            </Container>
+            <StyledContainer>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+                className="welcome"
+              >
+                <Grid item xs={12} md={3}>
+                  <h1>{welcomeHeader}</h1>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <p>{welcomeText}</p>
+                </Grid>
+              </Grid>
+            </StyledContainer>
             <>{this.renderBestsellers()}</>
             <>{this.renderSections()}</>
             <>{this.renderFamily()}</>

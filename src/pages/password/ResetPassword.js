@@ -28,7 +28,7 @@ const schema = object().shape({
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '48px',
+    fontSize: '36px',
     color: '#231f20',
     fontFamily: 'Canela Text Web',
     lineHeight: 'normal',
@@ -41,6 +41,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: '18px',
     fontFamily: 'FreightTextProBook',
     paddingBottom: theme.spacing(3)
+  },
+  form: {
+    padding: '0 78px',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
   }
 }));
 
@@ -81,8 +87,8 @@ const ResetPassword = ({ history, location }) => {
   );
 
   const renderForm = ({ isValid }) => (
-    <Form>
-      <Grid container spacing={2}>
+    <Form className={classes.form}>
+      <Grid container>
         <Grid item xs={12}>
           <Field
             label={utm_content ? 'Password' : 'New Password'}
@@ -143,7 +149,7 @@ const ResetPassword = ({ history, location }) => {
             }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ paddingTop: '33px' }}>
           <Button type="submit" fullWidth disabled={!isValid}>
             {utm_content ? 'Set password' : 'Reset Password'}
           </Button>
@@ -165,7 +171,9 @@ const ResetPassword = ({ history, location }) => {
     <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box component={Paper} pb={5} textAlign="center">
-        <Typography className={classes.title}>{utm_content ? 'Set your password' : 'Reset your password'}</Typography>
+        <Typography className={classes.title}>
+          {utm_content ? 'Set your password' : 'Reset your password'}
+        </Typography>
         <Typography className={classes.subTitle}>
           {utm_content ? 'Enter your password below.' : 'Enter your new password below.'}
         </Typography>

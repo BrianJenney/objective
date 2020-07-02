@@ -4,12 +4,10 @@
   font-family: $sansSerif;
   font-weight: 'bold';
   background-color: #000000;
-  border-top: 3px solid #000000;
   color: #ffffff;
 
   a {
     color: #ffffff;
-    text-decoration: none;
   }
 
   a:hover,
@@ -27,82 +25,55 @@
   }
 
   .promise {
-    background-color: #ffffff;
-    text-align: center;
-    color: #000000;
-    padding: 40px 16px 25px;
-    h3 {
-      letter-spacing: 1.5px;
-      font-size: 23px;
-      font-weight: 600;
-    }
-
+    padding: 48px 0px 48px 66px;
     h4 {
       font-family: p22-underground, sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-      font-style: normal;
+      font-size: 16px;
+      font-weight: 600;
       font-stretch: normal;
+      font-style: normal;
       line-height: normal;
-      letter-spacing: 2.25px;
-      text-align: center;
-      color: #000000;
-      margin-bottom: 20px;
+      letter-spacing: 1.5px;
+      color: #959595;
+      margin-bottom: 7px;
     }
     p {
-      font-family: FreightTextProBook;
-      font-size: 16px;
+      font-family: freight-text-pro, sans-serif;
+      font-size: 14px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
-      line-height: 1.5;
+      line-height: 26px;
       letter-spacing: normal;
-      text-align: center;
-      color: #000000;
-      text-transform: none;
+      color: #fff;
+      text-transform: initial;
       margin: 0;
     }
-    .diamond-outer {
-      width: 140px;
-      margin: 0 auto 75px;
-    }
-    .diamond {
-      background: #000;
-      height: 140px;
-      text-align: center;
-      transform: rotate(45deg);
-      width: 140px;
-      padding: 35px;
-      svg {
-        width: 65px;
-        transform: rotate(315deg);
-        path {
-          fill: #fff;
-        }
-      }
-    }
     @media (min-width: 1200px) {
-      padding: 40px 165px;
       p {
-        font-size: 20px;
+        font-size: 16px;
       }
     }
-
-    @media (min-width: 1600px) {
-      padding: 70px 200px;
+    @media only screen and (max-width: 1024px) {
+      padding: 30px;
+    }
+    @media only screen and (max-width: 960px) {
+      padding: 32px 0px;
     }
   }
   .signup-box {
     text-align: left;
     font-family: freight-text-pro, sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     text-transform: none;
-    padding: 10px 30px 10px;
+    padding: 48px 0px 77px 32px;
+    color: #959595;
+
     .MuiFormHelperText-root.Mui-error {
       color: #fff;
     }
     .MuiOutlinedInput-notchedOutline {
-      top: 10px;
+      top: 0;
       left: 0;
       right: 0;
       bottom: 0;
@@ -110,20 +81,39 @@
       padding: 0;
       position: absolute;
     }
+    button {
+      background: #fff;
+      width: 115px;
+      height: 100%;
+      .cls-1,
+      .cls-2 {
+        fill: none;
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+      .cls-2 {
+        stroke-linecap: square;
+      }
+    }
     @media (min-width: 1200px) {
-      font-size: 16px;
-      padding: 30px 0px 30px 50px;
+      font-size: 18px;
+      padding: 55px 0px 77px 64px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
       .MuiFormHelperText-root.Mui-error {
         color: #fff;
       }
-      .MuiOutlinedInput-notchedOutline {
-        top: 10px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: 0;
-        padding: 0;
-        position: absolute;
+      form {
+        .MuiFormControl-fullWidth {
+          width: 76%;
+          .MuiInputBase-fullWidth {
+            width: 98%;
+          }
+        }
       }
     }
     form {
@@ -137,89 +127,57 @@
       }
     }
     @media (max-width: 768px) {
+      padding-left: 10px;
       form {
         .MuiFormControl-fullWidth {
-          width: 98%;
+          width: 76%;
           .MuiInputBase-fullWidth {
             width: 98%;
           }
         }
-      }
-      button {
-        min-width: auto;
-        padding: 0;
-      }
-    }
-    .signup-arrow {
-      margin-top: 11px;
-      margin-left: -65px;
-      position: absolute;
-      width: 60%;
-    }
-    @supports (-ms-ime-align: auto) {
-      .signup-arrow {
-        margin-top: 18px;
-        margin-left: -125px;
-        position: absolute;
-        width: 60%;
-      }
-    }
-    @-moz-document url-prefix() {
-      .signup-arrow {
-        margin-top: 25px;
-        margin-left: -130px;
-      }
-    }
-    .mobile-arrow {
-      z-index: 0;
-      margin-top: 15px;
-      margin-left: -45px;
-      position: absolute;
-      width: 90%;
-    }
-    @-moz-document url-prefix() {
-      .mobile-arrow {
-        margin-top: 35px;
-        margin-left: -110px;
-      }
-    }
-    @media (max-width: 375px) {
-      .mobile-arrow {
-        z-index: 0;
-        margin-top: 16px;
-        margin-left: -45px;
-      }
-      @-moz-document url-prefix() {
-        .mobile-arrow {
-          margin-top: 35px;
-          margin-left: -95px;
+        button {
+          background: #fff;
+          width: 82.7px;
+          height: 100%;
+          .cls-1,
+          .cls-2 {
+            fill: none;
+            stroke: #231f20;
+            stroke-miterlimit: 10;
+            stroke-width: 2px;
+          }
+          .cls-2 {
+            stroke-linecap: square;
+          }
         }
       }
     }
+    @media only screen and (max-width: 960px) {
+      padding: 31px 0px;
+    }
   }
-  .icon {
-    padding: 25px;
-    text-align: center;
-    @media (min-width: 1200px) {
-      padding: 50px 35px;
-    }
-    @media (min-width: 1600px) {
-      padding: 50px;
-    }
-    img {
-      vertical-align: bottom;
-    }
+  .MuiOutlinedInput-input {
+    padding: 15.5px;
+  }
+  .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+    border: 2px solid #c10230;
+  }
+  .MuiFormHelperText-contained {
+    margin: 0px !important;
   }
   .border-left {
-    border-left: 1px solid $gray;
+    border-left: 1px solid #959595;
   }
 
   .border-bottom {
-    border-bottom: 1px solid $gray;
+    border-bottom: 1px solid #959595;
   }
 
   .border-right {
-    border-right: 1px solid $gray;
+    border-right: 1px solid #959595;
+  }
+  .border-top {
+    border-top: 1px solid #959595;
   }
 
   .uppercase {
@@ -228,7 +186,7 @@
 
   .footer-main-holder {
     width: 100%;
-    padding: 25px 0 60px;
+    padding: 31px 0 60px;
 
     @media (min-width: 1200px) {
       padding: 55px 0px 100px;
@@ -240,40 +198,39 @@
   }
 
   .footer-main {
-    border: 1px solid $gray;
-    min-height: 475px;
-
     .logo {
-      padding: 20px 23px;
+      display: flex;
+      justify-content: center;
       svg {
-        width: 65px;
+        width: 92px;
+        height: 92px;
         path {
           fill: #fff;
         }
       }
     }
-
     .title {
       font-family: p22-underground, Helvetica, sans-serif;
       font-size: 16px;
       font-weight: 600;
       text-transform: uppercase;
-      padding: 40px 20px 20px 20px;
+      padding: 31px 0px 18px 0px;
       letter-spacing: 1px;
       text-align: left;
+      color: #959595;
 
       @media (min-width: 1200px) {
-        padding: 45px 50px;
+        padding: 31px 0px 18px 0px;
       }
     }
 
     .links {
       text-transform: capitalize;
+      font-family: freight-text-pro, sans-serif;
       li {
         padding: 0;
       }
       @media (min-width: 1200px) {
-        padding: 30px 50px;
         font-size: 18px;
         line-height: 2.22;
       }
@@ -281,19 +238,41 @@
 
     .legal {
       text-transform: uppercase;
-      font-size: 10px;
       letter-spacing: 0.8px;
+      font-weight: 600;
+      color: #959595;
+      a {
+        color: #959595;
+        text-decoration: underline;
+      }
 
       @media (min-width: 320px) {
-        display: flex;
-        justify-content: center;
+        padding: 15px 0px;
+        .legal-text {
+          padding-top: 5px;
+          text-decoration: underline;
+          @media (min-width: 1200px) {
+            text-decoration: underline;
+            padding: 0;
+          }
+        }
       }
       @media (min-width: 1200px) {
-        border-top: 1px solid #414141;
-      }
-      @media (min-width: 1600px) {
-        display: flex;
-        justify-content: center;
+        padding: 32px 0px 28px 48px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 600;
+        font-size: 16px;
+        color: #959595;
+        font-family: p22-underground, sans-serif;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 1.33px;
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+          /* IE10+ CSS styles go here */
+          justify-content: space-around;
+        }
       }
 
       ul {
@@ -309,52 +288,64 @@
     }
 
     .row1 {
-      text-align: center;
       &.logo {
-        svg {
-          width: 65px;
-          path {
-            fill: #fff;
+        @media (min-width: 600px) {
+          svg {
+            width: 62px;
+            height: 62px;
+            path {
+              fill: #fff;
+            }
+          }
+          padding: 15px;
+        }
+        @media (max-width: 600px) {
+          svg {
+            width: 48px;
+            height: 48px;
+            path {
+              fill: #fff;
+            }
+          }
+          padding: 15px;
+        }
+      }
+      img {
+        width: 27px;
+        height: 27px;
+      }
+      @media (min-width: 1200px) {
+        width: 175px;
+        .logo {
+          padding: 20px 46px;
+          svg {
+            width: 92px;
+            height: 92px;
           }
         }
       }
-      &.copy-mobile {
-        padding: 45px 0;
+    }
+    .follow-text {
+      font-family: p22-underground, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1.31px;
+      color: #959595;
+      @media (max-width: 600px) {
+        font-size: 14px;
       }
     }
-
-    .rotate {
-      text-transform: uppercase;
-      font-size: 14px;
-      letter-spacing: 1.5px;
-      @media (min-width: 1200px) {
-        /* Safari */
-        -webkit-transform: rotate(-90deg);
-        /* Firefox */
-        -moz-transform: rotate(-90deg);
-        /* IE */
-        -ms-transform: rotate(-90deg);
-        /* Opera */
-        -o-transform: rotate(-90deg);
-        float: left;
-        margin-top: 145px;
-        margin-left: -20px;
-        position: absolute;
-      }
-      @media (min-width: 1600px) {
-        margin-left: -5px;
-      }
-    }
-
     input {
-      margin: 10px 0 0;
+      font-family: p22-underground, sans-serif;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
       color: #ffffff;
-      padding: 15px 10px 10px 10px;
-      border: 1px solid #fff;
-      background-color: #000000;
-      &:hover {
-        border: 1px solid #fff;
-      }
     }
 
     input::placeholder {
@@ -383,7 +374,7 @@
   @media (max-width: 768px) {
     .footer-main {
       .links {
-        padding: 0px 0px 36px 20px;
+        padding: 0px 0px 32px 0px;
         font-size: 15px;
       }
       .legal ul li {
@@ -454,7 +445,7 @@
       padding-bottom: 7px;
     }
     h4 {
-      font-family: FreightTextProBook, serif;
+      font-family: FreightTextProBook, sans-serif;
       font-size: 16px;
       font-weight: normal;
       font-style: normal;
@@ -604,7 +595,7 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
-      padding: 0px 18px 20px 18px;
+      padding: 0px 5px 20px 5px;
     }
     p {
       font-family: p22-underground, Helvetica, sans-serif;
@@ -620,7 +611,7 @@
     }
     h3 {
       font-family: 'Canela Text Web';
-      font-size: 18px;
+      font-size: 20px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -632,7 +623,7 @@
     }
     h4 {
       font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -640,7 +631,6 @@
       letter-spacing: normal;
       text-align: center;
       color: #231f20;
-      padding-bottom: 20px;
     }
     @media only screen and (min-width: 600px) {
       svg:nth-child(1) {
@@ -725,6 +715,7 @@
     padding-top: 39px;
   }
   .disclaimer-text {
+    color: #959595;
     font-size: 14px;
     text-transform: none;
     font-family: p22-underground, Helvetica, sans-serif;

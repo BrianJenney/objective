@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+
 import ScrollToTop from '../components/common/ScrollToTop';
-import './about/about-styles.scss';
 import { contentfulClient } from '../utils/contentful';
 import HeadTags from '../components/common/HeadTags';
+import { StyledContainer } from '../assets/styles/StyledComponents';
+
+import './about/about-styles.scss';
 
 const contentfulOptions = {
   renderNode: {
@@ -152,11 +157,19 @@ const AboutUs = ({ location }) => {
 
     return (
       <>
-        <h3>{sectionsTitle}</h3>
-        <h1>
-          {subTitle1} <br />
-          {subTitle2}
-        </h1>
+        <StyledContainer>
+          <Grid container direction="column" justify="center" alignItems="center">
+            <Grid item xs={8} lg={5}>
+              <h3>{sectionsTitle}</h3>
+            </Grid>
+            <Grid item xs={11} lg={6}>
+              <h1>
+                {subTitle1} <br />
+                {subTitle2}
+              </h1>
+            </Grid>
+          </Grid>
+        </StyledContainer>
         {mobile ? (
           <div className="mobile-only">
             <img
@@ -175,29 +188,37 @@ const AboutUs = ({ location }) => {
             ))}
           </div>
         ) : (
-          <div className="hundred xs-hidden">
-            <div className="left fifty">
-              <Container className="container-left">
+          <div className="section4">
+            <div className="hundred">
+              <div className="image-container right">
+                <img
+                  src={allImgs[1][0].data.target.fields.file.url}
+                  alt={allImgs[1][0].data.target.fields.title}
+                />
+              </div>
+            </div>
+            <StyledContainer className="container-left">
+              <Grid container item xs={12} lg={6} className="text">
                 {allTexts[0].map((text, key) => (
                   <p className={`textNum${key}`}>{text.content[0].value}</p>
                 ))}
-              </Container>
-              <img
-                src={allImgs[0][0].data.target.fields.file.url}
-                alt={allImgs[0][0].data.target.fields.title}
-              />
+              </Grid>
+            </StyledContainer>
+            <div className="hundred">
+              <div className="image-container left">
+                <img
+                  src={allImgs[0][0].data.target.fields.file.url}
+                  alt={allImgs[0][0].data.target.fields.title}
+                />
+              </div>
             </div>
-            <div className="right fifty">
-              <img
-                src={allImgs[1][0].data.target.fields.file.url}
-                alt={allImgs[1][0].data.target.fields.title}
-              />
-              <Container className="container-right">
+            <StyledContainer className="container-right">
+              <Grid container item xs={12} lg={5} className="text">
                 {allTexts[1].map((text, key) => (
                   <p className={`textNum${key}`}>{text.content[0].value}</p>
                 ))}
-              </Container>
-            </div>
+              </Grid>
+            </StyledContainer>
           </div>
         )}
       </>
@@ -211,17 +232,21 @@ const AboutUs = ({ location }) => {
         <div className="aboutus">
           {renderHeroSlider()}
           <Box py={8} className="mobile-padding">
-            <Container className="section1">
-              <div className="title">
-                <h1>{contents.welcomeHeader}</h1>
-                <img
-                  src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
-                  alt=""
-                  className="slash"
-                />
-              </div>
-              {renderWelcomeText()}
-            </Container>
+            <StyledContainer className="section1">
+              <Grid container spacing={3} justify="center">
+                <Grid item xs={12} md={10} lg={8}>
+                  <div className="title">
+                    <h1>{contents.welcomeHeader}</h1>
+                    <img
+                      src="http://cdn1.stopagingnow.com/objective/aboutus/slash-desktop.png"
+                      alt=""
+                      className="slash"
+                    />
+                  </div>
+                  {renderWelcomeText()}
+                </Grid>
+              </Grid>
+            </StyledContainer>
           </Box>
           <Box className="section2 mobile-padding" py={8}>
             {mobile ? (
@@ -250,33 +275,33 @@ const AboutUs = ({ location }) => {
                 }}
                 className="desktop-img"
               >
-                <Container>
+                <StyledContainer>
                   <Box>
                     <div className="text">{renderAdditionalText()}</div>
                   </Box>
                   <Link to="/gallery" className="buttonlink mobile-only">
                     Shop Better Health
                   </Link>
-                </Container>
+                </StyledContainer>
               </div>
             )}
           </Box>
           <Box py={8} className="mobile-padding">
-            <Container className="section3">
+            <StyledContainer className="section3">
               <div className="border">
                 {renderApproachBlock()}
                 <Link to="/gallery" className="buttonlink">
                   Shop Better Health
                 </Link>
               </div>
-            </Container>
+            </StyledContainer>
           </Box>
           <Box py={8} className="section4 mobile-padding">
             {renderSections()}
-            <Link to="/gallery" className="buttonlink">
-              Shop Better Health
-            </Link>
           </Box>
+          <Link to="/gallery" className="buttonlink">
+            Shop Better Health
+          </Link>
           <Box py={8} className="section5 mobile-padding">
             <Container>
               <h3>Press & Media Inquires?</h3>
