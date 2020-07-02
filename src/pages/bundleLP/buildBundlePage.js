@@ -1,7 +1,9 @@
 import React from 'react';
 import { Box, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import { Button, NavLink } from '../../components/common';
+import { HomeVariantCard } from '../home/';
 
 import {
   Paragraph,
@@ -9,10 +11,8 @@ import {
   transformMobileStyle,
   transformDesktopStyle
 } from '../static/transformComponents';
-export const generateComponents = (page, xs) => {
-  console.log('testing', page);
+export const generateComponents = (page, xs, products) => {
   const components = [];
-
   page.components.forEach(comp => {
     const desktopStyle = transformDesktopStyle(comp);
     const mobileStyle = transformMobileStyle(comp);
@@ -38,6 +38,21 @@ export const generateComponents = (page, xs) => {
             />
           </div>
         );
+        break;
+      case 'product':
+        const contentfulSKU = comp.value.map(prod => prod.sku);
+        const contentfulProds = products
+          .filter(product => contentfulSKU.includes(product.sku.split('-')[0]))
+          .map(product => product);
+        console.log('testing-SKUS', contentfulProds);
+        components.push(
+          <Grid container spacing={3} style={desktopStyle}>
+            {contentfulProds.map(variant => (
+              <HomeVariantCard variant={variant} key={variant.id} />
+            ))}
+          </Grid>
+        );
+
         break;
       case 'pageTitle':
       case 'sectionTitle':

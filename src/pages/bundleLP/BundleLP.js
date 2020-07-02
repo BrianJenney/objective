@@ -27,6 +27,7 @@ const BundleLP = ({ match }) => {
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
   const page = useSelector(state => state.page);
+  const { variants } = useSelector(state => state.catalog);
 
   useEffect(() => {
     if (!pageLoaded) dispatch(requestPage(slug));
@@ -40,8 +41,8 @@ const BundleLP = ({ match }) => {
   }, [page]);
 
   let FinalPage = null;
-  if (pageLoaded) {
-    FinalPage = () => generateComponents(page, xs);
+  if (pageLoaded && variants) {
+    FinalPage = () => generateComponents(page, xs, variants);
   }
 
   if (FinalPage) {

@@ -16,6 +16,7 @@ import './home-style.scss';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
 
 export const HomeVariantCard = ({ variant }) => {
+  console.log('testing-HOME-VARIANT-CARD', variant);
   const cart = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const [ATCAdded, setATCAdded] = useState(false);
@@ -55,7 +56,7 @@ export const HomeVariantCard = ({ variant }) => {
   const closeEmailConfirmation = useCallback(() => {
     setOpenEmailConfirmation(false);
   }, [setOpenEmailConfirmation]);
-
+  console.log('testing-ASSETS', assets);
   return (
     <Grid item xs={12} md={4}>
       <Card className="tile" ref={ref} style={{ border: `1px solid ${variant.color}` }}>
@@ -76,7 +77,11 @@ export const HomeVariantCard = ({ variant }) => {
             });
           }}
         >
-          <CardMedia style={{ height: 430, width: '100%' }} image={assets.imgs + '&q=50'} className="tile-img" />
+          <CardMedia
+            style={{ height: 430, width: '100%' }}
+            image={`${assets.imgs}&q=50`}
+            className="tile-img"
+          />
         </NavLink>
         <NavLink
           to={`/products/${slug}`}
