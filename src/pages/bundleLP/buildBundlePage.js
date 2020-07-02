@@ -43,7 +43,7 @@ export const generateComponents = (page, xs) => {
       case 'sectionTitle':
         components.push(<Title data={comp} value={comp.value} xs={xs} />);
         break;
-      case 'button':
+      case 'button': // handle ATC and shop gallery here
         components.push(
           <div style={xs ? mobileStyle : desktopStyle}>
             <Button to={comp.URL} component={NavLink}>
