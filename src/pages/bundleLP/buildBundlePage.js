@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Box, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
+import { ATC, OutOfStock } from '../../components/atcOutOfStock';
 
 import {
   Paragraph,
@@ -11,8 +12,19 @@ import {
   transformMobileStyle,
   transformDesktopStyle
 } from '../static/transformComponents';
-export const generateComponents = (page, xs, products) => {
+
+export const generateComponents = (
+  page,
+  xs,
+  products,
+  cart,
+  ATCAdded,
+  ATCAdding,
+  handleAddToCart,
+  setSelectedVariant
+) => {
   const components = [];
+
   page.components.forEach(comp => {
     const desktopStyle = transformDesktopStyle(comp);
     const mobileStyle = transformMobileStyle(comp);
@@ -44,12 +56,13 @@ export const generateComponents = (page, xs, products) => {
         const contentfulProds = products
           .filter(product => contentfulSKU.includes(product.sku.split('-')[0]))
           .map(product => product);
-        console.log('testing-SKUS', contentfulProds);
+
         components.push(
           <Grid container spacing={3} style={desktopStyle}>
-            {contentfulProds.map(variant => (
-              <HomeVariantCard variant={variant} key={variant.id} />
-            ))}
+            {contentfulProds.map(variant => {
+              setSelectedVariant(variant);
+              return <HomeVariantCard variant={variant} key={variant.id} />;
+            })}
           </Grid>
         );
 
@@ -59,11 +72,16 @@ export const generateComponents = (page, xs, products) => {
         components.push(<Title data={comp} value={comp.value} xs={xs} />);
         break;
       case 'button': // handle ATC and shop gallery here
+        const btnType = comp.value.toLowerCase() === 'add to cart';
         components.push(
           <div style={xs ? mobileStyle : desktopStyle}>
-            <Button to={comp.URL} component={NavLink}>
-              {comp.value}
-            </Button>
+            {btnType ? (
+              <Button onClick={handleAddToCart}>{comp.value}</Button>
+            ) : (
+              <Button to={comp.URL} component={NavLink}>
+                {comp.value}
+              </Button>
+            )}
           </div>
         );
         break;
@@ -76,17 +94,17 @@ export const generateComponents = (page, xs, products) => {
             style={
               xs
                 ? {
-                  ...mobileStyle,
-                  border: mobileStyle.borderColor,
-                  top: '80%',
-                  margin: '0 11%'
-                }
+                    ...mobileStyle,
+                    border: mobileStyle.borderColor,
+                    top: '80%',
+                    margin: '0 11%'
+                  }
                 : {
-                  ...desktopStyle,
-                  border: desktopStyle.borderColor,
-                  top: 'calc(100% / 3.5)',
-                  margin: '0 0 0 120px'
-                }
+                    ...desktopStyle,
+                    border: desktopStyle.borderColor,
+                    top: 'calc(100% / 3.5)',
+                    margin: '0 0 0 120px'
+                  }
             }
           >
             {generateComponents(comp.value, xs)}
