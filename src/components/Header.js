@@ -66,7 +66,7 @@ const segmentIdentify = user => {
 
 const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
-  const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const locationState = history.location.state;
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
@@ -279,7 +279,7 @@ const Header = ({ currentUser, location, history }) => {
 
                 <Grid item xs="auto" className="h-pding">
                   {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
-                  {cartNotification ? <CartNotification isCheckoutPage={isCheckoutPage} /> : null}
+                  {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
                 </Grid>
               </Grid>
             </Grid>

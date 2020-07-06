@@ -14,6 +14,7 @@ import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+import './home/home-style.scss';
 import { StyledContainer } from '../assets/styles/StyledComponents';
 
 const contentfulOptions = {

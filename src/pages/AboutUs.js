@@ -87,7 +87,7 @@ const AboutUs = ({ location }) => {
 
     return images.map(image => (
       <li key={image.sys.id} style={{ listStyleType: 'none' }}>
-        <img src={image.fields.file.url + params} className="hero" alt="about-us-hero" />
+        <img src={image.fields.file.url + params} className="hero" alt={image.fields.title} />
       </li>
     ));
   };
@@ -109,7 +109,7 @@ const AboutUs = ({ location }) => {
   const renderApproachBlock = () => {
     if (!contents.approachBlock) return <></>;
     const { content } = contents.approachBlock;
-    const titleApproach = content[0].content[0].value;
+    const approachBlockTitle = content[0].content[0].value;
     const subTitle = content[1].content[0].value;
     const allBlocks = content
       .slice(2, 5)
@@ -117,7 +117,7 @@ const AboutUs = ({ location }) => {
     return (
       <>
         <h1>
-          {titleApproach}
+          {approachBlockTitle}
           <br />
           {subTitle}
         </h1>
@@ -142,7 +142,7 @@ const AboutUs = ({ location }) => {
   const renderSections = () => {
     if (!contents.aboutUsContent) return <></>;
     const { content } = contents.aboutUsContent;
-    const titleSection = content[0].content[0].value;
+    const sectionsTitle = content[0].content[0].value;
     const subTitle1 = content[1].content[0].value;
     const subTitle2 = content[2].content[0].value;
     const sections = content
@@ -160,7 +160,7 @@ const AboutUs = ({ location }) => {
         <StyledContainer>
           <Grid container direction="column" justify="center" alignItems="center">
             <Grid item xs={8} lg={5}>
-              <h3>{titleSection}</h3>
+              <h3>{sectionsTitle}</h3>
             </Grid>
             <Grid item xs={11} lg={6}>
               <h1>
@@ -253,8 +253,8 @@ const AboutUs = ({ location }) => {
               <>
                 <img
                   src={contents.additionalText.content[6].data.target.fields.file.url}
-                  alt={contents.additionalText.content[6].data.target.fields.title}
                   className="mobile-img"
+                  alt={contents.additionalText.content[6].data.target.fields.title}
                 ></img>
                 <Container>
                   <Box>
