@@ -19,7 +19,10 @@ export const Paragraph = ({ data, value, xs }) =>
   ));
 
 export const Image = ({ data, xs }) => (
-  <img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
+  <img
+    style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
+    src={data.desktopImg}
+  />
 );
 
 export const generateComponents = (page, xs) => {
@@ -89,6 +92,8 @@ export const transformDesktopStyle = data => {
         // skip margin value from Contentful
       } else if (value === 'align') {
         obj.textAlign = desktopStyle[value];
+      } else if (value === 'fontColor') {
+        obj.color = desktopStyle[value];
       } else {
         obj[value] = desktopStyle[value];
       }
@@ -115,6 +120,8 @@ export const transformMobileStyle = data => {
         // skip margin value from Contentful
       } else if (value === 'align') {
         obj.textAlign = mobileStyle[value];
+      } else if (value === 'fontColor') {
+        obj.color = mobileStyle[value];
       } else {
         obj[value] = mobileStyle[value];
       }
