@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 
-import { Button } from '../components/common';
 import ScrollToTop from '../components/common/ScrollToTop';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import './blog/blog-styles.scss';
 import { fetchBlogHome } from '../utils/blog';
@@ -38,39 +38,18 @@ const Blog = ({ location }) => {
     window.analytics.page('Journal Home');
   }, []);
 
-  /*
-   *
-   *@description - Track Segment Editorial Grid Item Clicked
-   *@return void
-   *
-   */
-  const segmentTrackEditorialItemClicked = (post, cta = '') => {
-    window.analytics.track('Editorial Grid Item Clicked', {
-      cta,
-      label: post.fields.title,
-      text: post.fields.title
-    });
-  };
-
   const renderFeaturedMain = post => <FeaturedPost post={post} />;
 
   const renderFeaturedPosts = posts => {
     if (posts.length > 0) {
-      return posts.map((item, key) => (
-        <FeaturedItem post={item} key={item.sys.id} />
-      ));
+      return posts.map(item => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
 
-  const renderPosts = posts =>
-    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
+  const renderPosts = posts => posts.map(item => <PostItem post={item} key={item.sys.id} />);
 
-  if (
-    Object.keys(featuredMain).length === 0 ||
-    featuredPosts.length === 0 ||
-    posts.length === 0
-  ) {
+  if (Object.keys(featuredMain).length === 0 || featuredPosts.length === 0 || posts.length === 0) {
     return <LoadingSpinner loadingMessage="Loading blog" page="journal" />;
   }
   return (
@@ -79,16 +58,20 @@ const Blog = ({ location }) => {
       <ScrollToTop>
         <div className="journal-gallery">
           <Box className="header" py={8}>
-            <Container className="container">
-              <h1>The Journal</h1>
-              <p>
-                Lifestyle tips, recipes, deep dives into study results and
-                more...to make good health easy
-              </p>
-            </Container>
+            <StyledContainer>
+              <Grid container spacing={3} direction="column" justify="center" alignItems="center">
+                <Grid item xs={12} sm={8} md={6}>
+                  <h1>The Journal</h1>
+                  <p>
+                    Lifestyle tips, recipes, deep dives into study results and more...to make good
+                    health easy
+                  </p>
+                </Grid>
+              </Grid>
+            </StyledContainer>
           </Box>
           <Box className="content" py={8}>
-            <Container>
+            <StyledContainer>
               <Divider />
               <h1>Featured Posts</h1>
               {renderFeaturedMain(featuredMain)}
@@ -100,12 +83,16 @@ const Blog = ({ location }) => {
               <Divider />
               <h1>All Posts</h1>
               <div className="list">{renderPosts(posts)}</div>
-            </Container>
+            </StyledContainer>
           </Box>
         </div>
       </ScrollToTop>
     </>
   );
+};
+
+Blog.propTypes = {
+  location: PropTypes.object.isRequired
 };
 
 export default Blog;

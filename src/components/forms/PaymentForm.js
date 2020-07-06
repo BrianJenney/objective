@@ -120,7 +120,16 @@ const checkedFields = [
   'zipcode',
   'password'
 ];
-const formikFields = ['cardholderName', 'firstName', 'lastName', 'address1', 'city', 'state', 'zipcode', 'password'];
+const formikFields = [
+  'cardholderName',
+  'firstName',
+  'lastName',
+  'address1',
+  'city',
+  'state',
+  'zipcode',
+  'password'
+];
 const formikValueFieldsMap = {
   cardholderName: 'paymentDetails.cardholderName',
   firstName: 'billingAddress.firstName',
@@ -183,7 +192,9 @@ const PaymentForm = ({
   const dispatch = useDispatch();
   const paypalPayloadState = useSelector(state => state.paypal);
   const paypalEmail =
-    Object.keys(paypalPayloadState).length > 0 && paypalPayloadState.details && paypalPayloadState.details.email
+    Object.keys(paypalPayloadState).length > 0 &&
+    paypalPayloadState.details &&
+    paypalPayloadState.details.email
       ? paypalPayloadState.details.email
       : false;
   const classes = useStyles();
@@ -314,7 +325,8 @@ const PaymentForm = ({
                 const field = event.fields[event.emittedBy];
                 if (field.isValid) {
                   field.container.nextElementSibling.style.display = 'none';
-                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
                   document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
                   field.container.nextElementSibling.style.display = 'block';
@@ -324,7 +336,8 @@ const PaymentForm = ({
                 const field = event.fields[event.emittedBy];
                 if (field.isPotentiallyValid) {
                   field.container.nextElementSibling.style.display = 'none';
-                  document.getElementById('bt-payment-holder').style.border = '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border =
+                    '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
                   document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
                   field.container.nextElementSibling.style.display = 'block';
@@ -362,7 +375,8 @@ const PaymentForm = ({
       paymentDetails: {},
       billingAddress: {}
     };
-    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
+    const isGuest =
+      currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
     if (isGuest) {
       values.shouldSaveData = false;
     }
@@ -443,7 +457,11 @@ const PaymentForm = ({
       return null;
     }
     const { total, shippingAddress } = rest.cart;
-    if (!rest.cart || total === 0 || document.getElementById('paypal-checkout-button-payment-form') === null) {
+    if (
+      !rest.cart ||
+      total === 0 ||
+      document.getElementById('paypal-checkout-button-payment-form') === null
+    ) {
       return null;
     }
     setPpButtonRendered(true);
@@ -529,7 +547,14 @@ const PaymentForm = ({
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <div ref={errRef}>
-              <AlertPanel py={2} px={4} type="error" bgcolor="#ffcdd2" text={errorMessage} variant="subtitle2" />
+              <AlertPanel
+                py={2}
+                px={4}
+                type="error"
+                bgcolor="#ffcdd2"
+                text={errorMessage}
+                variant="subtitle2"
+              />
             </div>
           </Grid>
           {!onlyCard && (
@@ -560,7 +585,11 @@ const PaymentForm = ({
 
           {values.paymentDetails.paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
             <>
-              <Grid item xs={12} style={{ display: paymentMethodMode === 'creditCard' ? 'block' : 'none' }}>
+              <Grid
+                item
+                xs={12}
+                style={{ display: paymentMethodMode === 'creditCard' ? 'block' : 'none' }}
+              >
                 <div ref={fieldRefs.cardholderName}>
                   <Field
                     name="paymentDetails.cardholderName"
@@ -570,12 +599,20 @@ const PaymentForm = ({
                   />
                 </div>
               </Grid>
-              <Grid item xs={12} style={{ display: paymentMethodMode === 'creditCard' ? 'block' : 'none' }}>
+              <Grid
+                item
+                xs={12}
+                style={{ display: paymentMethodMode === 'creditCard' ? 'block' : 'none' }}
+              >
                 <Box
                   position="relative"
                   className="bt-payment-holder"
                   id="bt-payment-holder"
-                  style={rest.checkoutVersion && rest.checkoutVersion === 2 ? { border: '1px solid #231f20' } : {}}
+                  style={
+                    rest.checkoutVersion && rest.checkoutVersion === 2
+                      ? { border: '1px solid #231f20' }
+                      : {}
+                  }
                 >
                   <Grid item xs={6}>
                     <div id="bt-cardNumber" ref={fieldRefs.number} />
@@ -611,7 +648,11 @@ const PaymentForm = ({
                             : 'Save details in account'
                         }
                         component={CheckboxField}
-                        style={rest.checkoutVersion && rest.checkoutVersion === 2 ? { paddingLeft: '3px' } : {}}
+                        style={
+                          rest.checkoutVersion && rest.checkoutVersion === 2
+                            ? { paddingLeft: '3px' }
+                            : {}
+                        }
                       />
                     )}
                   </Grid>
@@ -631,7 +672,13 @@ const PaymentForm = ({
                 </>
               )}
 
-              <Grid item xs={12} style={{ display: paymentMethodMode === 'paypal' && !paypalEmail ? 'block' : 'none' }}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  display: paymentMethodMode === 'paypal' && !paypalEmail ? 'block' : 'none'
+                }}
+              >
                 <Box>
                   <Typography
                     variant="body1"
@@ -660,34 +707,37 @@ const PaymentForm = ({
                   />
                 </Grid>
               )}
-              {seedEnabled && paymentMethodMode === 'creditCard' && rest.checkoutVersion && rest.checkoutVersion === 2 && (
-                <Grid item xs={12}>
-                  <Box>
-                    <RadioGroup
-                      id="toggleBillingAddressFormMode"
-                      onChange={evt => {
-                        handleSetBillingAddressMode(evt, values, setValues);
-                      }}
-                      value={billingAddressMode}
-                    >
-                      <FormControlLabel
-                        key="formControlLabelSameAsShipping"
-                        value="sameAsShipping"
-                        control={<Radio color={'primary'} size={'small'} />}
-                        label="Same as shipping address"
-                        classes={{ label: classes.formControlLabel }}
-                      />
-                      <FormControlLabel
-                        key="formControlLabelDifferentShipping"
-                        value="differentShipping"
-                        control={<Radio color={'primary'} size={'small'} />}
-                        label="Use a different billing address"
-                        classes={{ label: classes.formControlLabel }}
-                      />
-                    </RadioGroup>
-                  </Box>
-                </Grid>
-              )}
+              {seedEnabled &&
+                paymentMethodMode === 'creditCard' &&
+                rest.checkoutVersion &&
+                rest.checkoutVersion === 2 && (
+                  <Grid item xs={12}>
+                    <Box>
+                      <RadioGroup
+                        id="toggleBillingAddressFormMode"
+                        onChange={evt => {
+                          handleSetBillingAddressMode(evt, values, setValues);
+                        }}
+                        value={billingAddressMode}
+                      >
+                        <FormControlLabel
+                          key="formControlLabelSameAsShipping"
+                          value="sameAsShipping"
+                          control={<Radio color={'primary'} size={'small'} />}
+                          label="Same as shipping address"
+                          classes={{ label: classes.formControlLabel }}
+                        />
+                        <FormControlLabel
+                          key="formControlLabelDifferentShipping"
+                          value="differentShipping"
+                          control={<Radio color={'primary'} size={'small'} />}
+                          label="Use a different billing address"
+                          classes={{ label: classes.formControlLabel }}
+                        />
+                      </RadioGroup>
+                    </Box>
+                  </Grid>
+                )}
               {seedEnabled &&
                 paymentMethodMode === 'creditCard' &&
                 (!rest.checkoutVersion || (rest.checkoutVersion && rest.checkoutVersion === 1)) && (
@@ -697,16 +747,25 @@ const PaymentForm = ({
                         id="useAddressSeedToggle"
                         onChange={evt => handleUseAddressSeedToggle(evt, values, setValues)}
                       />
-                      <Typography variant="body2" children={useSeedLabel} style={{ color: '#231f20' }} />
+                      <Typography
+                        variant="body2"
+                        children={useSeedLabel}
+                        style={{ color: '#231f20' }}
+                      />
                     </Box>
                   </Grid>
                 )}
 
-              {((billingAddressMode === 'differentShipping' && paymentMethodMode === 'creditCard') ||
+              {((billingAddressMode === 'differentShipping' &&
+                paymentMethodMode === 'creditCard') ||
                 !rest.checkoutVersion ||
                 (rest.checkoutVersion && rest.checkoutVersion === 1)) && (
                 <>
-                  <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
+                  <Grid
+                    item
+                    xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+                    sm={6}
+                  >
                     <div ref={fieldRefs.firstName}>
                       <Field
                         name="billingAddress.firstName"
@@ -716,7 +775,11 @@ const PaymentForm = ({
                       />
                     </div>
                   </Grid>
-                  <Grid item xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12} sm={6}>
+                  <Grid
+                    item
+                    xs={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : 12}
+                    sm={6}
+                  >
                     <div ref={fieldRefs.lastName}>
                       <Field
                         name="billingAddress.lastName"
@@ -751,7 +814,11 @@ const PaymentForm = ({
                       />
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={rest.checkoutVersion && rest.checkoutVersion === 2 ? 6 : false}
+                  >
                     <div ref={fieldRefs.city}>
                       <Field
                         name="billingAddress.city"
@@ -772,7 +839,9 @@ const PaymentForm = ({
                         label="State"
                         component={SelectField}
                         options={
-                          rest.checkoutVersion && rest.checkoutVersion === 2 ? STATE_OPTIONS_ABBR : STATE_OPTIONS
+                          rest.checkoutVersion && rest.checkoutVersion === 2
+                            ? STATE_OPTIONS_ABBR
+                            : STATE_OPTIONS
                         }
                       />
                     </div>
@@ -804,7 +873,9 @@ const PaymentForm = ({
                   <Grid
                     item
                     xs={12}
-                    style={rest.checkoutVersion && rest.checkoutVersion === 2 ? { display: 'none' } : {}}
+                    style={
+                      rest.checkoutVersion && rest.checkoutVersion === 2 ? { display: 'none' } : {}
+                    }
                   >
                     <Field
                       name="billingAddress.country"
@@ -867,22 +938,25 @@ const PaymentForm = ({
           )}
           <Grid item xs={12}>
             <ButtonGroup fullWidth>
-              {onBack && currentUser.data.paymentMethods && currentUser.data.paymentMethods.length > 0 && (
-                <Button
-                  style={{ height: '55px', padding: '0px' }}
-                  color="secondary"
-                  type="button"
-                  onClick={onBack}
-                  children={backLabel}
-                  mr={2}
-                />
-              )}
+              {onBack &&
+                currentUser.data.paymentMethods &&
+                currentUser.data.paymentMethods.length > 0 && (
+                  <Button
+                    style={{ height: '60px', padding: '0px' }}
+                    color="secondary"
+                    type="button"
+                    onClick={onBack}
+                    children={backLabel}
+                    mr={2}
+                  />
+                )}
               <Button
                 style={{
-                  height: '55px',
+                  height: '60px',
                   padding: '0px',
                   display:
-                    paymentMethodMode === 'creditCard' || (paymentMethodMode === 'paypal' && paypalEmail)
+                    paymentMethodMode === 'creditCard' ||
+                    (paymentMethodMode === 'paypal' && paypalEmail)
                       ? 'block'
                       : 'none'
                 }}

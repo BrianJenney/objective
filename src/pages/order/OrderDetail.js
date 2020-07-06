@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   title: {
-    fontSize: '55px',
+    fontSize: '36px',
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
     paddingBottom: theme.spacing(4),
@@ -83,6 +83,10 @@ const useStyles = makeStyles(theme => ({
   cancelledText: {
     fontFamily: 'p22-underground, sans-serif',
     color: '#d0021b'
+  },
+  box: {
+    maxWidth: '1200px',
+    margin: '0 auto'
   }
 }));
 
@@ -240,7 +244,6 @@ const OrderSummary = ({
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
-            padding: '23px 23px',
             margin: '25px 0',
             minWidth: '210px'
           }}
@@ -334,39 +337,42 @@ const OrderDetail = ({ hideLPCoupon }) => {
   order.status = statusStepper.status;
 
   return (
-    <Box bgcolor="rgba(252, 248, 244, 0.5)">
-      <Container>
-        <CssBaseline />
-        <Box py={10} className={classes.containingBox}>
-          <Grid container spacing={xs ? 0 : 4}>
-            <Grid item xs={mainWidth}>
-              <OrderSummary
-                hideLPCoupon={hideLPCoupon}
-                account={account}
-                orderNumber={order.orderNumber}
-                orderId={order.orderNumber}
-                orderRef={order._id}
-                orderEmail={order.email}
-                createdAt={formatDateTime(order.createdAt, false)}
-                shippingAddress={order.shippingAddress}
-                billingAddress={order.billingAddress}
-                paymentData={order.paymentData}
-                orderStatus={order.status}
-                classes={classes}
-                addressesWidth={addressesWidth}
-                xs={xs}
-                tracking={tracking}
-                statusStepper={status}
-                order={order}
-              />
-            </Grid>
-            <Grid item xs={cartWidth}>
-              <OrderCartSummary order={order} hideLPCoupon={hideLPCoupon} />
-            </Grid>
-          </Grid>
+    <div style={{ backgroundColor: 'rgba(252, 248, 244, 0.5)' }}>
+      <div className={classes.box}>
+        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+          <Container>
+            <CssBaseline />
+            <Box py={10} className={classes.containingBox}>
+              <Grid container spacing={xs ? 0 : 4}>
+                <Grid item xs={mainWidth}>
+                  <OrderSummary
+                    account={account}
+                    orderNumber={order.orderNumber}
+                    orderId={order.orderNumber}
+                    orderRef={order._id}
+                    orderEmail={order.email}
+                    createdAt={formatDateTime(order.createdAt, false)}
+                    shippingAddress={order.shippingAddress}
+                    billingAddress={order.billingAddress}
+                    paymentData={order.paymentData}
+                    orderStatus={order.status}
+                    classes={classes}
+                    addressesWidth={addressesWidth}
+                    xs={xs}
+                    tracking={tracking}
+                    statusStepper={status}
+                    order={order}
+                  />
+                </Grid>
+                <Grid item xs={cartWidth}>
+                  <OrderCartSummary order={order} />
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
         </Box>
-      </Container>
-    </Box>
+      </div>
+    </div>
   );
 };
 

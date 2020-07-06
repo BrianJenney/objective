@@ -3,15 +3,15 @@ import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
-import Box from '@material-ui/core/Box';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
 import { InputField } from '../form-fields';
 import { Button, AlertPanel, NavLink } from '../common';
 import { getInitialValues } from '../../utils/misc';
 import EventEmitter from '../../events';
-import { useTheme, makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { receivedFetchAccountSuccess } from '../../modules/account/actions';
 
 const useStyles = makeStyles(theme => ({
@@ -30,13 +30,14 @@ const useStyles = makeStyles(theme => ({
       borderColor: '#231f20'
     }
   },
-  title: { fontSize: '26px', textAlign: 'center' },
+  title: { fontSize: '36px', textAlign: 'center' },
   subText: {
-    fontFamily: 'p22-underground',
-    fontSize: '16px',
-    paddingBottom: theme.spacing(1),
+    fontFamily: 'freight-text-pro, serif ',
+    fontSize: '18px',
+    marginBottom: 40,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '14px'
+      fontSize: '14px',
+      marginBottom: 24
     },
     lineHeight: 1.5,
     textAlign: 'center'
@@ -71,7 +72,6 @@ const OrderTrackerForm = ({
   submitLabel,
   requestFindUnauthenticatedOrders,
   receivedGetOrder,
-  requestFetchAccountSuccess,
   requestFetchAccount,
   dispatch,
   history
@@ -79,8 +79,6 @@ const OrderTrackerForm = ({
   const [orderFoundError, setOrderFoundError] = useState(false);
 
   const classes = useStyles();
-  const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
 
   const queryStringParams = queryString.parse(history.location.search);
 
@@ -96,34 +94,42 @@ const OrderTrackerForm = ({
         }
       })
     );
-    //We received a response from the server for the order request
+    //  We received a response from the server for the order request
     EventEmitter.once('RECEIVED_FIND_ORDERS_BY_ACCOUNT', d => {
       if (d.payload.length > 0) {
-        //Order found
+        // Order found
         const order = d.payload[0];
-        //Let's fetch an account so that we can get the jwt to allow user to cancel account.
+        //  Let's fetch an account so that we can get the jwt to allow user to cancel account.
         dispatch(
           requestFetchAccount(
             {
               query: {
                 _id: order.accountId,
-                $select: ['_id', 'firstName', 'lastName', 'email', 'storeCode', 'isGuest', 'passwordSet']
+                $select: [
+                  '_id',
+                  'firstName',
+                  'lastName',
+                  'email',
+                  'storeCode',
+                  'isGuest',
+                  'passwordSet'
+                ]
               },
               accessScope: { 'order.cancel': order._id }
             },
             true
           )
         );
-        //We received a successful response for fetching account
+        //  We received a successful response for fetching account
         EventEmitter.once('RECEIVED_FETCH_ACCOUNT_SUCCESS', data => {
-          //An account currently exists for this order, let's set the order payload and redirect to the order details page
+          //  An account currently exists for this order, let's set the order payload and redirect to the order details page
           if (data.payload._id) {
             order.account = { ...data.payload, isGuest: true, temporarilyLogin: true };
             dispatch(receivedGetOrder(order));
             dispatch(receivedFetchAccountSuccess(order.account));
             history.push(`/orders/${order._id}`);
           } else {
-            //No account holder found, display error message
+            //  No account holder found, display error message
             setOrderFoundError(true);
             if (actions) {
               actions.setSubmitting(false);
@@ -131,7 +137,7 @@ const OrderTrackerForm = ({
           }
         });
       } else {
-        //Order not found, display error message
+        //  Order not found, display error message
         setOrderFoundError(true);
         if (actions) {
           actions.setSubmitting(false);
@@ -147,7 +153,11 @@ const OrderTrackerForm = ({
   }
 
   useEffect(() => {
-    if (INITIAL_VALUES.email !== '' && INITIAL_VALUES.zip !== '' && INITIAL_VALUES.orderNumber !== '') {
+    if (
+      INITIAL_VALUES.email !== '' &&
+      INITIAL_VALUES.zip !== '' &&
+      INITIAL_VALUES.orderNumber !== ''
+    ) {
       onSubmit(INITIAL_VALUES);
     }
   }, [INITIAL_VALUES]);
@@ -156,7 +166,8 @@ const OrderTrackerForm = ({
     <Form className={classes.root}>
       {title && <Typography variant="h6" gutterBottom children={title} className={classes.title} />}
       <Typography className={classes.subText}>
-        Don’t have an account? You can still track your order with the order number in your order confirmation email.
+        Don’t have an account? You can still track your order with the order number in your order
+        confirmation email.
       </Typography>
       {orderFoundError && (
         <AlertPanel
@@ -176,20 +187,20 @@ const OrderTrackerForm = ({
           }}
         />
       )}
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Field name="email" label="Email" component={InputField} type="email" />
+      <Grid container spacing={3} justify="center" alignItems="center">
+        <Grid item xs={12} lg={10}>
+          <Field name="email" label="Email Address" component={InputField} type="email" />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} lg={10}>
           <Field name="orderNumber" label="Order Number" component={InputField} type="text" />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} lg={10}>
           <Field name="zip" label="Zip Code" component={InputField} type="text" />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} lg={7}>
           <Button
             fullWidth
             type="submit"
@@ -198,7 +209,7 @@ const OrderTrackerForm = ({
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} lg={7}>
           <Typography className={classes.footerText}>
             Need help with tracking your order? Give us a call at (800) 270-5771.
           </Typography>
@@ -220,10 +231,12 @@ const OrderTrackerForm = ({
 OrderTrackerForm.propTypes = {
   title: PropTypes.string,
   defaultValues: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-  onBack: PropTypes.func,
   submitLabel: PropTypes.string,
-  backLabel: PropTypes.string
+  requestFindUnauthenticatedOrders: PropTypes.func,
+  receivedGetOrder: PropTypes.func,
+  requestFetchAccount: PropTypes.func,
+  dispatch: PropTypes.func,
+  history: PropTypes.object.isRequired
 };
 
 OrderTrackerForm.defaultProps = {

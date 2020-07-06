@@ -1,19 +1,21 @@
 import React, { useCallback, useState, createRef } from 'react';
-import { Link } from 'react-router-dom';
-// import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
+
 import { useQuantity } from '../../hooks';
 import { addToCart } from '../../modules/cart/functions';
-import { Button, NavLink } from '../../components/common';
+import { NavLink } from '../../components/common';
 import '../../assets/styles/_variables.scss';
 import { ATC, OutOfStock } from '../../components/atcOutOfStock';
 import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmed';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
+
 const PriceVariantInfo = ({ variant }) =>
   variant ? (
     <div>
@@ -44,7 +46,7 @@ const VariantCard = ({ variant, styleMap }) => {
     },
     [cart, variant, dispatch]
   );
-  const [quantity, Quantity] = useQuantity(updateQuantityToCart, 'QTY');
+  const [quantity] = useQuantity(updateQuantityToCart, 'QTY');
 
   const handleAddToCart = useCallback(() => {
     setATCAdded(true);
@@ -103,8 +105,7 @@ const VariantCard = ({ variant, styleMap }) => {
         }}
       >
         <CardMedia
-          style={{ height: 500, width: 324 }}
-          image={variant.assets.imgs + '&q=50'}
+          image={`${variant.assets.imgs}&q=50`}
           title={variant.name}
           className="gallery-prod-img"
         />
@@ -187,6 +188,15 @@ const VariantCard = ({ variant, styleMap }) => {
       </div>
     </Card>
   );
+};
+
+PriceVariantInfo.propTypes = {
+  variant: PropTypes.object.isRequired
+};
+
+VariantCard.propTypes = {
+  variant: PropTypes.object.isRequired,
+  styleMap: PropTypes.object.isRequired
 };
 
 export default VariantCard;

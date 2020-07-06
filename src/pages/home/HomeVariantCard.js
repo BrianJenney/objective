@@ -1,4 +1,5 @@
 import React, { useCallback, useState, createRef } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -8,10 +9,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
+
 import { ATC, OutOfStock } from '../../components/atcOutOfStock';
 import { addToCart } from '../../modules/cart/functions';
 import ConfirmEmail from '../product/ProductOutOfStockEmailConfirmed';
-import { Button, NavLink } from '../../components/common';
+import { NavLink } from '../../components/common';
 import './home-style.scss';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
 
@@ -57,7 +59,7 @@ export const HomeVariantCard = ({ variant }) => {
   }, [setOpenEmailConfirmation]);
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={3}>
       <Card className="tile" ref={ref} style={{ border: `1px solid ${variant.color}` }}>
         <NavLink
           to={`/products/${slug}`}
@@ -76,7 +78,11 @@ export const HomeVariantCard = ({ variant }) => {
             });
           }}
         >
-          <CardMedia style={{ height: 430, width: '100%' }} image={assets.imgs + '&q=50'} className="tile-img" />
+          <CardMedia
+            style={{ height: 275, width: '100%' }}
+            image={`${assets.imgs}&q=50`}
+            className="tile-img"
+          />
         </NavLink>
         <NavLink
           to={`/products/${slug}`}
@@ -179,4 +185,8 @@ export const HomeVariantCard = ({ variant }) => {
       </Card>
     </Grid>
   );
+};
+
+HomeVariantCard.propTypes = {
+  variant: PropTypes.object.isRequired
 };

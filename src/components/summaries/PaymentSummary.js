@@ -12,25 +12,22 @@ const labelsMap = {
   expirationDate: 'Expires'
 };
 const getValuesWithoutLabels = ({ name, cardType, last4, expirationDate }) => [
-  `${cardType} ${last4}`,
+  `${cardType} ***${last4}`,
   `Expires ${expirationDate}`,
   name
 ];
 
 const getValuesWithoutLabels2 = ({ cardType, last4, expirationDate }) => [
-  `${cardType} ${last4}`,
+  `${cardType} ***${last4}`,
   `Expires ${expirationDate}`
 ];
 
-const getValuesWithoutLabelsPaypal = ({ email }) => [
-  `PayPal: ${email}`
-]
+const getValuesWithoutLabelsPaypal = ({ email }) => [`PayPal: ${email}`];
 
-const PaymentSummary = ({ withLabels, values, children, ...rest}) => {
-  const isPaypalMethod = values.method && values.method === 'paypal' ? true : false;
-  const neededValues = isPaypalMethod? pick(values, ['email']) : pick(values, PAYMENT_FIELDS);;
+const PaymentSummary = ({ withLabels, values, children, ...rest }) => {
+  const isPaypalMethod = !!(values.method && values.method === 'paypal');
+  const neededValues = isPaypalMethod ? pick(values, ['email']) : pick(values, PAYMENT_FIELDS);
 
-  
   let pairs = null;
   let PAYMENT_FIELDS_ITEMS = null;
   if (rest.checkoutVersion && rest.checkoutVersion === 2) {
@@ -43,16 +40,14 @@ const PaymentSummary = ({ withLabels, values, children, ...rest}) => {
       label: labelsMap[key],
       value: neededValues[key]
     }));
-  } else {
-    if (rest.checkoutVersion && rest.checkoutVersion === 2) {
-      if(isPaypalMethod){
-        pairs = getValuesWithoutLabelsPaypal(neededValues).map(value => ({ value }));
-      }else{
-        pairs = getValuesWithoutLabels2(neededValues).map(value => ({ value }));
-      }
+  } else if (rest.checkoutVersion && rest.checkoutVersion === 2) {
+    if (isPaypalMethod) {
+      pairs = getValuesWithoutLabelsPaypal(neededValues).map(value => ({ value }));
     } else {
-      pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
+      pairs = getValuesWithoutLabels2(neededValues).map(value => ({ value }));
     }
+  } else {
+    pairs = getValuesWithoutLabels(neededValues).map(value => ({ value }));
   }
 
   return (

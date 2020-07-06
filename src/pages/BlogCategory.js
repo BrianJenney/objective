@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { matchPath } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import './blog/blog-styles.scss';
 import { fetchPostsByCategory } from '../utils/blog';
@@ -99,13 +100,13 @@ const BlogCategory = ({ computedMatch, location }) => {
           {isSleep ? (
             <div className="journal-gallery">
               <Box className="header" py={8}>
-                <Container className="container">
+                <StyledContainer className="container">
                   <h1>Sleep</h1>
                   <p>Sleep Well, Live Well</p>
-                </Container>
+                </StyledContainer>
               </Box>
               <Box className="content" py={8}>
-                <Container>
+                <StyledContainer>
                   <Divider />
                   <h1>Featured Posts</h1>
                   {renderFeaturedMain(featuredMain)}
@@ -117,20 +118,20 @@ const BlogCategory = ({ computedMatch, location }) => {
                   <Divider />
                   <h1>All Posts</h1>
                   <div className="list">{renderPosts(posts.reverse())}</div>
-                </Container>
+                </StyledContainer>
               </Box>
             </div>
           ) : (
             <div className="journal-gallery">
               <Box className="header" py={8}>
-                <Container className="container">
+                <StyledContainer className="container">
                   <h1>{blogTitle}</h1>
-                </Container>
+                </StyledContainer>
               </Box>
               <Box className="content" py={8}>
-                <Container>
+                <StyledContainer>
                   <div className="list">{renderPosts(posts)}</div>
-                </Container>
+                </StyledContainer>
               </Box>
             </div>
           )}
@@ -138,6 +139,11 @@ const BlogCategory = ({ computedMatch, location }) => {
       </>
     )
   );
+};
+
+BlogCategory.propTypes = {
+  computedMatch: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default BlogCategory;
