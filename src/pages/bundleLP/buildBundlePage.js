@@ -4,8 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
-import { ATC, OutOfStock } from '../../components/atcOutOfStock';
-
+import LPButton from './LPButton';
 import {
   Paragraph,
   Title,
@@ -13,16 +12,7 @@ import {
   transformDesktopStyle
 } from '../static/transformComponents';
 
-export const generateComponents = (
-  page,
-  xs,
-  products,
-  cart,
-  ATCAdded,
-  ATCAdding,
-  handleAddToCart,
-  setSelectedVariant
-) => {
+export const generateComponents = (page, xs, products) => {
   const components = [];
 
   page.components.forEach(comp => {
@@ -59,10 +49,9 @@ export const generateComponents = (
 
         components.push(
           <Grid container spacing={3} style={desktopStyle}>
-            {contentfulProds.map(variant => {
-              setSelectedVariant(variant);
-              return <HomeVariantCard variant={variant} key={variant.id} />;
-            })}
+            {contentfulProds.map(variant => (
+              <HomeVariantCard variant={variant} key={variant.id} />
+            ))}
           </Grid>
         );
 
@@ -71,12 +60,12 @@ export const generateComponents = (
       case 'sectionTitle':
         components.push(<Title data={comp} value={comp.value} xs={xs} />);
         break;
-      case 'button': // handle ATC and shop gallery here
+      case 'button':
         const btnType = comp.value.toLowerCase() === 'add to cart';
         components.push(
           <div style={xs ? mobileStyle : desktopStyle}>
             {btnType ? (
-              <Button onClick={handleAddToCart}>{comp.value}</Button>
+              <LPButton data={comp} />
             ) : (
               <Button to={comp.URL} component={NavLink}>
                 {comp.value}

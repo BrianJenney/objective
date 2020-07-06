@@ -7,8 +7,7 @@ import Container from '@material-ui/core/Container';
 import { requestPage } from '../../modules/static/actions';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { generateComponents } from './buildBundlePage';
-import ScrollToTop from '../../components/common/ScrollToTop';
-import { addToCart } from '../../modules/cart/functions';
+
 export const StyledContainer = withStyles(theme => ({
   root: {
     padding: '0',
@@ -26,31 +25,8 @@ const BundleLP = ({ match }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [selectedVariant, setSelectedVariant] = useState({});
-  const [ATCAdded, setATCAdded] = useState(false);
-  const [ATCAdding, setATCAdding] = useState(false);
   const page = useSelector(state => state.page);
-  const cart = useSelector(state => state.cart);
-  const ref = createRef();
   const { variants } = useSelector(state => state.catalog);
-  console.log('testing-ATCCCC', ATCAdded, ATCAdding);
-  const handleAddToCart = useCallback(() => {
-    console.log('testing-BUNDLE-VARIANT', selectedVariant);
-    setATCAdded(true);
-    setATCAdding(true);
-    setTimeout(() => {
-      // Give effect of item being added
-      addToCart(cart, selectedVariant, 1);
-      setATCAdding(false);
-      setTimeout(() => {
-        setATCAdded(false);
-      }, 500);
-    }, 500);
-    ref.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }, [cart, selectedVariant, dispatch, ref]);
 
   useEffect(() => {
     if (!pageLoaded) dispatch(requestPage(slug));
@@ -65,27 +41,15 @@ const BundleLP = ({ match }) => {
 
   let FinalPage = null;
   if (pageLoaded && variants) {
-    FinalPage = () =>
-      generateComponents(
-        page,
-        xs,
-        variants,
-        cart,
-        ATCAdded,
-        ATCAdding,
-        handleAddToCart,
-        setSelectedVariant
-      );
+    FinalPage = () => generateComponents(page, xs, variants);
   }
 
   if (FinalPage) {
     return (
       <div className="bundlePage">
-        <ScrollToTop>
-          <StyledContainer>
-            <FinalPage />
-          </StyledContainer>
-        </ScrollToTop>
+        <StyledContainer>
+          <FinalPage />
+        </StyledContainer>
       </div>
     );
   }
