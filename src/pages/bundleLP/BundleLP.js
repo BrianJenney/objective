@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import { requestPage } from '../../modules/static/actions';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { generateComponents } from './buildBundlePage';
-
+import '../home/home-style.scss';
 export const StyledContainer = withStyles(theme => ({
   root: {
     padding: '0',
@@ -46,7 +46,7 @@ const BundleLP = ({ match }) => {
 
   if (FinalPage) {
     return (
-      <div className="bundlePage">
+      <div className="home-style">
         <StyledContainer>
           <FinalPage />
         </StyledContainer>
