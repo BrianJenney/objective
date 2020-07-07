@@ -234,8 +234,8 @@ const Checkout = ({
       const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
-        !payload.paymentDetails.billingAddress.password;
-      // setGuestMode(isGuest);
+        !payload.paymentDetails.billingAddress.password
+      );
       // prettier-ignore
       const accountInfoPayload = isGuest
         ? {
