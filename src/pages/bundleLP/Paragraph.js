@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { transformDesktopStyle, transformMobileStyle } from '../static/transformComponents';
 
 const useStyles = makeStyles(theme => ({
-  button: {
+  btn: {
     fontFamily: 'P22Underground',
     fontWeight: '500',
     fontSize: '16px',
@@ -12,7 +12,11 @@ const useStyles = makeStyles(theme => ({
     lineHeight: '1.75',
     letterSpacing: 'normal',
     color: '#000000',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    border: 'none',
+    background: 'none',
+    outline: 0,
+    boxShadow: 'none!important'
   }
 }));
 
@@ -22,9 +26,9 @@ const Paragraph = ({ data, value, xs, noBorder, hideText }) => {
   const [expandText, setExpandText] = useState(false);
   const desktopStyles = transformDesktopStyle(data, noBorder);
   const mobileStyles = transformMobileStyle(data);
-  let textPadding = '0 0 20px 60px';
+  let textPadding = '0 0 40px 60px';
   if (desktopStyles.float && desktopStyles.float === 'right') {
-    textPadding = '0 0 20px 10px';
+    textPadding = '0 0 40px 10px';
   }
 
   const handleToggle = useCallback(() => {
@@ -42,7 +46,7 @@ const Paragraph = ({ data, value, xs, noBorder, hideText }) => {
           <div className="button-LP">
             {hideText && (
               <button
-                className={classes.button}
+                className={classes.btn}
                 onClick={handleToggle}
                 style={{
                   padding: textPadding
