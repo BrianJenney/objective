@@ -63,14 +63,6 @@ const Paragraph = ({ data, value, xs, noBorder, hideText }) => {
       ></div>
     );
   });
-
-  // return value.map((item, i) => (
-  //   <div
-  //     key={i}
-  //     style={xs ? transformMobileStyle(data) : transformDesktopStyle(data, noBorder)}
-  //     dangerouslySetInnerHTML={{ __html: item }}
-  //   ></div>
-  // ));
 };
 
 export default Paragraph;
