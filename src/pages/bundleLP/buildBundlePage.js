@@ -48,7 +48,11 @@ export const generateComponents = (page, xs, products) => {
           .map(product => product);
 
         components.push(
-          <Grid container spacing={3} style={xs ? mobileStyle : {...desktopStyle, justifyContent:'center'}}>
+          <Grid
+            container
+            spacing={3}
+            style={xs ? mobileStyle : { ...desktopStyle, justifyContent: 'center' }}
+          >
             {contentfulProds.map(variant => (
               <HomeVariantCard variant={variant} key={variant.id} />
             ))}
@@ -67,7 +71,7 @@ export const generateComponents = (page, xs, products) => {
             {btnType ? (
               <LPButton data={comp} />
             ) : (
-              <Button to={comp.URL} component={NavLink}>
+              <Button to={comp.URL} component={NavLink} style={{ textDecoration: 'none' }}>
                 {comp.value}
               </Button>
             )}
