@@ -208,7 +208,7 @@ const Checkout = ({
   }, [paymentMethods]);
 
   useEffect(() => {
-    const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
+    const isPaypalPaymentMethod = !!(payload.method && payload.method === 'paypal');
     const isGuest =
       currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
 
@@ -268,9 +268,9 @@ const Checkout = ({
 
   useEffect(() => {
     if (Object.keys(paypalPayloadState).length > 0) {
-      //Make a copy and preserve to preserve the payload
-      let paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
-      //normalize paymentDetailsPayload
+      // Make a copy and preserve to preserve the payload
+      const paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
+      // normalize paymentDetailsPayload
       paymentDetailsPayload.details.shippingAddress.address1 =
         paymentDetailsPayload.details.shippingAddress.line1;
       paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details
