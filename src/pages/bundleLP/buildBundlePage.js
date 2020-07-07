@@ -48,7 +48,7 @@ export const generateComponents = (page, xs, products) => {
           .map(product => product);
 
         components.push(
-          <Grid container spacing={3} style={xs ? mobileStyle : desktopStyle}>
+          <Grid container spacing={3} style={xs ? mobileStyle : {...desktopStyle, justifyContent:'center'}}>
             {contentfulProds.map(variant => (
               <HomeVariantCard variant={variant} key={variant.id} />
             ))}
