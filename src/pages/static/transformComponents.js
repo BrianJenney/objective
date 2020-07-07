@@ -4,6 +4,7 @@ import React from 'react';
 import { Box, Container } from '@material-ui/core';
 import Scrollchor from 'react-scrollchor';
 import { PropTypes } from 'prop-types';
+import Paragraph from '../bundleLP/Paragraph';
 
 const commonPropTypes = {
   data: PropTypes.object,
@@ -26,15 +27,6 @@ export const SectionTitle = ({ data, value, xs }) => (
 SectionTitle.propTypes = {
   ...commonPropTypes
 };
-
-export const Paragraph = ({ data, value, xs }) =>
-  value.map((item, i) => (
-    <div
-      key={`${data.name}_${i + 1}`}
-      style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
-      dangerouslySetInnerHTML={{ __html: item }}
-    ></div>
-  ));
 
 Paragraph.propTypes = {
   ...commonPropTypes
