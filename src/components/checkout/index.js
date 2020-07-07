@@ -131,9 +131,9 @@ const Checkout = ({
   const [restrictedProduct, setRestrictedProduct] = useState('');
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
-  const closeShippingRestrictionsDialog = useCallback(() => {
-    setCloseShippingRestrictions(true);
-  }, [setCloseShippingRestrictions]);
+  // const closeShippingRestrictionsDialog = useCallback(() => {
+  //   setCloseShippingRestrictions(true);
+  // }, [setCloseShippingRestrictions]);
 
   setTimeout(() => {
     setLoading(false);
@@ -618,7 +618,7 @@ const Checkout = ({
                     <StateRestrictionsDialog
                       product_name={restrictedProduct}
                       cartCount={cartCount}
-                      onExited={closeShippingRestrictionsDialog}
+                      //     onExited={closeShippingRestrictionsDialog}
                     />
                   ) : null}
                   <div ref={stepRefs[1]}>
