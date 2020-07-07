@@ -12,7 +12,6 @@ export const emitOrderSubmitted = args => async (dispatch, getState) => {
 
   const { client: stompClient, replyTo } = getState().stomp;
   const { merchantAccountId } = getState().storefront;
-
   const params = {
     data: { ...args },
     params: {
