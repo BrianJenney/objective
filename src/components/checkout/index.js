@@ -536,6 +536,10 @@ const Checkout = ({
     if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
       return null;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Initiating orders with an event rather than a request
     const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
