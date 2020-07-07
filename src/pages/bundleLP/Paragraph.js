@@ -5,8 +5,8 @@ import { transformDesktopStyle, transformMobileStyle } from '../static/transform
 const useStyles = makeStyles(theme => ({
   button: {
     fontFamily: 'P22Underground',
-    fontSize: '16px',
     fontWeight: '500',
+    fontSize: '16px',
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: '1.75',
@@ -39,12 +39,14 @@ const Paragraph = ({ data, value, xs, noBorder, hideText }) => {
           <div key={i} style={xs ? mobileStyles : desktopStyles}>
             {!expandText ? <div>{`${shortenText}`}</div> : item}
           </div>
-          <div>
+          <div className="button-LP">
             {hideText && (
               <button
                 className={classes.button}
                 onClick={handleToggle}
-                style={{ padding: textPadding }}
+                style={{
+                  padding: textPadding
+                }}
               >
                 {expandText ? 'READ LESS' : 'READ MORE'}
               </button>
