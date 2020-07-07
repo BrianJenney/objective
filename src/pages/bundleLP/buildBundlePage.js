@@ -1,16 +1,10 @@
-import React, { useCallback } from 'react';
-import { Box, Container, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { Box, Grid } from '@material-ui/core';
 import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
 import LPButton from './LPButton';
-import {
-  Paragraph,
-  Title,
-  transformMobileStyle,
-  transformDesktopStyle
-} from '../static/transformComponents';
+import Paragraph from './Paragraph';
+import { Title, transformMobileStyle, transformDesktopStyle } from '../static/transformComponents';
 
 export const generateComponents = (page, xs, products) => {
   const components = [];
@@ -86,7 +80,13 @@ export const generateComponents = (page, xs, products) => {
         }
         components.push(
           <>
-            <Paragraph data={comp} value={comp.value} xs={xs} noBorder />
+            <Paragraph
+              data={comp}
+              value={comp.value}
+              xs={xs}
+              noBorder
+              hideText={comp.desktopStyle.wordWrap}
+            />
             {desktopStyle.border ? <hr style={{ ...borderStyle, width: '193px' }}></hr> : null}
           </>
         );

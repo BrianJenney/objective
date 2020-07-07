@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
+import Paragraph from '../bundleLP/Paragraph';
 
 export const Title = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
@@ -8,15 +9,6 @@ export const Title = ({ data, value, xs }) => (
 export const SectionTitle = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
 );
-
-export const Paragraph = ({ data, value, xs, noBorder }) =>
-  value.map((item, i) => (
-    <div
-      key={i}
-      style={xs ? transformMobileStyle(data) : transformDesktopStyle(data, noBorder)}
-      dangerouslySetInnerHTML={{ __html: item }}
-    ></div>
-  ));
 
 export const Image = ({ data, xs }) => (
   <img
