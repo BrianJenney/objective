@@ -79,7 +79,17 @@ export const generateComponents = (page, xs, products) => {
         );
         break;
       case 'paragraph':
-        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
+        const borderStyle = {};
+        if (desktopStyle.border) {
+          const borderType = comp.desktopStyle.borderPlacement;
+          borderStyle[borderType] = desktopStyle[borderType];
+        }
+        components.push(
+          <>
+            <Paragraph data={comp} value={comp.value} xs={xs} noBorder />
+            {desktopStyle.border ? <hr style={{ ...borderStyle, width: '193px' }}></hr> : null}
+          </>
+        );
         break;
       case 'box':
         components.push(
