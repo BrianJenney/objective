@@ -79,7 +79,7 @@ const BlogPost = ({ computedMatch }) => {
         window.analytics.page('404 Error');
       }
     });
-  }, [isValidPost]);
+  }, [isValidPost, slug]);
 
   if (useStaticPage) {
     return <StaticPage />;
