@@ -87,7 +87,11 @@ export const buildComponents = (page, xs, products) => {
               noBorder
               hideText={comp.desktopStyle.wordWrap}
             />
-            {desktopStyle.border ? <hr style={{ ...borderStyle, width: '193px' }}></hr> : null}
+            {desktopStyle.border ? (
+              <div style={{ padding: '50px 0' }}>
+                <hr style={{ ...borderStyle, width: '193px' }}></hr>
+              </div>
+            ) : null}
           </>
         );
         break;
@@ -97,17 +101,17 @@ export const buildComponents = (page, xs, products) => {
             style={
               xs
                 ? {
-                    ...mobileStyle,
-                    border: mobileStyle.borderColor,
-                    top: '80%',
-                    margin: '0 11%'
-                  }
+                  ...mobileStyle,
+                  border: mobileStyle.borderColor,
+                  top: '80%',
+                  margin: '0 11%'
+                }
                 : {
-                    ...desktopStyle,
-                    border: desktopStyle.borderColor,
-                    top: 'calc(100% / 3.5)',
-                    margin: '0 0 0 120px'
-                  }
+                  ...desktopStyle,
+                  border: desktopStyle.borderColor,
+                  top: 'calc(14%)',
+                  margin: '0 0 0 100px'
+                }
             }
           >
             {buildComponents(comp.value, xs)}
