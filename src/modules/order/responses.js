@@ -57,7 +57,6 @@ export const handleOrderResponse = (status, data, fields, properties) => {
         // clear cart on success
         store.dispatch(receivedCreateOrderSuccess(data));
         store.dispatch(requestRemoveCartById(data.cartId));
-        store.dispatch(requestCreateCart());
 
         // ImpactRadius, Segment
         // Remove clickId/timer on success order
