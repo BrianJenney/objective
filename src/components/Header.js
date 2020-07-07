@@ -73,6 +73,7 @@ const contentfulClient = contentful.createClient({
 const Header = ({ currentUser, location }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('xs'));
+  const isBundleLP = matchPath(location.pathname, { path: '/bundle' });
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -241,7 +242,7 @@ const Header = ({ currentUser, location }) => {
                       component={RouterLink}
                       to="/gallery"
                     >
-                      Shop
+                      {isBundleLP ? '' : 'Shop'}
                     </StyledLink>
                   </Grid>
                   <Grid item xs={6} className="h-pding">
@@ -250,7 +251,7 @@ const Header = ({ currentUser, location }) => {
                       component={RouterLink}
                       to="/journal"
                     >
-                      Journal
+                      {isBundleLP ? '' : 'Journal'}
                     </StyledLink>
                   </Grid>
                 </Grid>
@@ -260,21 +261,25 @@ const Header = ({ currentUser, location }) => {
                   <Logo />
                 </NavLink>
               </Grid>
-              <Grid item xs={4}>
-                <Grid container className="align-right">
-                  <Grid item xs={6} className="acct h-pding">
-                    <StyledLink
-                      component={RouterLink}
-                      {...accountMenuItemConf}
-                      onClick={segmentTrackNavigationClick}
-                    />
-                  </Grid>
-                  <Grid item xs={6} className="header-shop-holder h-pding">
-                    {!isCheckoutPage && <ShoppingCart />}
-                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+              {isBundleLP ? (
+                <></>
+              ) : (
+                <Grid item xs={4}>
+                  <Grid container className="align-right">
+                    <Grid item xs={6} className="acct h-pding">
+                      <StyledLink
+                        component={RouterLink}
+                        {...accountMenuItemConf}
+                        onClick={segmentTrackNavigationClick}
+                      />
+                    </Grid>
+                    <Grid item xs={6} className="header-shop-holder h-pding">
+                      {!isCheckoutPage && <ShoppingCart />}
+                      {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              )}
             </Grid>
           </Container>
         </div>
