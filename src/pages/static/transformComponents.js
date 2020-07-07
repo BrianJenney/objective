@@ -1,26 +1,100 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
+import Scrollchor from 'react-scrollchor';
+import { PropTypes } from 'prop-types';
+
+const commonPropTypes = {
+  data: PropTypes.object,
+  value: PropTypes.string,
+  xs: PropTypes.bool
+};
 
 export const Title = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
 );
 
+Title.propTypes = {
+  ...commonPropTypes
+};
+
 export const SectionTitle = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
 );
 
+SectionTitle.propTypes = {
+  ...commonPropTypes
+};
+
 export const Paragraph = ({ data, value, xs }) =>
   value.map((item, i) => (
     <div
-      key={i}
+      key={`${data.name}_${i + 1}`}
       style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
+      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: item }}
     ></div>
   ));
 
+Paragraph.propTypes = {
+  ...commonPropTypes
+};
+
 export const Image = ({ data, xs }) => (
-  <img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
+  <img
+    style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
+    src={data.desktopImg}
+    alt={data.name}
+  />
 );
+
+Image.propTypes = {
+  ...commonPropTypes
+};
+
+// Anchor links for terms of use page:
+export const AnchorList = ({ data, value, xs }) => {
+  const indented = data.name.toLowerCase().includes('indent');
+  // const bullet = indented ? '○' : '•';
+  const transformedStyles = xs ? transformMobileStyle(data) : transformDesktopStyle(data);
+  const bullet = indented ? 'circle' : 'disc';
+  const listStyle = {
+    ...transformedStyles,
+    listStylePosition: 'inside',
+    listStyleType: bullet,
+    margin: '0'
+  };
+
+  const result = value.map(item => (
+    <li style={listStyle}>
+      <Scrollchor to={`#${item.scroll}`} style={{ textDecoration: 'none' }}>
+        {item.label}
+      </Scrollchor>
+    </li>
+  ));
+
+  return <ul>{result}</ul>;
+};
+
+AnchorList.propTypes = {
+  ...commonPropTypes
+};
+
+export const List = ({ data, value, xs }) => {
+  const transformedStyles = xs ? transformMobileStyle(data) : transformDesktopStyle(data);
+  const listStyle = {
+    ...transformedStyles,
+    margin: '0'
+  };
+
+  const result = value.map(item => <li style={listStyle}>{item}</li>);
+
+  return <ul>{result}</ul>;
+};
+
+List.propTypes = {
+  ...commonPropTypes
+};
 
 export const generateComponents = (page, xs) => {
   const components = [];
@@ -56,7 +130,10 @@ export const generateComponents = (page, xs) => {
       case 'container':
         components.push(
           <Box style={isBorder}>
-            <Box style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}>
+            <Box
+              style={xs ? transformMobileStyle(comp) : transformDesktopStyle(comp)}
+              id={comp.name}
+            >
               {generateComponents(comp.value, xs)}
             </Box>
           </Box>
@@ -69,7 +146,16 @@ export const generateComponents = (page, xs) => {
           </Container>
         );
         break;
+      case 'navigation':
+        components.push(<AnchorList data={comp} value={comp.value} xs={xs} />);
+        break;
+      case 'list':
+        components.push(<List data={comp} value={comp.value} xs={xs} />);
+        break;
+      default:
+        break;
     }
+    return '';
   });
   return components;
 };
