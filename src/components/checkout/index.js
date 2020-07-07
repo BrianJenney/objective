@@ -1,4 +1,5 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+/* eslint-disable camelcase */
+import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -107,9 +108,9 @@ const Checkout = ({
   const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
-  const [guestMode, setGuestMode] = useState(false);
+  // const [guestMode, setGuestMode] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
-  const [ppButtonRendered, setPpButtonRendered] = useState(false);
+  // const [ppButtonRendered, setPpButtonRendered] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
@@ -121,18 +122,18 @@ const Checkout = ({
   const paypalPayloadState = useSelector(state => state.paypal);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { signupConfirmation } = currentUser;
+  // const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
+  // const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
-  const closeShippingRestrictionsDialog = useCallback(() => {
-    setCloseShippingRestrictions(true);
-  }, [setCloseShippingRestrictions]);
+  // const closeShippingRestrictionsDialog = useCallback(() => {
+  //   setCloseShippingRestrictions(true);
+  // }, [setCloseShippingRestrictions]);
 
-  setTimeout(function() {
+  setTimeout(() => {
     setLoading(false);
   }, 300);
 
@@ -233,19 +234,21 @@ const Checkout = ({
       const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
-        !payload.paymentDetails.billingAddress.password
-      );
-      setGuestMode(isGuest);
-      const accountInfoPayload = {
-        firstName: payload.paymentDetails.billingAddress.firstName,
-        lastName: payload.paymentDetails.billingAddress.lastName,
-        email: payload.shippingAddress.email.toLowerCase(),
-        password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
-        passwordSet: !isGuest,
-        isGuest,
-        storeCode: cart.storeCode,
-        newsletter: true
-      };
+        !payload.paymentDetails.billingAddress.password;
+      // setGuestMode(isGuest);
+      // prettier-ignore
+      const accountInfoPayload = isGuest
+        ? {
+          firstName: payload.paymentDetails.billingAddress.firstName,
+          lastName: payload.paymentDetails.billingAddress.lastName,
+          email: payload.shippingAddress.email.toLowerCase(),
+          password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
+          passwordSet: !isGuest,
+          isGuest,
+          storeCode: cart.storeCode,
+          newsletter: true
+        }
+        : { storeCode: cart.storeCode, email: currentUserEmail };
 
       setPayload({
         ...payload,
@@ -257,7 +260,7 @@ const Checkout = ({
       activeStep === 1 &&
       !account_jwt &&
       payload.paymentDetails &&
-      payload.paymentDetails.hasOwnProperty('billingAddress')
+      payload.paymentDetails.billingAddress
     ) {
       setResetPaymentDetailsFormMode(true);
     }
@@ -415,21 +418,22 @@ const Checkout = ({
 
     if (paymentMethodNonce) {
       if (cart.items.length > 0) {
-        //        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
         emitOrderSubmitted({
           cartId: cart._id,
           email: payload.shippingAddress.email,
+          ...payload,
           payment: { paymentMethodNonce },
-          customerJwt: account_jwt ? account_jwt : localStorageClient.get('olympusToken')
+          customerJwt: account_jwt || localStorageClient.get('olympusToken')
         });
       }
     } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
         emitOrderSubmitted({
           cartId: cart._id,
-          email: payload.shippingAddress.email,
+          email: currentUser.data.email,
+          ...payload,
           payment: { paymentMethodToken },
-          customerJwt: account_jwt ? account_jwt : localStorageClient.get('olympusToken')
+          customerJwt: account_jwt || localStorageClient.get('olympusToken')
         });
       }
     } else {
@@ -510,12 +514,12 @@ const Checkout = ({
     return setCurrentStep(panelIndex);
   };
 
+  // eslint-disable-next-line consistent-return
   const getPaypalBraintreeNonce = async () => {
     const { total, shippingAddress } = cart;
     if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
       return null;
     }
-    setPpButtonRendered(true);
     const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
@@ -606,7 +610,7 @@ const Checkout = ({
                     <StateRestrictionsDialog
                       product_name={restrictedProduct}
                       cartCount={cartCount}
-                      onExited={closeShippingRestrictionsDialog}
+                      //     onExited={closeShippingRestrictionsDialog}
                     />
                   ) : null}
                   <div ref={stepRefs[1]}>
@@ -726,13 +730,12 @@ Checkout.propTypes = {
   history: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   cart: PropTypes.object.isRequired,
-  requestCreateAccount: PropTypes.func.isRequired,
   clearCreateAccountError: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
   clearLoginError: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   clearPatchAccountError: PropTypes.func.isRequired,
-  requestCreateOrder: PropTypes.func.isRequired
+  emitOrderSubmitted: PropTypes.func.isRequired
 };
 
 export default withRouter(Checkout);
