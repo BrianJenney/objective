@@ -13,7 +13,8 @@ export const requestPage = (slug, prefix = '') => (dispatch, getState) => {
     params: {
       query: {
         slug,
-        prefix
+        prefix,
+        store: process.env.REACT_APP_STORE_CODE
       },
       collation: {
         locale: 'en_US',
