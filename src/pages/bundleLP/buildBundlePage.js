@@ -48,7 +48,11 @@ export const generateComponents = (page, xs, products) => {
           .map(product => product);
 
         components.push(
-          <Grid container spacing={3} style={xs ? mobileStyle : {...desktopStyle, justifyContent:'center'}}>
+          <Grid
+            container
+            spacing={3}
+            style={xs ? mobileStyle : { ...desktopStyle, justifyContent: 'center' }}
+          >
             {contentfulProds.map(variant => (
               <HomeVariantCard variant={variant} key={variant.id} />
             ))}
@@ -67,7 +71,7 @@ export const generateComponents = (page, xs, products) => {
             {btnType ? (
               <LPButton data={comp} />
             ) : (
-              <Button to={comp.URL} component={NavLink}>
+              <Button to={comp.URL} component={NavLink} style={{ textDecoration: 'none' }}>
                 {comp.value}
               </Button>
             )}
@@ -75,7 +79,17 @@ export const generateComponents = (page, xs, products) => {
         );
         break;
       case 'paragraph':
-        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
+        const borderStyle = {};
+        if (desktopStyle.border) {
+          const borderType = comp.desktopStyle.borderPlacement;
+          borderStyle[borderType] = desktopStyle[borderType];
+        }
+        components.push(
+          <>
+            <Paragraph data={comp} value={comp.value} xs={xs} noBorder />
+            {desktopStyle.border ? <hr style={{ ...borderStyle, width: '193px' }}></hr> : null}
+          </>
+        );
         break;
       case 'box':
         components.push(
