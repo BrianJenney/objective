@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
@@ -31,7 +32,6 @@ export const Paragraph = ({ data, value, xs }) =>
     <div
       key={`${data.name}_${i + 1}`}
       style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: item }}
     ></div>
   ));
@@ -87,7 +87,9 @@ export const List = ({ data, value, xs }) => {
     margin: '0'
   };
 
-  const result = value.map(item => <li style={listStyle}>{item}</li>);
+  const result = value.map(item => (
+    <li style={listStyle} dangerouslySetInnerHTML={{ __html: item }}></li>
+  ));
 
   return <ul>{result}</ul>;
 };
