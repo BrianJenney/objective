@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable camelcase */
 import {
   REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
@@ -28,13 +30,12 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
    * in your cart & orders will fail. Just make sure they're all there.
    */
   if (!cart.catalogId || !cart.storeCode || !cart.email) {
-    console.log('***** HAD TO LOAD SOME CART DATA FROM HACK *****');
     cart.catalogId = getState().storefront.catalogId;
     cart.storeCode = getState().storefront.code;
     cart.email = getState().account.data.email;
   }
 
-  let params = {
+  const params = {
     data: { cart },
     params: {
       nonceOrToken,
@@ -46,11 +47,11 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
   };
 
   if (cart.account_jwt) {
-    const account_jwt = cart.account_jwt;
+    const { account_jwt } = cart;
     params.params.account_jwt = account_jwt;
     delete cart.account_jwt;
   } else if (cart.accountInfo) {
-    const accountInfo = cart.accountInfo;
+    const { accountInfo } = cart;
     params.params.accountInfo = accountInfo;
     delete cart.accountInfo;
   }
@@ -71,7 +72,7 @@ export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getSt
   });
 };
 
-export const receivedCreateOrderSuccess = order => async (dispatch, getState) => {
+export const receivedCreateOrderSuccess = order => async dispatch => {
   dispatch({
     type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
@@ -79,7 +80,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
 
   // @segment Order Completed Event
   // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
-  let orderItemsTransformed = [];
+  const orderItemsTransformed = [];
   order.items.forEach(item => {
     orderItemsTransformed.push({
       brand: order.storeCode,
@@ -124,7 +125,7 @@ export const receivedCreateOrderSuccess = order => async (dispatch, getState) =>
   });
 };
 
-export const receivedCreateOrderFailure = order => async (dispatch, getState) => {
+export const receivedCreateOrderFailure = order => async dispatch => {
   dispatch({
     type: RECEIVED_CREATE_ORDER_FAILURE,
     payload: order
@@ -145,12 +146,9 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
   const { client: stompClient, replyTo } = getState().stomp;
   let { account_jwt } = getState().account.data;
   if (!account_jwt) {
-    let orderState = getState().order;
-    if (
-      orderState.hasOwnProperty('order') &&
-      orderState.order.hasOwnProperty('account') &&
-      orderState.order.account.hasOwnProperty('account_jwt')
-    ) {
+    const orderState = getState().order;
+    if (orderState.order && orderState.order.account && orderState.order.account.account_jwt) {
+      // eslint-disable-next-line prefer-destructuring
       account_jwt = orderState.order.account.account_jwt;
     }
   }
@@ -175,7 +173,7 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
   });
 };
 
-export const receivedCancelOrderSuccess = order => async (dispatch, getState) => {
+export const receivedCancelOrderSuccess = order => async dispatch => {
   dispatch({
     type: RECEIVED_CANCEL_ORDER_SUCCESS,
     payload: order
@@ -225,7 +223,7 @@ export const receivedCancelOrderSuccess = order => async (dispatch, getState) =>
   });
 };
 
-export const receivedCancelOrderFailure = order => async (dispatch, getState) => {
+export const receivedCancelOrderFailure = order => async dispatch => {
   dispatch({
     type: RECEIVED_CANCEL_ORDER_FAILURE,
     payload: order
@@ -306,7 +304,8 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
   let account_jwt = '';
   if (accountJwt) {
     account_jwt = accountJwt;
-  } else if (getState().account.data.hasOwnProperty('account_jwt')) {
+  } else if (getState().account.data.account_jwt) {
+    // eslint-disable-next-line prefer-destructuring
     account_jwt = getState().account.data.account_jwt;
   }
 
@@ -335,15 +334,13 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
   );
 };
 
-export const receivedGetOrder = order => (dispatch, getState) => {
+export const receivedGetOrder = order => dispatch => {
   dispatch({
     type: RECEIVED_GET_ORDER,
     payload: order
   });
 };
 
-export const resetOrderState = () => {
-  return {
-    type: RESET_ORDER_STATE
-  };
-};
+export const resetOrderState = () => ({
+  type: RESET_ORDER_STATE
+});
