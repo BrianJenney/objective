@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
-import Paragraph from '../bundleLP/Paragraph';
+import LPParagraph from '../bundleLP/LPParagraph';
 
 export const Title = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
@@ -36,7 +36,7 @@ export const generateComponents = (page, xs) => {
         components.push(<SectionTitle data={comp} value={comp.value} xs={xs} />);
         break;
       case 'paragraph':
-        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
+        components.push(<LPParagraph data={comp} value={comp.value} xs={xs} />);
         break;
       case 'image':
         components.push(<Image data={comp} xs={xs} />);

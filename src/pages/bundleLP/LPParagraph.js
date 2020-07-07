@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Paragraph = ({ data, value, xs, noBorder, hideText }) => {
+const LPParagraph = ({ data, value, xs, noBorder, hideText }) => {
   const classes = useStyles(data);
   const charLimit = 150;
   const [expandText, setExpandText] = useState(false);
@@ -69,4 +69,4 @@ const Paragraph = ({ data, value, xs, noBorder, hideText }) => {
   });
 };
 
-export default Paragraph;
+export default LPParagraph;
