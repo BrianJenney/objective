@@ -530,6 +530,10 @@ const Checkout = ({
       return null;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Initiating orders with an event rather than a request
 =======
 
 >>>>>>> Initiating orders with an event rather than a request
