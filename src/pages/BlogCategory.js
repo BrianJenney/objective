@@ -19,7 +19,7 @@ import HeadTags from '../components/common/HeadTags';
 import NotFound from './notfound/NotFound';
 
 const BlogCategory = ({ computedMatch, location }) => {
-  const { category_slug } = computedMatch.params;
+  const { categorySlug } = computedMatch.params;
 
   const [blogTitle, setBlogTitle] = useState('General');
   const [featuredMain, setFeaturedMain] = useState({});
@@ -27,7 +27,7 @@ const BlogCategory = ({ computedMatch, location }) => {
   const [posts, setPosts] = useState([]);
 
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validCategory = seoMap[category_slug];
+  const validCategory = seoMap[categorySlug];
   let title;
   let description;
   const isSleep = matchPath(location.pathname, { path: '/journal/category/sleep' });
@@ -37,14 +37,14 @@ const BlogCategory = ({ computedMatch, location }) => {
   }
 
   const fetchData = async () => {
-    const results = await fetchPostsByCategory(category_slug);
+    const results = await fetchPostsByCategory(categorySlug);
 
     if (isSleep) {
       const featuredPostHolder = [];
       results.posts.forEach(post => {
         if (post.fields.featuredCategories && post.fields.featuredCategories[0].includes('Sleep')) {
           const featuredPosition = post.fields.featuredCategories[0].slice(-1);
-          if (featuredPosition === 1) {
+          if (featuredPosition === '1') {
             setFeaturedMain(post);
           } else {
             featuredPostHolder.push(post);
@@ -64,7 +64,7 @@ const BlogCategory = ({ computedMatch, location }) => {
     } else {
       window.analytics.page('404 Error');
     }
-  }, []);
+  }, [categorySlug]);
 
   if (!validCategory) {
     return <NotFound />;
@@ -82,14 +82,15 @@ const BlogCategory = ({ computedMatch, location }) => {
   }
   const renderFeaturedMain = post => <FeaturedPost post={post} />;
 
-  const renderFeaturedPosts = posts => {
-    if (posts.length > 0) {
-      return posts.map(item => <FeaturedItem post={item} key={item.sys.id} />);
+  const renderFeaturedPosts = featuredPostsForRender => {
+    if (featuredPostsForRender.length > 0) {
+      return featuredPostsForRender.map(item => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
 
-  const renderPosts = posts => posts.map(item => <PostItem post={item} key={item.sys.id} />);
+  const renderPosts = postsForRender =>
+    postsForRender.map(item => <PostItem post={item} key={item.sys.id} />);
 
   return (
     posts.length && (
