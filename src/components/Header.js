@@ -272,7 +272,7 @@ const Header = ({ currentUser, location, history }) => {
                 alignItems="center"
                 justify="flex-end"
               >
-                <Grid item lg={6} className="h-pding">
+                <Grid item lg="auto" className="h-pding name">
                   <StyledLink
                     component={RouterLink}
                     {...accountMenuItemConf}
