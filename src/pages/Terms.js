@@ -13,6 +13,8 @@ import { generateComponents } from './static/transformComponents';
 import ScrollToTop from '../components/common/ScrollToTop';
 import HeadTags from '../components/common/HeadTags';
 
+import './static/components/terms-styles.scss';
+
 export const StyledBackground = withStyles(theme => ({
   root: {
     backgroundColor: '#fdfbf9',
