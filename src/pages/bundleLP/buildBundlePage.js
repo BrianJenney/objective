@@ -1,16 +1,10 @@
-import React, { useCallback } from 'react';
-import { Box, Container, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { Box, Grid } from '@material-ui/core';
 import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
 import LPButton from './LPButton';
-import {
-  Paragraph,
-  Title,
-  transformMobileStyle,
-  transformDesktopStyle
-} from '../static/transformComponents';
+import Paragraph from './Paragraph';
+import { Title, transformMobileStyle, transformDesktopStyle } from '../static/transformComponents';
 
 export const generateComponents = (page, xs, products) => {
   const components = [];
@@ -48,7 +42,11 @@ export const generateComponents = (page, xs, products) => {
           .map(product => product);
 
         components.push(
-          <Grid container spacing={3} style={xs ? mobileStyle : desktopStyle}>
+          <Grid
+            container
+            spacing={3}
+            style={xs ? mobileStyle : { ...desktopStyle, justifyContent: 'center' }}
+          >
             {contentfulProds.map(variant => (
               <HomeVariantCard variant={variant} key={variant.id} />
             ))}
@@ -67,7 +65,7 @@ export const generateComponents = (page, xs, products) => {
             {btnType ? (
               <LPButton data={comp} />
             ) : (
-              <Button to={comp.URL} component={NavLink}>
+              <Button to={comp.URL} component={NavLink} style={{ textDecoration: 'none' }}>
                 {comp.value}
               </Button>
             )}
@@ -75,7 +73,23 @@ export const generateComponents = (page, xs, products) => {
         );
         break;
       case 'paragraph':
-        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
+        const borderStyle = {};
+        if (desktopStyle.border) {
+          const borderType = comp.desktopStyle.borderPlacement;
+          borderStyle[borderType] = desktopStyle[borderType];
+        }
+        components.push(
+          <>
+            <Paragraph
+              data={comp}
+              value={comp.value}
+              xs={xs}
+              noBorder
+              hideText={comp.desktopStyle.wordWrap}
+            />
+            {desktopStyle.border ? <hr style={{ ...borderStyle, width: '193px' }}></hr> : null}
+          </>
+        );
         break;
       case 'box':
         components.push(
