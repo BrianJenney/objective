@@ -3,10 +3,10 @@ import { Box, Grid } from '@material-ui/core';
 import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
 import LPButton from './LPButton';
-import Paragraph from './Paragraph';
+import LPParagraph from './LPParagraph';
 import { Title, transformMobileStyle, transformDesktopStyle } from '../static/transformComponents';
 
-export const generateComponents = (page, xs, products) => {
+export const buildComponents = (page, xs, products) => {
   const components = [];
 
   page.components.forEach(comp => {
@@ -80,14 +80,18 @@ export const generateComponents = (page, xs, products) => {
         }
         components.push(
           <>
-            <Paragraph
+            <LPParagraph
               data={comp}
               value={comp.value}
               xs={xs}
               noBorder
               hideText={comp.desktopStyle.wordWrap}
             />
-            {desktopStyle.border ? <hr style={{ ...borderStyle, width: '193px' }}></hr> : null}
+            {desktopStyle.border ? (
+              <div style={{ padding: '50px 0' }}>
+                <hr style={{ ...borderStyle, width: '193px' }}></hr>
+              </div>
+            ) : null}
           </>
         );
         break;
@@ -97,20 +101,20 @@ export const generateComponents = (page, xs, products) => {
             style={
               xs
                 ? {
-                    ...mobileStyle,
-                    border: mobileStyle.borderColor,
-                    top: '80%',
-                    margin: '0 11%'
-                  }
+                  ...mobileStyle,
+                  border: mobileStyle.borderColor,
+                  top: '80%',
+                  margin: '0 11%'
+                }
                 : {
-                    ...desktopStyle,
-                    border: desktopStyle.borderColor,
-                    top: 'calc(100% / 3.5)',
-                    margin: '0 0 0 120px'
-                  }
+                  ...desktopStyle,
+                  border: desktopStyle.borderColor,
+                  top: 'calc(14%)',
+                  margin: '0 0 0 100px'
+                }
             }
           >
-            {generateComponents(comp.value, xs)}
+            {buildComponents(comp.value, xs)}
           </Box>
         );
         break;
@@ -123,7 +127,7 @@ export const generateComponents = (page, xs, products) => {
                 : { ...desktopStyle, margin: comp.desktopStyle.margin }
             }
           >
-            {generateComponents(comp.value, xs)}
+            {buildComponents(comp.value, xs)}
           </div>
         );
         break;

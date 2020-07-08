@@ -68,6 +68,7 @@ const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const locationState = history.location.state;
+  const isBundleLP = matchPath(location.pathname, { path: '/bundle' });
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -235,7 +236,7 @@ const Header = ({ currentUser, location, history }) => {
                     component={RouterLink}
                     to="/gallery"
                   >
-                    Shop
+                    {isBundleLP ? '' : 'Shop'}
                   </StyledLink>
                 </Grid>
                 <Grid item sm={4} className="h-pding">
@@ -244,7 +245,7 @@ const Header = ({ currentUser, location, history }) => {
                     component={RouterLink}
                     to="/journal"
                   >
-                    Journal
+                    {isBundleLP ? '' : 'Journal'}
                   </StyledLink>
                 </Grid>
               </Grid>
@@ -264,6 +265,7 @@ const Header = ({ currentUser, location, history }) => {
                   </NavLink>
                 </Grid>
               </Grid>
+
               <Grid
                 container
                 md={3}
@@ -272,18 +274,25 @@ const Header = ({ currentUser, location, history }) => {
                 alignItems="center"
                 justify="flex-end"
               >
-                <Grid item lg="auto" className="h-pding name">
-                  <StyledLink
-                    component={RouterLink}
-                    {...accountMenuItemConf}
-                    onClick={segmentTrackNavigationClick}
-                  />
-                </Grid>
-
-                <Grid item sm="auto" className="h-pding">
-                  {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
-                  {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
-                </Grid>
+                {isBundleLP ? (
+                  <></>
+                ) : (
+                  <Grid item lg="auto" className="h-pding name">
+                    <StyledLink
+                      component={RouterLink}
+                      {...accountMenuItemConf}
+                      onClick={segmentTrackNavigationClick}
+                    />
+                  </Grid>
+                )}
+                {isBundleLP ? (
+                  <></>
+                ) : (
+                  <Grid item sm="auto" className="h-pding">
+                    {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
+                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </StyledContainer>
