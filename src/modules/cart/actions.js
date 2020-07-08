@@ -1,6 +1,7 @@
 import {
   REQUEST_FETCH_CART,
   RECEIVED_FETCH_CART,
+  REQUEST_FETCH_CART_BY_ACCOUNT,
   REQUEST_CREATE_CART,
   RECEIVED_CREATE_CART,
   REQUEST_UPDATE_CART,
@@ -9,6 +10,7 @@ import {
   RECEIVED_PATCH_CART,
   SET_CART_DRAWER_OPENED,
   REQUEST_REMOVE_CART_BY_ID,
+  RECEIVED_REMOVE_CART,
   REQUEST_ADD_TO_CART,
   REQUEST_REMOVE_FROM_CART,
   REQUEST_UPDATE_QUANTITY,
@@ -24,13 +26,33 @@ const ObjectId = require('bson-objectid');
 const jwt = require('jsonwebtoken');
 
 export const requestAddToCart = (cart, product, quantity) => async (dispatch, getState) => {
-  const { client: stompClient, replyTo } = getState().stomp;
+  const {
+    account,
+    stomp: { client: stompClient, replyTo }
+  } = getState();
+
+  const newCartParams = {
+    storeCode: getState().storefront.code,
+    catalogId: getState().storefront.catalogId
+  };
+
+  if (account.data && account.data.account_jwt) {
+    const accountId = jwt.decode(account.data.account_jwt).account_id;
+    newCartParams.accountId = accountId;
+  }
+
   const params = {
-    cart,
     product,
     quantity,
     segmentAnonymousId: localStorageClient.get('ajs_anonymous_id')
   };
+
+  if (cart._id) {
+    params.cartId = cart._id;
+  } else {
+    params.newCartParams = newCartParams;
+  }
+
   const obj = JSON.stringify(msgpack.encode(params));
 
   stompClient.send(
@@ -62,11 +84,11 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
   });
 };
 
-export const requestRemoveFromCart = (cart, product) => async (dispatch, getState) => {
+export const requestRemoveFromCart = (cart, productIndex) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
-    cart,
-    product
+    cartId: cart._id,
+    productSku: cart.items[productIndex].sku
   };
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
@@ -83,7 +105,7 @@ export const requestRemoveFromCart = (cart, product) => async (dispatch, getStat
     payload: {}
   });
 
-  const item = cart.items[product];
+  const item = cart.items[productIndex];
 
   // @segment Product Removed
   window.analytics.track('Product Removed', {
@@ -99,13 +121,17 @@ export const requestRemoveFromCart = (cart, product) => async (dispatch, getStat
   });
 };
 
-export const requestUpdateQuantity = (cart, product, quantity) => async (dispatch, getState) => {
+export const requestUpdateQuantity = (cart, productIndex, quantity) => async (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
-    cart,
-    product,
+    cartId: cart._id,
+    productSku: cart.items[productIndex].sku,
     quantity
   };
+
   const obj = JSON.stringify(msgpack.encode(params));
   stompClient.send(
     '/exchange/cart/cart.request.updatequantity',
@@ -151,6 +177,31 @@ export const receivedFetchCart = cart => ({
   type: RECEIVED_FETCH_CART,
   payload: cart
 });
+
+export const requestFetchCartByAccount = accountId => async (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    params: {
+      query: {
+        accountId
+      }
+    }
+  };
+  const obj = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/cart/cart.request.find',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    obj
+  );
+  dispatch({
+    type: REQUEST_FETCH_CART_BY_ACCOUNT,
+    payload: {}
+  });
+};
 
 export const requestCreateCart = () => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
@@ -250,7 +301,7 @@ export const receivedPatchCart = cart => ({
 export const setCartDrawerOpened = open => (dispatch, getState) => {
   const { cart } = getState();
 
-  if (cart.setCartDrawerOpened != open) {
+  if (cart.setCartDrawerOpened !== open) {
     const orderItemsTransformed = [];
 
     cart.items.forEach(item => {
@@ -294,6 +345,11 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
     payload: {}
   });
 };
+
+export const receivedRemoveCart = () => ({
+  type: RECEIVED_REMOVE_CART,
+  payload: {}
+});
 
 export const requestMergeCarts = (cartId, accountId) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
