@@ -17,7 +17,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { InputField, SelectField, CheckboxField, RadioGroupField } from '../form-fields';
 import { Button, AlertPanel, NavLink } from '../common';
 import { COUNTRY_OPTIONS, STATE_OPTIONS, STATE_OPTIONS_ABBR } from '../../constants/location';
@@ -25,7 +25,8 @@ import { PAYMENT_METHODS, PAYMENT_METHOD_OPTIONS } from '../../constants/payment
 import { getInitialValues, getErrorMessage, scrollToRef } from '../../utils/misc';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 import { setCheckoutPaypalPayload } from '../../modules/paypal/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import EventEmitter from '../../events';
+
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
@@ -217,6 +218,7 @@ const PaymentForm = ({
     }
   };
 
+  const [emailExists, setEmailExists] = useState(false);
   const [billingAddressMode, setBillingAddressMode] = useState('sameAsShipping');
   const [paymentMethodMode, setPaymentMethodMode] = useState('creditCard');
   const [initialRender, setInitialRender] = useState(false);
@@ -370,6 +372,12 @@ const PaymentForm = ({
     delete formikValueFieldsMap.password;
     delete INITIAL_VALUES.billingAddress.password;
   }
+
+  EventEmitter.once('RECEIVED_CHECK_EMAIL_EXISTENCE', data => {
+    const exists = data.payload.exists;
+    setEmailExists(exists);
+  });
+
   const handleSubmit = async (values, actions) => {
     const fieldErrors = {
       paymentDetails: {},
@@ -887,7 +895,7 @@ const PaymentForm = ({
                   </Grid>
                 </>
               )}
-              {!currentUser.data.account_jwt && paymentMethodMode === 'creditCard' && (
+              {!currentUser.data.account_jwt && paymentMethodMode === 'creditCard' && !emailExists && (
                 <>
                   <Grid item xs={12} style={{ marginBottom: '10px' }}>
                     <Box

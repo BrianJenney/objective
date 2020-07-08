@@ -13,7 +13,9 @@ import { AddressForm } from '../forms';
 import { FORM_TYPES } from '../forms/AddressForm';
 import VariantRestrictions from '../../utils/product/variant.restriction.class';
 import { removeFromCart } from '../../modules/cart/functions';
-
+import { scrollToRef } from '../../utils/misc';
+import { requestCheckEmailExistence } from '../../modules/account/actions';
+import { useDispatch } from 'react-redux';
 const AccountAddresses = ({
   currentUser,
   cart,
@@ -35,6 +37,7 @@ const AccountAddresses = ({
   const [isEditing, setIsEditing] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [editedIndex, setEditedIndex] = useState(-1);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const addressBook = get(currentUser, 'data.addressBook', []);
@@ -111,6 +114,10 @@ const AccountAddresses = ({
       }
 
       if (!account_jwt) {
+        //Request backend check of email existence
+        if (Object.prototype.hasOwnProperty.call(values, 'email')) {
+          dispatch(requestCheckEmailExistence(values.email));
+        }
         actions.setSubmitting(false);
         setIsEditing(false);
         setFormModeEnabled(false);

@@ -25,7 +25,9 @@ import {
   REQUEST_SIGNUP_EMAIL,
   REQUEST_PASSWORD_RESET,
   RECEIVED_PASSWORD_RESET_SUCCESS,
-  RECEIVED_PASSWORD_RESET_FAILURE
+  RECEIVED_PASSWORD_RESET_FAILURE,
+  REQUEST_CHECK_EMAIL_EXISTENCE,
+  RECEIVED_CHECK_EMAIL_EXISTENCE
 } from './types';
 import EventEmitter from '../../events';
 import { unsetCheckoutPaypalPayload } from '../paypal/actions';
@@ -495,5 +497,35 @@ export const receivedPasswordResetFailure = resetError => dispatch => {
   dispatch({
     type: RECEIVED_PASSWORD_RESET_FAILURE,
     payload: resetError
+  });
+};
+
+export const requestCheckEmailExistence = email => (dispatch, getState) => {
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    email
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/account/account.request.checkEmailExistence',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_CHECK_EMAIL_EXISTENCE,
+    payload: {}
+  });
+};
+
+export const receivedCheckEmailExistence = exists => dispatch => {
+  dispatch({
+    type: RECEIVED_CHECK_EMAIL_EXISTENCE,
+    payload: exists
   });
 };
