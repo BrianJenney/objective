@@ -52,10 +52,24 @@ Image.propTypes = {
   ...commonPropTypes
 };
 
+export const InlineAnchor = ({ data, value, xs }) => {
+  const transformedStyles = xs ? transformMobileStyle(data) : transformDesktopStyle(data);
+  return (
+    <div style={transformedStyles}>
+      <Scrollchor to={`#${value[0].scroll}`} style={{ textDecoration: 'none' }}>
+        {value[0].label}
+      </Scrollchor>
+    </div>
+  );
+};
+
+InlineAnchor.propTypes = {
+  ...commonPropTypes
+};
+
 // Anchor links for terms of use page:
 export const AnchorList = ({ data, value, xs }) => {
   const indented = data.name.toLowerCase().includes('indent');
-  // const bullet = indented ? '○' : '•';
   const transformedStyles = xs ? transformMobileStyle(data) : transformDesktopStyle(data);
   const bullet = indented ? 'circle' : 'disc';
   const listStyle = {
@@ -149,7 +163,11 @@ export const generateComponents = (page, xs) => {
         );
         break;
       case 'navigation':
-        components.push(<AnchorList data={comp} value={comp.value} xs={xs} />);
+        if (comp.desktopStyle.cssClass === 'inline-anchor') {
+          components.push(<InlineAnchor data={comp} value={comp.value} xs={xs} />);
+        } else {
+          components.push(<AnchorList data={comp} value={comp.value} xs={xs} />);
+        }
         break;
       case 'list':
         components.push(<List data={comp} value={comp.value} xs={xs} />);
@@ -162,7 +180,7 @@ export const generateComponents = (page, xs) => {
   return components;
 };
 
-export const transformDesktopStyle = data => {
+export const transformDesktopStyle = (data, noBorder) => {
   const { desktopStyle, type } = data;
   return Object.keys(desktopStyle).reduce((obj, value) => {
     if (!obj[value]) {
@@ -172,11 +190,17 @@ export const transformDesktopStyle = data => {
         obj.backgroundColor = desktopStyle[value];
       } else if (value === 'borderPlacement') {
         const borderVal = desktopStyle[value];
-        obj[borderVal] = desktopStyle.borderColor;
+        if (noBorder) {
+          obj[borderVal] = null;
+        } else {
+          obj[borderVal] = desktopStyle.borderColor;
+        }
       } else if (value === 'margin') {
         // skip margin value from Contentful
       } else if (value === 'align') {
         obj.textAlign = desktopStyle[value];
+      } else if (value === 'fontColor') {
+        obj.color = desktopStyle[value];
       } else {
         obj[value] = desktopStyle[value];
       }
@@ -203,6 +227,8 @@ export const transformMobileStyle = data => {
         // skip margin value from Contentful
       } else if (value === 'align') {
         obj.textAlign = mobileStyle[value];
+      } else if (value === 'fontColor') {
+        obj.color = mobileStyle[value];
       } else {
         obj[value] = mobileStyle[value];
       }
