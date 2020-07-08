@@ -41,10 +41,24 @@ Image.propTypes = {
   ...commonPropTypes
 };
 
+export const InlineAnchor = ({ data, value, xs }) => {
+  const transformedStyles = xs ? transformMobileStyle(data) : transformDesktopStyle(data);
+  return (
+    <div style={transformedStyles}>
+      <Scrollchor to={`#${value[0].scroll}`} style={{ textDecoration: 'none' }}>
+        {value[0].label}
+      </Scrollchor>
+    </div>
+  );
+};
+
+InlineAnchor.propTypes = {
+  ...commonPropTypes
+};
+
 // Anchor links for terms of use page:
 export const AnchorList = ({ data, value, xs }) => {
   const indented = data.name.toLowerCase().includes('indent');
-  // const bullet = indented ? '○' : '•';
   const transformedStyles = xs ? transformMobileStyle(data) : transformDesktopStyle(data);
   const bullet = indented ? 'circle' : 'disc';
   const listStyle = {
@@ -138,7 +152,11 @@ export const generateComponents = (page, xs) => {
         );
         break;
       case 'navigation':
-        components.push(<AnchorList data={comp} value={comp.value} xs={xs} />);
+        if (comp.desktopStyle.cssClass === 'inline-anchor') {
+          components.push(<InlineAnchor data={comp} value={comp.value} xs={xs} />);
+        } else {
+          components.push(<AnchorList data={comp} value={comp.value} xs={xs} />);
+        }
         break;
       case 'list':
         components.push(<List data={comp} value={comp.value} xs={xs} />);
