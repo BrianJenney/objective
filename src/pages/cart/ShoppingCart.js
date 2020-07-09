@@ -6,7 +6,7 @@ import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 import { StyledCartCloseIcon, StyledEmptyCartCloseIcon } from './StyledComponents';
 
-const ShoppingCart = ({ hideLPCoupon }) => {
+const ShoppingCart = ({ hideLPCoupon, isBundleLP }) => {
   const cart = useSelector(state => state.cart);
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   return (
@@ -14,14 +14,14 @@ const ShoppingCart = ({ hideLPCoupon }) => {
       hideLPCoupon={hideLPCoupon}
       toggleContent={
         <>
-          <ShoppingBag />
+          {isBundleLP ? <> </> : <ShoppingBag />}
           <span
             style={{
               fontFamily: 'p22-underground, sans-serif',
               fontSize: '14px'
             }}
           >
-            {cartCount}
+            {isBundleLP ? '' : cartCount}
           </span>
         </>
       }

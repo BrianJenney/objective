@@ -106,7 +106,7 @@ export const buildComponents = (page, xs, products) => {
                   ...mobileStyle,
                   border: mobileStyle.borderColor,
                   top: '80%',
-                  margin: '0 11%'
+                  margin: comp.mobileStyle.margin || '0 3vh'
                 }
                 : {
                   ...desktopStyle,

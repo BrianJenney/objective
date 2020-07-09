@@ -284,14 +284,13 @@ const Header = ({ currentUser, location, history }) => {
                     />
                   </Grid>
                 )}
-                {isBundleLP ? (
-                  <></>
-                ) : (
-                  <Grid item sm="auto" className="h-pding">
-                    {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
-                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
-                  </Grid>
-                )}
+
+                <Grid item sm="auto" className="h-pding">
+                  {!isCheckoutPage && (
+                    <ShoppingCart hideLPCoupon={locationState} isBundleLP={isBundleLP} />
+                  )}
+                  {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+                </Grid>
               </Grid>
             </Grid>
           </StyledContainer>
