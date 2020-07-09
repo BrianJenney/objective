@@ -24,22 +24,27 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    padding: '58px',
+    padding: '58px 58px 58px 25px',
     backgroundColor: '#FFF',
+    margin: '0px 70px',
     [theme.breakpoints.down('xs')]: {
-      padding: '0 0 32px'
+      padding: '0 0 32px',
+      margin: 0
     }
   },
   rightSideGrid: {
-    paddingLeft: '58px !important',
+    paddingLeft: '64px !important',
     [theme.breakpoints.down('xs')]: {
       paddingLeft: '12px !important'
     }
   },
   accountMenuGrid: {
     borderRight: '1px solid #231f20',
+    paddingRight: '40px',
     [theme.breakpoints.down('xs')]: {
-      borderRight: 'unset'
+      borderRight: 'unset',
+      padding: '12px',
+      width: '100%'
     }
   }
 }));
@@ -50,17 +55,12 @@ const Account = ({ routes }) => {
       <Container>
         <Box className={classes.paper}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={3} className={classes.accountMenuGrid}>
+            <div className={classes.accountMenuGrid}>
               <Box>
                 <AccountMenu />
               </Box>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={9}
-              className={`right-side-account ${classes.rightSideGrid}`}
-            >
+            </div>
+            <Grid item xs={12} md={9} className={`right-side-account ${classes.rightSideGrid}`}>
               <Switch>
                 <Redirect exact from="/account" to="/account/overview" />
                 {routes.map(route => (

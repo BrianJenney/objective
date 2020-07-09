@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { OrderTrackerForm } from '../components/forms';
-import {
-  requestFindOrdersByAccount,
-  requestFindUnauthenticatedOrders,
-  receivedGetOrder
-} from '../modules/order/actions';
-import { requestFetchAccount, receivedFetchAccountSuccess } from '../modules/account/actions';
-import { useTheme, makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
+
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { OrderTrackerForm } from '../components/forms';
+import { requestFindUnauthenticatedOrders, receivedGetOrder } from '../modules/order/actions';
+import { requestFetchAccount, receivedFetchAccountSuccess } from '../modules/account/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,7 +36,6 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     marginTop: '30px',
     fontFamily: 'Canela Text Web',
-    fontWeight: 'normal',
     paddingBottom: theme.spacing(4),
     [theme.breakpoints.down('xs')]: {
       fontSize: 40
@@ -74,9 +70,7 @@ const useStyles = makeStyles(theme => ({
 
 const TrackOrder = ({ history }) => {
   const dispatch = useDispatch();
-  const theme = useTheme();
   const classes = useStyles();
-  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   useEffect(() => {
     setTimeout(() => window.scrollTo(0, 0), 300);
   }, []);
@@ -85,10 +79,10 @@ const TrackOrder = ({ history }) => {
       <Container>
         <CssBaseline />
         <Box className={classes.containingBox}>
-          <Grid container spacing={2} justify={'center'}>
-            <Grid item xs={xs ? 12 : 6}>
+          <Grid container spacing={2} justify="center">
+            <Grid item xs={12} sm={6} md={4}>
               <OrderTrackerForm
-                title={'Track an order'}
+                title="Track an order"
                 requestFindUnauthenticatedOrders={requestFindUnauthenticatedOrders}
                 receivedGetOrder={receivedGetOrder}
                 requestFetchAccount={requestFetchAccount}
@@ -102,6 +96,10 @@ const TrackOrder = ({ history }) => {
       </Container>
     </Box>
   );
+};
+
+TrackOrder.propTypes = {
+  history: PropTypes.object.isRequired
 };
 
 export default withRouter(TrackOrder);

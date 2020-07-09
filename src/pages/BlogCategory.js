@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { matchPath } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import ScrollToTop from '../components/common/ScrollToTop';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 import './blog/blog-styles.scss';
 import { fetchPostsByCategory } from '../utils/blog';
@@ -18,7 +19,7 @@ import HeadTags from '../components/common/HeadTags';
 import NotFound from './notfound/NotFound';
 
 const BlogCategory = ({ computedMatch, location }) => {
-  const { category_slug } = computedMatch.params;
+  const { categorySlug } = computedMatch.params;
 
   const [blogTitle, setBlogTitle] = useState('General');
   const [featuredMain, setFeaturedMain] = useState({});
@@ -26,7 +27,7 @@ const BlogCategory = ({ computedMatch, location }) => {
   const [posts, setPosts] = useState([]);
 
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validCategory = seoMap[category_slug];
+  const validCategory = seoMap[categorySlug];
   let title;
   let description;
   const isSleep = matchPath(location.pathname, { path: '/journal/category/sleep' });
@@ -36,14 +37,14 @@ const BlogCategory = ({ computedMatch, location }) => {
   }
 
   const fetchData = async () => {
-    const results = await fetchPostsByCategory(category_slug);
+    const results = await fetchPostsByCategory(categorySlug);
 
     if (isSleep) {
-      let featuredPostHolder = [];
-      results.posts.map(post => {
+      const featuredPostHolder = [];
+      results.posts.forEach(post => {
         if (post.fields.featuredCategories && post.fields.featuredCategories[0].includes('Sleep')) {
-          let featuredPosition = post.fields.featuredCategories[0].slice(-1);
-          if (featuredPosition == 1) {
+          const featuredPosition = post.fields.featuredCategories[0].slice(-1);
+          if (featuredPosition === '1') {
             setFeaturedMain(post);
           } else {
             featuredPostHolder.push(post);
@@ -54,7 +55,7 @@ const BlogCategory = ({ computedMatch, location }) => {
     }
     setBlogTitle(results.title);
     setPosts(results.posts);
-  }
+  };
 
   useEffect(() => {
     if (validCategory) {
@@ -63,7 +64,7 @@ const BlogCategory = ({ computedMatch, location }) => {
     } else {
       window.analytics.page('404 Error');
     }
-  }, []);
+  }, [categorySlug]);
 
   if (!validCategory) {
     return <NotFound />;
@@ -81,14 +82,15 @@ const BlogCategory = ({ computedMatch, location }) => {
   }
   const renderFeaturedMain = post => <FeaturedPost post={post} />;
 
-  const renderFeaturedPosts = posts => {
-    if (posts.length > 0) {
-      return posts.map((item, key) => <FeaturedItem post={item} key={item.sys.id} />);
+  const renderFeaturedPosts = featuredPostsForRender => {
+    if (featuredPostsForRender.length > 0) {
+      return featuredPostsForRender.map(item => <FeaturedItem post={item} key={item.sys.id} />);
     }
     return <></>;
   };
 
-  const renderPosts = posts => posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
+  const renderPosts = postsForRender =>
+    postsForRender.map(item => <PostItem post={item} key={item.sys.id} />);
 
   return (
     posts.length && (
@@ -98,13 +100,13 @@ const BlogCategory = ({ computedMatch, location }) => {
           {isSleep ? (
             <div className="journal-gallery">
               <Box className="header" py={8}>
-                <Container className="container">
+                <StyledContainer className="container">
                   <h1>Sleep</h1>
                   <p>Sleep Well, Live Well</p>
-                </Container>
+                </StyledContainer>
               </Box>
               <Box className="content" py={8}>
-                <Container>
+                <StyledContainer>
                   <Divider />
                   <h1>Featured Posts</h1>
                   {renderFeaturedMain(featuredMain)}
@@ -116,20 +118,20 @@ const BlogCategory = ({ computedMatch, location }) => {
                   <Divider />
                   <h1>All Posts</h1>
                   <div className="list">{renderPosts(posts.reverse())}</div>
-                </Container>
+                </StyledContainer>
               </Box>
             </div>
           ) : (
             <div className="journal-gallery">
               <Box className="header" py={8}>
-                <Container className="container">
+                <StyledContainer className="container">
                   <h1>{blogTitle}</h1>
-                </Container>
+                </StyledContainer>
               </Box>
               <Box className="content" py={8}>
-                <Container>
+                <StyledContainer>
                   <div className="list">{renderPosts(posts)}</div>
-                </Container>
+                </StyledContainer>
               </Box>
             </div>
           )}
@@ -137,6 +139,11 @@ const BlogCategory = ({ computedMatch, location }) => {
       </>
     )
   );
+};
+
+BlogCategory.propTypes = {
+  computedMatch: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default BlogCategory;

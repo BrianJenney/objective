@@ -71,7 +71,13 @@ const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload)
 
   const payloadView =
     payloadSummary && !isActiveStep ? (
-      <Box width={1} px={xs ? 8 : 14} py={xs ? 3 : 4} bgcolor="rgba(252, 248, 244, 0.5)" color="#231f20">
+      <Box
+        width={1}
+        px={xs ? 8 : 14}
+        py={xs ? 3 : 4}
+        bgcolor="rgba(252, 248, 244, 0.5)"
+        color="#231f20"
+      >
         {payloadSummary}
       </Box>
     ) : null;
@@ -98,6 +104,7 @@ const Checkout = ({
   clearPatchAccountError,
   requestCreateOrder
 }) => {
+  const hideLPCoupon = !!history.location.state;
   const [payload, setPayload] = useState({});
   const [resetFormMode, setResetFormMode] = useState(false);
   const [authMode, setAuthMode] = useState('shipping');
@@ -123,7 +130,6 @@ const Checkout = ({
   const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
-
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
   const closeShippingRestrictionsDialog = useCallback(() => {
@@ -160,13 +166,14 @@ const Checkout = ({
     });
   };
 
-  //Reset signupError, patchError upon component unmount
-  useEffect(() => {
-    return () => {
+  // Reset signupError, patchError upon component unmount
+  useEffect(
+    () => () => {
       clearPatchAccountError();
       clearCreateAccountError();
-    };
-  }, []);
+    },
+    []
+  );
 
   // Set step 2 to active if there are any patch account errors
   useEffect(() => {
@@ -183,7 +190,8 @@ const Checkout = ({
   }, [currentUser.patchAccountError]);
 
   useEffect(() => {
-    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
+    const isGuest =
+      currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
     if (accountCreated && paymentDetailsUpdated && !addressBookUpdated && !isGuest) {
       requestPatchAccount(account_jwt, {
         addressBook: [payload.shippingAddress]
@@ -204,9 +212,15 @@ const Checkout = ({
 
   useEffect(() => {
     const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
-    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
+    const isGuest =
+      currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
 
-    if (accountCreated && account_jwt && !paymentDetailsUpdated && (isPaypalPaymentMethod || isGuest)) {
+    if (
+      accountCreated &&
+      account_jwt &&
+      !paymentDetailsUpdated &&
+      (isPaypalPaymentMethod || isGuest)
+    ) {
       setPaymentDetailsUpdated(true);
     }
   }, [accountCreated]);
@@ -220,12 +234,11 @@ const Checkout = ({
 
   useEffect(() => {
     if (activeStep === 2 && !account_jwt && !accountCreated) {
-      const isGuest =
+      const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
         !payload.paymentDetails.billingAddress.password
-          ? true
-          : false;
+      );
       setGuestMode(isGuest);
       const accountInfoPayload = {
         firstName: payload.paymentDetails.billingAddress.firstName,
@@ -233,7 +246,7 @@ const Checkout = ({
         email: payload.shippingAddress.email.toLowerCase(),
         password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
         passwordSet: !isGuest,
-        isGuest: isGuest,
+        isGuest,
         storeCode: cart.storeCode,
         newsletter: true
       };
@@ -259,14 +272,20 @@ const Checkout = ({
       //Make a copy and preserve to preserve the payload
       let paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
       //normalize paymentDetailsPayload
-      paymentDetailsPayload.details.shippingAddress.address1 = paymentDetailsPayload.details.shippingAddress.line1;
-      paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details.shippingAddress.line2
-        ? (paymentDetailsPayload.details.shippingAddress.address1 = paymentDetailsPayload.details.shippingAddress.line2)
+      paymentDetailsPayload.details.shippingAddress.address1 =
+        paymentDetailsPayload.details.shippingAddress.line1;
+      paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details
+        .shippingAddress.line2
+        ? paymentDetailsPayload.details.shippingAddress.line2
         : '';
-      paymentDetailsPayload.details.shippingAddress.zipcode = paymentDetailsPayload.details.shippingAddress.postalCode;
-      paymentDetailsPayload.details.shippingAddress.country = paymentDetailsPayload.details.shippingAddress.countryCode;
-      paymentDetailsPayload.details.shippingAddress.firstName = paymentDetailsPayload.details.firstName;
-      paymentDetailsPayload.details.shippingAddress.lastName = paymentDetailsPayload.details.lastName;
+      paymentDetailsPayload.details.shippingAddress.zipcode =
+        paymentDetailsPayload.details.shippingAddress.postalCode;
+      paymentDetailsPayload.details.shippingAddress.country =
+        paymentDetailsPayload.details.shippingAddress.countryCode;
+      paymentDetailsPayload.details.shippingAddress.firstName =
+        paymentDetailsPayload.details.firstName;
+      paymentDetailsPayload.details.shippingAddress.lastName =
+        paymentDetailsPayload.details.lastName;
       delete paymentDetailsPayload.details.shippingAddress.line1;
       if (paymentDetailsPayload.details.shippingAddress.line2) {
         delete paymentDetailsPayload.details.shippingAddress.line2;
@@ -296,7 +315,9 @@ const Checkout = ({
         });
 
         setShippingAddressActive(paymentDetailsPayload.details.shippingAddress);
-        dispatch(requestSetShippingAddress(cart._id, paymentDetailsPayload.details.shippingAddress));
+        dispatch(
+          requestSetShippingAddress(cart._id, paymentDetailsPayload.details.shippingAddress)
+        );
         setActiveStep(2);
       }, 100);
     }
@@ -310,7 +331,7 @@ const Checkout = ({
       if (orderError === false) {
         dispatch(unsetCheckoutPaypalPayload());
         setPayload({});
-        history.replace('/order');
+        history.replace('/order', hideLPCoupon);
       }
     }
   }, [orderError, orderIsLoading]);
@@ -392,17 +413,22 @@ const Checkout = ({
       payload.shippingAddress.saveToAccount = true;
       payload.shippingAddress.isDefault = true;
     }
-
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
-    if (paymentMethodNonce !== '') {
+    if (paymentMethodNonce) {
       if (cart.items.length > 0) {
-        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
+        requestCreateOrder(
+          { ...cart, hideLPCoupon, ...payload, account_jwt },
+          { paymentMethodNonce }
+        );
       }
-    } else if (paymentMethodToken !== '') {
+    } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
-        requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
+        requestCreateOrder(
+          { ...cart, hideLPCoupon, ...payload, account_jwt },
+          { paymentMethodToken }
+        );
       }
     } else {
       return false;
@@ -414,7 +440,7 @@ const Checkout = ({
       setCheckoutDialogOpen(true);
     } else {
       setPayload({});
-      history.replace('/order');
+      history.replace('/order', hideLPCoupon);
     }
     return true;
   };
@@ -448,13 +474,12 @@ const Checkout = ({
   };
 
   const handleBack = () => activeStep > 0 && setCurrentStep(activeStep - 1);
-
   const handleNext = async values => {
     let result = null;
     if (activeStep <= 1) {
       result = await handleAddressesAndCardSteps(values);
     } else if (activeStep === 2) {
-      handleReviewStep(values);
+      handleReviewStep(values); // <-- Here! direct to /order page
       return true;
     }
     if (result) {
@@ -478,7 +503,6 @@ const Checkout = ({
     }
     trackCheckoutStepCompleted(panelIndex);
     if (panelIndex === 0) {
-      console.log('resetting formMode');
       setResetFormMode(true);
     }
     return setCurrentStep(panelIndex);
@@ -490,7 +514,7 @@ const Checkout = ({
       return null;
     }
     setPpButtonRendered(true);
-    let paymentDetailsPayload = await sendPaypalCheckoutRequest(
+    const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
       {
@@ -506,7 +530,7 @@ const Checkout = ({
     dispatch(setCheckoutPaypalPayload(paymentDetailsPayload));
   };
 
-  let paypalCheckoutButton = document.getElementById('paypal-checkout-button');
+  const paypalCheckoutButton = document.getElementById('paypal-checkout-button');
   useEffect(() => {
     if (activeStep === 0 && paypalCheckoutButton !== null) {
       paypalCheckoutButton.innerHTML = '';
@@ -532,7 +556,14 @@ const Checkout = ({
                     style={{ fontSize: '14px', padding: '50px 20px 12px' }}
                   />
                 ) : null}
-                <Grid item flex={1} xs={12} md={8} style={xs ? { padding: 0 } : {}} className="right-side">
+                <Grid
+                  item
+                  flex={1}
+                  xs={12}
+                  md={8}
+                  style={xs ? { padding: 0 } : {}}
+                  className="right-side"
+                >
                   <div ref={stepRefs[0]}>
                     <Panel
                       title={getPanelTitleContent(xs, 0, activeStep, null, payload.shippingAddress)}

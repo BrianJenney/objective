@@ -26,11 +26,12 @@ export const ResizeImage = (template, data) => {
     } else {
       params = defaultParams;
     }
+  } else if (mobileWidth === '100%') {
+    params = `?w=315`;
   } else if (mobileWidth) {
     params = `?w=${mobileWidth}`;
   } else {
     params = '?w=164';
   }
-
   return params;
 };

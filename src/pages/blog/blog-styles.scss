@@ -64,13 +64,9 @@
   .header {
     background-color: #fdfbf9;
     text-align: center;
-    .container {
-      padding-left: 300px;
-      padding-right: 300px;
-    }
     h1 {
       font-family: 'Canela Text Web';
-      font-size: 60px;
+      font-size: 44px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -261,7 +257,7 @@
     h2,
     h2 a {
       font-family: 'Canela Text Web';
-      font-size: 32px !important;
+      font-size: 28px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -366,7 +362,7 @@
       margin-bottom: 55px;
       h1 {
         font-family: 'Canela Text Web';
-        font-size: 60px;
+        font-size: 48px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
@@ -388,9 +384,9 @@
       margin: 0;
       .categoryName,
       .minRead {
-        font-size: 24px;
+        font-size: 22px;
         a {
-          font-size: 24px;
+          font-size: 22px;
           text-decoration: none;
         }
       }
@@ -438,27 +434,37 @@
   .journal-gallery {
     .mobile-flex {
       display: flex;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
       .tagholder,
       .icon-holder {
         width: 50%;
-        padding-top: 25px;
+        padding-top: 20px;
       }
       .tags {
-        min-height: 117px;
+        min-height: 90px;
       }
       .icon-holder {
-        padding-bottom: 25px;
-        padding-left: 25px;
+        padding-bottom: 20px;
+        padding-left: 20px;
         border-bottom: 2px solid;
         border-left: 2px solid;
 
-        min-height: 117px;
+        min-height: 90px;
         .share {
           padding: 0 0 10px;
+          font-size: 14px;
+        }
+        .social {
+          img {
+            width: 30px;
+            &:first-of-type {
+              margin-right: 12px;
+            }
+          }
         }
       }
     }
+    
     .header {
       .container {
         padding-left: 16px;
@@ -499,9 +505,9 @@
     &.post {
       .flex .categoryName,
       .flex .minRead {
-        font-size: 18px;
+        font-size: 16px;
         a {
-          font-size: 18px;
+          font-size: 16px;
         }
       }
       .center {
@@ -509,13 +515,14 @@
           font-size: 36px;
           margin-bottom: 25px;
         }
-        margin-bottom: 20px;
+        margin-bottom: 12px;
       }
       .left {
         .date {
           text-align: center;
           font-size: 14px;
           margin-bottom: 0;
+          padding-bottom: 12px;
         }
       }
       .border-left {

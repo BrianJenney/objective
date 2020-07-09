@@ -3,6 +3,7 @@ import {
   receivedCreateCart,
   receivedFetchCart,
   receivedPatchCart,
+  receivedRemoveCart,
   receivedUpdateCart,
   setCartDrawerOpened,
   segmentAddCouponReceived,
@@ -28,25 +29,33 @@ export const handleCartResponse = (status, data, fields, properties) => {
     case 'cart.request.addcoupon':
     case 'cart.request.removecoupon':
     case 'cart.request.setshippingaddress':
-    case 'cart.request.patch':
-      debugRabbitResponse(`Cart Patch Response (${fields.routingKey})`, status, data, fields, properties);
+    case 'cart.request.patch': {
+      debugRabbitResponse(
+        `Cart Patch Response (${fields.routingKey})`,
+        status,
+        data,
+        fields,
+        properties
+      );
+
       const oldCart = store.getState().cart;
       let openCartDrawer = true;
 
-      if(!data.hasOwnProperty('items')){
-        //Something went wrong on backend.
+      // eslint-disable-next-line no-prototype-builtins
+      if (!data.hasOwnProperty('items')) {
+        // Something went wrong on backend.
         break;
       }
 
-      if (
-        oldCart.items.length === data.items.length &&
-        oldCart.total === data.total
-      ) {
+      if (oldCart.items.length === data.items.length && oldCart.total === data.total) {
         openCartDrawer = false;
       }
 
       // Merge carts notification logic
-      if (fields.routingKey === 'cart.request.mergecarts' && data.items.length !== oldCart.items.length) {
+      if (
+        fields.routingKey === 'cart.request.mergecarts' &&
+        data.items.length !== oldCart.items.length
+      ) {
         openCartDrawer = false;
         store.dispatch(setCartNotification(true, 'cartMerged'));
       }
@@ -71,11 +80,17 @@ export const handleCartResponse = (status, data, fields, properties) => {
         store.dispatch(setCartDrawerOpened(true));
       }
       break;
+    }
     case 'cart.request.update':
       debugRabbitResponse('Cart Update Response', status, data, fields, properties);
       store.dispatch(receivedUpdateCart(data));
       break;
+    case 'cart.request.remove':
+      debugRabbitResponse('Cart Remove Response', status, data, fields, properties);
+      store.dispatch(receivedRemoveCart(data));
+      break;
     default:
+      // eslint-disable-next-line no-console
       console.log(`bad response ${fields.routingKey}`);
   }
 };

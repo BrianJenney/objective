@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -14,6 +14,8 @@ import { FORM_TYPES } from '../forms/AddressForm';
 import VariantRestrictions from '../../utils/product/variant.restriction.class';
 import { removeFromCart } from '../../modules/cart/functions';
 import { scrollToRef } from '../../utils/misc';
+import { requestCheckEmailExistence } from '../../modules/account/actions';
+import { useDispatch } from 'react-redux';
 const AccountAddresses = ({
   currentUser,
   cart,
@@ -35,12 +37,13 @@ const AccountAddresses = ({
   const [isEditing, setIsEditing] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [editedIndex, setEditedIndex] = useState(-1);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const addressBook = get(currentUser, 'data.addressBook', []);
   const account_jwt = get(currentUser, 'data.account_jwt', '');
-  const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 48 : xs ? 24 : 30; // eslint-disable-line
-  const errRef = useRef(null);
+  const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 36 : xs ? 24 : 30; // eslint-disable-line
+
   useEffect(() => {
     if (rest.resetFormMode && addressBook.length === 0 && !account_jwt) {
       setFormModeEnabled(true);
@@ -111,6 +114,10 @@ const AccountAddresses = ({
       }
 
       if (!account_jwt) {
+        //Request backend check of email existence
+        if (Object.prototype.hasOwnProperty.call(values, 'email')) {
+          dispatch(requestCheckEmailExistence(values.email));
+        }
         actions.setSubmitting(false);
         setIsEditing(false);
         setFormModeEnabled(false);
@@ -166,7 +173,11 @@ const AccountAddresses = ({
 
     const selectedAddress = addressBook[selectedIndex];
     const restrictions = new VariantRestrictions(cart.items);
-    const restrictionValidations = restrictions.validate(selectedAddress, 'variant_id', 'variant_name');
+    const restrictionValidations = restrictions.validate(
+      selectedAddress,
+      'variant_id',
+      'variant_name'
+    );
     if (restrictionValidations.hasRestrictions) {
       restrictionValidations.items.map(item => {
         setRestrictionMessage(true);
@@ -224,7 +235,14 @@ const AccountAddresses = ({
               {addressBook.map((addressEntity, index) =>
                 addressEntity.isDefault ? (
                   <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                    <Box display="flex" alignItems="flex-start" m={1} px={4} py={3} border="2px solid #979797">
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      m={1}
+                      px={4}
+                      py={3}
+                      border="1px solid #231f20"
+                    >
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
                           <Radio
@@ -246,8 +264,12 @@ const AccountAddresses = ({
                             setFormModeEnabled(true);
                             setEditedIndex(index);
                           }}
-                          onRemove={addressEntity.isDefault ? undefined : () => deleteAddress(index)}
-                          onSetDefault={addressEntity.isDefault ? undefined : () => setDefaultAddress(index)}
+                          onRemove={
+                            addressEntity.isDefault ? undefined : () => deleteAddress(index)
+                          }
+                          onSetDefault={
+                            addressEntity.isDefault ? undefined : () => setDefaultAddress(index)
+                          }
                         />
                       </Box>
                     </Box>
@@ -257,7 +279,14 @@ const AccountAddresses = ({
               {addressBook.map((addressEntity, index) =>
                 addressEntity.isDefault === false ? (
                   <Grid key={`address_entity_${index}`} item xs={12} sm={6}>
-                    <Box display="flex" alignItems="flex-start" m={1} px={4} py={3} border="2px solid #979797">
+                    <Box
+                      display="flex"
+                      alignItems="flex-start"
+                      m={1}
+                      px={4}
+                      py={3}
+                      border="2px solid #979797"
+                    >
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
                           <Radio
@@ -279,8 +308,12 @@ const AccountAddresses = ({
                             setFormModeEnabled(true);
                             setEditedIndex(index);
                           }}
-                          onRemove={addressEntity.isDefault ? undefined : () => deleteAddress(index)}
-                          onSetDefault={addressEntity.isDefault ? undefined : () => setDefaultAddress(index)}
+                          onRemove={
+                            addressEntity.isDefault ? undefined : () => deleteAddress(index)
+                          }
+                          onSetDefault={
+                            addressEntity.isDefault ? undefined : () => setDefaultAddress(index)
+                          }
                         />
                       </Box>
                     </Box>
@@ -289,7 +322,12 @@ const AccountAddresses = ({
               )}
             </Grid>
           </Box>
-          <Box mt="26px" fontSize={xs ? 14 : 16} fontWeight={600} style={{ textTransform: 'uppercase' }}>
+          <Box
+            mt="26px"
+            fontSize={xs ? 14 : 16}
+            fontWeight={600}
+            style={{ textTransform: 'uppercase' }}
+          >
             <MenuLink
               onClick={() => {
                 const addressesData = currentUser.data.addressBook || [];

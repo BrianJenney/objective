@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Grid from '@material-ui/core/Grid';
 import VariantCard from './VariantCard';
 import './gallery-style.scss';
@@ -42,7 +44,7 @@ const CategorySummary = ({ category, products, styleMap }) => {
   return (
     <>
       {products.map(product => (
-        <Grid item xs={12} sm={3} md={3} lg={3} key={product.id}>
+        <Grid item xs={12} sm={3} key={product.id}>
           <div className="opt2" style={styleMap.container}>
             <VariantCard variant={product} styleMap={styleMap} />
           </div>
@@ -50,6 +52,12 @@ const CategorySummary = ({ category, products, styleMap }) => {
       ))}
     </>
   );
+};
+
+CategorySummary.propTypes = {
+  category: PropTypes.object.isRequired,
+  products: PropTypes.object.isRequired,
+  styleMap: PropTypes.object.isRequired
 };
 
 export default CategorySummary;

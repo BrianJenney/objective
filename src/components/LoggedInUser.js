@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { withStyles, useTheme } from '@material-ui/core/styles';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { fonts } from './Theme/fonts';
 import { NavLink, MenuLink } from './common';
@@ -69,53 +68,48 @@ const LoggedInUser = ({ name, logout }) => {
   return xs ? (
     <NavLink to="/account/overview">Hi, {name}</NavLink>
   ) : (
-      <div className="logged-in-user-desktop">
-        <Button
-          margin="0 10px"
-          aria-haspopup="true"
-          onClick={handleClick}
-          style={{ backgroundColor: 'transparent', padding: 0 }}
+    <div className="logged-in-user-desktop">
+      <Button
+        margin="0 10px"
+        aria-haspopup="true"
+        onClick={handleClick}
+        style={{ backgroundColor: 'transparent', padding: 0 }}
+      >
+        <Typography
+          style={{
+            fontFamily: $brandSans,
+            fontSize: '16px',
+            letterSpacing: '1px'
+          }}
         >
-          <Typography
-            style={{
-              fontFamily: $brandSans,
-              fontSize: '16px',
-              letterSpacing: '1px',
-              lineHeight: '1rem'
-            }}
-          >
-            Hi, {name}
-          </Typography>{' '}
-          &nbsp; {xs ? '' : <ExpandMore />}
-        </Button>
+          Hi, {name}
+        </Typography>{' '}
+        &nbsp; {xs ? '' : <ExpandMore />}
+      </Button>
 
-        <StyledMenu
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {menuItems.map(menuItem =>
-            menuItem.key === 'logout' ? (
-              <NavLink onClick={logout}>
-                <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
-                  <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
-                </StyledMenuItem>
-              </NavLink>
-            ) : (
-                <NavLink to={menuItem.to}>
-                  <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
-                    <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
-                  </StyledMenuItem>
-                </NavLink>
-              )
-          )}
-        </StyledMenu>
-      </div>
-    );
+      <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+        {menuItems.map(menuItem =>
+          menuItem.key === 'logout' ? (
+            <NavLink onClick={logout}>
+              <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
+                <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
+              </StyledMenuItem>
+            </NavLink>
+          ) : (
+            <NavLink to={menuItem.to}>
+              <StyledMenuItem key={menuItem.key} button onClick={handleClose}>
+                <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
+              </StyledMenuItem>
+            </NavLink>
+          )
+        )}
+      </StyledMenu>
+    </div>
+  );
 };
 
 LoggedInUser.propTypes = {
+  name: PropTypes.string,
   logout: PropTypes.func.isRequired
 };
 
