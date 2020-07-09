@@ -28,7 +28,7 @@ const LPParagraph = ({ data, value, xs, noBorder, hideText }) => {
   const mobileStyles = transformMobileStyle(data);
   let textPadding = '0 0 40px 60px';
   if (desktopStyles.float && desktopStyles.float === 'right') {
-    textPadding = '0 0 40px 10px';
+    textPadding = '0 0 40px 125px';
   }
 
   const handleToggle = useCallback(() => {
