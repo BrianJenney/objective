@@ -88,7 +88,7 @@ export const buildComponents = (page, xs, products) => {
               hideText={comp.desktopStyle.wordWrap}
             />
             {desktopStyle.border ? (
-              <div style={{ padding: '50px 0' }}>
+              <div style={{ padding: xs ? '30px 0 20px' : '50px 0 20px' }}>
                 <hr style={{ ...borderStyle, width: '193px' }}></hr>
               </div>
             ) : null}
