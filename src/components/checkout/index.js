@@ -416,14 +416,14 @@ const Checkout = ({
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
-    if (paymentMethodNonce !== '') {
+    if (paymentMethodNonce) {
       if (cart.items.length > 0) {
         requestCreateOrder(
           { ...cart, hideLPCoupon, ...payload, account_jwt },
           { paymentMethodNonce }
         );
       }
-    } else if (paymentMethodToken !== '') {
+    } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
         requestCreateOrder(
           { ...cart, hideLPCoupon, ...payload, account_jwt },
