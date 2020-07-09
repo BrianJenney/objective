@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, createRef } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../../modules/cart/functions';
@@ -9,18 +9,14 @@ const LPButton = ({ history, data }) => {
   const products = useSelector(state => state.catalog.variants);
   const cart = useSelector(state => state.cart);
   const prodAdded = useSelector(state => state.utils.lpProdAdded);
-  const ref = createRef();
+
   const dispatch = useDispatch();
 
   const handleClick = useCallback(() => {
     if (cart && products) {
       handleAddToCart();
     }
-    ref.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }, [cart, products, dispatch, ref]);
+  }, [cart, products, dispatch]);
 
   const handleAddToCart = useCallback(() => {
     setTimeout(() => {
