@@ -227,7 +227,10 @@ export const receivedCancelOrderFailure = order => async (dispatch, getState) =>
   });
 };
 
-export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null }) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {
@@ -256,7 +259,10 @@ export const requestFindOrdersByAccount = (accountJwt, query = { accountId: null
   });
 };
 
-export const requestFindUnauthenticatedOrders = (accountJwt, query = { accountId: null }) => (dispatch, getState) => {
+export const requestFindUnauthenticatedOrders = (accountJwt, query = { accountId: null }) => (
+  dispatch,
+  getState
+) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const params = {
     params: {

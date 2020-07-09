@@ -71,7 +71,13 @@ const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload)
 
   const payloadView =
     payloadSummary && !isActiveStep ? (
-      <Box width={1} px={xs ? 8 : 14} py={xs ? 3 : 4} bgcolor="rgba(252, 248, 244, 0.5)" color="#231f20">
+      <Box
+        width={1}
+        px={xs ? 8 : 14}
+        py={xs ? 3 : 4}
+        bgcolor="rgba(252, 248, 244, 0.5)"
+        color="#231f20"
+      >
         {payloadSummary}
       </Box>
     ) : null;
@@ -183,7 +189,8 @@ const Checkout = ({
   }, [currentUser.patchAccountError]);
 
   useEffect(() => {
-    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
+    const isGuest =
+      currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
     if (accountCreated && paymentDetailsUpdated && !addressBookUpdated && !isGuest) {
       requestPatchAccount(account_jwt, {
         addressBook: [payload.shippingAddress]
@@ -204,9 +211,15 @@ const Checkout = ({
 
   useEffect(() => {
     const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
-    const isGuest = currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
+    const isGuest =
+      currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
 
-    if (accountCreated && account_jwt && !paymentDetailsUpdated && (isPaypalPaymentMethod || isGuest)) {
+    if (
+      accountCreated &&
+      account_jwt &&
+      !paymentDetailsUpdated &&
+      (isPaypalPaymentMethod || isGuest)
+    ) {
       setPaymentDetailsUpdated(true);
     }
   }, [accountCreated]);
@@ -259,14 +272,21 @@ const Checkout = ({
       //Make a copy and preserve to preserve the payload
       let paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
       //normalize paymentDetailsPayload
-      paymentDetailsPayload.details.shippingAddress.address1 = paymentDetailsPayload.details.shippingAddress.line1;
-      paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details.shippingAddress.line2
-        ? (paymentDetailsPayload.details.shippingAddress.address1 = paymentDetailsPayload.details.shippingAddress.line2)
+      paymentDetailsPayload.details.shippingAddress.address1 =
+        paymentDetailsPayload.details.shippingAddress.line1;
+      paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details
+        .shippingAddress.line2
+        ? (paymentDetailsPayload.details.shippingAddress.address1 =
+            paymentDetailsPayload.details.shippingAddress.line2)
         : '';
-      paymentDetailsPayload.details.shippingAddress.zipcode = paymentDetailsPayload.details.shippingAddress.postalCode;
-      paymentDetailsPayload.details.shippingAddress.country = paymentDetailsPayload.details.shippingAddress.countryCode;
-      paymentDetailsPayload.details.shippingAddress.firstName = paymentDetailsPayload.details.firstName;
-      paymentDetailsPayload.details.shippingAddress.lastName = paymentDetailsPayload.details.lastName;
+      paymentDetailsPayload.details.shippingAddress.zipcode =
+        paymentDetailsPayload.details.shippingAddress.postalCode;
+      paymentDetailsPayload.details.shippingAddress.country =
+        paymentDetailsPayload.details.shippingAddress.countryCode;
+      paymentDetailsPayload.details.shippingAddress.firstName =
+        paymentDetailsPayload.details.firstName;
+      paymentDetailsPayload.details.shippingAddress.lastName =
+        paymentDetailsPayload.details.lastName;
       delete paymentDetailsPayload.details.shippingAddress.line1;
       if (paymentDetailsPayload.details.shippingAddress.line2) {
         delete paymentDetailsPayload.details.shippingAddress.line2;
@@ -296,7 +316,9 @@ const Checkout = ({
         });
 
         setShippingAddressActive(paymentDetailsPayload.details.shippingAddress);
-        dispatch(requestSetShippingAddress(cart._id, paymentDetailsPayload.details.shippingAddress));
+        dispatch(
+          requestSetShippingAddress(cart._id, paymentDetailsPayload.details.shippingAddress)
+        );
         setActiveStep(2);
       }, 100);
     }
@@ -396,11 +418,11 @@ const Checkout = ({
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
-    if (paymentMethodNonce !== '') {
+    if (paymentMethodNonce) {
       if (cart.items.length > 0) {
         requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodNonce });
       }
-    } else if (paymentMethodToken !== '') {
+    } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
         requestCreateOrder({ ...cart, ...payload, account_jwt }, { paymentMethodToken });
       }
@@ -532,7 +554,14 @@ const Checkout = ({
                     style={{ fontSize: '14px', padding: '50px 20px 12px' }}
                   />
                 ) : null}
-                <Grid item flex={1} xs={12} md={8} style={xs ? { padding: 0 } : {}} className="right-side">
+                <Grid
+                  item
+                  flex={1}
+                  xs={12}
+                  md={8}
+                  style={xs ? { padding: 0 } : {}}
+                  className="right-side"
+                >
                   <div ref={stepRefs[0]}>
                     <Panel
                       title={getPanelTitleContent(xs, 0, activeStep, null, payload.shippingAddress)}
