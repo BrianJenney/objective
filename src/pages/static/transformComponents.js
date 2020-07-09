@@ -5,7 +5,7 @@ import React from 'react';
 import { Box, Container } from '@material-ui/core';
 import Scrollchor from 'react-scrollchor';
 import { PropTypes } from 'prop-types';
-import Paragraph from '../bundleLP/Paragraph';
+import LPParagraph from '../bundleLP/LPParagraph';
 
 const commonPropTypes = {
   data: PropTypes.object,
@@ -120,7 +120,7 @@ export const generateComponents = (page, xs) => {
         components.push(<SectionTitle data={comp} value={comp.value} xs={xs} />);
         break;
       case 'paragraph':
-        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
+        components.push(<LPParagraph data={comp} value={comp.value} xs={xs} />);
         break;
       case 'image':
         components.push(<Image data={comp} xs={xs} />);
