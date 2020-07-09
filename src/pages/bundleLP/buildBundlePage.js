@@ -63,11 +63,15 @@ export const buildComponents = (page, xs, products) => {
       case 'button':
         const btnType = comp.value.toLowerCase() === 'add to cart';
         components.push(
-          <div style={xs ? mobileStyle : desktopStyle}>
+          <div style={xs ? mobileStyle : desktopStyle} className="button-LP">
             {btnType ? (
               <LPButton data={comp} />
             ) : (
-              <Button to={comp.URL} component={NavLink} style={{ textDecoration: 'none' }}>
+              <Button
+                to={comp.URL}
+                component={NavLink}
+                style={{ textDecoration: 'none', fontSize: '16px', width: '276px' }}
+              >
                 {comp.value}
               </Button>
             )}
