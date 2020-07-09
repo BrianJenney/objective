@@ -11,7 +11,7 @@ const commonPropTypes = {
 
 const useStyles = makeStyles(theme => ({
   btn: {
-    fontFamily: 'P22Underground',
+    fontFamily: 'P22-Underground',
     fontWeight: '500',
     fontSize: '16px',
     fontStretch: 'normal',
@@ -35,7 +35,7 @@ const LPParagraph = ({ data, value, xs, noBorder, hideText }) => {
   const mobileStyles = transformMobileStyle(data);
   let textPadding = '0 0 40px 60px';
   if (desktopStyles.float && desktopStyles.float === 'right') {
-    textPadding = '0 0 40px 10px';
+    textPadding = '0 70px 40px 90px';
   }
 
   const handleToggle = useCallback(() => {

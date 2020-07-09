@@ -26,7 +26,9 @@ export const buildComponents = (page, xs, products) => {
       case 'image':
         components.push(
           <div
-            style={xs ? { margin: comp.mobileStyle.margin } : { margin: comp.desktopStyle.margin }}
+            style={
+              xs ? { padding: comp.mobileStyle.margin } : { padding: comp.desktopStyle.margin }
+            }
           >
             <img
               src={xs ? comp.mobileImg : comp.desktopImg}
@@ -121,11 +123,7 @@ export const buildComponents = (page, xs, products) => {
       case 'oneColSection':
         components.push(
           <div
-            style={
-              xs
-                ? { ...mobileStyle, margin: comp.mobileStyle.margin }
-                : { ...desktopStyle, margin: comp.desktopStyle.margin }
-            }
+            style={xs ? { ...mobileStyle } : { ...desktopStyle, margin: comp.desktopStyle.margin }}
           >
             {buildComponents(comp.value, xs)}
           </div>
