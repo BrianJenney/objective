@@ -4,7 +4,7 @@ import { transformDesktopStyle, transformMobileStyle } from '../static/transform
 
 const useStyles = makeStyles(theme => ({
   btn: {
-    fontFamily: 'P22Underground',
+    fontFamily: 'P22-Underground',
     fontWeight: '500',
     fontSize: '16px',
     fontStretch: 'normal',
