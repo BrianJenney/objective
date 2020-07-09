@@ -261,11 +261,12 @@ const Header = ({ currentUser, location }) => {
                   <Logo />
                 </NavLink>
               </Grid>
-              {isBundleLP ? (
-                <></>
-              ) : (
-                <Grid item xs={4}>
-                  <Grid container className="align-right">
+
+              <Grid item xs={4}>
+                <Grid container className="align-right">
+                  {isBundleLP ? (
+                    <></>
+                  ) : (
                     <Grid item xs={6} className="acct h-pding">
                       <StyledLink
                         component={RouterLink}
@@ -273,13 +274,13 @@ const Header = ({ currentUser, location }) => {
                         onClick={segmentTrackNavigationClick}
                       />
                     </Grid>
-                    <Grid item xs={6} className="header-shop-holder h-pding">
-                      {!isCheckoutPage && <ShoppingCart />}
-                      {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
-                    </Grid>
+                  )}
+                  <Grid item xs={6} className="header-shop-holder h-pding">
+                    {!isCheckoutPage && <ShoppingCart isBundleLP={isBundleLP} />}
+                    {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
                   </Grid>
                 </Grid>
-              )}
+              </Grid>
             </Grid>
           </Container>
         </div>
