@@ -4,6 +4,7 @@ import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
 import LPButton from './LPButton';
 import LPParagraph from './LPParagraph';
+import LPNavigation from './LPNavigation';
 import { Title, transformMobileStyle, transformDesktopStyle } from '../static/transformComponents';
 
 export const buildComponents = (page, xs, products) => {
@@ -60,17 +61,13 @@ export const buildComponents = (page, xs, products) => {
       case 'sectionTitle':
         components.push(<Title data={comp} value={comp.value} xs={xs} />);
         break;
+      case 'navigation':
+        components.push(<LPNavigation data={comp} xs={xs} />);
+        break;
       case 'button':
-        const btnType = comp.value.toLowerCase() === 'add to cart';
         components.push(
           <div style={xs ? mobileStyle : desktopStyle}>
-            {btnType ? (
-              <LPButton data={comp} />
-            ) : (
-              <Button to={comp.URL} component={NavLink} style={{ textDecoration: 'none' }}>
-                {comp.value}
-              </Button>
-            )}
+            <LPButton data={comp} />
           </div>
         );
         break;
