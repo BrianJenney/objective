@@ -69,6 +69,7 @@ const LPParagraph = ({ data, value, xs, noBorder, hideText }) => {
     return (
       <div
         key={i}
+        id={data.name}
         style={xs ? mobileStyles : desktopStyles}
         dangerouslySetInnerHTML={{ __html: item }}
       ></div>
