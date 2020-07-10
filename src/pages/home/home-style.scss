@@ -297,12 +297,13 @@
     button {
       font-size: 16px !important;
       letter-spacing: 1.65px !important;
-      padding: 19px !important;
+      // padding: 19px !important;
+      height: 60px
     }
     .button-LP {
       button {
         font-size: 16px !important;
-        // padding: 0 0 40px !important;
+        padding: 0 0 40px !important;
         text-align: left
       }
     }
