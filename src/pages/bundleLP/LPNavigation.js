@@ -17,7 +17,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       height: 60,
       margin: '20px auto',
-      paddingLeft: '50px'
+      paddingLeft: '50px',
+      width: 'fit-content',
+      padding: '0 30px'
     }
   },
 
