@@ -28,6 +28,7 @@ import {
   TermsPage,
   NotFoundPage,
   StaticPageOne,
+  BundleLP,
   TrackOrderPage
 } from './pages';
 
@@ -171,7 +172,7 @@ export default [
   { path: '/landing/fastasleep-melatonin', exact: true, component: FastAsleepMelatonin },
   { path: '/landing/fastasleep-mom', exact: true, component: FastAsleepMom },
   { path: '/landing/:slug', exact: true, component: StaticPageOne },
-
+  { path: '/bundle/:slug', exact: true, component: BundleLP },
   { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
   { path: '/privacypolicy/:slug', exact: true, component: PrivacyPolicyPage },
 

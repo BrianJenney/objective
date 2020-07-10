@@ -1,4 +1,10 @@
-import { REQUEST_PAGE, RECEIVED_PAGE, REQUEST_PRIVACY, RECEIVED_PRIVACY } from './types';
+import {
+  REQUEST_PAGE,
+  RECEIVED_PAGE,
+  REQUEST_PRIVACY,
+  RECEIVED_PRIVACY,
+  PAGE_ERROR
+} from './types';
 
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
@@ -97,5 +103,12 @@ export const receivedPrivacy = page => async dispatch => {
   dispatch({
     type: RECEIVED_PRIVACY,
     payload: page
+  });
+};
+
+export const pageError = msg => dispatch => {
+  dispatch({
+    type: PAGE_ERROR,
+    payload: msg
   });
 };

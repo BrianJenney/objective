@@ -68,6 +68,7 @@ const Header = ({ currentUser, location, history }) => {
   const theme = useTheme();
   const burger = useMediaQuery(theme.breakpoints.down('sm'));
   const locationState = history.location.state;
+  const isBundleLP = matchPath(location.pathname, { path: '/bundle' });
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
@@ -234,7 +235,7 @@ const Header = ({ currentUser, location, history }) => {
                   component={RouterLink}
                   to="/gallery"
                 >
-                  Shop
+                  {isBundleLP ? '' : 'Shop'}
                 </StyledLink>
               </Grid>
               <Grid item sm={1} className="h-pding">
@@ -243,7 +244,7 @@ const Header = ({ currentUser, location, history }) => {
                   component={RouterLink}
                   to="/journal"
                 >
-                  Journal
+                  {isBundleLP ? '' : 'Journal'}
                 </StyledLink>
               </Grid>
               <Grid
@@ -269,16 +270,22 @@ const Header = ({ currentUser, location, history }) => {
                 justify="space-around"
                 alignItems="center"
               >
-                <Grid item xs="auto" className="h-pding">
-                  <StyledLink
-                    component={RouterLink}
-                    {...accountMenuItemConf}
-                    onClick={segmentTrackNavigationClick}
-                  />
-                </Grid>
+                {isBundleLP ? (
+                  <></>
+                ) : (
+                  <Grid item xs="auto" className="h-pding">
+                    <StyledLink
+                      component={RouterLink}
+                      {...accountMenuItemConf}
+                      onClick={segmentTrackNavigationClick}
+                    />
+                  </Grid>
+                )}
 
                 <Grid item xs="auto" className="h-pding">
-                  {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
+                  {!isCheckoutPage && (
+                    <ShoppingCart hideLPCoupon={locationState} isBundleLP={isBundleLP} />
+                  )}
                   {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
                 </Grid>
               </Grid>

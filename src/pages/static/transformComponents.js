@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
+import LPParagraph from '../bundleLP/LPParagraph';
 
 export const Title = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
@@ -9,17 +10,11 @@ export const SectionTitle = ({ data, value, xs }) => (
   <div style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}>{value}</div>
 );
 
-export const Paragraph = ({ data, value, xs }) =>
-  value.map((item, i) => (
-    <div
-      key={i}
-      style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
-      dangerouslySetInnerHTML={{ __html: item }}
-    ></div>
-  ));
-
 export const Image = ({ data, xs }) => (
-  <img style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)} src={data.desktopImg} />
+  <img
+    style={xs ? transformMobileStyle(data) : transformDesktopStyle(data)}
+    src={data.desktopImg}
+  />
 );
 
 export const generateComponents = (page, xs) => {
@@ -41,7 +36,7 @@ export const generateComponents = (page, xs) => {
         components.push(<SectionTitle data={comp} value={comp.value} xs={xs} />);
         break;
       case 'paragraph':
-        components.push(<Paragraph data={comp} value={comp.value} xs={xs} />);
+        components.push(<LPParagraph data={comp} value={comp.value} xs={xs} />);
         break;
       case 'image':
         components.push(<Image data={comp} xs={xs} />);
@@ -74,7 +69,7 @@ export const generateComponents = (page, xs) => {
   return components;
 };
 
-export const transformDesktopStyle = data => {
+export const transformDesktopStyle = (data, noBorder) => {
   const { desktopStyle, type } = data;
   return Object.keys(desktopStyle).reduce((obj, value) => {
     if (!obj[value]) {
@@ -84,11 +79,17 @@ export const transformDesktopStyle = data => {
         obj.backgroundColor = desktopStyle[value];
       } else if (value === 'borderPlacement') {
         const borderVal = desktopStyle[value];
-        obj[borderVal] = desktopStyle.borderColor;
+        if (noBorder) {
+          obj[borderVal] = null;
+        } else {
+          obj[borderVal] = desktopStyle.borderColor;
+        }
       } else if (value === 'margin') {
         // skip margin value from Contentful
       } else if (value === 'align') {
         obj.textAlign = desktopStyle[value];
+      } else if (value === 'fontColor') {
+        obj.color = desktopStyle[value];
       } else {
         obj[value] = desktopStyle[value];
       }
@@ -115,6 +116,8 @@ export const transformMobileStyle = data => {
         // skip margin value from Contentful
       } else if (value === 'align') {
         obj.textAlign = mobileStyle[value];
+      } else if (value === 'fontColor') {
+        obj.color = mobileStyle[value];
       } else {
         obj[value] = mobileStyle[value];
       }
