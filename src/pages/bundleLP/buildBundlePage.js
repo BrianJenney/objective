@@ -120,11 +120,7 @@ export const buildComponents = (page, xs, products) => {
       case 'oneColSection':
         components.push(
           <div
-            style={
-              xs
-                ? { ...mobileStyle, margin: '50px 0' }
-                : { ...desktopStyle, margin: comp.desktopStyle.margin }
-            }
+            style={xs ? { ...mobileStyle } : { ...desktopStyle, margin: comp.desktopStyle.margin }}
           >
             {buildComponents(comp.value, xs)}
           </div>
