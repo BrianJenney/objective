@@ -1,11 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Logo from '../../../components/common/Icons/Logo/Logo';
-import Scrollchor from 'react-scrollchor';
+import PropTypes from 'prop-types';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Container, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import Scrollchor from 'react-scrollchor';
+import Logo from '../../../components/common/Icons/Logo/Logo';
+import { StyledContainer } from '../../../assets/styles/StyledComponents';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,9 +35,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexWrap: 'nowrap',
     [theme.breakpoints.down('sm')]: {
       paddingTop: 15
     }
@@ -45,8 +46,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: props.desktopStyle.fontSize,
     fontFamily: props.desktopStyle.fontFamily,
     lineHeight: props.desktopStyle.lineHeight,
-    textTransform: props.desktopStyle.textTransform,
-    width: props.desktopStyle.width
+    textTransform: props.desktopStyle.textTransform
   })
 }));
 
@@ -58,20 +58,29 @@ const Header = ({ data, template, type }) => {
   return (
     <Grid className={classes.root}>
       {!sm ? (
-        <Container>
-          <Grid className={classes.container}>
-            <NavLink to="/">
-              <Logo />
-            </NavLink>
-            {data.value.map(val => {
-              return (
+        <StyledContainer>
+          <Grid
+            container
+            spacing={1}
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            className={classes.container}
+          >
+            <Grid item sm="auto">
+              <NavLink to="/">
+                <Logo />
+              </NavLink>
+            </Grid>
+            {data.value.map(val => (
+              <Grid item sm="auto">
                 <Scrollchor to={`#${val.scroll}`} className={`${classes.link} ${template}-${type}`}>
                   {val.label}
                 </Scrollchor>
-              );
-            })}
+              </Grid>
+            ))}
           </Grid>
-        </Container>
+        </StyledContainer>
       ) : (
         <Grid className={classes.container}>
           <NavLink to="/">
@@ -81,6 +90,12 @@ const Header = ({ data, template, type }) => {
       )}
     </Grid>
   );
+};
+
+Header.propTypes = {
+  data: PropTypes.object.isRequired,
+  template: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 };
 
 export default Header;
