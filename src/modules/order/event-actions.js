@@ -24,7 +24,7 @@ export const emitOrderSubmitted = args => async (dispatch, getState) => {
 
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
-    '/exchange/be-events/fe.order.submitted',
+    '/exchange/fe-events/fe.order.submitted',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
