@@ -111,6 +111,11 @@ const AccountPaymentDetails = ({
   const addressBook = get(currentUser, 'data.addressBook', []);
   const titleFontSize = formType === FORM_TYPES.ACCOUNT ? 36 : xs ? 24 : 30; // eslint-disable-line
   const cart = useSelector(state => state.cart);
+  const orderErrorMessageState = useSelector(state => state.order.order);
+  const orderErrorState = useSelector(state => state.order.transactionError);
+  const orderErrorMessage = usePrevious(orderErrorMessageState);
+  const orderError = usePrevious(orderErrorState);
+
   useEffect(() => {
     if (window.location.pathname.indexOf('/account/payment-details') !== -1) {
       window.analytics.page('Account Payment Details');
@@ -355,7 +360,9 @@ const AccountPaymentDetails = ({
                 mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
                 style={{ display: formType === FORM_TYPES.CHECKOUT ? 'none' : 'block' }}
               />
-
+              {typeof orderErrorMessage === 'string' && orderError && (
+                <AlertPanel mb={2} type="error" text={orderErrorMessage} />
+              )}
               <FormControlLabel
                 key="formControlLabelCreditCardMode"
                 style={{ marginLeft: '-6px' }}
