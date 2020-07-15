@@ -100,18 +100,18 @@ const columns = [
         const trackings = getTracking(rowData[4], rowData[3]);
         return trackings
           ? trackings.map(tracking => (
-              <>
-                <Link
-                  href={tracking.url}
-                  style={{ color: 'black' }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {tracking.number}
-                </Link>
-                <br />
-              </>
-            ))
+            <>
+              <Link
+                href={tracking.url}
+                style={{ color: 'black' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {tracking.number}
+              </Link>
+              <br />
+            </>
+          ))
           : null;
       }
     }

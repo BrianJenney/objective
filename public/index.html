@@ -2,20 +2,29 @@
 <html lang="en">
   <head>
     <!-- OneTrust Cookies Consent Notice start -->
+    <script
+      src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+      type="text/javascript"
+      charset="UTF-8"
+      data-domain-script="623f893d-7d39-40fc-b8a3-0b01db1d79b9"
+    ></script>
     <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="623f893d-7d39-40fc-b8a3-0b01db1d79b9"></script>
-    <script src="https://cdn.logrocket.io/LogRocket.min.js"></script>
     <script type="text/javascript">
-    function OptanonWrapper() { }
+      function OptanonWrapper() {}
     </script>
+    <!-- Optimizely -->
+    <script src="https://cdn.optimizely.com/js/18294062904.js"></script>
     <!-- LogRocket -->
     <script src="https://cdn.logrocket.io/LogRocket.min.js"></script>
-    <script>window.LogRocket && window.LogRocket.init('oe5etj/objective-dev');</script>
+    <script>if ("%REACT_APP_LOGROCKET%".match(/oe5etj/)) {
+      window.LogRocket && window.LogRocket.init("%REACT_APP_LOGROCKET%");
+      }</script>
     <!-- OneTrust Cookies Consent Notice end -->
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/objective_favicon.png" />
     <meta
-    name="viewport"
-    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, maximum-scale=1.0"
+      name="viewport"
+      content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no maximum-scale=1.0"
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#000000" />
@@ -29,12 +38,12 @@
       folder can be referenced from the HTML. Unlike "/favicon.ico" or "favicon.ico" , "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL. Learn how to configure a non-root public
       URL by running `npm run build`.
-
     -->
     <link rel="stylesheet" href="https://use.typekit.net/tdk0ckd.css" />
     <link rel="stylesheet" href="https://use.typekit.net/hzx0bjb.css" />
 
     <title>Objective</title>
+
     <script type="text/javascript">
       !(function() {
         var analytics = (window.analytics = window.analytics || []);
@@ -95,9 +104,10 @@
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-      gtag('config', 'UA-148808963-1');
+      gtag('config', 'UA-148808963-1', { optimize_id: 'GTM-5G8HP2X' });
     </script>
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

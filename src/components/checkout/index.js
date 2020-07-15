@@ -26,6 +26,7 @@ import { STEPS, STEP_KEYS, STEPS_V2, DATA_KEYS } from './constants';
 import { getDefaultEntity, scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
+import { requestCheckEmailExistence } from '../../modules/account/actions';
 import { resetOrderState } from '../../modules/order/actions';
 import { setCheckoutPaypalPayload, unsetCheckoutPaypalPayload } from '../../modules/paypal/actions';
 import IconButton from '@material-ui/core/IconButton';
@@ -120,6 +121,7 @@ const Checkout = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail, paymentMethods } = currentUser.data;
+  const order = useSelector(state => state.order.order);
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const paypalPayloadState = useSelector(state => state.paypal);
@@ -211,7 +213,7 @@ const Checkout = ({
   }, [paymentMethods]);
 
   useEffect(() => {
-    const isPaypalPaymentMethod = payload.method && payload.method === 'paypal' ? true : false;
+    const isPaypalPaymentMethod = !!(payload.method && payload.method === 'paypal');
     const isGuest =
       currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
 
@@ -269,9 +271,9 @@ const Checkout = ({
 
   useEffect(() => {
     if (Object.keys(paypalPayloadState).length > 0) {
-      //Make a copy and preserve to preserve the payload
-      let paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
-      //normalize paymentDetailsPayload
+      // Make a copy and preserve to preserve the payload
+      const paymentDetailsPayload = JSON.parse(JSON.stringify(paypalPayloadState));
+      // normalize paymentDetailsPayload
       paymentDetailsPayload.details.shippingAddress.address1 =
         paymentDetailsPayload.details.shippingAddress.line1;
       paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details
@@ -352,6 +354,14 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
+      if (
+        payload.shippingAddress &&
+        payload.shippingAddress.email &&
+        typeof payload.shippingAddress.email === 'string' &&
+        !account_jwt
+      ) {
+        dispatch(requestCheckEmailExistence(payload.shippingAddress.email));
+      }
     }
   }, [activeStep, payload.shippingAddress]);
 
@@ -378,6 +388,12 @@ const Checkout = ({
       history.push('/');
     }
   }, [cart._id]);
+
+  useEffect(() => {
+    if (orderError && activeStep === 2) {
+      setActiveStep(1);
+    }
+  }, [orderError]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
@@ -416,14 +432,14 @@ const Checkout = ({
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
-    if (paymentMethodNonce !== '') {
+    if (paymentMethodNonce) {
       if (cart.items.length > 0) {
         requestCreateOrder(
           { ...cart, hideLPCoupon, ...payload, account_jwt },
           { paymentMethodNonce }
         );
       }
-    } else if (paymentMethodToken !== '') {
+    } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
         requestCreateOrder(
           { ...cart, hideLPCoupon, ...payload, account_jwt },
@@ -709,7 +725,7 @@ const Checkout = ({
                   </IconButton>
                 ) : null}
                 <MuiDialogContent>
-                  <TransactionMessage orderError={orderError} />
+                  <TransactionMessage orderError={orderError} errorMessage={order} />
                 </MuiDialogContent>
               </Dialog>
             </Box>

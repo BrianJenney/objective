@@ -172,8 +172,9 @@ export const scrollToRef = ref => {
   if (!ref.current) {
     return null;
   }
-  ref.current.scrollIntoView({ behavior: 'smooth' });
+  ref.current.scrollIntoView({behavior: 'smooth'})
   return true;
+
 };
 
 export const getDaysDiff = dateFrom => {

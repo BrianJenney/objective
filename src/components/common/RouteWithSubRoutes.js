@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 
@@ -59,6 +59,9 @@ const RouteWithSubRoutes = ({
     }
     Component = () => <Redirect to={redirectPath} />;
   }
+  useEffect(() => {
+    window.gtag('config', 'UA-148808963-1', { page_path: window.location.pathname });
+  }, [window.location.pathname]);
 
   if (
     (location.pathname.startsWith('/account') && currentUser.fetchAccountLoading === null) ||

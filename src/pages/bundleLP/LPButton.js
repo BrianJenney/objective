@@ -16,10 +16,10 @@ const LPButton = ({ history, data }) => {
     if (cart && products) {
       handleAddToCart();
     }
-    ref.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    // ref.current.scrollIntoView({
+    //   behavior: 'smooth',
+    //   block: 'start'
+    // });
   }, [cart, products, dispatch, ref]);
 
   const handleAddToCart = useCallback(() => {

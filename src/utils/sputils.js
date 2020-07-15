@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, useMediaQuery } from '@material-ui/core';
+import { Grid, useMediaQuery } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import {
@@ -15,6 +15,7 @@ import {
   Banner,
   List
 } from '../pages/static/components';
+import { StyledContainer } from '../assets/styles/StyledComponents';
 
 export const buildPage = page => {
   const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
@@ -36,9 +37,9 @@ export const GenerateTemplate = ({ data, header, template }) => {
   return (
     <div>
       <Header data={header} template={template} type={header.type} />
-      <Container>
+      <StyledContainer>
         <RenderComponents components={data} />
-      </Container>
+      </StyledContainer>
     </div>
   );
 };
