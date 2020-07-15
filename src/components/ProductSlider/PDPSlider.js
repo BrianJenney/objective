@@ -93,13 +93,13 @@ const PDPSlider = props => {
     imagesToRender.map(image => {
       let imageUrlOriginal = `${image.fields.file.url}?w=687&w=687&q=50`;
       const imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/mj9bpefl6wof/');
-      imageUrlOriginal = `https://nutranext.imgix.net/${imageUrlOriginalSplit[1]}&auto=compress,format`;
+      imageUrlOriginal = `https://nutranext.imgix.net/${imageUrlOriginalSplit[1]}&auto=format`;
 
       let imageUrlThumbnail = `${image.fields.file.url}?w=120&h=120&q=50`;
       const imageUrlThumbnailSplit = imageUrlThumbnail.split(
         '//images.ctfassets.net/mj9bpefl6wof/'
       );
-      imageUrlThumbnail = `https://nutranext.imgix.net/${imageUrlThumbnailSplit[1]}&auto=compress,format`;
+      imageUrlThumbnail = `https://nutranext.imgix.net/${imageUrlThumbnailSplit[1]}&auto=format`;
 
       if (!xs) {
         carouselImages.push({
