@@ -168,13 +168,17 @@ const BlogPost = ({ computedMatch }) => {
             <Box className="content" py={8}>
               <StyledContainer>
                 <Box className="center">
-                  <div className="flex">
-                    <span className="categoryName">
-                      <Link to={`/journal/category/${categorySlug}`}>{category}</Link>
-                    </span>
-                    |<span className="minRead">{post.fields.minuteRead} Min Read</span>
-                  </div>
-                  <h1>{post.fields.title}</h1>
+                  <Grid container direction="column" justify="center" alignItems="center">
+                    <div className="flex">
+                      <span className="categoryName">
+                        <Link to={`/journal/category/${categorySlug}`}>{category}</Link>
+                      </span>
+                      <span className="minRead">| {post.fields.minuteRead} Min Read</span>
+                    </div>
+                    <Grid item xs={12} sm={8} md={6}>
+                      <h1>{post.fields.title}</h1>
+                    </Grid>
+                  </Grid>
                   <img src={imageUrl} alt={post.fields.featuredImage.fields.title} />
                 </Box>
                 <Grid container xs={12} md={10}>
