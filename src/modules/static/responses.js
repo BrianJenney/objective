@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import store from '../../store';
-import { receivedPage, receivedPrivacy } from './actions';
+import { receivedPage, receivedPrivacy, pageError } from './actions';
 import { debugRabbitResponse } from '../../utils/misc';
 
 export const handlePageResponse = (status, data, fields, properties) => {
@@ -8,7 +9,13 @@ export const handlePageResponse = (status, data, fields, properties) => {
       debugRabbitResponse('Contentful Response', status, data, fields, properties);
       // status handling
       if (status === 'success') {
-        store.dispatch(receivedPage(data));
+        if (Object.keys(data).length) {
+          store.dispatch(receivedPage(data));
+        } else {
+          // Empty page will throw 404
+          const err = { error: 'No page data' };
+          store.dispatch(pageError(err));
+        }
       } else {
         console.log('THIS FAILED');
       }
@@ -23,6 +30,6 @@ export const handlePageResponse = (status, data, fields, properties) => {
       }
       break;
     default:
-      console.log('bad response ' + fields.routingKey);
+      console.log(`bad response ${fields.routingKey}`);
   }
 };

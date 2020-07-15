@@ -164,7 +164,7 @@ export default [
     component: BlogCategory
   },
   { path: '/journal/tag/:tag_slug', exact: true, component: BlogTag },
-  { path: '/journal/posts/:post_slug', exact: true, component: BlogPost },
+  { path: '/journal/posts/:slug', exact: true, component: BlogPost },
   { path: '/journal', exact: true, component: Blog },
   { path: '/newyear', exact: true, component: NewYear },
   { path: '/landing/sleepandimmunity', exact: true, component: SleepImmunity },
