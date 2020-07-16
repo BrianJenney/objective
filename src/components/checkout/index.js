@@ -277,8 +277,7 @@ const Checkout = ({
         paymentDetailsPayload.details.shippingAddress.line1;
       paymentDetailsPayload.details.shippingAddress.address2 = paymentDetailsPayload.details
         .shippingAddress.line2
-        ? (paymentDetailsPayload.details.shippingAddress.address1 =
-            paymentDetailsPayload.details.shippingAddress.line2)
+        ? paymentDetailsPayload.details.shippingAddress.line2
         : '';
       paymentDetailsPayload.details.shippingAddress.zipcode =
         paymentDetailsPayload.details.shippingAddress.postalCode;
