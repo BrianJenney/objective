@@ -28,6 +28,7 @@ import { STEP_KEYS, STEPS_V2 } from './constants';
 import { scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
+import { requestCheckEmailExistence } from '../../modules/account/actions';
 import { resetOrderState } from '../../modules/order/actions';
 import { setCheckoutPaypalPayload, unsetCheckoutPaypalPayload } from '../../modules/paypal/actions';
 import TransactionMessage from './TransactionMessage';
@@ -117,6 +118,7 @@ const Checkout = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail, paymentMethods } = currentUser.data;
+  const order = useSelector(state => state.order.order);
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const paypalPayloadState = useSelector(state => state.paypal);
@@ -352,6 +354,14 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
+      if (
+        payload.shippingAddress &&
+        payload.shippingAddress.email &&
+        typeof payload.shippingAddress.email === 'string' &&
+        !account_jwt
+      ) {
+        dispatch(requestCheckEmailExistence(payload.shippingAddress.email));
+      }
     }
   }, [activeStep, payload.shippingAddress]);
 
@@ -378,6 +388,12 @@ const Checkout = ({
       history.push('/');
     }
   }, [cart._id]);
+
+  useEffect(() => {
+    if (orderError && activeStep === 2) {
+      setActiveStep(1);
+    }
+  }, [orderError]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
@@ -716,7 +732,7 @@ const Checkout = ({
                   </IconButton>
                 ) : null}
                 <MuiDialogContent>
-                  <TransactionMessage orderError={orderError} />
+                  <TransactionMessage orderError={orderError} errorMessage={order} />
                 </MuiDialogContent>
               </Dialog>
             </Box>

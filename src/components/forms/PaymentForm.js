@@ -233,9 +233,16 @@ const PaymentForm = ({
     },
     [passwordVisible, setPasswordVisible]
   );
-
+  const orderErrorMessageState = useSelector(state => state.order.order);
+  const orderErrorState = useSelector(state => state.order.transactionError);
+  const orderErrorMessage = usePrevious(orderErrorMessageState);
+  const orderError = usePrevious(orderErrorState);
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  let errorMessage = getErrorMessage(currentUser.patchAccountError);
+
+  if (typeof orderErrorMessage === 'string' && orderError) {
+    errorMessage = orderErrorMessage;
+  }
 
   const handleSetBillingAddressMode = (event, values, setValues) => {
     if (event.target.value === 'sameAsShipping') {

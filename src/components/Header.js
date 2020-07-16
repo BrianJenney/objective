@@ -228,24 +228,26 @@ const Header = ({ currentUser, location, history }) => {
         {promoVisible && contents && renderPromoBanner()}
         <div className="holder">
           <StyledContainer>
-            <Grid container spacing={3} direction="row" alignItems="center">
-              <Grid item sm={1} className="h-pding">
-                <StyledLink
-                  onClick={segmentTrackNavigationClick}
-                  component={RouterLink}
-                  to="/gallery"
-                >
-                  {isBundleLP ? '' : 'Shop'}
-                </StyledLink>
-              </Grid>
-              <Grid item sm={1} className="h-pding">
-                <StyledLink
-                  onClick={segmentTrackNavigationClick}
-                  component={RouterLink}
-                  to="/journal"
-                >
-                  {isBundleLP ? '' : 'Journal'}
-                </StyledLink>
+            <Grid container direction="row" alignItems="center" justify="space-between">
+              <Grid container sm={3} spacing={3} justify="flex-start">
+                <Grid item sm={4} className="h-pding">
+                  <StyledLink
+                    onClick={segmentTrackNavigationClick}
+                    component={RouterLink}
+                    to="/gallery"
+                  >
+                    {isBundleLP ? '' : 'Shop'}
+                  </StyledLink>
+                </Grid>
+                <Grid item sm={4} className="h-pding">
+                  <StyledLink
+                    onClick={segmentTrackNavigationClick}
+                    component={RouterLink}
+                    to="/journal"
+                  >
+                    {isBundleLP ? '' : 'Journal'}
+                  </StyledLink>
+                </Grid>
               </Grid>
               <Grid
                 container
@@ -275,7 +277,7 @@ const Header = ({ currentUser, location, history }) => {
                 {isBundleLP ? (
                   <></>
                 ) : (
-                  <Grid item xs="auto" className="h-pding">
+                  <Grid item lg="auto" className="h-pding name">
                     <StyledLink
                       component={RouterLink}
                       {...accountMenuItemConf}
@@ -284,7 +286,7 @@ const Header = ({ currentUser, location, history }) => {
                   </Grid>
                 )}
 
-                <Grid item xs="auto" className="h-pding">
+                <Grid item sm="auto" className="h-pding">
                   {!isCheckoutPage && (
                     <ShoppingCart hideLPCoupon={locationState} isBundleLP={isBundleLP} />
                   )}
