@@ -44,7 +44,6 @@ export const emitOrderSubmitted = args => async (dispatch, getState) => {
 };
 
 export const emitOrderCancelled = args => async (dispatch, getState) => {
-  console.log('called fn');
   dispatch({
     type: FE_ORDER_CANCELLED,
     payload: { isLoading: true }
@@ -53,7 +52,7 @@ export const emitOrderCancelled = args => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;
   const { merchantAccountId } = getState().storefront;
   const params = {
-    data: { ...args },
+    data: { orderId: args },
     params: {
       merchantAccountId,
       ...(localStorageClient.get('clickId') && {
@@ -64,7 +63,7 @@ export const emitOrderCancelled = args => async (dispatch, getState) => {
 
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
-    '/exchange/be-events/fe.order.cancelled',
+    '/exchange/fe-events/fe.order.cancelled',
     {
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
