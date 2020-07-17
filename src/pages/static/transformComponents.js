@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/no-danger */
 /* eslint-disable no-param-reassign */
 import React from 'react';
