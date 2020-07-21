@@ -364,7 +364,7 @@ const Footer = ({ location, currentUser }) => {
                   Objective is committed to making its website accessible for all users, and will
                   continue to take all steps necessary to ensure compliance with applicable laws.
                 </Typography>
-                <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                <Typography className="disclaimer-text">
                   If you have difficulty accessing any content, feature or functionality on our
                   website or on our other electronic platforms, please email us at{' '}
                   <Link
@@ -382,6 +382,12 @@ const Footer = ({ location, currentUser }) => {
                     800-270-5771
                   </Link>{' '}
                   so that we can provide you access through an alternative method.
+                </Typography>
+                <Typography
+                  className="disclaimer-text"
+                  style={{ textAlign: 'center', marginBottom: 0 }}
+                >
+                  1301 Sawgrass Corporate Parkway, Sunrise, FL 33323
                 </Typography>
               </Grid>
               <div className="ccpa-footer">
@@ -655,7 +661,7 @@ const Footer = ({ location, currentUser }) => {
                   Objective is committed to making its website accessible for all users, and will
                   continue to take all steps necessary to ensure compliance with applicable laws.
                 </Typography>
-                <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                <Typography className="disclaimer-text">
                   If you have difficulty accessing any content, feature or functionality on our
                   website or on our other electronic platforms, please email us at{' '}
                   <Link
@@ -671,6 +677,9 @@ const Footer = ({ location, currentUser }) => {
                   </Link>{' '}
                   or call us at 800-270-5771 so that we can provide you access through an
                   alternative method.
+                </Typography>
+                <Typography className="disclaimer-text" style={{ textAlign: 'center' }}>
+                  1301 Sawgrass Corporate Parkway, Sunrise, FL 33323
                 </Typography>
               </Grid>
               <div className="ccpa-footer">
