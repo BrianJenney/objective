@@ -678,7 +678,10 @@ const Footer = ({ location, currentUser }) => {
                   or call us at 800-270-5771 so that we can provide you access through an
                   alternative method.
                 </Typography>
-                <Typography className="disclaimer-text" style={{ textAlign: 'center' }}>
+                <Typography
+                  className="disclaimer-text"
+                  style={{ textAlign: 'center', marginBottom: 0 }}
+                >
                   1301 Sawgrass Corporate Parkway, Sunrise, FL 33323
                 </Typography>
               </Grid>
