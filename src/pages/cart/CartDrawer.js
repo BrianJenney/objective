@@ -95,10 +95,15 @@ const Cart = ({
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
+  const freeVariant = useSelector(state =>
+    state.catalog.variants.find(variant => variant.sku === 'TCXS-1BOT-PWD')
+  );
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   const hideLPCoupon = !!history.location.state;
+  console.log('Anne2');
+  console.log(cart.subtotal - cart.discount >= 50);
 
   useEffect(() => {
     const loc =
@@ -254,7 +259,7 @@ const Cart = ({
             <Typography className={classes.cartRestricted}>
               CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this
               product is not available in the state you selected. We hope to be able to offer{' '}
-                {restrictedProduct} in your state soon!
+              {restrictedProduct} in your state soon!
             </Typography>
             {cartCount === 0 && (
               <NavLink to="/gallery" underline="always" className={classes.link}>
@@ -375,8 +380,8 @@ const Cart = ({
                             -
                           </StyledCounterButton>
                           <StyledSmallCaps style={{ fontSize: '18px' }}>
-                          {item.quantity}
-                        </StyledSmallCaps>
+                            {item.quantity}
+                          </StyledSmallCaps>
                           <StyledCounterButton
                             color="primary"
                             onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
@@ -393,10 +398,10 @@ const Cart = ({
                     </Grid>
                     <StyledCardContent
                       style={
-                      !xsBreakpoint
-                        ? { paddingBottom: '0' }
-                        : { paddingBottom: '0px', paddingRight: '0px' }
-                    }
+                        !xsBreakpoint
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
                     >
                       <StyledFinePrint component="div" value={index}>
                         {!disableItemEditing && (
@@ -420,6 +425,108 @@ const Cart = ({
               </StyledDrawerGrid>
             ))
           : null}
+        {cart.subtotal - cart.discount >= 50 && (
+          <StyledDrawerGrid container direction="row">
+            <Grid
+              item
+              xs={4}
+              style={
+                !xsBreakpoint
+                  ? { minWidth: '126px', marginRight: '18px' }
+                  : { minWidth: '126px', marginRight: '18px' }
+              }
+            >
+              <Card>
+                <Link
+                  to={`/products/${freeVariant.slug}`}
+                  onClick={() => {
+                    segmentProductClickEvent({
+                      image_url: `https:${freeVariant.assets.thumbnail}`,
+                      sku: freeVariant.sku,
+                      price: Number.parseFloat(0),
+                      product_id: freeVariant.id,
+                      variant: freeVariant.id,
+                      name: freeVariant.name,
+                      brand: cart.storeCode,
+                      cart_id: cart._id,
+                      site_location: 'cart'
+                    });
+                  }}
+                >
+                  <CardMedia
+                    style={{ height: 126, width: 126 }}
+                    image={freeVariant.assets.thumbnail}
+                    title={freeVariant.name}
+                    onClick={onClickProduct}
+                  />
+                </Link>
+              </Card>
+            </Grid>
+            <Grid item xs={xsBreakpoint ? 8 : 7}>
+              <Card
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 'auto',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <StyledProductLink
+                  style={{ fontSize: '18px', padding: '0' }}
+                  align="left"
+                  onClick={onClickProduct}
+                >
+                  Free Item for you:
+                </StyledProductLink>
+                <Link
+                  to={`/products/${freeVariant.slug}`}
+                  style={{
+                    textDecoration: 'none',
+                    maxHeight: '40px'
+                  }}
+                  onClick={() => {
+                    segmentProductClickEvent({
+                      image_url: `https:${freeVariant.assets.thumbnail}`,
+                      sku: freeVariant.sku,
+                      price: Number.parseFloat(0),
+                      product_id: freeVariant.id,
+                      variant: freeVariant.id,
+                      name: freeVariant.name,
+                      brand: cart.storeCode,
+                      cart_id: cart._id,
+                      site_location: 'cart'
+                    });
+                  }}
+                >
+                  <StyledProductLink
+                    style={{ fontSize: '18px', padding: '0', marginBottom: '10px' }}
+                    align="left"
+                    onClick={onClickProduct}
+                  >
+                    {freeVariant.name}
+                  </StyledProductLink>
+                </Link>
+                <StyledCardContent
+                  style={
+                    !xsBreakpoint
+                      ? { paddingBottom: '0' }
+                      : { paddingBottom: '0px', paddingRight: '0px' }
+                  }
+                >
+                  <div></div>
+                  <StyledProductPrice
+                    style={
+                      xsBreakpoint ? { fontSize: '16px', color: '#8bbc00' } : { color: '#8bbc00' }
+                    }
+                  >
+                    FREE
+                  </StyledProductPrice>
+                </StyledCardContent>
+              </Card>
+            </Grid>
+          </StyledDrawerGrid>
+        )}
+
         {cart.items.length > 0 ? (
           <Grid item xs={12} style={{ textAlign: 'left' }}>
             <StyledTotalWrapper container direction="row" justify="space-between">
