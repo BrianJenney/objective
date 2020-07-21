@@ -17,6 +17,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ErrorIcon from '@material-ui/icons/Error';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { InputField, SelectField, CheckboxField, RadioGroupField } from '../form-fields';
 import { Button, AlertPanel, NavLink } from '../common';
@@ -231,9 +233,16 @@ const PaymentForm = ({
     },
     [passwordVisible, setPasswordVisible]
   );
-
+  const orderErrorMessageState = useSelector(state => state.order.order);
+  const orderErrorState = useSelector(state => state.order.transactionError);
+  const orderErrorMessage = usePrevious(orderErrorMessageState);
+  const orderError = usePrevious(orderErrorState);
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
-  const errorMessage = getErrorMessage(currentUser.patchAccountError);
+  let errorMessage = getErrorMessage(currentUser.patchAccountError);
+
+  if (typeof orderErrorMessage === 'string' && orderError) {
+    errorMessage = orderErrorMessage;
+  }
 
   const handleSetBillingAddressMode = (event, values, setValues) => {
     if (event.target.value === 'sameAsShipping') {
@@ -325,24 +334,35 @@ const PaymentForm = ({
               }
               hostedFieldsInstance.on('blur', function(event) {
                 const field = event.fields[event.emittedBy];
+                const errorContainer = document.querySelector(`.btError-${field.container.id}`);
                 if (field.isValid) {
-                  field.container.nextElementSibling.style.display = 'none';
+                  if (errorContainer) {
+                    errorContainer.style.display = 'none';
+                  }
                   document.getElementById('bt-payment-holder').style.border =
                     '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
                   document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
-                  field.container.nextElementSibling.style.display = 'block';
+                  if (errorContainer) {
+                    errorContainer.style.display = 'block';
+                  }
                 }
               });
               hostedFieldsInstance.on('validityChange', function(event) {
                 const field = event.fields[event.emittedBy];
+                const errorContainer = document.querySelector(`.btError-${field.container.id}`);
+
                 if (field.isPotentiallyValid) {
-                  field.container.nextElementSibling.style.display = 'none';
+                  if (errorContainer) {
+                    errorContainer.style.display = 'none';
+                  }
                   document.getElementById('bt-payment-holder').style.border =
                     '1px solid rgba(0, 0, 0, 0.23)';
                 } else {
                   document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
-                  field.container.nextElementSibling.style.display = 'block';
+                  if (errorContainer) {
+                    errorContainer.style.display = 'block';
+                  }
                 }
               });
               setHostedFieldsClient(hostedFieldsInstance);
@@ -398,7 +418,10 @@ const PaymentForm = ({
       if (!hostedFieldState.fields[field].isValid) {
         const elem = hostedFieldState.fields[field];
         document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
-        elem.container.nextElementSibling.style.display = 'block';
+        let errorContainer = document.querySelector(`.btError-${elem.container.id}`);
+        if (errorContainer) {
+          errorContainer.style.display = 'block';
+        }
         fieldErrors[field] = 'This field is invalid';
         isHostedFieldInvalid = true;
       } else {
@@ -624,17 +647,29 @@ const PaymentForm = ({
                 >
                   <Grid item xs={6}>
                     <div id="bt-cardNumber" ref={fieldRefs.number} />
-                    <div className="btError">Please enter valid card number</div>
                   </Grid>
                   <Grid item xs={3}>
                     <div id="bt-cardExpiration" ref={fieldRefs.expirationDate} />
-                    <div className="btError">Please enter valid Exp. Date</div>
                   </Grid>
                   <Grid item xs={3}>
                     <div id="bt-cardCvv" ref={fieldRefs.cvv} />
-                    <div className="btError">Please enter valid CVV</div>
                   </Grid>
                 </Box>
+                <Grid item xs={12}>
+                  <div className="btError btError-bt-cardNumber">
+                    <p>Please enter valid card number</p> <ErrorIcon />
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="btError btError-bt-cardExpiration">
+                    <p>Please enter valid Exp. Date</p> <ErrorIcon />
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="btError btError-bt-cardCvv">
+                    <p>Please enter valid CVV</p> <ErrorIcon />
+                  </div>
+                </Grid>
               </Grid>
               {allowFlyMode && (
                 <>

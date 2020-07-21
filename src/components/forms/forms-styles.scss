@@ -25,18 +25,25 @@
 .btError {
   display: none;
   background-color: rgba(208, 2, 27, 0.15);
-  margin: 0;
-  padding: 0 5px;
-  min-height: 24px;
+  margin: 0 0 6px 0;
+  padding: 8px 10px 8px 20px;
+  min-height: 13px;
   line-height: 24px;
-  font-size: 0.75rem;
+  font-size: 13px;
   text-align: left;
-  font-family: undefined, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  @media (max-width: 768px) {
-    background-color: rgba(208, 2, 27, 0.15);
-    font-size: 0.65rem;
-  }
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+}
+.btError p {
+  margin: 0;
+  display: inline;
+}
+.btError svg {
+  float: right;
+  display: inline;
+  position: relative;
+  color: #d0021b;
+  font-size: 25px;
 }
 ::-webkit-input-placeholder,
 label {
