@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { addCoupon, addToCart } from '../../../modules/cart/functions';
 import { setLpProdAdded, setLpCouponAdded } from '../../../modules/utils/actions';
@@ -49,7 +50,7 @@ const SPButton = ({ history, data, template, type, align }) => {
         addToCart(
           cart,
           products.find(p => p.sku === sku),
-          parseInt(qty)
+          parseInt(qty, 10)
         );
         dispatch(setLpProdAdded(true));
       }
@@ -64,14 +65,12 @@ const SPButton = ({ history, data, template, type, align }) => {
   }, [cart, products, dispatch]);
 
   useEffect(() => {
-    if (data.coupon && prodAdded && couponAdded === false) {
+    if (data.coupon && prodAdded && couponAdded === false && cart._id) {
       handleAddCoupon();
     }
-  }, [prodAdded, dispatch]);
+  }, [cart, prodAdded, dispatch]);
 
   useEffect(() => {
-    const [sku, qty] = data.skuAndQty[0].split(';');
-
     if (prodAdded && !data.coupon) {
       history.push(data.URL, 'landingPage');
     }
@@ -83,11 +82,19 @@ const SPButton = ({ history, data, template, type, align }) => {
 
   return (
     <div className={`${template}-${type}-${align}`}>
-      <button className={`${classes.root} ${template}-${type}`} onClick={handleClick}>
+      <button className={`${classes.root} ${template}-${type}`} type="button" onClick={handleClick}>
         {data.value}
       </button>
     </div>
   );
+};
+
+SPButton.propTypes = {
+  history: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  template: PropTypes.string.isRequired,
+  type: PropTypes.object.isRequired,
+  align: PropTypes.string.isRequired
 };
 
 export default withRouter(SPButton);
