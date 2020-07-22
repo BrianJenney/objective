@@ -2,15 +2,25 @@
 <html lang="en">
   <head>
     <!-- OneTrust Cookies Consent Notice start -->
-    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="623f893d-7d39-40fc-b8a3-0b01db1d79b9"></script>
-    <script src="https://cdn.logrocket.io/LogRocket.min.js"></script>
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="d5c2e11e-3c1c-4609-9671-842607fc48ac-test"></script>
     <script type="text/javascript">
-    function OptanonWrapper() { }
+      function OptanonWrapper() {
+        //using insert script OneTrust helper function https://community.cookiepro.com/s/article/UUID-730ad441-6c4d-7877-7f85-36f1e801e8ca
+        // note, we are selecting category "C0001" so script will fire every time a user updates consent
+        console.log("Anne1 html")
+        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0001");
+        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0002");
+        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0003");
+        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0004");
+        OneTrust.InsertScript("segmentOneTrust.js", "head", null, null, "C0002");
+        OneTrust.InsertScript("segmentOneTrust.js", "head", null, null, "C0003");
+        OneTrust.InsertScript("segmentOneTrust.js", "head", null, null, "C0004");
+      }
     </script>
+    <!-- OneTrust Cookies Consent Notice end -->
     <!-- LogRocket -->
     <script src="https://cdn.logrocket.io/LogRocket.min.js"></script>
     <script>window.LogRocket && window.LogRocket.init('oe5etj/objective-dev');</script>
-    <!-- OneTrust Cookies Consent Notice end -->
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/objective_favicon.png" />
     <meta
@@ -58,7 +68,11 @@
               'page',
               'once',
               'off',
-              'on'
+              'on',
+              'addSourceMiddleware',
+              'addIntegrationMiddleware',
+              'setAnonymousId',
+              'addDestinationMiddleware'
             ];
             analytics.factory = function(t) {
               return function() {
@@ -72,18 +86,19 @@
               var e = analytics.methods[t];
               analytics[e] = analytics.factory(e);
             }
-            analytics.load = function(t, e) {
-              var n = document.createElement('script');
-              n.type = 'text/javascript';
+            analytics.load = function(e, t) {
+              var n = document.createElement("script");
+              n.type = "text/javascript";
               n.async = !0;
-              n.src = 'https://cdn.segment.com/analytics.js/v1/' + t + '/analytics.min.js';
-              var a = document.getElementsByTagName('script')[0];
+              n.src =
+                "https://cdn.segment.com/analytics.js/v1/" +
+                e +
+                "/analytics.min.js";
+              var a = document.getElementsByTagName("script")[0];
               a.parentNode.insertBefore(n, a);
-              analytics._loadOptions = e;
+              analytics._loadOptions = t;
             };
-            analytics.SNIPPET_VERSION = '4.1.0';
-            analytics.load("%REACT_APP_SEGMENT_KEY%");
-            //analytics.page();
+            analytics.SNIPPET_VERSION = "4.1.0";
           }
       })();
     </script>
