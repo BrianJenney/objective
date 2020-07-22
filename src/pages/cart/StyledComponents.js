@@ -145,9 +145,9 @@ export const StyledCartCount = withStyles(theme => ({
 
 export const StyledDrawerGrid = withStyles(theme => ({
   root: {
-    padding: '12px 0',
-    borderTop: $thin1pxRuler_gray,
-    flexWrap: 'nowrap'
+    flexWrap: 'nowrap',
+    marginBottom: '12px',
+    borderColor: '#eec0b1'
   }
 }))(Grid);
 
@@ -313,10 +313,8 @@ export const StyledBadge = withStyles(theme => ({
     right: -3,
     // The border color match the background color.
     border: `2px solid ${
-      theme.palette.type === 'light'
-        ? theme.palette.grey[200]
-        : theme.palette.grey[900]
-      }`
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    }`
   }
 }))(Badge);
 

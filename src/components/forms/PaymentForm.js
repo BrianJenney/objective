@@ -69,11 +69,11 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiFormHelperText-root': {
       fontSize: '11px',
-      color: '#231f20',
+      color: '#7f7470',
       marginTop: '-8px'
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#231f20'
+      borderColor: theme.palette.brand.accentBrown
     }
   }
 }));
@@ -604,7 +604,7 @@ const PaymentForm = ({
               style={{ marginLeft: '-6px' }}
               key="formControlLabelCreditCardMode"
               value="creditCard"
-              control={<Radio color={'primary'} size={'small'} />}
+              control={<Radio color={'secondary'} size={'small'} />}
               label="Credit Card"
               classes={{ label: classes.formControlLabel }}
               onClick={evt => {
@@ -704,7 +704,7 @@ const PaymentForm = ({
                     key="formControlLabelPayPalMode"
                     style={{ marginLeft: '-6px' }}
                     value="paypal"
-                    control={<Radio color={'primary'} size={'small'} />}
+                    control={<Radio color={'secondary'} size={'small'} />}
                     label={paypalEmail ? `PayPal: ${paypalEmail}` : 'PayPal'}
                     classes={{ label: classes.formControlLabel }}
                     onClick={evt => {
@@ -766,14 +766,14 @@ const PaymentForm = ({
                         <FormControlLabel
                           key="formControlLabelSameAsShipping"
                           value="sameAsShipping"
-                          control={<Radio color={'primary'} size={'small'} />}
+                          control={<Radio color={'secondary'} size={'small'} />}
                           label="Same as shipping address"
                           classes={{ label: classes.formControlLabel }}
                         />
                         <FormControlLabel
                           key="formControlLabelDifferentShipping"
                           value="differentShipping"
-                          control={<Radio color={'primary'} size={'small'} />}
+                          control={<Radio color={'secondary'} size={'small'} />}
                           label="Use a different billing address"
                           classes={{ label: classes.formControlLabel }}
                         />

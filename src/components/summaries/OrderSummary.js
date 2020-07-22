@@ -12,7 +12,7 @@ const OrderSummary = ({ cart }) => {
         </Typography>
       </Grid>
       {Object.values(cart.items).map((item, index) => (
-        <Grid item xs={12}>
+        <Grid item xs={12} className="ListBox">
           <Grid item xs={4}>
             <img src="item.variant_img" />
           </Grid>

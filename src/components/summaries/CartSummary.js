@@ -85,7 +85,7 @@ const CartSummary = ({ order }) => {
         {items.map((item, index) => (
           <>
             <StyledDrawerGrid container xs={12}>
-              <Grid item xs={4} style={{ minWidth: '126px' }}>
+              <Grid item xs={4} style={{ minWidth: '126px' }} className="ListBox">
                 <Card>
                   <CardMedia
                     style={{ height: 100, width: 95 }}

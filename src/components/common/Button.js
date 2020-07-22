@@ -26,7 +26,7 @@ const ButtonComponent = ({
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const buttonStyles = {
     fontFamily: 'p22-underground, Helvetica, sans',
-    border: '1px solid #000',
+    border: 'none',
     fontWeight: 900,
     padding: '14px',
     letterSpacing: xs ? '1.17px' : '1.33px',

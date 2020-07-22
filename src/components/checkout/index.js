@@ -40,8 +40,8 @@ import EventEmitter from '../../events';
 const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
-  const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
-  const titleViewColor = isActiveStep ? '#ffffff' : '#4a4a4a';
+  const titleViewBgcolor = '#fff7e8';
+  const titleViewColor = '#553226';
   const titleView = (
     <Box
       px={xs ? '18px' : 3}

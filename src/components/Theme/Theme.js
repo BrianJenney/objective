@@ -21,12 +21,14 @@ const nxtTheme = createMuiTheme({
       main: color.BLACK
     },
     secondary: {
-      main: color.VANILLA
+      main: '#553226'
     },
     brand: {
-      forestGreen: color.FOREST_GREEN,
-      seaFoam: color.SEA_FOAM,
-      sienna: color.SIENNA,
+      camoGreen: '#553226',
+      mainYellow: '#f7c665',
+      infoGray: '#938985',
+      inputGray: '#7f7470',
+      accentBrown: '#a06958',
       palePink: color.PALE_PINK,
       navy: color.NAVY,
       lightBlue: color.LIGHT_BLUE,
@@ -207,12 +209,26 @@ const nxtTheme = createMuiTheme({
       },
       outlined: {
         '&.MuiInputLabel-shrink': {
-          transform: 'translate(14px, 4px) scale(0.75)'
+          transform: 'translate(14px, 4px) scale(0.75)',
+          color: '#a06958'
         }
+      }
+    },
+    MuiCheckbox: {
+      root: {
+        color: '#7f7470'
       }
     },
     MuiOutlinedInput: {
       root: {
+        borderColor: '#a06958',
+        '&:focus': {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#a06958',
+            border: '2px',
+            color: '#a06958'
+          }
+        },
         '&:hover': {
           '& .MuiOutlinedInput-notchedOutline': {
             borderColor: '#a06958'
@@ -226,11 +242,16 @@ const nxtTheme = createMuiTheme({
         borderColor: '#a06958'
       },
       input: {
+        fontWeight: '500',
         color: '#a06958',
         fontSize: '18px'
       }
     },
-
+    MuiRadio: {
+      root: {
+        color: '#553226'
+      }
+    },
     MuiGrid: {
       container: {
         maxWidth: 1600,
@@ -270,7 +291,8 @@ const nxtTheme = createMuiTheme({
         margin: 0,
         minHeight: 24,
         lineHeight: '24px',
-        padding: '0 5px'
+        padding: '0 5px',
+        color: '#7f7470'
       }
     }
   },

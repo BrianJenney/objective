@@ -367,7 +367,7 @@ const AccountPaymentDetails = ({
                 key="formControlLabelCreditCardMode"
                 style={{ marginLeft: '-6px' }}
                 value="creditCard"
-                control={<Radio color="primary" size="small" />}
+                control={<Radio color="secondary" size="small" />}
                 label="Credit Card"
                 classes={{ label: classes.formControlLabel }}
                 onClick={evt => {
@@ -407,14 +407,13 @@ const AccountPaymentDetails = ({
                     m={1}
                     px={4}
                     py={3}
-                    border="1px solid #231f20"
                     style={{ marginLeft: '0px' }}
+                    className="ListBox"
                   >
                     {selectionEnabled && (
                       <Box ml="-17px" mt="-9px">
                         <Radio
                           name="payment-method-selector"
-                          style={{ color: '#231f20' }}
                           value={index.toString()}
                           onChange={handleSelect}
                           checked={selectedIndex === index}
@@ -460,7 +459,7 @@ const AccountPaymentDetails = ({
               key="formControlLabelCreditCardMode"
               style={{ marginLeft: '-6px' }}
               value="paypal"
-              control={<Radio color="primary" size="small" />}
+              control={<Radio color="secondary" size="small" />}
               label={paypalEmail ? `PayPal: ${paypalEmail}` : 'PayPal'}
               classes={{ label: classes.formControlLabel }}
               onClick={evt => {

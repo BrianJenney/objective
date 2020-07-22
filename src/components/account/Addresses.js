@@ -241,13 +241,12 @@ const AccountAddresses = ({
                       m={1}
                       px={4}
                       py={3}
-                      border="1px solid #231f20"
+                      className="ListBox"
                     >
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
                           <Radio
                             name="address-selector"
-                            style={{ color: '#231f20' }}
                             value={index.toString()}
                             onChange={handleSelect}
                             checked={selectedIndex === index}

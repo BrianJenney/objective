@@ -24,10 +24,10 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiFormHelperText-root': {
       fontSize: '11px',
-      color: '#231f20'
+      color: theme.palette.brand.accentBrown
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#231f20'
+      borderColor: theme.palette.brand.accentBrown
     }
   },
   title: { fontSize: '36px', textAlign: 'center' },
