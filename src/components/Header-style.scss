@@ -1,7 +1,7 @@
 @import '../assets/styles/variables';
 
 .headerContainer {
-  background-color: #ffffff;
+  background-color: #f7c665;
   text-transform: uppercase;
   font-family: $sansSerif;
   font-weight: 'bold';
@@ -92,9 +92,8 @@
   }
 }
 .checkout-header {
-  border-bottom: 1px solid #000000;
+  background: #f7c665;
   text-align: center;
-  padding: 20px;
   svg {
     width: 175px;
   }

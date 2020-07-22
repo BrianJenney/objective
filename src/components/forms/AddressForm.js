@@ -51,11 +51,13 @@ const useStyles = makeStyles(theme => ({
     },
     '& .MuiFormHelperText-root': {
       fontSize: '11px',
-      color: '#231f20',
+      color: '#7f7470',
       lineHeight: '14px',
       marginTop: '-8px'
     },
-    '& .MuiOutlinedInput-notchedOutline': {},
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.brand.accentBrown
+    },
     '& .MuiCheckbox-root': {
       padding: '3px'
     }
