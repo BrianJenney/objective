@@ -55,9 +55,7 @@ const useStyles = makeStyles(theme => ({
       lineHeight: '14px',
       marginTop: '-8px'
     },
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#231f20'
-    },
+    '& .MuiOutlinedInput-notchedOutline': {},
     '& .MuiCheckbox-root': {
       padding: '3px'
     }

@@ -179,6 +179,13 @@ const nxtTheme = createMuiTheme({
         '&:hover': {
           backgroundColor: '#fff'
         }
+      },
+      containedPrimary: {
+        backgroundColor: '#f1be56',
+        color: '#553226',
+        '&:hover': {
+          backgroundColor: '#f1be56'
+        }
       }
     },
     MuiFormLabel: {
@@ -195,7 +202,8 @@ const nxtTheme = createMuiTheme({
     MuiInputLabel: {
       root: {
         fontFamily: 'p22-underground, sans-serif',
-        fontSize: '1rem'
+        fontSize: '1rem',
+        color: '#a06958'
       },
       outlined: {
         '&.MuiInputLabel-shrink': {
@@ -204,12 +212,25 @@ const nxtTheme = createMuiTheme({
       }
     },
     MuiOutlinedInput: {
+      root: {
+        '&:hover': {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#a06958'
+          }
+        }
+      },
       notchedOutline: {
         '& legend': {
           display: 'none'
-        }
+        },
+        borderColor: '#a06958'
+      },
+      input: {
+        color: '#a06958',
+        fontSize: '18px'
       }
     },
+
     MuiGrid: {
       container: {
         maxWidth: 1600,
