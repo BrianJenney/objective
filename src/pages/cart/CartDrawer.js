@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
@@ -18,7 +19,6 @@ import {
   StyledCartHeader,
   StyledSmallCaps,
   StyledFinePrint,
-  //  StyledCartCount,
   StyledHeaderWrapper,
   StyledProductLink,
   StyledCounterButton,
@@ -28,7 +28,6 @@ import {
   StyledGridEmptyCart,
   StyledTotalWrapper,
   StyledArrowIcon,
-  //  StyledBadge,
   StyledHeaderWrapperEmptyCart,
   StyledSmallCapsEmptyCart,
   StyledPromoLink,
@@ -102,8 +101,6 @@ const Cart = ({
   const dispatch = useDispatch();
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   const hideLPCoupon = !!history.location.state;
-  console.log('Anne2');
-  console.log(cart.subtotal - cart.discount >= 50);
 
   useEffect(() => {
     const loc =
@@ -140,11 +137,6 @@ const Cart = ({
       });
     }
   }, [cart.cartDrawerOpened]);
-
-  const onClickLogo = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
-    history.push('/gallery');
-  }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
@@ -280,7 +272,7 @@ const Cart = ({
         ) : null}
         {cart.items.length > 0
           ? Object.values(cart.items).map((item, index) => (
-              <StyledDrawerGrid container direction="row" key={`cart-${index}`}>
+              <StyledDrawerGrid container direction="row" key={`cart-${item._id}`}>
                 <Grid
                   item
                   xs={4}
@@ -405,15 +397,24 @@ const Cart = ({
                     >
                       <StyledFinePrint component="div" value={index}>
                         {!disableItemEditing && (
-                          <Link
+                          <button
+                            type="button"
                             onClick={e => {
                               e.preventDefault();
                               removeFromCart(cart, index);
                             }}
-                            style={{ color: '#9b9b9b' }}
+                            style={{
+                              color: '#9b9b9b',
+                              background: 'none',
+                              border: 'none',
+                              margin: '0',
+                              padding: '0',
+                              cursor: 'pointer',
+                              textDecoration: 'underline'
+                            }}
                           >
                             <StyledRemoveLink>Remove</StyledRemoveLink>
-                          </Link>
+                          </button>
                         )}
                       </StyledFinePrint>
                       <StyledProductPrice style={xsBreakpoint ? { fontSize: '16px' } : {}}>
@@ -617,8 +618,8 @@ const Cart = ({
           </Grid>
         ) : null}
 
-        {cart.items.length > 0 ? (
-          cart.promo ? (
+        {cart.items.length > 0 &&
+          (cart.promo ? (
             <PromoCodeView hideLPCoupon={hideLPCoupon} history={history} />
           ) : (
             <>
@@ -627,8 +628,7 @@ const Cart = ({
               </StyledPromoLink>
               {promoVisible && <PromoCodeForm />}
             </>
-          )
-        ) : null}
+          ))}
 
         {cart.items.length > 0 ? (
           <Grid
@@ -681,7 +681,14 @@ Cart.propTypes = {
   history: PropTypes.object.isRequired,
   hideCheckoutProceedLink: PropTypes.bool,
   disableItemEditing: PropTypes.bool,
-  hideTaxLabel: PropTypes.bool
+  hideTaxLabel: PropTypes.bool,
+  showOrderSummaryText: PropTypes.bool,
+  xsBreakpoint: PropTypes.bool,
+  location: PropTypes.object,
+  activeStep: PropTypes.number,
+  restrictionMessage: PropTypes.bool,
+  restrictedProduct: PropTypes.string,
+  checkoutVersion: PropTypes.number
 };
 
 Cart.defaultProps = {
