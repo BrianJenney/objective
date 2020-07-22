@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
+import { useSelector } from 'react-redux';
 
 import './account-style.scss';
 export { default as AccountOverviewPage } from './Overview';
@@ -49,7 +50,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const Account = ({ routes }) => {
+  const currentUser = useSelector(state => state.account.data);
   const classes = useStyles();
+  console.log('CURRRENTTT',currentUser)
   return (
     <Box className={classes.root} py={10}>
       <Container>

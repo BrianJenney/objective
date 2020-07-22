@@ -322,12 +322,17 @@ const AccountAddresses = ({
               )}
             </Grid>
           </Box>
-          <Box
-            mt="26px"
-            fontSize={xs ? 14 : 16}
-            fontWeight={600}
-            style={{ textTransform: 'uppercase' }}
-          >
+         <Box
+                      display="flex"
+                      alignItems= "center"
+                      justifyContent= "center"
+                      fontSize={xs ? 14 : 16}
+                      fontWeight={600}
+                      mt={2}
+                      px={4}
+                      py={10}
+                      border="1px solid #231f20"
+                    >
             <MenuLink
               onClick={() => {
                 const addressesData = currentUser.data.addressBook || [];
