@@ -13,7 +13,8 @@ import {
   SPButton,
   SPBox,
   Banner,
-  List
+  List,
+  SPStickyBtn
 } from '../pages/static/components';
 import { StyledContainer } from '../assets/styles/StyledComponents';
 
@@ -37,7 +38,7 @@ export const GenerateTemplate = ({ data, header, template }) => {
   return (
     <div>
       <Header data={header} template={template} type={header.type} />
-      <StyledContainer>
+      <StyledContainer className="renderComp">
         <RenderComponents components={data} />
       </StyledContainer>
     </div>
@@ -104,9 +105,25 @@ export const GeneratePageComponents = (comps, template, pageName) => {
           </>
         );
         break;
+      case 'stickyBtn':
+        components.push(
+          <aside
+            style={{
+              border: '2px solid green',
+              width: '185px',
+              float: 'right',
+              position: 'sticky',
+              top: '10px',
+              marginTop: '-207vw'
+            }}
+          >
+            <SPStickyBtn data={obj.value.components} name={obj.name} />
+          </aside>
+        );
+        break;
       case 'oneColSection':
         components.push(
-          <>
+          <div className="one-column">
             <Grid
               item
               xs={12}
@@ -119,7 +136,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
                 components={GenerateOneColumn(obj.value.components, template, pageName, xs)}
               />
             </Grid>
-          </>
+          </div>
         );
         break;
       case 'twoColSection':
