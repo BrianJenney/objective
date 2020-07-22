@@ -69,13 +69,6 @@ const AccountMenu = ({ logout }) => {
   ));
 
   return xs ? (
-<<<<<<< HEAD
-  <>
-  <Typography className={classes.accountHeaderMobile} variant="h1">
-      </Typography> 
- <NTextField/>  
-</>
-=======
     <>
       <Typography className={classes.accountHeaderMobile} variant="h1">
         ACCOUNT
@@ -83,7 +76,6 @@ const AccountMenu = ({ logout }) => {
 
       <NTextField />
     </>
->>>>>>> 36a175a7b9f1f2364414a9edc8e92c636749f1e9
   ) : (
     <Box width={1} className="account-menu-box">
       <List component="nav" className="account-left-side">
