@@ -122,7 +122,7 @@ const Checkout = ({
   const [loading, setLoading] = useState(true);
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   // I don't want to have to disable the linter rule, but i also don't want to
-  // devise, implement, & test a different way.
+  // devise, implement, & test a different way.  This is unrelated to EDA.
   // eslint-disable-next-line no-unused-vars
   const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
