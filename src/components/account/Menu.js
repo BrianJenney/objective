@@ -70,10 +70,6 @@ const AccountMenu = ({ logout }) => {
 
   return xs ? (
     <>
-      <Typography className={classes.accountHeaderMobile} variant="h1">
-        ACCOUNT
-      </Typography>
-
       <NTextField />
     </>
   ) : (

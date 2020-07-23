@@ -222,7 +222,7 @@ const AccountAddresses = ({
           {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
             <Box
               component={Typography}
-              color="#231f20"
+              color="#a06958"
               variant="h5"
               children={formType === FORM_TYPES.ACCOUNT ? 'Saved Addresses' : 'Shipping Address'}
               fontSize={titleFontSize}
@@ -284,13 +284,13 @@ const AccountAddresses = ({
                       m={1}
                       px={4}
                       py={3}
-                      border="2px solid #979797"
+                      border="2px solid #a06958"
                     >
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
                           <Radio
                             name="address-selector"
-                            style={{ color: '#231f20' }}
+                            style={{ color: '#a06958' }}
                             value={index.toString()}
                             onChange={handleSelect}
                             checked={selectedIndex === index}
@@ -330,9 +330,10 @@ const AccountAddresses = ({
                       mt={2}
                       px={4}
                       py={10}
-                      border="1px solid #231f20"
+                      border="1px solid #a06958"
                     >
             <MenuLink
+              style={{color: '#a06958'}}
               onClick={() => {
                 const addressesData = currentUser.data.addressBook || [];
                 setFormModeEnabled(true);

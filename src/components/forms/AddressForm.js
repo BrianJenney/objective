@@ -213,9 +213,9 @@ const AddressForm = ({
       ? currentUser.data.account_jwt
         ? 'Shipping Address'
         : 'Objective Secure Checkout'
-      : formType === FORM_TYPES.ACCOUNT
-      ? 'Address'
-      : 'Shipping Address';
+      : formType !== FORM_TYPES.ACCOUNT
+      ? 'Shipping Address'
+      : null;
   const bottomTitle = formType === FORM_TYPES.ACCOUNT ? '' : 'Shipping Method';
   const prevSubmitting = usePrevious(currentUser.patchAccountSubmitting);
   const errorMessage = getErrorMessage(currentUser.patchAccountError);

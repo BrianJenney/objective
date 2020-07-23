@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Redirect } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -22,6 +23,17 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       padding: 0,
       backgroundColor: '#FFF'
+    }
+  },
+  title: {
+    fontFamily: theme.typography.headerFontFamily,
+    fontSize: 36,
+    marginBottom: 30,
+    color: theme.palette.brand.camoGreen,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 36,
+      marginTop: 15,
+      marginBottom: 5
     }
   },
   paper: {
@@ -59,6 +71,9 @@ const Account = ({ routes }) => {
         <Box className={classes.paper}>
           <Grid container spacing={3}>
             <div className={classes.accountMenuGrid}>
+            <Typography className={classes.title} variant="h1" gutterBottom>
+        Welcome, {currentUser.firstName}!
+      </Typography>
               <Box>
                 <AccountMenu />
               </Box>
