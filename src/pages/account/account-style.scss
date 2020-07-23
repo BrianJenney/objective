@@ -13,12 +13,13 @@
 .nxTextField .MuiInputBase-formControl {
   height: 50px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   color: #553226;
 }
 .account-side-menu {
-  font-family: p22-underground, sans-serif;
-  font-size: 18px;
+  font-family: proxima-nova, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
   a {
     &:hover {
       text-decoration: none;
@@ -38,18 +39,20 @@
 }
 
 .account-overview {
-  font-family: FreightTextProBook;
-  font-size: 21px;
+  font-family: proxima-nova, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
   strong {
-    font-family: p22-underground, sans-serif;
-    font-size: 18px;
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px;
     margin-right: 25px;
   }
   a {
-    font-family: p22-undergrounf, sans-serif;
-    font-size: 12px;
-    font-weight: 600;
+    font-family: proxima-nova, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
     text-decoration: underline;
+    color: #a06958;
   }
   p {
     line-height: 1.6;
@@ -62,21 +65,27 @@
 }
 .account-profile {
   input {
-    font-family: p22-undergrounf, sans-serif;
+    font-family: upgrade, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
   }
   .MuiFormHelperText-contained {
-    font-family: p22-undergrounf, sans-serif;
-    font-size: 11px;
+    font-family: upgrade, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
     margin: 5px 0 0;
   }
 }
 .account-change-password {
   input {
-    font-family: p22-undergrounf, sans-serif;
+    font-family: upgrade, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
   }
   .MuiFormHelperText-contained {
-    font-family: p22-undergrounf, sans-serif;
-    font-size: 11px;
+    font-family: upgrade, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
     margin: 5px 0 0;
   }
 }
@@ -124,11 +133,11 @@
     margin-bottom: 30px;
   }
   h6 {
-    font-family: p22-underground, sans-serif;
+    font-family: proxima-nova, sans-serif;
   }
   th,
   th > div {
-    font-family: p22-underground, sans-serif;
+    font-family: proxima-nova, sans-serif;
     font-weight: 600;
     color: #231f20;
     font-size: 18px;
@@ -160,7 +169,7 @@
     td,
     td a,
     td p {
-      font-family: p22-underground, sans-serif;
+      font-family: proxima-nova, sans-serif;
       font-size: 18px !important;
       text-transform: capitalize;
       @media (max-width: 959.95px) {
@@ -216,7 +225,7 @@
       span {
         color: #fff;
         font-size: 16px;
-        font-family: p22-underground, sans-serif;
+        font-family: proxima-nova, sans-serif;
         padding: 17px 10px;
         font-weight: 600;
         line-height: 1.88;

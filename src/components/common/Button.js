@@ -25,9 +25,9 @@ const ButtonComponent = ({
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const buttonStyles = {
-    fontFamily: 'p22-underground, Helvetica, sans',
+    fontFamily: 'proxima-nova, sans-serif',
     border: 'none',
-    fontWeight: 900,
+    fontWeight: 600,
     padding: '14px',
     letterSpacing: xs ? '1.17px' : '1.33px',
     lineHeight: xs ? 1.88 : 2.14,

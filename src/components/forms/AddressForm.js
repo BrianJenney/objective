@@ -19,37 +19,40 @@ import AddressValidation from '../account/AddressValidation';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
-    fontFamily: 'Canela Text Web'
+    fontFamily: theme.typography.headerFontFamily
   },
   mobileTitle: {
     fontSize: '24px',
-    fontFamily: 'FreightTextProBook'
+    fontFamily: theme.typography.headerFontFamily
   },
   subTitle: {
     textAlign: 'right',
     fontSize: '16px',
-    fontWeight: 'normal',
-    fontFamily: 'p22-underground, Helvetica, sans-serif'
+    fontWeight: 400,
+    fontFamily: theme.typography.bodyFontFamily,
   },
   subTitleLink: {
     fontWeight: 600,
     marginLeft: '5px'
   },
   mobileLogin: {
-    fontFamily: 'P22-Underground',
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: '14px',
-    fontWeight: 'normal'
+    fontWeight: 400
   },
   mobileBox: {},
   root: {
     '& .MuiInputLabel-root': {
+      fontFamily: theme.typography.bodyFontFamily,
       fontSize: '16px'
     },
     '& .MuiInputBase-root': {
+      fontFamily: theme.typography.bodyFontFamily,
       fontSize: '16px',
       marginBottom: '10px'
     },
     '& .MuiFormHelperText-root': {
+      fontFamily: theme.typography.bodyFontFamily,
       fontSize: '11px',
       color: '#7f7470',
       lineHeight: '14px',

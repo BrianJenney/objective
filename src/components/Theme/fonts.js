@@ -1,22 +1,22 @@
 export const fonts = {
-  body: 'freight-text-pro',
-  body2: 'p22-underground, sans-serif',
+  body: 'proxima-nova, sans-serif',
+  body2: 'proxima-nova, sans-serif',
   bodyWeight: '400',
-  header: 'Canela Text Web',
-  $brandSerif: 'Canela Text Web',
-  $brandSans: 'p22-underground, Helvetica, sans-serif',
-  smallHeader: 'p22-underground',
-  variant: 'Canela Text Web',
+  header: 'bodoni-urw, serif',
+  $brandSerif: 'bodoni-urw, serif',
+  $brandSans: 'proxima-nova, sans-serif',
+  smallHeader: 'proxima-nova, sans-serif',
+  variant: 'bodoni-urw, serif',
   captionBook: {
-    header: 'p22-underground, Helvetica, sans-serif',
+    header: 'proxima-nova, sans-serif',
     weight: 400
   },
   captionMedium: {
-    header: 'p22-underground',
+    header: 'proxima-nova, sans-serif',
     weight: 500
   },
   captionHeavy: {
-    header: 'p22-underground, Helvetica, sans-serif',
+    header: 'proxima-nova, sans-serif',
     weight: 900
   }
 };

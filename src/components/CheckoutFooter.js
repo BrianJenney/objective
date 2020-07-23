@@ -328,7 +328,7 @@ class CheckoutFooter extends React.Component {
           padding: 50,
           background: 'rgba(252, 248, 244, 0.5)',
           borderTop: '1px solid',
-          fontFamily: 'p22-underground, sans-serif',
+          fontFamily: 'proxima-nova, sans-serif',
           fontSize: 18,
           display: 'flex'
         }}

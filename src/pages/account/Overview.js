@@ -19,7 +19,7 @@ const change = {
 };
 const useStyles = makeStyles(theme => ({
   title: {
-    fontFamily: fonts.header,
+    fontFamily: theme.typography.headerFontFamily,
     fontSize: 36,
     marginBottom: 30,
     color: theme.palette.brand.camoGreen,
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   info: {
-    fontFamily: fonts.smallHeader,
+    fontFamily: theme.typography.headerFontFamily,
     fontSize: '18px',
     [theme.breakpoints.down('xs')]: {
       fontSize: 16
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
   item: {
     color: 'white',
     fontSize: '16px',
-    fontFamily: 'p22-underground, sans-serif'
+    fontFamily: theme.typography.bodyFontFamily
   }
 }));
 const AccountOverview = ({ currentUser, logout }) => {

@@ -32,17 +32,17 @@ import EventEmitter from '../../events';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
-    fontFamily: 'Canela Text Web'
+    fontFamily: theme.typography.headerFontFamily
   },
   mobileTitle: {
     fontSize: '24px',
-    fontFamily: 'FreightTextProBook'
+    fontFamily: theme.typography.headerFontFamily
   },
   subTitle: {
     textAlign: 'right',
     fontSize: '16px',
     fontWeight: 'normal',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
+    fontFamily: theme.typography.bodyFontFamily,
     marginLeft: 'auto',
     lineHeight: '1.2rem',
     marginBottom: '16px',
@@ -50,14 +50,14 @@ const useStyles = makeStyles(theme => ({
   },
   formControlLabel: {
     fontSize: '20px',
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.headerFontFamily,
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }
   },
   mobileLogin: {
     fontSize: '16px',
-    fontFamily: 'p22-underground'
+    fontFamily: theme.typography.headerFontFamily
   },
   root: {
     '& .MuiInputLabel-root': {
@@ -743,7 +743,7 @@ const PaymentForm = ({
                     color="#231f20"
                     variant="h5"
                     children="Billing Address"
-                    style={{ fontFamily: 'CanelaText' }}
+                    style={{ fontFamily: 'bodoni-urw, serif' }}
                     fontSize={xs ? 24 : 30}
                     mb={xs ? 0 : 1}
                     mt={1}

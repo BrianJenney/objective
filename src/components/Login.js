@@ -15,19 +15,19 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
     color: '#231f20',
-    fontFamily: 'Canela Text Web',
+    fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '24px',
-      fontFamily: 'FreightTextProBook',
+      fontSize: '32px',
+      fontFamily: theme.typography.headerFontFamily,
       textAlign: 'left',
       margin: 0,
       paddingTop: 15
     }
   },
   subTitle: {
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.headerFontFamily,
     fontSize: '18px',
     paddingBottom: theme.spacing(1),
     lineHeight: 1.1,

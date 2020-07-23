@@ -30,7 +30,7 @@ const usePrevious = value => {
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontFamily: fonts.header,
+    fontFamily: theme.typography.headerFontFamily,
     fontSize: 36,
     marginBottom: 30,
     [theme.breakpoints.down('xs')]: {
@@ -38,9 +38,9 @@ const useStyles = makeStyles(theme => ({
     }
   },
   info: {
-    fontFamily: 'p22-underground, sans-serif',
-    fontSize: 18,
-    fontWeight: 600,
+    fontFamily: theme.typography.bodyFontFamily,
+    fontSize: 14,
+    fontWeight: 700,
     lineHeight: 'normal',
     marginBottom: 20
   },

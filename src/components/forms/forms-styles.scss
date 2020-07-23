@@ -17,7 +17,7 @@
     }
     input {
       padding: 10px;
-      border: 2px solid red;
+      border: 2px solid #ce0e2d;
       margin-right: 20px;
     }
   }
@@ -42,23 +42,23 @@
   float: right;
   display: inline;
   position: relative;
-  color: #d0021b;
+  color: #ce0e2d;
   font-size: 25px;
 }
 ::-webkit-input-placeholder,
 label {
   /* Chrome/Opera/Safari */
-  font-family: Helvetica, sans-serif !important;
+  font-family: proxima-nova, sans-serif !important;
 }
 ::-moz-placeholder {
   /* Firefox 19+ */
-  font-family: Helvetica, sans-serif !important;
+  font-family: proxima-nova, sans-serif !important;
 }
 :-ms-input-placeholder {
   /* IE 10+ */
-  font-family: Helvetica, sans-serif !important;
+  font-family: proxima-nova, sans-serif !important;
 }
 :-moz-placeholder {
   /* Firefox 18- */
-  font-family: Helvetica, sans-serif !important;
+  font-family: proxima-nova, sans-serif !important;
 }

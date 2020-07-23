@@ -50,7 +50,8 @@ const nxtTheme = createMuiTheme({
   typography: {
     htmlFontSize: 16,
     fontSize: 16,
-    fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+    bodyFontFamily: `${fonts.body}, ${backupFontStack.sans}`,
+    headerFontFamily: `${fonts.header}, ${backupFontStack.sans}`,
     body1: {
       fontFamily: `${fonts.body}, ${backupFontStack.sans}`,
       fontSize: sizes.productDetail,
@@ -190,13 +191,18 @@ const nxtTheme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        fontFamily: 'p22-underground, sans-serif'
+        fontFamily: 'upgrade, sans-serif',
+        fontStyle: 'normal',
+         fontWeight: 400,
+        fontSize: '18px'
       }
     },
     MuiInputLabel: {
       root: {
-        fontFamily: 'p22-underground, sans-serif',
-        fontSize: '1rem',
+        fontFamily: 'proxima-nova, sans-serif',
+        fontStyle: 'normal',
+         fontWeight: 400,
+        fontSize: '14px',
         color: '#a06958'
       },
       outlined: {
@@ -262,14 +268,18 @@ const nxtTheme = createMuiTheme({
     },
     MuiTextField: {
       root: {
-        fontFamily: 'p22-underground, sans-serif',
-        fontSize: '18px'
+        fontFamily: 'proxima-nova, sans-serif',
+        fontStyle: 'normal',
+         fontWeight: 400,
+        fontSize: '22px'
       }
     },
     MuiSelect: {
       root: {
-        fontFamily: 'p22-underground, sans-serif',
-        fontSize: '18px'
+        fontFamily: 'proxima-nova, sans-serif',
+        fontStyle: 'normal',
+         fontWeight: 400,
+        fontSize: '22px'
       }
     },
     MuiFormHelperText: {

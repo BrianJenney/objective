@@ -38,9 +38,9 @@ const usePrevious = value => {
 
 const useStyles = makeStyles(theme => ({
   info: {
-    fontFamily: 'p22-underground, sans-serif',
-    fontSize: 18,
-    fontWeight: 600,
+    fontFamily: theme.typography.bodyFontFamily,
+    fontSize: 14,
+    fontWeight: 700,
     lineHeight: 'normal',
     marginBottom: 20
   }
@@ -137,7 +137,7 @@ const ChangePassword = ({
                 <Box width={1} textAlign="right">
                   <NavLink
                     style={{
-                      fontFamily: 'p22-underground',
+                      fontFamily: 'proxima-nova, sans-serif',
                       fontSize: '12px'
                     }}
                     component="button"
@@ -179,7 +179,7 @@ const ChangePassword = ({
                 <Box width={1} textAlign="right">
                   <NavLink
                     style={{
-                      fontFamily: 'p22-underground',
+                      fontFamily: 'proxima-nova, sans-serif',
                       fontSize: '12px'
                     }}
                     component="button"
@@ -208,7 +208,7 @@ const ChangePassword = ({
                 <Box width={1} textAlign="right">
                   <NavLink
                     style={{
-                      fontFamily: 'p22-underground',
+                      fontFamily: 'proxima-nova, sans-serif',
                       fontSize: '12px'
                     }}
                     component="button"
