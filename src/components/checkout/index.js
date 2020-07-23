@@ -37,7 +37,7 @@ import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 const localStorageClient = require('store');
 
-const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
+const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -109,9 +109,7 @@ const Checkout = ({
   const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
-  // const [guestMode, setGuestMode] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
-  // const [ppButtonRendered, setPpButtonRendered] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
@@ -124,7 +122,6 @@ const Checkout = ({
   const paypalPayloadState = useSelector(state => state.paypal);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   // I don't want to have to disable the linter rule, but i also don't want to
   // devise, implement, & test a different way.
