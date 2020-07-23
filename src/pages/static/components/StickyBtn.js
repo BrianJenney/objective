@@ -2,17 +2,27 @@ import React from 'react';
 import Image from './Image';
 import Title from './Title';
 import Button from './Button';
+import { transformMobileStyle } from '../transformComponents';
 
 const SPStickyBtn = ({ data, xs }) => (
   <>
     {data.map(obj => {
       switch (obj.type) {
         case 'image':
-          return <Image data={obj} type={obj.type} id={`${obj.name}`} style={{ width: '180px' }} />;
+          return xs ? null : (
+            <Image data={obj} type={obj.type} id={`${obj.name}`} style={{ width: '180px' }} />
+          );
           break;
         case 'sectionTitle':
           return (
-            <div className="Title" style={{ padding: '15px 0' }}>
+            <div
+              className="Title"
+              style={
+                xs
+                  ? { display: 'inline-block', ...transformMobileStyle(obj) }
+                  : { padding: '15px 0' }
+              }
+            >
               <Title data={obj} type={obj.type} id={`${obj.name}`} />
             </div>
           );
@@ -21,7 +31,15 @@ const SPStickyBtn = ({ data, xs }) => (
           return (
             <div
               className="Button"
-              style={{ display: 'flex', justifyContent: 'center', margin: '0 0 20px' }}
+              style={
+                xs
+                  ? {
+                    float: 'right',
+                    display: 'inline-block',
+                    padding: '15px'
+                  }
+                  : { display: 'flex', justifyContent: 'center', margin: '0 0 20px' }
+              }
             >
               <Button
                 data={obj}

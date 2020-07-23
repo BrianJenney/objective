@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
       fontWeight: props.mobileStyle.fontWeight,
       fontSize: props.mobileStyle.fontSize,
       lineHeight: props.mobileStyle.lineHeight,
-      fontFamily: props.mobileStyle.fontFamily
+      fontFamily: props.mobileStyle.fontFamily,
+      textAlign: props.mobileStyle.align
     }
   })
 }));
