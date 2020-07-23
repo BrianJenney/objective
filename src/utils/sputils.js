@@ -17,6 +17,7 @@ import {
   SPStickyBtn
 } from '../pages/static/components';
 import { StyledContainer } from '../assets/styles/StyledComponents';
+import { transformDesktopStyle } from '../pages/static/transformComponents';
 
 export const buildPage = page => {
   const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
@@ -106,18 +107,18 @@ export const GeneratePageComponents = (comps, template, pageName) => {
         );
         break;
       case 'stickyBtn':
+        const styles = transformDesktopStyle(obj);
+
         components.push(
           <aside
             style={{
-              border: '2px solid green',
-              width: '185px',
-              float: 'right',
-              position: 'sticky',
+              ...styles,
+              border: styles.borderColor,
               top: '10px',
-              marginTop: '-207vw'
+              margin: obj.desktopStyle.margin
             }}
           >
-            <SPStickyBtn data={obj.value.components} name={obj.name} />
+            <SPStickyBtn data={obj.value.components} xs={xs} />
           </aside>
         );
         break;

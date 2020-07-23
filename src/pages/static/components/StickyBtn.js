@@ -3,7 +3,7 @@ import Image from './Image';
 import Title from './Title';
 import Button from './Button';
 
-const SPStickyBtn = ({ data }) => (
+const SPStickyBtn = ({ data, xs }) => (
   <>
     {data.map(obj => {
       switch (obj.type) {
