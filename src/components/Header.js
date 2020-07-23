@@ -110,7 +110,7 @@ const Header = ({ currentUser, location, history }) => {
 
   let accountMenuItemConf = {};
 
-  if (accountJWT && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin) {
+  if (accountJWT && !currentUser.data.isGuest) {
     accountMenuItemConf = {
       key: 'third',
       children: <LoggedInUser name={firstName} />,
