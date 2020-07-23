@@ -204,10 +204,10 @@ const OrderSummary = ({
 
   const shouldShowSetPasswordForm = !!(
     Object.prototype.hasOwnProperty.call(order, 'account') &&
-    Object.prototype.hasOwnProperty.call(order.account, 'passwordSet') &&
-    Object.prototype.hasOwnProperty.call(order.account, 'isGuest') &&
-    !order.account.passwordSet &&
-    order.account.isGuest
+    Object.prototype.hasOwnProperty.call(account, 'passwordSet') &&
+    Object.prototype.hasOwnProperty.call(account, 'isGuest') &&
+    !account.passwordSet &&
+    account.isGuest
   );
 
   return (
