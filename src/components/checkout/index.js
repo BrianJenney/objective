@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -124,14 +124,17 @@ const Checkout = ({
   const [loading, setLoading] = useState(true);
   // const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-  // const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
+  // I don't want to have to disable the linter rule, but i also don't want to
+  // devise, implement, & test a different way.
+  // eslint-disable-next-line no-unused-vars
+  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
-  // const closeShippingRestrictionsDialog = useCallback(() => {
-  //   setCloseShippingRestrictions(true);
-  // }, [setCloseShippingRestrictions]);
+  const closeShippingRestrictionsDialog = useCallback(() => {
+    setCloseShippingRestrictions(true);
+  }, [setCloseShippingRestrictions]);
 
   setTimeout(() => {
     setLoading(false);
@@ -603,7 +606,7 @@ const Checkout = ({
                     <StateRestrictionsDialog
                       product_name={restrictedProduct}
                       cartCount={cartCount}
-                      //     onExited={closeShippingRestrictionsDialog}
+                      onExited={closeShippingRestrictionsDialog}
                     />
                   ) : null}
                   <div ref={stepRefs[1]}>
