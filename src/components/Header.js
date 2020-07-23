@@ -109,6 +109,7 @@ const Header = ({ currentUser, location, history }) => {
   segmentIdentify(currentUser.data);
 
   let accountMenuItemConf = {};
+
   if (accountJWT && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin) {
     accountMenuItemConf = {
       key: 'third',
