@@ -132,8 +132,8 @@ const OrderConfirmation = ({ history }) => {
         Object.prototype.hasOwnProperty.call(order.account, 'passwordSet')
       ) {
         if (!order.account.isGuest && order.account.passwordSet) {
-          if (Object.prototype.hasOwnProperty.call(order.account, 'temporarilyLogin')) {
-            delete order.account.temporarilyLogin;
+          if (Object.prototype.hasOwnProperty.call(account, 'temporarilyLogin')) {
+            delete account.temporarilyLogin;
           }
           dispatch(receivedCreateAccountSuccess(order.account, account.data.account_jwt));
         }
@@ -220,7 +220,7 @@ const OrderConfirmation = ({ history }) => {
           order.account
         ) {
           order.account.temporarilyLogin = true;
-          dispatch(receivedFetchAccountSuccess(order.account));
+          dispatch(receivedFetchAccountSuccess(account));
         }
 
         history.replace(`/orders/${order._id}`, order.hideCouponCode);
