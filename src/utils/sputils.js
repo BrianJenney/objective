@@ -109,7 +109,6 @@ export const GeneratePageComponents = (comps, template, pageName) => {
       case 'stickyBtn':
         const deskStyles = transformDesktopStyle(obj);
         const mobStyles = transformMobileStyle(obj);
-
         components.push(
           <aside
             style={
@@ -117,12 +116,8 @@ export const GeneratePageComponents = (comps, template, pageName) => {
                 ? {
                   ...mobStyles,
                   border: mobStyles.borderColor,
-                  backgroundColor: '#fcf8f4',
-                  position: 'fixed',
-                  height: '74px',
                   left: 0,
-                  bottom: 0,
-                  width: '100%'
+                  bottom: 0
                 }
                 : {
                   ...deskStyles,
