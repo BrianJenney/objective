@@ -36,7 +36,7 @@ const SPStickyBtn = ({ data, xs }) => (
                   ? {
                     float: 'right',
                     display: 'inline-block',
-                    padding: '15px'
+                    padding: '15px 15px 0 0'
                   }
                   : { display: 'flex', justifyContent: 'center', margin: '0 0 20px' }
               }

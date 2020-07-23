@@ -118,7 +118,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
                   ...mobStyles,
                   border: mobStyles.borderColor,
                   backgroundColor: '#fcf8f4',
-                  position: 'absolute',
+                  position: 'fixed',
                   height: '74px',
                   left: 0,
                   bottom: 0,
