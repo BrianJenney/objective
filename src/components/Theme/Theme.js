@@ -25,24 +25,16 @@ const nxtTheme = createMuiTheme({
     },
     brand: {
       camoGreen: '#553226',
-      mainYellow: '#f7c665',
-      infoGray: '#938985',
-      inputGray: '#7f7470',
       accentBrown: '#a06958',
-      palePink: color.PALE_PINK,
-      navy: color.NAVY,
-      lightBlue: color.LIGHT_BLUE,
-      plum: color.PLUM,
-      lavender: color.LAVENDER,
-      offWhite: color.OFF_WHITE,
-      lemon: color.LEMON,
-      orange: color.ORANGE,
-      vanilla: color.VANILLA
+      mainYellow: '#f7c665',
+      creamYellow: '#fff7e8',
+      lightSubTextGray: '#938985',
+      darkSubTextGray: '#7f7470',
+      redSubText: '#ce0e2d',
     },
     error: {
-      main: color.RED,
-      dark: color.RED,
-      contrastText: color.WHITE
+      main: 'rgba(208, 2, 27, 0.15)',
+      dark: '#ce0e2d'
     },
     text: {
       primary: color.BLACK,
