@@ -232,25 +232,18 @@ const Checkout = ({
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
-    if (activeStep === 2 && !account_jwt && !accountCreated) {
+    if (activeStep === 2 && !accountCreated) {
       const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
         !payload.paymentDetails.billingAddress.password
       );
-      // prettier-ignore
-      const accountInfoPayload = isGuest
-        ? {
-          firstName: payload.paymentDetails.billingAddress.firstName,
-          lastName: payload.paymentDetails.billingAddress.lastName,
-          email: payload.shippingAddress.email.toLowerCase(),
-          password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
-          passwordSet: !isGuest,
-          isGuest,
-          storeCode: cart.storeCode,
-          newsletter: true
-        }
-        : { storeCode: cart.storeCode, email: currentUserEmail };
+
+      const accountInfoPayload = {
+        storeCode: cart.storeCode,
+        email: currentUserEmail || payload.shippingAddress.email.toLowerCase(),
+        password: !isGuest ? payload.paymentDetails.billingAddress.password : ''
+      };
 
       setPayload({
         ...payload,

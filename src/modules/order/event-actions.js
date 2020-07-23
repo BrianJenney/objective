@@ -12,6 +12,7 @@ export const emitOrderSubmitted = args => async (dispatch, getState) => {
 
   const { client: stompClient, replyTo } = getState().stomp;
   const { merchantAccountId } = getState().storefront;
+
   const params = {
     data: { ...args },
     params: {
@@ -21,6 +22,10 @@ export const emitOrderSubmitted = args => async (dispatch, getState) => {
       })
     }
   };
+
+  // hacky way to make the params line up with what the schema validator expects
+  params.data.paymentData = params.data.paymentDetails;
+  delete params.data.paymentDetails;
 
   const payload = JSON.stringify(msgpack.encode(params));
   stompClient.send(
