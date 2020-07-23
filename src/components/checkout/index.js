@@ -424,6 +424,7 @@ const Checkout = ({
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
+
     if (paymentMethodNonce) {
       if (cart.items.length > 0) {
         emitOrderSubmitted({
