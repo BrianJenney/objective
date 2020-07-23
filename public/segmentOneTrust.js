@@ -1,13 +1,8 @@
-// const SEGMENT_WRITE_KEY = process.env.REACT_APP_SEGMENT_KEY;
-const SEGMENT_WRITE_KEY = "";
-console.log("Anne14")
-console.log(SEGMENT_WRITE_KEY)
+const SEGMENT_WRITE_KEY = '';
 // determines whether All: false is added to Segment's analytics.load integrations object https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#selecting-destinations
 const DISABLE_DESTINATIONS_BY_DEFAULT = false;
-const shouldSendToSegment = true;
 
 // mapping OneTrust cookie categories to Segment's tool categories https://community.cookiepro.com/s/article/UUID-91049ba1-62b7-f7d3-8582-e3b36fadb7c9
-// to get destination names and cateogories assiociated with Segment write key, use this script https://codepen.io/samuelkahr/pen/gOpWyEG
 const ONE_TRUST_SEGMENT_MAPPING = {
   // OneTrust Performance Cookies
   C0002: ['A/B Testing', 'Feature Flagging', 'Live Chat'],
@@ -16,47 +11,16 @@ const ONE_TRUST_SEGMENT_MAPPING = {
   // OneTrust Targeting Cookies
   C0004: ['Email', 'Email Marketing', 'CRM']
 };
-// returned value is array of OneTrust group ids user has consented to
-/*
-function getConsentGroups() {
-//parse cookie string to find OptanonConsent cookie
-const consentCookie = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("OptanonConsent"));
-//get consentGroups user has consented to from consentCookie
-const consentGroups = consentCookie
-    .split("&")
-    .find(row => row.startsWith("groups"))
-    .split("=")[1];
-//adding groups to array
-const rawConsentArray = consentGroups.split("%");
-const consentGroupArray = [];
-//iterate through consentArray and remove ASCII encoding from start of each consent group value (values start with 2C)
-for (const element of rawConsentArray) {
-    let updatedElement;
-    if (element.startsWith("2C")) {
-    updatedElement = element.substr(2);
-    consentGroupArray.push(updatedElement);
-    } else if (element.startsWith("C000")) {
-    consentGroupArray.push(element);
-    }
-}
-//console.log(consentGroupArray);
-return consentGroupArray;
-}
-*/
+
 // helper function gets OneTrust active groups from window. Returns array of active groups users consented to
 function getConsentGroups() {
   if (!window.OnetrustActiveGroups) {
-    console.log('No OneTrust groups have been consented to');
     return [];
   }
   const oneTrustActiveGroupArray = window.OnetrustActiveGroups.split(',').filter(e =>
     e.startsWith('C')
   );
 
-  console.log('Anne13');
-  console.log(oneTrustActiveGroupArray);
   return oneTrustActiveGroupArray;
 }
 
@@ -78,7 +42,6 @@ async function getConsentedIntegrations(enabledIntegrations, oneTrustGroupIds) {
 
 // helper function determines whether user has given consent for any cookie groups OTHER than strictly necessary. Returns boolean
 function shouldLoadAjs(oneTrustActiveGroups) {
-    oneTrustActiveGroups = "reassign";
   return (
     oneTrustActiveGroups.includes('C0002') ||
     oneTrustActiveGroups.includes('C0003') ||
@@ -108,6 +71,8 @@ async function fetchDestinationForWriteKey(writeKey) {
     delete destination.creationName;
   }
 
+  console.log("Anne16")
+  console.log(destinations)
   return destinations;
 }
 
