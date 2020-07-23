@@ -50,15 +50,15 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     }
   };
 
-  if (account.hasOwnProperty('isGuest')) {
+  if (Object.prototype.hasOwnProperty.call(account, 'isGuest')) {
     params.data.isGuest = account.isGuest;
   }
 
-  if (account.hasOwnProperty('disableGuestLogic')) {
+  if (Object.prototype.hasOwnProperty.call(account, 'disableGuestLogic')) {
     params.data.disableGuestLogic = account.disableGuestLogic;
   }
 
-  if (account.hasOwnProperty('passwordSet')) {
+  if (Object.prototype.hasOwnProperty.call(account, 'passwordSet')) {
     params.data.passwordSet = account.passwordSet;
   }
 
@@ -486,7 +486,7 @@ export const requestPasswordReset = (authToken, patches, actions) => (dispatch, 
   });
 };
 
-export const receivedPasswordResetSuccess = (account, token) => dispatch => {
+export const receivedPasswordResetSuccess = account => dispatch => {
   dispatch({
     type: RECEIVED_PASSWORD_RESET_SUCCESS,
     payload: account

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -37,7 +37,7 @@ import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 const localStorageClient = require('store');
 
-const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
+const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -109,9 +109,7 @@ const Checkout = ({
   const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
-  // const [guestMode, setGuestMode] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
-  // const [ppButtonRendered, setPpButtonRendered] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
@@ -124,16 +122,18 @@ const Checkout = ({
   const paypalPayloadState = useSelector(state => state.paypal);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  // const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-  // const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
+  // I don't want to have to disable the linter rule, but i also don't want to
+  // devise, implement, & test a different way.  This is unrelated to EDA.
+  // eslint-disable-next-line no-unused-vars
+  const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
   const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
-  // const closeShippingRestrictionsDialog = useCallback(() => {
-  //   setCloseShippingRestrictions(true);
-  // }, [setCloseShippingRestrictions]);
+  const closeShippingRestrictionsDialog = useCallback(() => {
+    setCloseShippingRestrictions(true);
+  }, [setCloseShippingRestrictions]);
 
   setTimeout(() => {
     setLoading(false);
@@ -232,25 +232,18 @@ const Checkout = ({
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
-    if (activeStep === 2 && !account_jwt && !accountCreated) {
+    if (activeStep === 2 && !accountCreated) {
       const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
         !payload.paymentDetails.billingAddress.password
       );
-      // prettier-ignore
-      const accountInfoPayload = isGuest
-        ? {
-          firstName: payload.paymentDetails.billingAddress.firstName,
-          lastName: payload.paymentDetails.billingAddress.lastName,
-          email: payload.shippingAddress.email.toLowerCase(),
-          password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
-          passwordSet: !isGuest,
-          isGuest,
-          storeCode: cart.storeCode,
-          newsletter: true
-        }
-        : { storeCode: cart.storeCode, email: currentUserEmail };
+
+      const accountInfoPayload = {
+        storeCode: cart.storeCode,
+        email: currentUserEmail || payload.shippingAddress.email.toLowerCase(),
+        password: !isGuest ? payload.paymentDetails.billingAddress.password : ''
+      };
 
       setPayload({
         ...payload,
@@ -535,7 +528,6 @@ const Checkout = ({
     if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
       return null;
     }
-
     const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
@@ -626,7 +618,7 @@ const Checkout = ({
                     <StateRestrictionsDialog
                       product_name={restrictedProduct}
                       cartCount={cartCount}
-                      //     onExited={closeShippingRestrictionsDialog}
+                      onExited={closeShippingRestrictionsDialog}
                     />
                   ) : null}
                   <div ref={stepRefs[1]}>

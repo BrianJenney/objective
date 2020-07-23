@@ -26,6 +26,15 @@ export const handleAccountResponse = (status, data, fields, properties) => {
         store.dispatch(receivedCreateAccountFailure(data));
       }
       break;
+    case 'fe.account.fetched':
+      debugRabbitResponse('Account Order Placed Response', status, data, fields, properties);
+      if (status === 'success') {
+        store.dispatch(receivedFetchAccountSuccess(data));
+        if (data.passwordSet) store.dispatch(receivedLoginSuccess(data, data.account_jwt));
+      } else {
+        store.dispatch(receivedFetchAccountFailure(data));
+      }
+      break;
     case 'account.request.get':
     case 'account.request.find':
       debugRabbitResponse('Account Get Response', status, data, fields, properties);

@@ -17,10 +17,7 @@ const Order = ({ history, match: { params } }) => {
   const { isLoading } = order;
 
   account = account.data;
-  if (order.order && order.order.account) {
-    // eslint-disable-next-line prefer-destructuring
-    account = order.order.account;
-  }
+
   if (order.order && !account.account_jwt) {
     account = { account_jwt: false };
   }
@@ -34,13 +31,6 @@ const Order = ({ history, match: { params } }) => {
   useEffect(() => {
     if (account.account_jwt && shouldLookup) {
       dispatch(requestGetOrder(account.account_jwt, params.id));
-      return () => {
-        dispatch(receivedGetOrder(null));
-        dispatch(resetOrderState());
-        if (account.temporarilyLogin) {
-          dispatch(requestLogout());
-        }
-      };
     }
     return () => {
       dispatch(receivedGetOrder(null));
