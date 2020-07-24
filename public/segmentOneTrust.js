@@ -122,9 +122,7 @@ function segmentOneTrust(wk) {
           integrations: destinationPreferences
         });
       } else {
-        window.analytics.options.integrations = {
-          integrations: destinationPreferences
-        };
+        window.analytics.options.integrations = destinationPreferences;
       }
     }
   }
