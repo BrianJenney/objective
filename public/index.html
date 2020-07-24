@@ -12,7 +12,6 @@
       }
 
       function OptanonWrapper() {
-          console.log("OptanonWrapper called");
           segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
 
           var OABCcookieName = "OptanonAlertBoxClosed";
@@ -23,21 +22,15 @@
 
           if (!OABCcookie && bannerAcceptBtn) {
               bannerAcceptBtn.addEventListener('click', function() {
-                  console.log("Allowed all via Banner");
-                  console.log("Anne16 listeners");
                   segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
               });
           }
           if (pcAllowAllBtn)
               pcAllowAllButton.addEventListener('click', function() {
-                  console.log("Allowed all via Preference Center");
-                  console.log("Anne16 listeners");
                   segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
               });
 
           pcSaveBtn.addEventListener('click', function() {
-              console.log("Set custom settings via Preference Center");
-              console.log("Anne16 listeners");
               segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
           });
       }
