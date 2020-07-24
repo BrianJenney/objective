@@ -1,10 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 import {
-  REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
-  REQUEST_CANCEL_ORDER,
   RECEIVED_CANCEL_ORDER_SUCCESS,
   RECEIVED_CANCEL_ORDER_FAILURE,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
@@ -16,61 +14,6 @@ import {
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
-
-export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getState) => {
-  dispatch({
-    type: REQUEST_CREATE_ORDER,
-    payload: { isLoading: true }
-  });
-  const { client: stompClient, replyTo } = getState().stomp;
-  const { merchantAccountId } = getState().storefront;
-
-  /**
-   * Total hack here, but if you refresh the page, you don't get a these fields
-   * in your cart & orders will fail. Just make sure they're all there.
-   */
-  if (!cart.catalogId || !cart.storeCode || !cart.email) {
-    cart.catalogId = getState().storefront.catalogId;
-    cart.storeCode = getState().storefront.code;
-    cart.email = getState().account.data.email;
-  }
-
-  const params = {
-    data: { cart },
-    params: {
-      nonceOrToken,
-      merchantAccountId,
-      ...(localStorageClient.get('clickId') && {
-        clickId: localStorageClient.get('clickId')
-      })
-    }
-  };
-
-  if (cart.account_jwt) {
-    const { account_jwt } = cart;
-    params.params.account_jwt = account_jwt;
-    delete cart.account_jwt;
-  } else if (cart.accountInfo) {
-    const { accountInfo } = cart;
-    params.params.accountInfo = accountInfo;
-    delete cart.accountInfo;
-  }
-
-  const payload = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
-    '/exchange/order/order.request.createorder',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      token: localStorageClient.get('olympusToken')
-    },
-    payload
-  );
-  // @segment - Order Submitted Event
-  window.analytics.track('Order Submitted', {
-    cart_id: cart._id
-  });
-};
 
 export const receivedCreateOrderSuccess = order => async dispatch => {
   dispatch({
@@ -95,7 +38,7 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
   });
 
   const paymentMethod =
-    order.paymentData.hasOwnProperty('method') && order.paymentData.method === 'paypal'
+    Object.prototype.hasOwnProperty.call(order, 'method') && order.paymentData.method === 'paypal'
       ? 'paypal'
       : 'creditcard';
   window.analytics.track('Order Completed', {
@@ -111,12 +54,13 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
     order_link: `https://objectivewellness.com/orders/${order._id}`,
     payment_method: paymentMethod === 'creditcard' ? 'Credit Card' : 'PayPal',
     payment_method_detail:
+      // prettier-ignore
       // eslint-disable-next-line no-nested-ternary
       paymentMethod === 'creditcard'
         ? order.paymentData.cardType
-        : order.paymentData.hasOwnProperty('email')
-        ? order.paymentData.email
-        : '',
+        : Object.prototype.hasOwnProperty.call(order, 'email')
+          ? order.paymentData.email
+          : '',
     products: orderItemsTransformed,
     shipping: order.shippingMethod.price,
     subtotal: order.subtotal,
@@ -134,42 +78,6 @@ export const receivedCreateOrderFailure = order => async dispatch => {
   window.analytics.track('Order Failed', {
     cart_id: localStorage.cartId,
     error_message: order
-  });
-};
-
-export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, getState) => {
-  dispatch({
-    type: REQUEST_CANCEL_ORDER,
-    payload: { isLoading: true }
-  });
-
-  const { client: stompClient, replyTo } = getState().stomp;
-  let { account_jwt } = getState().account.data;
-  if (!account_jwt) {
-    const orderState = getState().order;
-    if (orderState.order && orderState.order.account && orderState.order.account.account_jwt) {
-      // eslint-disable-next-line prefer-destructuring
-      account_jwt = orderState.order.account.account_jwt;
-    }
-  }
-  const params = {
-    data: { orderId },
-    params: { account_jwt }
-  };
-  const payload = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
-    '/exchange/order/order.request.cancelorder',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      jwt: account_jwt,
-      token: localStorageClient.get('olympusToken')
-    },
-    payload
-  );
-  // @segment - Cancel Order Submitted Event
-  window.analytics.track('Order Cancel Submitted', {
-    order_id: orderNumber
   });
 };
 
