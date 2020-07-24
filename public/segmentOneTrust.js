@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 function segmentOneTrust(wk) {
   const SEGMENT_WRITE_KEY = wk;
   // determines whether All: false is added to Segment's analytics.load integrations object https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#selecting-destinations
@@ -68,11 +67,12 @@ function segmentOneTrust(wk) {
     const destinations = await res.json();
 
     // Rename creationName to id to abstract default data model
-    // eslint-disable-next-line no-restricted-syntax
-    for (const destination of destinations) {
+    /* eslint-disable no-param-reassign */
+    destinations.forEach(destination => {
       destination.id = destination.creationName;
       delete destination.creationName;
-    }
+    });
+    /* eslint-enable no-param-reassign */
 
     return destinations;
   }
@@ -129,3 +129,5 @@ function segmentOneTrust(wk) {
 
   loadAnalytics();
 }
+
+window.segmentOneTrust = segmentOneTrust;
