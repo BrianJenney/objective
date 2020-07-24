@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
 import {
-  REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_CANCEL_ORDER,
@@ -16,61 +15,6 @@ import {
 const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
-
-export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getState) => {
-  dispatch({
-    type: REQUEST_CREATE_ORDER,
-    payload: { isLoading: true }
-  });
-  const { client: stompClient, replyTo } = getState().stomp;
-  const { merchantAccountId } = getState().storefront;
-
-  /**
-   * Total hack here, but if you refresh the page, you don't get a these fields
-   * in your cart & orders will fail. Just make sure they're all there.
-   */
-  if (!cart.catalogId || !cart.storeCode || !cart.email) {
-    cart.catalogId = getState().storefront.catalogId;
-    cart.storeCode = getState().storefront.code;
-    cart.email = getState().account.data.email;
-  }
-
-  const params = {
-    data: { cart },
-    params: {
-      nonceOrToken,
-      merchantAccountId,
-      ...(localStorageClient.get('clickId') && {
-        clickId: localStorageClient.get('clickId')
-      })
-    }
-  };
-
-  if (cart.account_jwt) {
-    const { account_jwt } = cart;
-    params.params.account_jwt = account_jwt;
-    delete cart.account_jwt;
-  } else if (cart.accountInfo) {
-    const { accountInfo } = cart;
-    params.params.accountInfo = accountInfo;
-    delete cart.accountInfo;
-  }
-
-  const payload = JSON.stringify(msgpack.encode(params));
-  stompClient.send(
-    '/exchange/order/order.request.createorder',
-    {
-      'reply-to': replyTo,
-      'correlation-id': ObjectId(),
-      token: localStorageClient.get('olympusToken')
-    },
-    payload
-  );
-  // @segment - Order Submitted Event
-  window.analytics.track('Order Submitted', {
-    cart_id: cart._id
-  });
-};
 
 export const receivedCreateOrderSuccess = order => async dispatch => {
   dispatch({
@@ -95,7 +39,9 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
   });
 
   const paymentMethod =
-    order.paymentData.method && order.paymentData.method === 'paypal' ? 'paypal' : 'creditcard';
+    Object.prototype.hasOwnProperty.call(order, 'method') && order.paymentData.method === 'paypal'
+      ? 'paypal'
+      : 'creditcard';
   window.analytics.track('Order Completed', {
     affiliation: order.storeCode,
     coupon: order.promo && order.promo.code ? order.promo.code : '',
@@ -113,7 +59,7 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
       // eslint-disable-next-line no-nested-ternary
       paymentMethod === 'creditcard'
         ? order.paymentData.cardType
-        : order.paymentData.email
+        : Object.prototype.hasOwnProperty.call(order, 'email')
           ? order.paymentData.email
           : '',
     products: orderItemsTransformed,
