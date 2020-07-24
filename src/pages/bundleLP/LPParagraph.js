@@ -1,3 +1,5 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable react/no-danger */
 import React, { useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
@@ -9,7 +11,7 @@ const commonPropTypes = {
   xs: PropTypes.bool
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   btn: {
     fontFamily: 'P22-Underground',
     fontWeight: '500',
@@ -42,19 +44,31 @@ const LPParagraph = ({ data, value, xs, noBorder, hideText }) => {
     setExpandText(!expandText);
   }, [expandText]);
 
-  return value.map((item, i) => {
+  const limitText = (text, limit) => {
+    let limitIdx;
+    for (let i = limit; i < text.length; i += 1) {
+      if (text[i] === ' ') {
+        limitIdx = i;
+        break;
+      }
+    }
+    return text.substring(0, limitIdx);
+  };
+
+  return value.map(item => {
     if (hideText) {
-      const shortenText = value[0].substring(0, charLimit);
+      const shortenText = limitText(value[0], charLimit);
       return (
         <>
-          <div key={i} style={xs ? mobileStyles : desktopStyles}>
-            {!expandText ? <div>{`${shortenText}`}</div> : item}
+          <div key={data.name} style={xs ? mobileStyles : desktopStyles}>
+            {!expandText ? <div>{`${shortenText}...`}</div> : item}
           </div>
           <div className="button-LP">
             {hideText && (
               <button
                 className={classes.btn}
                 onClick={handleToggle}
+                type="button"
                 style={{
                   padding: textPadding
                 }}
@@ -68,7 +82,7 @@ const LPParagraph = ({ data, value, xs, noBorder, hideText }) => {
     }
     return (
       <div
-        key={i}
+        key={data.name}
         id={data.name}
         style={xs ? mobileStyles : desktopStyles}
         dangerouslySetInnerHTML={{ __html: item }}
