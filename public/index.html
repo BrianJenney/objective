@@ -13,7 +13,7 @@
 
       function OptanonWrapper() {
           console.log("OptanonWrapper called");
-          segmentOneTrust()
+          segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
 
           var OABCcookieName = "OptanonAlertBoxClosed";
           var bannerAcceptBtn = document.getElementById("onetrust-accept-btn-handler");
@@ -25,20 +25,20 @@
               bannerAcceptBtn.addEventListener('click', function() {
                   console.log("Allowed all via Banner");
                   console.log("Anne16 listeners");
-                  segmentOneTrust()
+                  segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
               });
           }
           if (pcAllowAllBtn)
               pcAllowAllButton.addEventListener('click', function() {
                   console.log("Allowed all via Preference Center");
                   console.log("Anne16 listeners");
-                  segmentOneTrust()
+                  segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
               });
 
           pcSaveBtn.addEventListener('click', function() {
               console.log("Set custom settings via Preference Center");
               console.log("Anne16 listeners");
-              segmentOneTrust()
+              segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
           });
       }
     </script>

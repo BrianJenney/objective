@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-function segmentOneTrust() {
-  const SEGMENT_WRITE_KEY = '';
+function segmentOneTrust(wk) {
+  const SEGMENT_WRITE_KEY = wk;
   // determines whether All: false is added to Segment's analytics.load integrations object https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/#selecting-destinations
   const DISABLE_DESTINATIONS_BY_DEFAULT = false;
 
