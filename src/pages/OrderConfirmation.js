@@ -15,6 +15,7 @@ import { Button, Address } from '../components/common';
 import { CartSummary } from '../components/summaries';
 import { GuestOrderSetPasswordForm } from '../components/forms';
 import {
+  clearAccountData,
   receivedLoginSuccess,
   requestChangePassword,
   receivedCreateAccountSuccess,
@@ -159,6 +160,9 @@ const OrderConfirmation = ({ history }) => {
 
     return () => {
       if (!matchPath(history.location.pathname, { path: '/orders' })) {
+        if (account.data.isGuest && !account.data.passwordSet) {
+          dispatch(clearAccountData());
+        }
         dispatch(receivedGetOrder(null));
       }
     };
