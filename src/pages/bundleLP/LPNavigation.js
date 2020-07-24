@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import Scrollchor from 'react-scrollchor';
 import { Container, Grid } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { PropTypes } from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,11 +13,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: '35px',
+    textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       height: 60,
       margin: '20px auto',
-      paddingLeft: '50px',
       width: 'fit-content',
       padding: '0 30px'
     }
@@ -54,6 +53,10 @@ const LPNavigation = ({ data }) => {
       </Container>
     </Grid>
   );
+};
+
+LPNavigation.propTypes = {
+  data: PropTypes.object
 };
 
 export default LPNavigation;
