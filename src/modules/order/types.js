@@ -1,4 +1,5 @@
 // Event-based architecture
+export const FE_ORDER_CANCELLED = 'FE_ORDER_CANCELLED';
 export const FE_ORDER_SUBMITTED = 'FE_ORDER_SUBMITTED';
 
 // Old request-based architecture kept around until legacy OMS is retired.

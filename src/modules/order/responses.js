@@ -69,6 +69,13 @@ export const handleOrderResponse = (status, data, fields, properties) => {
         store.dispatch(receivedCreateOrderFailure(data));
       }
       break;
+    case 'fe.order.cancelStatus':
+      if (status === 'success') {
+        store.dispatch(receivedCancelOrderSuccess(data));
+      } else {
+        store.dispatch(receivedCancelOrderFailure(data));
+      }
+      break;
     default:
   }
 };
