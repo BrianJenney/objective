@@ -86,7 +86,7 @@
               'page',
               'once',
               'off',
-              'on',
+              'on'
             ];
             analytics.factory = function(t) {
               return function() {
@@ -101,18 +101,15 @@
               analytics[e] = analytics.factory(e);
             }
             analytics.load = function(t, e) {
-              var n = document.createElement("script");
-              n.type = "text/javascript";
+              var n = document.createElement('script');
+              n.type = 'text/javascript';
               n.async = !0;
-              n.src =
-                "https://cdn.segment.com/analytics.js/v1/" +
-                t +
-                "/analytics.min.js";
-              var a = document.getElementsByTagName("script")[0];
+              n.src = 'https://cdn.segment.com/analytics.js/v1/' + t + '/analytics.min.js';
+              var a = document.getElementsByTagName('script')[0];
               a.parentNode.insertBefore(n, a);
               analytics._loadOptions = e;
             };
-            analytics.SNIPPET_VERSION = "4.1.0";
+            analytics.SNIPPET_VERSION = '4.1.0';
           }
       })();
     </script>
