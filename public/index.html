@@ -3,17 +3,43 @@
   <head>
     <!-- OneTrust Cookies Consent Notice start -->
     <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="623f893d-7d39-40fc-b8a3-0b01db1d79b9"></script>
+    <script src="segmentOneTrust.js"></script>
     <script type="text/javascript">
+      function getCookie(name) {
+          var value = "; " + document.cookie;
+          var parts = value.split("; " + name + "=");
+          if (parts.length == 2) return parts.pop().split(";").shift();
+      }
+
       function OptanonWrapper() {
-        //using insert script OneTrust helper function https://community.cookiepro.com/s/article/UUID-730ad441-6c4d-7877-7f85-36f1e801e8ca
-        // note, we are selecting category "C0001" so script will fire every time a user updates consent
-        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0001");
-        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0002");
-        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0003");
-        // OneTrust.InsertScript("../src/utils/segmentOneTrust.js", "head", null, null, "C0004");
-        OneTrust.InsertScript("segmentOneTrust.js", "head", null, null, "C0002");
-        OneTrust.InsertScript("segmentOneTrust.js", "head", null, null, "C0003");
-        OneTrust.InsertScript("segmentOneTrust.js", "head", null, null, "C0004");
+          console.log("OptanonWrapper called");
+          segmentOneTrust()
+
+          var OABCcookieName = "OptanonAlertBoxClosed";
+          var bannerAcceptBtn = document.getElementById("onetrust-accept-btn-handler");
+          var pcAllowAllBtn = document.getElementById("accept-recommended-btn-handler");
+          var pcSaveBtn = document.getElementsByClassName("save-preference-btn-handler onetrust-close-btn-handler button-theme")[0];
+          var OABCcookie = getCookie(OABCcookieName);
+
+          if (!OABCcookie && bannerAcceptBtn) {
+              bannerAcceptBtn.addEventListener('click', function() {
+                  console.log("Allowed all via Banner");
+                  console.log("Anne16 listeners");
+                  segmentOneTrust()
+              });
+          }
+          if (pcAllowAllBtn)
+              pcAllowAllButton.addEventListener('click', function() {
+                  console.log("Allowed all via Preference Center");
+                  console.log("Anne16 listeners");
+                  segmentOneTrust()
+              });
+
+          pcSaveBtn.addEventListener('click', function() {
+              console.log("Set custom settings via Preference Center");
+              console.log("Anne16 listeners");
+              segmentOneTrust()
+          });
       }
     </script>
     <!-- OneTrust Cookies Consent Notice end -->
