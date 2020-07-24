@@ -87,10 +87,6 @@
               'once',
               'off',
               'on',
-              'addSourceMiddleware',
-              'addIntegrationMiddleware',
-              'setAnonymousId',
-              'addDestinationMiddleware'
             ];
             analytics.factory = function(t) {
               return function() {
@@ -104,17 +100,17 @@
               var e = analytics.methods[t];
               analytics[e] = analytics.factory(e);
             }
-            analytics.load = function(e, t) {
+            analytics.load = function(t, e) {
               var n = document.createElement("script");
               n.type = "text/javascript";
               n.async = !0;
               n.src =
                 "https://cdn.segment.com/analytics.js/v1/" +
-                e +
+                t +
                 "/analytics.min.js";
               var a = document.getElementsByTagName("script")[0];
               a.parentNode.insertBefore(n, a);
-              analytics._loadOptions = t;
+              analytics._loadOptions = e;
             };
             analytics.SNIPPET_VERSION = "4.1.0";
           }
