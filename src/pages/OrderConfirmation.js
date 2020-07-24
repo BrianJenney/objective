@@ -101,19 +101,17 @@ const OrderConfirmation = ({ history }) => {
   const mainWidth = xs ? 12 : 8;
   const cartWidth = xs ? 12 : 4;
   const addressesWidth = xs ? 12 : 6;
-  const orderItemsTransformedGA = [];
+  let orderItemsTransformedGA = [];
 
   if (order) {
-    order.items.map(item => {
-      orderItemsTransformedGA.push({
-        id: item.variant_id,
-        name: item.variant_name,
-        brand: order.storeCode,
-        variant: item.sku,
-        quantity: item.quantity,
-        price: item.unit_price
-      });
-    });
+    orderItemsTransformedGA = order.items.map(item => ({
+      id: item.variant_id,
+      name: item.variant_name,
+      brand: order.storeCode,
+      variant: item.sku,
+      quantity: item.quantity,
+      price: item.unit_price
+    }));
   }
   useEffect(() => {
     if (order) {
@@ -130,20 +128,20 @@ const OrderConfirmation = ({ history }) => {
 
       if (
         order.account &&
-        order.account.hasOwnProperty('isGuest') &&
-        order.account.hasOwnProperty('passwordSet')
+        Object.prototype.hasOwnProperty.call(order.account, 'isGuest') &&
+        Object.prototype.hasOwnProperty.call(order.account, 'passwordSet')
       ) {
         if (!order.account.isGuest && order.account.passwordSet) {
-          if (order.account.hasOwnProperty('temporarilyLogin')) {
-            delete order.account.temporarilyLogin;
+          if (Object.prototype.hasOwnProperty.call(account, 'temporarilyLogin')) {
+            delete account.temporarilyLogin;
           }
-          dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
+          dispatch(receivedCreateAccountSuccess(order.account, account.data.account_jwt));
         }
 
         if (
           order.account.isGuest &&
           !order.account.passwordSet &&
-          order.account.hasOwnProperty('newsletter') &&
+          Object.prototype.hasOwnProperty.call(order.account, 'newsletter') &&
           order.account.newsletter
         ) {
           window.analytics.track('Subscribed', {
@@ -169,7 +167,7 @@ const OrderConfirmation = ({ history }) => {
   const onGuestOrderPasswordSubmit = (values, actions) => {
     dispatch(
       requestChangePassword(
-        order.account.account_jwt,
+        account.data.account_jwt,
         {
           currentPassword: '',
           newPassword1: values.password,
@@ -183,11 +181,11 @@ const OrderConfirmation = ({ history }) => {
     );
     order.account.isGuest = false;
     order.account.passwordSet = true;
-    if (order.account.hasOwnProperty('temporarilyLogin')) {
+    if (Object.prototype.hasOwnProperty.call(order.account, 'temporarilyLogin')) {
       delete order.account.temporarilyLogin;
     }
-    dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
-    dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
+    dispatch(receivedCreateAccountSuccess(account.data, account.data.account_jwt));
+    dispatch(receivedLoginSuccess(account.data, account.data.account_jwt));
     setGuestPasswordFormSubmitted(true);
   };
 
@@ -217,25 +215,20 @@ const OrderConfirmation = ({ history }) => {
       e => {
         e.preventDefault();
         if (
-          account.hasOwnProperty('data') &&
-          !account.data.hasOwnProperty('_id') &&
+          Object.prototype.hasOwnProperty.call(account, 'data') &&
+          !Object.prototype.hasOwnProperty.call(account, '_id') &&
           order.account
         ) {
           order.account.temporarilyLogin = true;
-          dispatch(receivedFetchAccountSuccess(order.account));
+          dispatch(receivedFetchAccountSuccess(account));
         }
 
         history.replace(`/orders/${order._id}`, order.hideCouponCode);
       },
       [history, order._id]
     );
-    const shouldShowSetPasswordForm = !!(
-      order.hasOwnProperty('account') &&
-      order.account.hasOwnProperty('passwordSet') &&
-      order.account.hasOwnProperty('isGuest') &&
-      !order.account.passwordSet &&
-      order.account.isGuest
-    );
+
+    const shouldShowSetPasswordForm = account.data.isGuest && !account.data.passwordSet;
 
     return (
       <Box className={classes.paper}>
@@ -306,7 +299,7 @@ const OrderConfirmation = ({ history }) => {
           </Grid>
           <Grid item xs={addressesWidth}>
             <Box
-              paddingLeft={xs ? 0 : paymentMethod !== 'paypal' ? 3 : 0}
+              paddingLeft={xs || paymentMethod === 'paypal' ? 0 : 3}
               borderTop={xs ? '1px solid #979797' : 0}
               paddingBottom={xs ? '25px' : '35px'}
             >
@@ -353,7 +346,7 @@ const OrderConfirmation = ({ history }) => {
 };
 
 OrderConfirmation.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default withRouter(OrderConfirmation);

@@ -109,7 +109,8 @@ const Header = ({ currentUser, location, history }) => {
   segmentIdentify(currentUser.data);
 
   let accountMenuItemConf = {};
-  if (accountJWT && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin) {
+
+  if (accountJWT && !currentUser.data.isGuest) {
     accountMenuItemConf = {
       key: 'third',
       children: <LoggedInUser name={firstName} />,
