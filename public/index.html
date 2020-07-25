@@ -12,7 +12,9 @@
       }
 
       function OptanonWrapper() {
-          segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
+          if (window.analytics.load) {
+            segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
+          }
 
           var OABCcookieName = "OptanonAlertBoxClosed";
           var bannerAcceptBtn = document.getElementById("onetrust-accept-btn-handler");
