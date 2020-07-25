@@ -446,7 +446,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(shippingData.price, true)}
+                {displayMoney(shippingData.price)}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint component="p" style={{ position: 'relative', top: '6px' }}>
@@ -466,7 +466,7 @@ const Cart = ({
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
               <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(shippingData.price, true)}
+                {displayMoney(shippingData.price)}
               </StyledProductTotal>
             </Grid>
             <StyledFinePrint

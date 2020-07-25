@@ -3,7 +3,7 @@ export const displayMoney = (value, showFree = false) => {
     value = 0;
   }
 
-  if (parseInt(value) == 0 && showFree) {
+  if (parseInt(value) == 0 || showFree) {
     return 'FREE';
   } else {
     return `$${value.toFixed(2)}`;
