@@ -374,13 +374,13 @@ const Checkout = ({
   }, [cart._id]);
 
   useEffect(() => {
-    if (cart.shipping) {
+    if (cart.shippingMethod) {
       setPayload({
         ...payload,
-        shippingMethod: cart.shipping.options[cart.shipping.code]
+        shippingMethod: cart.shippingMethod
       });
     }
-  }, [cart.shipping]);
+  }, [cart.shippingMethod]);
 
   // Cart is empty, go to Home page
   useEffect(() => {

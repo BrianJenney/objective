@@ -147,7 +147,7 @@ const CartSummary = ({ order }) => {
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {displayMoney(shippingMethod.price, true)}
+                {displayMoney(shippingMethod.price)}
               </StyledSmallCaps>
             </Grid>
           </Grid>

@@ -167,9 +167,7 @@ const Cart = ({
     return null;
   }
 
-  const code = get(cart, 'shipping.code', '');
-  const options = get(cart, 'shipping.options', {});
-  const shippingData = get(options, code, {});
+  const shippingData = cart.shippingMethod;
   const mobileDrawerPadding = window.screen.width < 960 ? '24px 20px' : '0px';
   const isCheckoutPage =
     matchPath(location.pathname, { path: '/checkout' }) ||
@@ -254,7 +252,7 @@ const Cart = ({
             <Typography className={classes.cartRestricted}>
               CHANGES TO YOUR CART: We’ve removed {restrictedProduct} from your cart because this
               product is not available in the state you selected. We hope to be able to offer{' '}
-                {restrictedProduct} in your state soon!
+              {restrictedProduct} in your state soon!
             </Typography>
             {cartCount === 0 && (
               <NavLink to="/gallery" underline="always" className={classes.link}>
@@ -375,8 +373,8 @@ const Cart = ({
                             -
                           </StyledCounterButton>
                           <StyledSmallCaps style={{ fontSize: '18px' }}>
-                          {item.quantity}
-                        </StyledSmallCaps>
+                            {item.quantity}
+                          </StyledSmallCaps>
                           <StyledCounterButton
                             color="primary"
                             onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
@@ -393,10 +391,10 @@ const Cart = ({
                     </Grid>
                     <StyledCardContent
                       style={
-                      !xsBreakpoint
-                        ? { paddingBottom: '0' }
-                        : { paddingBottom: '0px', paddingRight: '0px' }
-                    }
+                        !xsBreakpoint
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
                     >
                       <StyledFinePrint component="div" value={index}>
                         {!disableItemEditing && (
