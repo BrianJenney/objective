@@ -46,12 +46,12 @@ const BlogPost = ({ computedMatch }) => {
   const seoMap = useSelector(state => state.storefront.seoMap);
   let title;
   let description;
-
+  let indexThisPage;
   const checkIsValidPost = async () => {
     const seoData = seoMap[slug];
     if (seoData && seoData.description.includes('Objective Journal')) {
       setIsValidPost(true);
-      ({ title, description } = seoData);
+      ({ title, description, indexThisPage } = seoData);
     } else {
       setIsValidPost(false);
     }
@@ -92,7 +92,7 @@ const BlogPost = ({ computedMatch }) => {
   if (Object.keys(post).length === 0) {
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
         </ScrollToTop>
@@ -162,7 +162,7 @@ const BlogPost = ({ computedMatch }) => {
 
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <div className="journal-gallery post">
             <Box className="content" py={8}>

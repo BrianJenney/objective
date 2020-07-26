@@ -14,7 +14,7 @@ const Gallery = ({ location }) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
+  const { title, description, indexThisPage } = seoMap[location.pathname.substring(1)];
 
   useEffect(() => {
     window.analytics.page('Gallery');
@@ -22,7 +22,7 @@ const Gallery = ({ location }) => {
 
   return (
     <>
-      <HeadTags title={title} description={description} />
+      <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
       <ScrollToTop>
         <Box className="gallery-page">
           <Box className="hero-holder">
