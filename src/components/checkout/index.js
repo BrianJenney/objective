@@ -40,7 +40,7 @@ import EventEmitter from '../../events';
 const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
-  const titleViewBgcolor = '#fff7e8';
+  const titleViewBgcolor = '#b5d7bf';
   const titleViewColor = '#553226';
   const titleView = (
     <Box
@@ -55,6 +55,7 @@ const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload)
       fontSize={xs ? 14 : 18}
       style={{ textTransform: 'uppercase' }}
       className="checkoutPanel"
+      marginBottom={!isActiveStep ? '10px' : '0px'}
     >
       <Box mr={1} children={`STEP ${step + 1}`} />
       <Box children={stepTitle} style={{ fontWeight: 600 }} />

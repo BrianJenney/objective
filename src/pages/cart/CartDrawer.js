@@ -275,7 +275,12 @@ const Cart = ({
         ) : null}
         {cart.items.length > 0
           ? Object.values(cart.items).map((item, index) => (
-              <StyledDrawerGrid container direction="row" key={`cart-${index}`} className="ListBox">
+              <StyledDrawerGrid
+                container
+                direction="row"
+                key={`cart-${index}`}
+                className="CartListBox"
+              >
                 <Grid
                   item
                   xs={4}

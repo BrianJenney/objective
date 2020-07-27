@@ -95,38 +95,36 @@ const ProductOutOfStockForm = ({
 
     window.analytics.track('Email Capture Successful', {
       email: email,
-      site_location: "back in stock"
+      site_location: 'back in stock'
     });
 
     window.analytics.track('Email Capture Completed', {
       email: email,
-      site_location: "back in stock"
+      site_location: 'back in stock'
     });
 
-
     if (subscribed) {
-
-      window.analytics.track("Subscribed", {
-        "email": email,
-        "site_location": "back in stock"
+      window.analytics.track('Subscribed', {
+        email: email,
+        site_location: 'back in stock'
       });
-    
-      window.analytics.track("Subscribed Listrak Auto", {
-        "email": email,
-        "site_location": "back in stock"
+
+      window.analytics.track('Subscribed Listrak Auto', {
+        email: email,
+        site_location: 'back in stock'
       });
     }
     // Listrak event
     let listrakProductSku = product_variant ? product_variant : product_sku; //For some reason a different value for 'product_sku' is being passed to the component on the PDP vs on the Gallery page. This hotfix guarantees the right value for now
     //This try-catch block prevents the ProductOutOfStockForm from breaking if Listrak as a destination isn't enabled in Segment
-    try{
-    window._ltk.Alerts.AddAlert(email, listrakProductSku, 'BIS');
-    window._ltk.Alerts.Submit();
-  } catch(e){
-    console.log(e.message);
-  }
+    try {
+      window._ltk.Alerts.AddAlert(email, listrakProductSku, 'BIS');
+      window._ltk.Alerts.Submit();
+    } catch (e) {
+      console.log(e.message);
+    }
     handleOpenEmailConfirmation();
-    
+
     closeDialog();
   };
 
@@ -135,28 +133,20 @@ const ProductOutOfStockForm = ({
       <Paper className={classes.paper}>
         <CssBaseline />
         <Box align="center">
-          <Typography className={classes.title}>
-            It'll be back soon, we promise!
-          </Typography>
+          <Typography className={classes.title}>It'll be back soon, we promise!</Typography>
 
           <Box className={classes.box}>
             <Typography className={classes.subTitle}>
-              We don't have this at the moment, but we'll let you know as soon
-              as it's in stock
+              We don't have this at the moment, but we'll let you know as soon as it's in stock
             </Typography>
 
             <CardMedia image={product_img} className={classes.bigAvatar} />
-            <Typography 
-              style={{ color: product_color }}
-              className={classes.name}>{product_name}</Typography>
+            <Typography style={{ color: product_color }} className={classes.name}>
+              {product_name}
+            </Typography>
           </Box>
           <Box align="start">
-            <Field
-              name="email"
-              label="Email Address"
-              component={InputField}
-              autoComplete="email"
-            />
+            <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
             <Box align="start">
               <Field
                 style={{ padding: '20px 7px 20px 0' }}
@@ -167,12 +157,7 @@ const ProductOutOfStockForm = ({
                 value={values.subscribed}
               />
             </Box>
-            <Button
-              fullWidth
-              type="submit"
-              children="Submit"
-              disabled={!isValid}
-            />
+            <Button fullWidth type="submit" children="Submit" disabled={!isValid} />
           </Box>
         </Box>
       </Paper>
