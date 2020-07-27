@@ -101,7 +101,7 @@ const ResetPassword = ({ history, location }) => {
                 <Box width={1} textAlign="right">
                   <NavLink
                     style={{
-                      fontFamily: 'p22-underground',
+                      fontFamily: 'proxima-nova, sans-serif',
                       fontSize: '12px'
                     }}
                     component="button"
@@ -115,7 +115,7 @@ const ResetPassword = ({ history, location }) => {
           />
           <Typography
             style={{
-              fontFamily: 'p22-underground',
+              fontFamily: 'proxima-nova, sans-serif',
               fontSize: '11px',
               padding: '5px',
               textAlign: 'left'
@@ -136,7 +136,7 @@ const ResetPassword = ({ history, location }) => {
                 <Box width={1} textAlign="right">
                   <NavLink
                     style={{
-                      fontFamily: 'p22-underground',
+                      fontFamily: 'proxima-nova, sans-serif',
                       fontSize: '12px'
                     }}
                     component="button"

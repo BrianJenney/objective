@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles(theme => ({
   text: {
     fontSize: '20px',
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     lineHeight: '1.2',
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'

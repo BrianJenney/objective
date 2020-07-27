@@ -15,23 +15,34 @@ const useStyles = makeStyles(theme => ({
   title: {
     minHeight: '48px',
     fontSize: '36px',
-    color: '#231f20',
-    fontFamily: 'Canela Text Web',
+    color: theme.palette.brand.camoGreen,
+    fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
     margin: theme.spacing(2),
+    
 
     [theme.breakpoints.down('xs')]: {
-      fontSize: '36px',
-      margin: theme.spacing(1)
+      minHeight: '0px',
+      fontSize: '25px',
+      float: 'left',
+      margin: 0,
+      paddingLeft: '10px'
     }
   },
   subTitle: {
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.darkSubTextGray,
     fontSize: '16px',
     paddingBottom: theme.spacing(3),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '14px'
+      fontSize: '16px',
+      float: 'left',
+      paddingLeft: '10px'
     }
+  },
+  link: {
+    color: theme.palette.brand.accentBrown,
+    fontSize: '14px'
   }
 }));
 
@@ -44,11 +55,11 @@ const Signup = ({ requestCreateAccount, clearCreateAccountError, switchToLogin }
         <Box textAlign="center">
           <Typography className={classes.title}>Create an account</Typography>
           <Typography className={classes.subTitle}>
-            Already registered?&nbsp;
+            Already have an account?&nbsp;
             {switchToLogin ? (
-              <MenuLink onClick={switchToLogin} children="Log in!" />
+              <MenuLink className={classes.link} onClick={switchToLogin} children="Log in" />
             ) : (
-              <NavLink to="/login" children="Log in!" replace underline="always" />
+              <NavLink className={classes.link} to="/login" children="Log in" replace underline="always" />
             )}
           </Typography>
 

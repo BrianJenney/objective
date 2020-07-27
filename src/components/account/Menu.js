@@ -18,7 +18,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 const StyledMenuItem = withStyles(theme => ({
   root: {
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: 16,
     '&:hover': {
       textDecoration: 'underline'
@@ -30,12 +30,12 @@ const useStyles = makeStyles(theme => ({
   accountHeaderMobile: {
     fontSize: '24px',
     color: theme.palette.brand.camoGreen,
-    fontFamily: 'p22-underground, sans-serif',
+    fontFamily: theme.typography.bodyFontFamily,
     fontWeight: '600',
     marginTop: '5px'
   },
   nxTextField: {
-    fontFamily: 'P22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: '18px',
     marginTop: '5px',
     color: theme.palette.brand.camoGreen

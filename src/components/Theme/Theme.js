@@ -214,7 +214,10 @@ const nxtTheme = createMuiTheme({
     },
     MuiCheckbox: {
       root: {
-        color: '#7f7470'
+        color: '#7f7470',
+        '&$checked': {
+          color: '#553226 !important' 
+        }
       }
     },
     MuiOutlinedInput: {

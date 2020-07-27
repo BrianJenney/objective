@@ -13,8 +13,8 @@ import { MenuLink, NavLink } from './common';
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: '36px',
-    color: '#231f20',
+    fontSize: '25px',
+    color: theme.palette.brand.camoGreen,
     fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
     marginBottom: theme.spacing(1),

@@ -15,22 +15,22 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '30px',
-    fontFamily: 'Canela Text Web'
+    fontFamily: 'bodoni-urw, serif;'
   },
   mobileTitle: {
     fontSize: 24,
-    fontFamily: 'FreightTextProBook'
+    fontFamily: 'bodoni-urw, serif;'
   },
   subTitle: {
     textAlign: 'right',
     fontSize: '18px',
     fontWeight: 'normal',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
+    fontFamily: 'proxima-nova, sans-serif',
     fontWeight: '600',
     paddingTop: '13px'
   },
   mobileLogin: {
-    fontFamily: 'P22Underground',
+    fontFamily: 'proxima-nova, sans-serif',
     fontSize: 16,
     fontWeight: 600
   },

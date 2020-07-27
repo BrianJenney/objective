@@ -7,9 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   text: {
-    fontFamily: 'p22-underground',
-    fontSize: '16px',
-    color: '#231f20',
+    fontFamily: theme.typography.bodyFontFamily,
+    fontSize: '14px',
+    color: theme.palette.brand.darkSubTextGray,
     lineHeight: 'normal'
   }
 }));

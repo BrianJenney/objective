@@ -13,31 +13,38 @@ import { withCurrentUser } from '../../hoc';
 
 const useStyles = makeStyles(theme => ({
   text: {
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: '14px',
+    color: theme.palette.brand.darkSubTextGray,
     display: 'block',
-    lineHeight: 'normal',
+    lineHeight: '21px',
     padding: '0 30px',
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '10px'
+      fontSize: '12px'
     }
   },
   text2: {
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: '14px',
+    color: theme.palette.brand.accentBrown,
     display: 'block',
-    lineHeight: 'normal',
+    lineHeight: '21px',
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '10px'
+      fontSize: '12px'
     }
   },
   subText: {
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.darkSubTextGray,
     fontSize: '11px',
     textAlign: 'left',
-    margin: theme.spacing(1, 0)
+  },
+  newsletter: {
+    paddingLeft: 0,
+    // fontFamily: theme.typography.bodyFontFamily + ' !important',
+    color: theme.palette.brand.darkSubTextGray
   }
 }));
 
@@ -123,24 +130,6 @@ const SignupForm = ({
             label="Password"
             component={InputField}
             type={passwordVisible ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <Box width={1} textAlign="right">
-                  <NavLink
-                    style={{
-                      fontFamily: 'P22-underground',
-                      fontSize: '12px'
-                    }}
-                    type="button"
-                    underline="always"
-                    onClick={event => togglePasswordVisibility(event)}
-                    children={
-                      passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
-                    }
-                  />
-                </Box>
-              )
-            }}
             autoComplete="current-password"
           />
           <Typography className={classes.subText}>
@@ -149,9 +138,10 @@ const SignupForm = ({
         </Grid>
         <Grid item xs={12}>
           <Field
+            className={classes.newsletter}
+            style={{fontFamily: 'proxima-nova, sans-serif'}}
             name="newsletter"
-            color="primary"
-            label="Subscribe for tips and new product launches"
+            label="Keep me updated with exclusive offers"
             component={CheckboxField}
           />
         </Grid>
@@ -168,9 +158,9 @@ const SignupForm = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <div className={classes.text}>
-            By creating an account you agree to the Objective Wellness&nbsp;
+            By creating an account you agree to Burt's Bees&nbsp;
             <div className={classes.text2}>
-              <NavLink to="/terms" underline="always" target="_blank">
+              <NavLink to="/terms" underline="always" target="_blank" style={{color: '#a06958'}}>
                 Terms &amp; Conditions
               </NavLink>
               &nbsp;&amp;&nbsp;
@@ -180,7 +170,7 @@ const SignupForm = ({
               <a
                 href="/privacypolicy"
                 target="_blank"
-                style={{ color: '#000000' }}
+                style={{ color: '#a06958' }}
               >
                 Privacy Policy
               </a>
