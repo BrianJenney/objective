@@ -424,6 +424,7 @@ const Checkout = ({
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
+
     if (paymentMethodNonce) {
       if (cart.items.length > 0) {
         emitOrderSubmitted({
@@ -528,14 +529,7 @@ const Checkout = ({
     if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
       return null;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> Initiating orders with an event rather than a request
-=======
-
->>>>>>> Initiating orders with an event rather than a request
     const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
