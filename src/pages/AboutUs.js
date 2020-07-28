@@ -46,7 +46,7 @@ const AboutUs = ({ location }) => {
   const mobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [contents, setContents] = useState();
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
+  const { title, description, indexThisPage } = seoMap[location.pathname.substring(1)];
 
   const fetchData = async () => {
     const results = [];
@@ -227,7 +227,7 @@ const AboutUs = ({ location }) => {
 
   return contents ? (
     <>
-      <HeadTags title={title} description={description} />
+      <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
       <ScrollToTop>
         <div className="aboutus">
           {renderHeroSlider()}
