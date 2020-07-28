@@ -272,6 +272,36 @@ export const requestChangePassword = (authToken, patches, { setSubmitting }) => 
   });
 };
 
+export const requestChangePasswordPostOrder = (accountId, patches, { setSubmitting }) => (
+  dispatch,
+  getState
+) => {
+  // This fn is for the create account box that appears on the order confirmation
+  // page after guest checkout.  This version does not use JWT's.
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    id: accountId,
+    data: patches
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/account/account.request.changePasswordPostOrder',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_CHANGE_PASSWORD,
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
+  });
+};
+
 export const receivedChangePasswordSuccess = account => dispatch => {
   dispatch({
     type: RECEIVED_CHANGE_PASSWORD_SUCCESS,

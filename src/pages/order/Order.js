@@ -18,11 +18,11 @@ const Order = ({ history, match: { params } }) => {
 
   account = account.data;
 
-  if (order.order && !account.account_jwt) {
+  if (order.order && !account.account_jwt && !account.guestCheckout) {
     account = { account_jwt: false };
   }
 
-  if (!account.account_jwt && !isLoading) {
+  if (!account.account_jwt && !isLoading && !account.guestCheckout) {
     history.push('/login');
   }
 

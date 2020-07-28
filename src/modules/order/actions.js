@@ -21,7 +21,6 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
     type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
   });
-
   // @segment Order Completed Event
   // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
   const orderItemsTransformed = [];
