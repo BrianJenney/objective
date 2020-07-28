@@ -35,10 +35,18 @@ export const GenerateTemplate = ({ data, header, template, slug }) => {
   GenerateTemplate.propTypes = {
     data: PropTypes.func.isRequired,
     header: PropTypes.func.isRequired,
-    template: PropTypes.func.isRequired
+    template: PropTypes.func.isRequired,
+    slug: PropTypes.string.isRequired
   };
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description, indexThisPage } = seoMap[slug];
+  const lpMetaTags = seoMap[slug];
+  let title;
+  let description;
+  let indexThisPage;
+
+  if (lpMetaTags) {
+    ({ title, description, indexThisPage } = lpMetaTags);
+  }
 
   return (
     <div>
