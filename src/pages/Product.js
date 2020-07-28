@@ -19,9 +19,9 @@ const Product = ({ match }) => {
   const validProduct = seoMap[product_slug];
   let title;
   let description;
-
+  let indexThisPage;
   if (validProduct) {
-    ({ title, description } = validProduct);
+    ({ title, description, indexThisPage } = validProduct);
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Product = ({ match }) => {
   if (scrollToTabs) {
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         {content}
       </>
     );
@@ -56,7 +56,7 @@ const Product = ({ match }) => {
 
   return (
     <>
-      <HeadTags title={title} description={description} />
+      <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
       <ScrollToTop>{content}</ScrollToTop>
     </>
   );

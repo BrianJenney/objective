@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, useMediaQuery } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import {
@@ -16,26 +17,40 @@ import {
   List
 } from '../pages/static/components';
 import { StyledContainer } from '../assets/styles/StyledComponents';
+import HeadTags from '../components/common/HeadTags';
 
-export const buildPage = page => {
+export const buildPage = (page, slug) => {
   const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
   return (
     <GenerateTemplate
       data={tmpComps}
       template={page.template}
       header={page.components.filter(c => c.type === 'navigation')[0]}
+      slug={slug}
     />
   );
 };
 
-export const GenerateTemplate = ({ data, header, template }) => {
+export const GenerateTemplate = ({ data, header, template, slug }) => {
   GenerateTemplate.propTypes = {
     data: PropTypes.func.isRequired,
     header: PropTypes.func.isRequired,
-    template: PropTypes.func.isRequired
+    template: PropTypes.func.isRequired,
+    slug: PropTypes.string.isRequired
   };
+  const seoMap = useSelector(state => state.storefront.seoMap);
+  const lpMetaTags = seoMap[slug];
+  let title;
+  let description;
+  let indexThisPage;
+
+  if (lpMetaTags) {
+    ({ title, description, indexThisPage } = lpMetaTags);
+  }
+
   return (
     <div>
+      <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
       <Header data={header} template={template} type={header.type} />
       <StyledContainer>
         <RenderComponents components={data} />
