@@ -258,10 +258,10 @@ class Home extends Component {
       );
 
     const { welcomeHeader, welcomeText } = this.state.content;
-    const { title, description } = this.props.seoMap['/'];
+    const { title, description, indexThisPage } = this.props.seoMap['/'];
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <div className="home-style">
             <Link

@@ -27,7 +27,8 @@ import {
   RECEIVED_PASSWORD_RESET_SUCCESS,
   RECEIVED_PASSWORD_RESET_FAILURE,
   REQUEST_CHECK_EMAIL_EXISTENCE,
-  RECEIVED_CHECK_EMAIL_EXISTENCE
+  RECEIVED_CHECK_EMAIL_EXISTENCE,
+  CLEAR_ACCOUNT_DATA
 } from './types';
 import EventEmitter from '../../events';
 import { unsetCheckoutPaypalPayload } from '../paypal/actions';
@@ -527,5 +528,12 @@ export const receivedCheckEmailExistence = exists => dispatch => {
   dispatch({
     type: RECEIVED_CHECK_EMAIL_EXISTENCE,
     payload: exists
+  });
+};
+
+export const clearAccountData = () => dispatch => {
+  dispatch({
+    type: CLEAR_ACCOUNT_DATA,
+    payload: null
   });
 };

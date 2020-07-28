@@ -24,7 +24,8 @@ import {
   RECEIVED_PASSWORD_RESET_SUCCESS,
   RECEIVED_PASSWORD_RESET_FAILURE,
   CLEAR_PASSWORD_RESET_ERROR,
-  REQUEST_LOGOUT
+  REQUEST_LOGOUT,
+  CLEAR_ACCOUNT_DATA
 } from './types';
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
@@ -266,6 +267,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         resetError: false
+      };
+    case CLEAR_ACCOUNT_DATA:
+      return {
+        ...state,
+        data: {}
       };
     default:
       return state;
