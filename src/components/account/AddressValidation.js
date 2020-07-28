@@ -65,6 +65,10 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     width: '99% !important'
+  },
+  border: {
+    border: 'solid 3px #000000',
+    padding: '20px 25px'
   }
 }));
 
@@ -127,20 +131,18 @@ const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) =
   }
 
   const displayAddress = address => (
-    <Box border={1} borderColor="#979797" className={classes.boxPadding}>
-      <Paper className={classes.paper}>
-        {address === sAddress ? (
-          <div className={classes.atitle}>We suggest:</div>
-        ) : (
-          <div className={classes.atitle}>You entered:</div>
-        )}
-        <div className={classes.text}>
-          {address.address1} {address.address2 ? address.address2 : ''}
-        </div>
-        <div className={classes.text}>{`${address.city} ${address.state}`}</div>
-        <div className={classes.text}>{`${address.zipcode}`}</div>
-      </Paper>
-    </Box>
+    <Paper className={classes.paper}>
+      {address === sAddress ? (
+        <div className={classes.atitle}>We suggest:</div>
+      ) : (
+        <div className={classes.atitle}>You entered:</div>
+      )}
+      <div className={classes.text}>
+        {address.address1} {address.address2 ? address.address2 : ''}
+      </div>
+      <div className={classes.text}>{`${address.city} ${address.state}`}</div>
+      <div className={classes.text}>{`${address.zipcode}`}</div>
+    </Paper>
   );
 
   return (
@@ -171,7 +173,13 @@ const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) =
               md={6}
               className={xs ? '' : classes.grid}
             >
-              {displayAddress(origAddress)}
+              <Box
+                border={1}
+                borderColor="#979797"
+                className={originalAddress ? classes.border : classes.boxPadding}
+              >
+                {displayAddress(origAddress)}
+              </Box>
             </Grid>
             <Grid
               onClick={() => {
@@ -183,7 +191,13 @@ const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) =
               md={6}
               className={xs ? '' : classes.grid}
             >
-              {displayAddress(sAddress)}
+              <Box
+                border={1}
+                borderColor="#979797"
+                className={suggestedAddress ? classes.border : classes.boxPadding}
+              >
+                {displayAddress(sAddress)}
+              </Box>
             </Grid>
           </Grid>
           {suggestedAddress || originalAddress ? (
