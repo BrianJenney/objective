@@ -26,7 +26,6 @@ import CheckoutHeader from './CheckoutHeader';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 import { paramsToObject, isAcqDiscount } from '../utils/misc';
 const jwt = require('jsonwebtoken');
-
 const StyledLink = withStyles(() => ({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',

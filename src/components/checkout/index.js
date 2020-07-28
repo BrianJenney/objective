@@ -528,6 +528,7 @@ const Checkout = ({
     if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
       return null;
     }
+
     const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,

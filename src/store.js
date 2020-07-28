@@ -24,16 +24,17 @@ const rootReducer = combineReducers({
   paypal: paypalReducer
 });
 
-//Emits store dispatch events
+// Emits store dispatch events
 const reduxStoreEvents = store => next => action => {
-  EventEmitter.emit(action.type, {payload: action.payload, state: store.getState()});
+  EventEmitter.emit(action.type, { payload: action.payload, state: store.getState() });
   return next(action);
 };
 
+// eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(reduxThunk,reduxStoreEvents))
+  composeEnhancers(applyMiddleware(reduxThunk, reduxStoreEvents))
 );
 
 export default store;
