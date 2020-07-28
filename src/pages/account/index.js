@@ -83,18 +83,21 @@ const Account = ({ routes, history }) => {
         <Box className={classes.paper}>
           <Grid container spacing={3}>
             <div className={classes.accountMenuGrid}>
-            <RouterLink
-          onClick={() => history.goBack()}
-        >
-          <StyledArrowIcon>
-            <LeftArrowIcon fontSize="small" style={{color: '#a06958'}} />
-          </StyledArrowIcon>
-          <span style={backLink}>Back</span>
-        </RouterLink>
+            
               {xs ? (
+                <>
+                <RouterLink
+                onClick={() => history.goBack()}
+              >
+                <StyledArrowIcon>
+                  <LeftArrowIcon fontSize="small" style={{color: '#a06958'}} />
+                </StyledArrowIcon>
+                <span style={backLink}>Back</span>
+              </RouterLink>
                 <Typography className={classes.title} variant="h1" gutterBottom>
                   Welcome, {currentUser.firstName}!
                 </Typography>
+                </>
               ) : (
                 <></>
               )}
