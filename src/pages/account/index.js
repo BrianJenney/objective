@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Redirect } from 'react-router-dom';
+import { Switch, Redirect, useHistory, Link as RouterLink } from 'react-router-dom';
+import LeftArrowIcon from '@material-ui/icons/ArrowBack';
+import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { RouteWithSubRoutes } from '../../components/common';
 import { AccountMenu } from '../../components/account';
 import { useSelector } from 'react-redux';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 import './account-style.scss';
 export { default as AccountOverviewPage } from './Overview';
@@ -17,9 +21,16 @@ export { default as AccountAddressesPage } from './Addresses';
 export { default as AccountPaymentDetailsPage } from './PaymentDetails';
 export { default as AccountProfilePage } from './Profile';
 
+const backLink = {
+  fontFamily: 'proxima-nova, sans-serif',
+  fontSize: '14px',
+  color: '#a06958',
+  textDecoration: 'underline'
+}
+
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(252, 248, 244, 0.5)',
+    backgroundColor: '#f6f5f1',
     [theme.breakpoints.down('xs')]: {
       padding: 0,
       backgroundColor: '#FFF'
@@ -31,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 30,
     color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('xs')]: {
-      fontSize: 36,
+      fontSize: 25,
       marginTop: 15,
       marginBottom: 5
     }
@@ -61,19 +72,33 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const Account = ({ routes }) => {
+const Account = ({ routes, history }) => {
   const currentUser = useSelector(state => state.account.data);
   const classes = useStyles();
-  console.log('CURRRENTTT',currentUser)
+  const theme = useTheme();
+  const xs = useMediaQuery(theme.breakpoints.down('xs'));
   return (
     <Box className={classes.root} py={10}>
       <Container>
         <Box className={classes.paper}>
           <Grid container spacing={3}>
             <div className={classes.accountMenuGrid}>
-            <Typography className={classes.title} variant="h1" gutterBottom>
-        Welcome, {currentUser.firstName}!
-      </Typography>
+            <RouterLink
+          onClick={() => history.goBack()}
+        >
+          <StyledArrowIcon>
+            <LeftArrowIcon fontSize="small" style={{color: '#a06958'}} />
+          </StyledArrowIcon>
+          <span style={backLink}>Back</span>
+        </RouterLink>
+              {xs ? (
+                <Typography className={classes.title} variant="h1" gutterBottom>
+                  Welcome, {currentUser.firstName}!
+                </Typography>
+              ) : (
+                <></>
+              )}
+
               <Box>
                 <AccountMenu />
               </Box>

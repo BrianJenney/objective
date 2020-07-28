@@ -3,6 +3,7 @@ import { get, isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Typography from '@material-ui/core/Typography';
 
 import { fonts } from '../../components/Theme/fonts';
 import { getDefaultEntity } from '../../utils/misc';
@@ -11,21 +12,17 @@ import { withLogout } from '../../hoc';
 import ScrollToTop from '../../components/common/ScrollToTop';
 
 const change = {
-  fontFamily: fonts.smallHeader,
-  fontSize: 12,
+  fontFamily: 'proxima-nova, sans-serif',
+  fontSize: 14,
   padding: 9,
-  color: 'black'
+  color: '#a06958'
 };
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: theme.typography.headerFontFamily,
-    fontSize: 36,
-    marginBottom: 30,
+    fontSize: 25,
+    marginBottom: 20,
     color: theme.palette.brand.camoGreen,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: 32,
-      marginBottom: 15
-    }
   },
   info: {
     fontFamily: theme.typography.headerFontFamily,
@@ -73,6 +70,14 @@ const AccountOverview = ({ currentUser, logout }) => {
   }, []);
   const RenderOverview = () => (
     <div className="account-overview">
+      {xs ? (
+        <></>
+      ) : (
+        <Typography className={classes.title} variant="h1" gutterBottom>
+          Welcome, {currentUser.data.firstName}!
+        </Typography>
+      )}
+
       <p>
         <strong>NAME</strong> {currentUser.data.firstName} {currentUser.data.lastName}
       </p>
@@ -84,7 +89,7 @@ const AccountOverview = ({ currentUser, logout }) => {
         <strong>PASSWORD</strong>
         xxxxxx
         <NavLink to="/account/profile" style={change}>
-          CHANGE
+          Change
         </NavLink>
       </p>
       <p>

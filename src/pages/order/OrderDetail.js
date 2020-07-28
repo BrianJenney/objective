@@ -337,9 +337,9 @@ const OrderDetail = ({ hideLPCoupon }) => {
   order.status = statusStepper.status;
 
   return (
-    <div style={{ backgroundColor: 'rgba(252, 248, 244, 0.5)' }}>
+    <div style={{ backgroundColor: '#f6f5f1' }}>
       <div className={classes.box}>
-        <Box bgcolor="rgba(252, 248, 244, 0.5)">
+        <Box bgcolor="#f6f5f1">
           <Container>
             <CssBaseline />
             <Box py={10} className={classes.containingBox}>

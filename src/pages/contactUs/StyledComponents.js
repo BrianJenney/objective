@@ -9,7 +9,7 @@ const { $brandSans, $brandSerif, body } = fonts;
 
 export const StyledBackground = withStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(252, 248, 244, 0.5)',
+    backgroundColor: '#f6f5f1',
     padding: '90px 0px',
     [theme.breakpoints.down('xs')]: {
       padding: '0px',

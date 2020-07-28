@@ -19,7 +19,8 @@ import Typography from '@material-ui/core/Typography';
 const StyledMenuItem = withStyles(theme => ({
   root: {
     fontFamily: theme.typography.bodyFontFamily,
-    fontSize: 16,
+    color: theme.palette.brand.camoGreen,
+    fontSize: 22,
     '&:hover': {
       textDecoration: 'underline'
     }
@@ -39,6 +40,20 @@ const useStyles = makeStyles(theme => ({
     fontSize: '18px',
     marginTop: '5px',
     color: theme.palette.brand.camoGreen
+  },
+  link: {
+    color: theme.palette.brand.camoGreen,
+    fontFamily: theme.typography.bodyFontFamily,
+    fontWeight: 600,
+    fontStyle: 'normal',
+    fontSize: '14px'
+  },
+  selectedLink: {
+    color: theme.palette.brand.camoGreen,
+    fontFamily: theme.typography.bodyFontFamily,
+    fontWeight: 800,
+    fontStyle: 'normal',
+    fontSize: '14px'
   }
 }));
 
@@ -47,23 +62,25 @@ const AccountMenu = ({ logout }) => {
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
 
-  const [selected, setSelected] = useState(window.location.pathname);
+  const [mobileSelected, setMobileSelected] = useState(window.location.pathname);
+  const [deskSelected, setDeskSelected] = useState('Overview');
+
 
   const NTextField = withRouter(({ history }) => (
     <TextField
       className={`${classes.nxTextField} nxTextField`}
       fullWidth
       select
-      value={selected}
+      value={mobileSelected}
       onChange={e => {
         history.push(e.target.value, history.location.state);
-        setSelected(e.target.value);
+        setMobileSelected(e.target.value);
       }}
     >
       {ACCOUNT_MENU_ITEMS.filter(item => item.key !== ACCOUNT_MENU_KEYS.LOGOUT).map(menuItem => (
-        <MenuItem key={menuItem.key} value={menuItem.to}>
+        <StyledMenuItem key={menuItem.key} value={menuItem.to}>
           {menuItem.label}
-        </MenuItem>
+        </StyledMenuItem>
       ))}
     </TextField>
   ));
@@ -81,10 +98,16 @@ const AccountMenu = ({ logout }) => {
               primary={
                 <div className="account-side-menu">
                   {menuItem.key === ACCOUNT_MENU_KEYS.LOGOUT ? (
-                    <MenuLink onClick={logout}>{menuItem.label}</MenuLink>
+                    <MenuLink className={classes.link} onClick={logout}>{menuItem.label}</MenuLink>
+                  ) : deskSelected === menuItem.label ? (
+                    <NavLink className={classes.selectedLink} name={menuItem.label} to={menuItem.to} onClick={e => {
+                      setDeskSelected(e.target.name);
+                    }}>{menuItem.label}</NavLink>
                   ) : (
-                    <NavLink to={menuItem.to}>{menuItem.label}</NavLink>
-                  )}
+                    <NavLink className={classes.link} name={menuItem.label} to={menuItem.to} onClick={e => {
+                      setDeskSelected(e.target.name);
+                    }}>{menuItem.label}</NavLink>
+                  ) }
                 </div>
               }
             />

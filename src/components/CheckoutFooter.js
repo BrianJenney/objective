@@ -326,7 +326,7 @@ class CheckoutFooter extends React.Component {
         className="checkout-footer-container"
         style={{
           padding: 50,
-          background: 'rgba(252, 248, 244, 0.5)',
+          background: '#f6f5f1',
           borderTop: '1px solid',
           fontFamily: 'proxima-nova, sans-serif',
           fontSize: 18,

@@ -75,7 +75,7 @@ const TrackOrder = ({ history }) => {
     setTimeout(() => window.scrollTo(0, 0), 300);
   }, []);
   return (
-    <Box bgcolor="rgba(252, 248, 244, 0.5)">
+    <Box bgcolor="#f6f5f1">
       <Container>
         <CssBaseline />
         <Box className={classes.containingBox}>
