@@ -7,12 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
+import { OBJECTIVE_HOMEPAGE, OBJECTIVE_HERO } from '../constants/contentfulEntries';
 import HeadTags from '../components/common/HeadTags';
 import { contentfulClient } from '../utils/contentful';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ContentfulHero from '../components/ContentfulHero';
 
 import './home/home-style.scss';
 import { StyledContainer } from '../assets/styles/StyledComponents';
@@ -73,12 +74,27 @@ class Home extends Component {
       .catch(err => {
         throw err;
       });
+    contentfulClient
+      .getEntry(OBJECTIVE_HERO)
+      .then(entry => {
+        const content = entry.fields;
+        this.setState({
+          contentfulHero: {
+            ...content
+          }
+        });
+      })
+      .catch(err => {
+        throw err;
+      });
     if (!homePageTracked) {
       window.analytics.page('Home');
     }
   }
 
   renderHeroSlider() {
+    if (this.state.contentfulHero) return <ContentfulHero content={content} />;
+    // Here we will conditionally render the contentful hero
     if (!this.state.content.heroSlider) return <></>;
 
     let images = this.state.content.heroSlider;
