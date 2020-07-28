@@ -16,14 +16,12 @@ import { CartSummary } from '../components/summaries';
 import { GuestOrderSetPasswordForm } from '../components/forms';
 import {
   clearAccountData,
-  receivedLoginSuccess,
-  requestChangePassword,
+  requestChangePasswordPostOrder,
   receivedCreateAccountSuccess,
   receivedFetchAccountSuccess
 } from '../modules/account/actions';
 
 import { receivedGetOrder } from '../modules/order/actions';
-
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(0, 2),
@@ -160,7 +158,7 @@ const OrderConfirmation = ({ history }) => {
 
     return () => {
       if (!matchPath(history.location.pathname, { path: '/orders' })) {
-        if (account.data.isGuest && !account.data.passwordSet) {
+        if (account.data.guestCheckout && !account.data.passwordSet) {
           dispatch(clearAccountData());
         }
         dispatch(receivedGetOrder(null));
@@ -170,13 +168,11 @@ const OrderConfirmation = ({ history }) => {
 
   const onGuestOrderPasswordSubmit = (values, actions) => {
     dispatch(
-      requestChangePassword(
-        account.data.account_jwt,
+      requestChangePasswordPostOrder(
+        account.data._id,
         {
-          currentPassword: '',
           newPassword1: values.password,
           newPassword2: values.password,
-          skipComparison: true,
           isGuest: false,
           passwordSet: true
         },
@@ -188,8 +184,6 @@ const OrderConfirmation = ({ history }) => {
     if (Object.prototype.hasOwnProperty.call(order.account, 'temporarilyLogin')) {
       delete order.account.temporarilyLogin;
     }
-    dispatch(receivedCreateAccountSuccess(account.data, account.data.account_jwt));
-    dispatch(receivedLoginSuccess(account.data, account.data.account_jwt));
     setGuestPasswordFormSubmitted(true);
   };
 
@@ -232,7 +226,7 @@ const OrderConfirmation = ({ history }) => {
       [history, order._id]
     );
 
-    const shouldShowSetPasswordForm = account.data.isGuest && !account.data.passwordSet;
+    const shouldShowSetPasswordForm = account.data.guestCheckout && !account.data.passwordSet;
 
     return (
       <Box className={classes.paper}>
