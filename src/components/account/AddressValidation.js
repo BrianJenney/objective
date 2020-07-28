@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) => {
+const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeDialog }) => {
   const classes = useStyles();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -89,11 +89,11 @@ const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) =
     }
   }, [suggestedAddress]);
 
-  // useEffect(() => {
-  //   if (originalAddress) {
-  //     setPayload(origAddress);
-  //   }
-  // }, [originalAddress]);
+  useEffect(() => {
+    if (originalAddress) {
+      setPayload(origAddress);
+    }
+  }, [originalAddress]);
 
   // useEffect(() => {
   //   let pload = {};
@@ -103,8 +103,8 @@ const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) =
   //       phone: payload.phone ? payload.phone.trim() : ''
   //     };
 
-  //     if(origAddress.email){
-  //       pload.email = origAddress.email
+  //     if (origAddress.email) {
+  //       pload.email = origAddress.email;
   //     }
 
   //     onSubmit(pload, actions);
@@ -118,8 +118,8 @@ const AddressValidation = ({ origAddress, suggAddress, actions, closeDialog }) =
   //       phone: origAddress.phone ? origAddress.phone.trim() : '',
   //       shouldSaveData: origAddress.shouldSaveData
   //     };
-  //     if(origAddress.email){
-  //       pload.email = origAddress.email
+  //     if (origAddress.email) {
+  //       pload.email = origAddress.email;
   //     }
 
   //     onSubmit(pload, actions);
@@ -280,6 +280,7 @@ AddressValidation.propTypes = {
   origAddress: PropTypes.object.isRequired,
   suggAddress: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func,
   closeDialog: PropTypes.func
 };
 
