@@ -80,7 +80,7 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser, formStyle })
                     type="button"
                     underline="always"
                     onClick={event => togglePasswordVisibility(event)}
-                    children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
+                    // children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                   />
                 </Box>
               )

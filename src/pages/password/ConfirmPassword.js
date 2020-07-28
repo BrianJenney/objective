@@ -12,24 +12,22 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '36px',
-    fontFamily: 'Canela Text Web',
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(3),
+    color: theme.palette.brand.camoGreen,
+    fontFamily: theme.typography.headerFontFamily,
+    lineHeight: 'normal',
+    padding: theme.spacing(3, 0, 1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '36px',
-      lineHeight: '1.11',
-      paddingBottom: '10px'
+      fontSize: '25px'
     }
   },
   text: {
-    fontSize: '18px',
-    lineHeight: 'normal',
-    width: 400,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '16px',
-      width: '100%'
-    }
-  }
+    fontSize: '16px',
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.darkSubTextGray,
+    lineHeight: '24px',
+    alignText: 'center',
+    paddingBottom: theme.spacing(6)
+  },
 }));
 
 const ConfirmPassword = () => {

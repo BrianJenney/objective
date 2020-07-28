@@ -29,24 +29,25 @@ const schema = object().shape({
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '36px',
-    color: '#231f20',
-    fontFamily: 'Canela Text Web',
+    color: theme.palette.brand.camoGreen,
+    fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
-    padding: theme.spacing(3, 0, 2),
+    padding: theme.spacing(3, 0, 4),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '36px'
+      fontSize: '25px'
     }
-  },
-  subTitle: {
-    fontSize: '18px',
-    fontFamily: 'FreightTextProBook',
-    paddingBottom: theme.spacing(3)
   },
   form: {
     padding: '0 78px',
     [theme.breakpoints.down('xs')]: {
       padding: 0
     }
+  },
+  subText: {
+      fontFamily: theme.typography.bodyFontFamily,
+      fontSize: '11px',
+      color: theme.palette.brand.darkSubTextGray,
+      textAlign: 'left'
   }
 }));
 
@@ -91,7 +92,7 @@ const ResetPassword = ({ history, location }) => {
       <Grid container>
         <Grid item xs={12}>
           <Field
-            label={utm_content ? 'Password' : 'New Password'}
+            label={'Password'}
             name="newPassword1"
             type="password"
             component={InputField}
@@ -107,26 +108,20 @@ const ResetPassword = ({ history, location }) => {
                     component="button"
                     underline="always"
                     onClick={event => toggleFirstPassword(event)}
-                    children={firstNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                   ></NavLink>
                 </Box>
               )
             }}
           />
           <Typography
-            style={{
-              fontFamily: 'proxima-nova, sans-serif',
-              fontSize: '11px',
-              padding: '5px',
-              textAlign: 'left'
-            }}
+            className={classes.subText}
           >
             Must be at least 6 characters
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Field
-            label={utm_content ? 'Confirm Password' : 'Confirm New Password'}
+            label={'Confirm Password'}
             name="newPassword2"
             type="password"
             component={InputField}
@@ -142,7 +137,6 @@ const ResetPassword = ({ history, location }) => {
                     component="button"
                     underline="always"
                     onClick={event => toggleSecondPassword(event)}
-                    children={secondNewPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                   ></NavLink>
                 </Box>
               )
@@ -173,9 +167,6 @@ const ResetPassword = ({ history, location }) => {
       <Box component={Paper} pb={5} textAlign="center">
         <Typography className={classes.title}>
           {utm_content ? 'Set your password' : 'Reset your password'}
-        </Typography>
-        <Typography className={classes.subTitle}>
-          {utm_content ? 'Enter your password below.' : 'Enter your new password below.'}
         </Typography>
         <Formik
           initialValues={INITIAL_VALUES}

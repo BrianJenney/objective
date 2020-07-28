@@ -17,19 +17,22 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: '36px',
-    color: '#231f20',
-    fontFamily: 'Canela Text Web',
+    color: theme.palette.brand.camoGreen,
+    fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
-    padding: theme.spacing(3, 0, 2),
+    padding: theme.spacing(3, 0, 1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '36px'
+      fontSize: '25px'
     }
   },
   subTitle: {
-    fontSize: '18px',
-    fontFamily: 'FreightTextProBook',
-    paddingBottom: theme.spacing(3)
-  }
+    fontSize: '16px',
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.darkSubTextGray,
+    lineHeight: '24px',
+    alignText: 'center',
+    paddingBottom: theme.spacing(6)
+  },
 }));
 
 const localStorageClient = require('store');
@@ -51,7 +54,7 @@ const ResetSuccess = ({ history, location }) => {
         <Typography className={classes.subTitle}>
           Click below to return to the account login page
         </Typography>
-        <Button fullWidth onClick={handleClick} padding="0 53px">
+        <Button fullWidth onClick={handleClick} padding="0 53px 20px 53px">
           Login to your account
         </Button>
         <br />
