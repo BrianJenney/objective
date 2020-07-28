@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { MenuLink, Button } from '../common';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     padding: '10px 55px 55px',
     width: '730px',
@@ -30,8 +30,7 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'freight-text-pro, sans-serif',
     fontWeight: 600,
     lineHeight: '1.5',
-    marginTop: '20px',
-    [theme.breakpoints.down('xs')]: {}
+    marginTop: '20px'
   },
   text: {
     fontSize: 20,
@@ -51,7 +50,8 @@ const useStyles = makeStyles(theme => ({
     padding: '20px 25px'
   },
   grid: {
-    maxWidth: '49.33%'
+    maxWidth: '49.33%',
+    cursor: 'pointer'
   },
   gridNoSug: {
     maxWidth: '60.33%',
@@ -95,36 +95,36 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
     }
   }, [originalAddress]);
 
-  // useEffect(() => {
-  //   let pload = {};
-  //   if (originalAddress) {
-  //     pload = {
-  //       ...payload,
-  //       phone: payload.phone ? payload.phone.trim() : ''
-  //     };
+  useEffect(() => {
+    let pload = {};
+    if (originalAddress && btnClick) {
+      pload = {
+        ...payload,
+        phone: payload.phone ? payload.phone.trim() : ''
+      };
 
-  //     if (origAddress.email) {
-  //       pload.email = origAddress.email;
-  //     }
+      if (origAddress.email) {
+        pload.email = origAddress.email;
+      }
 
-  //     onSubmit(pload, actions);
-  //   } else if (suggestedAddress) {
-  //     pload = {
-  //       ...payload,
-  //       country: origAddress.country,
-  //       firstName: origAddress.firstName,
-  //       isDefault: origAddress.isDefault,
-  //       lastName: origAddress.lastName,
-  //       phone: origAddress.phone ? origAddress.phone.trim() : '',
-  //       shouldSaveData: origAddress.shouldSaveData
-  //     };
-  //     if (origAddress.email) {
-  //       pload.email = origAddress.email;
-  //     }
+      onSubmit(pload, actions);
+    } else if (suggestedAddress && btnClick) {
+      pload = {
+        ...payload,
+        country: origAddress.country,
+        firstName: origAddress.firstName,
+        isDefault: origAddress.isDefault,
+        lastName: origAddress.lastName,
+        phone: origAddress.phone ? origAddress.phone.trim() : '',
+        shouldSaveData: origAddress.shouldSaveData
+      };
+      if (origAddress.email) {
+        pload.email = origAddress.email;
+      }
 
-  //     onSubmit(pload, actions);
-  //   }
-  // }, [payload]);
+      onSubmit(pload, actions);
+    }
+  }, [payload, btnClick]);
 
   if (origAddress && suggAddress && suggAddress !== false) {
     sAddress = suggAddress;
