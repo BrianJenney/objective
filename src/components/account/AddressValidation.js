@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { MenuLink, Button } from '../common';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     padding: '10px 55px 55px',
     width: '730px',
@@ -212,6 +212,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
                     underline="always"
                     fullWidth
                     className={xs ? '' : classes.button}
+                    style={xs ? { padding: 33 } : ''}
                   />
                 </Paper>
               </Box>
