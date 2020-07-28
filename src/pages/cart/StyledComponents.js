@@ -224,11 +224,13 @@ export const StyledCardActions = withStyles(theme => ({
 export const StyledCounterButton = withStyles(theme => ({
   root: {
     padding: '0 !important',
-    width: '18px',
-    minWidth: '18px',
-    padding: '4px',
+    width: '20px',
+    minWidth: '20px',
+    height: '20px',
     lineHeight: '1px',
-    color: '#979797'
+    color: '#553226',
+    border: '1px solid #553226',
+    borderRadius: '50%'
   }
 }))(Button);
 

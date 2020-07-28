@@ -6,6 +6,20 @@
   border: solid 1px #eec0b1;
 }
 
+.CounterButtonMinus {
+  .MuiButton-label {
+    margin-bottom: 5px;
+  }
+}
+
+.CounterButtonPlus {
+  .MuiButton-label {
+    margin-bottom: 0px;
+    margin-top: 3px;
+    margin-left: 0px;
+  }
+}
+
 @media screen and (max-width: 576px) {
   .xs-hidden {
     display: none;
