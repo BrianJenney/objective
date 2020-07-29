@@ -31,14 +31,13 @@ const usePrevious = value => {
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: theme.typography.headerFontFamily,
-    fontSize: 36,
-    marginBottom: 30,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '36px'
-    }
+    color: theme.palette.brand.accentBrown,
+    fontSize: 25,
+    marginBottom: 15
   },
   info: {
     fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen,
     fontSize: 14,
     fontWeight: 700,
     lineHeight: 'normal',

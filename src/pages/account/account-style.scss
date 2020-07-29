@@ -4,6 +4,11 @@
   padding-left: 55px !important;
 } */
 
+p {
+  color: #7f7470;
+  font-size: 18px
+}
+
 .account-orders-mobile-table div[role='toolbar'] {
   display: none;
 }
@@ -29,13 +34,13 @@
 }
 .account-history-return {
   margin-bottom: 24px;
-  color: #231f20;
+  color: #553226;
   font-size: 18px;
 }
 .account-history-return:visted,
 .account-history-return:active,
 .account-history-return:hover {
-  color: #231f20;
+  color: #553226;
 }
 
 .account-overview {
@@ -46,7 +51,7 @@
     font-family: proxima-nova, sans-serif;
     font-size: 14px;
     margin-right: 25px;
-    color: #231f20;
+    color: #553226;
   }
   a {
     font-family: proxima-nova, sans-serif;
@@ -141,7 +146,7 @@
   th > div {
     font-family: proxima-nova, sans-serif;
     font-weight: 600;
-    color: #231f20;
+    color: #553226;
     font-size: 18px;
     padding: 0 10px 15px 0;
   }
@@ -195,11 +200,14 @@
   a:visited,
   a:active {
     text-decoration: underline;
-    color: #231f20;
+    color: #553226;
   }
 }
 
 @media (max-width: 768px) {
+  p {
+    font-size: 16px
+  }
   .account-orders {
     tbody > tr {
       background-color: #fbf7f3;

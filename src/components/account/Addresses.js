@@ -294,7 +294,7 @@ const AccountAddresses = ({
                       m={1}
                       px={4}
                       py={3}
-                      border="2px solid #a06958"
+                      border="1px solid #a06958"
                     >
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
