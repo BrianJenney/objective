@@ -195,41 +195,47 @@ const AccountAddresses = ({
     <Box {...rest} className="step-2-wrapper account-addresses">
       {formModeEnabled ? (
         <>
-        { !xs ? <Typography variant="h5" children="Saved Addresses" style={{color: theme.palette.brand.accentBrown}} /> : null}
-        <AddressForm
-          currentUser={currentUser}
-          formType={formType}
-          isEditing={isEditing}
-          seedEnabled={seedEnabled}
-          addressSeed={addressSeed}
-          useSeedLabel={useSeedLabel}
-          defaultValues={
-            editedIndex > -1 && addressBook[editedIndex]
-              ? addressBook[editedIndex]
-              : rest.shippingAddressActive
-              ? rest.shippingAddressActive
-              : null
-          }
-          onSubmit={handleSave}
-          clearPatchAccountError={clearPatchAccountError}
-          onBack={() => {
-            setFormModeEnabled(false);
-            setEditedIndex(-1);
-          }}
-          allowFlyMode={allowFlyMode}
-          checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
-          switchToLogin={rest.switchToLogin ? rest.switchToLogin : false}
-        />
+          {!xs && formType === FORM_TYPES.ACCOUNT ? (
+            <Typography
+              variant="h5"
+              children="Saved Addresses"
+              style={{ color: theme.palette.brand.accentBrown }}
+            />
+          ) : null}
+          <AddressForm
+            currentUser={currentUser}
+            formType={formType}
+            isEditing={isEditing}
+            seedEnabled={seedEnabled}
+            addressSeed={addressSeed}
+            useSeedLabel={useSeedLabel}
+            defaultValues={
+              editedIndex > -1 && addressBook[editedIndex]
+                ? addressBook[editedIndex]
+                : rest.shippingAddressActive
+                ? rest.shippingAddressActive
+                : null
+            }
+            onSubmit={handleSave}
+            clearPatchAccountError={clearPatchAccountError}
+            onBack={() => {
+              setFormModeEnabled(false);
+              setEditedIndex(-1);
+            }}
+            allowFlyMode={allowFlyMode}
+            checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
+            switchToLogin={rest.switchToLogin ? rest.switchToLogin : false}
+          />
         </>
       ) : (
         <>
           {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
             <Box
               component={Typography}
-              color="#a06958"
+              color={theme.palette.brand.camoGreen}
               variant="h5"
               children={formType === FORM_TYPES.ACCOUNT ? 'Saved Addresses' : 'Shipping Address'}
-              fontSize={'25px'}
+              fontSize="25px"
               mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
             />
           )}
@@ -335,16 +341,29 @@ const AccountAddresses = ({
                   py={9}
                   border="1px solid #a06958"
                 >
-                  <div style={{textAlign: 'center'}} onClick={() => {
+                  <div
+                    style={{ textAlign: 'center' }}
+                    onClick={() => {
                       const addressesData = currentUser.data.addressBook || [];
                       setFormModeEnabled(true);
-                    }}>
-                  <AddIcon style={{  fontSize: '50px', color: theme.palette.brand.accentBrown, cursor: 'pointer'}}  />
-                  <MenuLink
-                    style={{ display: 'block', color: theme.palette.brand.accentBrown, fontWeight: 400 }}
-                    children="Add New Address"
-                    underline="always"
-                  />
+                    }}
+                  >
+                    <AddIcon
+                      style={{
+                        fontSize: '50px',
+                        color: theme.palette.brand.accentBrown,
+                        cursor: 'pointer'
+                      }}
+                    />
+                    <MenuLink
+                      style={{
+                        display: 'block',
+                        color: theme.palette.brand.accentBrown,
+                        fontWeight: 400
+                      }}
+                      children="Add New Address"
+                      underline="always"
+                    />
                   </div>
                 </Box>
               </Grid>

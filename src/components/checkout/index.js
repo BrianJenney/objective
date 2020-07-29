@@ -73,13 +73,7 @@ const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload)
 
   const payloadView =
     payloadSummary && !isActiveStep ? (
-      <Box
-        width={1}
-        px={xs ? 8 : 14}
-        py={xs ? 3 : 4}
-        bgcolor="#f6f5f1"
-        color="#231f20"
-      >
+      <Box width={1} px={xs ? 8 : 14} py={xs ? 3 : 4} bgcolor="#f6f5f1" color="#231f20">
         {payloadSummary}
       </Box>
     ) : null;

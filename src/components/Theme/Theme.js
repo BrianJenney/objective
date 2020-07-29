@@ -30,7 +30,7 @@ const nxtTheme = createMuiTheme({
       creamYellow: '#fff7e8',
       lightSubTextGray: '#938985',
       darkSubTextGray: '#7f7470',
-      redSubText: '#ce0e2d',
+      redSubText: '#ce0e2d'
     },
     error: {
       main: 'rgba(208, 2, 27, 0.15)',
@@ -93,7 +93,7 @@ const nxtTheme = createMuiTheme({
     h5: {
       fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
       fontSize: '25px',
-      fontColor: '#a06958',
+      color: '#a06958',
       fontWeight: 400,
       lineHeight: '1.875rem'
     },
@@ -194,7 +194,7 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'upgrade, sans-serif',
         fontStyle: 'normal',
-         fontWeight: 400,
+        fontWeight: 400,
         fontSize: '18px'
       }
     },
@@ -202,7 +202,7 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'proxima-nova, sans-serif',
         fontStyle: 'normal',
-         fontWeight: 400,
+        fontWeight: 400,
         fontSize: '14px',
         color: '#a06958'
       },
@@ -217,7 +217,7 @@ const nxtTheme = createMuiTheme({
       root: {
         color: '#7f7470',
         '&$checked': {
-          color: '#553226 !important' 
+          color: '#553226 !important'
         }
       }
     },
@@ -274,7 +274,7 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'proxima-nova, sans-serif',
         fontStyle: 'normal',
-         fontWeight: 400,
+        fontWeight: 400,
         fontSize: '22px'
       }
     },
@@ -282,7 +282,7 @@ const nxtTheme = createMuiTheme({
       root: {
         fontFamily: 'proxima-nova, sans-serif',
         fontStyle: 'normal',
-         fontWeight: 400,
+        fontWeight: 400,
         fontSize: '22px'
       }
     },

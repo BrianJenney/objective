@@ -19,21 +19,25 @@ import AddressValidation from '../account/AddressValidation';
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
-    fontFamily: theme.typography.headerFontFamily
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   mobileTitle: {
     fontSize: '24px',
-    fontFamily: theme.typography.headerFontFamily
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   subTitle: {
     textAlign: 'right',
     fontSize: '16px',
     fontWeight: 400,
     fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   subTitleLink: {
     fontWeight: 600,
-    marginLeft: '5px'
+    marginLeft: '5px',
+    color: theme.palette.brand.camoGreen
   },
   mobileLogin: {
     fontFamily: theme.typography.bodyFontFamily,
@@ -322,7 +326,7 @@ const AddressForm = ({
         {!currentUser.data.account_jwt && (
           <>
             <Typography
-              color="#231f20"
+              color={theme.palette.brand.accentBrown}
               variant="h5"
               fontSize={xs ? 24 : 30}
               className={xs ? classes.mobileTitle : classes.title}
@@ -340,23 +344,27 @@ const AddressForm = ({
               style={{ marginTop: '23px', marginBottom: '23px' }}
             >
               <Grid item xs>
-                <hr style={{ border: 'solid 1px #231f20' }}></hr>
+                <hr style={{ border: `solid 1px ${theme.palette.brand.camoGreen}` }}></hr>
               </Grid>
               <Grid item xs={1} style={{ textAlign: 'center' }}>
                 <Typography
                   variant="body2"
                   children={'or'}
-                  style={{ color: '#231f20', fontWeight: '500', fontSize: '22px' }}
+                  style={{
+                    color: theme.palette.brand.camoGreen,
+                    fontWeight: '500',
+                    fontSize: '22px'
+                  }}
                 />
               </Grid>
               <Grid item xs>
-                <hr style={{ border: 'solid 1px #231f20' }}></hr>
+                <hr style={{ border: `solid 1px ${theme.palette.brand.camoGreen}` }}></hr>
               </Grid>
             </Grid>
           </>
         )}
         <Typography
-          color="#231f20"
+          color={theme.palette.brand.camoGreen}
           variant="h5"
           fontSize={xs ? 24 : 30}
           className={xs ? classes.mobileTitle : classes.title}
@@ -397,7 +405,11 @@ const AddressForm = ({
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
               <Checkbox id="useAddressSeedToggle" onChange={handleUseAddressSeedToggle} />
-              <Typography variant="body2" children={useSeedLabel} style={{ color: '#231f20' }} />
+              <Typography
+                variant="body2"
+                children={useSeedLabel}
+                style={{ color: theme.palette.brand.accentBrown }}
+              />
             </Box>
           </Grid>
         )}
@@ -554,7 +566,7 @@ const AddressForm = ({
           <Grid item xs={12}>
             <Box
               component={Typography}
-              color="#231f20"
+              color={theme.palette.brand.accentBrown}
               variant="h5"
               children={bottomTitle}
               fontSize={
@@ -562,18 +574,10 @@ const AddressForm = ({
               }
               mb={rest.checkoutVersion && rest.checkoutVersion === 2 ? (xs ? 2 : 3) : xs ? 3 : 4}
             />
-            <Box
-              border={
-                rest.checkoutVersion && rest.checkoutVersion === 2
-                  ? '1px solid #231f20'
-                  : '1px solid rgb(0, 0, 0, 0.23)'
-              }
-              p="14px"
-              mb="29px"
-            >
+            <Box className="ListBox" p="14px" mb="29px">
               <Box
                 component={Typography}
-                color="#231f20"
+                color={theme.palette.brand.accentBrown}
                 variant="body2"
                 children="Standard Shipping"
                 fontSize={18}
