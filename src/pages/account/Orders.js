@@ -93,119 +93,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// const columns = [
-//   {
-//     name: '_id',
-//     options: {
-//       display: 'false'
-//     }
-//   },
-//   {
-//     name: 'orderNumber',
-//     label: 'ORDER ID',
-//     options: {
-//       filter: false,
-//       sort: false,
-//       customBodyRender: (value, tableMeta, updateValue) => (
-//         <Button
-//           style={{ lineHeight: 0, paddingLeft: '1px' }}
-//           color="primary"
-//           component={AdapterLink}
-//           to={`/orders/${tableMeta.rowData[0]}`}
-//         >
-//           {value}
-//         </Button>
-//       )
-//     }
-//   },
-//   {
-//     name: 'createdAt',
-//     label: 'ORDER DATE',
-//     options: {
-//       filter: false,
-//       sort: false,
-//       sortDirection: 'desc',
-//       customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, false)
-//     }
-//   },
-//   /*
-//   {
-//     name: "cart.total",
-//     label: "Amount",
-//     options: {
-//       filter: false,
-//       sort: true,
-//       customBodyRender: (value, tableMeta, updateValue) => (
-//         <Typography component="p" align="right" style={{fontSize: "0.875rem"}}>{formatCurrency(value)}</Typography>
-//       )
-//     }
-//   },
-//   {
-//     name: "source",
-//     label: "Source",
-//     options: {
-//       filter: true,
-//       sort: false,
-//       customBodyRender: (value, tableMeta, updateValue) => (
-//         <Typography component="p" align="center" style={{fontSize: "0.875rem"}}>{value}</Typography>
-//       )
-//     }
-//   },
-//   */
-//   {
-//     name: 'status',
-//     label: 'STATUS',
-//     options: {
-//       filter: true,
-//       sort: false,
-//       customBodyRender: (value, tableMeta, updateValue) => (
-//         <Typography component="p" align="left" style={{ fontSize: '0.875rem' }}>
-//           {value}
-//         </Typography>
-//       )
-//     }
-//   },
-//   {
-//     name: 'items',
-//     label: 'TRACKING INFORMATION',
-//     options: {
-//       filter: false,
-//       sort: false,
-//       customBodyRender: (value, tableMeta, updateValue) => {
-//         const { rowData } = tableMeta;
-//         const trackings = getTracking(rowData[4], rowData[3]);
-//         return trackings
-//           ? trackings.map(tracking => (
-//               <>
-//                 <Link
-//                   href={tracking.url}
-//                   style={{ color: 'black' }}
-//                   target="_blank"
-//                   rel="noopener noreferrer"
-//                 >
-//                   {tracking.number}
-//                 </Link>
-//                 <br />
-//               </>
-//             ))
-//           : null;
-//       }
-//     }
-//   }
-
-/*
-{
-          name: "updatedAt",
-          label: "Updated On",
-          options: {
-            filter: false,
-          sort: false,
-          customBodyRender: (value, tableMeta, updateValue) => formatDateTime(value, true),
-        },
-      },
-      */
-// ];
-
 const AccountOrders = ({ currentUser: { data }, location }) => {
   const dispatch = useDispatch();
   // const { state } = location;
@@ -245,7 +132,7 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
       return null;
     }
 
-    console.log('DATAAAA', data.orders)
+    console.log('DATAAAA', data.orders);
 
     return data.orders.map((d, dataIndex, rowIndex) => {
       return (
@@ -266,10 +153,15 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
               {data.orders[dataIndex].orderNumber}
             </MenuLink>
             <Typography className={classes.statusTitle}>ORDER DATE</Typography>
-            <Typography className={classes.info}>{formatDateTime(data.orders[dataIndex].createdAt, false)}</Typography>
+            <Typography className={classes.info}>
+              {formatDateTime(data.orders[dataIndex].createdAt, false)}
+            </Typography>
 
             <Typography className={classes.statusTitle}>STATUS</Typography>
-            <Typography className={classes.info}>{data.orders[dataIndex].status.charAt(0).toUpperCase() + data.orders[dataIndex].status.slice(1)}</Typography>
+            <Typography className={classes.info}>
+              {data.orders[dataIndex].status.charAt(0).toUpperCase() +
+                data.orders[dataIndex].status.slice(1)}
+            </Typography>
             <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
             <MenuLink
               to={`/transactions/${data.orders[dataIndex]._id}`}
@@ -280,82 +172,64 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
             </MenuLink>
           </Box>
           <Box component="div" m={1} className={classes.rightBox}>
-          {data.orders[dataIndex].items.map((item) => {
-            return (
-              <StyledDrawerGrid
-                container
-                direction="row"
-                key={`cart-${dataIndex}`}
-                className="CartListBox"
-              >
-                <Grid
-                  item
-                  xs={4}
-                  style={
-                    !xs
-                      ? { minWidth: '126px', marginRight: '25px' }
-                      : { minWidth: '126px', marginRight: '18px' }
-                  }
+            {data.orders[dataIndex].items.map(item => {
+              return (
+                <StyledDrawerGrid
+                  container
+                  direction="row"
+                  key={`cart-${dataIndex}`}
+                  className="CartListBox"
                 >
-                  <Card>
-                    <Link
-                      to={`/products/${item.slug}`}
-                    >
-                      <CardMedia
-                        style={{ height: 135, width: 130 }}
-                        image={item.variant_img}
-                        title={item.variant_name} 
-                        />
-                    </Link>
-                  </Card>
-                </Grid>
-                <Grid item xs={8}>
-                  <Card
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: 130,
-                      justifyContent: 'space-between'
-                    }}
+                  <Grid
+                    item
+                    xs={4}
+                    style={
+                      !xs
+                        ? { minWidth: '126px', marginRight: '25px' }
+                        : { minWidth: '126px', marginRight: '18px' }
+                    }
                   >
-                      <StyledProductLink
-                        className={classes.productTitle}
-                        align="left"
-                      >
+                    <Card>
+                      <Link to={`/products/${item.slug}`}>
+                        <CardMedia
+                          style={{ height: 135, width: 130 }}
+                          image={item.variant_img}
+                          title={item.variant_name}
+                        />
+                      </Link>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Card
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 130,
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <StyledProductLink className={classes.productTitle} align="left">
                         {item.variant_name}
                       </StyledProductLink>
                       <Typography className={classes.price}>
                         {displayMoney(item.quantity * item.unit_price)}
                       </Typography>
                       <MenuLink
-              to={`/orders/${data.orders[dataIndex]._id}`}
-              className={classes.link}
-              underline="always"
-              style={{marginBottom: '10px'}}
-            >
-              
-              <span>Trace Product</span>
-              <StyledArrowIcon style={{marginLeft: '10px'}}>
-                  <ArrowForwardIcon style={{color: '#a06958'}} />
-                </StyledArrowIcon>
-            </MenuLink>
-                    {/* <StyledCardContent
-                      style={
-                        !xs
-                          ? { paddingBottom: '0' }
-                          : { paddingBottom: '0px', paddingRight: '0px' }
-                      }
-                    >
-                      
-                    </StyledCardContent> */}
-                    {/* <StyledCardContent>
-                      
-                    </StyledCardContent> */}
-                  </Card>
-                </Grid>
-              </StyledDrawerGrid>
-            )
-          })}
+                        to={`/orders/${data.orders[dataIndex]._id}`}
+                        className={classes.link}
+                        underline="always"
+                        style={{ marginBottom: '10px' }}
+                      >
+                        <span>Trace Product</span>
+                        <StyledArrowIcon style={{ marginLeft: '10px' }}>
+                          <ArrowForwardIcon style={{ color: '#a06958' }} />
+                        </StyledArrowIcon>
+                      </MenuLink>
+                    </Card>
+                  </Grid>
+                </StyledDrawerGrid>
+              );
+            })}
           </Box>
         </Grid>
       );
@@ -364,19 +238,10 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
 
   return (
     <ScrollToTop>
-      <Grid
-        container
-        direction="column"
-        spacing={3}
-        // className={xs ? 'account-orders account-orders-mobile-table' : 'account-orders'}
-      >
+      <Grid container direction="column" spacing={3}>
         {!xs ? <Typography className={classes.title}>Your Orders</Typography> : null}
-        
-        
-          <>
-            {renderOrders()}
-          </>
-      
+
+        <>{renderOrders()}</>
       </Grid>
     </ScrollToTop>
   );
