@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     letterSpacing: '1px',
     fontSize: '14px',
-    color: '#231f20'
+    color: theme.palette.brand.camoGreen
   },
   productTitle: {
     fontFamily: theme.typography.bodyFontFamily,
@@ -54,9 +54,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '18px',
     color: theme.palette.brand.camoGreen,
     lineHeight: '22.5px',
-    paddingTop: '10px',
-    marginLeft: '0px',
-    marginBottom: '-10px'
+    marginLeft: '0px'
   },
   price: {
     fontFamily: theme.typography.bodyFontFamily,
@@ -64,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '16px',
     color: theme.palette.brand.accentBrown,
     letterSpacing: '1px',
-    marginTop: '-55px'
+    marginTop: '-20px'
   },
   info: {
     fontFamily: theme.typography.bodyFontFamily,
@@ -80,11 +78,12 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400
   },
   topGrid: {
-    borderTop: '1px solid black',
-    borderBottom: '1px solid black'
+    marginTop: '20px',
+    borderTop: `1px solid ${theme.palette.brand.camoGreen}`,
+    borderBottom: `1px solid ${theme.palette.brand.camoGreen}`
   },
   otherGrid: {
-    borderBottom: '1px solid black'
+    borderBottom: `1px solid ${theme.palette.brand.camoGreen}`
   },
   leftBox: {
     float: 'left'
@@ -246,6 +245,8 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
       return null;
     }
 
+    console.log('DATAAAA', data.orders)
+
     return data.orders.map((d, dataIndex, rowIndex) => {
       return (
         <Grid
@@ -301,19 +302,19 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
                       to={`/products/${item.slug}`}
                     >
                       <CardMedia
-                        style={{ height: 126, width: 126 }}
+                        style={{ height: 135, width: 130 }}
                         image={item.variant_img}
                         title={item.variant_name} 
                         />
                     </Link>
                   </Card>
                 </Grid>
-                <Grid item xs={xs ? 8 : 7}>
+                <Grid item xs={8}>
                   <Card
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      height: 'auto',
+                      height: 130,
                       justifyContent: 'space-between'
                     }}
                   >
@@ -323,28 +324,14 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
                       >
                         {item.variant_name}
                       </StyledProductLink>
-                    <StyledCardContent
-                      style={
-                        !xs
-                          ? { paddingBottom: '0' }
-                          : { paddingBottom: '0px', paddingRight: '0px' }
-                      }
-                    >
                       <Typography className={classes.price}>
                         {displayMoney(item.quantity * item.unit_price)}
                       </Typography>
-                    </StyledCardContent>
-                    <StyledCardContent
-                      style={
-                        !xs
-                          ? { paddingBottom: '0' }
-                          : { paddingBottom: '0px', paddingRight: '0px' }
-                      }
-                    >
                       <MenuLink
               to={`/orders/${data.orders[dataIndex]._id}`}
               className={classes.link}
               underline="always"
+              style={{marginBottom: '10px'}}
             >
               
               <span>Trace Product</span>
@@ -352,7 +339,18 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
                   <ArrowForwardIcon style={{color: '#a06958'}} />
                 </StyledArrowIcon>
             </MenuLink>
-                    </StyledCardContent>
+                    {/* <StyledCardContent
+                      style={
+                        !xs
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
+                    >
+                      
+                    </StyledCardContent> */}
+                    {/* <StyledCardContent>
+                      
+                    </StyledCardContent> */}
                   </Card>
                 </Grid>
               </StyledDrawerGrid>
@@ -374,84 +372,11 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
       >
         {!xs ? <Typography className={classes.title}>Your Orders</Typography> : null}
         
-        {xs ? (
-          <p>hello</p>
-        ) : (
-          // <DataTable
-          //   title={xs ? '' : 'Your Orders'}
-          //   data={data.orders}
-          //   columns={columns}
-          //   isLoading={isLoading}
-          //   moreOptions={{
-          //     customRowRender: (d, dataIndex, rowIndex) => (
-          //       <tr className="account-orders-mobile-row">
-          //         <td>
-          //           <Grid container direction="row">
-          //             <Grid item xs>
-          //               <Typography className="order-meta-title-item">ORDER NUMBER</Typography>
-          //               <Typography className="order-meta-item-info">
-          //                 <Button
-          //                   color="primary"
-          //                   component={AdapterLink}
-          //                   to={`/orders/${data.orders[dataIndex]._id}`}
-          //                 >
-          //                   {data.orders[dataIndex].orderNumber}
-          //                 </Button>
-          //               </Typography>
-          //             </Grid>
-          //           </Grid>
-
-          //           <Grid container direction="row">
-          //             <Grid item xs>
-          //               <Typography className="order-meta-title-item">ORDER DATE</Typography>
-          //               <Typography
-          //                 className="order-meta-item-info"
-          //                 style={{ verticalAlign: 'top' }}
-          //               >
-          //                 {formatDateTime(data.orders[dataIndex].createdAt, false)}
-          //               </Typography>
-          //             </Grid>
-          //           </Grid>
-
-          //           <Grid container direction="row">
-          //             <Grid item xs>
-          //               <Typography className="order-meta-title-item">STATUS</Typography>
-          //               <Typography className="order-meta-item-info">
-          //                 {data.orders[dataIndex].status}
-          //               </Typography>
-          //             </Grid>
-          //           </Grid>
-
-          //           <Grid container direction="row">
-          //             <Grid item xs>
-          //               <Typography className="order-meta-title-item">
-          //                 TRACKING INFORMATION
-          //               </Typography>
-          //               <Typography className="order-meta-item-info">
-          //                 <Button
-          //                   color="primary"
-          //                   component={AdapterLink}
-          //                   to={`/transactions/${data.orders[dataIndex]._id}`}
-          //                 />
-          //               </Typography>
-          //             </Grid>
-          //           </Grid>
-          //         </td>
-          //       </tr>
-          //     )
-          //   }}
-          // />
+        
           <>
             {renderOrders()}
           </>
-
-          // <DataTable
-          //   title={xs ? '' : 'Your Orders'}
-          //   data={data.orders}
-          //   columns={columns}
-          //   isLoading={isLoading}
-          // />
-        )}
+      
       </Grid>
     </ScrollToTop>
   );
