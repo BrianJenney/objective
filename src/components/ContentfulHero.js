@@ -9,20 +9,20 @@ import './ContentfulHero.scss';
 
 const posValues = {
   topLeft: {
-    top: '15%',
-    left: '5%'
+    top: '20%',
+    left: '10%'
   },
   bottomLeft: {
-    bottom: '15%',
-    left: '5%'
+    bottom: '10%',
+    left: '10%'
   },
   topRight: {
-    top: '15%',
-    right: '5%'
+    top: '20%',
+    right: '10%'
   },
   bottomRight: {
-    bottom: '15%',
-    right: '15%'
+    bottom: '10%',
+    right: '10%'
   },
   center: {
     top: '50%',
