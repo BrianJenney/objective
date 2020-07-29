@@ -108,7 +108,7 @@ class Home extends Component {
     //   params = '?w=450&fm=jpg&q=80';
     // }
 
-    // return images.map(image => (
+    // const hero = images.map(image => (
     //   <li key={image.sys.id}>
     //     <img
     //       src={image.fields.file.url + params}
@@ -117,6 +117,21 @@ class Home extends Component {
     //     />
     //   </li>
     // ));
+
+    // return (
+    //   <Link
+    //     to="/gallery"
+    //     segmentProperties={{
+    //       cta: 'Shop All',
+    //       destination: '/gallery',
+    //       site_location: 'home',
+    //       text: 'Targeted Health Solutions for You and Yours'
+    //     }}
+    //     onClick={this.segmentTrackBannerClicked}
+    //   >
+    //     <ul>{hero}</ul>
+    //   </Link>
+    // );
   }
 
   renderSections() {
@@ -283,7 +298,7 @@ class Home extends Component {
         <HeadTags title={title} description={description} />
         <ScrollToTop>
           <div className="home-style">
-            <Link
+            {/* <Link
               to="/gallery"
               segmentProperties={{
                 cta: 'Shop All',
@@ -294,7 +309,8 @@ class Home extends Component {
               onClick={this.segmentTrackBannerClicked}
             >
               <ul>{this.renderHeroSlider()}</ul>
-            </Link>
+            </Link> */}
+            {this.renderHeroSlider()}
             <StyledContainer>
               <Grid
                 container
