@@ -271,7 +271,7 @@ const ProductDetail = () => {
                   {!ATCEnabled && <Quantity />}
                 </Box>
               </CardContent>
-              {ATCEnabled && variant.inventory.quantityInStock >= 50 && (
+              {ATCEnabled && variant && variant.inventory.quantityInStock >= 50 && (
                 <CardActions className={classes.maxWidth}>
                   <Box className="pdp-atc-container" width={1}>
                     <Box className="atc-btn" ref={atcRef}>
@@ -318,7 +318,7 @@ const ProductDetail = () => {
                   </Box>
                 </CardActions>
               )}
-              {variant.inventory.quantityInStock < 50 && (
+              {variant && variant.inventory.quantityInStock < 50 && (
                 <>
                   <OutOfStockPDP
                     maxWidth={classes.maxWidth}

@@ -55,6 +55,17 @@ export class ProductStore extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.productSlug !== this.props.productSlug) {
+      contentfulClient
+        .getEntries({
+          content_type: 'product',
+          'fields.Slug': this.props.productSlug
+        })
+        .then(entry => {
+          this.setState({ content: entry.items[0].fields });
+        })
+        .catch(() => {
+          this.setState({ content: null });
+        });
       const { stomp } = store.getState();
       const stompClient = stomp.client;
       const { replyTo } = stomp;
