@@ -302,7 +302,7 @@ class Home extends Component {
         <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <div className="home-style">
-            {/* <Link
+            <Link
               to="/gallery"
               segmentProperties={{
                 cta: 'Shop All',
@@ -313,8 +313,7 @@ class Home extends Component {
               onClick={this.segmentTrackBannerClicked}
             >
               <ul>{this.renderHeroSlider()}</ul>
-            </Link> */}
-            {this.renderHeroSlider()}
+            </Link>
             <StyledContainer>
               <Grid
                 container
