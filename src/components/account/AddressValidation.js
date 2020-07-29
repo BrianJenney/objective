@@ -79,6 +79,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
   const [btnClick, setBtnClick] = useState(false);
   const [suggestedAddress, setSuggestedAddress] = useState(false);
   const [originalAddress, setOriginalAddress] = useState(false);
+  const [providedAddress, setProvidedAddress] = useState(false);
   const [payload, setPayload] = useState(null);
 
   let sAddress = null;
@@ -94,6 +95,12 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
       setPayload(origAddress);
     }
   }, [originalAddress]);
+
+  useEffect(() => {
+    if (providedAddress) {
+      setPayload(origAddress);
+    }
+  }, [providedAddress]);
 
   useEffect(() => {
     let pload = {};
@@ -125,6 +132,22 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
       onSubmit(pload, actions);
     }
   }, [payload, btnClick]);
+
+  useEffect(() => {
+    let pload = {};
+    if (providedAddress && btnClick) {
+      pload = {
+        ...payload,
+        phone: payload.phone ? payload.phone.trim() : ''
+      };
+
+      if (origAddress.email) {
+        pload.email = origAddress.email;
+      }
+
+      onSubmit(pload, actions);
+    }
+  }, [payload]);
 
   if (origAddress && suggAddress && suggAddress !== false) {
     sAddress = suggAddress;
@@ -250,7 +273,8 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
             <Paper className={classes.paper}>
               <Button
                 onClick={() => {
-                  setOriginalAddress(true);
+                  setProvidedAddress(true);
+                  setBtnClick(true);
                 }}
                 children="YES, THIS ADDRESS IS CORRECT"
                 underline="always"
