@@ -68,7 +68,13 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       }
       break;
     case 'account.request.changePasswordPostOrder':
-      debugRabbitResponse('Account Change Password Response', status, data, fields, properties);
+      debugRabbitResponse(
+        'Account Change Password Post Order Response',
+        status,
+        data,
+        fields,
+        properties
+      );
       if (status === 'success') {
         store.dispatch(receivedChangePasswordSuccess(data));
         store.dispatch(receivedCreateAccountSuccess(data, data.account_jwt));
