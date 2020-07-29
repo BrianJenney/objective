@@ -1,0 +1,10 @@
+#blinking-caret {
+  margin-left: 1px;
+  animation: caretAnimation 1s step-end infinite;
+}
+
+@keyframes caretAnimation {
+  50% {
+    opacity: 0;
+  }
+}
