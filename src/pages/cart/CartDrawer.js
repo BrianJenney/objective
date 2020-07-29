@@ -71,6 +71,7 @@ const useStyles = makeStyles(theme => ({
     fontStyle: 'normal',
     lineHeight: 'normal',
     letterSpacing: '1.06px',
+    color: theme.palette.brand.accentBrown,
     [theme.breakpoints.down('xs')]: {
       fontSize: '14px',
       letterSpacing: '0.93px',
@@ -194,6 +195,7 @@ const Cart = ({
             <Grid container direction="row" alignItems="baseline">
               <StyledCartHeader
                 align="center"
+                component="h5"
                 style={
                   xsBreakpoint
                     ? {
@@ -347,14 +349,13 @@ const Cart = ({
                         });
                       }}
                     >
-                      <StyledProductLink
-                        style={{ fontSize: '18px', padding: '0' }}
-                        align="left"
-                        onClick={onClickProduct}
-                      >
+                      <StyledProductLink align="left" onClick={onClickProduct}>
                         {item.variant_name}
                       </StyledProductLink>
                     </Link>
+                    <StyledProductPrice>
+                      {displayMoney(item.quantity * item.unit_price)}
+                    </StyledProductPrice>
                     <Grid item style={{ padding: '0' }}>
                       <StyledCardActions style={{ border: 'none' }}>
                         <StyledCounterButton
@@ -412,9 +413,6 @@ const Cart = ({
                           </Link>
                         )}
                       </StyledFinePrint>
-                      <StyledProductPrice style={xsBreakpoint ? { fontSize: '16px' } : {}}>
-                        {displayMoney(item.quantity * item.unit_price)}
-                      </StyledProductPrice>
                     </StyledCardContent>
                   </Card>
                 </Grid>
@@ -430,9 +428,7 @@ const Cart = ({
                 </StyledSmallCaps>
               </Grid>
               <Grid item xs={3} style={{ textAlign: 'right' }}>
-                <StyledProductTotal style={{ fontSize: '18px' }}>
-                  {displayMoney(cart.subtotal)}
-                </StyledProductTotal>
+                <StyledProductTotal>{displayMoney(cart.subtotal)}</StyledProductTotal>
               </Grid>
             </StyledTotalWrapper>
           </Grid>
@@ -448,9 +444,7 @@ const Cart = ({
               <StyledSmallCaps style={{ fontSize: '14px' }}>Shipping</StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(shippingData.price, true)}
-              </StyledProductTotal>
+              <StyledProductTotal>{displayMoney(shippingData.price, true)}</StyledProductTotal>
             </Grid>
             <StyledFinePrint component="p" style={{ position: 'relative', top: '6px' }}>
               {shippingData.deliveryEstimate}
@@ -468,9 +462,7 @@ const Cart = ({
               <StyledSmallCaps style={{ fontSize: '14px' }}>Shipping</StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(shippingData.price, true)}
-              </StyledProductTotal>
+              <StyledProductTotal>{displayMoney(shippingData.price, true)}</StyledProductTotal>
             </Grid>
             <StyledFinePrint
               component="p"
@@ -492,9 +484,7 @@ const Cart = ({
               <StyledSmallCaps style={{ fontSize: '14px' }}>Savings</StyledSmallCaps>
             </Grid>
             <Grid item xs={3} style={{ textAlign: 'right' }}>
-              <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(cart.savings)}
-              </StyledProductTotal>
+              <StyledProductTotal>{displayMoney(cart.savings)}</StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}
@@ -504,9 +494,7 @@ const Cart = ({
               <StyledSmallCaps style={{ fontSize: '14px' }}>Tax</StyledSmallCaps>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <StyledProductTotal style={{ fontSize: '18px' }}>
-                {displayMoney(cart.tax)}
-              </StyledProductTotal>
+              <StyledProductTotal>{displayMoney(cart.tax)}</StyledProductTotal>
             </Grid>
           </Grid>
         ) : null}
