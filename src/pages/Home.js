@@ -145,7 +145,7 @@ class Home extends Component {
           backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
             '//images.ctfassets.net/mj9bpefl6wof/',
             'https://nutranext.imgix.net/'
-          )}?q=50&auto=compress,format")`
+          )}?&auto=compress,format")`
         }}
       >
         <StyledContainer className="section-container">
@@ -198,7 +198,13 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 53, display: 'flex', justifyContent: 'center' }}>
+            <Box
+              style={{
+                paddingTop: 53,
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
               {documentToReactComponents(
                 this.state.content.bestsellers.content[2],
                 contentfulOptions
@@ -292,10 +298,10 @@ class Home extends Component {
       );
 
     const { welcomeHeader, welcomeText } = this.state.content;
-    const { title, description } = this.props.seoMap['/'];
+    const { title, description, indexThisPage } = this.props.seoMap['/'];
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <div className="home-style">
             {/* <Link

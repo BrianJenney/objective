@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Typed from 'typed.js';
 
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-
-import './ContentfulHero.scss';
+import Typed from 'typed.js';
+import SwitchLink from './common/SwitchLink';
 
 const posValues = {
   topLeft: {
@@ -132,6 +130,7 @@ const desktopStyles = {
     position: 'relative'
   },
   typedText: {
+    fontFamily: 'inherit',
     marginTop: 20,
     height: 64,
     display: 'flex',
@@ -145,6 +144,7 @@ const desktopStyles = {
     borderRight: '3px solid white'
   },
   button: {
+    color: '#000000',
     marginTop: 14,
     fontFamily: 'p22-underground, Helvetica, sans',
     border: 'none',
@@ -197,22 +197,26 @@ const ContentfulHero = () => {
   const segmentTrackBannerClicked = () =>
     window.analytics.track('Banner Clicked', segmentProperties);
 
-  const renderCtaButton = () => (
-    <Link
-      to="/gallery"
-      segmentProperties={{
-        cta: 'Shop All',
-        destination: '/gallery',
-        site_location: 'home',
-        text: 'SHOP NOW'
-      }}
-      onClick={segmentTrackBannerClicked}
-    >
+  const renderCtaButton = () => {
+    const content = (
       <button type="button" style={{ ...styleOptions.button }}>
         {buttonText}
       </button>
-    </Link>
-  );
+    );
+    return (
+      <SwitchLink
+        to="https://www.google.com/"
+        content={content}
+        segmentProperties={{
+          cta: 'Shop All',
+          destination: '/gallery',
+          site_location: 'home',
+          text: 'SHOP NOW'
+        }}
+        onClick={segmentTrackBannerClicked}
+      ></SwitchLink>
+    );
+  };
 
   const renderTypedText = () => (
     <div style={{ ...styleOptions.typedText }}>
