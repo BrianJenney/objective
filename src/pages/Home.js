@@ -7,12 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+// import { OBJECTIVE_HOMEPAGE, OBJECTIVE_HERO } from '../constants/contentfulEntries';
 import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
 import HeadTags from '../components/common/HeadTags';
 import { contentfulClient } from '../utils/contentful';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ContentfulHero from '../components/ContentfulHero';
 
 import './home/home-style.scss';
 import { StyledContainer } from '../assets/styles/StyledComponents';
@@ -73,31 +75,63 @@ class Home extends Component {
       .catch(err => {
         throw err;
       });
+    // contentfulClient
+    //   .getEntry(OBJECTIVE_HERO)
+    //   .then(entry => {
+    //     const content = entry.fields;
+    //     this.setState({
+    //       contentfulHero: {
+    //         ...content
+    //       }
+    //     });
+    //   })
+    //   .catch(err => {
+    //     throw err;
+    //   });
     if (!homePageTracked) {
       window.analytics.page('Home');
     }
   }
 
   renderHeroSlider() {
-    if (!this.state.content.heroSlider) return <></>;
+    // if (this.state.contentfulHero) return <ContentfulHero content={this.state.contentfulHero} />;
+    return <ContentfulHero />;
+    // Here we will conditionally render the contentful hero
+    // UNCOMMENT BELOW AFTER ADDING TRUE CONTENTFUL SUPPORT
+    // if (!this.state.content.heroSlider) return <></>;
 
-    let images = this.state.content.heroSlider;
-    let params = '?w=2000&fm=jpg&q=80';
+    // let images = this.state.content.heroSlider;
+    // let params = '?w=2000&fm=jpg&q=80';
 
-    if (window.screen.width < 768) {
-      images = this.state.content.heroSliderMobile;
-      params = '?w=450&fm=jpg&q=80';
-    }
+    // if (window.screen.width < 768) {
+    //   images = this.state.content.heroSliderMobile;
+    //   params = '?w=450&fm=jpg&q=80';
+    // }
 
-    return images.map(image => (
-      <li key={image.sys.id}>
-        <img
-          src={image.fields.file.url + params}
-          style={{ width: '100%' }}
-          alt={image.fields.title}
-        />
-      </li>
-    ));
+    // const hero = images.map(image => (
+    //   <li key={image.sys.id}>
+    //     <img
+    //       src={image.fields.file.url + params}
+    //       style={{ width: '100%' }}
+    //       alt={image.fields.title}
+    //     />
+    //   </li>
+    // ));
+
+    // return (
+    //   <Link
+    //     to="/gallery"
+    //     segmentProperties={{
+    //       cta: 'Shop All',
+    //       destination: '/gallery',
+    //       site_location: 'home',
+    //       text: 'Targeted Health Solutions for You and Yours'
+    //     }}
+    //     onClick={this.segmentTrackBannerClicked}
+    //   >
+    //     <ul>{hero}</ul>
+    //   </Link>
+    // );
   }
 
   renderSections() {
@@ -264,7 +298,7 @@ class Home extends Component {
         <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <div className="home-style">
-            <Link
+            {/* <Link
               to="/gallery"
               segmentProperties={{
                 cta: 'Shop All',
@@ -275,7 +309,8 @@ class Home extends Component {
               onClick={this.segmentTrackBannerClicked}
             >
               <ul>{this.renderHeroSlider()}</ul>
-            </Link>
+            </Link> */}
+            {this.renderHeroSlider()}
             <StyledContainer>
               <Grid
                 container
