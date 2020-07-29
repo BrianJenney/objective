@@ -75,6 +75,16 @@ const sharedStyles = {
   }
 };
 
+const screenreaderStyles = {
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  width: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  whiteSpace: 'nowrap'
+};
+
 const mobileStyles = {
   ...sharedStyles,
   assets: {
@@ -194,9 +204,12 @@ const ContentfulHero = ({ content }) => {
     );
   };
 
+  const renderAccessibleText = () => typedText.map(string => <li>{string}</li>);
+
   const renderTypedText = () => (
     <div style={{ ...styles.typedText }}>
-      <div id="typingBox" style={{ marginLeft: 3 }}></div>
+      <div aria-hidden="true" id="typingBox" style={{ marginLeft: 3 }}></div>
+      <ul style={{ ...screenreaderStyles }}>{renderAccessibleText()}</ul>
       <div style={{ ...styles.underline }}></div>
     </div>
   );
