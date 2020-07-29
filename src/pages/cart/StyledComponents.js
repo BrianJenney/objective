@@ -21,8 +21,9 @@ const $thin2pxRuler_gray = `solid 1px ${MEDIUM_GRAY}`;
 
 export const StyledCartHeader = withStyles(theme => ({
   root: {
+    color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('sm')]: {
-      fontSize: '32px',
+      fontSize: '25px',
       fontFamily: $brandSerif,
       fontWeight: 'normal',
       fontStyle: 'normal',
@@ -32,7 +33,7 @@ export const StyledCartHeader = withStyles(theme => ({
       paddingTop: '11px'
     },
     [theme.breakpoints.up('sm')]: {
-      fontSize: '32px',
+      fontSize: '25px',
       fontFamily: $brandSerif,
       fontWeight: 'normal',
       fontStyle: 'normal',
@@ -71,7 +72,7 @@ export const StyledSmallCaps = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: '#000000',
+    color: theme.palette.brand.camoGreen,
     paddingTop: '7px',
     [theme.breakpoints.up('sm')]: {
       fontSize: 'smallText1'
@@ -125,7 +126,7 @@ export const StyledCartCountHeader = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: '#000000',
+    color: theme.palette.brand.camoGreen,
     marginLeft: '8px'
   }
 }))(Typography);
@@ -217,7 +218,7 @@ export const StyledCardActions = withStyles(theme => ({
     padding: '7px',
     display: 'flex',
     flexDirection: 'row',
-    marginTop: '5px',
+    marginTop: '0px',
     justifyContent: 'space-between'
   }
 }))(CardActions);
@@ -238,25 +239,23 @@ export const StyledCounterButton = withStyles(theme => ({
 export const StyledProductLink = withStyles(theme => ({
   root: {
     fontSize: '18px',
-    fontFamily: $brandSerif,
-    fontWeight: 'normal',
-    color: '#333333',
-    fontWeight: 'normal',
+    fontFamily: $brandSans,
+    color: theme.palette.brand.camoGreen,
+    fontWeight: 'bold',
     fontStyle: 'normal',
     fontStretch: 'normal',
-    lineHeight: 1.17,
+    lineHeight: 1.25,
     letterSpacing: 'normal',
     paddingRight: '45px',
     paddingBottom: '0',
+    marginLeft: '7px',
+    marginTop: '7px',
     [theme.breakpoints.up('sm')]: {
       fontSize: '18px',
-      fontFamily: $brandSerif,
-      fontWeight: 'normal',
-      color: '#333333',
-      fontWeight: 'normal',
+      fontFamily: $brandSans,
       fontStyle: 'normal',
       fontStretch: 'normal',
-      lineHeight: 1.17,
+      lineHeight: 1.25,
       letterSpacing: 'normal'
     }
   }
@@ -267,7 +266,7 @@ export const StyledPromoLink = withStyles(theme => ({
     fontSize: 14,
     fontFamily: $brandSans,
     fontWeight: 'normal',
-    color: BLACK,
+    color: theme.palette.brand.accentBrown,
     textTransform: 'uppercase',
     textDecoration: 'underline',
     cursor: 'pointer'
@@ -323,26 +322,28 @@ export const StyledBadge = withStyles(theme => ({
 
 export const StyledProductPrice = withStyles(theme => ({
   root: {
-    fontSize: '22px',
-    fontFamily: $brandSans,
-    fontWeight: 600,
-    fontStyle: 'normal',
-    fontStretch: 'normal',
-    lineHeight: 1.82,
-    letterSpacing: 'normal'
-  }
-}))(Typography);
-
-export const StyledProductTotal = withStyles(theme => ({
-  root: {
-    fontSize: '18px',
+    fontSize: '16px',
     fontFamily: $brandSans,
     fontWeight: 'normal',
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 1.82,
     letterSpacing: 'normal',
-    color: '#000000',
+    marginLeft: '7px',
+    color: theme.palette.brand.accentBrown
+  }
+}))(Typography);
+
+export const StyledProductTotal = withStyles(theme => ({
+  root: {
+    fontSize: '14px',
+    fontFamily: $brandSans,
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 1.5,
+    letterSpacing: 'normal',
+    color: theme.palette.brand.camoGreen,
     textTransform: 'uppercase'
   }
 }))(Typography);
