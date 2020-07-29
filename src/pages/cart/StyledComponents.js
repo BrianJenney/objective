@@ -97,7 +97,8 @@ export const StyledArrowIcon = withStyles(theme => ({
     top: 7,
     right: 5,
     color: '#000000',
-    position: 'relative'
+    position: 'relative',
+    fontSize: '22px'
   }
 }))(SvgIcon);
 

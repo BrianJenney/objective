@@ -23,3 +23,4 @@ export const ACCOUNT_MENU_ITEMS = [
   { key: 'yourProfile', label: 'Your Profile', to: '/account/profile' },
   { key: 'logout', label: 'Logout' }
 ];
+

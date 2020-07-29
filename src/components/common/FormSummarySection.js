@@ -37,10 +37,11 @@ const FormSummarySection = ({ title, pairs, children, ...rest }) => {
               <Box
                 component={Typography}
                 flex={1}
-                lineHeight={1.2}
-                variant="body2"
+                lineHeight={1.6}
+                variant="caption"
                 children={value}
-                fontSize={xs ? 16 : 20}
+                fontSize={14}
+                color={'#553226'}
                 whiteSpace="nowrap"
                 textOverflow="ellipsis"
                 overflow="hidden"

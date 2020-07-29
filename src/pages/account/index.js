@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Redirect, useHistory, Link as RouterLink } from 'react-router-dom';
+import { Switch, Redirect, Link as RouterLink } from 'react-router-dom';
 import LeftArrowIcon from '@material-ui/icons/ArrowBack';
-import { StyledArrowIcon, StyledSmallCaps } from '../cart/StyledComponents';
+import { StyledArrowIcon } from '../cart/StyledComponents';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -90,7 +90,7 @@ const Account = ({ routes, history }) => {
                 onClick={() => history.goBack()}
               >
                 <StyledArrowIcon>
-                  <LeftArrowIcon fontSize="small" style={{color: '#a06958'}} />
+                  <LeftArrowIcon style={{color: '#a06958'}} />
                 </StyledArrowIcon>
                 <span style={backLink}>Back</span>
               </RouterLink>

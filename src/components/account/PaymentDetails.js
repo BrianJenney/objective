@@ -12,6 +12,7 @@ import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import AddIcon from '@material-ui/icons/Add';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
@@ -24,31 +25,32 @@ import { setCheckoutPaypalPayload } from '../../modules/paypal/actions';
 const useStyles = makeStyles(theme => ({
   formControlLabel: {
     fontSize: '20px',
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }
   },
   mobileLogin: {
     fontSize: '16px',
-    fontFamily: 'p22-underground'
+    fontFamily: theme.typography.bodyFontFamily
   },
   subTitle: {
     textAlign: 'right',
     fontSize: '16px',
     fontWeight: 'normal',
-    fontFamily: 'p22-underground, Helvetica, sans-serif',
+    fontFamily: theme.typography.bodyFontFamily,
     marginLeft: '3px',
     marginBottom: '16px',
     marginTop: '8px'
   },
   title: {
     fontSize: '26px',
-    fontFamily: 'Canela Text Web'
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.accentBrown
   },
   mobileTitle: {
     fontSize: '24px',
-    fontFamily: 'FreightTextProBook'
+    fontFamily: theme.typography.headerFontFamily
   }
 }));
 
@@ -353,10 +355,9 @@ const AccountPaymentDetails = ({
               </Box>
               <Box
                 component={Typography}
-                color="#231f20"
+                color={theme.palette.brand.accentBrown}
                 variant="h5"
                 children={formType === FORM_TYPES.ACCOUNT ? 'Payment Details' : 'Credit Card'}
-                fontSize={titleFontSize}
                 mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
                 style={{ display: formType === FORM_TYPES.CHECKOUT ? 'none' : 'block' }}
               />
@@ -377,19 +378,6 @@ const AccountPaymentDetails = ({
                 style={{ display: formType !== FORM_TYPES.ACCOUNT ? 'block' : 'none' }}
               />
             </>
-          )}
-          {!xs && formType === FORM_TYPES.ACCOUNT && (
-            <Box
-              color="#231f20"
-              component={Typography}
-              variant="h5"
-              children="Credit Card"
-              fontSize={18}
-              fontWeight={600}
-              fontFamily="p22-underground"
-              style={{ textTransform: 'uppercase' }}
-              mb={3}
-            />
           )}
           {isEmpty(creditCards) && paymentMethodMode === 'creditCard' && (
             <AlertPanel mb={2} type="info" text="No Saved Credit Cards." />
@@ -437,8 +425,30 @@ const AccountPaymentDetails = ({
                   </Box>
                 </Grid>
               ))}
+                 <Grid item xs={12} sm={5}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize={xs ? 14 : 16}
+                  fontWeight={600}
+                  m={1}
+                  px={1}
+                  py={7.5}
+                  border="1px solid #a06958"
+                >
+                  <div style={{textAlign: 'center'}} onClick={() => setFormModeEnabled(true)}>
+                  <AddIcon style={{  fontSize: '50px', color: theme.palette.brand.accentBrown, cursor: 'pointer'}}  />
+                  <MenuLink
+                    style={{ display: 'block', color: theme.palette.brand.accentBrown, fontWeight: 400 }}
+                    children="Add New Card"
+                    underline="always"
+                  />
+                  </div>
+                </Box>
+              </Grid>
             </Grid>
-            <Box
+            {/* <Box
               mt="37px"
               mb="10px"
               fontSize={xs ? 14 : 18}
@@ -453,7 +463,7 @@ const AccountPaymentDetails = ({
                 children="Add New Card"
                 underline="always"
               />
-            </Box>
+            </Box> */}
 
             <FormControlLabel
               key="formControlLabelCreditCardMode"

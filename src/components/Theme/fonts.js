@@ -1,6 +1,7 @@
 export const fonts = {
   body: 'proxima-nova, sans-serif',
   body2: 'proxima-nova, sans-serif',
+  caption: 'proxima-nova, sans-serif',
   bodyWeight: '400',
   header: 'bodoni-urw, serif',
   $brandSerif: 'bodoni-urw, serif',
@@ -45,7 +46,7 @@ export const sizes = {
   productBook: '0.875rem',
   tableBody: '0.875rem',
   miniText: '0.875rem', // 14px
-  caption: '0.75rem',
+  caption: '0.875rem',
   fineprint: '0.75rem',
   tableHead: '0.75rem',
   microText: '0.75rem' // 12px

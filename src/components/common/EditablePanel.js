@@ -58,19 +58,22 @@ const EditablePanel = ({
               />
             ) : (
               <Box display="flex" alignItems="center">
-                <CheckIcon style={{ width: '16px', height: '16px' }} />
-                <Box children="Saved as default" style={{ marginLeft: 5 }} />
+                <CheckIcon style={{ width: '16px', height: '16px', color: theme.palette.brand.camoGreen }} />
+                <Box children="Saved as default" style={{ marginLeft: 5, fontSize: '14px', color: theme.palette.brand.camoGreen }} />
               </Box>
             )}
             <Box mt="13px" height={16} display="flex" alignItems="center">
               {onRemove && (
                 <MenuLink
                   onClick={onRemove}
-                  children="Remove"
+                  children="Delete"
                   underline="always"
                   style={{
                     paddingRight: 9,
-                    borderRight: onFormSubmit ? '1px solid #231f20' : 0
+                    borderRight: onFormSubmit ? '1px solid #231f20' : 0, 
+                    color: theme.palette.brand.camoGreen,
+                    fontSize: '14px',
+                    float: 'right'
                   }}
                 />
               )}
@@ -85,7 +88,7 @@ const EditablePanel = ({
                   }}
                   children="Edit"
                   underline="always"
-                  style={{ paddingLeft: onRemove ? 9 : 0 }}
+                  style={{ paddingLeft: onRemove ? 9 : 0, fontSize: '14px', color: theme.palette.brand.camoGreen}}
                 />
               )}
             </Box>

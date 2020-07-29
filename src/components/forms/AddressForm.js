@@ -594,7 +594,6 @@ const AddressForm = ({
           <ButtonGroup fullWidth>
             {onBack && currentUser.data.addressBook && currentUser.data.addressBook.length > 0 && (
               <Button
-                color="secondary"
                 type="button"
                 onClick={onBack}
                 children={backLabel}

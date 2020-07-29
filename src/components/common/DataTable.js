@@ -1,12 +1,28 @@
 import React from 'react';
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
 import LoaderInProgress from './LoaderInProgress';
 
 /* https://www.material-ui-datatables.com */
 import MUIDataTable from 'mui-datatables';
+
+const useStyles = makeStyles(theme => ({
+
+  title: {
+    fontFamily: theme.typography.headerFontFamily,
+    fontSize: 36,
+    marginBottom: 30,
+    color: theme.palette.brand.camoGreen,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 25,
+      marginTop: 15,
+      marginBottom: 5
+    }
+  }
+}));
 
 const getMuiTheme = () =>
   createMuiTheme({
@@ -30,6 +46,7 @@ const getMuiTheme = () =>
   });
 
 const DataTable = ({ title, data, columns, isLoading, moreOptions }) => {
+  const classes = useStyles();
   const options = {
     filterType: 'dropdown',
     responsive: 'stacked',
@@ -49,7 +66,7 @@ const DataTable = ({ title, data, columns, isLoading, moreOptions }) => {
     <MuiThemeProvider theme={getMuiTheme()}>
       <MUIDataTable
         title={
-          <Typography variant="h3">
+          <Typography className={classes.title}>
             {title}
             {isLoading && <LoaderInProgress />}
           </Typography>

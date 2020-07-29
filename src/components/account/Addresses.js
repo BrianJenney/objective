@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
+import AddIcon from '@material-ui/icons/Add';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
@@ -193,6 +194,8 @@ const AccountAddresses = ({
   return (
     <Box {...rest} className="step-2-wrapper account-addresses">
       {formModeEnabled ? (
+        <>
+        { !xs ? <Typography variant="h5" children="Saved Addresses" style={{color: theme.palette.brand.accentBrown}} /> : null}
         <AddressForm
           currentUser={currentUser}
           formType={formType}
@@ -217,6 +220,7 @@ const AccountAddresses = ({
           checkoutVersion={rest.checkoutVersion ? rest.checkoutVersion : 1}
           switchToLogin={rest.switchToLogin ? rest.switchToLogin : false}
         />
+        </>
       ) : (
         <>
           {(!xs || formType !== FORM_TYPES.ACCOUNT) && (
@@ -225,7 +229,7 @@ const AccountAddresses = ({
               color="#a06958"
               variant="h5"
               children={formType === FORM_TYPES.ACCOUNT ? 'Saved Addresses' : 'Shipping Address'}
-              fontSize={titleFontSize}
+              fontSize={'25px'}
               mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
             />
           )}
@@ -290,7 +294,7 @@ const AccountAddresses = ({
                         <Box ml="-17px" mt="-9px">
                           <Radio
                             name="address-selector"
-                            style={{ color: '#a06958' }}
+                            style={{ color: theme.palette.brand.accentBrown }}
                             value={index.toString()}
                             onChange={handleSelect}
                             checked={selectedIndex === index}
@@ -319,28 +323,32 @@ const AccountAddresses = ({
                   </Grid>
                 ) : null
               )}
+              <Grid item xs={12} sm={6}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize={xs ? 14 : 16}
+                  fontWeight={600}
+                  m={1}
+                  px={1}
+                  py={9}
+                  border="1px solid #a06958"
+                >
+                  <div style={{textAlign: 'center'}} onClick={() => {
+                      const addressesData = currentUser.data.addressBook || [];
+                      setFormModeEnabled(true);
+                    }}>
+                  <AddIcon style={{  fontSize: '50px', color: theme.palette.brand.accentBrown, cursor: 'pointer'}}  />
+                  <MenuLink
+                    style={{ display: 'block', color: theme.palette.brand.accentBrown, fontWeight: 400 }}
+                    children="Add New Address"
+                    underline="always"
+                  />
+                  </div>
+                </Box>
+              </Grid>
             </Grid>
-          </Box>
-         <Box
-                      display="flex"
-                      alignItems= "center"
-                      justifyContent= "center"
-                      fontSize={xs ? 14 : 16}
-                      fontWeight={600}
-                      mt={2}
-                      px={4}
-                      py={10}
-                      border="1px solid #a06958"
-                    >
-            <MenuLink
-              style={{color: '#a06958'}}
-              onClick={() => {
-                const addressesData = currentUser.data.addressBook || [];
-                setFormModeEnabled(true);
-              }}
-              children="Add New Address"
-              underline="always"
-            />
           </Box>
           {onSubmit && (
             <Box mt={xs ? '18px' : '45px'} width={xs ? 1 : '438px'} mx="auto">

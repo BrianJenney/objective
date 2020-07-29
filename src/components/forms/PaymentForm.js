@@ -986,7 +986,6 @@ const PaymentForm = ({
                 currentUser.data.paymentMethods.length > 0 && (
                   <Button
                     style={{ height: '60px', padding: '0px' }}
-                    color="secondary"
                     type="button"
                     onClick={onBack}
                     children={backLabel}
