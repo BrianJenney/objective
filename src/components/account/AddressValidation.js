@@ -279,7 +279,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
 
 AddressValidation.propTypes = {
   origAddress: PropTypes.object.isRequired,
-  suggAddress: PropTypes.object.isRequired,
+  suggAddress: PropTypes.oneOfType([PropTypes.object.isRequired, PropTypes.bool]),
   actions: PropTypes.object.isRequired,
   onSubmit: PropTypes.func,
   closeDialog: PropTypes.func
