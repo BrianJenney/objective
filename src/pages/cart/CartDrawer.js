@@ -351,45 +351,41 @@ const Cart = ({
                       </StyledProductLink>
                     </Link>
                     <Grid item style={{ padding: '0' }}>
-                      {disableItemEditing ? (
-                        <Box
+                      <StyledCardActions style={{ border: 'none' }}>
+                        <StyledCounterButton
+                          color="primary"
+                          onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
                           style={{
-                            fontFamily: 'p22-underground, sans-serif',
-                            fontSize: '16px'
+                            fontSize: '25pt'
                           }}
-                          component={Typography}
-                          children={`QTY: ${item.quantity}`}
-                        />
-                      ) : (
-                        <StyledCardActions>
-                          <StyledCounterButton
-                            color="primary"
-                            onClick={e => adjustQty(cart, e.currentTarget.value, -1)}
-                            style={{
-                              fontSize: '20pt',
-                              paddingBottom: '4px'
-                            }}
-                            value={index}
-                            disabled={item.quantity < 2}
-                          >
-                            -
-                          </StyledCounterButton>
-                          <StyledSmallCaps style={{ fontSize: '18px' }}>
+                          className="CounterButtonMinus"
+                          value={index}
+                          disabled={item.quantity < 2}
+                        >
+                          -
+                        </StyledCounterButton>
+                        <StyledSmallCaps
+                          style={{
+                            fontSize: '22px',
+                            paddingTop: '0px',
+                            marginRight: '5px',
+                            marginLeft: '10px'
+                          }}
+                        >
                           {item.quantity}
                         </StyledSmallCaps>
-                          <StyledCounterButton
-                            color="primary"
-                            onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
-                            style={{
-                              fontSize: '13pt',
-                              paddingBottom: '2.5px'
-                            }}
-                            value={index}
-                          >
-                            +
-                          </StyledCounterButton>
-                        </StyledCardActions>
-                      )}
+                        <StyledCounterButton
+                          color="primary"
+                          onClick={e => adjustQty(cart, e.currentTarget.value, 1)}
+                          style={{
+                            fontSize: '19pt'
+                          }}
+                          className="CounterButtonPlus"
+                          value={index}
+                        >
+                          +
+                        </StyledCounterButton>
+                      </StyledCardActions>
                     </Grid>
                     <StyledCardContent
                       style={
