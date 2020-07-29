@@ -433,8 +433,9 @@ const AccountPaymentDetails = ({
                   fontSize={xs ? 14 : 16}
                   fontWeight={600}
                   m={1}
+                  ml={0}
                   px={1}
-                  py={7.5}
+                  py={7.6}
                   border="1px solid #a06958"
                 >
                   <div style={{textAlign: 'center'}} onClick={() => setFormModeEnabled(true)}>
@@ -448,23 +449,6 @@ const AccountPaymentDetails = ({
                 </Box>
               </Grid>
             </Grid>
-            {/* <Box
-              mt="37px"
-              mb="10px"
-              fontSize={xs ? 14 : 18}
-              fontWeight={600}
-              style={{
-                textTransform: 'uppercase',
-                display: paymentMethodMode === 'creditCard' ? 'block' : 'none'
-              }}
-            >
-              <MenuLink
-                onClick={() => setFormModeEnabled(true)}
-                children="Add New Card"
-                underline="always"
-              />
-            </Box> */}
-
             <FormControlLabel
               key="formControlLabelCreditCardMode"
               style={{ marginLeft: '-6px' }}

@@ -55,6 +55,7 @@ const EditablePanel = ({
                 onClick={onSetDefault}
                 children="Make default"
                 underline="always"
+                style={{ fontSize: '14px', color: theme.palette.brand.camoGreen }}
               />
             ) : (
               <Box display="flex" alignItems="center">

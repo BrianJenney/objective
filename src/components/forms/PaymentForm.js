@@ -567,12 +567,13 @@ const PaymentForm = ({
         )}
         {!allowFlyMode && (
           <Box
+            children={xs ? "CREDIT CARD" : "Credit Card"}
             component={Typography}
-            color="#231f20"
-            variant="h5"
-            children="Credit Card"
-            fontSize={xs ? 24 : 30}
-            mb={xs ? 3 : 4}
+            color={xs ? theme.palette.brand.camoGreen : theme.palette.brand.accentBrown}
+            fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
+            fontWeight={xs ? 700 : 400}
+            fontSize={xs ? 14 : 25}
+            mb={xs ? 0 : 2}
           />
         )}
         <Grid container spacing={2}>
@@ -737,16 +738,15 @@ const PaymentForm = ({
               </Grid>
 
               {paymentMethodMode === 'creditCard' && (
-                <Grid item xs={12} style={{ marginTop: '10px', marginBottom: xs ? '0px' : '8px' }}>
+                <Grid item xs={12} style={{ marginTop: '10px', marginBottom: xs ? '0px' : '0px' }}>
                   <Box
                     component={Typography}
-                    color="#231f20"
-                    variant="h5"
-                    children="Billing Address"
-                    style={{ fontFamily: 'bodoni-urw, serif' }}
-                    fontSize={xs ? 24 : 30}
-                    mb={xs ? 0 : 1}
-                    mt={1}
+                    children={xs ? "BILLING ADDRESS" : "Billing Address"}
+                    color={xs ? theme.palette.brand.camoGreen : theme.palette.brand.accentBrown}
+                    fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
+                    fontWeight={xs ? 700 : 400}
+                    fontSize={xs ? 14 : 25}
+                    mb={xs ? -2 : 0}
                   />
                 </Grid>
               )}
@@ -793,7 +793,7 @@ const PaymentForm = ({
                       <Typography
                         variant="body2"
                         children={useSeedLabel}
-                        style={{ color: '#231f20' }}
+                        style={{ color: theme.palette.brand.camoGreen}}
                       />
                     </Box>
                   </Grid>

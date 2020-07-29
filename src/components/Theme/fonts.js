@@ -42,7 +42,7 @@ export const sizes = {
   body: '1rem',
   title: '1rem',
   subhead: '1rem',
-  smallText1: '1rem', // 16px
+  smallText1: '0.875rem', // 14px
   productBook: '0.875rem',
   tableBody: '0.875rem',
   miniText: '0.875rem', // 14px
