@@ -37,7 +37,8 @@ import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 const localStorageClient = require('store');
 
-const getPanelTitleContent = (xs, step, activeStep, payload) => {
+// eslint-disable-next-line no-unused-vars
+const getPanelTitleContent = (xs, step, activeStep, payload, signupConfirmation) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -112,6 +113,7 @@ const Checkout = ({
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const { signupConfirmation } = currentUser;
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -582,7 +584,14 @@ const Checkout = ({
                 >
                   <div ref={stepRefs[0]}>
                     <Panel
-                      title={getPanelTitleContent(xs, 0, activeStep, null, payload.shippingAddress)}
+                      title={getPanelTitleContent(
+                        xs,
+                        0,
+                        activeStep,
+                        null,
+                        payload.shippingAddress,
+                        signupConfirmation
+                      )}
                       collapsible
                       expanded={activeStep === 0}
                       onChange={e => onPanelChange(e, 0)}
