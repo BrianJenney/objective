@@ -37,8 +37,7 @@ import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 const localStorageClient = require('store');
 
-// eslint-disable-next-line no-unused-vars
-const getPanelTitleContent = (xs, step, activeStep, payload, signupConfirmation) => {
+const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -113,7 +112,6 @@ const Checkout = ({
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const { signupConfirmation } = currentUser;
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -584,14 +582,7 @@ const Checkout = ({
                 >
                   <div ref={stepRefs[0]}>
                     <Panel
-                      title={getPanelTitleContent(
-                        xs,
-                        0,
-                        activeStep,
-                        null,
-                        payload.shippingAddress,
-                        signupConfirmation
-                      )}
+                      title={getPanelTitleContent(xs, 0, activeStep, payload.shippingAddress)}
                       collapsible
                       expanded={activeStep === 0}
                       onChange={e => onPanelChange(e, 0)}
@@ -634,7 +625,7 @@ const Checkout = ({
                   ) : null}
                   <div ref={stepRefs[1]}>
                     <Panel
-                      title={getPanelTitleContent(xs, 1, activeStep, null, payload.paymentDetails)}
+                      title={getPanelTitleContent(xs, 1, activeStep, payload.paymentDetails)}
                       hideExpandIcon={activeStep <= 1}
                       collapsible
                       expanded={activeStep === 1}
@@ -664,7 +655,7 @@ const Checkout = ({
                   </div>
                   <div ref={stepRefs[2]}>
                     <Panel
-                      title={getPanelTitleContent(xs, 2, activeStep, null, {})}
+                      title={getPanelTitleContent(xs, 2, activeStep, {})}
                       collapsible
                       hideExpandIcon
                       expanded={activeStep === 2}
