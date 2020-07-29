@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
     width: props.desktopStyle.width,
     height: props.desktopStyle.height,
     [theme.breakpoints.down('sm')]: {
-      width: props.mobileStyle.width
+      width: props.mobileStyle.width,
+      height: props.mobileStyle.height
     }
   })
 }));

@@ -13,9 +13,11 @@ import {
   SPButton,
   SPBox,
   Banner,
-  List
+  List,
+  SPStickyBtn
 } from '../pages/static/components';
 import { StyledContainer } from '../assets/styles/StyledComponents';
+import { transformDesktopStyle, transformMobileStyle } from '../pages/static/transformComponents';
 
 export const buildPage = page => {
   const tmpComps = GeneratePageComponents(page.components, page.template, page.name);
@@ -37,7 +39,7 @@ export const GenerateTemplate = ({ data, header, template }) => {
   return (
     <div>
       <Header data={header} template={template} type={header.type} />
-      <StyledContainer>
+      <StyledContainer className="renderComp">
         <RenderComponents components={data} />
       </StyledContainer>
     </div>
@@ -104,9 +106,34 @@ export const GeneratePageComponents = (comps, template, pageName) => {
           </>
         );
         break;
+      case 'stickyBtn':
+        const deskStyles = transformDesktopStyle(obj);
+        const mobStyles = transformMobileStyle(obj);
+        components.push(
+          <aside
+            style={
+              xs
+                ? {
+                  ...mobStyles,
+                  border: mobStyles.borderColor,
+                  left: 0,
+                  bottom: 0
+                }
+                : {
+                  ...deskStyles,
+                  border: deskStyles.borderColor,
+                  top: '10px',
+                  margin: obj.desktopStyle.margin
+                }
+            }
+          >
+            <SPStickyBtn data={obj.value.components} xs={xs} />
+          </aside>
+        );
+        break;
       case 'oneColSection':
         components.push(
-          <>
+          <div className="one-column">
             <Grid
               item
               xs={12}
@@ -119,7 +146,7 @@ export const GeneratePageComponents = (comps, template, pageName) => {
                 components={GenerateOneColumn(obj.value.components, template, pageName, xs)}
               />
             </Grid>
-          </>
+          </div>
         );
         break;
       case 'twoColSection':
