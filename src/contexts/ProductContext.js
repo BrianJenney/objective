@@ -28,6 +28,25 @@ export class ProductStore extends Component {
   }
 
   componentDidMount() {
+    this.updateProductState();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.productSlug !== this.props.productSlug) {
+      this.updateProductState();
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const updated = !(
+      nextState.product === null ||
+      nextState.variants.length === 0 ||
+      nextState.prices.length === 0
+    );
+    return updated;
+  }
+
+  updateProductState() {
     const { client: stompClient, replyTo } = store.getState().stomp;
 
     contentfulClient
@@ -51,24 +70,6 @@ export class ProductStore extends Component {
     });
 
     this.getProductData(stompClient, replyTo);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.productSlug !== this.props.productSlug) {
-      const { stomp } = store.getState();
-      const stompClient = stomp.client;
-      const { replyTo } = stomp;
-      this.getProductData(stompClient, replyTo);
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const updated = !(
-      nextState.product === null ||
-      nextState.variants.length === 0 ||
-      nextState.prices.length === 0
-    );
-    return updated;
   }
 
   getProductData(stompClient, replyTo) {
