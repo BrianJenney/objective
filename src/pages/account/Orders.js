@@ -3,11 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
-import { DataTable, AdapterLink } from '../../components/common';
+import { MenuLink } from '../../components/common';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { StyledArrowIcon } from '../cart/StyledComponents';
+import {
+  StyledSmallCaps,
+  StyledFinePrint,
+  StyledProductLink,
+  StyledCounterButton,
+  StyledCardActions,
+  StyledCardContent,
+  StyledDrawerGrid,
+  StyledProductPrice,
+  StyledRemoveLink
+} from '../cart/StyledComponents.js';
+import { displayMoney } from '../../utils/formatters';
 
 import { requestFindOrdersByAccount } from '../../modules/order/actions';
 import {
@@ -19,19 +35,6 @@ import {
 import ScrollToTop from '../../components/common/ScrollToTop';
 
 const useStyles = makeStyles(theme => ({
-  topGrid: {
-    borderTop: '1px solid black',
-    borderBottom: '1px solid black',
-  },
-  otherGrid: {
-    borderBottom: '1px solid black',
-  },
-  leftBox: {
-    float: 'left'
-  },
-  rightBox: {
-    float: 'right'
-  },
   title: {
     fontFamily: theme.typography.headerFontFamily,
     fontSize: 25,
@@ -45,12 +48,48 @@ const useStyles = makeStyles(theme => ({
     fontSize: '14px',
     color: '#231f20'
   },
-  info: {
-    fontFamily: theme.typography.headerFontFamily,
+  productTitle: {
+    fontFamily: theme.typography.bodyFontFamily,
+    fontWeight: 700,
     fontSize: '18px',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: 16
-    }
+    color: theme.palette.brand.camoGreen,
+    lineHeight: '22.5px',
+    paddingTop: '10px',
+    marginBottom: '-10px'
+  },
+  price: {
+    fontFamily: theme.typography.bodyFontFamily,
+    fontWeight: 400,
+    fontSize: '16px',
+    color: theme.palette.brand.accentBrown,
+    letterSpacing: '1px',
+    marginTop: '-55px'
+  },
+  info: {
+    fontFamily: theme.typography.bodyFontFamily,
+    fontWeight: 400,
+    letterSpacing: '1px',
+    fontSize: '14px',
+    color: '#231f20',
+    marginTop: '-5px'
+  },
+  link: {
+    display: 'block',
+    color: theme.palette.brand.accentBrown,
+    fontWeight: 400
+  },
+  topGrid: {
+    borderTop: '1px solid black',
+    borderBottom: '1px solid black'
+  },
+  otherGrid: {
+    borderBottom: '1px solid black'
+  },
+  leftBox: {
+    float: 'left'
+  },
+  rightBox: {
+    float: 'right'
   }
 }));
 
@@ -208,18 +247,116 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
 
     return data.orders.map((d, dataIndex, rowIndex) => {
       return (
-        <Grid item sm={12} md={12} lg={12} className={dataIndex === 0 ? classes.topGrid : classes.otherGrid}>
+        <Grid
+          item
+          sm={12}
+          md={12}
+          lg={12}
+          className={dataIndex === 0 ? classes.topGrid : classes.otherGrid}
+        >
           <Box component="div" m={1} className={classes.leftBox}>
             <Typography className={classes.statusTitle}>ORDER ID</Typography>
-            <Typography className={classes.statusTitle}>
+            <MenuLink
+              to={`/orders/${data.orders[dataIndex]._id}`}
+              className={classes.link}
+              underline="always"
+            >
               {data.orders[dataIndex].orderNumber}
-            </Typography>
+            </MenuLink>
             <Typography className={classes.statusTitle}>ORDER DATE</Typography>
+            <Typography className={classes.info}>{formatDateTime(data.orders[dataIndex].createdAt, false)}</Typography>
+
             <Typography className={classes.statusTitle}>STATUS</Typography>
+            <Typography className={classes.info}>{data.orders[dataIndex].status.charAt(0).toUpperCase() + data.orders[dataIndex].status.slice(1)}</Typography>
             <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
+            <MenuLink
+              to={`/transactions/${data.orders[dataIndex]._id}`}
+              className={classes.link}
+              underline="always"
+            >
+              {data.orders[dataIndex].shipTracking}
+            </MenuLink>
           </Box>
           <Box component="div" m={1} className={classes.rightBox}>
-            hello
+          {data.orders[dataIndex].items.map((item) => {
+            return (
+              <StyledDrawerGrid
+                container
+                direction="row"
+                key={`cart-${dataIndex}`}
+                className="CartListBox"
+              >
+                <Grid
+                  item
+                  xs={4}
+                  style={
+                    !xs
+                      ? { minWidth: '126px', marginRight: '25px' }
+                      : { minWidth: '126px', marginRight: '18px' }
+                  }
+                >
+                  <Card>
+                    <Link
+                      to={`/products/${item.slug}`}
+                    >
+                      <CardMedia
+                        style={{ height: 126, width: 126 }}
+                        image={item.variant_img}
+                        title={item.variant_name} 
+                        />
+                    </Link>
+                  </Card>
+                </Grid>
+                <Grid item xs={xs ? 8 : 7}>
+                  <Card
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: 'auto',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                      <StyledProductLink
+                        className={classes.productTitle}
+                        align="left"
+                      >
+                        {item.variant_name}
+                      </StyledProductLink>
+                    <StyledCardContent
+                      style={
+                        !xs
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
+                    >
+                      <Typography className={classes.price}>
+                        {displayMoney(item.quantity * item.unit_price)}
+                      </Typography>
+                    </StyledCardContent>
+                    <StyledCardContent
+                      style={
+                        !xs
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
+                    >
+                      <MenuLink
+              to={`/orders/${data.orders[dataIndex]._id}`}
+              className={classes.link}
+              underline="always"
+            >
+              
+              <span>Trace Product</span>
+              <StyledArrowIcon style={{marginLeft: '10px'}}>
+                  <ArrowForwardIcon style={{color: '#a06958'}} />
+                </StyledArrowIcon>
+            </MenuLink>
+                    </StyledCardContent>
+                  </Card>
+                </Grid>
+              </StyledDrawerGrid>
+            )
+          })}
           </Box>
         </Grid>
       );
@@ -234,6 +371,8 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
         spacing={3}
         // className={xs ? 'account-orders account-orders-mobile-table' : 'account-orders'}
       >
+        {!xs ? <Typography className={classes.title}>Your Orders</Typography> : null}
+        
         {xs ? (
           <p>hello</p>
         ) : (
@@ -302,22 +441,6 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
           //   }}
           // />
           <>
-            {/* {data.orders.map((d, dataIndex, rowIndex) => {
-              return (
-                <>
-                <Box component="div" m={1} className={classes.leftBox}>
-                <Typography className={classes.statusTitle}>ORDER ID</Typography>
-                <Typography className={classes.statusTitle}>{data.orders[dataIndex].orderNumber}</Typography>
-                <Typography className={classes.statusTitle}>ORDER DATE</Typography>
-                <Typography className={classes.statusTitle}>STATUS</Typography>
-                <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
-              </Box>
-              <Box component="div" m={1} className={classes.rightBox}>
-                hello
-              </Box>
-              </>
-              )
-            })} */}
             {renderOrders()}
           </>
 

@@ -43,7 +43,7 @@ const EditablePanel = ({
           {...rest}
         />
       ) : (
-        <Summary values={defaultValues} {...rest}>
+        <Summary values={defaultValues} {...rest} >
           <Box
             mt={4}
             fontSize={xs ? 12 : 16}
@@ -63,7 +63,7 @@ const EditablePanel = ({
                 <Box children="Saved as default" style={{ marginLeft: 5, fontSize: '14px', color: theme.palette.brand.camoGreen }} />
               </Box>
             )}
-            <Box mt="13px" height={16} display="flex" alignItems="center">
+            <Box mt="13px" height={16} >
               {onRemove && (
                 <MenuLink
                   onClick={onRemove}
@@ -73,8 +73,7 @@ const EditablePanel = ({
                     paddingRight: 9,
                     borderRight: onFormSubmit ? '1px solid #231f20' : 0, 
                     color: theme.palette.brand.camoGreen,
-                    fontSize: '14px',
-                    float: 'right'
+                    fontSize: '14px'
                   }}
                 />
               )}
