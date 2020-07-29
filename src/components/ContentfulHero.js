@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Typed from 'typed.js';
 import SwitchLink from './common/SwitchLink';
 
+// Dictionary to translate contentful entry to aboslute position:
 const posValues = {
   topLeft: {
     top: '20%',
@@ -27,33 +29,27 @@ const posValues = {
     left: '50%',
     transform: 'translate(-50%, -50%)'
   },
-  mobile: {
+  topCenter: {
     top: '30%',
     left: '50%',
     transform: 'translate(-50%, -50%)'
   }
 };
 
-const mobileStyles = {
-  assets: {
-    hero: 'http://cdn1.stopagingnow.com/objective/assets/mobile-cropped.png'
-  },
+const sharedStyles = {
   heroContainer: {
     width: '100%',
     position: 'relative',
     textAlign: 'center'
   },
-  ctaDiv: {
+  ctaBox: {
     color: 'white',
     height: 200,
     background: 'none',
-    position: 'absolute',
-    ...posValues.mobile
+    position: 'absolute'
   },
   imageBox: {
-    width: '100%',
-    zIndex: 1,
-    margin: 0
+    width: '100%'
   },
   underline: {
     height: 4,
@@ -76,10 +72,14 @@ const mobileStyles = {
     textAlign: 'left',
     fontSize: 48,
     lineHeight: 'normal'
-  },
-  caret: {
-    marginLeft: 5,
-    borderRight: '3px solid white'
+  }
+};
+
+const mobileStyles = {
+  ...sharedStyles,
+  assets: {
+    hero: 'http://cdn1.stopagingnow.com/objective/assets/mobile-cropped.png',
+    alt: 'Alt text'
   },
   button: {
     marginTop: -5,
@@ -91,61 +91,18 @@ const mobileStyles = {
     letterSpacing: '1.33px',
     lineHeight: 2.14,
     fontSize: 16,
-    height: '55px',
-    backgroundColor: '#F7C6B1'
+    height: '55px'
   }
 };
 
 const desktopStyles = {
+  ...sharedStyles,
   assets: {
-    hero: 'http://cdn1.stopagingnow.com/objective/assets/desktop-cropped.png'
-  },
-  heroContainer: {
-    width: '100%',
-    position: 'relative',
-    textAlign: 'center'
-  },
-  ctaDiv: {
-    color: 'white',
-    height: 200,
-    background: 'none',
-    position: 'absolute',
-    ...posValues.topLeft
-  },
-  imageBox: {
-    width: '100%',
-    zIndex: 1
-  },
-  underline: {
-    height: 4,
-    backgroundColor: 'black',
-    width: '100%',
-    position: 'absolute',
-    top: 90
-  },
-  leadingText: {
-    fontFamily: 'FreightTextProBook',
-    color: 'black',
-    fontSize: 58,
-    position: 'relative'
-  },
-  typedText: {
-    fontFamily: 'inherit',
-    marginTop: 20,
-    height: 64,
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'left',
-    fontSize: 48,
-    lineHeight: 'normal'
-  },
-  caret: {
-    marginLeft: 5,
-    borderRight: '3px solid white'
+    hero: 'http://cdn1.stopagingnow.com/objective/assets/desktop-cropped.png',
+    alt: 'Alt text'
   },
   button: {
-    color: '#000000',
-    marginTop: 14,
+    marginTop: 10,
     fontFamily: 'p22-underground, Helvetica, sans',
     border: 'none',
     fontWeight: 900,
@@ -153,20 +110,38 @@ const desktopStyles = {
     letterSpacing: '1.33px',
     lineHeight: 2.14,
     fontSize: 16,
-    height: '55px',
-    backgroundColor: '#F7C6B1'
+    height: '55px'
   }
 };
 
-const ContentfulHero = () => {
+const mapContentfulValues = content => {
+  desktopStyles.assets.hero = content.desktopImage.fields.file.url;
+  mobileStyles.assets.hero = content.mobileImage.fields.file.url;
+  desktopStyles.assets.alt = content.desktopImage.fields.title;
+  mobileStyles.assets.alt = content.mobileImage.fields.title;
+
+  desktopStyles.ctaBox = { ...desktopStyles.ctaBox, ...posValues[content.desktopCtaPlacement] };
+  mobileStyles.ctaBox = { ...mobileStyles.ctaBox, ...posValues[content.mobileCtaPlacement] };
+
+  sharedStyles.leadingText.fontFamily = content.leadingTextFontFamily;
+  sharedStyles.leadingText.color = content.leadingTextFontColor;
+  sharedStyles.leadingText.fontSize = content.leadingTextFontSize;
+
+  sharedStyles.typedText.fontFamily = content.typedTextFontFamily;
+  sharedStyles.typedText.color = content.typedTextFontColor;
+  sharedStyles.typedText.fontSize = content.typedTextFontSize;
+
+  desktopStyles.button.backgroundColor = content.buttonColor;
+  mobileStyles.button.backgroundColor = content.buttonColor;
+  desktopStyles.button.color = content.buttonFontColor;
+  mobileStyles.button.color = content.buttonFontColor;
+};
+
+const ContentfulHero = ({ content }) => {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const styles = sm ? mobileStyles : desktopStyles;
   let segmentProperties;
-
-  const styleOptions = sm ? mobileStyles : desktopStyles;
-
-  const image = styleOptions.assets.hero;
 
   // Calculate width based on longest supplied string:
   const getBoxWidth = arr => {
@@ -174,23 +149,24 @@ const ContentfulHero = () => {
     return `${Math.max(...lengths) * 1.5}em`;
   };
 
-  // Prepare typewriter variables:
-  const strings = ['alarm clocks', 'better sleep'];
-  // const strings = ['alarm clocks'];
-  const leadingText = 'Back to...';
-  const options = {
+  // Handle Contentful value assignments:
+  mapContentfulValues(content);
+  const image = styles.assets.hero;
+  const altText = styles.assets.alt;
+  const { leadingText, typedText, buttonText, buttonDestination } = content;
+  const boxWidth = getBoxWidth(typedText);
+
+  const typewriterOptions = {
     typeSpeed: 120,
     showCursor: false,
     backSpeed: 60,
     backDelay: 850,
-    loop: strings.length > 1,
-    strings
+    loop: typedText.length > 1,
+    strings: typedText
   };
-  const buttonText = 'SHOP ALL';
-  const boxWidth = getBoxWidth(strings);
 
   useEffect(() => {
-    const Typewriter = () => new Typed('.typewriter', options);
+    const Typewriter = () => new Typed('#typingBox', typewriterOptions);
     Typewriter();
   });
 
@@ -198,18 +174,18 @@ const ContentfulHero = () => {
     window.analytics.track('Banner Clicked', segmentProperties);
 
   const renderCtaButton = () => {
-    const content = (
-      <button type="button" style={{ ...styleOptions.button }}>
+    const buttonContent = (
+      <button type="button" style={{ ...styles.button }}>
         {buttonText}
       </button>
     );
     return (
       <SwitchLink
-        to="https://www.google.com/"
-        content={content}
+        to={buttonDestination}
+        content={buttonContent}
         segmentProperties={{
           cta: 'Shop All',
-          destination: '/gallery',
+          destination: buttonDestination,
           site_location: 'home',
           text: 'SHOP NOW'
         }}
@@ -219,18 +195,18 @@ const ContentfulHero = () => {
   };
 
   const renderTypedText = () => (
-    <div style={{ ...styleOptions.typedText }}>
-      <div className="typewriter" id="typedstr" style={{ marginLeft: 3 }}></div>
-      <div style={{ ...styleOptions.underline }}></div>
+    <div style={{ ...styles.typedText }}>
+      <div id="typingBox" style={{ marginLeft: 3 }}></div>
+      <div style={{ ...styles.underline }}></div>
     </div>
   );
 
-  const renderLeadingText = () => <div style={{ ...styleOptions.leadingText }}>{leadingText}</div>;
+  const renderLeadingText = () => <div style={{ ...styles.leadingText }}>{leadingText}</div>;
 
   const Result = () => (
-    <div style={{ ...styleOptions.heroContainer }}>
-      <img alt="test" src={image} style={{ ...styleOptions.imageBox }}></img>
-      <div style={{ ...styleOptions.ctaDiv, width: boxWidth }}>
+    <div style={{ ...styles.heroContainer }}>
+      <img alt={altText} src={image} style={{ ...styles.imageBox }}></img>
+      <div style={{ ...styles.ctaBox, width: boxWidth }}>
         {renderLeadingText()}
         {renderTypedText()}
         {sm ? null : renderCtaButton()}
@@ -240,6 +216,10 @@ const ContentfulHero = () => {
   );
 
   return <Result />;
+};
+
+ContentfulHero.propTypes = {
+  content: PropTypes.object
 };
 
 export default ContentfulHero;

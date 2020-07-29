@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// SwitchLink makes a basic differentiation between an internal and external link:
 const SwitchLink = props => {
   const href = props.to;
   let finalLink = null;
