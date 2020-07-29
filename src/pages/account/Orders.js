@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.brand.camoGreen,
     lineHeight: '22.5px',
     paddingTop: '10px',
+    marginLeft: '0px',
     marginBottom: '-10px'
   },
   price: {
