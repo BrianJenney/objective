@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet';
 
 const HeadTags = ({ title, description, indexThisPage }) => (
   <Helmet>
-    {title && <title>{title}</title>}
+    {indexThisPage && title ? <title>{title}</title> : null}
     {description && (
-      <meta name="description" content={indexThisPage ? description : 'noindex,nofollow'} />
+      <meta name="robots" content={indexThisPage ? description : 'noindex,nofollow'} />
     )}
   </Helmet>
 );
