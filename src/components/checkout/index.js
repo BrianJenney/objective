@@ -191,7 +191,13 @@ const Checkout = ({
   useEffect(() => {
     const isGuest =
       currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
-    if (accountCreated && paymentDetailsUpdated && !addressBookUpdated && !isGuest) {
+    if (
+      accountCreated &&
+      paymentDetailsUpdated &&
+      !addressBookUpdated &&
+      !isGuest &&
+      payload.method !== 'paypal'
+    ) {
       requestPatchAccount(account_jwt, {
         addressBook: [payload.shippingAddress]
       });
