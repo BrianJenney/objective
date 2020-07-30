@@ -7,12 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { OBJECTIVE_HOMEPAGE } from '../constants/contentfulEntries';
+import { OBJECTIVE_HOMEPAGE, OBJECTIVE_DYNAMICHERO } from '../constants/contentfulEntries';
 import HeadTags from '../components/common/HeadTags';
 import { contentfulClient } from '../utils/contentful';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ContentfulHero from '../components/ContentfulHero';
 
 import './home/home-style.scss';
 import { StyledContainer } from '../assets/styles/StyledComponents';
@@ -73,12 +74,28 @@ class Home extends Component {
       .catch(err => {
         throw err;
       });
+    contentfulClient
+      .getEntry(OBJECTIVE_DYNAMICHERO)
+      .then(entry => {
+        const content = entry.fields;
+        this.setState({
+          contentfulHero: {
+            ...content
+          }
+        });
+      })
+      .catch(err => {
+        throw err;
+      });
     if (!homePageTracked) {
       window.analytics.page('Home');
     }
   }
 
   renderHeroSlider() {
+    // Check for Contentful hero:
+    if (this.state.contentfulHero) return <ContentfulHero content={this.state.contentfulHero} />;
+
     if (!this.state.content.heroSlider) return <></>;
 
     let images = this.state.content.heroSlider;
@@ -89,7 +106,7 @@ class Home extends Component {
       params = '?w=450&fm=jpg&q=80';
     }
 
-    return images.map(image => (
+    const hero = images.map(image => (
       <li key={image.sys.id}>
         <img
           src={image.fields.file.url + params}
@@ -98,6 +115,21 @@ class Home extends Component {
         />
       </li>
     ));
+
+    return (
+      <Link
+        to="/gallery"
+        segmentProperties={{
+          cta: 'Shop All',
+          destination: '/gallery',
+          site_location: 'home',
+          text: 'Targeted Health Solutions for You and Yours'
+        }}
+        onClick={this.segmentTrackBannerClicked}
+      >
+        <ul>{hero}</ul>
+      </Link>
+    );
   }
 
   renderSections() {
@@ -111,7 +143,7 @@ class Home extends Component {
           backgroundImage: `url("${section.fields.mainContent.content[4].data.target.fields.file.url.replace(
             '//images.ctfassets.net/mj9bpefl6wof/',
             'https://nutranext.imgix.net/'
-          )}?q=50&auto=compress,format")`
+          )}?&auto=compress,format")`
         }}
       >
         <StyledContainer className="section-container">
@@ -164,7 +196,13 @@ class Home extends Component {
                 <HomeVariantCard variant={variant} key={variant.id} />
               ))}
             </Grid>
-            <Box style={{ paddingTop: 53, display: 'flex', justifyContent: 'center' }}>
+            <Box
+              style={{
+                paddingTop: 53,
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
               {documentToReactComponents(
                 this.state.content.bestsellers.content[2],
                 contentfulOptions
