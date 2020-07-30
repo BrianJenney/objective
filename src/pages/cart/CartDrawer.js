@@ -93,6 +93,7 @@ const Cart = ({
 }) => {
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
+
   const cartNotification = useSelector(state => state.utils.cartNotification);
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
