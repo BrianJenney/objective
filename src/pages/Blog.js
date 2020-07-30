@@ -21,7 +21,7 @@ const Blog = ({ location }) => {
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[location.pathname.substring(1)];
+  const { title, description, indexThisPage } = seoMap[location.pathname.substring(1)];
 
   useEffect(() => {
     async function fetchData() {
@@ -54,7 +54,7 @@ const Blog = ({ location }) => {
   }
   return (
     <>
-      <HeadTags title={title} description={description} />
+      <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
       <ScrollToTop>
         <div className="journal-gallery">
           <Box className="header" py={8}>

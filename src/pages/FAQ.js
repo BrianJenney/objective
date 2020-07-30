@@ -41,7 +41,7 @@ const FAQ = ({ location }) => {
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[slug];
+  const { title, description, indexThisPage } = seoMap[slug];
   const page = useSelector(state => state.page);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const FAQ = ({ location }) => {
   if (FinalPage) {
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <StyledBackground>
             <StyledContainer>
