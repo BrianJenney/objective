@@ -235,7 +235,6 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
                     underline="always"
                     fullWidth
                     className={xs ? '' : classes.button}
-                    style={xs ? { padding: 33 } : ''}
                   />
                 </Paper>
               </Box>
