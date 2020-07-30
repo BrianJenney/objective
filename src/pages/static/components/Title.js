@@ -13,12 +13,14 @@ const useStyles = makeStyles(theme => ({
     fontSize: props.desktopStyle.fontSize,
     lineHeight: props.desktopStyle.lineHeight,
     fontFamily: props.desktopStyle.fontFamily,
+    textAlign: props.desktopStyle.align,
     [theme.breakpoints.down('sm')]: {
       color: props.mobileStyle.fontColor,
       fontWeight: props.mobileStyle.fontWeight,
       fontSize: props.mobileStyle.fontSize,
       lineHeight: props.mobileStyle.lineHeight,
-      fontFamily: props.mobileStyle.fontFamily
+      fontFamily: props.mobileStyle.fontFamily,
+      textAlign: props.mobileStyle.align
     }
   })
 }));
@@ -28,7 +30,7 @@ const Title = ({ data, template, type, pageName }) => {
   const classes = useStyles(data);
   const borderClassname = data.desktopStyle.borderPlacement
     ? `${template}-${type}-${data.desktopStyle.borderPlacement}`
-    : ''
+    : '';
 
   const ComponentToTrack = ({ isVisible }) => {
     if (isVisible && tracked === false && (type === 'sectionTitle' || type === 'sectionSubTitle')) {
