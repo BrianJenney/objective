@@ -9,7 +9,7 @@ import Check from '@material-ui/icons/Check';
 import StepConnector from '@material-ui/core/StepConnector';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -19,17 +19,17 @@ const QontoConnector = withStyles({
   },
   active: {
     '& $line': {
-      borderColor: 'black'
+      borderColor: '#553226'
     }
   },
   completed: {
     '& $line': {
-      borderColor: 'black'
+      borderColor: '#553226'
     }
   },
   disabled: {
     '& $line': {
-      borderColor: '#eaeaf0'
+      borderColor: '#553226'
     }
   },
   line: {
@@ -40,16 +40,16 @@ const QontoConnector = withStyles({
 
 const useQontoStepIconStyles = makeStyles({
   root: {
-    color: '#eaeaf0',
+    color: '#553226',
     display: 'flex',
     height: 22,
     alignItems: 'center'
   },
   active: {
-    color: 'black'
+    color: '#553226'
   },
   completed: {
-    color: 'black',
+    color: '#553226',
     zIndex: 1,
     fontSize: 28
   }
@@ -65,7 +65,7 @@ function QontoStepIcon(props) {
         [classes.active]: active
       })}
     >
-      {completed ? <CheckCircleOutlineIcon className={classes.completed} /> : <RadioButtonUncheckedIcon />}
+      {completed ? <CheckCircleIcon className={classes.completed} /> : <RadioButtonUncheckedIcon />}
     </div>
   );
 }
@@ -126,8 +126,8 @@ const StatusStepper = ({ status, statusStepper }) => {
     <>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map(label => (
-          <Step key={label}>
-            <StepLabel>
+          <Step key={label} >
+            <StepLabel StepIconComponent={QontoStepIcon}>
               {label} {statusStepper[label]}
             </StepLabel>
           </Step>

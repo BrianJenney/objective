@@ -4,11 +4,12 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   text: {
-    fontSize: '20px',
+    fontSize: '18px',
     fontFamily: theme.typography.bodyFontFamily,
     lineHeight: '1.2',
+    color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '16px'
+      fontSize: '14px'
     }
   }
 }));

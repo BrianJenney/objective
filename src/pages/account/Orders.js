@@ -162,7 +162,9 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
               {data.orders[dataIndex].status.charAt(0).toUpperCase() +
                 data.orders[dataIndex].status.slice(1)}
             </Typography>
-            <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
+            {data.orders[dataIndex].shipTracking ? (
+              <>
+              <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
             <MenuLink
               to={`/transactions/${data.orders[dataIndex]._id}`}
               className={classes.link}
@@ -170,6 +172,9 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
             >
               {data.orders[dataIndex].shipTracking}
             </MenuLink>
+              </>
+            ) : null }
+            
           </Box>
           <Box component="div" m={1} className={classes.rightBox}>
             {data.orders[dataIndex].items.map(item => {

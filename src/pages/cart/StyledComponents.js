@@ -66,17 +66,14 @@ export const StyledSmallCaps = withStyles(theme => ({
   root: {
     fontSize: '14px',
     textTransform: 'uppercase',
-    fontWeight: 600,
-    fontFamily: $brandSans,
+    fontWeight: 700,
+    fontFamily: theme.typography.bodyFontFamily,
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: theme.palette.brand.camoGreen,
-    paddingTop: '7px',
-    [theme.breakpoints.up('sm')]: {
-      fontSize: 'smallText1'
-    }
+    paddingTop: '7px'
   }
 }))(Typography);
 
@@ -239,16 +236,16 @@ export const StyledCounterButton = withStyles(theme => ({
 export const StyledProductLink = withStyles(theme => ({
   root: {
     fontSize: '18px',
-    fontFamily: $brandSans,
+    fontFamily: theme.typography.bodyFontFamily,
     color: theme.palette.brand.camoGreen,
-    fontWeight: 'bold',
+    fontWeight: 700,
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 1.25,
     letterSpacing: 'normal',
     paddingRight: '45px',
     paddingBottom: '0',
-    marginLeft: '7px',
+    marginLeft: '10px',
     marginTop: '7px',
     [theme.breakpoints.up('sm')]: {
       fontSize: '18px',

@@ -46,25 +46,29 @@ const useStyles = makeStyles(theme => ({
     }
   },
   title: {
-    fontSize: '36px',
+    fontSize: '25px',
     marginTop: '30px',
-    fontFamily: 'Canela Text Web',
-    paddingBottom: theme.spacing(4),
-    [theme.breakpoints.down('xs')]: {
-      fontSize: 40
-    }
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen,
+    paddingBottom: theme.spacing(2)
   },
   text: {
-    fontSize: '20px',
-    fontFamily: 'p22-underground, sans-serif',
+    fontSize: '18px',
+    fontFamily: theme.typography.headerFontFamily,
     lineHeight: '1.2',
+    color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('xs')]: {
       fontSize: 18
     }
   },
   textFreight: {
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: 18,
-    lineHeight: '1.5rem'
+    color: theme.palette.brand.camoGreen,
+    lineHeight: '1.5rem',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 16
+    }
   },
   textTracking: {
     marginTop: '16px'
@@ -78,10 +82,13 @@ const useStyles = makeStyles(theme => ({
     }
   },
   link: {
-    color: '#000'
+    color: theme.palette.brand.accentBrown,
+    fontSize: '14px',
+    fontWeight: 400,
+    textDecoration: 'underline'
   },
   cancelledText: {
-    fontFamily: 'p22-underground, sans-serif',
+    fontFamily: theme.typography.bodyFontFamily,
     color: '#d0021b'
   },
   box: {
@@ -110,13 +117,14 @@ const getStatusStepper = statusStepper => {
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
+  const theme = useTheme();
   return tracking.map(tracking => (
     <>
       <Typography className={classes.text} pt={2}>
         {tracking && (
           <Link
             href={tracking.url}
-            style={{ color: 'black' }}
+            style={{ color: theme.palette.brand.camoGreen }}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -154,6 +162,7 @@ const OrderSummary = ({
   orderStatus,
   order
 }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
   const onGuestOrderPasswordSubmit = (values, actions) => {
@@ -219,7 +228,7 @@ const OrderSummary = ({
           }}
         >
           <StyledArrowIcon>
-            <LeftArrowIcon />
+            <LeftArrowIcon style={{ color: theme.palette.brand.camoGreen}} />
           </StyledArrowIcon>
           <span>Return to order history</span>
         </RouterLink>
@@ -227,13 +236,17 @@ const OrderSummary = ({
       </Box>
       {orderStatus === 'canceled' ? (
         <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          Your order number: <span className={classes.link}>{orderId}</span>
+          <br />
+          Placed on: <span style={{fontWeight: 600}}>{createdAt}</span>
           <br></br>
           Order status: <strong className={classes.cancelledText}>CANCELLED</strong>
         </Typography>
       ) : (
         <Typography className={classes.textFreight}>
-          Your order number: <strong>{orderId}</strong>, placed on <strong>{createdAt}</strong>
+          Your order number: <span className={classes.link}>{orderId}</span>
+          <br />
+          Placed on: <span style={{fontWeight: 600}}>{createdAt}</span>
         </Typography>
       )}
       <br />
@@ -272,16 +285,16 @@ const OrderSummary = ({
           style={{ marginBottom: '50px', marginTop: '32px' }}
         />
       )}
-      <Typography className={classes.textFreight} style={{ padding: '50px 0' }}>
+      <Typography className={classes.textFreight} style={{ padding: '20px 0', color: theme.palette.brand.darkSubTextGray }}>
         Have questions about your order? You can reach customer service at (800) 270-5771.
       </Typography>
-      <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1}>
+      <Box display="flex" flexDirection={xs ? 'column' : 'row'} borderTop={1} borderBottom={1} borderColor={theme.palette.brand.camoGreen}>
         <Grid
           item
           xs={addressesWidth}
           style={{ display: paymentMethod !== 'paypal' ? 'block' : 'none' }}
         >
-          <Box borderRight={xs ? 0 : 1} paddingBottom={3}>
+          <Box borderRight={xs ? 0 : 1} paddingBottom={3} borderColor={theme.palette.brand.camoGreen}>
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>
               Billing Information
             </StyledSmallCaps>
@@ -293,6 +306,7 @@ const OrderSummary = ({
             paddingLeft={xs ? 0 : paymentMethod !== 'paypal' ? 3 : 0}
             borderTop={xs ? 1 : 0}
             paddingBottom={3}
+            borderColor={theme.palette.brand.camoGreen}
           >
             <StyledSmallCaps style={{ padding: '24px 0 16px' }}>
               Shipping Information
@@ -311,7 +325,7 @@ const OrderSummary = ({
       </Box>
       <Grid item xs={addressesWidth}>
         <StyledSmallCaps style={{ padding: '24px 0 16px' }}>Payment</StyledSmallCaps>
-        <Typography className={classes.text}>
+        <Typography className={classes.textFreight} style={xs ? {fontSize: '14px', marginBottom: '20px'} : {fontSize: '18px', marginBottom: '20px'}}>
           {paymentMethod === 'creditCard' ? `${cardType} - ***${last4}` : ''}
           {paymentMethod === 'paypal' ? `PayPal: ${paymentEmail}` : ''}
         </Typography>

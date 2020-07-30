@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import CardMedia from '@material-ui/core/CardMedia';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   StyledDrawerGrid,
   StyledFinePrint,
@@ -29,38 +29,47 @@ const useStyles = makeStyles(theme => ({
     }
   },
   title: {
-    fontSize: '30px',
-    fontFamily: 'Canela Text Web',
+    fontSize: '25px',
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen,
     marginTop: '-13px',
     marginBottom: '20px',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '24px',
-      fontFamily: 'freight-text-pro'
+      fontFamily: theme.typography.headerFontFamily,
     }
   },
   text: {
-    fontSize: '16px',
-    fontFamily: 'p22-underground'
+    fontSize: '14px',
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   code: {
     fontSize: '14px',
-    fontFamily: 'p22-underground',
+    fontFamily: theme.typography.bodyFontFamily,
     textTransform: 'uppercase'
   },
   total: {
-    fontSize: '18px',
-    fontFamily: 'p22-underground',
+    fontSize: '20px',
+    fontFamily: theme.typography.bodyFontFamily,
     textTransform: 'uppercase',
-    fontWeight: 'bold',
-    [theme.breakpoints.up('sm')]: {
-      fontSize: '20px'
-    }
-  }
+    fontWeight: 700,
+    color: theme.palette.brand.camoGreen
+  },
+  price: {
+    fontFamily: theme.typography.bodyFontFamily,
+    fontWeight: 400,
+    fontSize: '16px',
+    color: theme.palette.brand.accentBrown,
+    letterSpacing: '1px',
+    marginLeft: '9px'
+    // marginTop: '-20px'
+  },
 }));
 const { MEDIUM_GRAY } = colorPalette;
 
 const CartSummary = ({ order }) => {
   const classes = useStyles();
+  const theme = useTheme();
   const { items, hideCouponCode } = order;
   let shippingMethod = null;
 
@@ -79,16 +88,16 @@ const CartSummary = ({ order }) => {
           </Grid>
 
           <Grid item>
-            <StyledSmallCaps style={{ fontSize: '12px' }}>({items.length} items) </StyledSmallCaps>
+            <StyledSmallCaps style={{ fontSize: '14px' }}>({items.length} items) </StyledSmallCaps>
           </Grid>
         </Grid>
         {items.map((item, index) => (
           <>
-            <StyledDrawerGrid container xs={12}>
-              <Grid item xs={4} style={{ minWidth: '126px' }} className="ListBox">
+            <StyledDrawerGrid container xs={12} className="ListBox">
+              <Grid item xs={4} style={{ minWidth: '126px' }}>
                 <Card>
                   <CardMedia
-                    style={{ height: 100, width: 95 }}
+                    style={{ height: 125, width: 120 }}
                     image={item.variant_img}
                     title={item.variant_name}
                   />
@@ -99,26 +108,15 @@ const CartSummary = ({ order }) => {
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '126px',
-                    justifyContent: 'space-between'
+                    height: '126px'
                   }}
                 >
                   <StyledProductLink style={{ fontSize: '18px' }}>
                     {item.variant_name}
                   </StyledProductLink>
-                  <Typography
-                    className={classes.text}
-                    style={{
-                      fontFamily: 'p22-underground, sans-serif',
-                      fontSize: '16px'
-                    }}
-                  >
-                    QTY: {item.quantity}
-                  </Typography>
-
-                  <StyledSmallCaps align="right">
+                  <Typography className={classes.price} align="left">
                     {displayMoney(item.quantity * item.unit_price)}
-                  </StyledSmallCaps>
+                  </Typography>
                 </Card>
               </Grid>
             </StyledDrawerGrid>
@@ -132,9 +130,9 @@ const CartSummary = ({ order }) => {
               </StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ fontSize: '18px' }}>
+              <Typography className={classes.text}>
                 {displayMoney(order.subtotal)}
-              </StyledSmallCaps>
+              </Typography>
             </Grid>
           </StyledTotalWrapper>
 
@@ -146,9 +144,9 @@ const CartSummary = ({ order }) => {
               </StyledFinePrint>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ fontSize: '18px' }}>
+              <Typography className={classes.text}>
                 {displayMoney(shippingMethod.price, true)}
-              </StyledSmallCaps>
+              </Typography>
             </Grid>
           </Grid>
           <Grid container xs={12}>
@@ -158,9 +156,9 @@ const CartSummary = ({ order }) => {
               </StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ fontSize: '18px' }}>
+              <Typography className={classes.text}>
                 {displayMoney(order.discount)}
-              </StyledSmallCaps>
+              </Typography>
             </Grid>
           </Grid>
           <Grid container style={{ margin: '15px 0' }}>
@@ -168,22 +166,22 @@ const CartSummary = ({ order }) => {
               <StyledSmallCaps style={{ fontSize: '14px' }}>Tax</StyledSmallCaps>
             </Grid>
             <Grid item>
-              <StyledSmallCaps style={{ fontSize: '18px' }}>
+              <Typography className={classes.text}>
                 {displayMoney(order.tax)}
-              </StyledSmallCaps>
+              </Typography>
             </Grid>
           </Grid>
           <Grid
             container
             xs={12}
             style={{
-              borderTop: `solid 2px ${MEDIUM_GRAY}`,
+              borderTop: `solid 2px ${theme.palette.brand.camoGreen}`,
               paddingTop: '30px',
               marginTop: '20px'
             }}
           >
             <Grid item xs>
-              <StyledSmallCaps>Total</StyledSmallCaps>
+            <Typography className={classes.total}>Total</Typography>
             </Grid>
             <Grid item>
               <Typography className={classes.total}>{displayMoney(order.total)}</Typography>
