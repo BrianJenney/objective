@@ -94,12 +94,15 @@ const Cart = ({
   const classes = useStyles();
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
-  const freeVariant = useSelector(state =>
-    state.catalog.variants.find(variant => variant.sku === 'TCXS-1BOT-PWD')
-  );
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
-  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+
+  // remove hidden items to ensure numberof items displays correctly
+  // then separate visible items into customer added items and pip inserted items
+  const visibleItems = cart.items.filter(item => !item.isHidden);
+  const promotionalItems = visibleItems.filter(item => item.pipInsertId);
+  const regularItems = visibleItems.filter(item => !item.pipInsertId);
+  const cartCount = visibleItems.reduce((acc, item) => acc + item.quantity, 0);
   const hideLPCoupon = !!history.location.state;
 
   useEffect(() => {
@@ -109,7 +112,7 @@ const Cart = ({
       matchPath(location.pathname, { path: '/order' });
     const orderItemsTransformed = [];
 
-    cart.items.forEach(item => {
+    visibleItems.forEach(item => {
       orderItemsTransformed.push({
         image_url: `https:${item.variant_img}`,
         quantity: item.quantity,
@@ -124,7 +127,7 @@ const Cart = ({
     if (cart.cartDrawerOpened && !loc) {
       window.analytics.track('Cart Viewed', {
         cart_id: cart._id,
-        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        num_products: cartCount,
         products: orderItemsTransformed
       });
     }
@@ -132,7 +135,7 @@ const Cart = ({
     if (!cart.cartDrawerOpened && !loc) {
       window.analytics.track('Cart Dismissed', {
         cart_id: cart._id,
-        num_products: cart.items.reduce((acc, item) => acc + item.quantity, 0),
+        num_products: cartCount,
         products: orderItemsTransformed
       });
     }
@@ -160,7 +163,7 @@ const Cart = ({
     return <AlertPanel type="info" text="No Cart" />;
   }
 
-  if (!cart.items) {
+  if (!visibleItems) {
     return null;
   }
 
@@ -186,7 +189,7 @@ const Cart = ({
       className="cart-drawer"
     >
       <div>
-        {cart.items.length > 0 ? (
+        {visibleItems.length > 0 ? (
           <StyledHeaderWrapper container direction="column">
             <Grid container direction="row" alignItems="baseline">
               <StyledCartHeader
@@ -263,15 +266,15 @@ const Cart = ({
       </Grid>
 
       <Grid container>
-        {cart.items.length === 0 ? (
+        {visibleItems.length === 0 ? (
           <StyledGridEmptyCart item xs={12}>
             <StyledSmallCapsEmptyCart component="span">
               Your cart is currently empty
             </StyledSmallCapsEmptyCart>
           </StyledGridEmptyCart>
         ) : null}
-        {cart.items.length > 0
-          ? Object.values(cart.items).map((item, index) => (
+        {visibleItems.length > 0
+          ? Object.values(regularItems).map((item, index) => (
               <StyledDrawerGrid container direction="row" key={`cart-${item._id}`}>
                 <Grid
                   item
@@ -426,109 +429,112 @@ const Cart = ({
               </StyledDrawerGrid>
             ))
           : null}
-        {cart.subtotal - cart.discount >= 50 && (
-          <StyledDrawerGrid container direction="row">
-            <Grid
-              item
-              xs={4}
-              style={
-                !xsBreakpoint
-                  ? { minWidth: '126px', marginRight: '18px' }
-                  : { minWidth: '126px', marginRight: '18px' }
-              }
-            >
-              <Card>
-                <Link
-                  to={`/products/${freeVariant.slug}`}
-                  onClick={() => {
-                    segmentProductClickEvent({
-                      image_url: `https:${freeVariant.assets.thumbnail}`,
-                      sku: freeVariant.sku,
-                      price: Number.parseFloat(0),
-                      product_id: freeVariant.id,
-                      variant: freeVariant.id,
-                      name: freeVariant.name,
-                      brand: cart.storeCode,
-                      cart_id: cart._id,
-                      site_location: 'cart'
-                    });
-                  }}
-                >
-                  <CardMedia
-                    style={{ height: 126, width: 126 }}
-                    image={freeVariant.assets.thumbnail}
-                    title={freeVariant.name}
-                    onClick={onClickProduct}
-                  />
-                </Link>
-              </Card>
-            </Grid>
-            <Grid item xs={xsBreakpoint ? 8 : 7}>
-              <Card
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 'auto',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <StyledProductLink
-                  style={{ fontSize: '18px', padding: '0' }}
-                  align="left"
-                  onClick={onClickProduct}
-                >
-                  Free Item for you:
-                </StyledProductLink>
-                <Link
-                  to={`/products/${freeVariant.slug}`}
-                  style={{
-                    textDecoration: 'none',
-                    maxHeight: '40px'
-                  }}
-                  onClick={() => {
-                    segmentProductClickEvent({
-                      image_url: `https:${freeVariant.assets.thumbnail}`,
-                      sku: freeVariant.sku,
-                      price: Number.parseFloat(0),
-                      product_id: freeVariant.id,
-                      variant: freeVariant.id,
-                      name: freeVariant.name,
-                      brand: cart.storeCode,
-                      cart_id: cart._id,
-                      site_location: 'cart'
-                    });
-                  }}
-                >
-                  <StyledProductLink
-                    style={{ fontSize: '18px', padding: '0', marginBottom: '10px' }}
-                    align="left"
-                    onClick={onClickProduct}
-                  >
-                    {freeVariant.name}
-                  </StyledProductLink>
-                </Link>
-                <StyledCardContent
+        {promotionalItems.length > 0
+          ? Object.values(promotionalItems).map(item => (
+              <StyledDrawerGrid container direction="row">
+                <Grid
+                  item
+                  xs={4}
                   style={
                     !xsBreakpoint
-                      ? { paddingBottom: '0' }
-                      : { paddingBottom: '0px', paddingRight: '0px' }
+                      ? { minWidth: '126px', marginRight: '18px' }
+                      : { minWidth: '126px', marginRight: '18px' }
                   }
                 >
-                  <div></div>
-                  <StyledProductPrice
-                    style={
-                      xsBreakpoint ? { fontSize: '16px', color: '#8bbc00' } : { color: '#8bbc00' }
-                    }
+                  <Card>
+                    <Link
+                      to={`/products/${item.slug}`}
+                      onClick={() => {
+                        segmentProductClickEvent({
+                          image_url: `https:${item.assets.thumbnail}`,
+                          sku: item.sku,
+                          price: Number.parseFloat(0),
+                          product_id: item.id,
+                          variant: item.id,
+                          name: item.name,
+                          brand: cart.storeCode,
+                          cart_id: cart._id,
+                          site_location: 'cart'
+                        });
+                      }}
+                    >
+                      <CardMedia
+                        style={{ height: 126, width: 126 }}
+                        image={item.assets.thumbnail}
+                        title={item.name}
+                        onClick={onClickProduct}
+                      />
+                    </Link>
+                  </Card>
+                </Grid>
+                <Grid item xs={xsBreakpoint ? 8 : 7}>
+                  <Card
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: 'auto',
+                      justifyContent: 'space-between'
+                    }}
                   >
-                    FREE
-                  </StyledProductPrice>
-                </StyledCardContent>
-              </Card>
-            </Grid>
-          </StyledDrawerGrid>
-        )}
-
-        {cart.items.length > 0 ? (
+                    <StyledProductLink
+                      style={{ fontSize: '18px', padding: '0' }}
+                      align="left"
+                      onClick={onClickProduct}
+                    >
+                      Free Item for you:
+                    </StyledProductLink>
+                    <Link
+                      to={`/products/${item.slug}`}
+                      style={{
+                        textDecoration: 'none',
+                        maxHeight: '40px'
+                      }}
+                      onClick={() => {
+                        segmentProductClickEvent({
+                          image_url: `https:${item.assets.thumbnail}`,
+                          sku: item.sku,
+                          price: Number.parseFloat(0),
+                          product_id: item.id,
+                          variant: item.id,
+                          name: item.name,
+                          brand: cart.storeCode,
+                          cart_id: cart._id,
+                          site_location: 'cart'
+                        });
+                      }}
+                    >
+                      <StyledProductLink
+                        style={{ fontSize: '18px', padding: '0', marginBottom: '10px' }}
+                        align="left"
+                        onClick={onClickProduct}
+                      >
+                        {item.name}
+                      </StyledProductLink>
+                    </Link>
+                    <StyledCardContent
+                      style={
+                        !xsBreakpoint
+                          ? { paddingBottom: '0' }
+                          : { paddingBottom: '0px', paddingRight: '0px' }
+                      }
+                    >
+                      <div></div>
+                      <StyledProductPrice
+                        style={
+                          xsBreakpoint
+                            ? { fontSize: '16px', color: '#8bbc00' }
+                            : { color: '#8bbc00' }
+                        }
+                      >
+                        FREE
+                      </StyledProductPrice>
+                    </StyledCardContent>
+                  </Card>
+                </Grid>
+              </StyledDrawerGrid>
+            ))
+          : null}
+        {visibleItems.length > 0 ? (
           <Grid item xs={12} style={{ textAlign: 'left' }}>
             <StyledTotalWrapper container direction="row" justify="space-between">
               <Grid item xs={6}>
@@ -544,7 +550,7 @@ const Cart = ({
             </StyledTotalWrapper>
           </Grid>
         ) : null}
-        {cart.items.length > 0 && isCheckoutPage ? (
+        {visibleItems.length > 0 && isCheckoutPage ? (
           <Grid
             container
             direction="row"
@@ -564,7 +570,7 @@ const Cart = ({
             </StyledFinePrint>
           </Grid>
         ) : null}
-        {cart.items.length > 0 && !isCheckoutPage ? (
+        {visibleItems.length > 0 && !isCheckoutPage ? (
           <Grid
             container
             direction="row"
@@ -587,7 +593,7 @@ const Cart = ({
             </StyledFinePrint>
           </Grid>
         ) : null}
-        {cart.items.length > 0 && cart.savings ? (
+        {visibleItems.length > 0 && cart.savings ? (
           <Grid
             container
             direction="row"
@@ -605,7 +611,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length > 0 && isCheckoutPage ? (
+        {visibleItems.length > 0 && isCheckoutPage ? (
           <Grid container direction="row" justify="space-between" style={{ margin: '20px 0 0' }}>
             <Grid item xs={6}>
               <StyledSmallCaps style={{ fontSize: '14px' }}>Tax</StyledSmallCaps>
@@ -617,8 +623,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-
-        {cart.items.length > 0 &&
+        {visibleItems.length > 0 &&
           (cart.promo ? (
             <PromoCodeView hideLPCoupon={hideLPCoupon} history={history} />
           ) : (
@@ -629,8 +634,7 @@ const Cart = ({
               {promoVisible && <PromoCodeForm />}
             </>
           ))}
-
-        {cart.items.length > 0 ? (
+        {visibleItems.length > 0 ? (
           <Grid
             container
             direction="row"
@@ -665,7 +669,7 @@ const Cart = ({
             </Grid>
           </Grid>
         ) : null}
-        {cart.items.length > 0 && !hideTaxLabel && (
+        {visibleItems.length > 0 && !hideTaxLabel && (
           <Grid container>
             <Grid item xs={12}>
               <StyledFinePrint component="div">Tax is calculated at checkout</StyledFinePrint>
