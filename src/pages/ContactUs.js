@@ -43,7 +43,7 @@ const ContactUs = ({ location }) => {
   const dispatch = useDispatch();
   const [pageLoaded, setPageLoaded] = useState(false);
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const { title, description } = seoMap[slug];
+  const { title, description, indexThisPage } = seoMap[slug];
   const page = useSelector(state => state.page);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const ContactUs = ({ location }) => {
   if (FinalPage) {
     return (
       <div className="ContactUs">
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <StyledBackground>
             <StyledContainer>
