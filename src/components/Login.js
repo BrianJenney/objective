@@ -27,13 +27,11 @@ const useStyles = makeStyles(theme => ({
     }
   },
   subTitle: {
-    fontFamily: theme.typography.headerFontFamily,
-    fontSize: '18px',
+    fontFamily: theme.typography.bodyFontFamily,
+    fontSize: '14px',
+    color: theme.palette.brand.darkSubTextGray,
     paddingBottom: theme.spacing(1),
-    lineHeight: 1.1,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '14px'
-    }
+    lineHeight: 1.1
   },
   form: {
     padding: '0 78px',
@@ -62,7 +60,7 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>
-              <NavLink to="/password/forgot" replace underline="always">
+              <NavLink to="/password/forgot" replace underline="always" style={{color: '#553226'}}>
                 Forgot your email/&nbsp;password?
               </NavLink>
             </Typography>
@@ -70,9 +68,9 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
             <Typography className={classes.subTitle}>
               Don&#39;t have an account?&nbsp;
               {switchToSignup ? (
-                <MenuLink onClick={switchToSignup} children="Sign up!" />
+                <MenuLink onClick={switchToSignup} style={{color: '#7f7470'}} children="Sign up!" />
               ) : (
-                <NavLink to="/signup" children="Sign up!" replace underline="always" />
+                <NavLink style={{color: '#553226'}} to="/signup" children="Sign up!" replace underline="always" />
               )}
             </Typography>
           </Box>
