@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
     fontFamily: theme.typography.headerFontFamily,
-    color: theme.palette.brand.accentBrown
+    color: theme.palette.brand.camoGreen
   },
   mobileTitle: {
     fontSize: '24px',
@@ -355,7 +355,7 @@ const AccountPaymentDetails = ({
               </Box>
               <Box
                 component={Typography}
-                color={theme.palette.brand.accentBrown}
+                color={theme.palette.brand.camoGreen}
                 variant="h5"
                 children={formType === FORM_TYPES.ACCOUNT ? 'Payment Details' : 'Credit Card'}
                 mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}

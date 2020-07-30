@@ -569,7 +569,7 @@ const PaymentForm = ({
           <Box
             children={xs ? "CREDIT CARD" : "Credit Card"}
             component={Typography}
-            color={xs ? theme.palette.brand.camoGreen : theme.palette.brand.accentBrown}
+            color={theme.palette.brand.camoGreen}
             fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
             fontWeight={xs ? 700 : 400}
             fontSize={xs ? 14 : 25}
@@ -742,7 +742,7 @@ const PaymentForm = ({
                   <Box
                     component={Typography}
                     children={xs ? "BILLING ADDRESS" : "Billing Address"}
-                    color={xs ? theme.palette.brand.camoGreen : theme.palette.brand.accentBrown}
+                    color={theme.palette.brand.camoGreen}
                     fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
                     fontWeight={xs ? 700 : 400}
                     fontSize={xs ? 14 : 25}

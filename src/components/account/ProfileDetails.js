@@ -31,7 +31,7 @@ const usePrevious = value => {
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: theme.typography.headerFontFamily,
-    color: theme.palette.brand.accentBrown,
+    color: theme.palette.brand.camoGreen,
     fontSize: 25,
     marginBottom: 15
   },
