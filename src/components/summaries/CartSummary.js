@@ -62,10 +62,8 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.brand.accentBrown,
     letterSpacing: '1px',
     marginLeft: '9px'
-    // marginTop: '-20px'
   },
 }));
-const { MEDIUM_GRAY } = colorPalette;
 
 const CartSummary = ({ order }) => {
   const classes = useStyles();

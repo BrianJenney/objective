@@ -14,26 +14,23 @@ const useStyles = makeStyles(theme => ({
     padding: '10px 55px 55px'
   },
   title: {
-    fontSize: 30,
-    fontFamily: 'Canela Text Web',
-    marginBottom: '10px'
-  },
-  titleXs: {
-    fontSize: 30,
-    fontFamily: 'Canela Text Web',
+    fontSize: 25,
+    fontFamily: theme.typography.headerFontFamily,
     marginBottom: '10px',
-    textAlign: 'center'
+    color: theme.palette.brand.camoGreen
   },
   text: {
-    fontSize: 20,
-    lineHeight: '1.2'
+    fontSize: 16,
+    lineHeight: '1.2',
+    color: theme.palette.brand.camoGreen
   },
   atitle: {
-    fontSize: 20,
-    fontFamily: 'freight-text-pro, sans-serif',
+    fontSize: 18,
+    fontFamily: theme.typography.bodyFontFamily,
     lineHeight: '1.4',
     marginBottom: '18px',
-    fontWeight: 600
+    fontWeight: 700,
+    color: theme.palette.brand.camoGreen
   },
   boxHolder: {
     padding: '40px 0'
@@ -49,8 +46,10 @@ const useStyles = makeStyles(theme => ({
     flexBasis: '60.33%'
   },
   continue: {
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen,
     textAlign: 'center',
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: '1.75',
     paddingTop: '16px'
   },
@@ -127,11 +126,11 @@ const AddressValidation = ({
         <div className={xs ? classes.rootXs : classes.root}>
           <Box>
             <Paper className={classes.paper}>
-              <Typography className={xs ? classes.titleXs : classes.title}>
+              <Typography className={classes.title}>
                 Shipping Address Validation
               </Typography>
               <Typography className={classes.text}>
-                Important: we were not able to validate your shipping address.
+                <strong>Important:</strong> We were not able to validate your shipping address.
               </Typography>
             </Paper>
           </Box>
@@ -139,7 +138,7 @@ const AddressValidation = ({
             <Grid item xs={12} md={6} className={xs ? '' : classes.grid}>
               <Box
                 border={1}
-                borderColor="#979797"
+                borderColor={theme.palette.brand.accentBrown}
                 className={classes.boxPadding}
               >
                 <Paper className={classes.paper}>
@@ -157,7 +156,7 @@ const AddressValidation = ({
             <Grid item xs={12} md={6} className={xs ? '' : classes.grid}>
               <Box
                 border={1}
-                borderColor="#979797"
+                borderColor={theme.palette.brand.accentBrown}
                 className={classes.boxPadding}
               >
                 <Paper className={classes.paper}>
@@ -218,7 +217,7 @@ const AddressValidation = ({
               <Grid item xs={12} md={6} className={xs ? '' : classes.gridNoSug}>
                 <Box
                   border={1}
-                  borderColor="#979797"
+                  borderColor={theme.palette.brand.accentBrown}
                   className={classes.boxPadding}
                 >
                   <Paper className={classes.paper}>

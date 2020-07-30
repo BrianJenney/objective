@@ -294,7 +294,7 @@ const AccountAddresses = ({
                       m={1}
                       px={4}
                       py={3}
-                      border="1px solid #a06958"
+                      className="ListBox"
                     >
                       {selectionEnabled && (
                         <Box ml="-17px" mt="-9px">
@@ -339,7 +339,7 @@ const AccountAddresses = ({
                   m={1}
                   px={1}
                   py={9}
-                  border="1px solid #a06958"
+                  className="ListBox"
                 >
                   <div
                     style={{ textAlign: 'center' }}
