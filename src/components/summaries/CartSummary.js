@@ -62,14 +62,20 @@ const { MEDIUM_GRAY } = colorPalette;
 const CartSummary = ({ order }) => {
   const classes = useStyles();
   const { items, hideCouponCode } = order;
-  let shippingMethod = null;
+  let orderShippingMethod = null;
 
   if (order.shippingMethod) {
-    shippingMethod = order.shippingMethod;
+    orderShippingMethod = order.shippingMethod;
   } else {
-    shippingMethod = order.shipping.options[order.shipping.code];
+    orderShippingMethod = order.shipping.options[order.shipping.code];
   }
   const promoCode = order.promo ? ` (${order.promo.code})` : '';
+
+  // remove hidden items to ensure numberof items displays correctly
+  // then separate visible items into customer added items and pip inserted items
+  const visibleItems = items.filter(item => !item.isHidden);
+  const promotionalItems = visibleItems.filter(item => item.pipInsertId);
+  const regularItems = visibleItems.filter(item => !item.pipInsertId);
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
@@ -79,10 +85,12 @@ const CartSummary = ({ order }) => {
           </Grid>
 
           <Grid item>
-            <StyledSmallCaps style={{ fontSize: '12px' }}>({items.length} items) </StyledSmallCaps>
+            <StyledSmallCaps style={{ fontSize: '12px' }}>
+              ({visibleItems.length} items){' '}
+            </StyledSmallCaps>
           </Grid>
         </Grid>
-        {items.map((item, index) => (
+        {regularItems.map(item => (
           <>
             <StyledDrawerGrid container xs={12}>
               <Grid item xs={4} style={{ minWidth: '126px' }}>
@@ -124,11 +132,43 @@ const CartSummary = ({ order }) => {
             </StyledDrawerGrid>
           </>
         ))}
+        {promotionalItems.map(item => (
+          <>
+            <StyledDrawerGrid container xs={12}>
+              <Grid item xs={4} style={{ minWidth: '126px' }}>
+                <Card>
+                  <CardMedia
+                    style={{ height: 100, width: 95 }}
+                    image={item.variant_img}
+                    title={item.variant_name}
+                  />
+                </Card>
+              </Grid>
+              <Grid item xs={8}>
+                <Card
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '126px',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <StyledProductLink style={{ fontSize: '18px' }}>
+                    {item.variant_name}
+                  </StyledProductLink>
+                  <StyledSmallCaps align="right" style={{ color: '#8bbc00' }}>
+                    FREE
+                  </StyledSmallCaps>
+                </Card>
+              </Grid>
+            </StyledDrawerGrid>
+          </>
+        ))}
         <Grid xs={12} container>
           <StyledTotalWrapper container xs={12}>
             <Grid item xs>
               <StyledSmallCaps style={{ fontSize: '14px' }}>
-                Subtotal <span>({items.length} items):</span>
+                Subtotal <span>({visibleItems.length} items):</span>
               </StyledSmallCaps>
             </Grid>
             <Grid item>
@@ -142,12 +182,12 @@ const CartSummary = ({ order }) => {
             <Grid item xs>
               <StyledSmallCaps>Shipping</StyledSmallCaps>
               <StyledFinePrint component="p" style={{ position: 'relative', top: '6px' }}>
-                {shippingMethod.deliveryEstimate}
+                {orderShippingMethod.deliveryEstimate}
               </StyledFinePrint>
             </Grid>
             <Grid item>
               <StyledSmallCaps style={{ fontSize: '18px' }}>
-                {displayMoney(shippingMethod.price, true)}
+                {displayMoney(orderShippingMethod.price, true)}
               </StyledSmallCaps>
             </Grid>
           </Grid>
@@ -196,7 +236,7 @@ const CartSummary = ({ order }) => {
 };
 
 CartSummary.propTypes = {
-  cart: PropTypes.object
+  order: PropTypes.object
 };
 
 export default CartSummary;
