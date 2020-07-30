@@ -101,7 +101,8 @@ const mobileStyles = {
     letterSpacing: '1.33px',
     lineHeight: 2.14,
     fontSize: 16,
-    height: '55px'
+    height: '55px',
+    cursor: 'pointer'
   }
 };
 
@@ -120,7 +121,8 @@ const desktopStyles = {
     letterSpacing: '1.33px',
     lineHeight: 2.14,
     fontSize: 16,
-    height: '55px'
+    height: '55px',
+    cursor: 'pointer'
   }
 };
 
