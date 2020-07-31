@@ -86,7 +86,7 @@ const CartSummary = ({ order }) => {
 
           <Grid item>
             <StyledSmallCaps style={{ fontSize: '12px' }}>
-              ({visibleItems.length} items){' '}
+              ({visibleItems.length} items)
             </StyledSmallCaps>
           </Grid>
         </Grid>
