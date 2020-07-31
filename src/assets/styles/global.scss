@@ -20,6 +20,19 @@
   }
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus, input[type="text"], textarea {
+  -webkit-text-fill-color: #a06958;
+  -webkit-box-shadow: 0 0 0 35px white inset !important;
+}
+
 @media screen and (max-width: 576px) {
   .xs-hidden {
     display: none;

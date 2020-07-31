@@ -224,11 +224,9 @@ const nxtTheme = createMuiTheme({
     MuiOutlinedInput: {
       root: {
         borderColor: '#a06958',
-        '&:focus': {
+        '&.Mui-focused': {
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#a06958',
-            border: '1px',
-            color: '#a06958'
+            borderColor: '#a06958'
           }
         },
         '&:hover': {

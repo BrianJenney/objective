@@ -75,7 +75,9 @@ const useStyles = makeStyles(theme => ({
   link: {
     display: 'block',
     color: theme.palette.brand.accentBrown,
-    fontWeight: 400
+    fontWeight: 400,
+    textDecoration: 'underline',
+    cursor: 'pointer'
   },
   topGrid: {
     marginTop: '20px',
@@ -83,15 +85,38 @@ const useStyles = makeStyles(theme => ({
     borderBottom: `1px solid ${theme.palette.brand.camoGreen}`
   },
   otherGrid: {
-    borderBottom: `1px solid ${theme.palette.brand.camoGreen}`
+    borderBottom: `1px solid ${theme.palette.brand.camoGreen}`,
+    
   },
   leftBox: {
     float: 'left'
   },
   rightBox: {
-    float: 'right'
+    float: 'right',
+    maxWidth: '350px'
   }
 }));
+
+const TrackingInfo = ({ tracking }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  return tracking.map(tracking => (
+    <>
+      <Typography className={classes.link} pt={2}>
+        {tracking && (
+          <Link
+            href={tracking.url}
+            style={{ color: theme.palette.brand.camoGreen }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {tracking.number}
+          </Link>
+        )}
+      </Typography>
+    </>
+  ));
+};
 
 const AccountOrders = ({ currentUser: { data }, location }) => {
   const dispatch = useDispatch();
@@ -162,19 +187,12 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
               {data.orders[dataIndex].status.charAt(0).toUpperCase() +
                 data.orders[dataIndex].status.slice(1)}
             </Typography>
-            {data.orders[dataIndex].shipTracking ? (
+            {data.orders[dataIndex].shipTracking && (
               <>
-              <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
-            <MenuLink
-              to={`/transactions/${data.orders[dataIndex]._id}`}
-              className={classes.link}
-              underline="always"
-            >
-              {data.orders[dataIndex].shipTracking}
-            </MenuLink>
+                <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
+                <TrackingInfo className={classes.link} tracking={data.orders[dataIndex].shipTracking} />
               </>
-            ) : null }
-            
+            )}
           </Box>
           <Box component="div" m={1} className={classes.rightBox}>
             {data.orders[dataIndex].items.map(item => {
