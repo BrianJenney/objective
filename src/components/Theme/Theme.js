@@ -216,8 +216,13 @@ const nxtTheme = createMuiTheme({
     MuiCheckbox: {
       root: {
         color: '#7f7470',
+        padding: '0 9px 0 0',
+        backgroundColor: '#fff',
+        '&:hover': {
+          backgroundColor: '#fff' 
+        },
         '&$checked': {
-          color: '#553226 !important'
+          color: '#553226 !important',
         }
       }
     },

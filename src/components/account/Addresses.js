@@ -338,7 +338,7 @@ const AccountAddresses = ({
                   fontWeight={600}
                   m={1}
                   px={1}
-                  py={9}
+                  py={7.2}
                   className="ListBox"
                 >
                   <div

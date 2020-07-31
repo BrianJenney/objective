@@ -92,11 +92,7 @@ const useStyles = makeStyles(theme => ({
   },
   rightBox: {
     float: 'right',
-    // width: '100%',
-    width: '350px',
-    [theme.breakpoints.down('xs')]: {
-      width: '100%'
-    }
+    width: '330px'
   }
 }));
 
@@ -159,7 +155,7 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
     if (!data.orders) {
       return null;
     }
-
+    console.log('DATAAA', data.orders);
     return data.orders.map((d, dataIndex, rowIndex) => {
       return (
         <Grid
@@ -172,14 +168,12 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
           <Box component="div" m={1} className={classes.leftBox}>
             <Typography className={classes.statusTitle}>ORDER ID</Typography>
             <MenuLink
-              component="span"
               to={`/orders/${data.orders[dataIndex]._id}`}
               className={classes.link}
               underline="always"
             >
               {data.orders[dataIndex].orderNumber}
             </MenuLink>
-
             <Typography className={classes.statusTitle}>ORDER DATE</Typography>
             <Typography className={classes.info}>
               {formatDateTime(data.orders[dataIndex].createdAt, false)}

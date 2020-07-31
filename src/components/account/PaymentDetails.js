@@ -435,7 +435,7 @@ const AccountPaymentDetails = ({
                   m={1}
                   ml={0}
                   px={1}
-                  py={7.6}
+                  py={5.9}
                   border="1px solid #a06958"
                 >
                   <div style={{textAlign: 'center'}} onClick={() => setFormModeEnabled(true)}>

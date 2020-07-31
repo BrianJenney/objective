@@ -34,7 +34,7 @@ const EditablePanel = ({
   const handleCancel = () => setEditing(false);
 
   return (
-    <Panel title={title}>
+    <Panel title={title} style={{ display: 'flex'}}>
       {editing && Form ? (
         <Form
           defaultValues={defaultValues}
@@ -63,14 +63,16 @@ const EditablePanel = ({
                 <Box children="Saved as default" style={{ marginLeft: 5, fontSize: '14px', color: theme.palette.brand.camoGreen }} />
               </Box>
             )}
-            <Box mt="13px" height={16} >
+          </Box>
+        </Summary>
+      )}
+      <Box height={16} style={ xs ? {paddingLeft: '25px'} : {paddingLeft: '60px'}}>
               {onRemove && (
                 <MenuLink
                   onClick={onRemove}
                   children="Delete"
                   underline="always"
                   style={{
-                    paddingRight: 9,
                     borderRight: onFormSubmit ? '1px solid #231f20' : 0, 
                     color: theme.palette.brand.camoGreen,
                     fontSize: '14px'
@@ -88,13 +90,10 @@ const EditablePanel = ({
                   }}
                   children="Edit"
                   underline="always"
-                  style={{ paddingLeft: onRemove ? 9 : 0, fontSize: '14px', color: theme.palette.brand.camoGreen}}
+                  style={{ paddingLeft: onRemove ? 9 : 0, fontSize: '14px', color: theme.palette.brand.camoGreen, paddingLeft: '20px'}}
                 />
               )}
             </Box>
-          </Box>
-        </Summary>
-      )}
     </Panel>
   );
 };
