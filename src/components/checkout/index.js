@@ -649,7 +649,6 @@ const Checkout = ({
                         requestPatchAccount={requestPatchAccount}
                         clearPatchAccountError={clearPatchAccountError}
                         formType={PAYMENT_FORM_TYPES.CHECKOUT}
-                        onBack={handleBack}
                         onSubmit={handleNext}
                         selectionEnabled
                         seedEnabled

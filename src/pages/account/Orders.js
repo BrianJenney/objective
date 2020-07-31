@@ -85,35 +85,37 @@ const useStyles = makeStyles(theme => ({
     borderBottom: `1px solid ${theme.palette.brand.camoGreen}`
   },
   otherGrid: {
-    borderBottom: `1px solid ${theme.palette.brand.camoGreen}`,
-    
+    borderBottom: `1px solid ${theme.palette.brand.camoGreen}`
   },
   leftBox: {
     float: 'left'
   },
   rightBox: {
     float: 'right',
-    maxWidth: '350px'
+    // width: '100%',
+    width: '350px',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
   }
 }));
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
   const theme = useTheme();
-  return tracking.map(tracking => (
+
+  return tracking.map(trackingInfo => (
     <>
-      <Typography className={classes.link} pt={2}>
-        {tracking && (
-          <Link
-            href={tracking.url}
-            style={{ color: theme.palette.brand.camoGreen }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {tracking.number}
-          </Link>
-        )}
-      </Typography>
+      {trackingInfo && (
+        <MenuLink
+          href={tracking.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes.link}
+        >
+          {trackingInfo.number}
+        </MenuLink>
+      )}
     </>
   ));
 };
@@ -140,7 +142,8 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
   }, []);
 
   for (const key in data.orders) {
-    const { statusStepper } = getShippingAndTracking(data.orders[key]);
+    const { statusStepper, tracking } = getShippingAndTracking(data.orders[key]);
+    data.orders[key].__tracking = tracking;
     if (statusStepper.status === 'delivered') {
       data.orders[key].status = 'delivered';
     }
@@ -157,8 +160,6 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
       return null;
     }
 
-    console.log('DATAAAA', data.orders);
-
     return data.orders.map((d, dataIndex, rowIndex) => {
       return (
         <Grid
@@ -171,12 +172,14 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
           <Box component="div" m={1} className={classes.leftBox}>
             <Typography className={classes.statusTitle}>ORDER ID</Typography>
             <MenuLink
+              component="span"
               to={`/orders/${data.orders[dataIndex]._id}`}
               className={classes.link}
               underline="always"
             >
               {data.orders[dataIndex].orderNumber}
             </MenuLink>
+
             <Typography className={classes.statusTitle}>ORDER DATE</Typography>
             <Typography className={classes.info}>
               {formatDateTime(data.orders[dataIndex].createdAt, false)}
@@ -190,7 +193,10 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
             {data.orders[dataIndex].shipTracking && (
               <>
                 <Typography className={classes.statusTitle}>TRACKING INFORMATON</Typography>
-                <TrackingInfo className={classes.link} tracking={data.orders[dataIndex].shipTracking} />
+                <TrackingInfo
+                  className={classes.link}
+                  tracking={data.orders[dataIndex].__tracking}
+                />
               </>
             )}
           </Box>
@@ -227,7 +233,7 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        height: 130,
+                        height: 135,
                         justifyContent: 'space-between'
                       }}
                     >

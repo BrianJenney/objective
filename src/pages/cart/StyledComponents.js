@@ -374,7 +374,7 @@ export const StyledEstimatedTotal = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: '#231f20',
+    color: theme.palette.brand.camoGreen,
     paddingTop: '9px'
   }
 }))(Typography);
