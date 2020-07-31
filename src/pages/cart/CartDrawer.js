@@ -40,6 +40,8 @@ import {
 } from './StyledComponents';
 import CartNotification from '../../components/cart/CartNotification';
 
+import './CartDrawer.scss';
+
 const { MEDIUM_GRAY } = colorPalette;
 
 const useStyles = makeStyles(theme => ({
@@ -99,7 +101,7 @@ const Cart = ({
   const dispatch = useDispatch();
 
   // remove hidden items to ensure numberof items displays correctly
-  // then separate visible items into customer added items and pip inserted items
+  // then identify promotional items
   const visibleItems = cart.items.filter(item => !item.isHidden);
   const promotionalItems = visibleItems.filter(item => item.pipInsertId);
   const cartCount = visibleItems.reduce((acc, item) => acc + item.quantity, 0);
