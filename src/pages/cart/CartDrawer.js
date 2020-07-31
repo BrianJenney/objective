@@ -176,7 +176,8 @@ const Cart = ({
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
 
-  const checkoutPadding = xsBreakpoint ? '0px' : 'inherit';
+  const mobileCheckoutPadding = activeStep === 2 ? '0px' : '0px 20px 24px 20px';
+  const checkoutPadding = xsBreakpoint ? mobileCheckoutPadding : '24px 20px';
   const drawerPadding = !isCheckoutPage ? mobileDrawerPadding : checkoutPadding;
   return (
     <Grid

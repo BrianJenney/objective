@@ -36,6 +36,7 @@ import StateRestrictionsDialog from './StateRestrictionsDialog';
 import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 import EventEmitter from '../../events';
+import LeftArrowIcon from '@material-ui/icons/ArrowBack';
 
 const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
   const isActiveStep = step === activeStep;
@@ -549,6 +550,14 @@ const Checkout = ({
     }
   }, [activeStep, paypalCheckoutButton, cart.total]);
 
+  const continueShoppingText = () => {
+    return (
+      <>
+        {' '}
+        <LeftArrowIcon style={{ fontSize: '14px' }} /> Continue Shopping
+      </>
+    );
+  };
   return (
     <>
       {loading ? (
@@ -558,15 +567,23 @@ const Checkout = ({
           <Container>
             <Box py={10} className="checkout-wrapper">
               <CssBaseline />
+
               <Grid container spacing={4}>
-                {xs ? (
+                <Grid item xs={12}>
                   <MenuLink
                     to="/gallery"
-                    children=" < Continue Shopping"
+                    children={continueShoppingText()}
                     underline="always"
-                    style={{ fontSize: '14px', padding: '50px 20px 12px' }}
-                  />
-                ) : null}
+                    style={{
+                      fontSize: '14px',
+                      padding: '50px 20px 12px',
+                      color: theme.palette.brand.accentBrown,
+                      position: 'relative',
+                      ...(xs && { left: '-35px', top: '6px' }),
+                      ...(!xs && { left: '-20px' })
+                    }}
+                  />{' '}
+                </Grid>
                 <Grid
                   item
                   flex={1}
@@ -681,14 +698,20 @@ const Checkout = ({
                     </Panel>
                   </div>
                 </Grid>
-                {!xs && currentUser ? (
-                  <Grid item xs={12} md={4} className="left-side">
+                {currentUser && activeStep !== 2 ? (
+                  <Grid
+                    item
+                    xs={12}
+                    md={4}
+                    className="left-side"
+                    style={xs ? { padding: '0px' } : {}}
+                  >
                     <CartDrawer
                       checkoutVersion={2}
                       disableItemEditing
                       hideCheckoutProceedLink
                       hideTaxLabel
-                      showOrderSummaryText={false}
+                      showOrderSummaryText
                       xsBreakpoint={xs}
                       activeStep={activeStep}
                       restrictionMessage={restrictionMessage}
