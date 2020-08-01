@@ -74,13 +74,15 @@ const LoginForm = ({ title, onSubmit, clearLoginError, currentUser, formStyle })
                 <Box width={1} textAlign="right">
                   <NavLink
                     style={{
-                      fontFamily: 'p22-underground',
-                      fontSize: 12
+                      fontFamily: 'proxima-nova, sans-serif',
+                       fontWeight: 600,
+                       fontSize: '12px',
+                       color: '#553226'
                     }}
                     type="button"
                     underline="always"
                     onClick={event => togglePasswordVisibility(event)}
-                    // children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
+                    children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
                   />
                 </Box>
               )

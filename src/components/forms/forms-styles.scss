@@ -24,19 +24,24 @@
 }
 .btError {
   display: none;
+  text-align: left;
+  font-size: 12px;
+  font-family: proxima-nova, sans-serif;
+  font-weight: normal;
+  color: #553226;
   background-color: rgba(208, 2, 27, 0.15);
   margin: 0 0 6px 0;
   padding: 8px 10px 8px 20px;
   min-height: 13px;
   line-height: 24px;
-  font-size: 13px;
-  text-align: left;
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: normal;
 }
 .btError p {
   margin: 0;
   display: inline;
+  font-size: 12px;
+  font-family: proxima-nova, sans-serif;
+  font-weight: normal;
+  color: #ce0e2d;
 }
 .btError svg {
   float: right;

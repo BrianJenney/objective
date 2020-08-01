@@ -284,32 +284,45 @@ const PaymentForm = ({
               client: clientInstance,
               styles: {
                 input: {
-                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '18px',
-                  'font-family': 'p22-underground, sans-serif',
+                  'font-size': '13px',
+                  'font-family': 'proxima-nova, sans-serif',
                   'font-weight': 'lighter',
-                  color: '#585858',
+                  color: '##a06958',
                   padding: '18.5px 14px'
                 },
                 ':focus': {
-                  color: '#000'
+                  'font-size': '13px',
+                  'font-family': 'proxima-nova, sans-serif',
+                  'font-weight': 'lighter',
+                  color: '#a06958'
                 },
                 '.valid': {
-                  color: '#000'
+                  'font-size': '13px',
+                  'font-family': 'proxima-nova, sans-serif',
+                  'font-weight': 'lighter',
+                  color: '#a06958'
                 },
                 '.invalid': {
-                  color: '#000'
+                  'font-size': '13px',
+                  'font-family': 'proxima-nova, sans-serif',
+                  'font-weight': 'lighter',
+                  color: '#a06958'
                 },
                 '::-webkit-input-placeholder': {
-                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
+                  'font-size': '13px',
+                  color: '#a06958'
                 },
                 ':-moz-placeholder': {
-                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
+                  'font-size': '13px',
+                  color: '#a06958'
                 },
                 '::-moz-placeholder': {
-                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
+                  'font-size': '13px',
+                  color: '#a06958'
                 },
                 ':-ms-input-placeholder': {
-                  'font-size': rest.checkoutVersion && rest.checkoutVersion === 2 ? '16px' : '1rem'
+                  'font-size': '13px',
+                  color: '#a06958'
                 }
               },
               fields: {
@@ -328,6 +341,7 @@ const PaymentForm = ({
               }
             },
             (hostedFieldsErr, hostedFieldsInstance) => {
+              document.getElementById('bt-payment-holder').style.border = '1px solid #a06958';
               if (hostedFieldsErr) {
                 console.log(hostedFieldsErr);
                 // @TODO need to handle this gracefully
@@ -339,10 +353,9 @@ const PaymentForm = ({
                   if (errorContainer) {
                     errorContainer.style.display = 'none';
                   }
-                  document.getElementById('bt-payment-holder').style.border =
-                    '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border = '1px solid #a06958';
                 } else {
-                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  document.getElementById('bt-payment-holder').style.border = '1px solid #ce0e2d';
                   if (errorContainer) {
                     errorContainer.style.display = 'block';
                   }
@@ -356,10 +369,9 @@ const PaymentForm = ({
                   if (errorContainer) {
                     errorContainer.style.display = 'none';
                   }
-                  document.getElementById('bt-payment-holder').style.border =
-                    '1px solid rgba(0, 0, 0, 0.23)';
+                  document.getElementById('bt-payment-holder').style.border = '1px solid #a06958';
                 } else {
-                  document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+                  document.getElementById('bt-payment-holder').style.border = '1px solid #ce0e2d';
                   if (errorContainer) {
                     errorContainer.style.display = 'block';
                   }
@@ -417,7 +429,7 @@ const PaymentForm = ({
     Object.keys(hostedFieldState.fields).forEach(function(field) {
       if (!hostedFieldState.fields[field].isValid) {
         const elem = hostedFieldState.fields[field];
-        document.getElementById('bt-payment-holder').style.border = '1px solid #C10230';
+        document.getElementById('bt-payment-holder').style.border = '1px solid #a06958';
         let errorContainer = document.querySelector(`.btError-${elem.container.id}`);
         if (errorContainer) {
           errorContainer.style.display = 'block';
@@ -567,7 +579,7 @@ const PaymentForm = ({
         )}
         {!allowFlyMode && (
           <Box
-            children={xs ? "CREDIT CARD" : "Credit Card"}
+            children={xs ? 'CREDIT CARD' : 'Credit Card'}
             component={Typography}
             color={theme.palette.brand.camoGreen}
             fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
@@ -741,9 +753,11 @@ const PaymentForm = ({
                 <Grid item xs={12} style={{ marginTop: '10px', marginBottom: xs ? '0px' : '0px' }}>
                   <Box
                     component={Typography}
-                    children={xs ? "BILLING ADDRESS" : "Billing Address"}
+                    children={xs ? 'BILLING ADDRESS' : 'Billing Address'}
                     color={theme.palette.brand.camoGreen}
-                    fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
+                    fontFamily={
+                      xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily
+                    }
                     fontWeight={xs ? 700 : 400}
                     fontSize={xs ? 14 : 25}
                     mb={xs ? -2 : 0}
@@ -793,7 +807,7 @@ const PaymentForm = ({
                       <Typography
                         variant="body2"
                         children={useSeedLabel}
-                        style={{ color: theme.palette.brand.camoGreen}}
+                        style={{ color: theme.palette.brand.camoGreen }}
                       />
                     </Box>
                   </Grid>
@@ -960,8 +974,10 @@ const PaymentForm = ({
                             <Box width={1} textAlign="right">
                               <NavLink
                                 style={{
-                                  fontFamily: 'P22-underground',
-                                  fontSize: '12px'
+                                  fontFamily: 'proxima-nova, sans-serif',
+                                  fontWeight: 600,
+                                  fontSize: '12px',
+                                  color: '#553226'
                                 }}
                                 type="button"
                                 underline="always"

@@ -133,24 +133,28 @@ const ChangePassword = ({
             label="Current Password"
             component={InputField}
             type={currentPasswordVisible ? 'text' : 'password'}
-            // InputProps={{
-            //   endAdornment: (
-            //     <Box width={1} textAlign="right">
-            //       <NavLink
-            //         style={{
-            //           fontFamily: 'proxima-nova, sans-serif',
-            //           fontSize: '12px'
-            //         }}
-            //         component="button"
-            //         underline="always"
-            //         onClick={event => togglePasswordVisibility(event)}
-            //         children={
-            //           currentPasswordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'
-            //         }
-            //       ></NavLink>
-            //     </Box>
-            //   )
-            // }}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                   <NavLink
+                     style={{
+                       fontFamily: 'proxima-nova, sans-serif',
+                       fontWeight: 600,
+                       fontSize: '12px',
+                       color: '#553226'
+                     }}
+                     component="button"
+                     underline="always"
+                     onClick={event => togglePasswordVisibility(event)}
+                     children={
+                       secondNewPasswordVisible
+                         ? 'HIDE PASSWORD'
+                         : 'SHOW PASSWORD'
+                     }
+                   ></NavLink>
+                 </Box>
+               )
+             }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -175,26 +179,28 @@ const ChangePassword = ({
             label="New Password"
             component={InputField}
             type={firstNewPasswordVisible ? 'text' : 'password'}
-            // InputProps={{
-            //   endAdornment: (
-            //     <Box width={1} textAlign="right">
-            //       <NavLink
-            //         style={{
-            //           fontFamily: 'proxima-nova, sans-serif',
-            //           fontSize: '12px'
-            //         }}
-            //         component="button"
-            //         underline="always"
-            //         onClick={event => toggleFirstPassword(event)}
-            //         children={
-            //           firstNewPasswordVisible
-            //             ? 'HIDE PASSWORD'
-            //             : 'SHOW PASSWORD'
-            //         }
-            //       ></NavLink>
-            //     </Box>
-            //   )
-            // }}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                   <NavLink
+                     style={{
+                       fontFamily: 'proxima-nova, sans-serif',
+                       fontWeight: 600,
+                       fontSize: '12px',
+                       color: '#553226'
+                     }}
+                     component="button"
+                     underline="always"
+                     onClick={event => toggleFirstPassword(event)}
+                     children={
+                       secondNewPasswordVisible
+                         ? 'HIDE PASSWORD'
+                         : 'SHOW PASSWORD'
+                     }
+                   ></NavLink>
+                 </Box>
+               )
+             }}
             helperText="Must be at least 6 characters"
           />
         </Grid>
@@ -204,26 +210,28 @@ const ChangePassword = ({
             label="Confirm New Password"
             component={InputField}
             type={secondNewPasswordVisible ? 'text' : 'password'}
-            // InputProps={{
-            //   endAdornment: (
-            //     <Box width={1} textAlign="right">
-            //       <NavLink
-            //         style={{
-            //           fontFamily: 'proxima-nova, sans-serif',
-            //           fontSize: '12px'
-            //         }}
-            //         component="button"
-            //         underline="always"
-            //         onClick={event => toggleSecondPassword(event)}
-            //         children={
-            //           secondNewPasswordVisible
-            //             ? 'HIDE PASSWORD'
-            //             : 'SHOW PASSWORD'
-            //         }
-            //       ></NavLink>
-            //     </Box>
-            //   )
-            // }}
+            InputProps={{
+              endAdornment: (
+                <Box width={1} textAlign="right">
+                   <NavLink
+                     style={{
+                       fontFamily: 'proxima-nova, sans-serif',
+                       fontWeight: 600,
+                       fontSize: '12px',
+                       color: '#553226'
+                     }}
+                     component="button"
+                     underline="always"
+                     onClick={event => toggleSecondPassword(event)}
+                     children={
+                       secondNewPasswordVisible
+                         ? 'HIDE PASSWORD'
+                         : 'SHOW PASSWORD'
+                     }
+                   ></NavLink>
+                 </Box>
+               )
+             }}
           />
         </Grid>
 
