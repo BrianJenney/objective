@@ -41,6 +41,7 @@ const SPButton = ({ history, data, template, type, align }) => {
   const handleClick = useCallback(() => {
     if (cart && products) {
       handleAddToCart();
+      handleAddCoupon();
     }
   }, [cart, products, dispatch]);
 
@@ -64,12 +65,6 @@ const SPButton = ({ history, data, template, type, align }) => {
       dispatch(setLpCouponAdded(true));
     }, 500);
   }, [cart, products, dispatch]);
-
-  useEffect(() => {
-    if (data.coupon && prodAdded && couponAdded === false && cart._id) {
-      handleAddCoupon();
-    }
-  }, [cart, prodAdded, dispatch]);
 
   useEffect(() => {
     if (prodAdded && !data.coupon) {
