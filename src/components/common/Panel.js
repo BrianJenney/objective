@@ -39,15 +39,7 @@ const styles = {
 };
 const ExpansionPanelSummary = withStyles(styles)(MuiExpansionPanelSummary);
 
-const Panel = ({
-  title,
-  expanded,
-  collapsible,
-  hideExpandIcon,
-  onChange,
-  children,
-  ...rest
-}) => {
+const Panel = ({ title, expanded, collapsible, hideExpandIcon, onChange, children, ...rest }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const [expandedInternal, setExpandedInternal] = useState(false);
@@ -77,13 +69,18 @@ const Panel = ({
               />
             )
           }
+          className={
+            !isPanelExpanded
+              ? !hideExpandIcon
+                ? 'Mui-Expand-Icon-visible'
+                : 'Mui-Expand-Icon-hidden'
+              : ''
+          }
         >
           <Box width={1} children={title} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails
-          style={
-            xs ? { padding: '8px 18px 24px' } : { padding: '8px 24px 24px' }
-          }
+          style={xs ? { padding: '8px 18px 24px' } : { padding: '8px 24px 24px' }}
         >
           <Box width={1} children={children} />
         </ExpansionPanelDetails>

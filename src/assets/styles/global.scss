@@ -58,5 +58,11 @@ body {
 }
 
 .MuiExpansionPanelSummary-root[aria-expanded='false'] {
+  //background-color: rgb(246, 245, 241) !important;
+}
+.Mui-Expand-Icon-hidden {
+  background-color: rgb(246, 245, 241) !important;
+}
+.Mui-Expand-Icon-visible {
   background-color: #ffffff !important;
 }
