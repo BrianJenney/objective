@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
   formControlLabel: {
     fontSize: '20px',
     fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }
@@ -425,7 +426,7 @@ const AccountPaymentDetails = ({
                   </Box>
                 </Grid>
               ))}
-                 <Grid item xs={12} sm={5}>
+              <Grid item xs={12} sm={5}>
                 <Box
                   display="flex"
                   alignItems="center"
@@ -438,13 +439,23 @@ const AccountPaymentDetails = ({
                   py={5.9}
                   border="1px solid #a06958"
                 >
-                  <div style={{textAlign: 'center'}} onClick={() => setFormModeEnabled(true)}>
-                  <AddIcon style={{  fontSize: '50px', color: theme.palette.brand.accentBrown, cursor: 'pointer'}}  />
-                  <MenuLink
-                    style={{ display: 'block', color: theme.palette.brand.accentBrown, fontWeight: 400 }}
-                    children="Add New Card"
-                    underline="always"
-                  />
+                  <div style={{ textAlign: 'center' }} onClick={() => setFormModeEnabled(true)}>
+                    <AddIcon
+                      style={{
+                        fontSize: '50px',
+                        color: theme.palette.brand.accentBrown,
+                        cursor: 'pointer'
+                      }}
+                    />
+                    <MenuLink
+                      style={{
+                        display: 'block',
+                        color: theme.palette.brand.accentBrown,
+                        fontWeight: 400
+                      }}
+                      children="Add New Card"
+                      underline="always"
+                    />
                   </div>
                 </Box>
               </Grid>

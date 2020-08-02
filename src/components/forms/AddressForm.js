@@ -216,7 +216,7 @@ const AddressForm = ({
     rest.checkoutVersion && rest.checkoutVersion === 2
       ? currentUser.data.account_jwt
         ? 'Shipping Address'
-        : 'Objective Secure Checkout'
+        : 'Shipping Address'
       : formType !== FORM_TYPES.ACCOUNT
       ? 'Shipping Address'
       : null;

@@ -50,7 +50,8 @@ const useStyles = makeStyles(theme => ({
   },
   formControlLabel: {
     fontSize: '20px',
-    fontFamily: theme.typography.headerFontFamily,
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('xs')]: {
       fontSize: '16px'
     }

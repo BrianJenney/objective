@@ -50,15 +50,18 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
           component={Typography}
           my={3}
           variant="h5"
-          fontFamily="Canela Text Web"
           children="Please take a moment to review your order."
-          style={{ fontSize: '32px' }}
+          style={{ fontSize: '25px' }}
         />
       ) : (
         ''
       )}
 
-      <Box display={!accountJwt ? 'flex' : 'none'} alignItems="center" style={{ marginBottom: '12px' }}>
+      <Box
+        display={!accountJwt ? 'flex' : 'none'}
+        alignItems="center"
+        style={{ marginBottom: '12px' }}
+      >
         <Checkbox
           id="useAddressSeedToggle"
           size="small"
@@ -123,11 +126,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
             bottom: '3px'
           }}
         >
-          <a
-            style={{ fontSize: '11px', color: '#000000' }}
-            href="/privacypolicy"
-            target="_blank"
-          >
+          <a style={{ fontSize: '11px', color: '#000000' }} href="/privacypolicy" target="_blank">
             Privacy Policy
           </a>
         </Box>

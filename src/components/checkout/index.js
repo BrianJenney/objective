@@ -697,7 +697,7 @@ const Checkout = ({
                     </Panel>
                   </div>
                 </Grid>
-                {currentUser && activeStep !== 2 ? (
+                {currentUser && ((xs && activeStep !== 2) || !xs) ? (
                   <Grid
                     item
                     xs={12}
