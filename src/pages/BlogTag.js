@@ -26,9 +26,9 @@ const BlogTag = ({ computedMatch }) => {
   const validTag = seoMap[tag_slug];
   let title;
   let description;
-
+  let indexThisPage;
   if (validTag) {
-    ({ title, description } = validTag);
+    ({ title, description, indexThisPage } = validTag);
   }
 
   const [tag, setTag] = useState('General');
@@ -48,9 +48,8 @@ const BlogTag = ({ computedMatch }) => {
       return () => {
         setPosts([]);
       };
-    } else {
-      window.analytics.page('404 Error');
     }
+    window.analytics.page('404 Error');
   }, []);
 
   if (!validTag) {
@@ -60,7 +59,7 @@ const BlogTag = ({ computedMatch }) => {
   if (posts.length === 0) {
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <LoadingSpinner loadingMessage="Loading ..." page="journal" />;
         </ScrollToTop>
@@ -68,12 +67,11 @@ const BlogTag = ({ computedMatch }) => {
     );
   }
 
-  const renderPosts = posts =>
-    posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
+  const renderPosts = posts => posts.map((item, key) => <PostItem post={item} key={item.sys.id} />);
 
   return (
     <>
-      <HeadTags title={title} description={description} />
+      <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
       <ScrollToTop>
         <div className="journal-gallery">
           <Box className="header" py={8}>

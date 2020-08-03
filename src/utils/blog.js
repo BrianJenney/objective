@@ -116,8 +116,8 @@ export const fetchStorefrontSeo = async () => {
     content_type: 'seoMetadata'
   });
   response.items.forEach(({ fields }) => {
-    const { page, title, description } = fields;
-    seoMetadata[page] = { title, description };
+    const { page, title, description, indexThisPage } = fields;
+    seoMetadata[page] = { title, description, indexThisPage };
   });
   return seoMetadata;
 };
