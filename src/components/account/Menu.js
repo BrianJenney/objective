@@ -63,8 +63,7 @@ const AccountMenu = ({ logout }) => {
   const classes = useStyles();
 
   const [mobileSelected, setMobileSelected] = useState(window.location.pathname);
-  const [deskSelected, setDeskSelected] = useState('Overview');
-
+  const [deskSelected, setDeskSelected] = useState(window.location.pathname);
 
   const NTextField = withRouter(({ history }) => (
     <TextField
@@ -85,27 +84,26 @@ const AccountMenu = ({ logout }) => {
     </TextField>
   ));
 
-  return xs ? (
-    <>
-      <NTextField />
-    </>
-  ) : (
+  const DesktopMenu = withRouter(({history}) => (
     <Box width={1} className="account-menu-box">
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
           <ListItem key={menuItem.key} style={{ paddingBottom: '0px' }}>
+            {console.log('MENU ITEM', menuItem)}
             <ListItemText
               primary={
                 <div className="account-side-menu">
                   {menuItem.key === ACCOUNT_MENU_KEYS.LOGOUT ? (
                     <MenuLink className={classes.link} onClick={logout}>{menuItem.label}</MenuLink>
-                  ) : deskSelected === menuItem.label ? (
-                    <NavLink className={classes.selectedLink} name={menuItem.label} to={menuItem.to} onClick={e => {
-                      setDeskSelected(e.target.name);
+                  ) : deskSelected === menuItem.to ? (
+                    <NavLink className={classes.selectedLink} value={menuItem.to} to={menuItem.to} onClick={e => {
+                      history.push(e.target.value, history.location.state);
+                      setDeskSelected(menuItem.to);
                     }}>{menuItem.label}</NavLink>
                   ) : (
-                    <NavLink className={classes.link} name={menuItem.label} to={menuItem.to} onClick={e => {
-                      setDeskSelected(e.target.name);
+                    <NavLink className={classes.link} value={menuItem.to} to={menuItem.to} onClick={e => {
+                      history.push(e.target.value, history.location.state);
+                      setDeskSelected(menuItem.to);
                     }}>{menuItem.label}</NavLink>
                   ) }
                 </div>
@@ -115,6 +113,16 @@ const AccountMenu = ({ logout }) => {
         ))}
       </List>
     </Box>
+  ))
+
+  return xs ? (
+    <>
+      <NTextField />
+    </>
+  ) : (
+    <>
+    <DesktopMenu />
+    </>
   );
 };
 

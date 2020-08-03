@@ -199,7 +199,7 @@ const AccountAddresses = ({
             <Typography
               variant="h5"
               children="Saved Addresses"
-              style={{ color: theme.palette.brand.accentBrown }}
+              style={{ color: theme.palette.brand.camoGreen }}
             />
           ) : null}
           <AddressForm
