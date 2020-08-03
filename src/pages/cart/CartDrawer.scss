@@ -1,0 +1,8 @@
+.no-focus-outline a:focus,
+.no-focus-outline button:focus {
+  outline: none;
+}
+
+.no-focus-outline {
+  color: rgba(0, 0, 0, 0.847);
+}
