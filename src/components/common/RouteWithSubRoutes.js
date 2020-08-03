@@ -24,15 +24,10 @@ const RouteWithSubRoutes = ({
   let Component = component || null;
   let redirectPath = redirectTo;
 
-  if (redirectPath) {
-    Component = () => <Redirect to={redirectPath} />;
-  }
-
   if (auth && !accountJwt) {
     if (!redirectPath) {
       redirectPath = '/';
     }
-    Component = () => <Redirect to={redirectPath} />;
   } else if (nonAuth && accountJwt) {
     switch (location.pathname) {
       case '/login/order':
@@ -61,6 +56,9 @@ const RouteWithSubRoutes = ({
           redirectPath = '/gallery';
         }
     }
+  }
+
+  if (redirectPath) {
     Component = () => <Redirect to={redirectPath} />;
   }
 
