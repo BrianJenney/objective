@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import HttpsOutlined from '@material-ui/icons/HttpsOutlined';
-import { Button, NavLink } from '../common';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import { useTheme } from '@material-ui/core/styles';
+import { Button, NavLink } from '../common';
 const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activeStep }) => {
   const [checkboxChecked, setCheckboxChecked] = useState(true);
+  const theme = useTheme();
   const handleChange = (event, payload) => {
     if (payload && payload.accountInfo) {
       payload.accountInfo.newsletter = event.target.checked;
@@ -108,7 +109,9 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
             width: 'auto',
             marginLeft: '3px',
             fontSize: '11px',
-            float: 'left'
+            float: 'left',
+            color: theme.palette.brand.accentBrown,
+            textDecoration: 'none'
           }}
         >
           Terms &amp; Conditions
@@ -126,7 +129,15 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
             bottom: '3px'
           }}
         >
-          <a style={{ fontSize: '11px', color: '#000000' }} href="/privacypolicy" target="_blank">
+          <a
+            style={{
+              fontSize: '11px',
+              color: theme.palette.brand.accentBrown,
+              textDecoration: 'none'
+            }}
+            href="/privacypolicy"
+            target="_blank"
+          >
             Privacy Policy
           </a>
         </Box>

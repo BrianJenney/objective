@@ -710,6 +710,7 @@ const PaymentForm = ({
                             ? { paddingLeft: '3px' }
                             : {}
                         }
+                        size="small"
                       />
                     )}
                   </Grid>
@@ -804,6 +805,7 @@ const PaymentForm = ({
                       <Checkbox
                         id="useAddressSeedToggle"
                         onChange={evt => handleUseAddressSeedToggle(evt, values, setValues)}
+                        size="small"
                       />
                       <Typography
                         variant="body2"

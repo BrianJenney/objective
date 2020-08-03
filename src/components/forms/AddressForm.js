@@ -404,7 +404,11 @@ const AddressForm = ({
         {seedEnabled && (
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
-              <Checkbox id="useAddressSeedToggle" onChange={handleUseAddressSeedToggle} />
+              <Checkbox
+                id="useAddressSeedToggle"
+                onChange={handleUseAddressSeedToggle}
+                size="small"
+              />
               <Typography
                 variant="body2"
                 children={useSeedLabel}
@@ -549,6 +553,7 @@ const AddressForm = ({
               name="shouldSaveData"
               label="Save details in account"
               component={CheckboxField}
+              size="small"
             />
           </Grid>
         )}
@@ -559,6 +564,7 @@ const AddressForm = ({
               label="Keep me updated with exclusive offers and product launches"
               component={CheckboxField}
               style={{ paddingLeft: '3px' }}
+              size="small"
             />
           </Grid>
         )}
