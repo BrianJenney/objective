@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
@@ -21,7 +20,7 @@ const RouteWithSubRoutes = ({
   ...rest
 }) => {
   const currentUserProp = injectCurrentUser ? { currentUser } : {};
-  const { account_jwt } = currentUser.data;
+  const accountJwt = currentUser.data.account_jwt;
   let Component = component || null;
   let redirectPath = redirectTo;
 
@@ -29,12 +28,12 @@ const RouteWithSubRoutes = ({
     Component = () => <Redirect to={redirectPath} />;
   }
 
-  if (auth && !account_jwt) {
+  if (auth && !accountJwt) {
     if (!redirectPath) {
       redirectPath = '/';
     }
     Component = () => <Redirect to={redirectPath} />;
-  } else if (nonAuth && account_jwt) {
+  } else if (nonAuth && accountJwt) {
     switch (location.pathname) {
       case '/login/order':
         redirectPath = '/account/orders';
