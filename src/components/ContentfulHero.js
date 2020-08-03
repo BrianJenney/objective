@@ -30,7 +30,7 @@ const posValues = {
     transform: 'translate(-50%, -50%)'
   },
   topCenter: {
-    top: '30%',
+    top: '32%',
     left: '50%',
     transform: 'translate(-50%, -50%)'
   }
@@ -50,19 +50,6 @@ const sharedStyles = {
   },
   imageBox: {
     width: '100%'
-  },
-  leadingText: {
-    fontFamily: 'FreightTextProBook',
-    color: 'black',
-    fontSize: 58,
-    position: 'relative'
-  },
-  typedText: {
-    height: 64,
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'left',
-    lineHeight: 'normal'
   }
 };
 
@@ -96,12 +83,15 @@ const mobileStyles = {
     cursor: 'pointer'
   },
   leadingText: {
-    fontSize: 40
+    fontFamily: 'FreightTextProBook',
+    color: 'black',
+    fontSize: 40,
+    position: 'relative'
   },
   typedText: {
     height: 64,
     display: 'flex',
-    marginTop: 20,
+    marginTop: 12,
     fontSize: 38,
     flexDirection: 'column',
     textAlign: 'left',
@@ -112,7 +102,7 @@ const mobileStyles = {
     backgroundColor: 'black',
     width: '100%',
     position: 'absolute',
-    top: 80
+    top: 72
   }
 };
 
@@ -135,7 +125,10 @@ const desktopStyles = {
     cursor: 'pointer'
   },
   leadingText: {
-    fontSize: 58
+    fontFamily: 'FreightTextProBook',
+    color: 'black',
+    fontSize: 58,
+    position: 'relative'
   },
   typedText: {
     height: 64,
@@ -163,12 +156,16 @@ const mapContentfulValues = content => {
   desktopStyles.ctaBox = { ...desktopStyles.ctaBox, ...posValues[content.desktopCtaPlacement] };
   mobileStyles.ctaBox = { ...mobileStyles.ctaBox, ...posValues[content.mobileCtaPlacement] };
 
-  sharedStyles.leadingText.fontFamily = content.leadingTextFontFamily;
-  sharedStyles.leadingText.color = content.leadingTextFontColor;
+  mobileStyles.leadingText.fontFamily = content.leadingTextFontFamily;
+  mobileStyles.leadingText.color = content.leadingTextFontColor;
+  desktopStyles.leadingText.fontFamily = content.leadingTextFontFamily;
+  desktopStyles.leadingText.color = content.leadingTextFontColor;
   desktopStyles.leadingText.fontSize = content.leadingTextFontSize;
 
-  sharedStyles.typedText.fontFamily = content.typedTextFontFamily;
-  sharedStyles.typedText.color = content.typedTextFontColor;
+  mobileStyles.typedText.fontFamily = content.typedTextFontFamily;
+  mobileStyles.typedText.color = content.typedTextFontColor;
+  desktopStyles.typedText.fontFamily = content.typedTextFontFamily;
+  desktopStyles.typedText.color = content.typedTextFontColor;
   desktopStyles.typedText.fontSize = content.typedTextFontSize;
 
   desktopStyles.button.backgroundColor = content.buttonColor;
