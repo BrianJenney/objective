@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
@@ -5,7 +6,7 @@ import { compose } from 'redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { withCurrentUser } from '../../hoc';
 
-import Loader from '../common/Loader';
+import Loader from './Loader';
 
 const RouteWithSubRoutes = ({
   location,
@@ -71,7 +72,13 @@ const RouteWithSubRoutes = ({
     return <Loader />;
   }
 
-  return <Route path={path} exact={exact} render={props => <Component {...currentUserProp} {...props} {...rest} />} />;
+  return (
+    <Route
+      path={path}
+      exact={exact}
+      render={props => <Component {...currentUserProp} {...props} {...rest} />}
+    />
+  );
 };
 
 RouteWithSubRoutes.propTypes = {
@@ -83,7 +90,8 @@ RouteWithSubRoutes.propTypes = {
   routes: PropTypes.array,
   auth: PropTypes.bool,
   nonAuth: PropTypes.bool,
-  redirectTo: PropTypes.string
+  redirectTo: PropTypes.string,
+  location: PropTypes.object
 };
 
 RouteWithSubRoutes.defaultProps = {
