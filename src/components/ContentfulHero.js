@@ -10,19 +10,19 @@ import SwitchLink from './common/SwitchLink';
 const posValues = {
   topLeft: {
     top: '20%',
-    left: '10%'
+    left: '6%'
   },
   bottomLeft: {
     bottom: '10%',
-    left: '10%'
+    left: '6%'
   },
   topRight: {
     top: '20%',
-    right: '10%'
+    right: '6%'
   },
   bottomRight: {
     bottom: '10%',
-    right: '10%'
+    right: '6%'
   },
   center: {
     top: '50%',
@@ -30,7 +30,7 @@ const posValues = {
     transform: 'translate(-50%, -50%)'
   },
   topCenter: {
-    top: '30%',
+    top: '32%',
     left: '50%',
     transform: 'translate(-50%, -50%)'
   }
@@ -50,28 +50,6 @@ const sharedStyles = {
   },
   imageBox: {
     width: '100%'
-  },
-  underline: {
-    height: 4,
-    backgroundColor: 'black',
-    width: '100%',
-    position: 'absolute',
-    top: 90
-  },
-  leadingText: {
-    fontFamily: 'FreightTextProBook',
-    color: 'black',
-    fontSize: 58,
-    position: 'relative'
-  },
-  typedText: {
-    marginTop: 20,
-    height: 64,
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'left',
-    fontSize: 48,
-    lineHeight: 'normal'
   }
 };
 
@@ -103,6 +81,28 @@ const mobileStyles = {
     fontSize: 16,
     height: '55px',
     cursor: 'pointer'
+  },
+  leadingText: {
+    fontFamily: 'FreightTextProBook',
+    color: 'black',
+    fontSize: 40,
+    position: 'relative'
+  },
+  typedText: {
+    height: 64,
+    display: 'flex',
+    marginTop: 12,
+    fontSize: 38,
+    flexDirection: 'column',
+    textAlign: 'left',
+    lineHeight: 'normal'
+  },
+  underline: {
+    height: 4,
+    backgroundColor: 'black',
+    width: '100%',
+    position: 'absolute',
+    top: 72
   }
 };
 
@@ -123,6 +123,27 @@ const desktopStyles = {
     fontSize: 16,
     height: '55px',
     cursor: 'pointer'
+  },
+  leadingText: {
+    fontFamily: 'FreightTextProBook',
+    color: 'black',
+    fontSize: 58,
+    position: 'relative'
+  },
+  typedText: {
+    height: 64,
+    marginTop: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'left',
+    lineHeight: 'normal'
+  },
+  underline: {
+    height: 4,
+    backgroundColor: 'black',
+    width: '100%',
+    position: 'absolute',
+    top: 90
   }
 };
 
@@ -135,13 +156,17 @@ const mapContentfulValues = content => {
   desktopStyles.ctaBox = { ...desktopStyles.ctaBox, ...posValues[content.desktopCtaPlacement] };
   mobileStyles.ctaBox = { ...mobileStyles.ctaBox, ...posValues[content.mobileCtaPlacement] };
 
-  sharedStyles.leadingText.fontFamily = content.leadingTextFontFamily;
-  sharedStyles.leadingText.color = content.leadingTextFontColor;
-  sharedStyles.leadingText.fontSize = content.leadingTextFontSize;
+  mobileStyles.leadingText.fontFamily = content.leadingTextFontFamily;
+  mobileStyles.leadingText.color = content.leadingTextFontColor;
+  desktopStyles.leadingText.fontFamily = content.leadingTextFontFamily;
+  desktopStyles.leadingText.color = content.leadingTextFontColor;
+  desktopStyles.leadingText.fontSize = content.leadingTextFontSize;
 
-  sharedStyles.typedText.fontFamily = content.typedTextFontFamily;
-  sharedStyles.typedText.color = content.typedTextFontColor;
-  sharedStyles.typedText.fontSize = content.typedTextFontSize;
+  mobileStyles.typedText.fontFamily = content.typedTextFontFamily;
+  mobileStyles.typedText.color = content.typedTextFontColor;
+  desktopStyles.typedText.fontFamily = content.typedTextFontFamily;
+  desktopStyles.typedText.color = content.typedTextFontColor;
+  desktopStyles.typedText.fontSize = content.typedTextFontSize;
 
   desktopStyles.button.backgroundColor = content.buttonColor;
   mobileStyles.button.backgroundColor = content.buttonColor;
@@ -158,7 +183,8 @@ const ContentfulHero = ({ content }) => {
   // Calculate width based on longest supplied string:
   const getBoxWidth = arr => {
     const lengths = arr.map(ele => ele.length);
-    return `${Math.max(...lengths) * 1.5}em`;
+    const multiplier = sm ? 1.16 : 1.46;
+    return `${Math.max(...lengths) * multiplier}em`;
   };
 
   // Handle Contentful value assignments:
