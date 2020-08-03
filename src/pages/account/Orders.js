@@ -155,7 +155,6 @@ const AccountOrders = ({ currentUser: { data }, location }) => {
     if (!data.orders) {
       return null;
     }
-    console.log('DATAAA', data.orders);
     return data.orders.map((d, dataIndex, rowIndex) => {
       return (
         <Grid

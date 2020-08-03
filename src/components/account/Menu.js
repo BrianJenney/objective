@@ -89,7 +89,6 @@ const AccountMenu = ({ logout }) => {
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
           <ListItem key={menuItem.key} style={{ paddingBottom: '0px' }}>
-            {console.log('MENU ITEM', menuItem)}
             <ListItemText
               primary={
                 <div className="account-side-menu">
