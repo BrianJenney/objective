@@ -10,19 +10,19 @@ import SwitchLink from './common/SwitchLink';
 const posValues = {
   topLeft: {
     top: '20%',
-    left: '10%'
+    left: '6%'
   },
   bottomLeft: {
     bottom: '10%',
-    left: '10%'
+    left: '6%'
   },
   topRight: {
     top: '20%',
-    right: '10%'
+    right: '6%'
   },
   bottomRight: {
     bottom: '10%',
-    right: '10%'
+    right: '6%'
   },
   center: {
     top: '50%',
@@ -51,13 +51,6 @@ const sharedStyles = {
   imageBox: {
     width: '100%'
   },
-  underline: {
-    height: 4,
-    backgroundColor: 'black',
-    width: '100%',
-    position: 'absolute',
-    top: 90
-  },
   leadingText: {
     fontFamily: 'FreightTextProBook',
     color: 'black',
@@ -65,12 +58,10 @@ const sharedStyles = {
     position: 'relative'
   },
   typedText: {
-    marginTop: 20,
     height: 64,
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'left',
-    fontSize: 48,
     lineHeight: 'normal'
   }
 };
@@ -103,6 +94,25 @@ const mobileStyles = {
     fontSize: 16,
     height: '55px',
     cursor: 'pointer'
+  },
+  leadingText: {
+    fontSize: 40
+  },
+  typedText: {
+    height: 64,
+    display: 'flex',
+    marginTop: 20,
+    fontSize: 38,
+    flexDirection: 'column',
+    textAlign: 'left',
+    lineHeight: 'normal'
+  },
+  underline: {
+    height: 4,
+    backgroundColor: 'black',
+    width: '100%',
+    position: 'absolute',
+    top: 80
   }
 };
 
@@ -123,6 +133,24 @@ const desktopStyles = {
     fontSize: 16,
     height: '55px',
     cursor: 'pointer'
+  },
+  leadingText: {
+    fontSize: 58
+  },
+  typedText: {
+    height: 64,
+    marginTop: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'left',
+    lineHeight: 'normal'
+  },
+  underline: {
+    height: 4,
+    backgroundColor: 'black',
+    width: '100%',
+    position: 'absolute',
+    top: 90
   }
 };
 
@@ -137,11 +165,11 @@ const mapContentfulValues = content => {
 
   sharedStyles.leadingText.fontFamily = content.leadingTextFontFamily;
   sharedStyles.leadingText.color = content.leadingTextFontColor;
-  sharedStyles.leadingText.fontSize = content.leadingTextFontSize;
+  desktopStyles.leadingText.fontSize = content.leadingTextFontSize;
 
   sharedStyles.typedText.fontFamily = content.typedTextFontFamily;
   sharedStyles.typedText.color = content.typedTextFontColor;
-  sharedStyles.typedText.fontSize = content.typedTextFontSize;
+  desktopStyles.typedText.fontSize = content.typedTextFontSize;
 
   desktopStyles.button.backgroundColor = content.buttonColor;
   mobileStyles.button.backgroundColor = content.buttonColor;
@@ -158,7 +186,8 @@ const ContentfulHero = ({ content }) => {
   // Calculate width based on longest supplied string:
   const getBoxWidth = arr => {
     const lengths = arr.map(ele => ele.length);
-    return `${Math.max(...lengths) * 1.5}em`;
+    const multiplier = sm ? 1.16 : 1.46;
+    return `${Math.max(...lengths) * multiplier}em`;
   };
 
   // Handle Contentful value assignments:
