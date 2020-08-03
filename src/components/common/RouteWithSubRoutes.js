@@ -21,8 +21,12 @@ const RouteWithSubRoutes = ({
 }) => {
   const currentUserProp = injectCurrentUser ? { currentUser } : {};
   const { account_jwt } = currentUser.data;
-  let Component = component;
+  let Component = component || null;
   let redirectPath = redirectTo;
+
+  if (redirectPath) {
+    Component = () => <Redirect to={redirectPath} />;
+  }
 
   if (auth && !account_jwt) {
     if (!redirectPath) {
