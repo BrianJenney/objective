@@ -20,6 +20,7 @@ const EditablePanel = ({
 }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
+  const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const [editing, setEditing] = useState(false);
   const handleSave = async (...args) => {
     try {
@@ -34,7 +35,7 @@ const EditablePanel = ({
   const handleCancel = () => setEditing(false);
 
   return (
-    <Panel title={title} style={{ display: 'flex'}}>
+    <Panel title={title} style={{ display: 'flex', overflow: 'auto'}}>
       {editing && Form ? (
         <Form
           defaultValues={defaultValues}
@@ -43,7 +44,7 @@ const EditablePanel = ({
           {...rest}
         />
       ) : (
-        <Summary values={defaultValues} {...rest} >
+        <Summary values={defaultValues} {...rest} style={{width: xs ? 500 : 300}} >
           <Box
             mt={4}
             fontSize={xs ? 12 : 16}
@@ -66,16 +67,16 @@ const EditablePanel = ({
           </Box>
         </Summary>
       )}
-      <Box height={16} style={ xs ? {paddingLeft: '25px'} : {paddingLeft: '60px'}}>
+      <Box height={16}>
               {onRemove && (
                 <MenuLink
                   onClick={onRemove}
                   children="Delete"
                   underline="always"
                   style={{
-                    borderRight: onFormSubmit ? '1px solid #231f20' : 0, 
+                    borderRight: onFormSubmit ? `1px solid ${theme.palette.brand.camoGreen}` : 0, 
                     color: theme.palette.brand.camoGreen,
-                    fontSize: '14px'
+                    fontSize: '14px',
                   }}
                 />
               )}
@@ -90,7 +91,7 @@ const EditablePanel = ({
                   }}
                   children="Edit"
                   underline="always"
-                  style={{ paddingLeft: onRemove ? 9 : 0, fontSize: '14px', color: theme.palette.brand.camoGreen, paddingLeft: '20px'}}
+                  style={{ paddingLeft: onRemove ? 9 : 0, fontSize: '14px', color: theme.palette.brand.camoGreen }}
                 />
               )}
             </Box>
