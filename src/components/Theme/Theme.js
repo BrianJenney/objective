@@ -174,6 +174,9 @@ const nxtTheme = createMuiTheme({
         backgroundColor: '#fff',
         '&:hover': {
           backgroundColor: '#fff'
+        },
+        '&.Mui-disabled': {
+          backgroundColor: 'rgba(241, 190, 86, 0.5)'
         }
       },
       containedPrimary: {
@@ -181,8 +184,11 @@ const nxtTheme = createMuiTheme({
         color: '#553226',
         '&:hover': {
           backgroundColor: '#f1be56'
+        },
+        '&.Mui-disabled': {
+          backgroundColor: 'rgba(241, 190, 86, 0.5)'
         }
-      }
+      },
     },
     MuiFormLabel: {
       root: {

@@ -19,8 +19,6 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 'normal',
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '32px',
-      fontFamily: theme.typography.headerFontFamily,
       textAlign: 'left',
       margin: 0,
       paddingTop: 15

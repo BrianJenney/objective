@@ -320,7 +320,7 @@ const AddressForm = ({
     setAddressSuggestion(false);
   };
 
-  const renderForm = ({ values, setValues, setFieldValue, isSubmitting }) => (
+  const renderForm = ({ values, setValues, setFieldValue, isSubmitting, isValid }) => (
     <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
       <Box display="block" mb={xs ? 3 : 4} className="justify-content">
         {!currentUser.data.account_jwt && (
@@ -613,6 +613,7 @@ const AddressForm = ({
             )}
             <Button
               type="submit"
+              disabled={!isValid}
               children={submitLabel}
               loading={isSubmitting}
               style={{ height: '60px', padding: '0px' }}

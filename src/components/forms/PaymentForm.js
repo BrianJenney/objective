@@ -552,7 +552,7 @@ const PaymentForm = ({
     }
   };
   /* eslint-disable */
-  const renderForm = ({ values, setValues, isSubmitting }) => {
+  const renderForm = ({ values, setValues, isSubmitting, isValid }) => {
     preRenderBillingAddress(values, setValues);
     return (
       <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
@@ -1022,6 +1022,7 @@ const PaymentForm = ({
                       : 'none'
                 }}
                 type="submit"
+                disabled={!isValid}
                 children={submitLabel}
                 loading={isSubmitting}
               />
