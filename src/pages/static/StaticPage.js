@@ -24,7 +24,7 @@ const StaticPage = ({ match }) => {
       hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview' ? 'preview' : '';
     if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
-  console.log('testing', pageLoaded);
+
   let analyticsStr;
   useEffect(() => {
     // check this when we have real content from content ms
