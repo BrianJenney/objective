@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     marginTop: '20px'
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: '1.2'
   },
   atitle: {
@@ -178,7 +178,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
                 Shipping Address Validation
               </Typography>
               <Typography className={classes.text}>
-                Important: we were not able to validate your shipping address.
+                We were not able to validate your shipping address.
               </Typography>
               <Typography className={classes.subtitle}>
                 Please select an address to continue:
