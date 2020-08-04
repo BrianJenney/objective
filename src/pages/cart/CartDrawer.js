@@ -287,7 +287,7 @@ const Cart = ({
         ) : null}
         {cart.items.length > 0
           ? Object.values(cart.items).map((item, index) => (
-              <Collapse timout="auto" in={productsCollapseOpen}>
+              <Collapse timout="auto" in={productsCollapseOpen} style={{ width: '100%' }}>
                 <StyledDrawerGrid
                   container
                   direction="row"
