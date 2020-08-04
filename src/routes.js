@@ -178,6 +178,7 @@ export default [
 
   // Back to school campaign redirect:
   { path: '/backto', exact: true, redirectTo: '/bundle/back-to' },
+  { path: '/backto15a', exact: true, redirectTo: '/bundle/back-to' },
 
   { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
