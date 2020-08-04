@@ -29,7 +29,7 @@ const ChangePasswordForm = ({
   submitLabel,
   backLabel
 }) => {
-  const renderForm = () => (
+  const renderForm = ({ isValid }) => (
     <Form>
       {title && <Typography variant="h6" gutterBottom children={title} />}
       <Grid container spacing={2}>
@@ -68,7 +68,7 @@ const ChangePasswordForm = ({
                 mr={2}
               />
             )}
-            <Button type="submit" children={submitLabel} />
+            <Button type="submit" children={submitLabel} disabled={!isValid} />
           </Box>
         </Grid>
       </Grid>

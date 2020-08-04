@@ -5,6 +5,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
 
 const styles = theme => ({
   root: {
@@ -16,7 +17,18 @@ const styles = theme => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
-  }
+  },
+  dialogPaper: {
+    [theme.breakpoints.down('xs')]: {
+      // position: 'absolute', 
+      // bottom: '0px',
+      height: '70vh',
+      position: 'fixed',
+      bottom: '0%',
+      right: '-32px',
+      marginBottom: 0
+    }
+    }
 });
 
 const StyledDialogTitle = withStyles(styles)(props => {
@@ -37,22 +49,30 @@ const StyledDialogTitle = withStyles(styles)(props => {
   );
 });
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const withDialog = WrappedComponent => {
-  const WithDialog = props => {
+  const WithDialog = withStyles(styles)(props => {
+    const { classes } = props;
     const allowedToClose = !props.noClosingDialog;
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(true);   
     const handleDialogClose = useCallback(() => {
       if (typeof props.onExited === 'function') {
         props.onExited();
       }
       setOpen(false);
     }, []);
+
     return (
       <Dialog
         open={open}
+        TransitionComponent={Transition}
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        classes={{ paper: classes.dialogPaper, container: classes.container}}
         disableBackdropClick={true}
         disableEscapeKeyDown={true}
         onExited={props.onExited}
@@ -61,7 +81,7 @@ const withDialog = WrappedComponent => {
         <WrappedComponent closeDialog={handleDialogClose} {...props} />
       </Dialog>
     );
-  };
+  });
   return WithDialog;
 };
 

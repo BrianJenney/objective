@@ -125,7 +125,7 @@ const ProfileDetails = ({ currentUser, requestPatchAccount, clearPatchAccountErr
     email: currentUser.data.email
   };
 
-  const renderForm = () => (
+  const renderForm = ({ isValid }) => (
     <Form>
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -153,6 +153,7 @@ const ProfileDetails = ({ currentUser, requestPatchAccount, clearPatchAccountErr
           <Button
             mt={2}
             mp={3}
+            disabled={!isValid}
             fullWidth
             type="submit"
             loading={currentUser.patchAccountSubmitting}

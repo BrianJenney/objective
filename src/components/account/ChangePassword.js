@@ -121,7 +121,7 @@ const ChangePassword = ({
     return null;
   }
 
-  const renderForm = () => (
+  const renderForm = ({ isValid }) => (
     <Form>
       <Typography className={classes.info} variant="h3" gutterBottom>
         CHANGE PASSWORD
@@ -238,6 +238,7 @@ const ChangePassword = ({
         <Grid item xs={xs ? 12 : 4}>
           <Box display="flex" alignItems="center">
             <Button
+            disabled={!isValid}
               fullWidth
               type="submit"
               loading={currentUser.changePasswordSubmitting}
