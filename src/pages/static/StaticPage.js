@@ -24,10 +24,10 @@ const StaticPage = ({ match }) => {
       hostname === 'preview.localhost' || hostname.split('-')[0] === 'preview' ? 'preview' : '';
     if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
-
+  console.log('testing', pageLoaded);
+  let analyticsStr;
   useEffect(() => {
     // check this when we have real content from content ms
-    let analyticsStr;
     if (page.template && !tracked) {
       // Check templates against routes:
       if (isLandingPage && page.template === 'LP-Template-1') {
@@ -45,12 +45,12 @@ const StaticPage = ({ match }) => {
       analyticsStr = '404 Error';
       setPageError(true);
     }
-    window.analytics.page(analyticsStr);
   }, [page]);
 
   let FinalPage;
 
   if (pageLoaded) {
+    window.analytics.page(analyticsStr);
     FinalPage = () => buildPage(page, slug);
   }
 
