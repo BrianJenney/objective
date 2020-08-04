@@ -294,6 +294,7 @@ const AccountAddresses = ({
                       m={1}
                       px={4}
                       py={3}
+                      style={{ maxWidth: 350 }}
                       className="ListBox"
                     >
                       {selectionEnabled && (

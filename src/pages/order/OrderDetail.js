@@ -29,7 +29,10 @@ import { requestCancelOrder } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: 'rgba(252, 248, 244, 0.6)'
+    backgroundColor: 'rgba(252, 248, 244, 0.6)',
+    [theme.breakpoints.down('xs')]: {
+      backgroundColor: '#ffffff',
+    }
   },
   main: {
     padding: theme.spacing(10, 5),
@@ -41,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.common.white,
     padding: theme.spacing(3, 4),
     [theme.breakpoints.down('xs')]: {
-      backgroundColor: 'rgba(252, 248, 244, 0.6)',
+      backgroundColor: '#ffffff',
       padding: 0
     }
   },
@@ -351,9 +354,9 @@ const OrderDetail = ({ hideLPCoupon }) => {
   order.status = statusStepper.status;
 
   return (
-    <div style={{ backgroundColor: '#f6f5f1' }}>
+    <div style={{ backgroundColor: xs ? '#ffffff' : '#f6f5f1' }}>
       <div className={classes.box}>
-        <Box bgcolor="#f6f5f1">
+        <Box bgcolor={xs ? '#ffffff' : '#f6f5f1' }>
           <Container>
             <CssBaseline />
             <Box py={10} className={classes.containingBox}>

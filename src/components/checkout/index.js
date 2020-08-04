@@ -563,7 +563,7 @@ const Checkout = ({
       {loading ? (
         <Loader />
       ) : (
-        <Box bgcolor="#f6f5f1">
+        <Box bgcolor={xs ? "#FFF" : "#f6f5f1"}>
           <Container>
             <Box py={10} className="checkout-wrapper">
               <CssBaseline />

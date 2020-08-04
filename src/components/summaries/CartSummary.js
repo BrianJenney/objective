@@ -82,7 +82,7 @@ const CartSummary = ({ order }) => {
       <Grid container xs={12} direction="column">
         <Grid container xs={12}>
           <Grid item xs>
-            <Typography className={classes.title}>Order Summary!</Typography>
+            <Typography className={classes.title}>Order Summary</Typography>
           </Grid>
 
           <Grid item>

@@ -24,12 +24,11 @@ import { setCheckoutPaypalPayload } from '../../modules/paypal/actions';
 
 const useStyles = makeStyles(theme => ({
   formControlLabel: {
-    fontSize: '20px',
+    fontSize: '14px',
     fontFamily: theme.typography.bodyFontFamily,
-    color: theme.palette.brand.camoGreen,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '16px'
-    }
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    color: theme.palette.brand.camoGreen
   },
   mobileLogin: {
     fontSize: '16px',
@@ -396,7 +395,7 @@ const AccountPaymentDetails = ({
                     m={1}
                     px={4}
                     py={3}
-                    style={{ marginLeft: '0px' }}
+                    style={{ marginLeft: '0px', minHeight: 175 }}
                     className="ListBox"
                   >
                     {selectionEnabled && (
@@ -436,8 +435,9 @@ const AccountPaymentDetails = ({
                   m={1}
                   ml={0}
                   px={1}
-                  py={5.9}
+                  py={3}
                   border="1px solid #a06958"
+                  style={{ marginLeft: '0px', minHeight: 175 }}
                 >
                   <div style={{ textAlign: 'center' }} onClick={() => setFormModeEnabled(true)}>
                     <AddIcon

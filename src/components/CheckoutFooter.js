@@ -9,7 +9,6 @@ import { useTheme, withStyles } from '@material-ui/core/styles';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import ScrollToTop from './common/ScrollToTop';
 
-
 import { Button, NavLink } from './common';
 import Link from '@material-ui/core/Link';
 import './Footer-style.scss';
@@ -57,11 +56,7 @@ const DialogTitle = withStyles(styles)(props => {
     <MuiDialogTitle disableTypography className={classes.root}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -69,22 +64,20 @@ const DialogTitle = withStyles(styles)(props => {
   );
 });
 
-
 const StyledContainerBackgroundAlt = styled(StyledContainerBackground)({
   padding: '0px',
-    width: 'auto',
-    height: 570,
+  width: 'auto',
+  height: 570
 });
-
 
 const StyledParagraph1Alt = styled(StyledParagraph1)({
   paddingLeft: '0px',
-  paddingRight: '0px',
+  paddingRight: '0px'
 });
 
 const StyledParagraph2Alt = styled(StyledParagraph2)({
   paddingLeft: '0px',
-  paddingRight: '0px',
+  paddingRight: '0px'
 });
 
 const DialogContent = withStyles(theme => ({
@@ -161,8 +154,24 @@ const useStyles = makeStyles(theme => ({
       letterSpacing: 'normal',
       color: '#231f20',
       paddingBottom: 7,
-      paddingTop: 0,
+      paddingTop: 0
     }
+  },
+  container: {
+    padding: 50,
+    borderTop: '1px solid',
+    fontFamily: $brandSerif,
+    fontSize: 18,
+    display: 'flex',
+    backgroundColor: '#f6f5f1',
+    [theme.breakpoints.down('xs')]: {
+      backgroundColor: '#ffffff'
+    }
+  },
+  footerText: {
+    fontFamily: theme.typography.bodyFontFamily,
+    paddingRight: 5,
+    color: theme.palette.brand.camoGreen
   }
 }));
 
@@ -175,22 +184,23 @@ const NeedHelpDialog = () => {
     setOpen(false);
   };
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <div>
       <ListItem style={{ padding: 0 }}>
         <NavLink
           onClick={handleClickOpen}
-          style={{ textDecoration: 'underline' }}
+          style={{
+            fontFamily: theme.typography.bodyFontFamily,
+            color: theme.palette.brand.accentBrown,
+            textDecoration: 'underline'
+          }}
         >
           CONTACT US
         </NavLink>
       </ListItem>
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose} />
         <DialogContent>
           <Container>
@@ -206,7 +216,7 @@ const NeedHelpDialog = () => {
                 </Box>
                 <Box textAlign="center">
                   <StyledHours>
-                   <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
+                    <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
                   </StyledHours>
                 </Box>
               </Grid>
@@ -217,14 +227,11 @@ const NeedHelpDialog = () => {
                   </Box>
                   <Box textAlign="center">
                     <StyledParagraph1Alt>
-                      Give us a call for immediate assistance and chat with one
-                      of our customer care specialists.
+                      Give us a call for immediate assistance and chat with one of our customer care
+                      specialists.
                     </StyledParagraph1Alt>
                     <StyledPhoneNumber>
-                      <Link
-                        href="tel:800-270-5771"
-                        style={{ textDecoration: 'none' }}
-                      >
+                      <Link href="tel:800-270-5771" style={{ textDecoration: 'none' }}>
                         (800) 270-5771
                       </Link>
                     </StyledPhoneNumber>
@@ -236,8 +243,7 @@ const NeedHelpDialog = () => {
                   </Box>
                   <Box textAlign="center">
                     <StyledParagraph2Alt>
-                      Email our customer care department. We'll respond as soon
-                      as possible.
+                      Email our customer care department. We'll respond as soon as possible.
                     </StyledParagraph2Alt>
                     <StyledEmail>
                       <Link
@@ -259,84 +265,63 @@ const NeedHelpDialog = () => {
           </Container>
         </DialogContent>
         <Container className="checkout-contact-container">
-        <DialogContentMobile>
-          <Box textAlign="center">
-            <Grid
-              container
-              spacing={0}
-              style={{ borderBottom: '1px solid #979797' }}
-            >
-              <Grid item>
-                <Box textAlign="center">
-                  <ContactPhone />
-                </Box>
-                <Box textAlign="center" pb={2}>
-                  <Typography variant="h2">
-                    Need help? Give us a call for assistance.
-                  </Typography>
-                  <Typography variant="h4">
-                     <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
-                  </Typography>
-                  <Typography>
-                    <Link
-                      href="tel:800-270-5771"
-                      style={{ textDecoration: 'none' }}
-                    >
-                      (800) 270-5771
-                    </Link>
-                  </Typography>
-                </Box>
+          <DialogContentMobile>
+            <Box textAlign="center">
+              <Grid container spacing={0} style={{ borderBottom: '1px solid #979797' }}>
+                <Grid item>
+                  <Box textAlign="center">
+                    <ContactPhone />
+                  </Box>
+                  <Box textAlign="center" pb={2}>
+                    <Typography variant="h2">Need help? Give us a call for assistance.</Typography>
+                    <Typography variant="h4">
+                      <strong>Mon-Fri</strong> 8am-8pm EST/ 5am-5pm PST
+                    </Typography>
+                    <Typography>
+                      <Link href="tel:800-270-5771" style={{ textDecoration: 'none' }}>
+                        (800) 270-5771
+                      </Link>
+                    </Typography>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container spacing={0}>
-              <Grid item>
-                <Box textAlign="center" px={3}>
-                  <Typography variant="h3">
-                    or send us an email and will get back to you as soon as
-                    possible:
-                  </Typography>
-                  <Typography variant="h4">
-                    <Link
-                      style={{
-                        cursor: 'pointer',
-                        borderBottom: '1px solid #000',
-                        paddingBottom: '1px',
-                        textDecoration: 'none'
-                      }}
-                      href="mailto:help@objectivewellness.com"
-                    >
-                      help@objectivewellness.com
-                    </Link>
-                  </Typography>
-                </Box>
+              <Grid container spacing={0}>
+                <Grid item>
+                  <Box textAlign="center" px={3}>
+                    <Typography variant="h3">
+                      or send us an email and will get back to you as soon as possible:
+                    </Typography>
+                    <Typography variant="h4">
+                      <Link
+                        style={{
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #000',
+                          paddingBottom: '1px',
+                          textDecoration: 'none'
+                        }}
+                        href="mailto:help@objectivewellness.com"
+                      >
+                        help@objectivewellness.com
+                      </Link>
+                    </Typography>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
-        </DialogContentMobile>
+            </Box>
+          </DialogContentMobile>
         </Container>
       </Dialog>
     </div>
   );
 };
 
-class CheckoutFooter extends React.Component {
-  render() {
-    return (
-      <div
-        className="checkout-footer-container"
-        style={{
-          padding: 50,
-          background: '#f6f5f1',
-          borderTop: '1px solid',
-          fontFamily: 'proxima-nova, sans-serif',
-          fontSize: 18,
-          display: 'flex'
-        }}
-      >
-        <span style={{ paddingRight: 5 }}>Need Help?</span> <NeedHelpDialog />
-      </div>
-    );
-  }
-}
+const CheckoutFooter = () => {
+  const classes = useStyles();
+  return (
+    <div className={`${classes.container} checkout-footer-container`}>
+      <span className={classes.footerText}>Need Help?</span> <NeedHelpDialog />
+    </div>
+  );
+};
 
 export default CheckoutFooter;

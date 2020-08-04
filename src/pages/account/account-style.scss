@@ -6,7 +6,7 @@
 
 p {
   color: #7f7470;
-  font-size: 18px
+  font-size: 18px;
 }
 
 .account-orders-mobile-table div[role='toolbar'] {
@@ -140,7 +140,7 @@ p {
     margin-bottom: 30px;
   }
   h6 {
-    font-family:  v;
+    font-family: v;
   }
   th,
   th > div {
@@ -206,7 +206,7 @@ p {
 
 @media (max-width: 768px) {
   p {
-    font-size: 16px
+    font-size: 16px;
   }
   .account-orders {
     tbody > tr {
@@ -240,6 +240,12 @@ p {
         font-weight: 600;
         line-height: 1.88;
       }
+    }
+  }
+  .account-payment-details,
+  .account-addresses {
+    .MuiBox-root.MuiBox-root-226 {
+      background-color: #fff;
     }
   }
 }
