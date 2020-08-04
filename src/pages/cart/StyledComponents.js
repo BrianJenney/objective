@@ -264,7 +264,6 @@ export const StyledPromoLink = withStyles(theme => ({
     fontFamily: $brandSans,
     fontWeight: 'normal',
     color: theme.palette.brand.accentBrown,
-    textTransform: 'uppercase',
     textDecoration: 'underline',
     cursor: 'pointer'
   }
@@ -363,12 +362,9 @@ export const StyledRemoveLink = withStyles(theme => ({
 
 export const StyledEstimatedTotal = withStyles(theme => ({
   root: {
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '17px'
-    },
-    fontSize: '18px',
+    fontSize: '20px',
     textTransform: 'uppercase',
-    fontWeight: 600,
+    fontWeight: 700,
     fontFamily: $brandSans,
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -387,6 +383,6 @@ export const StyledPromoCode = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
-    color: '#000000'
+    color: theme.palette.brand.accentBrown
   }
 }))(Typography);

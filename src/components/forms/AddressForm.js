@@ -32,12 +32,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: '16px',
     fontWeight: 400,
     fontFamily: theme.typography.bodyFontFamily,
-    color: theme.palette.brand.camoGreen
+    color: theme.palette.brand.darkGraySubtext
   },
   subTitleLink: {
     fontWeight: 600,
     marginLeft: '5px',
-    color: theme.palette.brand.camoGreen
+    color: theme.palette.brand.accentBrown
   },
   mobileLogin: {
     fontFamily: theme.typography.bodyFontFamily,
@@ -379,7 +379,7 @@ const AddressForm = ({
                 Already have an account?
                 <MenuLink
                   onClick={rest.switchToLogin}
-                  children="LOG IN"
+                  children="Log In"
                   underline="always"
                   className={classes.subTitleLink}
                 />

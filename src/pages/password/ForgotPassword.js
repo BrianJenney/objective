@@ -69,14 +69,14 @@ const ForgotPassword = ({ history }) => {
     history.replace('/password/confirm');
   };
 
-  const renderForm = () => (
+  const renderForm = ({ isValid }) => (
     <Form className={classes.form}>
       <Grid container>
         <Grid item xs={12}>
           <Field name="email" label="Email Address" component={InputField} autoComplete="email" />
         </Grid>
         <Grid item xs={12} style={{ paddingTop: '33px' }}>
-          <Button type="submit" fullWidth children="Request Reset Link" />
+          <Button type="submit" disabled={!isValid} fullWidth children="Request Reset Link" />
         </Grid>
       </Grid>
     </Form>

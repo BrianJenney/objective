@@ -48,14 +48,14 @@ const { MEDIUM_GRAY } = colorPalette;
 
 const useStyles = makeStyles(theme => ({
   cartRestricted: {
-    fontFamily: 'p22-underground',
-    fontSize: '14px',
+    fontFamily: theme.typography.bodyFontFamily,
+    fontSize: '16px',
     fontWeight: 'normal',
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: '1.5',
     letterSpacing: 'normal',
-    color: '#d0021b',
+    color: theme.palette.brand.darkSubTextGray,
     paddingBottom: '26px'
   },
   link: {
@@ -67,17 +67,14 @@ const useStyles = makeStyles(theme => ({
   },
   editCart: {
     marginTop: '4px',
-    fontFamily: 'p22-Underground',
+    fontFamily: theme.typography.bodyFontFamily,
     fontSize: '16px',
     fontWeight: 600,
     fontStretch: 'normal',
     fontStyle: 'normal',
     lineHeight: 'normal',
-    letterSpacing: '1.06px',
     color: theme.palette.brand.accentBrown,
     [theme.breakpoints.down('xs')]: {
-      fontSize: '14px',
-      letterSpacing: '0.93px',
       paddingTop: '8px'
     }
   }
@@ -180,7 +177,7 @@ const Cart = ({
     matchPath(location.pathname, { path: '/checkout' }) ||
     matchPath(location.pathname, { path: '/checkout2' });
 
-  const mobileCheckoutPadding = activeStep === 2 ? '0px' : '0px 20px 24px 20px';
+  const mobileCheckoutPadding = activeStep === 2 ? '0px' : '20px 20px 24px 20px';
   const checkoutPadding = xsBreakpoint ? mobileCheckoutPadding : '24px 20px';
   const drawerPadding = !isCheckoutPage ? mobileDrawerPadding : checkoutPadding;
   return (
@@ -189,7 +186,7 @@ const Cart = ({
       style={{
         width: '100%',
         minWidth: '90%',
-        margin: '0 auto',
+        margin: '20px auto',
         padding: drawerPadding
       }}
       className="cart-drawer"
@@ -236,7 +233,7 @@ const Cart = ({
                 onClick={handleEditCart}
                 underline="always"
                 className={classes.editCart}
-                children="EDIT CART"
+                children="Edit Cart"
               />
             ) : null}
             {!hideCheckoutProceedLink && (
@@ -325,7 +322,7 @@ const Cart = ({
                         }}
                       >
                         <CardMedia
-                          style={{ height: 126, width: 126 }}
+                          style={{ height: 135, width: 126 }}
                           image={item.variant_img}
                           title={item.variant_name}
                           onClick={onClickProduct}
@@ -367,7 +364,7 @@ const Cart = ({
                           {item.variant_name}
                         </StyledProductLink>
                       </Link>
-                      <StyledProductPrice>
+                      <StyledProductPrice style={{ marginTop: 10}}>
                         {displayMoney(item.quantity * item.unit_price)}
                       </StyledProductPrice>
                       <Grid item style={{ padding: '0' }}>
@@ -549,16 +546,14 @@ const Cart = ({
             }
           >
             <Grid item xs={6}>
-              <StyledEstimatedTotal style={xsBreakpoint ? { fontSize: '20px' } : {}}>
+              <StyledEstimatedTotal>
                 {xsBreakpoint || checkoutVersion === 2 ? 'Total' : 'Estimated Total'}
               </StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-              <StyledProductPrice
-                style={!xsBreakpoint ? { fontSize: '22px' } : { fontSize: '18px' }}
-              >
+            <StyledEstimatedTotal>
                 {displayMoney(cart.total)}
-              </StyledProductPrice>
+            </StyledEstimatedTotal>
             </Grid>
           </Grid>
         ) : null}

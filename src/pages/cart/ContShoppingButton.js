@@ -31,7 +31,7 @@ class ContShoppingButton extends Component {
                 color="primary"
                 variant="contained"
               >
-                Continue Shopping
+                Continue Shopping!
               </StyledCheckoutButton>
             </Grid>
           </Grid>
