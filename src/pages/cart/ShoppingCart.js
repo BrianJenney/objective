@@ -10,7 +10,7 @@ import { StyledCartCloseIcon } from './StyledComponents';
 const ShoppingCart = ({ hideLPCoupon, isBundleLP }) => {
   const cart = useSelector(state => state.cart);
   // remove hidden items to ensure numberof items displays correctly
-  const visibleItems = cart.items.filter(item => !item.isHidden);
+  const visibleItems = cart.items.filter(item => item.visibility !== 'hidden');
   const cartCount = visibleItems.reduce((acc, item) => acc + item.quantity, 0);
   return (
     <TemporaryCartDrawer
