@@ -73,7 +73,7 @@ const CartSummary = ({ order }) => {
 
   // remove hidden items to ensure numberof items displays correctly
   // then separate visible items into customer added items and pip inserted items
-  const visibleItems = items.filter(item => !item.isHidden);
+  const visibleItems = items.filter(item => item.visibility !== 'hidden');
   const promotionalItems = visibleItems.filter(item => item.pipInsertId);
   const regularItems = visibleItems.filter(item => !item.pipInsertId);
   return (
