@@ -456,9 +456,9 @@ const Cart = ({
                           image_url: `https:${item.assets.thumbnail}`,
                           sku: item.sku,
                           price: Number.parseFloat(0),
-                          product_id: item.id,
-                          variant: item.id,
-                          name: item.name,
+                          product_id: item.variant_id,
+                          variant: item.variant_id,
+                          name: item.variant_name,
                           brand: cart.storeCode,
                           cart_id: cart._id,
                           site_location: 'cart'
@@ -468,7 +468,7 @@ const Cart = ({
                       <CardMedia
                         style={{ height: 126, width: 126 }}
                         image={item.assets.thumbnail}
-                        title={item.name}
+                        title={item.variant_name}
                         onClick={onClickProduct}
                       />
                     </Link>
@@ -501,9 +501,9 @@ const Cart = ({
                           image_url: `https:${item.assets.thumbnail}`,
                           sku: item.sku,
                           price: Number.parseFloat(0),
-                          product_id: item.id,
-                          variant: item.id,
-                          name: item.name,
+                          product_id: item.variant_id,
+                          variant: item.variant_id,
+                          name: item.variant_name,
                           brand: cart.storeCode,
                           cart_id: cart._id,
                           site_location: 'cart'
@@ -515,7 +515,7 @@ const Cart = ({
                         align="left"
                         onClick={onClickProduct}
                       >
-                        {item.name}
+                        {item.variant_name}
                       </StyledProductLink>
                     </Link>
                     <StyledCardContent
