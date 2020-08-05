@@ -74,9 +74,6 @@ const SPButton = ({ history, data, template, type, align }) => {
     if (prodAdded && couponAdded) {
       history.push(data.URL, 'landingPage');
     }
-    if (!prodAdded && couponAdded) {
-      history.push(data.URL, 'landingPage');
-    }
   }, [prodAdded, couponAdded]);
 
   return (
