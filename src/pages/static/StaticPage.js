@@ -25,9 +25,9 @@ const StaticPage = ({ match }) => {
     if (pageLoaded === false) dispatch(requestPage(slug, prefix));
   }, []);
 
+  let analyticsStr;
   useEffect(() => {
     // check this when we have real content from content ms
-    let analyticsStr;
     if (page.template && !tracked) {
       // Check templates against routes:
       if (isLandingPage && page.template === 'LP-Template-1') {
@@ -45,12 +45,12 @@ const StaticPage = ({ match }) => {
       analyticsStr = '404 Error';
       setPageError(true);
     }
-    window.analytics.page(analyticsStr);
   }, [page]);
 
   let FinalPage;
 
   if (pageLoaded) {
+    window.analytics.page(analyticsStr);
     FinalPage = () => buildPage(page, slug);
   }
 
