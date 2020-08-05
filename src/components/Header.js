@@ -26,7 +26,6 @@ import CheckoutHeader from './CheckoutHeader';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 import { paramsToObject, isAcqDiscount } from '../utils/misc';
 const jwt = require('jsonwebtoken');
-
 const StyledLink = withStyles(() => ({
   root: {
     fontFamily: 'p22-underground, Helvetica, sans',
@@ -109,7 +108,8 @@ const Header = ({ currentUser, location, history }) => {
   segmentIdentify(currentUser.data);
 
   let accountMenuItemConf = {};
-  if (accountJWT && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin) {
+
+  if (accountJWT && !currentUser.data.isGuest) {
     accountMenuItemConf = {
       key: 'third',
       children: <LoggedInUser name={firstName} />,
