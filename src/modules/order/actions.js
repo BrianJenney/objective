@@ -32,6 +32,7 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
       product_id: item.variant_id,
       quantity: item.quantity,
       sku: item.sku,
+      free_item: !!item.pipInsertId,
       variant: item.variant_name
     });
   });
