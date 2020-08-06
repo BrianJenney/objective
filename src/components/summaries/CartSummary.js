@@ -17,6 +17,7 @@ import {
 } from '../../pages/cart/StyledComponents';
 
 import { displayMoney } from '../../utils/formatters';
+import { separateCartItemTypes } from '../../pages/cart/cartUtils';
 
 import { colorPalette } from '../Theme/color-palette';
 
@@ -62,20 +63,9 @@ const { MEDIUM_GRAY } = colorPalette;
 const CartSummary = ({ order }) => {
   const classes = useStyles();
   const { items, hideCouponCode } = order;
-  let orderShippingMethod = null;
-
-  if (order.shippingMethod) {
-    orderShippingMethod = order.shippingMethod;
-  } else {
-    orderShippingMethod = order.shipping.options[order.shipping.code];
-  }
+  const orderShippingMethod = order.shippingMethod || order.shipping.options[order.shipping.code];
   const promoCode = order.promo ? ` (${order.promo.code})` : '';
-
-  // remove hidden items to ensure numberof items displays correctly
-  // then separate visible items into customer added items and pip inserted items
-  const visibleItems = items.filter(item => !item.isHidden);
-  const promotionalItems = visibleItems.filter(item => item.pipInsertId);
-  const regularItems = visibleItems.filter(item => !item.pipInsertId);
+  const { visibleItems, promotionalItems, regularItems } = separateCartItemTypes(items);
   return (
     <Box className={classes.paper}>
       <Grid container xs={12} direction="column">
