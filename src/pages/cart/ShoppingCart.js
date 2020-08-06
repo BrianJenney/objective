@@ -6,12 +6,11 @@ import CartDrawer from './CartDrawer';
 import TemporaryCartDrawer from '../../components/common/TemporaryCartDrawer';
 import ShoppingBag from '../../components/common/Icons/Shopping-Bag/ShoppingBag';
 import { StyledCartCloseIcon } from './StyledComponents';
+import { separateCartItemTypes } from './cartUtils';
 
 const ShoppingCart = ({ hideLPCoupon, isBundleLP }) => {
   const cart = useSelector(state => state.cart);
-  // remove hidden items to ensure numberof items displays correctly
-  const visibleItems = cart.items.filter(item => !item.isHidden);
-  const cartCount = visibleItems.reduce((acc, item) => acc + item.quantity, 0);
+  const { cartCount } = separateCartItemTypes(cart.items);
   return (
     <TemporaryCartDrawer
       hideLPCoupon={hideLPCoupon}
