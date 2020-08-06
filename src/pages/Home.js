@@ -117,16 +117,7 @@ class Home extends Component {
     ));
 
     return (
-      <Link
-        to="/gallery"
-        segmentProperties={{
-          cta: 'Shop All',
-          destination: '/gallery',
-          site_location: 'home',
-          text: 'Targeted Health Solutions for You and Yours'
-        }}
-        onClick={this.segmentTrackBannerClicked}
-      >
+      <Link to="/gallery" onClick={this.segmentTrackBannerClicked}>
         <ul>{hero}</ul>
       </Link>
     );
@@ -279,7 +270,12 @@ class Home extends Component {
    */
 
   segmentTrackBannerClicked() {
-    window.analytics.track('Banner Clicked', this.segmentProperties);
+    window.analytics.track('Banner Clicked', {
+      cta: 'Shop All',
+      destination: '/gallery',
+      site_location: 'home',
+      text: 'Targeted Health Solutions for You and Yours'
+    });
   }
 
   navigateToTop = url => {
