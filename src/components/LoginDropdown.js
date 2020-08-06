@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -34,7 +34,7 @@ const StyledMenu = withStyles(theme => ({
   />
 ));
 
-const LoginDropdown = () => {
+const LoginDropdown = ({ text }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = e => {
@@ -50,7 +50,7 @@ const LoginDropdown = () => {
       <Button
         aria-haspopup="true"
         onClick={handleClick}
-        style={{ backgroundColor: 'transparent' }}
+        style={{ backgroundColor: 'transparent', textTransform: 'none' }}
       >
         <Typography
           style={{
@@ -59,15 +59,10 @@ const LoginDropdown = () => {
             letterSpacing: '1px'
           }}
         >
-          Account
+          {text}
         </Typography>{' '}
       </Button>
-      <StyledMenu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <StyledMenu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
         <Button
           fullWidth
           variant="contained"
@@ -100,6 +95,10 @@ const LoginDropdown = () => {
       </StyledMenu>
     </div>
   );
+};
+
+LoginDropdown.propTypes = {
+  text: PropTypes.string
 };
 
 export default LoginDropdown;

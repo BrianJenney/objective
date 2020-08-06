@@ -29,18 +29,18 @@ const jwt = require('jsonwebtoken');
 
 const StyledLink = withStyles(() => ({
   root: {
-    fontFamily: 'p22-underground, Helvetica, sans',
+    fontFamily: 'proxima-nova, sans-serif, Helvetica, sans',
     fontWeight: 'normal',
-    color: '#000000',
-    textTransform: 'uppercase',
+    color: '#553226',
     letterSpacing: '1px',
-    fontSize: '16px'
+    fontSize: '13px',
+    margin: '0 1.5em'
   }
 }))(Link);
 
 const StyledBox = withStyles(() => ({
   root: {
-    fontFamily: 'p22-underground, Helvetica, sans',
+    fontFamily: 'proxima-nova, sans-serif, Helvetica, sans',
     fontWeight: 'normal',
     color: '#ffffff',
     textTransform: 'uppercase',
@@ -74,18 +74,17 @@ const Header = ({ currentUser, location, history }) => {
     matchPath(location.pathname, { path: '/checkout2' });
   const isOrderPage = matchPath(location.pathname, { path: '/order' });
   const isLandingNoHeader = matchPath(location.pathname, { path: '/landing' });
-  const { firstName } = currentUser.data;
-  const accountJWT = currentUser.data.account_jwt;
+  // TODO: change to use matchPath?
+  const isLandingWithHeader = window.location.pathname === '/landing/sleepandimmunity';
   const [promoVisible, setPromoVisible] = useState(true);
   const [acqDiscount, setAcqDiscount] = useState(false);
   const [contents, setContents] = useState();
-  const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
   const cartNotification = useSelector(state => state.utils.cartNotification);
-  let isLandingWithHeader = false;
-  if (window.location.pathname === '/landing/sleepandimmunity') {
-    isLandingWithHeader = true;
-  }
+  const dispatch = useDispatch();
+  const {
+    data: { firstName, account_jwt: accountJWT }
+  } = currentUser;
 
   const fetchPromoBannerData = async () => {
     const response = await contentfulClient.getEntry(OBJECTIVE_PROMOBANNER);
@@ -108,25 +107,37 @@ const Header = ({ currentUser, location, history }) => {
 
   segmentIdentify(currentUser.data);
 
-  let accountMenuItemConf = {};
+  let accountMenuItemConf = {
+    key: 'third',
+    children: <LoginDropdown text="Sign In" />,
+    link: '/login'
+  };
   if (accountJWT && !currentUser.data.isGuest && !currentUser.data.temporarilyLogin) {
     accountMenuItemConf = {
       key: 'third',
       children: <LoggedInUser name={firstName} />,
       link: '/account/overview'
     };
-  } else if (burger) {
-    accountMenuItemConf = { key: 'third', to: '/login', link: '/login', children: ' Account' };
-  } else {
-    accountMenuItemConf = { key: 'third', children: <LoginDropdown />, link: '/login' };
   }
 
   const burgerMenuItems = [
-    { key: 'first', to: '/gallery', link: '/gallery', children: 'Shop' },
-    { key: 'second', to: '/journal', link: '/journal', children: 'Journal' },
-    accountMenuItemConf,
-    { key: 'fourth', to: '/faq', link: '/faq', children: 'Help' }
+    {
+      key: 'first',
+      to: '/gallery',
+      link: '/gallery',
+      children: 'Shop',
+      style: { color: '#553226' }
+    },
+    {
+      key: 'second',
+      to: '/journal',
+      link: '/journal',
+      children: 'About CBD',
+      style: { color: '#553226' }
+    },
+    { key: 'fourth', to: '/faq', link: '/faq', children: 'FAQs', style: { color: '#553226' } }
   ];
+
   const renderBurgerIcon = () => (
     <DropdownMenu
       toggleLabel={
@@ -215,7 +226,9 @@ const Header = ({ currentUser, location, history }) => {
               </NavLink>
             </Grid>
             <Grid item xs={1} className="mobile-cart-icon">
-              {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
+              {!isCheckoutPage && (
+                <ShoppingCart showCartCount={false} hideLPCoupon={locationState} />
+              )}
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
@@ -230,24 +243,29 @@ const Header = ({ currentUser, location, history }) => {
           <StyledContainer>
             <Grid container direction="row" alignItems="center" justify="space-between">
               <Grid container sm={3} spacing={3} justify="flex-start">
-                <Grid item sm={4} className="h-pding">
-                  <StyledLink
-                    onClick={segmentTrackNavigationClick}
-                    component={RouterLink}
-                    to="/gallery"
-                  >
-                    {isBundleLP ? '' : 'Shop'}
-                  </StyledLink>
-                </Grid>
-                <Grid item sm={4} className="h-pding">
-                  <StyledLink
-                    onClick={segmentTrackNavigationClick}
-                    component={RouterLink}
-                    to="/journal"
-                  >
-                    {isBundleLP ? '' : 'Journal'}
-                  </StyledLink>
-                </Grid>
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/gallery"
+                >
+                  {isBundleLP ? '' : 'Shop'}
+                </StyledLink>
+
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/journal"
+                >
+                  {isBundleLP ? '' : 'About CBD'}
+                </StyledLink>
+
+                <StyledLink
+                  onClick={segmentTrackNavigationClick}
+                  component={RouterLink}
+                  to="/journal"
+                >
+                  FAQs
+                </StyledLink>
               </Grid>
               <Grid
                 container
@@ -273,24 +291,27 @@ const Header = ({ currentUser, location, history }) => {
                 alignItems="center"
                 justify="flex-end"
               >
+                {!isCheckoutPage && (
+                  <span>
+                    <ShoppingCart
+                      showCartCount={false}
+                      hideLPCoupon={locationState}
+                      isBundleLP={isBundleLP}
+                    />
+                    Bag
+                  </span>
+                )}
+                {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+
                 {isBundleLP ? (
                   <></>
                 ) : (
-                  <Grid item lg="auto" className="h-pding">
-                    <StyledLink
-                      component={RouterLink}
-                      {...accountMenuItemConf}
-                      onClick={segmentTrackNavigationClick}
-                    />
-                  </Grid>
+                  <StyledLink
+                    component={RouterLink}
+                    {...accountMenuItemConf}
+                    onClick={segmentTrackNavigationClick}
+                  />
                 )}
-
-                <Grid item sm="auto" className="h-pding">
-                  {!isCheckoutPage && (
-                    <ShoppingCart hideLPCoupon={locationState} isBundleLP={isBundleLP} />
-                  )}
-                  {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
-                </Grid>
               </Grid>
             </Grid>
           </StyledContainer>
@@ -324,6 +345,4 @@ Header.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-const enhance = compose(withCurrentUser, withRouter);
-
-export default enhance(Header);
+export default compose(withCurrentUser, withRouter)(Header);

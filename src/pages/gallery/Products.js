@@ -29,7 +29,7 @@ const Products = () => {
       clearInterval(interval);
     }
 
-    if (!products && seconds === 10) {
+    if (!products && seconds === 10000) {
       clearInterval(interval);
       alert('Something wrong just happened, please refresh your browser and try again');
     }

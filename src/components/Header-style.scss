@@ -2,13 +2,11 @@
 
 .headerContainer {
   background-color: #f7c665;
-  text-transform: uppercase;
   font-family: $sansSerif;
   font-weight: 'bold';
   letter-spacing: 1px;
-  font-size: 16px;
+  font-size: 13px;
   display: flex;
-
   .align-right {
     text-align: right;
   }
@@ -21,9 +19,6 @@
   .mobile-cart-icon {
     padding-top: 11px;
   }
-  @media (min-width: 1200px) {
-    border-bottom: 1px solid #000000;
-  }
 
   .top {
     padding: 10px;
@@ -31,8 +26,9 @@
 
   .holder {
     width: 100%;
-    height: 122px;
+    height: 60px;
     display: flex;
+    justify-content: center;
     align-items: center;
     button {
       .MuiButton-label {
@@ -50,10 +46,9 @@
   }
 
   .headerBar {
-    background: black;
+    background: #b5d7bf;
     color: #ffffff;
     height: 40px;
-    // padding: 12px;
     letter-spacing: 0.8px;
     width: 100%;
     text-align: center;

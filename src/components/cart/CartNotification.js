@@ -122,13 +122,17 @@ const PromoDiscountNotification = () => {
   }, []);
 
   if (discount) {
-    const discountText = (discount.discount.type && discount.discount.type === 'PERCENT')
-      ? `${discount.discount.percent_off}% `
-      : `$${discount.discount.amount_off} `;
+    const discountText =
+      discount.discount.type && discount.discount.type === 'PERCENT'
+        ? `${discount.discount.percent_off}% `
+        : `$${discount.discount.amount_off} `;
 
     content = (
       <>
-        <Typography className={xs ? classes.textXS : classes.text} style={{ paddingBottom: '20px' }}>
+        <Typography
+          className={xs ? classes.textXS : classes.text}
+          style={{ paddingBottom: '20px' }}
+        >
           Your {discountText} off
           <br></br>promo code has
           <br></br>been applied to
@@ -138,15 +142,13 @@ const PromoDiscountNotification = () => {
     );
   }
 
-  return (
-    (content != null) 
-      ? <>
-          <div ref={node}>
-            <Paper className={xs ? 'triangleXS' : 'triangle'}>{content}</Paper>
-          </div>
-        </>
-      : null
-  );
+  return content != null ? (
+    <>
+      <div ref={node}>
+        <Paper className={xs ? 'triangleXS' : 'triangle'}>{content}</Paper>
+      </div>
+    </>
+  ) : null;
 };
 
 const CheckoutMergeNotification = () => {
@@ -156,9 +158,8 @@ const CheckoutMergeNotification = () => {
   return (
     <>
       <Grid className={xs ? classes.boxXS : classes.box}>
-        <Typography 
-          className={xs ? classes.textCheckoutXS : classes.textCheckout}>
-          We've added items from your 
+        <Typography className={xs ? classes.textCheckoutXS : classes.textCheckout}>
+          We've added items from your
           <br></br>previous session to your cart.
         </Typography>
       </Grid>
@@ -198,8 +199,8 @@ const ElsewhereMergeNotification = () => {
       <div ref={node}>
         <Paper className={xs ? 'triangleXS' : 'triangle'}>
           <Typography className={xs ? classes.textXS : classes.text}>
-            We've added items 
-            <br></br> from your previous 
+            We've added items
+            <br></br> from your previous
             <br></br> session to your cart.
           </Typography>
           <Typography className={xs ? classes.continueXS : classes.continue}>
@@ -214,13 +215,15 @@ const ElsewhereMergeNotification = () => {
 const CartNotification = ({ isCheckoutPage }) => {
   const variant = useSelector(state => state.utils.notificationVariant);
 
-  return (
-    (variant === 'cartMerged')
-      ? (isCheckoutPage)
-        ? <CheckoutMergeNotification />
-        : <ElsewhereMergeNotification />
-      : <PromoDiscountNotification />
-  )
+  return variant === 'cartMerged' ? (
+    isCheckoutPage ? (
+      <CheckoutMergeNotification />
+    ) : (
+      <ElsewhereMergeNotification />
+    )
+  ) : (
+    <PromoDiscountNotification />
+  );
 };
 
 export default CartNotification;

@@ -14,14 +14,10 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuLink from './MenuLink';
-import { fonts, sizes } from '../Theme/fonts';
-import { NavLink } from "../common";
+import { NavLink } from '.';
 
 const drawerWidth = 300;
-const { smallText2 } = sizes;
-const { $brandSans } = fonts;
 const useStyles = makeStyles(theme => ({
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -38,48 +34,45 @@ const useStyles = makeStyles(theme => ({
     })
   },
   drawer: {
+    backgroundColor: '#fff7e8',
     width: drawerWidth,
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    backgroundColor: '#fff7e8'
   },
   drawerHeader: {
     marginTop: '26px',
     justifyContent: 'flex-start'
   },
+  divider: {
+    backgroundColor: '#eec0b1'
+  },
   styledMenu: {
-    fontSize: smallText2,
-    textTransform: 'uppercase',
-    fontFamily: $brandSans
+    fontSize: '24px',
+    fontFamily: 'proxima-nova, sans-serif, Helvetica, sans',
+    colorPrimary: '#553226'
+  },
+  styledSubMenu: {
+    fontSize: '20px',
+    fontFamily: 'proxima-nova, sans-serif, Helvetica, sans',
+    colorPrimary: '#a06958',
+    textDecoration: 'underline'
   }
 }));
 
-const DropdownMenu = ({
-  toggleLabel,
-  dropdownTitle,
-  panelId,
-  menuItems,
-  side,
-  ...rest
-}) => {
+const DropdownMenu = ({ toggleLabel, dropdownTitle, panelId, menuItems, ...rest }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleMenu = event => {
-    if (
-      event.type == 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => setAnchorEl(null);
-
-
-  console.log('itemRestProps', menuItems);
-
 
   return (
     <Box {...rest}>
@@ -118,7 +111,6 @@ const DropdownMenu = ({
             <CloseIcon />
           </IconButton>
         </div>
-        <Divider />
         <List id={panelId} anchorEl={anchorEl}>
           {menuItems.map(({ key, link, ...itemRestProps }) => (
             <>
@@ -127,15 +119,30 @@ const DropdownMenu = ({
                   <Typography className={classes.styledMenu}>
                     <MenuLink {...itemRestProps} />
                   </Typography>
-                  <ChevronRightIcon />
                 </ListItem>
               </NavLink>
-              <Divider />
+              <Divider variant="middle" classes={{ root: classes.divider }} />
             </>
           ))}
         </List>
+        <List id={panelId} anchorEl={anchorEl}>
+          <>
+            <NavLink to="TODO">
+              <ListItem key="bag" justify="center" button onClick={handleClose}>
+                <Typography className={classes.styledSubMenu}>
+                  <MenuLink children="Bag" style={{ color: '#a06958' }} />
+                </Typography>
+              </ListItem>
+              <ListItem>
+                <Typography className={classes.styledSubMenu}>
+                  <MenuLink children="Sign In" style={{ color: '#a06958' }} />
+                </Typography>
+              </ListItem>
+            </NavLink>
+          </>
+        </List>
       </Drawer>
-    </Box >
+    </Box>
   );
 };
 
