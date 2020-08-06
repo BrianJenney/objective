@@ -4,148 +4,14 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Typed from 'typed.js';
-import SwitchLink from './common/SwitchLink';
+import SwitchLink from '../common/SwitchLink';
 
-// Dictionary to translate contentful entry to aboslute position:
-const posValues = {
-  topLeft: {
-    top: '20%',
-    left: '6%'
-  },
-  bottomLeft: {
-    bottom: '10%',
-    left: '6%'
-  },
-  topRight: {
-    top: '20%',
-    right: '6%'
-  },
-  bottomRight: {
-    bottom: '10%',
-    right: '6%'
-  },
-  center: {
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
-  },
-  topCenter: {
-    top: '32%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
-
-const sharedStyles = {
-  heroContainer: {
-    width: '100%',
-    position: 'relative',
-    textAlign: 'center'
-  },
-  ctaBox: {
-    color: 'white',
-    height: 200,
-    background: 'none',
-    position: 'absolute'
-  },
-  imageBox: {
-    width: '100%'
-  }
-};
-
-const screenreaderStyles = {
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  width: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  whiteSpace: 'nowrap'
-};
-
-const mobileStyles = {
-  ...sharedStyles,
-  assets: {
-    hero: 'http://cdn1.stopagingnow.com/objective/assets/mobile-cropped.png',
-    alt: 'Alt text'
-  },
-  button: {
-    marginTop: -5,
-    border: 'none',
-    width: '100%',
-    fontFamily: 'p22-underground, Helvetica, sans',
-    fontWeight: 900,
-    padding: '12px',
-    letterSpacing: '1.33px',
-    lineHeight: 2.14,
-    fontSize: 16,
-    height: '55px',
-    cursor: 'pointer'
-  },
-  leadingText: {
-    fontFamily: 'FreightTextProBook',
-    color: 'black',
-    fontSize: 40,
-    position: 'relative'
-  },
-  typedText: {
-    height: 64,
-    display: 'flex',
-    marginTop: 12,
-    fontSize: 38,
-    flexDirection: 'column',
-    textAlign: 'left',
-    lineHeight: 'normal'
-  },
-  underline: {
-    height: 4,
-    backgroundColor: 'black',
-    width: '100%',
-    position: 'absolute',
-    top: 72
-  }
-};
-
-const desktopStyles = {
-  ...sharedStyles,
-  assets: {
-    hero: 'http://cdn1.stopagingnow.com/objective/assets/desktop-cropped.png',
-    alt: 'Alt text'
-  },
-  button: {
-    marginTop: 10,
-    fontFamily: 'p22-underground, Helvetica, sans',
-    border: 'none',
-    fontWeight: 900,
-    padding: '12px',
-    letterSpacing: '1.33px',
-    lineHeight: 2.14,
-    fontSize: 16,
-    height: '55px',
-    cursor: 'pointer'
-  },
-  leadingText: {
-    fontFamily: 'FreightTextProBook',
-    color: 'black',
-    fontSize: 58,
-    position: 'relative'
-  },
-  typedText: {
-    height: 64,
-    marginTop: 20,
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'left',
-    lineHeight: 'normal'
-  },
-  underline: {
-    height: 4,
-    backgroundColor: 'black',
-    width: '100%',
-    position: 'absolute',
-    top: 90
-  }
-};
+import {
+  posValues,
+  desktopStyles,
+  mobileStyles,
+  screenreaderStyles
+} from './styles/contentfulHeroStyles';
 
 const mapContentfulValues = content => {
   desktopStyles.assets.hero = content.desktopImage.fields.file.url;
@@ -178,7 +44,6 @@ const ContentfulHero = ({ content }) => {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down('sm'));
   const styles = sm ? mobileStyles : desktopStyles;
-  let segmentProperties;
 
   // Calculate width based on longest supplied string:
   const getBoxWidth = arr => {
@@ -193,6 +58,13 @@ const ContentfulHero = ({ content }) => {
   const altText = styles.assets.alt;
   const { leadingText, typedText, buttonText, buttonDestination } = content;
   const boxWidth = getBoxWidth(typedText);
+
+  const segmentProperties = {
+    cta: buttonText,
+    destination: buttonDestination,
+    site_location: 'home',
+    text: `${leadingText} ${typedText.join(', ')} - ${buttonText}`
+  };
 
   const typewriterOptions = {
     typeSpeed: 120,
@@ -221,18 +93,12 @@ const ContentfulHero = ({ content }) => {
       <SwitchLink
         to={buttonDestination}
         content={buttonContent}
-        segmentProperties={{
-          cta: 'Shop All',
-          destination: buttonDestination,
-          site_location: 'home',
-          text: 'SHOP NOW'
-        }}
         onClick={segmentTrackBannerClicked}
       ></SwitchLink>
     );
   };
 
-  const renderAccessibleText = () => typedText.map(string => <li>{string}</li>);
+  const renderAccessibleText = () => typedText.map(text => <li>{text}</li>);
 
   const renderTypedText = () => (
     <div style={{ ...styles.typedText }}>
@@ -244,7 +110,7 @@ const ContentfulHero = ({ content }) => {
 
   const renderLeadingText = () => <div style={{ ...styles.leadingText }}>{leadingText}</div>;
 
-  const Result = () => (
+  const Hero = () => (
     <div style={{ ...styles.heroContainer }}>
       <img alt={altText} src={image} style={{ ...styles.imageBox }}></img>
       <div style={{ ...styles.ctaBox, width: boxWidth }}>
@@ -256,7 +122,7 @@ const ContentfulHero = ({ content }) => {
     </div>
   );
 
-  return <Result />;
+  return <Hero />;
 };
 
 ContentfulHero.propTypes = {
