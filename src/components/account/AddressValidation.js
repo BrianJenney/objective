@@ -36,6 +36,11 @@ const useStyles = makeStyles({
     fontSize: 18,
     lineHeight: '1.2'
   },
+  textXs: {
+    fontSize: 18,
+    lineHeight: '1.2',
+    textAlign: 'center'
+  },
   atitle: {
     fontSize: 20,
     fontFamily: 'freight-text-pro, sans-serif',
@@ -177,7 +182,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
               <Typography className={xs ? classes.titleXs : classes.title}>
                 Shipping Address Validation
               </Typography>
-              <Typography className={classes.text}>
+              <Typography className={xs ? classes.textXs : classes.text}>
                 We were not able to validate your shipping address.
               </Typography>
               <Typography className={classes.subtitle}>
