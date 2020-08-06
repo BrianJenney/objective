@@ -102,7 +102,7 @@ const Cart = ({
 
   // remove hidden items to ensure numberof items displays correctly
   // then identify promotional items
-  const visibleItems = cart.items.filter(item => item.visibility !== 'hidden');
+  const visibleItems = cart.items.filter(item => !item.isHidden);
   const promotionalItems = visibleItems.filter(item => item.pipInsertId);
   const cartCount = visibleItems.reduce((acc, item) => acc + item.quantity, 0);
   const hideLPCoupon = !!history.location.state;
@@ -281,6 +281,7 @@ const Cart = ({
               (item, index) =>
                 // have to iterate through full cart and then remove hidden & pipInserted items
                 // so the index is maintained since it is used to remove items from cart
+                !item.isHidden &&
                 !item.pipInsertId && (
                   <StyledDrawerGrid container direction="row" key={`cart-${item._id}`}>
                     <Grid
