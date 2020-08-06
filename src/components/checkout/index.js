@@ -150,6 +150,7 @@ const Checkout = ({
         product_id: item.variant_id,
         variant: item.variant_id,
         name: item.variant_name,
+        free_item: !!item.pipInsertId,
         brand: cart.storeCode
       });
     });
