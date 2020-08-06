@@ -26,16 +26,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
         store.dispatch(receivedCreateAccountFailure(data));
       }
       break;
-    case 'fe.account.fetched':
-      debugRabbitResponse('Account Order Placed Response', status, data, fields, properties);
-      if (status === 'success') {
-        const guestCheckout = { data };
-        store.dispatch(receivedFetchAccountSuccess(data));
-        if (!guestCheckout) store.dispatch(receivedLoginSuccess(data, data.account_jwt));
-      } else {
-        store.dispatch(receivedFetchAccountFailure(data));
-      }
-      break;
     case 'account.request.get':
     case 'account.request.find':
       debugRabbitResponse('Account Get Response', status, data, fields, properties);
@@ -63,22 +53,6 @@ export const handleAccountResponse = (status, data, fields, properties) => {
       debugRabbitResponse('Account Change Password Response', status, data, fields, properties);
       if (status === 'success') {
         store.dispatch(receivedChangePasswordSuccess(data));
-      } else {
-        store.dispatch(receivedChangePasswordFailure(data));
-      }
-      break;
-    case 'account.request.changePasswordPostOrder':
-      debugRabbitResponse(
-        'Account Change Password Post Order Response',
-        status,
-        data,
-        fields,
-        properties
-      );
-      if (status === 'success') {
-        store.dispatch(receivedChangePasswordSuccess(data));
-        store.dispatch(receivedCreateAccountSuccess(data, data.account_jwt));
-        store.dispatch(receivedLoginSuccess(data, data.account_jwt));
       } else {
         store.dispatch(receivedChangePasswordFailure(data));
       }

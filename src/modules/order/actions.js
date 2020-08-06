@@ -1,6 +1,5 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable camelcase */
 import {
+  REQUEST_CREATE_ORDER,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
   REQUEST_CANCEL_ORDER,
@@ -16,14 +15,71 @@ const localStorageClient = require('store');
 const msgpack = require('msgpack-lite');
 const ObjectId = require('bson-objectid');
 
-export const receivedCreateOrderSuccess = order => async dispatch => {
+export const requestCreateOrder = (cart, nonceOrToken) => async (dispatch, getState) => {
+  dispatch({
+    type: REQUEST_CREATE_ORDER,
+    payload: { isLoading: true }
+  });
+  const { client: stompClient, replyTo } = getState().stomp;
+  const { merchantAccountId } = getState().storefront;
+
+  /**
+   * Total hack here, but if you refresh the page, you don't get a these fields
+   * in your cart & orders will fail. Just make sure they're all there.
+   */
+  if (!cart.catalogId || !cart.storeCode || !cart.email) {
+    console.log('***** HAD TO LOAD SOME CART DATA FROM HACK *****');
+    cart.catalogId = getState().storefront.catalogId;
+    cart.storeCode = getState().storefront.code;
+    cart.email = getState().account.data.email;
+  }
+
+  let params = {
+    data: { cart },
+    params: {
+      nonceOrToken,
+      merchantAccountId,
+      ...(localStorageClient.get('clickId') && {
+        clickId: localStorageClient.get('clickId')
+      })
+    }
+  };
+
+  if (cart.account_jwt) {
+    const account_jwt = cart.account_jwt;
+    params.params.account_jwt = account_jwt;
+    delete cart.account_jwt;
+  } else if (cart.accountInfo) {
+    const accountInfo = cart.accountInfo;
+    params.params.accountInfo = accountInfo;
+    delete cart.accountInfo;
+  }
+
+  const payload = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/order/order.request.createorder',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+  // @segment - Order Submitted Event
+  window.analytics.track('Order Submitted', {
+    cart_id: cart._id
+  });
+};
+
+export const receivedCreateOrderSuccess = order => async (dispatch, getState) => {
   dispatch({
     type: RECEIVED_CREATE_ORDER_SUCCESS,
     payload: order
   });
+
   // @segment Order Completed Event
   // @TODO hard coded "Credit Card" in payment_method should be updated once we introduce PayPal
-  const orderItemsTransformed = [];
+  let orderItemsTransformed = [];
   order.items.forEach(item => {
     orderItemsTransformed.push({
       brand: order.storeCode,
@@ -38,7 +94,7 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
   });
 
   const paymentMethod =
-    Object.prototype.hasOwnProperty.call(order, 'method') && order.paymentData.method === 'paypal'
+    order.paymentData.hasOwnProperty('method') && order.paymentData.method === 'paypal'
       ? 'paypal'
       : 'creditcard';
   window.analytics.track('Order Completed', {
@@ -54,13 +110,12 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
     order_link: `https://objectivewellness.com/orders/${order._id}`,
     payment_method: paymentMethod === 'creditcard' ? 'Credit Card' : 'PayPal',
     payment_method_detail:
-      // prettier-ignore
       // eslint-disable-next-line no-nested-ternary
       paymentMethod === 'creditcard'
         ? order.paymentData.cardType
-        : Object.prototype.hasOwnProperty.call(order, 'email')
-          ? order.paymentData.email
-          : '',
+        : order.paymentData.hasOwnProperty('email')
+        ? order.paymentData.email
+        : '',
     products: orderItemsTransformed,
     shipping: order.shippingMethod.price,
     subtotal: order.subtotal,
@@ -69,7 +124,7 @@ export const receivedCreateOrderSuccess = order => async dispatch => {
   });
 };
 
-export const receivedCreateOrderFailure = order => async dispatch => {
+export const receivedCreateOrderFailure = order => async (dispatch, getState) => {
   dispatch({
     type: RECEIVED_CREATE_ORDER_FAILURE,
     payload: order
@@ -90,9 +145,12 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
   const { client: stompClient, replyTo } = getState().stomp;
   let { account_jwt } = getState().account.data;
   if (!account_jwt) {
-    const orderState = getState().order;
-    if (orderState.order && orderState.order.account && orderState.order.account.account_jwt) {
-      // eslint-disable-next-line prefer-destructuring
+    let orderState = getState().order;
+    if (
+      orderState.hasOwnProperty('order') &&
+      orderState.order.hasOwnProperty('account') &&
+      orderState.order.account.hasOwnProperty('account_jwt')
+    ) {
       account_jwt = orderState.order.account.account_jwt;
     }
   }
@@ -117,7 +175,7 @@ export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, get
   });
 };
 
-export const receivedCancelOrderSuccess = order => async dispatch => {
+export const receivedCancelOrderSuccess = order => async (dispatch, getState) => {
   dispatch({
     type: RECEIVED_CANCEL_ORDER_SUCCESS,
     payload: order
@@ -167,7 +225,7 @@ export const receivedCancelOrderSuccess = order => async dispatch => {
   });
 };
 
-export const receivedCancelOrderFailure = order => async dispatch => {
+export const receivedCancelOrderFailure = order => async (dispatch, getState) => {
   dispatch({
     type: RECEIVED_CANCEL_ORDER_FAILURE,
     payload: order
@@ -248,8 +306,7 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
   let account_jwt = '';
   if (accountJwt) {
     account_jwt = accountJwt;
-  } else if (getState().account.data.account_jwt) {
-    // eslint-disable-next-line prefer-destructuring
+  } else if (getState().account.data.hasOwnProperty('account_jwt')) {
     account_jwt = getState().account.data.account_jwt;
   }
 
@@ -278,13 +335,15 @@ export const requestGetOrder = (accountJwt, orderId) => (dispatch, getState) => 
   );
 };
 
-export const receivedGetOrder = order => dispatch => {
+export const receivedGetOrder = order => (dispatch, getState) => {
   dispatch({
     type: RECEIVED_GET_ORDER,
     payload: order
   });
 };
 
-export const resetOrderState = () => ({
-  type: RESET_ORDER_STATE
-});
+export const resetOrderState = () => {
+  return {
+    type: RESET_ORDER_STATE
+  };
+};

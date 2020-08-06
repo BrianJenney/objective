@@ -1,7 +1,3 @@
-// Event-based architecture
-export const FE_ORDER_SUBMITTED = 'FE_ORDER_SUBMITTED';
-
-// Old request-based architecture kept around until legacy OMS is retired.
 export const REQUEST_CREATE_ORDER = 'REQUEST_CREATE_ORDER';
 export const RECEIVED_CREATE_ORDER_SUCCESS = 'RECEIVED_CREATE_ORDER_SUCCESS';
 export const RECEIVED_CREATE_ORDER_FAILURE = 'RECEIVED_CREATE_ORDER_FAILURE';

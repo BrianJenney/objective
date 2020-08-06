@@ -11,7 +11,7 @@ import {
   requestPatchAccount,
   clearPatchAccountError
 } from '../modules/account/actions';
-import { emitOrderSubmitted } from '../modules/order/event-actions';
+import { requestCreateOrder } from '../modules/order/actions';
 import { withCart } from '../hoc';
 
 const mapDispatchToProps = {
@@ -23,9 +23,15 @@ const mapDispatchToProps = {
   clearLoginError,
   requestPatchAccount,
   clearPatchAccountError,
-  emitOrderSubmitted
+  requestCreateOrder
 };
 
-const enhance = compose(connect(null, mapDispatchToProps), withCart);
+const enhance = compose(
+  connect(
+    null,
+    mapDispatchToProps
+  ),
+  withCart
+);
 
 export default enhance(Checkout);

@@ -52,22 +52,8 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       // This is in the *account* module, so state updates are made in that reducer.
       store.dispatch(receivedGetOrder(data));
       break;
-    case 'fe.order.status':
-      if (status === 'success') {
-        // clear cart on success
-        store.dispatch(receivedCreateOrderSuccess(data));
-        store.dispatch(requestRemoveCartById(data.cartId));
-
-        // ImpactRadius, Segment
-        // Remove clickId/timer on success order
-        if (properties.clickId) {
-          localStorageClient.remove('clickId');
-          localStorageClient.remove('clickIdSetupTime');
-        }
-      } else {
-        store.dispatch(receivedCreateOrderFailure(data));
-      }
-      break;
     default:
+      // eslint-disable-next-line no-console
+      console.log(`bad response ${fields.routingKey}`);
   }
 };
