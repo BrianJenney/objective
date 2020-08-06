@@ -3,6 +3,7 @@
 import {
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
+  REQUEST_CANCEL_ORDER,
   RECEIVED_CANCEL_ORDER_SUCCESS,
   RECEIVED_CANCEL_ORDER_FAILURE,
   REQUEST_FIND_ORDERS_BY_ACCOUNT,
@@ -77,6 +78,42 @@ export const receivedCreateOrderFailure = order => async dispatch => {
   window.analytics.track('Order Failed', {
     cart_id: localStorage.cartId,
     error_message: order
+  });
+};
+
+export const requestCancelOrder = (orderId, orderNumber) => async (dispatch, getState) => {
+  dispatch({
+    type: REQUEST_CANCEL_ORDER,
+    payload: { isLoading: true }
+  });
+
+  const { client: stompClient, replyTo } = getState().stomp;
+  let { account_jwt } = getState().account.data;
+  if (!account_jwt) {
+    const orderState = getState().order;
+    if (orderState.order && orderState.order.account && orderState.order.account.account_jwt) {
+      // eslint-disable-next-line prefer-destructuring
+      account_jwt = orderState.order.account.account_jwt;
+    }
+  }
+  const params = {
+    data: { orderId },
+    params: { account_jwt }
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+  stompClient.send(
+    '/exchange/order/order.request.cancelorder',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId(),
+      jwt: account_jwt,
+      token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+  // @segment - Cancel Order Submitted Event
+  window.analytics.track('Order Cancel Submitted', {
+    order_id: orderNumber
   });
 };
 

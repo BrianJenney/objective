@@ -28,7 +28,7 @@ import {
 
 import StatusStepper from './StatusStepper';
 
-import { emitOrderCancelled } from '../../modules/order/event-actions';
+import { requestCancelOrder } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -140,7 +140,7 @@ OrderCartSummary.propTypes = {
 };
 
 const cancelOrder = (orderRef, orderNumber, dispatch) => {
-  dispatch(emitOrderCancelled(orderRef, orderNumber));
+  dispatch(requestCancelOrder(orderRef, orderNumber));
 };
 
 const OrderSummary = ({
