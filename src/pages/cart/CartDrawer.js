@@ -13,6 +13,7 @@ import PromoCodeView from './PromoCodeView';
 import { removeFromCart, adjustQty } from '../../modules/cart/functions';
 import { setCartDrawerOpened } from '../../modules/cart/actions';
 import { displayMoney } from '../../utils/formatters';
+import { separateCartItemTypes } from './cartUtils';
 import segmentProductClickEvent from '../../utils/product/segmentProductClickEvent';
 import { colorPalette } from '../../components/Theme/color-palette';
 import {
@@ -100,11 +101,7 @@ const Cart = ({
   const [promoVisible, setPromoVisible] = useState(false);
   const dispatch = useDispatch();
 
-  // remove hidden items to ensure numberof items displays correctly
-  // then identify promotional items
-  const visibleItems = cart.items.filter(item => !item.isHidden);
-  const promotionalItems = visibleItems.filter(item => item.pipInsertId);
-  const cartCount = visibleItems.reduce((acc, item) => acc + item.quantity, 0);
+  const { visibleItems, promotionalItems, cartCount } = separateCartItemTypes(cart.items);
   const hideLPCoupon = !!history.location.state;
 
   useEffect(() => {
@@ -457,7 +454,8 @@ const Cart = ({
                         segmentProductClickEvent({
                           image_url: `https:${item.assets.thumbnail}`,
                           sku: item.sku,
-                          price: Number.parseFloat(0),
+                          quantity: item.quantity,
+                          price: Number.parseFloat(item.unit_price),
                           product_id: item.variant_id,
                           variant: item.variant_id,
                           name: item.variant_name,
@@ -502,7 +500,8 @@ const Cart = ({
                         segmentProductClickEvent({
                           image_url: `https:${item.assets.thumbnail}`,
                           sku: item.sku,
-                          price: Number.parseFloat(0),
+                          quantity: item.quantity,
+                          price: Number.parseFloat(item.unit_price),
                           product_id: item.variant_id,
                           variant: item.variant_id,
                           name: item.variant_name,
