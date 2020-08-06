@@ -68,6 +68,7 @@ class App extends Component {
 
     EventEmitter.addListener('account.created', ({ token }) => {
       localStorageClient.set('olympusToken', token);
+
       const accountId = jwt.decode(token).account_id;
 
       requestPatchCart(this.props.cart._id, {

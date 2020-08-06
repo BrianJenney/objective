@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import _ from 'lodash';
 
 import Link from '@material-ui/core/Link';
 import { useTheme, makeStyles } from '@material-ui/core/styles';
@@ -28,7 +25,7 @@ import {
 
 import StatusStepper from './StatusStepper';
 
-import { emitOrderCancelled } from '../../modules/order/event-actions';
+import { requestCancelOrder } from '../../modules/order/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -113,17 +110,17 @@ const getStatusStepper = statusStepper => {
 
 const TrackingInfo = ({ tracking }) => {
   const classes = useStyles();
-  return tracking.map(trackingItem => (
+  return tracking.map(tracking => (
     <>
       <Typography className={classes.text} pt={2}>
-        {trackingItem && (
+        {tracking && (
           <Link
-            href={trackingItem.url}
+            href={tracking.url}
             style={{ color: 'black' }}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {trackingItem.number}
+            {tracking.number}
           </Link>
         )}
       </Typography>
@@ -134,13 +131,8 @@ const TrackingInfo = ({ tracking }) => {
 const OrderCartSummary = ({ order, hideLPCoupon }) =>
   order ? <CartSummary order={order} hideLPCoupon={hideLPCoupon} /> : null;
 
-OrderCartSummary.propTypes = {
-  hideLPCoupon: PropTypes.node,
-  order: PropTypes.object.isRequired
-};
-
 const cancelOrder = (orderRef, orderNumber, dispatch) => {
-  dispatch(emitOrderCancelled(orderRef, orderNumber));
+  dispatch(requestCancelOrder(orderRef, orderNumber));
 };
 
 const OrderSummary = ({
@@ -163,7 +155,6 @@ const OrderSummary = ({
   order
 }) => {
   const dispatch = useDispatch();
-  const orderCopy = _.cloneDeep(order);
   const [guestPasswordFormSubmitted, setGuestPasswordFormSubmitted] = useState(false);
   const onGuestOrderPasswordSubmit = (values, actions) => {
     dispatch(
@@ -181,13 +172,13 @@ const OrderSummary = ({
       )
     );
 
-    orderCopy.account.isGuest = false;
-    orderCopy.account.passwordSet = true;
-    if (Object.prototype.hasOwnProperty.call(orderCopy.account, 'temporarilyLogin')) {
-      delete orderCopy.account.temporarilyLogin;
+    order.account.isGuest = false;
+    order.account.passwordSet = true;
+    if (order.account.hasOwnProperty('temporarilyLogin')) {
+      delete order.account.temporarilyLogin;
     }
-    dispatch(receivedCreateAccountSuccess(orderCopy.account, orderCopy.account.account_jwt));
-    dispatch(receivedLoginSuccess(orderCopy.account, orderCopy.account.account_jwt));
+    dispatch(receivedCreateAccountSuccess(order.account, order.account.account_jwt));
+    dispatch(receivedLoginSuccess(order.account, order.account.account_jwt));
     setGuestPasswordFormSubmitted(true);
   };
 
@@ -203,11 +194,11 @@ const OrderSummary = ({
   const { phone } = billingAddress;
 
   const shouldShowSetPasswordForm = !!(
-    Object.prototype.hasOwnProperty.call(order, 'account') &&
-    Object.prototype.hasOwnProperty.call(account, 'passwordSet') &&
-    Object.prototype.hasOwnProperty.call(account, 'isGuest') &&
-    !account.passwordSet &&
-    account.isGuest
+    order.hasOwnProperty('account') &&
+    order.account.hasOwnProperty('passwordSet') &&
+    order.account.hasOwnProperty('isGuest') &&
+    !order.account.passwordSet &&
+    order.account.isGuest
   );
 
   return (
@@ -221,8 +212,8 @@ const OrderSummary = ({
           className="account-history-return"
           style={{
             display:
-              Object.prototype.hasOwnProperty.call(order, 'account') ||
-              (account && Object.prototype.hasOwnProperty.call(account, 'temporarilyLogin'))
+              order.hasOwnProperty('account') ||
+              (account.data && account.data.hasOwnProperty('temporarilyLogin'))
                 ? 'none'
                 : 'block'
           }}
@@ -299,7 +290,7 @@ const OrderSummary = ({
         </Grid>
         <Grid item xs={addressesWidth}>
           <Box
-            paddingLeft={xs || paymentMethod === 'paypal' ? 0 : 3}
+            paddingLeft={xs ? 0 : paymentMethod !== 'paypal' ? 3 : 0}
             borderTop={xs ? 1 : 0}
             paddingBottom={3}
           >
@@ -329,27 +320,7 @@ const OrderSummary = ({
   );
 };
 
-OrderSummary.propTypes = {
-  account: PropTypes.object.isRequired,
-  addressesWidth: PropTypes.number.isRequired,
-  billingAddress: PropTypes.object.isRequired,
-  classes: PropTypes.bool.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  hideLPCoupon: PropTypes.node,
-  order: PropTypes.object.isRequired,
-  orderEmail: PropTypes.string.isRequired,
-  orderId: PropTypes.string.isRequired,
-  orderNumber: PropTypes.string.isRequired,
-  orderRef: PropTypes.string.isRequired,
-  orderStatus: PropTypes.string.isRequired,
-  paymentData: PropTypes.object.isRequired,
-  shippingAddress: PropTypes.object.isRequired,
-  statusStepper: PropTypes.func.isRequired,
-  tracking: PropTypes.object.isRequired,
-  xs: PropTypes.object.isRequired
-};
-
-const OrderDetail = () => {
+const OrderDetail = ({ hideLPCoupon }) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
 
