@@ -7,12 +7,12 @@ const TransactionMessage = ({ orderError, errorMessage }) => (
   <>
     {orderError ? (
       <Box className="transaction-message-container">
-        <Typography className="title">Oops! Something went wrong.</Typography>
+        <Typography className="title">We're sorry, something went wrong.</Typography>
         <Typography className="error-subheader">
           Your credit card failed when we tried to process your payment.
           {typeof errorMessage === 'string'
             ? ` ${errorMessage}`
-            : 'Please review your information and submit again.'}
+            : ' Please review your information and submit again.'}
         </Typography>
       </Box>
     ) : (

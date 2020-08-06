@@ -30,10 +30,11 @@ const BlogCategory = ({ computedMatch, location }) => {
   const validCategory = seoMap[categorySlug];
   let title;
   let description;
+  let indexThisPage;
   const isSleep = matchPath(location.pathname, { path: '/journal/category/sleep' });
 
   if (validCategory) {
-    ({ title, description } = validCategory);
+    ({ title, description, indexThisPage } = validCategory);
   }
 
   const fetchData = async () => {
@@ -73,7 +74,7 @@ const BlogCategory = ({ computedMatch, location }) => {
   if (posts.length === 0) {
     return (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <LoadingSpinner loadingMessage="Loading posts..." page="journal" />
         </ScrollToTop>
@@ -95,7 +96,7 @@ const BlogCategory = ({ computedMatch, location }) => {
   return (
     posts.length && (
       <>
-        <HeadTags title={title} description={description} />
+        <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           {isSleep ? (
             <div className="journal-gallery">
