@@ -13,7 +13,7 @@ import { contentfulClient } from '../utils/contentful';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ContentfulHero from '../components/ContentfulHero';
+import { ContentfulHero } from '../components/contentfulHero';
 
 import './home/home-style.scss';
 import { StyledContainer } from '../assets/styles/StyledComponents';
