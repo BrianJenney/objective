@@ -165,7 +165,7 @@ const Header = ({ currentUser, location, history }) => {
   const renderPromoBanner = () => {
     if (burger) {
       return (
-        <div data-id="header-bar">
+        <div data-testid="header-bar">
           <Grid container item xs={12} className="headerBar">
             <Grid item xs={12}>
               <StyledBox fontSize={9}>
@@ -180,7 +180,7 @@ const Header = ({ currentUser, location, history }) => {
       );
     }
     return (
-      <div className="headerBar" data-id="header-desktop">
+      <div className="headerBar" data-testid="header-desktop">
         <Container>
           <Grid container item xs={12}>
             <Grid item xs={12}>
@@ -228,7 +228,7 @@ const Header = ({ currentUser, location, history }) => {
                 <Logo />
               </NavLink>
             </Grid>
-            <Grid item xs={1} className="mobile-cart-icon">
+            <Grid item xs={1} className="mobile-cart-icon" data-testid="shopping-cart-mobile">
               {!isCheckoutPage && (
                 <ShoppingCart showCartCount={false} hideLPCoupon={locationState} />
               )}
