@@ -45,15 +45,22 @@
     }
   }
 
+  .shopping-cart-wrapper {
+    display: flex;
+    align-items: center;
+    color: #553226;
+    font-family: $brandSans;
+  }
+
   .headerBar {
     background: #b5d7bf;
-    color: #ffffff;
+    color: #466650;
     height: 40px;
     letter-spacing: 0.8px;
     width: 100%;
     text-align: center;
     a {
-      color: #fff;
+      color: #466650;
     }
     .closeIcon {
       cursor: pointer;
@@ -71,7 +78,7 @@
     @media (min-width: 450px) {
       .closeIconMobile {
         position: absolute;
-        top: 87px;
+        top: 12px;
         right: 10px;
       }
     }

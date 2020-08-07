@@ -54,7 +54,6 @@ const StyledBox = withStyles(() => ({
     textTransform: 'uppercase',
     letterSpacing: '1.5px',
     fontSize: 16
-    // lineHeight: '44px'
   }
 }))(Box);
 
@@ -364,7 +363,7 @@ const Footer = ({ location, currentUser }) => {
                   Objective is committed to making its website accessible for all users, and will
                   continue to take all steps necessary to ensure compliance with applicable laws.
                 </Typography>
-                <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                <Typography className="disclaimer-text">
                   If you have difficulty accessing any content, feature or functionality on our
                   website or on our other electronic platforms, please email us at{' '}
                   <Link
@@ -382,6 +381,9 @@ const Footer = ({ location, currentUser }) => {
                     800-270-5771
                   </Link>{' '}
                   so that we can provide you access through an alternative method.
+                </Typography>
+                <Typography className="disclaimer-text" align="center">
+                  1301 Sawgrass Corporate Parkway, Sunrise, FL 33323
                 </Typography>
               </Grid>
               <div className="ccpa-footer">
@@ -404,32 +406,55 @@ const Footer = ({ location, currentUser }) => {
           <Grid container spacing={0}>
             <Grid item xs={12} className="footer-main-holder">
               <Grid container item xs={12} className="footer-main">
-                <Grid
-                  container
-                  direction="row"
-                  alignItems="center"
-                  className="border-top border-bottom"
-                >
-                  <Grid item xs={2}>
-                    <Box className="logo">
-                      <LogoShort />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={9} className="promise border-left">
+                <Grid container direction="row" alignItems="center">
+                  <Grid item xs={9} className="promise">
                     <Grid item>
                       <Typography variant="h4" gutterBottom className="uppercase">
-                        THE OBJECTIVE PROMISE
+                        Join the Hive
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <p>
-                        Behind every Objective supplement are studies, endless hours of research and
-                        a team with over 50 years of combined experience formulating dietary
-                        supplements. And the one thing we know for sure? Everybody&#39;s different.
-                        Every body is different. It&#39;s possible that what works wonders for your
-                        best friend might not do a thing for you. So let us know and we&#39;ll
-                        refund your money. It&#39;s that simple.
-                      </p>
+                      <Formik
+                        initialValues={{ email: '' }}
+                        onSubmit={handleSubmit}
+                        validationSchema={schema}
+                        render={() => (
+                          <Form style={{ marginTop: 24, height: 61 }}>
+                            <Field
+                              name="email"
+                              label=""
+                              placeholder="Your Email"
+                              component={InputField}
+                              InputProps={{
+                                style: {
+                                  border: '#fff solid 1px',
+                                  width: '100%',
+                                  height: '100%'
+                                }
+                              }}
+                            />
+                            <Button type="submit">
+                              <Grid container alignItems="center" justify="center">
+                                <Box pt={1}>
+                                  <Arrow />
+                                  <div
+                                    style={{
+                                      fontFamily: 'P22-Underground',
+                                      fontSize: '14px',
+                                      fontWeight: 600,
+                                      position: 'relative',
+                                      bottom: 4,
+                                      letterSpacing: 1.17
+                                    }}
+                                  >
+                                    Submit
+                                  </div>
+                                </Box>
+                              </Grid>
+                            </Button>
+                          </Form>
+                        )}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -534,48 +559,6 @@ const Footer = ({ location, currentUser }) => {
                           Subscribe and never miss out on new products, special offers, health tips,
                           and more.
                         </Grid>
-
-                        <Formik
-                          initialValues={{ email: '' }}
-                          onSubmit={handleSubmit}
-                          validationSchema={schema}
-                          render={() => (
-                            <Form style={{ marginTop: 24, height: 61 }}>
-                              <Field
-                                name="email"
-                                label=""
-                                placeholder="Your Email"
-                                component={InputField}
-                                InputProps={{
-                                  style: {
-                                    border: '#fff solid 1px',
-                                    width: '100%',
-                                    height: '100%'
-                                  }
-                                }}
-                              />
-                              <Button type="submit">
-                                <Grid container alignItems="center" justify="center">
-                                  <Box pt={1}>
-                                    <Arrow />
-                                    <div
-                                      style={{
-                                        fontFamily: 'P22-Underground',
-                                        fontSize: '14px',
-                                        fontWeight: 600,
-                                        position: 'relative',
-                                        bottom: 4,
-                                        letterSpacing: 1.17
-                                      }}
-                                    >
-                                      Submit
-                                    </div>
-                                  </Box>
-                                </Grid>
-                              </Button>
-                            </Form>
-                          )}
-                        />
                       </Grid>
                     )}
                   </Grid>
@@ -655,7 +638,7 @@ const Footer = ({ location, currentUser }) => {
                   Objective is committed to making its website accessible for all users, and will
                   continue to take all steps necessary to ensure compliance with applicable laws.
                 </Typography>
-                <Typography className="disclaimer-text" style={{ marginBottom: 0 }}>
+                <Typography className="disclaimer-text">
                   If you have difficulty accessing any content, feature or functionality on our
                   website or on our other electronic platforms, please email us at{' '}
                   <Link
@@ -671,6 +654,9 @@ const Footer = ({ location, currentUser }) => {
                   </Link>{' '}
                   or call us at 800-270-5771 so that we can provide you access through an
                   alternative method.
+                </Typography>
+                <Typography className="disclaimer-text" align="center">
+                  1301 Sawgrass Corporate Parkway, Sunrise, FL 33323
                 </Typography>
               </Grid>
               <div className="ccpa-footer">

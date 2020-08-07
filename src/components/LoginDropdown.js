@@ -54,8 +54,9 @@ const LoginDropdown = ({ text }) => {
       >
         <Typography
           style={{
-            fontFamily: $brandSans,
-            fontSize: '16px',
+            fontFamily: 'proxima-nova, sans-serif, Helvetica, sans',
+            color: '#553226',
+            fontSize: '13px',
             letterSpacing: '1px'
           }}
         >

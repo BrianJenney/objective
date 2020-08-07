@@ -165,20 +165,22 @@ const Header = ({ currentUser, location, history }) => {
   const renderPromoBanner = () => {
     if (burger) {
       return (
-        <Grid container item xs={12} className="headerBar">
-          <Grid item xs={12}>
-            <StyledBox fontSize={9}>
-              <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
-                {contents.text}
-              </NavLink>
-              <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
-            </StyledBox>
+        <div data-id="header-bar">
+          <Grid container item xs={12} className="headerBar">
+            <Grid item xs={12}>
+              <StyledBox fontSize={9}>
+                <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+                  {contents.text}
+                </NavLink>
+                <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
+              </StyledBox>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       );
     }
     return (
-      <div className="headerBar">
+      <div className="headerBar" data-id="header-desktop">
         <Container>
           <Grid container item xs={12}>
             <Grid item xs={12}>
@@ -215,6 +217,7 @@ const Header = ({ currentUser, location, history }) => {
     if (burger) {
       return (
         <>
+          {promoVisible && contents && renderPromoBanner()}
           <Grid container className="top">
             <Grid item xs={1}>
               {renderBurgerIcon()}
@@ -232,7 +235,6 @@ const Header = ({ currentUser, location, history }) => {
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
-          {promoVisible && contents && renderPromoBanner()}
         </>
       );
     }
@@ -292,7 +294,7 @@ const Header = ({ currentUser, location, history }) => {
                 justify="flex-end"
               >
                 {!isCheckoutPage && (
-                  <span>
+                  <span className="shopping-cart-wrapper">
                     <ShoppingCart
                       showCartCount={false}
                       hideLPCoupon={locationState}
