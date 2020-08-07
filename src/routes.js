@@ -176,6 +176,10 @@ export default [
   { path: '/privacypolicy', exact: true, component: PrivacyPolicyPage },
   { path: '/privacypolicy/:slug', exact: true, component: PrivacyPolicyPage },
 
+  // Back to school campaign redirect:
+  { path: '/backto', exact: true, redirectTo: '/bundle/back-to' },
+  { path: '/backto15a', exact: true, redirectTo: '/bundle/back-to' },
+
   { path: '*', exact: true, component: NotFoundPage },
   { path: '/:page', exact: true, component: StaticPage }
 ];

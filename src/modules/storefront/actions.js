@@ -1,7 +1,4 @@
-import {
-  RECEIVED_FETCH_STOREFRONT,
-  RECIEVED_FETCH_STOREFRONT_SEO
-} from './types';
+import { RECEIVED_FETCH_STOREFRONT, RECIEVED_FETCH_STOREFRONT_SEO } from './types';
 import { fetchStorefrontSeo } from '../../utils/blog';
 
 export const receivedFetchStorefront = storeFront => ({
