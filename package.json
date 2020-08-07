@@ -60,6 +60,7 @@
     "stompjs": "^2.3.3",
     "store": "^2.0.12",
     "styled-components": "^4.4.1",
+    "typed.js": "^2.0.11",
     "voucherify": "^3.0.0",
     "yup": "^0.27.0"
   },
