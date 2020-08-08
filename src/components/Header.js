@@ -154,20 +154,22 @@ const Header = ({ currentUser, location, history }) => {
   const renderPromoBanner = () => {
     if (burger) {
       return (
-        <Grid container item xs={12} className="headerBar">
-          <Grid item xs={12}>
-            <StyledBox fontSize={9}>
-              <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
-                {contents.text}
-              </NavLink>
-              <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
-            </StyledBox>
+        <div data-testid="header-bar">
+          <Grid container item xs={12} className="headerBar">
+            <Grid item xs={12}>
+              <StyledBox fontSize={9}>
+                <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+                  {contents.text}
+                </NavLink>
+                <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />
+              </StyledBox>
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       );
     }
     return (
-      <div className="headerBar">
+      <div className="headerBar" data-testid="header-desktop">
         <Container>
           <Grid container item xs={12}>
             <Grid item xs={12}>
@@ -214,8 +216,10 @@ const Header = ({ currentUser, location, history }) => {
                 <Logo />
               </NavLink>
             </Grid>
-            <Grid item xs={1} className="mobile-cart-icon">
-              {!isCheckoutPage && <ShoppingCart hideLPCoupon={locationState} />}
+            <Grid item xs={1} className="mobile-cart-icon" data-testid="shopping-cart-mobile">
+              {!isCheckoutPage && (
+                <ShoppingCart showCartCount={false} hideLPCoupon={locationState} />
+              )}
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
             </Grid>
           </Grid>
