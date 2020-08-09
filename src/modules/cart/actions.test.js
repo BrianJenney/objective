@@ -10,6 +10,9 @@ const msgpack = require('msgpack-lite');
 describe('cart actions', () => {
   let getState;
   let fakeDispatch;
+
+  // we will stub this to make sure it receives the correct args
+
   const clientSendStub = jest.fn();
   beforeEach(() => {
     getState = () => ({
@@ -34,6 +37,7 @@ describe('cart actions', () => {
     });
 
     msgpack.encode = obj => obj;
+
     localStorageClient.get = () => 'secretId';
 
     // same idea of mocking here - we will hard code the analytics function
@@ -45,9 +49,14 @@ describe('cart actions', () => {
     };
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe('requestAddToCart', () => {
     it('sends the correct params to the stomp client', () => {
       actions.requestAddToCart({}, {}, 5)(fakeDispatch, getState);
+
+      // make sure it sends the correct action
       expect(fakeDispatch).toHaveBeenCalledWith({ payload: {}, type: 'REQUEST_ADD_TO_CART' });
 
       const expectedStringifiedCode = JSON.stringify({
@@ -60,11 +69,52 @@ describe('cart actions', () => {
         }
       });
 
+      // this is probably the most useful test - that it actually sends the correct args
       expect(clientSendStub).toHaveBeenCalledWith(
+        expect.anything(), // this arg is hardcoded so who cares
         expect.anything(),
-        expect.anything(),
-        expectedStringifiedCode
+        expectedStringifiedCode // this is what we care about!
       );
+    });
+
+    it('sends the correct params to the stomp client depending on the cart id', () => {
+      const objWithCartId = {
+        product: {},
+        quantity: 5,
+        segmentAnonymousId: 'secretId',
+        cartId: 'cartId'
+      };
+
+      const objNoCartId = {
+        product: {},
+        quantity: 5,
+        segmentAnonymousId: 'secretId',
+        newCartParams: {
+          storeCode: 'storeCode',
+          catalogId: 'catalogId'
+        }
+      };
+
+      const tests = [
+        // cart                 expected
+        [{ _id: 'cartId' }, objWithCartId],
+        [{ foo: 'bar' }, objNoCartId]
+      ];
+
+      tests.forEach(test => {
+        const [cart, expected] = test;
+
+        actions.requestAddToCart(cart, {}, 5)(fakeDispatch, getState);
+
+        const expectedStringifiedCode = JSON.stringify(expected);
+
+        // this is probably the most useful test - that it actually sends the correct args
+        expect(clientSendStub).toHaveBeenCalledWith(
+          expect.anything(), // this arg is hardcoded so who cares
+          expect.anything(),
+          expectedStringifiedCode // this is what we care about!
+        );
+      });
     });
   });
 });
