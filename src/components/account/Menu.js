@@ -15,25 +15,8 @@ import { useTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 
 import Select from '@material-ui/core/Select';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
-const StyledMenuItem = withStyles(theme => ({
-  root: {
-    fontFamily: theme.typography.bodyFontFamily,
-    color: theme.palette.brand.camoGreen,
-    fontSize: 22,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}))(MenuItem);
-
-const StyledExpandIcon = withStyles(theme => ({
-  root: {
-    color: theme.palette.brand.camoGreen,
-    marginRight: 10
-  }
-}))(ExpandMoreIcon);
+import { ReactComponent as DropDownLogo } from '../../assets/static/drop_down_arrow.svg';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const useStyles = makeStyles(theme => ({
   accountHeaderMobile: {
@@ -62,8 +45,34 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 800,
     fontStyle: 'normal',
     fontSize: '14px'
+  },
+  logo: {
+    marginRight: 15
   }
 }));
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen,
+    fontSize: 22,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  }
+}))(MenuItem);
+
+const DownIcon = props => {
+  const classes = useStyles();
+  return (
+    <div style={{height: 20, width: 50}}>
+    <SvgIcon classes={classes.logo}>
+        <DropDownLogo />
+    </SvgIcon>
+    </div>
+  );
+};
+
 
 const AccountMenu = ({ logout }) => {
   const theme = useTheme();
@@ -78,7 +87,7 @@ const AccountMenu = ({ logout }) => {
       className={`${classes.nxTextField} nxTextField`}
       fullWidth
       variant="outlined"
-      IconComponent={StyledExpandIcon}
+      IconComponent={DownIcon}
       // select
       value={mobileSelected}
       onChange={e => {
