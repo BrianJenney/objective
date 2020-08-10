@@ -14,7 +14,8 @@ import { useTheme } from '@material-ui/core/styles';
 
 import { withRouter } from 'react-router-dom';
 
-import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 const StyledMenuItem = withStyles(theme => ({
   root: {
@@ -26,6 +27,13 @@ const StyledMenuItem = withStyles(theme => ({
     }
   }
 }))(MenuItem);
+
+const StyledExpandIcon = withStyles(theme => ({
+  root: {
+    color: theme.palette.brand.camoGreen,
+    marginRight: 10
+  }
+}))(ExpandMoreIcon);
 
 const useStyles = makeStyles(theme => ({
   accountHeaderMobile: {
@@ -66,10 +74,12 @@ const AccountMenu = ({ logout }) => {
   const [deskSelected, setDeskSelected] = useState(window.location.pathname);
 
   const NTextField = withRouter(({ history }) => (
-    <TextField
+    <Select
       className={`${classes.nxTextField} nxTextField`}
       fullWidth
-      select
+      variant="outlined"
+      IconComponent={StyledExpandIcon}
+      // select
       value={mobileSelected}
       onChange={e => {
         history.push(e.target.value, history.location.state);
@@ -81,10 +91,10 @@ const AccountMenu = ({ logout }) => {
           {menuItem.label}
         </StyledMenuItem>
       ))}
-    </TextField>
+    </Select>
   ));
 
-  const DesktopMenu = withRouter(({history}) => (
+  const DesktopMenu = withRouter(({ history }) => (
     <Box width={1} className="account-menu-box">
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
@@ -93,18 +103,34 @@ const AccountMenu = ({ logout }) => {
               primary={
                 <div className="account-side-menu">
                   {menuItem.key === ACCOUNT_MENU_KEYS.LOGOUT ? (
-                    <MenuLink className={classes.link} onClick={logout}>{menuItem.label}</MenuLink>
+                    <MenuLink className={classes.link} onClick={logout}>
+                      {menuItem.label}
+                    </MenuLink>
                   ) : deskSelected === menuItem.to ? (
-                    <NavLink className={classes.selectedLink} value={menuItem.to} to={menuItem.to} onClick={e => {
-                      history.push(e.target.value, history.location.state);
-                      setDeskSelected(menuItem.to);
-                    }}>{menuItem.label}</NavLink>
+                    <NavLink
+                      className={classes.selectedLink}
+                      value={menuItem.to}
+                      to={menuItem.to}
+                      onClick={e => {
+                        history.push(e.target.value, history.location.state);
+                        setDeskSelected(menuItem.to);
+                      }}
+                    >
+                      {menuItem.label}
+                    </NavLink>
                   ) : (
-                    <NavLink className={classes.link} value={menuItem.to} to={menuItem.to} onClick={e => {
-                      history.push(e.target.value, history.location.state);
-                      setDeskSelected(menuItem.to);
-                    }}>{menuItem.label}</NavLink>
-                  ) }
+                    <NavLink
+                      className={classes.link}
+                      value={menuItem.to}
+                      to={menuItem.to}
+                      onClick={e => {
+                        history.push(e.target.value, history.location.state);
+                        setDeskSelected(menuItem.to);
+                      }}
+                    >
+                      {menuItem.label}
+                    </NavLink>
+                  )}
                 </div>
               }
             />
@@ -112,7 +138,7 @@ const AccountMenu = ({ logout }) => {
         ))}
       </List>
     </Box>
-  ))
+  ));
 
   return xs ? (
     <>
@@ -120,7 +146,7 @@ const AccountMenu = ({ logout }) => {
     </>
   ) : (
     <>
-    <DesktopMenu />
+      <DesktopMenu />
     </>
   );
 };
