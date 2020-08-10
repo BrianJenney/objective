@@ -1,4 +1,4 @@
-import { OBJECTIVE_SPACE } from '../constants/contentfulSpaces';
+import { BURTS_SPACE } from '../constants/contentfulSpaces';
 
 const contentful = require('contentful');
 
@@ -18,6 +18,6 @@ const clientVars =
     : productionVars;
 
 export const contentfulClient = contentful.createClient({
-  space: OBJECTIVE_SPACE,
+  space: BURTS_SPACE,
   ...clientVars
 });
