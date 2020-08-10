@@ -69,34 +69,9 @@ const ProductDetail = () => {
   const contentRef = useRef();
   const atcRef = useRef();
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
   const { product, content } = useContext(ProductContext);
   const theme = useTheme();
-
-  const handleWindowScroll = evt => {
-    const OFFSET = 80;
-    const scrollingElement = evt.target.scrollingElement || evt.target.document.scrollingElement;
-    const { scrollTop } = scrollingElement;
-
-    if (atcRef.current && contentRef.current) {
-      if (
-        scrollTop >
-        OFFSET + contentRef.current.offsetTop + contentRef.current.offsetHeight - windowSize.height
-      ) {
-        atcRef.current.style.position = 'static';
-        atcRef.current.style.boxShadow = 'none';
-      } else {
-        atcRef.current.style.position = 'fixed';
-        atcRef.current.style.boxShadow = '0 0 8px 8px #ccc';
-      }
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleWindowScroll);
-    return () => {
-      window.removeEventListener('scroll', handleWindowScroll);
-    };
-  }, []);
 
   if (!content) {
     return <LoadingSpinner loadingMessage="Loading product" page="pdp" />;
@@ -113,16 +88,6 @@ const ProductDetail = () => {
   } = content;
 
   const productSubtitle = content.productHeadline;
-
-  console.log(content);
-
-  // return (
-  //   <>
-  //     <p>{productName}</p>
-  //     <p>{productHeadline}</p>
-  //     <p>{productDescription}</p>
-  //   </>
-  // );
 
   const renderProductTitle = () => {
     const cbdText = <span className="cbd-content">{`(with ${cbdContent} CBD)`}</span>;
@@ -141,6 +106,26 @@ const ProductDetail = () => {
     );
   };
 
+  const handleSetQuantity = val => {
+    if (quantity + val >= 0) {
+      setQuantity(quantity + val);
+    }
+  };
+
+  const renderQuantityWidget = () => {
+    return (
+      <Box className="pdp-quantity">
+        <button type="button" onClick={() => handleSetQuantity(-1)}>
+          -
+        </button>
+        {quantity}
+        <button type="button" onClick={() => handleSetQuantity(1)}>
+          +
+        </button>
+      </Box>
+    );
+  };
+
   return (
     <Box className={classes.root}>
       <StyledContainer>
@@ -154,20 +139,18 @@ const ProductDetail = () => {
                 <Box className="pdp-content" ref={contentRef}>
                   {renderProductTitle()}
                   <Box className="pdp-subtitle">{productSubtitle}</Box>
+                  <Box className="pdp-atc-container" width={1}>
+                    {renderQuantityWidget()}
+                    <Box className="atc-btn" ref={atcRef}>
+                      <ATC price={price} maxWidth={classes.maxWidth} btnStyle="pdp-atc-button" />
+                    </Box>
+                  </Box>
                   <Box className="pdp-description">{productDescription}</Box>
                   <Box className="pdp-accordion">
                     <ProductAccordion content={content} />
                   </Box>
-                  <Quantity />
                 </Box>
               </CardContent>
-              <CardActions className={classes.maxWidth}>
-                <Box className="pdp-atc-container" width={1}>
-                  <Box className="atc-btn" ref={atcRef}>
-                    <ATC price={price} maxWidth={classes.maxWidth} />
-                  </Box>
-                </Box>
-              </CardActions>
             </Card>
           </Grid>
         </Grid>

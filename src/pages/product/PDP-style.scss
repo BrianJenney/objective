@@ -55,6 +55,12 @@ html,
   letter-spacing: normal;
 }
 
+.pdp-quantity {
+  width: 110px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .pdp-description {
   font-family: FreightTextProBook;
   line-height: 1.5;
@@ -507,23 +513,29 @@ html,
 
 .pdp-atc-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
 
-  .atc-btn {
-    margin-top: 34px;
-    position: fixed;
-    box-shadow: 0 0 8px 8px #ccc;
-    bottom: 5px;
-    width: 352px;
-    z-index: 1;
+  .pdp-atc-button {
+    width: 275px;
+    height: 46px !important;
+    position: relative;
+
+    .MuiButton-label {
+      position: absolute;
+      bottom: 7;
+      font-size: 14px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1px;
+    }
   }
 
   .atc-note {
     font-family: p22-underground, sans-serif;
     font-size: 14px;
     font-weight: 500;
-    line-height: 1.43;
     letter-spacing: 1.13px;
     color: #707070;
     margin-top: 9px;
