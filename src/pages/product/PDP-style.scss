@@ -6,7 +6,7 @@ html,
 }
 
 .MuiTypography-h1.pdp-header {
-  font-size: 46px;
+  font-size: 34px;
   margin: 0 0 20px;
 }
 
@@ -26,11 +26,33 @@ html,
   color: #621244;
 }
 
+#full-spectrum {
+  padding: 0 0 8px;
+  color: #553226;
+  font-family: proxima-nova, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.14;
+  letter-spacing: 2px;
+}
+
+.cbd-content {
+  padding-left: 8px;
+  font-size: 24px;
+}
+
 .pdp-subtitle {
-  font-family: p22-underground, sans-serif;
-  text-transform: uppercase;
-  color: #000;
-  line-height: normal;
+  width: 461px;
+  height: 34px;
+  font-family: proxima-nova, sans-serif;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
 }
 
 .pdp-description {
@@ -662,12 +684,6 @@ html,
     margin-top: -16px;
   }
 
-  .pdp-subtitle {
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-    margin-bottom: 4px;
-  }
   .pdp-description {
     font-size: 18px;
   }

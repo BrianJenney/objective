@@ -323,10 +323,12 @@
 
 .image-gallery-slide.center {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .image-gallery-slide img {
-  width: 100%;
+    // transform: translate(100%, 0);
 }
 
 @media (max-width: 768px) {

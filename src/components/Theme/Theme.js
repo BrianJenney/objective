@@ -24,6 +24,7 @@ const nxtTheme = createMuiTheme({
       main: '#553226'
     },
     brand: {
+      lighterGreen: '#73997E',
       camoGreen: '#553226',
       accentBrown: '#a06958',
       mainYellow: '#f7c665',
@@ -188,7 +189,7 @@ const nxtTheme = createMuiTheme({
         '&.Mui-disabled': {
           backgroundColor: 'rgba(241, 190, 86, 0.5)'
         }
-      },
+      }
     },
     MuiFormLabel: {
       root: {

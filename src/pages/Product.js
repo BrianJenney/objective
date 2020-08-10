@@ -16,21 +16,21 @@ const Product = ({ match }) => {
   const { href: url } = window.location;
   const scrollToTabs = url[url.length - 1] === '#';
   const seoMap = useSelector(state => state.storefront.seoMap);
-  const validProduct = seoMap[product_slug];
-  let title;
-  let description;
+  // const validProduct = seoMap[product_slug];
+  // let title;
+  // let description;
 
-  if (validProduct) {
-    ({ title, description } = validProduct);
-  }
+  // if (validProduct) {
+  //   ({ title, description } = validProduct);
+  // }
 
-  useEffect(() => {
-    if (validProduct) {
-      window.analytics.page('PDP');
-    } else {
-      window.analytics.page('404 Error');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (validProduct) {
+  //     window.analytics.page('PDP');
+  //   } else {
+  //     window.analytics.page('404 Error');
+  //   }
+  // }, []);
 
   const content = (
     <ProductStore productSlug={product_slug}>
@@ -41,14 +41,14 @@ const Product = ({ match }) => {
     </ProductStore>
   );
 
-  if (!validProduct) {
-    return <NotFound />;
-  }
+  // if (!validProduct) {
+  //   return <NotFound />;
+  // }
 
   if (scrollToTabs) {
     return (
       <>
-        <HeadTags title={title} description={description} />
+        {/* <HeadTags title={title} description={description} /> */}
         {content}
       </>
     );
@@ -56,7 +56,7 @@ const Product = ({ match }) => {
 
   return (
     <>
-      <HeadTags title={title} description={description} />
+      {/* <HeadTags title={title} description={description} /> */}
       <ScrollToTop>{content}</ScrollToTop>
     </>
   );

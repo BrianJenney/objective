@@ -76,30 +76,30 @@ const PDPSlider = props => {
    * @return void
    *
    */
-  const handleSegmentBrowsedEvent = currentIndex => {
-    const image = images[currentIndex];
-    window.analytics.track('Product Images Browsed', {
-      image_url: `https:${image.fields.file.url}`,
-      index: currentIndex + 1,
-      product_id: product._id,
-      product_name: product.name,
-      sku: product.defaultVariantSku
-    });
-  };
+  // const handleSegmentBrowsedEvent = currentIndex => {
+  //   const image = images[currentIndex];
+  //   window.analytics.track('Product Images Browsed', {
+  //     image_url: `https:${image.fields.file.url}`,
+  //     index: currentIndex + 1,
+  //     product_id: product._id,
+  //     product_name: product.name,
+  //     sku: product.defaultVariantSku
+  //   });
+  // };
 
   const renderImages = imagesToRender => {
     const carouselImages = [];
 
     imagesToRender.map(image => {
-      let imageUrlOriginal = `${image.fields.file.url}?w=687&w=687&q=50`;
-      const imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/mj9bpefl6wof/');
-      imageUrlOriginal = `https://nutranext.imgix.net/${imageUrlOriginalSplit[1]}&auto=format`;
+      let imageUrlOriginal = `${image.fields.file.url}?w=220&w=220&q=50`;
+      const imageUrlOriginalSplit = imageUrlOriginal.split('//images.ctfassets.net/otvfhol0utd6/');
+      imageUrlOriginal = `https://burts-cbd.imgix.net/${imageUrlOriginalSplit[1]}&auto=format`;
 
       let imageUrlThumbnail = `${image.fields.file.url}?w=120&h=120&q=50`;
       const imageUrlThumbnailSplit = imageUrlThumbnail.split(
-        '//images.ctfassets.net/mj9bpefl6wof/'
+        '//images.ctfassets.net/otvfhol0utd6/'
       );
-      imageUrlThumbnail = `https://nutranext.imgix.net/${imageUrlThumbnailSplit[1]}&auto=format`;
+      imageUrlThumbnail = `https://burts-cbd.imgix.net/${imageUrlThumbnailSplit[1]}&auto=format`;
 
       if (!xs) {
         carouselImages.push({
@@ -127,7 +127,7 @@ const PDPSlider = props => {
           thumbnailPosition={xs ? 'bottom' : 'left'}
           showThumbnails={!xs}
           showBullets={!!xs}
-          onSlide={handleSegmentBrowsedEvent}
+          // onSlide={handleSegmentBrowsedEvent}
         />
       </div>
     );
