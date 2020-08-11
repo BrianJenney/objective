@@ -99,15 +99,12 @@ const OrderTrackerForm = ({
       if (d.payload.length > 0) {
         // Order found
         const order = d.payload[0];
-        const { _id, email, storeCode } = order;
         //  Let's fetch an account so that we can get the jwt to allow user to cancel account.
         dispatch(
           requestFetchAccount(
             {
               query: {
-                // Search by email & storeCode since in the new EDA, the order may not always have the accountId.
-                email,
-                storeCode,
+                _id: order.accountId,
                 $select: [
                   '_id',
                   'firstName',
@@ -118,7 +115,7 @@ const OrderTrackerForm = ({
                   'passwordSet'
                 ]
               },
-              accessScope: { 'order.cancel': _id }
+              accessScope: { 'order.cancel': order._id }
             },
             true
           )

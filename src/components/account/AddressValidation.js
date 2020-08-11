@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import withDialog from '../../hoc/withDialog';
 import { MenuLink, Button } from '../common';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     padding: '10px 55px 55px',
     width: '730px',
@@ -33,8 +33,13 @@ const useStyles = makeStyles(theme => ({
     marginTop: '20px'
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: '1.2'
+  },
+  textXs: {
+    fontSize: 18,
+    lineHeight: '1.2',
+    textAlign: 'center'
   },
   atitle: {
     fontSize: 20,
@@ -70,7 +75,7 @@ const useStyles = makeStyles(theme => ({
     border: 'solid 3px #000000',
     padding: '20px 25px'
   }
-}));
+});
 
 const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeDialog }) => {
   const classes = useStyles();
@@ -131,7 +136,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
 
       onSubmit(pload, actions);
     }
-  }, [payload, btnClick]);
+  }, [payload, !xs ? btnClick : null]);
 
   useEffect(() => {
     let pload = {};
@@ -177,8 +182,8 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
               <Typography className={xs ? classes.titleXs : classes.title}>
                 Shipping Address Validation
               </Typography>
-              <Typography className={classes.text}>
-                Important: we were not able to validate your shipping address.
+              <Typography className={xs ? classes.textXs : classes.text}>
+                We were not able to validate your shipping address.
               </Typography>
               <Typography className={classes.subtitle}>
                 Please select an address to continue:
@@ -187,10 +192,11 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
           </Box>
           <Grid container spacing={2} className={classes.boxHolder}>
             <Grid
-              onClick={() => {
-                setOriginalAddress(true);
-                setSuggestedAddress(false);
-              }}
+              onClick={() =>
+                !xs
+                  ? (setOriginalAddress(true), setSuggestedAddress(false))
+                  : (setOriginalAddress(true), setSuggestedAddress(false), setBtnClick(true))
+              }
               item
               xs={12}
               md={6}
@@ -205,10 +211,11 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
               </Box>
             </Grid>
             <Grid
-              onClick={() => {
-                setSuggestedAddress(true);
-                setOriginalAddress(false);
-              }}
+              onClick={() =>
+                !xs
+                  ? (setSuggestedAddress(true), setOriginalAddress(false))
+                  : (setSuggestedAddress(true), setOriginalAddress(false), setBtnClick(true))
+              }
               item
               xs={12}
               md={6}
@@ -223,7 +230,7 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
               </Box>
             </Grid>
           </Grid>
-          {suggestedAddress || originalAddress ? (
+          {(!xs && suggestedAddress) || (!xs && originalAddress) ? (
             <>
               <Box>
                 <Paper className={classes.paper}>
@@ -235,7 +242,6 @@ const AddressValidation = ({ origAddress, suggAddress, actions, onSubmit, closeD
                     underline="always"
                     fullWidth
                     className={xs ? '' : classes.button}
-                    style={xs ? { padding: 33 } : ''}
                   />
                 </Paper>
               </Box>

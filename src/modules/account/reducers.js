@@ -24,8 +24,7 @@ import {
   RECEIVED_PASSWORD_RESET_SUCCESS,
   RECEIVED_PASSWORD_RESET_FAILURE,
   CLEAR_PASSWORD_RESET_ERROR,
-  REQUEST_LOGOUT,
-  CLEAR_ACCOUNT_DATA
+  REQUEST_LOGOUT
 } from './types';
 const localStorageClient = require('store');
 const authToken = localStorageClient.get('token');
@@ -91,7 +90,7 @@ export default (state = INITIAL_STATE, action) => {
         onLoginFailure: action.onFailure
       };
     case RECEIVED_LOGIN_SUCCESS:
-      if (Object.prototype.hasOwnProperty.call(state, 'onLoginSuccess') && state.onLoginStatus) {
+      if (state.hasOwnProperty('onLoginSuccess') && state.onLoginStatus) {
         state.onLoginSuccess();
       }
       return {
@@ -104,7 +103,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_LOGIN_FAILURE:
-      if (Object.prototype.hasOwnProperty.call(state, 'onLoginFailure') && state.onLoginFailure) {
+      if (state.hasOwnProperty('onLoginFailure') && state.onLoginFailure) {
         state.onLoginFailure();
       }
       return {
@@ -153,7 +152,7 @@ export default (state = INITIAL_STATE, action) => {
         onPatchFailure: action.onFailure
       };
     case RECEIVED_PATCH_ACCOUNT_SUCCESS:
-      if (Object.prototype.hasOwnProperty.call(state, 'onPatchSuccess') && state.onPatchSuccess) {
+      if (state.hasOwnProperty('onPatchSuccess') && state.onPatchSuccess) {
         state.onPatchSuccess();
       }
 
@@ -167,7 +166,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_PATCH_ACCOUNT_FAILURE:
-      if (Object.prototype.hasOwnProperty.call(state, 'onPatchFailure') && state.onPatchFailure) {
+      if (state.hasOwnProperty('onPatchFailure') && state.onPatchFailure) {
         state.onPatchFailure();
       }
       return {
@@ -189,10 +188,9 @@ export default (state = INITIAL_STATE, action) => {
         onPatchFailure: action.onFailure
       };
     case RECEIVED_CHANGE_PASSWORD_SUCCESS:
-      if (Object.prototype.hasOwnProperty.call(state, 'onPatchSuccess') && state.onPatchSuccess) {
+      if (state.hasOwnProperty('onPatchSuccess') && state.onPatchSuccess) {
         state.onPatchSuccess();
       }
-
       return {
         ...state,
         changePasswordError: false,
@@ -203,7 +201,7 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
     case RECEIVED_CHANGE_PASSWORD_FAILURE:
-      if (Object.prototype.hasOwnProperty.call(state, 'onPatchFailure') && state.onPatchFailure) {
+      if (state.hasOwnProperty('onPatchFailure') && state.onPatchFailure) {
         state.onPatchFailure();
       }
       return {
@@ -231,6 +229,7 @@ export default (state = INITIAL_STATE, action) => {
         fetchAccountError: false,
         patchAccountError: false,
         changePasswordError: false,
+        resetPasswordError: false,
         resetPasswordError: false,
         loginSubmitting: false,
         signupSubmitting: false,
@@ -267,11 +266,6 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         resetError: false
-      };
-    case CLEAR_ACCOUNT_DATA:
-      return {
-        ...state,
-        data: {}
       };
     default:
       return state;

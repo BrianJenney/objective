@@ -100,7 +100,14 @@
               analytics.push(e);
               return analytics;
             };
+<<<<<<< HEAD
             analytics.SNIPPET_VERSION = '4.1.0';
+=======
+          };
+          for (var t = 0; t < analytics.methods.length; t++) {
+            var e = analytics.methods[t];
+            analytics[e] = analytics.factory(e);
+>>>>>>> 8575919c2308fdf785a041859bc2462cc083d198
           }
           analytics.load = function (t, e) {
             var n = document.createElement('script');
@@ -112,8 +119,7 @@
             analytics._loadOptions = e;
           };
           analytics.SNIPPET_VERSION = '4.1.0';
-          analytics.load("%REACT_APP_SEGMENT_KEY%");
-          //analytics.page();
+          segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
         }
     })();
   </script>
