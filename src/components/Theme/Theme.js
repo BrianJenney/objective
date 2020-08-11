@@ -254,7 +254,7 @@ const nxtTheme = createMuiTheme({
       },
       input: {
         fontWeight: '500',
-        color: '#553226',
+        color: '#a06958',
         fontSize: '18px'
       }
     },

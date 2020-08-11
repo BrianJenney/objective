@@ -15,6 +15,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 
 import Select from '@material-ui/core/Select';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { ReactComponent as DropDownLogo } from '../../assets/static/drop_down_arrow.svg';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
@@ -25,12 +26,6 @@ const useStyles = makeStyles(theme => ({
     fontFamily: theme.typography.bodyFontFamily,
     fontWeight: '600',
     marginTop: '5px'
-  },
-  nxTextField: {
-    fontFamily: theme.typography.bodyFontFamily,
-    fontSize: '18px',
-    marginTop: '5px',
-    color: theme.palette.brand.camoGreen
   },
   link: {
     color: theme.palette.brand.camoGreen,
@@ -46,9 +41,6 @@ const useStyles = makeStyles(theme => ({
     fontStyle: 'normal',
     fontSize: '14px'
   },
-  logo: {
-    marginRight: 15
-  }
 }));
 
 const StyledMenuItem = withStyles(theme => ({
@@ -62,11 +54,45 @@ const StyledMenuItem = withStyles(theme => ({
   }
 }))(MenuItem);
 
+const StyledSelect = withStyles(theme => ({
+  root: {
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen
+  }
+}))(Select);
+
+const StyledOutlinedInput = withStyles(theme => ({
+  root: {
+    borderColor: theme.palette.brand.camoGreen,
+    '&.Mui-focused': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.brand.camoGreen
+      }
+    },
+    '&:hover': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.brand.camoGreen
+      }
+    }
+  },
+  notchedOutline: {
+    '& legend': {
+      display: 'none'
+    },
+    borderColor: theme.palette.brand.camoGreen
+  },
+  input: {
+    fontWeight: '500',
+    color: theme.palette.brand.camoGreen,
+    fontSize: '18px'
+  }
+}))(OutlinedInput);
+
+
 const DownIcon = props => {
-  const classes = useStyles();
   return (
-    <div style={{height: 20, width: 50}}>
-    <SvgIcon classes={classes.logo}>
+    <div style={{height: 15, width: 50}}>
+    <SvgIcon>
         <DropDownLogo />
     </SvgIcon>
     </div>
@@ -83,24 +109,23 @@ const AccountMenu = ({ logout }) => {
   const [deskSelected, setDeskSelected] = useState(window.location.pathname);
 
   const NTextField = withRouter(({ history }) => (
-    <Select
-      className={`${classes.nxTextField} nxTextField`}
+    <StyledSelect
       fullWidth
       variant="outlined"
-      IconComponent={DownIcon}
-      // select
       value={mobileSelected}
       onChange={e => {
         history.push(e.target.value, history.location.state);
         setMobileSelected(e.target.value);
       }}
+      IconComponent={DownIcon}
+      input={<StyledOutlinedInput />}
     >
       {ACCOUNT_MENU_ITEMS.filter(item => item.key !== ACCOUNT_MENU_KEYS.LOGOUT).map(menuItem => (
         <StyledMenuItem key={menuItem.key} value={menuItem.to}>
           {menuItem.label}
         </StyledMenuItem>
       ))}
-    </Select>
+    </StyledSelect>
   ));
 
   const DesktopMenu = withRouter(({ history }) => (
