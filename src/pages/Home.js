@@ -13,7 +13,7 @@ import { contentfulClient } from '../utils/contentful';
 import { HomeVariantCard } from './home/';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { ContentfulHero } from '../components/contentfulHero';
+import ContentfulHero from '../components/ContentfulHero';
 
 import './home/home-style.scss';
 import { StyledContainer } from '../assets/styles/StyledComponents';
@@ -117,7 +117,16 @@ class Home extends Component {
     ));
 
     return (
-      <Link to="/gallery" onClick={this.segmentTrackBannerClicked}>
+      <Link
+        to="/gallery"
+        segmentProperties={{
+          cta: 'Shop All',
+          destination: '/gallery',
+          site_location: 'home',
+          text: 'Targeted Health Solutions for You and Yours'
+        }}
+        onClick={this.segmentTrackBannerClicked}
+      >
         <ul>{hero}</ul>
       </Link>
     );
@@ -270,12 +279,7 @@ class Home extends Component {
    */
 
   segmentTrackBannerClicked() {
-    window.analytics.track('Banner Clicked', {
-      cta: 'Shop All',
-      destination: '/gallery',
-      site_location: 'home',
-      text: 'Targeted Health Solutions for You and Yours'
-    });
+    window.analytics.track('Banner Clicked', this.segmentProperties);
   }
 
   navigateToTop = url => {
@@ -298,7 +302,18 @@ class Home extends Component {
         <HeadTags title={title} description={description} indexThisPage={indexThisPage} />
         <ScrollToTop>
           <div className="home-style">
-            {this.renderHeroSlider()}
+            <Link
+              to="/gallery"
+              segmentProperties={{
+                cta: 'Shop All',
+                destination: '/gallery',
+                site_location: 'home',
+                text: 'Targeted Health Solutions for You and Yours'
+              }}
+              onClick={this.segmentTrackBannerClicked}
+            >
+              <ul>{this.renderHeroSlider()}</ul>
+            </Link>
             <StyledContainer>
               <Grid
                 container

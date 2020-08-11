@@ -22,8 +22,6 @@ Name: David Hebert
 
 Name: Kelly Willard
 
-Name: Brian Jenney
-
 Name: Anne Staples
 GitHub: agstaples
 Location: San Francisco, CA
