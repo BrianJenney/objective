@@ -4,14 +4,17 @@
   padding-top: 2em;
 
   .stay-in-the-know {
-    font-family: $brandSans;
-    font-size: 13px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.62;
-    letter-spacing: 0.54px;
-    color: #938985;
+    width: 282px;
+    p {
+      font-family: $brandSans;
+      font-size: 13px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.62;
+      letter-spacing: 0.54px;
+      color: #938985;
+    }
   }
 
   .social-media {
@@ -23,7 +26,6 @@
   }
 
   .legal.border-bottom {
-    height: 50px;
     background-color: #f6f5f1;
     width: 100%;
     padding-right: 10px;
@@ -123,8 +125,30 @@
   }
 }
 
+.legal-text-mobile {
+  p {
+    width: 100%;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.38;
+    letter-spacing: 0.54px;
+    color: #52433e;
+  }
+}
+
+.legal-links-mobile {
+  display: contents;
+  a {
+    font-size: 13px;
+  }
+  a + a::before {
+    content: ' | ';
+    padding: 0 10px;
+  }
+}
+
 @media (max-width: 700px) {
   .social-media a {
-    margin-right: 2.5em;
+    margin-right: 2em;
   }
 }

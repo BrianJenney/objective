@@ -6,6 +6,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '60px',
     height: '18px',
+    stroke: 'white',
+    fill: 'none',
     [theme.breakpoints.down('xs')]: {
       width: '44px',
       height: '14px'

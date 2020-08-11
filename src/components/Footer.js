@@ -242,7 +242,7 @@ const Footer = ({ location, currentUser }) => {
     <StyledBox className="footer-container">
       <StyledContainer>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={6}>
             <header>
               <img
                 height="31"
@@ -253,9 +253,11 @@ const Footer = ({ location, currentUser }) => {
               />{' '}
               Join the Hive
             </header>
-            <p className="stay-in-the-know">
-              Stay in the know about our latest products, new ingredients, special deals and more
-            </p>
+            <div className="stay-in-the-know">
+              <p>
+                Stay in the know about our latest products, new ingredients, special deals and more
+              </p>
+            </div>
             {confirmationVisibility ? (
               <p className="sign-up-confirmation">{SIGN_UP_EMAIL_SUCCESS}</p>
             ) : (
@@ -297,7 +299,7 @@ const Footer = ({ location, currentUser }) => {
               />
             )}
           </Grid>
-          {!sm && <Grid xs={3}></Grid>}
+
           <Grid item md={2} xs={6}>
             <header>Customer Care</header>
             <StyledList>
@@ -353,9 +355,10 @@ const Footer = ({ location, currentUser }) => {
         alignItems="center"
         className="legal border-bottom"
       >
-        <Grid container direction="row" className="legal-text">
+        <Grid container direction="row" className={`legal-text${sm ? '-mobile' : ''}`}>
           <p>© 2020 Burt’s Bees, Inc. All Rights Reserved.</p>
-          <div className="legal-links">
+
+          <div className={`legal-links${sm ? '-mobile' : ''}`}>
             {footerLinks.map(({ text, href }) => (
               <NavLink
                 style={{ color: '#52433e' }}
