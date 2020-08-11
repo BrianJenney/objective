@@ -5,14 +5,15 @@ import { get, isEmpty, omit } from 'lodash';
 import { useSnackbar } from 'notistack';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme, makeStyles } from '@material-ui/core/styles';
+import { useTheme, makeStyles, withStyles } from '@material-ui/core/styles';
+import SvgIcon from '@material-ui/core/SvgIcon'
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Radio from '@material-ui/core/Radio';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import AddIcon from '@material-ui/icons/Add';
+import { ReactComponent as PlusSign } from '../../assets/static/plus_sign.svg';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
@@ -66,6 +67,15 @@ const usePrevious = value => {
   }, [value]);
   return useRefObj.current;
 };
+
+export const PlusSignIcon = withStyles(theme => ({
+  root: {
+    marginTop: 12,
+    marginBottom: 10,
+    color: '#000000',
+    fontSize: '28px'
+  }
+}))(SvgIcon);
 
 /*
  * @description - Wrapper function for tracking the Payment Info Entered Segment Event
@@ -440,13 +450,9 @@ const AccountPaymentDetails = ({
                   style={{ marginLeft: '0px', minHeight: 175 }}
                 >
                   <div style={{ textAlign: 'center' }} onClick={() => setFormModeEnabled(true)}>
-                    <AddIcon
-                      style={{
-                        fontSize: '50px',
-                        color: theme.palette.brand.accentBrown,
-                        cursor: 'pointer'
-                      }}
-                    />
+                    <PlusSignIcon>
+                      <PlusSign />
+                    </PlusSignIcon>
                     <MenuLink
                       style={{
                         display: 'block',

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get, isEmpty, omit } from 'lodash';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import AddIcon from '@material-ui/icons/Add';
+import {ReactComponent as PlusSign} from '../../assets/static/plus_sign.svg';
 import { EditablePanel, MenuLink, AlertPanel, Button } from '../common';
 import { AddressSummary } from '../summaries';
 import { AddressForm } from '../forms';
@@ -17,6 +19,16 @@ import { removeFromCart } from '../../modules/cart/functions';
 import { scrollToRef } from '../../utils/misc';
 import { requestCheckEmailExistence } from '../../modules/account/actions';
 import { useDispatch } from 'react-redux';
+
+export const PlusSignIcon = withStyles(theme => ({
+  root: {
+    marginTop: 12,
+    marginBottom: 10,
+    color: '#000000',
+    fontSize: '28px'
+  }
+}))(SvgIcon);
+
 const AccountAddresses = ({
   currentUser,
   cart,
@@ -348,13 +360,10 @@ const AccountAddresses = ({
                       setFormModeEnabled(true);
                     }}
                   >
-                    <AddIcon
-                      style={{
-                        fontSize: '50px',
-                        color: theme.palette.brand.accentBrown,
-                        cursor: 'pointer'
-                      }}
-                    />
+                    <PlusSignIcon>
+                      <PlusSign />
+                    </PlusSignIcon>
+                    
                     <MenuLink
                       style={{
                         display: 'block',
