@@ -49,11 +49,14 @@ const useStyles = makeStyles(theme => ({
     }
   },
   title: {
-    fontSize: '25px',
+    fontSize: '34px',
     marginTop: '30px',
     fontFamily: theme.typography.headerFontFamily,
     color: theme.palette.brand.camoGreen,
-    paddingBottom: theme.spacing(2)
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '30px',
+    }
   },
   text: {
     fontSize: '18px',

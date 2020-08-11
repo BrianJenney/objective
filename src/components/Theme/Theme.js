@@ -92,7 +92,7 @@ const nxtTheme = createMuiTheme({
     },
     h5: {
       fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
-      fontSize: '25px',
+      fontSize: '34px',
       color: '#a06958',
       fontWeight: 400,
       lineHeight: '1.875rem'

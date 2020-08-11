@@ -585,7 +585,7 @@ const PaymentForm = ({
             color={theme.palette.brand.camoGreen}
             fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
             fontWeight={xs ? 700 : 400}
-            fontSize={xs ? 14 : 25}
+            fontSize={xs ? 18 : 34}
             mb={xs ? 0 : 2}
           />
         )}
@@ -761,7 +761,7 @@ const PaymentForm = ({
                       xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily
                     }
                     fontWeight={xs ? 700 : 400}
-                    fontSize={xs ? 14 : 25}
+                    fontSize={xs ? 18 : 34}
                     mb={xs ? -2 : 0}
                   />
                 </Grid>

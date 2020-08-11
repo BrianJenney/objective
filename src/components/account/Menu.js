@@ -47,7 +47,7 @@ const StyledMenuItem = withStyles(theme => ({
   root: {
     fontFamily: theme.typography.bodyFontFamily,
     color: theme.palette.brand.camoGreen,
-    fontSize: 22,
+    fontSize: 18,
     '&:hover': {
       textDecoration: 'underline'
     }

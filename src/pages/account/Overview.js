@@ -20,9 +20,12 @@ const change = {
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: theme.typography.headerFontFamily,
-    fontSize: 25,
+    fontSize: 34,
     marginBottom: 20,
     color: theme.palette.brand.camoGreen,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 30
+    }
   },
   info: {
     fontFamily: theme.typography.headerFontFamily,

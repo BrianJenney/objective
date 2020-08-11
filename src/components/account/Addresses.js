@@ -235,7 +235,7 @@ const AccountAddresses = ({
               color={theme.palette.brand.camoGreen}
               variant="h5"
               children={formType === FORM_TYPES.ACCOUNT ? 'Saved Addresses' : 'Shipping Address'}
-              fontSize="25px"
+              fontSize={xs ? "30px" : "34px"}
               mb={formType === FORM_TYPES.ACCOUNT ? 4 : 3}
             />
           )}
