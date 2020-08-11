@@ -106,7 +106,7 @@ const ProductDetail = () => {
   };
 
   const handleSetQuantity = val => {
-    if (quantity + val >= 0) {
+    if (quantity + val > 0) {
       setQuantity(quantity + val);
     }
   };
@@ -140,7 +140,7 @@ const ProductDetail = () => {
     <Box className="pdp-detail-specs">
       <Box className="pdp-origin-statement">
         <img alt="" src="http://cdn1.stopagingnow.com/bbCBD/svg/ingredients.svg"></img>
-        <span>{naturalOriginPercentage}% NATURAL ORIGIN</span>
+        <span>{naturalOriginPercentage} NATURAL ORIGIN</span>
       </Box>
       <Box className="pdp-skin-type">
         <div>

@@ -8,12 +8,12 @@ import './image-gallery-overrides.scss';
 import styles from './overrides.module.scss';
 
 const PDPSlider = props => {
+  let { images } = props;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   // const { product } = useContext(ProductContext);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const galleryRef = useRef(null);
-  let { images } = props;
 
   if (!images) {
     images = [
@@ -133,6 +133,7 @@ const PDPSlider = props => {
           ref={galleryRef}
           showNav
           disableThumbnailScroll
+          showIndex
           additionalClass={styles['set-gallery-width']}
           showFullscreenButton={false}
           showPlayButton={false}
@@ -140,6 +141,7 @@ const PDPSlider = props => {
           thumbnailPosition={xs ? 'bottom' : 'left'}
           renderLeftNav={leftNav}
           renderRightNav={rightNav}
+          // renderCustomControls={imageTracker}
           showThumbnails={!xs}
           showBullets={!!xs}
           // onSlide={handleSegmentBrowsedEvent}
