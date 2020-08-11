@@ -201,7 +201,8 @@ const nxtTheme = createMuiTheme({
         fontFamily: 'upgrade, sans-serif',
         fontStyle: 'normal',
         fontWeight: 400,
-        fontSize: '18px'
+        fontSize: '18px',
+        height: '48px',
       }
     },
     MuiInputLabel: {
@@ -210,7 +211,8 @@ const nxtTheme = createMuiTheme({
         fontStyle: 'normal',
         fontWeight: 400,
         fontSize: '14px',
-        color: '#a06958'
+        color: '#a06958',
+        lineHeight: '5px'
       },
       outlined: {
         '&.MuiInputLabel-shrink': {
