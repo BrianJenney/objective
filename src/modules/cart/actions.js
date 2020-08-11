@@ -36,7 +36,7 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     catalogId: getState().storefront.catalogId
   };
 
-  if (account.data && account.data.account_jwt) {
+  if (account && account.data && account.data.account_jwt) {
     const accountId = jwt.decode(account.data.account_jwt).account_id;
     newCartParams.accountId = accountId;
   }
@@ -54,7 +54,6 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
   }
 
   const obj = JSON.stringify(msgpack.encode(params));
-
   stompClient.send(
     '/exchange/cart/cart.request.addtocart',
     {
@@ -64,7 +63,6 @@ export const requestAddToCart = (cart, product, quantity) => async (dispatch, ge
     },
     obj
   );
-
   dispatch({
     type: REQUEST_ADD_TO_CART,
     payload: {}
