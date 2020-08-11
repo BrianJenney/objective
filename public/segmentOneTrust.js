@@ -5,24 +5,17 @@ function segmentOneTrust(wk) {
 
   // mapping OneTrust cookie categories to Segment's tool categories https://community.cookiepro.com/s/article/UUID-91049ba1-62b7-f7d3-8582-e3b36fadb7c9
   const ONE_TRUST_SEGMENT_MAPPING = {
-    // OneTrust Performance Cookies
     C0002: ['A/B Testing', 'Feature Flagging', 'Live Chat'],
-    // OneTrust Functional Cookies
     C0003: ['Analytics', 'Raw Data'],
-    // OneTrust Targeting Cookies
     C0004: ['Email', 'Email Marketing', 'CRM', 'Advertising']
   };
 
   // helper function gets OneTrust active groups from window. Returns array of active groups users consented to
   function getConsentGroups() {
     if (!window.OnetrustActiveGroups) {
-      return [];
+      return ['C0002', 'C0003', 'C0005', 'C0001', 'C0004'];
     }
-    const oneTrustActiveGroupArray = window.OnetrustActiveGroups.split(',').filter(e =>
-      e.startsWith('C')
-    );
-
-    return oneTrustActiveGroupArray;
+    return window.OnetrustActiveGroups.split(',').filter(e => e.startsWith('C'));
   }
 
   async function getConsentedIntegrations(enabledIntegrations, oneTrustGroupIds) {
