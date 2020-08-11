@@ -9,7 +9,7 @@ import styles from './overrides.module.scss';
 
 const PDPSlider = props => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const { product } = useContext(ProductContext);
+  // const { product } = useContext(ProductContext);
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const galleryRef = useRef(null);
@@ -115,16 +115,31 @@ const PDPSlider = props => {
       return carouselImages;
     });
 
+    const leftNav = (onClick, disabled) => (
+      <button type="button" className="left-nav" disabled={disabled} onClick={onClick}>
+        <img alt="previous slide" src="http://cdn1.stopagingnow.com/bbCBD/icons/left.png"></img>
+      </button>
+    );
+
+    const rightNav = (onClick, disabled) => (
+      <button type="button" className="right-nav" disabled={disabled} onClick={onClick}>
+        <img alt="next slide" src="http://cdn1.stopagingnow.com/bbCBD/icons/right.png"></img>
+      </button>
+    );
+
     return (
       <div className="pdp-slider">
         <ImageGallery
           ref={galleryRef}
           showNav
+          disableThumbnailScroll
           additionalClass={styles['set-gallery-width']}
           showFullscreenButton={false}
           showPlayButton={false}
           items={carouselImages}
           thumbnailPosition={xs ? 'bottom' : 'left'}
+          renderLeftNav={leftNav}
+          renderRightNav={rightNav}
           showThumbnails={!xs}
           showBullets={!!xs}
           // onSlide={handleSegmentBrowsedEvent}

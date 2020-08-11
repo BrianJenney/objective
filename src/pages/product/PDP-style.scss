@@ -1,13 +1,12 @@
-html,
 .MuiTypography-h1.pdp-header {
-  font-family: 'Canela Text Web';
-  font-weight: 300;
-  line-height: 1.1;
-}
-
-.MuiTypography-h1.pdp-header {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: bodoni-urw, serif;
+  color: #73997e;
+  font-weight: normal;
+  line-height: .9;
   font-size: 34px;
-  margin: 0 0 20px;
+  margin: 10px 0 14px;
 }
 
 .forest-green {
@@ -44,27 +43,137 @@ html,
 }
 
 .pdp-subtitle {
-  width: 461px;
+  color: #553226;
   height: 34px;
   font-family: proxima-nova, sans-serif;
   font-size: 18px;
+  line-height: 20px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.5;
   letter-spacing: normal;
+  margin: 6px 0 0;
 }
 
 .pdp-quantity {
-  width: 110px;
+  color: #553226;
+  width: 82px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  font-size: 22px;
+  line-height: 22px;
+  font-weight: bold;
+  margin: 16px 20px 0 0;
+
+  button {
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+
+    img {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  button:focus {
+    outline: none;
+  }
+}
+
+.pdp-atc-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 0 30px;
+
+
+  .pdp-atc-button {
+    margin-top: 16px;
+    width: 265px;
+    height: 46px !important;
+    position: relative;
+
+    .MuiButton-label {
+      position: absolute;
+      bottom: 7;
+      font-size: 14px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 1px;
+    }
+  }
+
+  .atc-note {
+    font-family: p22-underground, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1.13px;
+    color: #707070;
+    margin-top: 9px;
+    text-align: center;
+
+    .MuiLink-underlineHover {
+      text-decoration: underline;
+      color: #707070;
+    }
+  }
+}
+
+.pdp-detail-specs {
+  font-weight: bold;
+  font-size: 14px;
+  color: #553226;
+  padding: 0 0 16px;
+  letter-spacing: 1px;
+
+  span {
+    color: #a06958;
+    text-transform: uppercase;
+  }
+
+  div {
+    padding-top: 5px;
+  }
+}
+
+.pdp-skin-type {
+  display: flex;
+  flex-wrap: wrap;
+
+  span {
+    padding: 0 18px 0 5px;
+  }
+}
+
+.pdp-origin-statement {
+  display: flex;
+  align-items: center;
+  letter-spacing: 1.5px;
+  padding: 0 0 25px;
+  
+  span {
+    color: #553226;
+  }
+
+  img {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+  }
 }
 
 .pdp-description {
-  font-family: FreightTextProBook;
+  font-size: 18px;
+  color: #553226;
   line-height: 1.5;
-  color: #000000;
+
 }
 .pdp-journal-gallery {
   max-width: 1200px;
@@ -508,43 +617,6 @@ html,
   }
   .MuiPaper-root {
     background-color: transparent;
-  }
-}
-
-.pdp-atc-container {
-  display: flex;
-  align-items: center;
-
-  .pdp-atc-button {
-    width: 275px;
-    height: 46px !important;
-    position: relative;
-
-    .MuiButton-label {
-      position: absolute;
-      bottom: 7;
-      font-size: 14px;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: normal;
-      letter-spacing: 1px;
-    }
-  }
-
-  .atc-note {
-    font-family: p22-underground, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 1.13px;
-    color: #707070;
-    margin-top: 9px;
-    text-align: center;
-
-    .MuiLink-underlineHover {
-      text-decoration: underline;
-      color: #707070;
-    }
   }
 }
 

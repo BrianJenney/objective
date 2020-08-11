@@ -84,24 +84,23 @@ const ProductDetail = () => {
     skinType,
     naturalOriginPercentage,
     cbdContent,
-    price
+    price,
+    productSize,
+    descriptionDisclaimer
   } = content;
 
   const productSubtitle = content.productHeadline;
 
-  const renderProductTitle = () => {
+  const renderProductTitleContainer = () => {
     const cbdText = <span className="cbd-content">{`(with ${cbdContent} CBD)`}</span>;
     return (
       <>
         <Typography id="full-spectrum">FULL SPECTRUM</Typography>
-        <Typography
-          variant="h1"
-          className="pdp-header"
-          style={{ color: theme.palette.brand.lighterGreen }}
-        >
+        <Typography variant="h1" className="pdp-header">
           {`CBD ${productName}`}
-          {cbdText}
+          <div>{cbdText}</div>
         </Typography>
+        <Box className="pdp-subtitle">{productSubtitle}</Box>
       </>
     );
   };
@@ -112,19 +111,55 @@ const ProductDetail = () => {
     }
   };
 
-  const renderQuantityWidget = () => {
+  const renderAtcContainer = () => {
     return (
-      <Box className="pdp-quantity">
-        <button type="button" onClick={() => handleSetQuantity(-1)}>
-          -
-        </button>
-        {quantity}
-        <button type="button" onClick={() => handleSetQuantity(1)}>
-          +
-        </button>
+      <Box className="pdp-atc-container" width={1}>
+        <Box className="pdp-quantity">
+          <button type="button" onClick={() => handleSetQuantity(-1)}>
+            <img
+              alt="Decrease quantity"
+              src="http://cdn1.stopagingnow.com/bbCBD/icons/subtract.png"
+            ></img>
+          </button>
+          <span>{quantity}</span>
+          <button type="button" onClick={() => handleSetQuantity(1)}>
+            <img
+              alt="Increase quantity"
+              src="http://cdn1.stopagingnow.com/bbCBD/icons/add.png"
+            ></img>
+          </button>
+        </Box>
+        <Box className="atc-btn" ref={atcRef}>
+          <ATC price={price} maxWidth={classes.maxWidth} btnStyle="pdp-atc-button" />
+        </Box>
       </Box>
     );
   };
+
+  const renderDetailSpecs = () => (
+    <Box className="pdp-detail-specs">
+      <Box className="pdp-origin-statement">
+        <img alt="" src="http://cdn1.stopagingnow.com/bbCBD/svg/ingredients.svg"></img>
+        <span>{naturalOriginPercentage}% NATURAL ORIGIN</span>
+      </Box>
+      <Box className="pdp-skin-type">
+        <div>
+          SIZE:<span>{productSize}</span>
+        </div>
+        <div>
+          SKIN&#8209;TYPE:<span>{skinType}</span>
+        </div>
+      </Box>
+    </Box>
+  );
+
+  const renderDescriptionContainer = () => (
+    <Box className="pdp-description">
+      <Box>{productDescription}</Box>
+      <br></br>
+      <Box>{descriptionDisclaimer}</Box>
+    </Box>
+  );
 
   return (
     <Box className={classes.root}>
@@ -137,18 +172,10 @@ const ProductDetail = () => {
             <Card className={classes.box}>
               <CardContent className={classes.cardRootOverrides}>
                 <Box className="pdp-content" ref={contentRef}>
-                  {renderProductTitle()}
-                  <Box className="pdp-subtitle">{productSubtitle}</Box>
-                  <Box className="pdp-atc-container" width={1}>
-                    {renderQuantityWidget()}
-                    <Box className="atc-btn" ref={atcRef}>
-                      <ATC price={price} maxWidth={classes.maxWidth} btnStyle="pdp-atc-button" />
-                    </Box>
-                  </Box>
-                  <Box className="pdp-description">{productDescription}</Box>
-                  <Box className="pdp-accordion">
-                    <ProductAccordion content={content} />
-                  </Box>
+                  {renderProductTitleContainer()}
+                  {renderAtcContainer()}
+                  {renderDetailSpecs()}
+                  {renderDescriptionContainer()}
                 </Box>
               </CardContent>
             </Card>
