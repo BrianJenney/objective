@@ -58,7 +58,12 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
           </Box>
           <Box mt={2} mb={2}>
             <Typography className={classes.subTitle}>
-              <NavLink to="/password/forgot" replace underline="always" style={{color: '#553226'}}>
+              <NavLink
+                to="/password/forgot"
+                replace
+                underline="always"
+                style={{ color: '#553226' }}
+              >
                 Forgot your email/&nbsp;password?
               </NavLink>
             </Typography>
@@ -66,9 +71,19 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
             <Typography className={classes.subTitle}>
               Don&#39;t have an account?&nbsp;
               {switchToSignup ? (
-                <MenuLink onClick={switchToSignup} style={{color: '#7f7470'}} children="Sign up!" />
+                <MenuLink
+                  onClick={switchToSignup}
+                  style={{ color: '#7f7470' }}
+                  children="Sign up!"
+                />
               ) : (
-                <NavLink style={{color: '#553226'}} to="/signup" children="Sign up!" replace underline="always" />
+                <NavLink
+                  style={{ color: '#553226' }}
+                  to="/signup"
+                  children="Sign up!"
+                  replace
+                  underline="always"
+                />
               )}
             </Typography>
           </Box>
@@ -79,10 +94,14 @@ const Login = ({ requestLogin, clearLoginError, switchToSignup, loginTitle }) =>
 };
 
 Login.propTypes = {
+  loginTitle: PropTypes.string,
   requestLogin: PropTypes.func.isRequired,
   clearLoginError: PropTypes.func.isRequired,
-  switchToSignup: PropTypes.func,
-  closeDialog: PropTypes.func
+  switchToSignup: PropTypes.func
+};
+
+Login.defaultProps = {
+  loginTitle: 'Login'
 };
 
 export default Login;

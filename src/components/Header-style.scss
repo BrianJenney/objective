@@ -17,11 +17,16 @@
     }
   }
   .mobile-cart-icon {
-    padding-top: 11px;
+    margin-left: -15px;
+  }
+
+  .sign-in-link {
+    margin-left: 5px;
   }
 
   .top {
-    padding: 10px;
+    display: flex;
+    align-items: center;
   }
 
   .holder {
@@ -45,21 +50,29 @@
     }
   }
 
-  .shopping-cart-wrapper {
+  .shopping-cart-wrapper,
+  .sign-in-wrapper {
     display: flex;
     align-items: center;
     color: #553226;
     font-family: $brandSans;
+    margin-right: 15px;
   }
 
   .headerBar {
     background: #b5d7bf;
     color: #466650;
-    height: 40px;
+    height: 64px;
     letter-spacing: 0.8px;
     width: 100%;
     text-align: center;
+    align-items: center;
+    display: flex;
+    align-items: center;
     a {
+      color: #466650;
+    }
+    display: flex a {
       color: #466650;
     }
     .closeIcon {
@@ -70,12 +83,25 @@
     }
     .closeIconMobile {
       position: absolute;
-      top: 89px;
+      top: 20px;
       right: 5px;
       width: 15px;
       height: 15px;
     }
     @media (min-width: 450px) {
+      .headerContainer {
+        .top {
+          height: 60px;
+        }
+      }
+
+      .mobile-cart-icon {
+        margin: 0;
+      }
+
+      .sign-in-link {
+        margin: 0;
+      }
       .closeIconMobile {
         position: absolute;
         top: 12px;
@@ -118,5 +144,9 @@
     position: sticky;
     top: 0;
     z-index: 5;
+
+    .top {
+      height: 60px;
+    }
   }
 }

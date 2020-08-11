@@ -1,748 +1,130 @@
 @import '../assets/styles/variables';
 
 .footer-container {
-  font-family: $sansSerif;
-  font-weight: 'bold';
-  background-color: #ffff;
-  color: #ffffff;
+  padding-top: 2em;
 
-  a {
-    color: #ffffff;
-  }
-
-  a:hover,
-  a:visited,
-  a:active {
-    text-decoration: none;
-    color: #ffffff;
-  }
-
-  .h-100 {
-    height: 100%;
-  }
-  .copy {
-    margin-left: -1px;
-  }
-
-  .promise {
-    padding: 48px 0px 48px 66px;
-    h4 {
-      font-family: p22-underground, sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: normal;
-      letter-spacing: 1.5px;
-      color: #959595;
-      margin-bottom: 7px;
-    }
-    p {
-      font-family: freight-text-pro, sans-serif;
-      font-size: 14px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 26px;
-      letter-spacing: normal;
-      color: #fff;
-      text-transform: initial;
-      margin: 0;
-    }
-    @media (min-width: 1200px) {
-      p {
-        font-size: 16px;
-      }
-    }
-    @media only screen and (max-width: 1024px) {
-      padding: 30px;
-    }
-    @media only screen and (max-width: 960px) {
-      padding: 32px 0px;
-    }
-  }
-  .signup-box {
-    text-align: left;
-    font-family: freight-text-pro, sans-serif;
-    font-size: 16px;
-    text-transform: none;
-    padding: 48px 0px 77px 32px;
-    color: #959595;
-
-    .MuiFormHelperText-root.Mui-error {
-      color: #fff;
-    }
-    .MuiOutlinedInput-notchedOutline {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: 0;
-      padding: 0;
-      position: absolute;
-    }
-    button {
-      background: #fff;
-      width: 115px;
-      height: 100%;
-      .cls-1,
-      .cls-2 {
-        fill: none;
-        stroke: #231f20;
-        stroke-miterlimit: 10;
-        stroke-width: 2px;
-      }
-      .cls-2 {
-        stroke-linecap: square;
-      }
-    }
-    @media (min-width: 1200px) {
-      font-size: 18px;
-      padding: 55px 0px 77px 64px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      .MuiFormHelperText-root.Mui-error {
-        color: #fff;
-      }
-      form {
-        .MuiFormControl-fullWidth {
-          width: 76%;
-          .MuiInputBase-fullWidth {
-            width: 98%;
-          }
-        }
-      }
-    }
-    form {
-      display: flex;
-      color: #fff;
-      opacity: 1;
-      div {
-        &:nth-of-type(2) {
-          width: 0;
-        }
-      }
-    }
-    @media (max-width: 768px) {
-      padding-left: 10px;
-      form {
-        .MuiFormControl-fullWidth {
-          width: 76%;
-          .MuiInputBase-fullWidth {
-            width: 98%;
-          }
-        }
-        button {
-          background: #fff;
-          width: 82.7px;
-          height: 100%;
-          .cls-1,
-          .cls-2 {
-            fill: none;
-            stroke: #231f20;
-            stroke-miterlimit: 10;
-            stroke-width: 2px;
-          }
-          .cls-2 {
-            stroke-linecap: square;
-          }
-        }
-      }
-    }
-    @media only screen and (max-width: 960px) {
-      padding: 31px 0px;
-    }
-  }
-  .MuiOutlinedInput-input {
-    padding: 15.5px;
-  }
-  .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
-    border: 2px solid #c10230;
-  }
-  .MuiFormHelperText-contained {
-    margin: 0px !important;
-  }
-  .border-left {
-    border-left: 1px solid #959595;
-  }
-
-  .border-bottom {
-    border-bottom: 1px solid #959595;
-  }
-
-  .border-right {
-    border-right: 1px solid #959595;
-  }
-  .border-top {
-    border-top: 1px solid #959595;
-  }
-
-  .uppercase {
-    text-transform: uppercase;
-  }
-
-  .footer-main-holder {
-    width: 100%;
-    padding: 31px 0 60px;
-
-    @media (min-width: 1200px) {
-      padding: 55px 0px 100px;
-    }
-
-    @media (min-width: 1600px) {
-      padding: 55px 0px 100px;
-    }
-  }
-
-  .footer-main {
-    .logo {
-      display: flex;
-      justify-content: center;
-      svg {
-        width: 92px;
-        height: 92px;
-        path {
-          fill: #fff;
-        }
-      }
-    }
-    .title {
-      font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      padding: 31px 0px 18px 0px;
-      letter-spacing: 1px;
-      text-align: left;
-      color: #959595;
-
-      @media (min-width: 1200px) {
-        padding: 31px 0px 18px 0px;
-      }
-    }
-
-    .links {
-      text-transform: capitalize;
-      font-family: freight-text-pro, sans-serif;
-      li {
-        padding: 0;
-      }
-      @media (min-width: 1200px) {
-        font-size: 18px;
-        line-height: 2.22;
-      }
-    }
-
-    .legal {
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 600;
-      color: #959595;
-      a {
-        color: #959595;
-        text-decoration: underline;
-      }
-
-      @media (min-width: 320px) {
-        padding: 15px 0px;
-        .legal-text {
-          padding-top: 5px;
-          text-decoration: underline;
-          @media (min-width: 1200px) {
-            text-decoration: underline;
-            padding: 0;
-          }
-        }
-      }
-      @media (min-width: 1200px) {
-        padding: 32px 0px 28px 48px;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        font-weight: 600;
-        font-size: 16px;
-        color: #959595;
-        font-family: p22-underground, sans-serif;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: normal;
-        letter-spacing: 1.33px;
-        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-          /* IE10+ CSS styles go here */
-          justify-content: space-around;
-        }
-      }
-
-      ul {
-        display: flex;
-        text-align: center;
-        @media (max-width: 450px) {
-          padding: 0;
-        }
-        li {
-          width: fit-content;
-        }
-      }
-    }
-
-    .row1 {
-      &.logo {
-        @media (min-width: 600px) {
-          svg {
-            width: 62px;
-            height: 62px;
-            path {
-              fill: #fff;
-            }
-          }
-          padding: 15px;
-        }
-        @media (max-width: 600px) {
-          svg {
-            width: 48px;
-            height: 48px;
-            path {
-              fill: #fff;
-            }
-          }
-          padding: 15px;
-        }
-      }
-      img {
-        width: 27px;
-        height: 27px;
-      }
-      @media (min-width: 1200px) {
-        width: 175px;
-        .logo {
-          padding: 20px 46px;
-          svg {
-            width: 92px;
-            height: 92px;
-          }
-        }
-      }
-    }
-    .follow-text {
-      font-family: p22-underground, sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: normal;
-      letter-spacing: 1.31px;
-      color: #959595;
-      @media (max-width: 600px) {
-        font-size: 14px;
-      }
-    }
-    input {
-      font-family: p22-underground, sans-serif;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      color: #ffffff;
-    }
-
-    input::placeholder {
-      /* Chrome, Firefox, Opera, Safari 10.1+ */
-      color: #ffffff !important;
-      opacity: 1;
-      /* Firefox */
-      font-size: 18px;
-      font-family: $brandSans;
-    }
-
-    input:-ms-input-placeholder {
-      /* Internet Explorer 10-11 */
-      color: #ffffff !important;
-      font-size: 18px;
-      font-family: $brandSans;
-    }
-
-    input::-ms-input-placeholder {
-      /* Microsoft Edge */
-      color: #ffffff !important;
-      font-size: 18px;
-      font-family: $brandSans;
-    }
-  }
-  @media (max-width: 768px) {
-    .footer-main {
-      .links {
-        padding: 0px 0px 32px 0px;
-        font-size: 15px;
-      }
-      .legal ul li {
-        font-size: 10px;
-        font-family: p22-underground, sans-serif;
-      }
-    }
-  }
-}
-
-.contact-container {
-  div {
-    &:nth-of-type(3) > div {
-      margin: 16px;
-      height: 588px;
-    }
-  }
-  @media only screen and (min-width: 600px) {
-    div {
-      &:nth-of-type(3) > div {
-        padding: 50px 0px;
-        max-width: none;
-        width: 796px;
-        height: 534px;
-        overflow-x: hidden;
-      }
-    }
-    h5 {
-      font-family: FreightTextProBook;
-      font-size: 18px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.44;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding: 15px 27px;
-    }
-    h4 {
-      font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 22px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-    }
-    .MuiDialogTitle-root {
-      padding: 0px !important;
-    }
-  }
-
-  .MuiDialogTitle-root {
-    padding: 34px 46px 13px 46px;
-    .contact-title {
-      font-family: 'Canela Text Web';
-      font-size: 30px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.27;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding-bottom: 7px;
-    }
-    h4 {
-      font-family: FreightTextProBook, sans-serif;
-      font-size: 16px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.38;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding-bottom: 7px;
-    }
-    button {
-      top: -9px;
-      right: -9px;
-    }
-    @media only screen and (min-width: 600px) {
-      h1 {
-        font-family: 'Canela Text Web';
-        font-size: 38px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.26;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-        padding: 0px;
-      }
-      h4 {
-        font-family: FreightTextProBook, serif;
-        font-size: 22px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.41;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-      }
-      button {
-        top: 0px;
-        right: 0px;
-      }
-    }
-  }
-  .MuiDialogContent-root {
-    padding: 10px 40px;
-    overflow-y: hidden;
-    svg:nth-child(1) {
-      width: auto;
-      height: 44px;
-      margin-bottom: 10px;
-    }
-    h4 {
-      font-family: FreightTextProBook, serif;
-      font-size: 16px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.38;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding: 10px 7px 7px 7px;
-    }
-    p {
-      font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 25px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding: 10px 0px;
-    }
-    h3 {
-      font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 20px;
-      font-weight: 300;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding-top: 3px;
-    }
-    @media only screen and (min-width: 600px) {
-      svg:nth-child(1) {
-        width: fit-content;
-        height: 65px;
-        margin-bottom: 10px;
-      }
-      h4 {
-        font-family: p22-underground, Helvetica, sans-serif;
-        font-size: 22px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.38;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-        padding: 10px 7px 7px 7px;
-      }
-    }
-  }
-}
-.checkout-button-container {
-  .MuiListItem-root {
-    padding: 0px !important;
-    border-bottom: 1px solid #000;
-    padding-bottom: 2px;
-  }
-}
-.checkout-contact-container {
-  div {
-    &:nth-of-type(3) > div {
-      margin: 16px;
-      height: 522px;
-      min-width: 0px;
-    }
-  }
-  @media only screen and (min-width: 600px) {
-    div {
-      &:nth-of-type(3) > div {
-        width: 576px;
-        height: 567px;
-        padding: 0px 27px;
-      }
-    }
-  }
-  .MuiDialogContent-root {
-    margin-top: 10px;
-    svg:nth-child(1) {
-      width: 55px;
-      height: 55px;
-    }
-    h2 {
-      font-family: 'Canela Text Web';
-      font-size: 30px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.27;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding: 0px 5px 20px 5px;
-    }
-    p {
-      font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 30px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding-bottom: 10px;
-    }
-    h3 {
-      font-family: 'Canela Text Web';
-      font-size: 20px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-      padding: 31px 20px 30px 20px;
-    }
-    h4 {
-      font-family: p22-underground, Helvetica, sans-serif;
-      font-size: 20px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: center;
-      color: #231f20;
-    }
-    @media only screen and (min-width: 600px) {
-      svg:nth-child(1) {
-        width: 69px;
-        height: 69px;
-      }
-      h2 {
-        font-family: 'Canela Text Web';
-        font-size: 38px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.27;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-        padding-bottom: 20px;
-      }
-      p {
-        font-family: p22-underground, Helvetica, sans-serif;
-        font-size: 36px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-        padding-bottom: 10px;
-      }
-      h3 {
-        font-family: 'Canela Text Web';
-        font-size: 22px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-        padding: 31px 60px 30px 60px;
-      }
-      h4 {
-        font-family: p22-underground, Helvetica, sans-serif;
-        font-size: 26px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        text-align: center;
-        color: #231f20;
-      }
-    }
-  }
-}
-.checkout-footer-container {
-  a,
-  a:visited,
-  a:hover,
-  a:active {
-    color: #000;
-    text-decoration: none;
-  }
-}
-@media (max-width: 768px) {
-  .checkout-footer-container {
-    padding: 20px !important;
-    font-size: 12px !important;
-    a,
-    a:visited,
-    a:hover,
-    a:active {
-      color: #000;
-      text-decoration: none;
-    }
-  }
-}
-.disclaimer-container {
-  padding-top: 18px;
-  @media only screen and (min-width: 600px) {
-    padding-top: 39px;
-  }
-  .disclaimer-text {
-    color: #959595;
-    font-size: 14px;
-    text-transform: none;
-    font-family: p22-underground, Helvetica, sans-serif;
-    margin-bottom: 30px;
+  .stay-in-the-know {
+    font-family: $brandSans;
+    font-size: 13px;
     font-weight: normal;
-    font-style: normal;
     font-stretch: normal;
-    line-height: 1.29;
+    font-style: normal;
+    line-height: 1.62;
+    letter-spacing: 0.54px;
+    color: #938985;
+  }
+
+  .social-media {
+    img {
+      margin: 0 5px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .legal.border-bottom {
+    height: 50px;
+    background-color: #f6f5f1;
+    width: 100%;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .legal-text {
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+
+  .legal-links {
+    display: flex;
+    align-items: center;
+    margin-right: 5%;
+    a {
+      margin: 0 10px;
+    }
+  }
+  .legal-text p {
+    font-family: $brandSans;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    color: #52433e;
+    margin-left: 5%;
+  }
+
+  .email-form fieldset {
+    top: 0;
+    height: 46px;
+  }
+
+  .email-form input {
+    padding: 12px;
+  }
+
+  .email-form > div > * {
+    top: 0;
+    height: 46px;
+  }
+
+  header {
+    font-family: $brandSans;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: 1.25px;
+    color: #553226;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .disclaimer-container {
+    p,
+    a {
+      font-size: 12px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.33;
+      letter-spacing: normal;
+      color: #979797;
+    }
+  }
+
+  .sign-up-confirmation {
+    font-family: $brandSans;
+    font-size: 24px;
+    color: #938985;
+  }
+
+  .email-error {
+    height: 30px;
+    background-color: rgba(208, 2, 27, 0.15);
+    line-height: 1.5;
     letter-spacing: normal;
+    width: 282px;
+    display: flex;
+    align-items: center;
+    p {
+      font-size: 14px;
+      margin: 0 0 0 1em;
+      color: '#ce0e2d';
+    }
+    img {
+      margin-left: 1em;
+      width: 24px;
+      height: 24px;
+    }
   }
 }
-.ccpa-footer {
-  text-align: center;
-  margin-top: 30px;
-  a,
-  a:hover {
-    text-decoration: none;
-  }
-  img {
-    height: 12px;
-    vertical-align: inherit;
-    margin-right: 5px;
-  }
-  @media (max-width: 500px) {
-    font-size: 10px;
-    img {
-      height: 10px;
-    }
+
+@media (max-width: 700px) {
+  .social-media a {
+    margin-right: 2.5em;
   }
 }

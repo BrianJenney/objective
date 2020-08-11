@@ -28,9 +28,7 @@ Field.propTypes = {
 
 Field.defaultProps = {
   render: () => {},
-  form: {},
-  fullWidth: true,
-  margin: 'normal'
+  form: {}
 };
 
 export default Field;

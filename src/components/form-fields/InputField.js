@@ -4,18 +4,27 @@ import { getIn } from 'formik';
 import TextField from '@material-ui/core/TextField';
 
 const InputField = props => {
-  const { field, form, helperText, disabled, ...rest } = props;
+  const { field, form, helperText, disabled, renderCustom, ...rest } = props;
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);
 
+  const textFieldProps = {
+    disabled: disabled || form.isSubmitting,
+    ...field,
+    ...rest
+  };
+
+  if (!renderCustom) {
+    Object.assign({}, textFieldProps, {
+      helperText: (touched && error) || helperText,
+      error: !!(touched && error)
+    });
+  }
+
   return (
-    <TextField
-      disabled={disabled || form.isSubmitting}
-      error={!!(touched && error)}
-      helperText={(touched && error) || helperText}
-      {...field}
-      {...rest}
-    />
+    <div>
+      <TextField {...textFieldProps} />
+    </div>
   );
 };
 
@@ -25,12 +34,14 @@ InputField.propTypes = {
   disabled: PropTypes.bool,
   helperText: PropTypes.string,
   fullWidth: PropTypes.bool,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  renderCustom: PropTypes.bool
 };
 
 InputField.defaultProps = {
   fullWidth: true,
-  variant: 'outlined'
+  variant: 'outlined',
+  renderCustom: false
 };
 
 export default InputField;

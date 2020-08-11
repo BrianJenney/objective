@@ -20,7 +20,8 @@ import { setCartNotification } from '../modules/utils/actions';
 import { contentfulClient } from '../utils/contentful';
 import { OBJECTIVE_PROMOBANNER } from '../constants/contentfulEntries';
 
-import Logo from './common/Icons/Logo/Logo';
+import signInImage from '../assets/images/account_avatar.svg';
+import BurtLogo from '../assets/images/bblogo.png';
 import './Header-style.scss';
 import CheckoutHeader from './CheckoutHeader';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
@@ -165,7 +166,7 @@ const Header = ({ currentUser, location, history }) => {
   const renderPromoBanner = () => {
     if (burger) {
       return (
-        <div data-testid="header-bar">
+        <div data-testid="header-bar" style={{ width: '100%' }}>
           <Grid container item xs={12} className="headerBar">
             <Grid item xs={12}>
               <StyledBox fontSize={9}>
@@ -184,7 +185,7 @@ const Header = ({ currentUser, location, history }) => {
         <Container>
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <StyledBox fontSize={12}>
+              <StyledBox fontSize={16}>
                 <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
                   {contents.text}
                 </NavLink>
@@ -225,7 +226,13 @@ const Header = ({ currentUser, location, history }) => {
             <Grid item xs={1}></Grid>
             <Grid item xs={8} className="logo text-center">
               <NavLink onClick={segmentTrackNavigationClick} to="/">
-                <Logo />
+                <img
+                  width="126"
+                  height="34"
+                  style={{ objectFit: 'contain' }}
+                  src={BurtLogo}
+                  alt="Burts Bees"
+                />
               </NavLink>
             </Grid>
             <Grid item xs={1} className="mobile-cart-icon" data-testid="shopping-cart-mobile">
@@ -233,6 +240,21 @@ const Header = ({ currentUser, location, history }) => {
                 <ShoppingCart showCartCount={false} hideLPCoupon={locationState} />
               )}
               {cartNotification && <CartNotification isCheckoutPage={isCheckoutPage} />}
+            </Grid>
+            <Grid item xs={1} className="sign-in-link" data-testid="sign-in-mobile">
+              {!isBundleLP && (
+                <Box style={{ marginTop: '5px' }}>
+                  <NavLink onClick={segmentTrackNavigationClick} to="/login">
+                    <img
+                      width="16"
+                      height="16"
+                      style={{ objectFit: 'contain' }}
+                      src={signInImage}
+                      alt="sign in"
+                    />
+                  </NavLink>
+                </Box>
+              )}
             </Grid>
           </Grid>
         </>
@@ -244,7 +266,7 @@ const Header = ({ currentUser, location, history }) => {
         <div className="holder">
           <StyledContainer>
             <Grid container direction="row" alignItems="center" justify="space-between">
-              <Grid container sm={3} spacing={3} justify="flex-start">
+              <Grid container sm={4} spacing={3} justify="flex-start">
                 <StyledLink
                   onClick={segmentTrackNavigationClick}
                   component={RouterLink}
@@ -272,7 +294,6 @@ const Header = ({ currentUser, location, history }) => {
               <Grid
                 container
                 sm={4}
-                lg={6}
                 spacing={1}
                 direction="row"
                 alignItems="center"
@@ -281,7 +302,13 @@ const Header = ({ currentUser, location, history }) => {
               >
                 <Grid item>
                   <NavLink onClick={segmentTrackNavigationClick} to="/">
-                    <Logo />
+                    <img
+                      width="150"
+                      height="40"
+                      style={{ objectFit: 'contain' }}
+                      src={BurtLogo}
+                      alt="Burts Bees"
+                    />
                   </NavLink>
                 </Grid>
               </Grid>
@@ -308,11 +335,15 @@ const Header = ({ currentUser, location, history }) => {
                 {isBundleLP ? (
                   <></>
                 ) : (
-                  <StyledLink
-                    component={RouterLink}
-                    {...accountMenuItemConf}
-                    onClick={segmentTrackNavigationClick}
-                  />
+                  <span className="sign-in-wrapper">
+                    <img src={signInImage} alt="sign in" />
+                    <StyledLink
+                      className="sign-in-link"
+                      component={RouterLink}
+                      {...accountMenuItemConf}
+                      onClick={segmentTrackNavigationClick}
+                    />
+                  </span>
                 )}
               </Grid>
             </Grid>

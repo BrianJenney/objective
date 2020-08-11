@@ -16,6 +16,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuLink from './MenuLink';
 import { NavLink } from '.';
+import shoppingBagImage from '../../assets/images/shopping_bag.svg';
+import signInImage from '../../assets/images/account_avatar.svg';
 
 const drawerWidth = 300;
 const useStyles = makeStyles(theme => ({
@@ -58,7 +60,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: '20px',
     fontFamily: 'proxima-nova, sans-serif, Helvetica, sans',
     colorPrimary: '#a06958',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    margin: '10px'
   }
 }));
 
@@ -129,11 +132,15 @@ const DropdownMenu = ({ toggleLabel, dropdownTitle, panelId, menuItems, ...rest 
           <>
             <NavLink to="TODO">
               <ListItem key="bag" justify="center" button onClick={handleClose}>
+                <img src={shoppingBagImage} alt="shop" />
                 <Typography className={classes.styledSubMenu}>
                   <MenuLink children="Bag" style={{ color: '#a06958' }} />
                 </Typography>
               </ListItem>
+            </NavLink>
+            <NavLink to="/login">
               <ListItem>
+                <img src={signInImage} alt="sign in" />
                 <Typography className={classes.styledSubMenu}>
                   <MenuLink children="Sign In" style={{ color: '#a06958' }} />
                 </Typography>
