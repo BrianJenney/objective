@@ -34,11 +34,13 @@ const paypalIcon = require('../../../src/assets/images/paypal-logo-100px.png');
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
-    fontFamily: theme.typography.headerFontFamily
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   mobileTitle: {
     fontSize: '24px',
-    fontFamily: theme.typography.headerFontFamily
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   subTitle: {
     textAlign: 'right',
@@ -48,7 +50,8 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 'auto',
     lineHeight: '1.2rem',
     marginBottom: '16px',
-    marginTop: '8px'
+    marginTop: '8px',
+    color: '#7f7470'
   },
   formControlLabel: {
     fontSize: '20px',
@@ -771,7 +774,7 @@ const PaymentForm = ({
                       xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily
                     }
                     fontWeight={xs ? 700 : 400}
-                    fontSize={xs ? 18 : 34}
+                    fontSize={xs ? 24 : 30}
                     mb={xs ? -2 : 0}
                   />
                 </Grid>
@@ -962,10 +965,10 @@ const PaymentForm = ({
                   <Grid item xs={12} style={{ marginBottom: '10px' }}>
                     <Box
                       component={Typography}
-                      color="#231f20"
                       variant="h5"
                       children="Easy order status and snappy checkout"
-                      fontSize={xs ? 24 : 26}
+                      fontSize={xs ? 24 : 30}
+                      className={xs ? classes.mobileTitle : classes.title}
                       mb={1}
                       mt={xs ? 2 : 3}
                     />
@@ -982,24 +985,6 @@ const PaymentForm = ({
                         label="Password"
                         component={InputField}
                         type={passwordVisible ? 'text' : 'password'}
-                        InputProps={{
-                          endAdornment: (
-                            <Box width={1} textAlign="right">
-                              <NavLink
-                                style={{
-                                  fontFamily: 'proxima-nova, sans-serif',
-                                  fontWeight: 600,
-                                  fontSize: '12px',
-                                  color: '#553226'
-                                }}
-                                type="button"
-                                underline="always"
-                                onClick={event => togglePasswordVisibility(event)}
-                                children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
-                              />
-                            </Box>
-                          )
-                        }}
                         autoComplete="current-password"
                       />
                     </div>
