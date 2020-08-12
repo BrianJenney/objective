@@ -24,24 +24,24 @@ const PromoCodeForm = () => {
   const cart = useSelector(state => state.cart);
   const [promoCodeErr, setPromoCodeErr] = useState(null);
   const onSubmit = useCallback(
-    async ( e, form ) => {
+    async (e, form) => {
       const response = await validatePromoCode(e.promoCode);
-      window.analytics.track("Coupon Entered", {
-        "cart_id": cart._id,
-        "coupon_id": e.promoCode,
-        "coupon_name": e.promoCode,
-        "order_id": cart.accountId ? cart.accountId : ''
+      window.analytics.track('Coupon Entered', {
+        cart_id: cart._id,
+        coupon_id: e.promoCode,
+        coupon_name: e.promoCode,
+        order_id: cart.accountId ? cart.accountId : ''
       });
       if (response.valid) {
         addCoupon(cart._id, response.code);
       } else {
         setPromoCodeErr(response.reason);
-        window.analytics.track("Coupon Denied", {
-          "cart_id": cart._id,
-          "coupon_id": e.promoCode,
-          "coupon_name": e.promoCode,
-          "order_id": cart.accountId ? cart.accountId : '',
-          "reason": response.reason
+        window.analytics.track('Coupon Denied', {
+          cart_id: cart._id,
+          coupon_id: e.promoCode,
+          coupon_name: e.promoCode,
+          order_id: cart.accountId ? cart.accountId : '',
+          reason: response.reason
         });
       }
       form.setSubmitting(false);
@@ -64,31 +64,17 @@ const PromoCodeForm = () => {
               Promo Code
             </StyledPromoCode>
           ) : (
-            <StyledPromoCode
-              style={{ 'font-size': '12px', paddingBottom: '5px' }}
-            >
+            <StyledPromoCode style={{ 'font-size': '12px', paddingBottom: '5px' }}>
               Promo Code
             </StyledPromoCode>
           )}
         </Grid>
-        <Grid
-          container
-          xs={12}
-          style={{ 'align-items': 'flex-start', height: '42px' }}
-        >
+        <Grid container xs={12} style={{ 'align-items': 'flex-start', height: '42px' }}>
           <Grid item xs={10}>
             {promoCodeErr ? (
-              <Field
-                name="promoCode"
-                component={InputField}
-                className="promo-code-input-error"
-              />
+              <Field name="promoCode" component={InputField} className="promo-code-input-error" />
             ) : (
-              <Field
-                name="promoCode"
-                component={InputField}
-                className="promo-code-input"
-              />
+              <Field name="promoCode" component={InputField} className="promo-code-input" />
             )}
 
             {promoCodeErr && (
@@ -109,12 +95,9 @@ const PromoCodeForm = () => {
               type="submit"
               children="Apply"
               style={{
-                color: '#000000',
-                backgroundColor: 'transparent',
-                textDecoration: 'underline',
-                minWidth: '0',
-                fontWeight: 'normal',
-                border: 'none',
+                fontSize: '14px',
+                fontWeight: '600',
+                height: '46px',
                 paddingTop: '10px'
               }}
             />

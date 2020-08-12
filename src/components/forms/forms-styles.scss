@@ -1,24 +1,18 @@
 .promo-code-form {
   width: 100%;
   .promo-code-input {
+    margin-top: 4px;
     .MuiOutlinedInput-notchedOutline {
-      border: none;
+      margin-right: 20px;
     }
     input {
       padding: 10px;
-      border: 2px solid #cbcbcb;
-      margin-right: 20px;
     }
   }
 
   .promo-code-input-error {
     .MuiOutlinedInput-notchedOutline {
-      border: none;
-    }
-    input {
-      padding: 10px;
       border: 2px solid #ce0e2d;
-      margin-right: 20px;
     }
   }
 }

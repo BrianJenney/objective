@@ -29,6 +29,8 @@ import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 import { setCheckoutPaypalPayload } from '../../modules/paypal/actions';
 import EventEmitter from '../../events';
 
+const paypalIcon = require('../../../src/assets/images/paypal-logo-100px.png');
+
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
@@ -513,7 +515,7 @@ const PaymentForm = ({
       total,
       shippingAddress,
       {
-        label: 'checkout',
+        label: 'paypal',
         shape: 'rect',
         color: 'gold',
         height: 55,
@@ -719,13 +721,21 @@ const PaymentForm = ({
                     key="formControlLabelPayPalMode"
                     style={{ marginLeft: '-6px' }}
                     value="paypal"
-                    control={<Radio color={'secondary'} size={'small'} />}
-                    label={paypalEmail ? `PayPal: ${paypalEmail}` : 'PayPal'}
+                    control={
+                      <>
+                        <Radio
+                          color={'secondary'}
+                          size={'small'}
+                          checked={paymentMethodMode === 'paypal'}
+                        />{' '}
+                        <img src={paypalIcon} style={{ display: paypalEmail ? 'none' : 'block' }} />
+                      </>
+                    }
+                    label={paypalEmail ? `PayPal: ${paypalEmail}` : ''}
                     classes={{ label: classes.formControlLabel }}
                     onClick={evt => {
-                      setPaymentMethodMode(evt.target.value);
+                      setPaymentMethodMode('paypal');
                     }}
-                    checked={paymentMethodMode === 'paypal'}
                   />
                 </>
               )}
@@ -747,7 +757,7 @@ const PaymentForm = ({
                   </Typography>
                 </Box>
                 <Grid container style={{ marginTop: '11px' }}>
-                  <div id="paypal-checkout-button-payment-form" style={{ width: '100%' }}></div>
+                  <div id="paypal-checkout-button-payment-form" style={{ width: '187px' }}></div>
                 </Grid>
               </Grid>
 
