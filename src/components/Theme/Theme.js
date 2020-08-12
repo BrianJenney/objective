@@ -1,8 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { colorPalette } from './color-palette';
 import { fonts, sizes, backupFontStack } from './fonts';
+import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 
 const { ...color } = colorPalette;
+const breakpoints = createBreakpoints({});
 
 const nxtTheme = createMuiTheme({
   shadows: ['none'],
@@ -201,8 +203,12 @@ const nxtTheme = createMuiTheme({
         fontFamily: 'upgrade, sans-serif',
         fontStyle: 'normal',
         fontWeight: 400,
-        fontSize: '18px',
+        fontSize: '14px',
         height: '48px',
+        marginBottom: '24px',
+        [breakpoints.down("sm")]: {
+          marginBottom: '16px'
+        }
       }
     },
     MuiInputLabel: {
@@ -286,7 +292,7 @@ const nxtTheme = createMuiTheme({
         fontFamily: 'proxima-nova, sans-serif',
         fontStyle: 'normal',
         fontWeight: 400,
-        fontSize: '22px'
+        fontSize: '22px',
       }
     },
     MuiSelect: {
@@ -299,17 +305,22 @@ const nxtTheme = createMuiTheme({
     },
     MuiFormHelperText: {
       root: {
+        fontSize: '14px',
         '&.Mui-error': {
           backgroundColor: 'rgba(208, 2, 27, 0.15)',
           color: '#000'
         }
       },
       contained: {
-        margin: 0,
-        minHeight: 24,
-        lineHeight: '24px',
-        padding: '0 5px',
-        color: '#7f7470'
+        marginTop: '-10px',
+        marginBottom: '12px',
+        lineHeight: '12px',
+        padding: '0px',
+        color: '#7f7470',
+        [breakpoints.down("sm")]: {
+          marginBottom: '8px',
+          fontSize: '13px'
+        }
       }
     }
   },

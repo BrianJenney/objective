@@ -762,7 +762,6 @@ const PaymentForm = ({
                     }
                     fontWeight={xs ? 700 : 400}
                     fontSize={xs ? 18 : 34}
-                    mb={xs ? -2 : 0}
                   />
                 </Grid>
               )}
