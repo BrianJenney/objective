@@ -1,8 +1,7 @@
 import {
-  REQUEST_CREATE_ORDER,
+  FE_ORDER_SUBMITTED,
   RECEIVED_CREATE_ORDER_SUCCESS,
   RECEIVED_CREATE_ORDER_FAILURE,
-  REQUEST_CANCEL_ORDER,
   RECEIVED_CANCEL_ORDER_SUCCESS,
   RECEIVED_CANCEL_ORDER_FAILURE,
   REQUEST_FIND_ALL_ORDERS,
@@ -21,7 +20,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REQUEST_CREATE_ORDER:
+    case FE_ORDER_SUBMITTED:
       return { ...state, isLoading: true, order: null };
     case RECEIVED_CREATE_ORDER_SUCCESS:
       return {
@@ -49,10 +48,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case RESET_ORDER_STATE:
       return { ...state, isLoading: false, transactionError: null };
-    case REQUEST_CANCEL_ORDER:
-      return {
-        ...state
-      };
     case RECEIVED_CANCEL_ORDER_SUCCESS:
       return {
         ...state,
