@@ -346,10 +346,13 @@ export const requestRemoveCartById = id => async (dispatch, getState) => {
   });
 };
 
-export const receivedRemoveCart = () => ({
-  type: RECEIVED_REMOVE_CART,
-  payload: {}
-});
+export const receivedRemoveCart = () => {
+  localStorageClient.remove('cartId');
+  return {
+    type: RECEIVED_REMOVE_CART,
+    payload: {}
+  };
+};
 
 export const requestMergeCarts = (cartId, accountId) => async (dispatch, getState) => {
   const { client: stompClient, replyTo } = getState().stomp;

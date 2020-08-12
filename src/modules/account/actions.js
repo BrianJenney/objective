@@ -27,7 +27,8 @@ import {
   RECEIVED_PASSWORD_RESET_SUCCESS,
   RECEIVED_PASSWORD_RESET_FAILURE,
   REQUEST_CHECK_EMAIL_EXISTENCE,
-  RECEIVED_CHECK_EMAIL_EXISTENCE
+  RECEIVED_CHECK_EMAIL_EXISTENCE,
+  CLEAR_ACCOUNT_DATA
 } from './types';
 import EventEmitter from '../../events';
 import { unsetCheckoutPaypalPayload } from '../paypal/actions';
@@ -50,15 +51,15 @@ export const requestCreateAccount = account => (dispatch, getState) => {
     }
   };
 
-  if (account.hasOwnProperty('isGuest')) {
+  if (Object.prototype.hasOwnProperty.call(account, 'isGuest')) {
     params.data.isGuest = account.isGuest;
   }
 
-  if (account.hasOwnProperty('disableGuestLogic')) {
+  if (Object.prototype.hasOwnProperty.call(account, 'disableGuestLogic')) {
     params.data.disableGuestLogic = account.disableGuestLogic;
   }
 
-  if (account.hasOwnProperty('passwordSet')) {
+  if (Object.prototype.hasOwnProperty.call(account, 'passwordSet')) {
     params.data.passwordSet = account.passwordSet;
   }
 
@@ -259,6 +260,36 @@ export const requestChangePassword = (authToken, patches, { setSubmitting }) => 
       'reply-to': replyTo,
       'correlation-id': ObjectId(),
       token: localStorageClient.get('olympusToken')
+    },
+    payload
+  );
+
+  dispatch({
+    type: REQUEST_CHANGE_PASSWORD,
+    payload: {},
+    onSuccess: () => setSubmitting(false),
+    onFailure: () => setSubmitting(false)
+  });
+};
+
+export const requestChangePasswordPostOrder = (accountId, patches, { setSubmitting }) => (
+  dispatch,
+  getState
+) => {
+  // This fn is for the create account box that appears on the order confirmation
+  // page after guest checkout.  This version does not use JWT's.
+  const { client: stompClient, replyTo } = getState().stomp;
+  const params = {
+    id: accountId,
+    data: patches
+  };
+  const payload = JSON.stringify(msgpack.encode(params));
+
+  stompClient.send(
+    '/exchange/account/account.request.changePasswordPostOrder',
+    {
+      'reply-to': replyTo,
+      'correlation-id': ObjectId()
     },
     payload
   );
@@ -486,7 +517,7 @@ export const requestPasswordReset = (authToken, patches, actions) => (dispatch, 
   });
 };
 
-export const receivedPasswordResetSuccess = (account, token) => dispatch => {
+export const receivedPasswordResetSuccess = account => dispatch => {
   dispatch({
     type: RECEIVED_PASSWORD_RESET_SUCCESS,
     payload: account
@@ -527,5 +558,12 @@ export const receivedCheckEmailExistence = exists => dispatch => {
   dispatch({
     type: RECEIVED_CHECK_EMAIL_EXISTENCE,
     payload: exists
+  });
+};
+
+export const clearAccountData = () => dispatch => {
+  dispatch({
+    type: CLEAR_ACCOUNT_DATA,
+    payload: null
   });
 };
