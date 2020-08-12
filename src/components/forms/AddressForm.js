@@ -321,7 +321,7 @@ const AddressForm = ({
   };
 
   const renderForm = ({ values, setValues, setFieldValue, isSubmitting, isValid }) => (
-    <Form className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
+    <Form style={ xs ? {marginTop: -40} : {marginTop: 0} } className={rest.checkoutVersion && rest.checkoutVersion === 2 ? classes.root : ''}>
       <Box display="block" mb={xs ? 3 : 4} className="justify-content">
         {!currentUser.data.account_jwt && (
           <>
