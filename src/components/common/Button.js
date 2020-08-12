@@ -28,11 +28,11 @@ const ButtonComponent = ({
     fontFamily: 'proxima-nova, sans-serif',
     border: 'none',
     fontWeight: 600,
-    padding: '14px',
+    padding: '0 16px 0 16px',
     letterSpacing: xs ? '1.17px' : '1.33px',
     lineHeight: xs ? 1.88 : 2.14,
-    fontSize: xs ? 14 : 16,
-    height: '60px',
+    fontSize: 14,
+    height: '46px',
     ...style
   };
 

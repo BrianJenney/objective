@@ -608,7 +608,7 @@ const AddressForm = ({
                 onClick={onBack}
                 children={backLabel}
                 mr={2}
-                style={{ height: '60px', padding: '0px' }}
+                style={{ height: '46px', padding: '0px' }}
               />
             )}
             <Button
@@ -616,7 +616,7 @@ const AddressForm = ({
               disabled={!isValid}
               children={submitLabel}
               loading={isSubmitting}
-              style={{ height: '60px', padding: '0px' }}
+              style={{ height: '46px', padding: '0px' }}
             />
           </ButtonGroup>
         </Grid>

@@ -90,6 +90,16 @@ export const StyledSmallCapsEmptyCart = withStyles(theme => ({
   }
 }))(Typography);
 
+export const StyledBackArrowIcon = withStyles(theme => ({
+  root: {
+    top: 15,
+    right: 5,
+    color: '#000000',
+    position: 'relative',
+    fontSize: '24px'
+  }
+}))(SvgIcon);
+
 export const StyledArrowIcon = withStyles(theme => ({
   root: {
     top: 7,

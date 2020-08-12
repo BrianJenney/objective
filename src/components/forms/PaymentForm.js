@@ -587,7 +587,7 @@ const PaymentForm = ({
             color={theme.palette.brand.camoGreen}
             fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
             fontWeight={xs ? 700 : 400}
-            fontSize={xs ? 14 : 25}
+            fontSize={xs ? 18 : 34}
             mb={xs ? 0 : 2}
           />
         )}
@@ -771,7 +771,7 @@ const PaymentForm = ({
                       xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily
                     }
                     fontWeight={xs ? 700 : 400}
-                    fontSize={xs ? 14 : 25}
+                    fontSize={xs ? 18 : 34}
                     mb={xs ? -2 : 0}
                   />
                 </Grid>
@@ -1014,7 +1014,7 @@ const PaymentForm = ({
                 currentUser.data.paymentMethods &&
                 currentUser.data.paymentMethods.length > 0 && (
                   <Button
-                    style={{ height: '60px', padding: '0px' }}
+                    style={{ height: '46px', padding: '0px' }}
                     type="button"
                     onClick={onBack}
                     children={backLabel}
@@ -1023,7 +1023,7 @@ const PaymentForm = ({
                 )}
               <Button
                 style={{
-                  height: '60px',
+                  height: '46px',
                   padding: '0px',
                   display:
                     paymentMethodMode === 'creditCard' ||

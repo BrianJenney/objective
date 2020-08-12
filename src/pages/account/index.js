@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Redirect, Link as RouterLink } from 'react-router-dom';
-import LeftArrowIcon from '@material-ui/icons/ArrowBack';
-import { StyledArrowIcon } from '../cart/StyledComponents';
+import { ReactComponent as LeftArrow } from '../../assets/static/back_arrow.svg';
+import { StyledBackArrowIcon } from '../cart/StyledComponents';
+
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import SvgIcon from '@material-ui/core/SvgIcon';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,7 +28,7 @@ const backLink = {
   fontSize: '14px',
   color: '#a06958',
   textDecoration: 'underline'
-}
+};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,11 +40,11 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontFamily: theme.typography.headerFontFamily,
-    fontSize: 36,
+    fontSize: 34,
     marginBottom: 30,
     color: theme.palette.brand.camoGreen,
     [theme.breakpoints.down('xs')]: {
-      fontSize: 25,
+      fontSize: 30,
       marginTop: 15,
       marginBottom: 5
     }
@@ -72,6 +74,15 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
+
+const LeftArrowIcon = () => {
+  return (
+      <StyledBackArrowIcon>
+        <LeftArrow />
+      </StyledBackArrowIcon>
+  );
+};
+
 const Account = ({ routes, history }) => {
   const currentUser = useSelector(state => state.account.data);
   const classes = useStyles();
@@ -83,20 +94,15 @@ const Account = ({ routes, history }) => {
         <Box className={classes.paper}>
           <Grid container spacing={3}>
             <div className={classes.accountMenuGrid}>
-            
               {xs ? (
                 <>
-                <RouterLink
-                onClick={() => history.goBack()}
-              >
-                <StyledArrowIcon>
-                  <LeftArrowIcon style={{color: '#a06958'}} />
-                </StyledArrowIcon>
-                <span style={backLink}>Back</span>
-              </RouterLink>
-                <Typography className={classes.title} variant="h1" gutterBottom>
-                  Welcome, {currentUser.firstName}!
-                </Typography>
+                  <RouterLink onClick={() => history.goBack()}>
+                      <LeftArrowIcon />
+                    <span style={backLink}>Back</span>
+                  </RouterLink>
+                  <Typography className={classes.title} variant="h1" gutterBottom>
+                    Welcome, {currentUser.firstName}!
+                  </Typography>
                 </>
               ) : (
                 <></>

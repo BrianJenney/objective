@@ -14,7 +14,7 @@ import { MenuLink, NavLink } from './common';
 const useStyles = makeStyles(theme => ({
   title: {
     minHeight: '48px',
-    fontSize: '36px',
+    fontSize: '34px',
     color: theme.palette.brand.camoGreen,
     fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.down('xs')]: {
       minHeight: '0px',
-      fontSize: '25px',
+      fontSize: '30px',
       float: 'left',
       margin: 0,
       paddingLeft: '10px'

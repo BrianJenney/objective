@@ -37,9 +37,12 @@ import ScrollToTop from '../../components/common/ScrollToTop';
 const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: theme.typography.headerFontFamily,
-    fontSize: 25,
+    fontSize: 34,
     marginBottom: 20,
-    color: theme.palette.brand.camoGreen
+    color: theme.palette.brand.camoGreen,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 30
+    }
   },
   statusTitle: {
     fontFamily: theme.typography.bodyFontFamily,

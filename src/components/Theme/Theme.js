@@ -92,7 +92,7 @@ const nxtTheme = createMuiTheme({
     },
     h5: {
       fontFamily: `${fonts.variant}, ${backupFontStack.sans}`,
-      fontSize: '25px',
+      fontSize: '34px',
       color: '#a06958',
       fontWeight: 400,
       lineHeight: '1.875rem'
@@ -201,7 +201,8 @@ const nxtTheme = createMuiTheme({
         fontFamily: 'upgrade, sans-serif',
         fontStyle: 'normal',
         fontWeight: 400,
-        fontSize: '18px'
+        fontSize: '18px',
+        height: '48px',
       }
     },
     MuiInputLabel: {
@@ -210,7 +211,8 @@ const nxtTheme = createMuiTheme({
         fontStyle: 'normal',
         fontWeight: 400,
         fontSize: '14px',
-        color: '#a06958'
+        color: '#a06958',
+        lineHeight: '5px'
       },
       outlined: {
         '&.MuiInputLabel-shrink': {
@@ -254,7 +256,7 @@ const nxtTheme = createMuiTheme({
       },
       input: {
         fontWeight: '500',
-        color: '#553226',
+        color: '#a06958',
         fontSize: '18px'
       }
     },
