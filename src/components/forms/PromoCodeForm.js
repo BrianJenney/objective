@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import Voucherify from 'voucherify.js';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -7,7 +8,7 @@ import { object, string } from 'yup';
 import { Formik, Field, Form } from 'formik';
 
 import { Button } from '../common';
-import { validatePromoCode } from '../../apis/Voucherify';
+// import { validatePromoCode } from '../../apis/Voucherify';
 import { addCoupon } from '../../modules/cart/functions';
 import { StyledPromoCode } from '../../pages/cart/StyledComponents';
 import { InputField } from '../form-fields';
@@ -25,28 +26,29 @@ const PromoCodeForm = () => {
   const [promoCodeErr, setPromoCodeErr] = useState(null);
   const onSubmit = useCallback(
     async ( e, form ) => {
-      const response = await validatePromoCode(e.promoCode);
-      window.analytics.track("Coupon Entered", {
-        "cart_id": cart._id,
-        "coupon_id": e.promoCode,
-        "coupon_name": e.promoCode,
-        "order_id": cart.accountId ? cart.accountId : ''
-      });
-      if (response.valid) {
-        addCoupon(cart._id, response.code);
-      } else {
-        setPromoCodeErr(response.reason);
-        window.analytics.track("Coupon Denied", {
+      Voucherify.validate(e.promoCode, function callback (response) { 
+        window.analytics.track("Coupon Entered", {
           "cart_id": cart._id,
           "coupon_id": e.promoCode,
           "coupon_name": e.promoCode,
-          "order_id": cart.accountId ? cart.accountId : '',
-          "reason": response.reason
+          "order_id": cart.accountId ? cart.accountId : ''
         });
-      }
-      form.setSubmitting(false);
+        if (response.valid) {
+          addCoupon(cart._id, response.code);
+        } else {
+          setPromoCodeErr(response.reason);
+          window.analytics.track("Coupon Denied", {
+            "cart_id": cart._id,
+            "coupon_id": e.promoCode,
+            "coupon_name": e.promoCode,
+            "order_id": cart.accountId ? cart.accountId : '',
+            "reason": response.reason
+          });
+        }
+        form.setSubmitting(false);
+      })
     },
-    [promoCodeErr, setPromoCodeErr, validatePromoCode]
+    [promoCodeErr, setPromoCodeErr]
   );
 
   const renderForm = () => (

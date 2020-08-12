@@ -28,6 +28,18 @@ import './fonts/fonts.css';
 import { createAnonymousToken } from './utils/token';
 import { requestFetchStorefrontSeo } from './modules/storefront/actions';
 
+import Voucherify from 'voucherify.js'
+
+function voucherifyInit() {
+  Voucherify.initialize(
+    process.env.REACT_APP_VOUCHERIFY_APPLICATION_ID,
+    process.env.REACT_APP_VOUCHERIFY_SECRET_KEY
+  );
+  Voucherify.setBaseUrl(process.env.REACT_APP_VOUCHERIFY_URL)
+};
+
+voucherifyInit();
+
 const localStorageClient = require('store');
 const ObjectId = require('bson-objectid');
 
