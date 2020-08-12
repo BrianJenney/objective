@@ -253,9 +253,9 @@ export const StyledProductLink = withStyles(theme => ({
     fontStretch: 'normal',
     lineHeight: 1.25,
     letterSpacing: 'normal',
-    paddingRight: '45px',
+    paddingRight: '5px',
     paddingBottom: '0',
-    marginLeft: '10px',
+    marginLeft: '6px',
     marginTop: '7px',
     [theme.breakpoints.up('sm')]: {
       fontSize: '18px',
