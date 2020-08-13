@@ -51,7 +51,7 @@ const StaticPage = ({ match }) => {
   let FinalPage;
 
   if (pageLoaded) {
-    FinalPage = () => buildPage(page);
+    FinalPage = () => buildPage(page, slug);
   }
 
   if (pageError) {

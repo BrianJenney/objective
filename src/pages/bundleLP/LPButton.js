@@ -36,14 +36,6 @@ const LPButton = ({ history, data }) => {
     }, 500);
   }, [cart, dispatch]);
 
-  useEffect(() => {
-    const [sku, qty] = data.skuAndQty[0].split(';');
-
-    if (prodAdded) {
-      history.push(data.URL);
-    }
-  }, [prodAdded]);
-
   return (
     <div>
       <Button onClick={handleClick}>{data.value}</Button>

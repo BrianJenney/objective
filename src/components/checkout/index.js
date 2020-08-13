@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,30 +14,30 @@ import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { Panel, Loader, MenuLink } from '../common';
 import { AccountAddresses, AccountPaymentDetails } from '../account';
 import { FORM_TYPES as PAYMENT_FORM_TYPES } from '../account/PaymentDetails';
-import { AccountSummary, AddressSummary, PaymentSummary } from '../summaries';
+import { AddressSummary, PaymentSummary } from '../summaries';
 import { CheckoutReviewForm } from '../forms';
 import { FORM_TYPES as ADDRESS_FORM_TYPES } from '../forms/AddressForm';
 import CartDrawer from '../../pages/cart/CartDrawer';
-import CheckoutAuth from './Auth';
-import { STEPS, STEP_KEYS, STEPS_V2, DATA_KEYS } from './constants';
-import { getDefaultEntity, scrollToRef } from '../../utils/misc';
+import { STEP_KEYS, STEPS_V2 } from './constants';
+import { scrollToRef } from '../../utils/misc';
 import '../../pages/checkout/checkout-styles.scss';
 import { requestSetShippingAddress } from '../../modules/cart/actions';
+import { requestCheckEmailExistence } from '../../modules/account/actions';
 import { resetOrderState } from '../../modules/order/actions';
 import { setCheckoutPaypalPayload, unsetCheckoutPaypalPayload } from '../../modules/paypal/actions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import TransactionMessage from './TransactionMessage';
 import StateRestrictionsDialog from './StateRestrictionsDialog';
 import Login from '../Login';
 import { sendPaypalCheckoutRequest } from '../../utils/braintree';
-import EventEmitter from '../../events';
+const localStorageClient = require('store');
 
-const getPanelTitleContent = (xs, step, activeStep, signupConfirmation, payload) => {
+const getPanelTitleContent = (xs, step, activeStep, payload) => {
   const isActiveStep = step === activeStep;
   const stepTitle = STEPS_V2[step];
   const titleViewBgcolor = isActiveStep ? '#003833' : '#fbf7f3';
@@ -94,15 +95,12 @@ const Checkout = ({
   history,
   currentUser,
   cart,
-  requestCreateAccount,
+  emitOrderSubmitted,
   clearCreateAccountError,
   requestLogin,
-  requestFetchAccount,
-  receivedFetchAccountSuccess,
   clearLoginError,
   requestPatchAccount,
-  clearPatchAccountError,
-  requestCreateOrder
+  clearPatchAccountError
 }) => {
   const hideLPCoupon = !!history.location.state;
   const [payload, setPayload] = useState({});
@@ -111,22 +109,23 @@ const Checkout = ({
   const [resetPaymentDetailsFormMode, setResetPaymentDetailsFormMode] = useState(false);
   const [shippingAddressActive, setShippingAddressActive] = useState({});
   const [accountCreated, setAccountCreated] = useState(false);
-  const [guestMode, setGuestMode] = useState(false);
   const [paymentDetailsUpdated, setPaymentDetailsUpdated] = useState(false);
-  const [ppButtonRendered, setPpButtonRendered] = useState(false);
   const [addressBookUpdated, setAddressBookUpdated] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const dispatch = useDispatch();
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.down('xs'));
   const { account_jwt, email: currentUserEmail, paymentMethods } = currentUser.data;
+  const order = useSelector(state => state.order.order);
   const orderError = useSelector(state => state.order.transactionError);
   const orderIsLoading = useSelector(state => state.order.isLoading);
   const paypalPayloadState = useSelector(state => state.paypal);
   const [checkoutDialogOpen, setCheckoutDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { signupConfirmation } = currentUser;
   const stepRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  // I don't want to have to disable the linter rule, but i also don't want to
+  // devise, implement, & test a different way.  This is unrelated to EDA.
+  // eslint-disable-next-line no-unused-vars
   const [closeShippingRestrictions, setCloseShippingRestrictions] = useState(false);
   const [restrictionMessage, setRestrictionMessage] = useState(false);
   const [restrictedProduct, setRestrictedProduct] = useState('');
@@ -136,7 +135,7 @@ const Checkout = ({
     setCloseShippingRestrictions(true);
   }, [setCloseShippingRestrictions]);
 
-  setTimeout(function() {
+  setTimeout(() => {
     setLoading(false);
   }, 300);
 
@@ -151,6 +150,7 @@ const Checkout = ({
         product_id: item.variant_id,
         variant: item.variant_id,
         name: item.variant_name,
+        free_item: !!item.pipInsertId,
         brand: cart.storeCode
       });
     });
@@ -192,7 +192,13 @@ const Checkout = ({
   useEffect(() => {
     const isGuest =
       currentUser.data.isGuest && currentUser.data.isGuest ? currentUser.data.isGuest : false;
-    if (accountCreated && paymentDetailsUpdated && !addressBookUpdated && !isGuest) {
+    if (
+      accountCreated &&
+      paymentDetailsUpdated &&
+      !addressBookUpdated &&
+      !isGuest &&
+      payload.method !== 'paypal'
+    ) {
       requestPatchAccount(account_jwt, {
         addressBook: [payload.shippingAddress]
       });
@@ -233,22 +239,17 @@ const Checkout = ({
   }, [currentUser.data.account_jwt]);
 
   useEffect(() => {
-    if (activeStep === 2 && !account_jwt && !accountCreated) {
+    if (activeStep === 2 && !accountCreated) {
       const isGuest = !!(
         (payload.paymentDetails.billingAddress.password &&
           payload.paymentDetails.billingAddress.password.length === 0) ||
         !payload.paymentDetails.billingAddress.password
       );
-      setGuestMode(isGuest);
+
       const accountInfoPayload = {
-        firstName: payload.paymentDetails.billingAddress.firstName,
-        lastName: payload.paymentDetails.billingAddress.lastName,
-        email: payload.shippingAddress.email.toLowerCase(),
-        password: !isGuest ? payload.paymentDetails.billingAddress.password : '',
-        passwordSet: !isGuest,
-        isGuest,
         storeCode: cart.storeCode,
-        newsletter: true
+        email: currentUserEmail || payload.shippingAddress.email.toLowerCase(),
+        password: !isGuest ? payload.paymentDetails.billingAddress.password : ''
       };
 
       setPayload({
@@ -261,7 +262,7 @@ const Checkout = ({
       activeStep === 1 &&
       !account_jwt &&
       payload.paymentDetails &&
-      payload.paymentDetails.hasOwnProperty('billingAddress')
+      payload.paymentDetails.billingAddress
     ) {
       setResetPaymentDetailsFormMode(true);
     }
@@ -352,6 +353,14 @@ const Checkout = ({
     if (activeStep === 1) {
       setShippingAddressActive(payload.shippingAddress);
       dispatch(requestSetShippingAddress(cart._id, payload.shippingAddress));
+      if (
+        payload.shippingAddress &&
+        payload.shippingAddress.email &&
+        typeof payload.shippingAddress.email === 'string' &&
+        !account_jwt
+      ) {
+        dispatch(requestCheckEmailExistence(payload.shippingAddress.email));
+      }
     }
   }, [activeStep, payload.shippingAddress]);
 
@@ -378,6 +387,12 @@ const Checkout = ({
       history.push('/');
     }
   }, [cart._id]);
+
+  useEffect(() => {
+    if (orderError && activeStep === 2) {
+      setActiveStep(1);
+    }
+  }, [orderError]);
 
   const handleCheckoutDialogClose = () => {
     setCheckoutDialogOpen(false);
@@ -416,19 +431,26 @@ const Checkout = ({
     delete payload.paymentDetails.billingAddress.password;
     delete payload.paymentDetails.billingAddress.shouldSubscribe;
     delete payload.shippingAddress.shouldSubscribe;
-    if (paymentMethodNonce !== '') {
+
+    if (paymentMethodNonce) {
       if (cart.items.length > 0) {
-        requestCreateOrder(
-          { ...cart, hideLPCoupon, ...payload, account_jwt },
-          { paymentMethodNonce }
-        );
+        emitOrderSubmitted({
+          cartId: cart._id,
+          email: payload.shippingAddress.email,
+          ...payload,
+          payment: { paymentMethodNonce },
+          customerJwt: account_jwt || localStorageClient.get('olympusToken')
+        });
       }
-    } else if (paymentMethodToken !== '') {
+    } else if (paymentMethodToken) {
       if (cart.items.length > 0) {
-        requestCreateOrder(
-          { ...cart, hideLPCoupon, ...payload, account_jwt },
-          { paymentMethodToken }
-        );
+        emitOrderSubmitted({
+          cartId: cart._id,
+          email: currentUser.data.email,
+          ...payload,
+          payment: { paymentMethodToken },
+          customerJwt: account_jwt || localStorageClient.get('olympusToken')
+        });
       }
     } else {
       return false;
@@ -508,12 +530,13 @@ const Checkout = ({
     return setCurrentStep(panelIndex);
   };
 
+  // eslint-disable-next-line consistent-return
   const getPaypalBraintreeNonce = async () => {
     const { total, shippingAddress } = cart;
     if (!cart || total === 0 || document.getElementById('paypal-checkout-button') === null) {
       return null;
     }
-    setPpButtonRendered(true);
+
     const paymentDetailsPayload = await sendPaypalCheckoutRequest(
       total,
       shippingAddress,
@@ -566,7 +589,7 @@ const Checkout = ({
                 >
                   <div ref={stepRefs[0]}>
                     <Panel
-                      title={getPanelTitleContent(xs, 0, activeStep, null, payload.shippingAddress)}
+                      title={getPanelTitleContent(xs, 0, activeStep, payload.shippingAddress)}
                       collapsible
                       expanded={activeStep === 0}
                       onChange={e => onPanelChange(e, 0)}
@@ -609,7 +632,7 @@ const Checkout = ({
                   ) : null}
                   <div ref={stepRefs[1]}>
                     <Panel
-                      title={getPanelTitleContent(xs, 1, activeStep, null, payload.paymentDetails)}
+                      title={getPanelTitleContent(xs, 1, activeStep, payload.paymentDetails)}
                       hideExpandIcon={activeStep <= 1}
                       collapsible
                       expanded={activeStep === 1}
@@ -639,7 +662,7 @@ const Checkout = ({
                   </div>
                   <div ref={stepRefs[2]}>
                     <Panel
-                      title={getPanelTitleContent(xs, 2, activeStep, null, {})}
+                      title={getPanelTitleContent(xs, 2, activeStep, {})}
                       collapsible
                       hideExpandIcon
                       expanded={activeStep === 2}
@@ -709,7 +732,7 @@ const Checkout = ({
                   </IconButton>
                 ) : null}
                 <MuiDialogContent>
-                  <TransactionMessage orderError={orderError} />
+                  <TransactionMessage orderError={orderError} errorMessage={order} />
                 </MuiDialogContent>
               </Dialog>
             </Box>
@@ -724,13 +747,12 @@ Checkout.propTypes = {
   history: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   cart: PropTypes.object.isRequired,
-  requestCreateAccount: PropTypes.func.isRequired,
   clearCreateAccountError: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
   clearLoginError: PropTypes.func.isRequired,
   requestPatchAccount: PropTypes.func.isRequired,
   clearPatchAccountError: PropTypes.func.isRequired,
-  requestCreateOrder: PropTypes.func.isRequired
+  emitOrderSubmitted: PropTypes.func.isRequired
 };
 
 export default withRouter(Checkout);

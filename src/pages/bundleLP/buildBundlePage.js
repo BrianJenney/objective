@@ -4,6 +4,7 @@ import { Button, NavLink } from '../../components/common';
 import { HomeVariantCard } from '../home/';
 import LPButton from './LPButton';
 import LPParagraph from './LPParagraph';
+import LPNavigation from './LPNavigation';
 import { Title, transformMobileStyle, transformDesktopStyle } from '../static/transformComponents';
 
 export const buildComponents = (page, xs, products) => {
@@ -26,7 +27,9 @@ export const buildComponents = (page, xs, products) => {
       case 'image':
         components.push(
           <div
-            style={xs ? { margin: comp.mobileStyle.margin } : { margin: comp.desktopStyle.margin }}
+            style={
+              xs ? { padding: comp.mobileStyle.margin } : { padding: comp.desktopStyle.margin }
+            }
           >
             <img
               src={xs ? comp.mobileImg : comp.desktopImg}
@@ -58,17 +61,13 @@ export const buildComponents = (page, xs, products) => {
       case 'sectionTitle':
         components.push(<Title data={comp} value={comp.value} xs={xs} />);
         break;
+      case 'navigation':
+        components.push(<LPNavigation data={comp} xs={xs} />);
+        break;
       case 'button':
-        const btnType = comp.value.toLowerCase() === 'add to cart';
         components.push(
           <div style={xs ? mobileStyle : desktopStyle}>
-            {btnType ? (
-              <LPButton data={comp} />
-            ) : (
-              <Button to={comp.URL} component={NavLink} style={{ textDecoration: 'none' }}>
-                {comp.value}
-              </Button>
-            )}
+            <LPButton data={comp} />
           </div>
         );
         break;
@@ -104,7 +103,7 @@ export const buildComponents = (page, xs, products) => {
                   ...mobileStyle,
                   border: mobileStyle.borderColor,
                   top: '80%',
-                  margin: '0 11%'
+                  margin: comp.mobileStyle.margin || '0 3vh'
                 }
                 : {
                   ...desktopStyle,
@@ -121,11 +120,7 @@ export const buildComponents = (page, xs, products) => {
       case 'oneColSection':
         components.push(
           <div
-            style={
-              xs
-                ? { ...mobileStyle, margin: comp.mobileStyle.margin }
-                : { ...desktopStyle, margin: comp.desktopStyle.margin }
-            }
+            style={xs ? { ...mobileStyle } : { ...desktopStyle, margin: comp.desktopStyle.margin }}
           >
             {buildComponents(comp.value, xs)}
           </div>

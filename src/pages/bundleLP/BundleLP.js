@@ -12,7 +12,7 @@ export const StyledContainer = withStyles(theme => ({
   root: {
     padding: '0',
     [theme.breakpoints.down('xs')]: {
-      padding: '38px 0 40px',
+      padding: '0 0 40px',
       backgroundColor: '#fdfbf9',
       width: '100%'
     }

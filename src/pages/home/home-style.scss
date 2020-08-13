@@ -382,22 +382,23 @@
       margin: 0;
     }
     button {
-      font-size: 20px !important;
+      font-size: 16px !important;
       letter-spacing: 1.65px !important;
-      padding: 19px !important;
-    }
-    .tile {
-      .home-atc {
-        button {
-          height: 74.4px;
-        }
-      }
+      // padding: 19px !important;
+      height: 60px
     }
     .button-LP {
       button {
         font-size: 16px !important;
         padding: 0 0 40px !important;
         text-align: left
+      }
+    }
+    .tile {
+      .home-atc {
+        button {
+          height: 74.4px;
+        }
       }
     }
     .shopAllLink {
