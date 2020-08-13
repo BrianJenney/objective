@@ -249,7 +249,6 @@ const OrderSummary = ({
       {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
-
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
@@ -308,12 +307,12 @@ const OrderSummary = ({
             </StyledSmallCaps>
             <Address address={shippingAddress} />
             {tracking && (
-              <>
+              <Box className={classes.textTracking}>
                 <Typography className={classes.text} pt={2}>
                   Tracking #:
                 </Typography>
                 <TrackingInfo className={classes.text} tracking={tracking} />
-              </>
+              </Box>
             )}
           </Box>
         </Grid>
@@ -361,6 +360,7 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
+
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
   order.status = statusStepper.status;
@@ -375,6 +375,7 @@ const OrderDetail = () => {
               <Grid container spacing={xs ? 0 : 4}>
                 <Grid item xs={mainWidth}>
                   <OrderSummary
+                    hideLPCoupon={hideLPCoupon}
                     account={account}
                     orderNumber={order.orderNumber}
                     orderId={order.orderNumber}
@@ -394,7 +395,7 @@ const OrderDetail = () => {
                   />
                 </Grid>
                 <Grid item xs={cartWidth}>
-                  <OrderCartSummary order={order} />
+                  <OrderCartSummary order={order} hideLPCoupon={hideLPCoupon} />
                 </Grid>
               </Grid>
             </Box>

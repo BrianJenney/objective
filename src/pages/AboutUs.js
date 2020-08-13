@@ -181,7 +181,7 @@ const AboutUs = ({ location }) => {
             ))}
             <img
               src={allImgs[0][1].data.target.fields.file.url}
-              alt={allImgs[0][1].data.target.fields}
+              alt={allImgs[0][1].data.target.fields.title}
             />
             {allTexts[1].map((text, key) => (
               <p className={`textNum${key}`}>{text.content[0].value}</p>

@@ -107,6 +107,7 @@ const CheckoutReviewForm = ({ onSubmit, xsBreakpoint, accountJwt, payload, activ
             fontSize: '11px',
             float: 'left'
           }}
+          target="_blank"
         >
           Terms &amp; Conditions
         </Box>

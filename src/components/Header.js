@@ -276,7 +276,7 @@ const Header = ({ currentUser, location, history }) => {
                 {isBundleLP ? (
                   <></>
                 ) : (
-                  <Grid item lg="auto" className="h-pding">
+                  <Grid item lg="auto" className="h-pding name">
                     <StyledLink
                       component={RouterLink}
                       {...accountMenuItemConf}

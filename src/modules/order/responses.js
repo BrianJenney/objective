@@ -40,6 +40,7 @@ export const handleOrderResponse = (status, data, fields, properties) => {
       } else {
         store.dispatch(receivedCancelOrderFailure(data));
       }
+
       break;
     case 'order.request.find':
     case 'order.request.findUnauthenticated':
