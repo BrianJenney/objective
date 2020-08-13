@@ -41,6 +41,7 @@ const StaticPage = ({ match }) => {
         setPageError(true);
       }
       setTracked(true);
+      window.analytics.page(analyticsStr);
     } else if (page.error) {
       analyticsStr = '404 Error';
       setPageError(true);
@@ -50,7 +51,6 @@ const StaticPage = ({ match }) => {
   let FinalPage;
 
   if (pageLoaded) {
-    window.analytics.page(analyticsStr);
     FinalPage = () => buildPage(page, slug);
   }
 
