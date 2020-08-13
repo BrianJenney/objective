@@ -130,7 +130,7 @@ const DropdownMenu = ({ toggleLabel, dropdownTitle, panelId, menuItems, ...rest 
         </List>
         <List id={panelId} anchorEl={anchorEl}>
           <>
-            <NavLink to="TODO">
+            <NavLink to="/gallery">
               <ListItem key="bag" justify="center" button onClick={handleClose}>
                 <img src={shoppingBagImage} alt="shop" />
                 <Typography className={classes.styledSubMenu}>

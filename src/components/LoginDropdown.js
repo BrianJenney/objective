@@ -34,7 +34,7 @@ const StyledMenu = withStyles(theme => ({
   />
 ));
 
-const LoginDropdown = ({ text }) => {
+const LoginDropdown = ({ text = 'Account' }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = e => {
