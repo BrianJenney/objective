@@ -32,8 +32,11 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontFamily: theme.typography.headerFontFamily,
     color: theme.palette.brand.camoGreen,
-    fontSize: 25,
-    marginBottom: 15
+    fontSize: 34,
+    marginBottom: 15,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 30
+    }
   },
   info: {
     fontFamily: theme.typography.bodyFontFamily,

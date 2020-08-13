@@ -44,6 +44,36 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     lineHeight: 'normal',
     marginBottom: 30
+  },
+  link: {
+      fontFamily: theme.typography.bodyFontFamily,
+      fontWeight: 600,
+      fontSize: '12px',
+      color: theme.palette.brand.camoGreen
+  },
+  root: {
+    '& .MuiInputLabel-root': {
+      fontSize: '16px'
+    },
+    '& .MuiInputBase-root': {
+      fontSize: '16px',
+      marginBottom: '24px',
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: '16px'
+      }
+    },
+    '& .MuiFormHelperText-root': {
+      fontSize: '14px',
+      color: '#7f7470',
+      marginTop: '-15px',
+      [theme.breakpoints.down('xs')]: {
+        marginTop: '-8px',
+        fontSize: '13px'
+      }
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: theme.palette.brand.accentBrown
+    }
   }
 }));
 
@@ -122,11 +152,11 @@ const ChangePassword = ({
   }
 
   const renderForm = ({ isValid }) => (
-    <Form>
+    <Form className={classes.root}>
       <Typography className={classes.info} variant="h3" gutterBottom>
         CHANGE PASSWORD
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           <Field
             name="currentPassword"
@@ -137,12 +167,7 @@ const ChangePassword = ({
               endAdornment: (
                 <Box width={1} textAlign="right">
                    <NavLink
-                     style={{
-                       fontFamily: 'proxima-nova, sans-serif',
-                       fontWeight: 600,
-                       fontSize: '12px',
-                       color: '#553226'
-                     }}
+                     className={classes.link}
                      component="button"
                      underline="always"
                      onClick={event => togglePasswordVisibility(event)}
@@ -173,7 +198,7 @@ const ChangePassword = ({
             />
           )}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{marginBottom: 8}}>
           <Field
             name="newPassword1"
             label="New Password"
@@ -183,12 +208,7 @@ const ChangePassword = ({
               endAdornment: (
                 <Box width={1} textAlign="right">
                    <NavLink
-                     style={{
-                       fontFamily: 'proxima-nova, sans-serif',
-                       fontWeight: 600,
-                       fontSize: '12px',
-                       color: '#553226'
-                     }}
+                     className={classes.link}
                      component="button"
                      underline="always"
                      onClick={event => toggleFirstPassword(event)}
@@ -206,6 +226,7 @@ const ChangePassword = ({
         </Grid>
         <Grid item xs={12}>
           <Field
+          style={{marginTop: 10}}
             name="newPassword2"
             label="Confirm New Password"
             component={InputField}
@@ -214,12 +235,7 @@ const ChangePassword = ({
               endAdornment: (
                 <Box width={1} textAlign="right">
                    <NavLink
-                     style={{
-                       fontFamily: 'proxima-nova, sans-serif',
-                       fontWeight: 600,
-                       fontSize: '12px',
-                       color: '#553226'
-                     }}
+                     className={classes.link}
                      component="button"
                      underline="always"
                      onClick={event => toggleSecondPassword(event)}

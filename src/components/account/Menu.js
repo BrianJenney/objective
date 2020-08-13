@@ -14,18 +14,10 @@ import { useTheme } from '@material-ui/core/styles';
 
 import { withRouter } from 'react-router-dom';
 
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-const StyledMenuItem = withStyles(theme => ({
-  root: {
-    fontFamily: theme.typography.bodyFontFamily,
-    color: theme.palette.brand.camoGreen,
-    fontSize: 22,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
-  }
-}))(MenuItem);
+import Select from '@material-ui/core/Select';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { ReactComponent as DropDownLogo } from '../../assets/static/drop_down_arrow.svg';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 const useStyles = makeStyles(theme => ({
   accountHeaderMobile: {
@@ -34,12 +26,6 @@ const useStyles = makeStyles(theme => ({
     fontFamily: theme.typography.bodyFontFamily,
     fontWeight: '600',
     marginTop: '5px'
-  },
-  nxTextField: {
-    fontFamily: theme.typography.bodyFontFamily,
-    fontSize: '18px',
-    marginTop: '5px',
-    color: theme.palette.brand.camoGreen
   },
   link: {
     color: theme.palette.brand.camoGreen,
@@ -54,8 +40,65 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 800,
     fontStyle: 'normal',
     fontSize: '14px'
-  }
+  },
 }));
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen,
+    fontSize: 18,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
+  }
+}))(MenuItem);
+
+const StyledSelect = withStyles(theme => ({
+  root: {
+    fontFamily: theme.typography.bodyFontFamily,
+    color: theme.palette.brand.camoGreen
+  }
+}))(Select);
+
+const StyledOutlinedInput = withStyles(theme => ({
+  root: {
+    borderColor: theme.palette.brand.camoGreen,
+    '&.Mui-focused': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.brand.camoGreen
+      }
+    },
+    '&:hover': {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.brand.camoGreen
+      }
+    }
+  },
+  notchedOutline: {
+    '& legend': {
+      display: 'none'
+    },
+    borderColor: theme.palette.brand.camoGreen
+  },
+  input: {
+    fontWeight: '500',
+    color: theme.palette.brand.camoGreen,
+    fontSize: '18px'
+  }
+}))(OutlinedInput);
+
+
+const DownIcon = props => {
+  return (
+    <div style={{height: 15, width: 50}}>
+    <SvgIcon>
+        <DropDownLogo />
+    </SvgIcon>
+    </div>
+  );
+};
+
 
 const AccountMenu = ({ logout }) => {
   const theme = useTheme();
@@ -66,25 +109,26 @@ const AccountMenu = ({ logout }) => {
   const [deskSelected, setDeskSelected] = useState(window.location.pathname);
 
   const NTextField = withRouter(({ history }) => (
-    <TextField
-      className={`${classes.nxTextField} nxTextField`}
+    <StyledSelect
       fullWidth
-      select
+      variant="outlined"
       value={mobileSelected}
       onChange={e => {
         history.push(e.target.value, history.location.state);
         setMobileSelected(e.target.value);
       }}
+      IconComponent={DownIcon}
+      input={<StyledOutlinedInput />}
     >
       {ACCOUNT_MENU_ITEMS.filter(item => item.key !== ACCOUNT_MENU_KEYS.LOGOUT).map(menuItem => (
         <StyledMenuItem key={menuItem.key} value={menuItem.to}>
           {menuItem.label}
         </StyledMenuItem>
       ))}
-    </TextField>
+    </StyledSelect>
   ));
 
-  const DesktopMenu = withRouter(({history}) => (
+  const DesktopMenu = withRouter(({ history }) => (
     <Box width={1} className="account-menu-box">
       <List component="nav" className="account-left-side">
         {ACCOUNT_MENU_ITEMS.map(menuItem => (
@@ -93,18 +137,34 @@ const AccountMenu = ({ logout }) => {
               primary={
                 <div className="account-side-menu">
                   {menuItem.key === ACCOUNT_MENU_KEYS.LOGOUT ? (
-                    <MenuLink className={classes.link} onClick={logout}>{menuItem.label}</MenuLink>
+                    <MenuLink className={classes.link} onClick={logout}>
+                      {menuItem.label}
+                    </MenuLink>
                   ) : deskSelected === menuItem.to ? (
-                    <NavLink className={classes.selectedLink} value={menuItem.to} to={menuItem.to} onClick={e => {
-                      history.push(e.target.value, history.location.state);
-                      setDeskSelected(menuItem.to);
-                    }}>{menuItem.label}</NavLink>
+                    <NavLink
+                      className={classes.selectedLink}
+                      value={menuItem.to}
+                      to={menuItem.to}
+                      onClick={e => {
+                        history.push(e.target.value, history.location.state);
+                        setDeskSelected(menuItem.to);
+                      }}
+                    >
+                      {menuItem.label}
+                    </NavLink>
                   ) : (
-                    <NavLink className={classes.link} value={menuItem.to} to={menuItem.to} onClick={e => {
-                      history.push(e.target.value, history.location.state);
-                      setDeskSelected(menuItem.to);
-                    }}>{menuItem.label}</NavLink>
-                  ) }
+                    <NavLink
+                      className={classes.link}
+                      value={menuItem.to}
+                      to={menuItem.to}
+                      onClick={e => {
+                        history.push(e.target.value, history.location.state);
+                        setDeskSelected(menuItem.to);
+                      }}
+                    >
+                      {menuItem.label}
+                    </NavLink>
+                  )}
                 </div>
               }
             />
@@ -112,7 +172,7 @@ const AccountMenu = ({ logout }) => {
         ))}
       </List>
     </Box>
-  ))
+  ));
 
   return xs ? (
     <>
@@ -120,7 +180,7 @@ const AccountMenu = ({ logout }) => {
     </>
   ) : (
     <>
-    <DesktopMenu />
+      <DesktopMenu />
     </>
   );
 };

@@ -29,14 +29,18 @@ import { sendPaypalCheckoutRequest } from '../../utils/braintree';
 import { setCheckoutPaypalPayload } from '../../modules/paypal/actions';
 import EventEmitter from '../../events';
 
+const paypalIcon = require('../../../src/assets/images/paypal-logo-100px.png');
+
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '26px',
-    fontFamily: theme.typography.headerFontFamily
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   mobileTitle: {
     fontSize: '24px',
-    fontFamily: theme.typography.headerFontFamily
+    fontFamily: theme.typography.headerFontFamily,
+    color: theme.palette.brand.camoGreen
   },
   subTitle: {
     textAlign: 'right',
@@ -46,7 +50,8 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 'auto',
     lineHeight: '1.2rem',
     marginBottom: '16px',
-    marginTop: '8px'
+    marginTop: '8px',
+    color: '#7f7470'
   },
   formControlLabel: {
     fontSize: '20px',
@@ -513,7 +518,7 @@ const PaymentForm = ({
       total,
       shippingAddress,
       {
-        label: 'checkout',
+        label: 'paypal',
         shape: 'rect',
         color: 'gold',
         height: 55,
@@ -585,7 +590,7 @@ const PaymentForm = ({
             color={theme.palette.brand.camoGreen}
             fontFamily={xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily}
             fontWeight={xs ? 700 : 400}
-            fontSize={xs ? 14 : 25}
+            fontSize={xs ? 18 : 34}
             mb={xs ? 0 : 2}
           />
         )}
@@ -692,7 +697,12 @@ const PaymentForm = ({
                     xs={12}
                     style={
                       rest.checkoutVersion && rest.checkoutVersion === 2
-                        ? { marginTop: '8px', paddingLeft: '3px', padding: '0px' }
+                        ? {
+                            marginTop: '8px',
+                            paddingLeft: '3px',
+                            padding: '0px',
+                            marginBottom: '25px'
+                          }
                         : {}
                     }
                   >
@@ -719,13 +729,21 @@ const PaymentForm = ({
                     key="formControlLabelPayPalMode"
                     style={{ marginLeft: '-6px' }}
                     value="paypal"
-                    control={<Radio color={'secondary'} size={'small'} />}
-                    label={paypalEmail ? `PayPal: ${paypalEmail}` : 'PayPal'}
+                    control={
+                      <>
+                        <Radio
+                          color={'secondary'}
+                          size={'small'}
+                          checked={paymentMethodMode === 'paypal'}
+                        />{' '}
+                        <img src={paypalIcon} style={{ display: paypalEmail ? 'none' : 'block' }} />
+                      </>
+                    }
+                    label={paypalEmail ? `PayPal: ${paypalEmail}` : ''}
                     classes={{ label: classes.formControlLabel }}
                     onClick={evt => {
-                      setPaymentMethodMode(evt.target.value);
+                      setPaymentMethodMode('paypal');
                     }}
-                    checked={paymentMethodMode === 'paypal'}
                   />
                 </>
               )}
@@ -747,7 +765,7 @@ const PaymentForm = ({
                   </Typography>
                 </Box>
                 <Grid container style={{ marginTop: '11px' }}>
-                  <div id="paypal-checkout-button-payment-form" style={{ width: '100%' }}></div>
+                  <div id="paypal-checkout-button-payment-form" style={{ width: '187px' }}></div>
                 </Grid>
               </Grid>
 
@@ -761,8 +779,7 @@ const PaymentForm = ({
                       xs ? theme.typography.bodyFontFamily : theme.typography.headerFontFamily
                     }
                     fontWeight={xs ? 700 : 400}
-                    fontSize={xs ? 14 : 25}
-                    mb={xs ? -2 : 0}
+                    fontSize={xs ? 18 : 34}
                   />
                 </Grid>
               )}
@@ -952,10 +969,10 @@ const PaymentForm = ({
                   <Grid item xs={12} style={{ marginBottom: '10px' }}>
                     <Box
                       component={Typography}
-                      color="#231f20"
                       variant="h5"
                       children="Easy order status and snappy checkout"
-                      fontSize={xs ? 24 : 26}
+                      fontSize={xs ? 24 : 30}
+                      className={xs ? classes.mobileTitle : classes.title}
                       mb={1}
                       mt={xs ? 2 : 3}
                     />
@@ -972,24 +989,6 @@ const PaymentForm = ({
                         label="Password"
                         component={InputField}
                         type={passwordVisible ? 'text' : 'password'}
-                        InputProps={{
-                          endAdornment: (
-                            <Box width={1} textAlign="right">
-                              <NavLink
-                                style={{
-                                  fontFamily: 'proxima-nova, sans-serif',
-                                  fontWeight: 600,
-                                  fontSize: '12px',
-                                  color: '#553226'
-                                }}
-                                type="button"
-                                underline="always"
-                                onClick={event => togglePasswordVisibility(event)}
-                                children={passwordVisible ? 'HIDE PASSWORD' : 'SHOW PASSWORD'}
-                              />
-                            </Box>
-                          )
-                        }}
                         autoComplete="current-password"
                       />
                     </div>
@@ -1004,7 +1003,7 @@ const PaymentForm = ({
                 currentUser.data.paymentMethods &&
                 currentUser.data.paymentMethods.length > 0 && (
                   <Button
-                    style={{ height: '60px', padding: '0px' }}
+                    style={{ height: '46px', padding: '0px' }}
                     type="button"
                     onClick={onBack}
                     children={backLabel}
@@ -1013,7 +1012,7 @@ const PaymentForm = ({
                 )}
               <Button
                 style={{
-                  height: '60px',
+                  height: '46px',
                   padding: '0px',
                   display:
                     paymentMethodMode === 'creditCard' ||

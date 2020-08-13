@@ -16,13 +16,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   title: {
-    fontSize: '36px',
+    fontSize: '34px',
     color: theme.palette.brand.camoGreen,
     fontFamily: theme.typography.headerFontFamily,
     lineHeight: 'normal',
     padding: theme.spacing(3, 0, 1),
     [theme.breakpoints.down('xs')]: {
-      fontSize: '25px'
+      fontSize: '30px'
     }
   },
   subTitle: {

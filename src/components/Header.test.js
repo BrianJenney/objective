@@ -1,8 +1,9 @@
 import React from 'react';
 import '../../test/setup';
-import { cleanup } from '@testing-library/react';
+import { cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { renderWithRedux } from '../../test/testUtils';
 import Header from './Header';
+import * as contentfulLib from '../utils/contentful';
 jest.mock('jsonwebtoken');
 const jwt = require('jsonwebtoken');
 
@@ -46,6 +47,7 @@ const createReduxStore = (options = {}) => {
 // TODO: get rid of all those warnings
 /* eslint-disable */
 const originalError = console.error;
+const trackStub = jest.fn();
 
 describe('Header', () => {
   beforeEach(() => {
@@ -64,7 +66,8 @@ describe('Header', () => {
     window.analytics = {
       identify: () => ({
         account_id: () => null
-      })
+      }),
+      track: trackStub // we use a stub here because we care what args are passed here
     };
   });
 
@@ -104,6 +107,70 @@ describe('Header', () => {
 
     // Without a user name present we should show the sign in
     expect(queryByText('Cool Dude', { exact: false })).toBeNull();
-    expect(queryByText('Sign In', { exact: false })).toBeTruthy();
+    expect(queryByText('Sign Up', { exact: false })).toBeTruthy();
+  });
+
+  // this kind of test is probably useful as it tests what arguments are sent
+  // to analytics and we can test all sorts of weird scenarios here
+  // which will also test `segmentSiteLocation` and any other dependednt functions that are called here
+  it('triggers segmentTrackNavigation on click', async () => {
+    // we can add anything in here to really test how our component
+    // will render the data it gets or what happens if this response is
+    // unsuccessful...(?)
+    contentfulLib.contentfulClient.getEntry = () =>
+      new Promise((resolve, reject) => {
+        resolve({
+          fields: {
+            text: 'Some Cool Product',
+            href: '/link/to/site'
+          }
+        });
+      });
+
+    const store = createReduxStore({
+      account: {
+        data: {
+          firstName: undefined,
+          awccount_jwt: undefined
+        }
+      }
+    });
+    store.subscribe = () => {};
+    store.dispatch = () => {};
+    const { queryAllByText } = renderWithRedux(<Header />, { store });
+
+    await waitFor(() => {
+      //we will wait for the element to appear before clicking since on first render it may not be available
+      const navLink = queryAllByText('Some Cool Product')[0]; // let's find an element with this name and click on it
+      fireEvent.click(navLink);
+    });
+
+    expect(trackStub).toHaveBeenCalledWith('Navigation Clicked', {
+      label: '',
+      site_location: 'home'
+    });
+  });
+
+  it('gracefully handles a failure from contentful', async () => {
+    // we can add anything in here to really test how our component
+    // will render the data it gets or what happens if this response is
+    // unsuccessful...(?)
+    contentfulLib.contentfulClient.getEntry = () =>
+      new Promise((resolve, reject) => {
+        reject('Ruh roh, contentful is down');
+      });
+
+    const store = createReduxStore({
+      account: {
+        data: {
+          firstName: undefined,
+          awccount_jwt: undefined
+        }
+      }
+    });
+    store.subscribe = () => {};
+    store.dispatch = () => {};
+    const { queryByText } = renderWithRedux(<Header />, { store });
+    expect(queryByText('Sign Up', { exact: false })).toBeTruthy();
   });
 });
