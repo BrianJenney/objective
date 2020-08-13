@@ -348,7 +348,7 @@ OrderSummary.propTypes = {
   xs: PropTypes.object.isRequired
 };
 
-const OrderDetail = () => {
+const OrderDetail = ({hideLPCoupon}) => {
   const account = useSelector(state => state.account);
   const order = useSelector(state => state.order.order);
 
