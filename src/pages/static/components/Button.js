@@ -36,11 +36,13 @@ const SPButton = ({ history, data, template, type, align }) => {
   const cart = useSelector(state => state.cart);
   const prodAdded = useSelector(state => state.utils.lpProdAdded);
   const couponAdded = useSelector(state => state.utils.lpCouponAdded);
+  const cartCount = cart.items.reduce((acc, item) => acc + item.quantity, 0);
   const dispatch = useDispatch();
 
   const handleClick = useCallback(() => {
     if (cart && products) {
       handleAddToCart();
+      handleAddCoupon();
     }
   }, [cart, products, dispatch]);
 
@@ -66,20 +68,10 @@ const SPButton = ({ history, data, template, type, align }) => {
   }, [cart, products, dispatch]);
 
   useEffect(() => {
-    if (data.coupon && prodAdded && couponAdded === false && cart._id) {
-      handleAddCoupon();
-    }
-  }, [cart, prodAdded, dispatch]);
-
-  useEffect(() => {
-    if (prodAdded && !data.coupon) {
+    if (prodAdded && couponAdded && cartCount > 0) {
       history.push(data.URL, 'landingPage');
     }
-
-    if (prodAdded && couponAdded) {
-      history.push(data.URL, 'landingPage');
-    }
-  }, [prodAdded, couponAdded]);
+  }, [cartCount]);
 
   return (
     <div className={`${template}-${type}-${align}`}>
