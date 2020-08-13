@@ -249,6 +249,7 @@ const OrderSummary = ({
       {orderStatus !== 'canceled' && orderStatus !== 'declined' && orderStatus !== 'created' && (
         <StatusStepper statusStepper={statusStepper} status={orderStatus} />
       )}
+
       {orderStatus === 'placed' ? (
         <CommonButton
           style={{
@@ -307,12 +308,12 @@ const OrderSummary = ({
             </StyledSmallCaps>
             <Address address={shippingAddress} />
             {tracking && (
-              <Box className={classes.textTracking}>
+              <>
                 <Typography className={classes.text} pt={2}>
                   Tracking #:
                 </Typography>
                 <TrackingInfo className={classes.text} tracking={tracking} />
-              </Box>
+              </>
             )}
           </Box>
         </Grid>
@@ -360,7 +361,6 @@ const OrderDetail = () => {
   const addressesWidth = xs ? 12 : 6;
 
   if (!order) return null;
-
   const { tracking, statusStepper } = getShippingAndTracking(order);
   const status = getStatusStepper(statusStepper);
   order.status = statusStepper.status;
