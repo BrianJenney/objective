@@ -375,7 +375,6 @@ const OrderDetail = () => {
               <Grid container spacing={xs ? 0 : 4}>
                 <Grid item xs={mainWidth}>
                   <OrderSummary
-                    hideLPCoupon={hideLPCoupon}
                     account={account}
                     orderNumber={order.orderNumber}
                     orderId={order.orderNumber}
@@ -395,7 +394,7 @@ const OrderDetail = () => {
                   />
                 </Grid>
                 <Grid item xs={cartWidth}>
-                  <OrderCartSummary order={order} hideLPCoupon={hideLPCoupon} />
+                  <OrderCartSummary order={order} />
                 </Grid>
               </Grid>
             </Box>
