@@ -169,8 +169,12 @@ const Header = ({ currentUser, location, history }) => {
         <div data-testid="header-bar" style={{ width: '100%' }}>
           <Grid container item xs={12} className="headerBar">
             <Grid item xs={12}>
-              <StyledBox fontSize={9}>
-                <NavLink onClick={segmentTrackNavigationClick} to={contents.href}>
+              <StyledBox className="mobile-box" fontSize={14}>
+                <NavLink
+                  className="mobile-promo-text"
+                  onClick={segmentTrackNavigationClick}
+                  to={contents.href}
+                >
                   {contents.text}
                 </NavLink>
                 <CloseIcon className="closeIconMobile" onClick={handlePromoClose} />

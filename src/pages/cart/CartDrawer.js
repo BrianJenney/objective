@@ -1,10 +1,11 @@
+/* eslint-disable indent, jsx-a11y/anchor-is-valid, react/no-array-index-key */
 import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { withRouter, Link, matchPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography, Grid, Card, CardMedia, IconButton } from '@material-ui/core';
+import { Typography, Grid, Card, CardMedia, IconButton } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -137,11 +138,6 @@ const Cart = ({
       });
     }
   }, [cart.cartDrawerOpened]);
-
-  const onClickLogo = useCallback(() => {
-    dispatch(setCartDrawerOpened(false));
-    history.push('/gallery');
-  }, [dispatch, history]);
 
   const onClickProduct = useCallback(() => {
     dispatch(setCartDrawerOpened(false));
@@ -364,7 +360,7 @@ const Cart = ({
                           {item.variant_name}
                         </StyledProductLink>
                       </Link>
-                      <StyledProductPrice style={{ marginTop: 10}}>
+                      <StyledProductPrice style={{ marginTop: 10 }}>
                         {displayMoney(item.quantity * item.unit_price)}
                       </StyledProductPrice>
                       <Grid item style={{ padding: '0' }}>
@@ -511,6 +507,7 @@ const Cart = ({
           </Grid>
         ) : null}
 
+        {/* eslint-disable-next-line */}
         {cart.items.length > 0 ? (
           cart.promo ? (
             <PromoCodeView hideLPCoupon={hideLPCoupon} history={history} />
@@ -551,9 +548,7 @@ const Cart = ({
               </StyledEstimatedTotal>
             </Grid>
             <Grid item xs={6} style={{ textAlign: 'right' }}>
-            <StyledEstimatedTotal>
-                {displayMoney(cart.total)}
-            </StyledEstimatedTotal>
+              <StyledEstimatedTotal>{displayMoney(cart.total)}</StyledEstimatedTotal>
             </Grid>
           </Grid>
         ) : null}
@@ -573,7 +568,14 @@ Cart.propTypes = {
   history: PropTypes.object.isRequired,
   hideCheckoutProceedLink: PropTypes.bool,
   disableItemEditing: PropTypes.bool,
-  hideTaxLabel: PropTypes.bool
+  hideTaxLabel: PropTypes.bool,
+  location: PropTypes.object,
+  showOrderSummaryText: PropTypes.bool,
+  xsBreakpoint: PropTypes.any,
+  activeStep: PropTypes.any,
+  restrictionMessage: PropTypes.string,
+  restrictedProduct: PropTypes.string,
+  checkoutVersion: PropTypes.any
 };
 
 Cart.defaultProps = {

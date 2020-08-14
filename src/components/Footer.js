@@ -23,11 +23,10 @@ import { InputField } from './form-fields';
 import { NavLink } from './common';
 import CheckoutFooter from './CheckoutFooter';
 import Logo from '../assets/images/Bee.svg';
-import { requestSignupEmail, requestCheckEmailExistence } from '../modules/account/actions';
+import { requestSignupEmail } from '../modules/account/actions';
 import { withCurrentUser } from '../hoc';
 import segmentSiteLocation from '../utils/segmentSiteLocation';
 import Arrow from './common/Icons/Arrow/Arrow';
-
 import igIcon from '../assets/images/instagram-icon.svg';
 import fbIcon from '../assets/images/fb-icon.svg';
 import twitterIcon from '../assets/images/twitter-icon.svg';
@@ -102,7 +101,6 @@ const Footer = ({ location, currentUser }) => {
       window.analytics.identify({
         email
       });
-      dispatch(requestCheckEmailExistence(email));
       dispatch(requestSignupEmail(email));
       setConfirmationVisibility(!confirmationVisibility);
     },
@@ -341,7 +339,7 @@ const Footer = ({ location, currentUser }) => {
         <Grid xs={12} className="disclaimer-container">
           <p>{BB_LEGAL_TEXT[0]}</p>
           <p>
-            <b>*Disclaimer:{BB_LEGAL_TEXT[1]}</b> 
+            <b>*Disclaimer</b>: {BB_LEGAL_TEXT[1]} 
           </p>
           <p>{BB_LEGAL_TEXT[2]}</p>
           <p>{BB_LEGAL_TEXT[3]}</p>

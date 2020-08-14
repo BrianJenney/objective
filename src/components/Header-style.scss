@@ -59,6 +59,9 @@
     margin-right: 15px;
   }
 
+  .header-bar-mobile {
+  }
+
   .headerBar {
     background: #b5d7bf;
     color: #466650;
@@ -83,11 +86,17 @@
     }
     .closeIconMobile {
       position: absolute;
-      top: 20px;
+      top: 5px;
       right: 5px;
       width: 15px;
       height: 15px;
     }
+
+    .mobile-box {
+      line-height: normal;
+      padding: 0 15px;
+    }
+
     @media (min-width: 450px) {
       .headerContainer {
         .top {
