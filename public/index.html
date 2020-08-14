@@ -3,42 +3,11 @@
 
 <head>
   <!-- OneTrust Cookies Consent Notice start -->
-  <script src="segmentOneTrust.js"></script>
-  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8"
-    data-domain-script="623f893d-7d39-40fc-b8a3-0b01db1d79b9"></script>
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="623f893d-7d39-40fc-b8a3-0b01db1d79b9"></script>
   <script type="text/javascript">
-    function getCookie(name) {
-      var value = "; " + document.cookie;
-      var parts = value.split("; " + name + "=");
-      if (parts.length == 2) return parts.pop().split(";").shift();
-    }
-
-    function OptanonWrapper() {
-      if (window.analytics.load) {
-        segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
-      }
-
-      var OABCcookieName = "OptanonAlertBoxClosed";
-      var bannerAcceptBtn = document.getElementById("onetrust-accept-btn-handler");
-      var pcAllowAllBtn = document.getElementById("accept-recommended-btn-handler");
-      var pcSaveBtn = document.getElementsByClassName("save-preference-btn-handler onetrust-close-btn-handler button-theme")[0];
-      var OABCcookie = getCookie(OABCcookieName);
-
-      if (!OABCcookie && bannerAcceptBtn) {
-        bannerAcceptBtn.addEventListener('click', function () {
-          segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
-        });
-      }
-      if (pcAllowAllBtn)
-        pcAllowAllButton.addEventListener('click', function () {
-          segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
-        });
-
-      pcSaveBtn.addEventListener('click', function () {
-        segmentOneTrust("%REACT_APP_SEGMENT_KEY%")
-      });
-    }
+    function OptanonWrapper() { }
   </script>
+  <!-- OneTrust Cookies Consent Notice end -->
   <!-- OneTrust Cookies Consent Notice end -->
   <!-- Optimizely -->
   <script src="https://cdn.optimizely.com/js/18294062904.js"></script>
@@ -69,11 +38,10 @@
 
     <!-- <title>Objective</title> -->
     <script type="text/javascript">
-      !(function() {
+      !(function () {
         var analytics = (window.analytics = window.analytics || []);
         if (!analytics.initialize)
-          if (analytics.invoked)
-            window.console && console.error && console.error('Segment snippet included twice.');
+          if (analytics.invoked) window.console && console.error && console.error('Segment snippet included twice.');
           else {
             analytics.invoked = !0;
             analytics.methods = [
@@ -94,8 +62,8 @@
               'off',
               'on'
             ];
-            analytics.factory = function(t) {
-              return function() {
+            analytics.factory = function (t) {
+              return function () {
                 var e = Array.prototype.slice.call(arguments);
                 e.unshift(t);
                 analytics.push(e);
@@ -106,7 +74,7 @@
               var e = analytics.methods[t];
               analytics[e] = analytics.factory(e);
             }
-            analytics.load = function(t, e) {
+            analytics.load = function (t, e) {
               var n = document.createElement('script');
               n.type = 'text/javascript';
               n.async = !0;
@@ -116,6 +84,8 @@
               analytics._loadOptions = e;
             };
             analytics.SNIPPET_VERSION = '4.1.0';
+            analytics.load("%REACT_APP_SEGMENT_KEY%");
+            //analytics.page();
           }
       })();
     </script>
