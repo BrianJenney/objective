@@ -162,6 +162,17 @@ export const requestFetchAccount = (data, find = false) => (dispatch, getState) 
 };
 
 export const receivedFetchAccountSuccess = account => dispatch => {
+  if (
+    account &&
+    account.account_jwt &&
+    account.account_jwt !== localStorageClient.get('olympusToken')
+  ) {
+    // we just logged in
+    EventEmitter.emit('account.created', {
+      account,
+      token: account.account_jwt
+    });
+  }
   dispatch({
     type: RECEIVED_FETCH_ACCOUNT_SUCCESS,
     payload: account
