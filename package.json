@@ -29,7 +29,7 @@
     "msgpack-lite": "^0.1.26",
     "mui-datatables": "^2.11.1",
     "mui-layout": "^1.2.9",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "notistack": "^0.8.9",
     "paypal-checkout": "^4.0.286",
     "prop-types": "^15.7.2",
